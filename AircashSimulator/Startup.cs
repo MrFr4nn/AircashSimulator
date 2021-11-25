@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using Services.Coupon;
 
 namespace AircashSimulator
 {
@@ -73,6 +74,7 @@ namespace AircashSimulator
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<ICouponService, CouponService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  
         }
