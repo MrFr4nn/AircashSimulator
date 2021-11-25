@@ -20,9 +20,9 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetValidCoupons()
+        public async Task<IActionResult> GetUnusedCoupons(int PurchasedCurrency)
         {
-            var response = CouponService.GetValidCoupons();
+            var response = CouponService.GetUnusedCoupons();
             return Ok(response);
         }
     }

@@ -14,9 +14,9 @@ namespace Services.Coupon
         {
             AircashSimulatorContext = aircashSimulatorContext;
         }
-        public async Task<object> GetValidCoupons()
+        public async Task<object> GetUnusedCoupons(int PurchasedCurrency)
         {
-            var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x => x.UsedOnUTC == null & x.CancelledOnUTC == null).FirstOrDefault<CouponEntity>();
+            var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x => x.UsedOnUTC == null & x.CancelledOnUTC == null & x.PurchasedCurrency.ToString() == PurchasedCurrency.ToString()).ToList();
             return ValidCoupons;
         }
     }
