@@ -19,10 +19,10 @@ namespace AircashSimulator.Controllers
             CouponService = couponService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUnusedCoupons(int PurchasedCurrency)
+        [HttpPost]
+        public async Task<IActionResult> GetUnusedCoupons(GetUnusedCouponsRequest getUnusedCouponsRequest)
         {
-            var response = CouponService.GetUnusedCoupons();
+            var response = await CouponService.GetUnusedCoupons(getUnusedCouponsRequest.PurchasedCurrency);
             return Ok(response);
         }
     }

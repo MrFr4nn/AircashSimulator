@@ -1,5 +1,6 @@
 ﻿using DataAccess;
 using Domain.Entities;
+using Domain.Entities.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,8 @@ namespace Services.Coupon
         }
         public async Task<object> GetUnusedCoupons(int PurchasedCurrency)
         {
-            var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x => x.UsedOnUTC == null & x.CancelledOnUTC == null & x.PurchasedCurrency.ToString() == PurchasedCurrency.ToString()).ToList();
+            var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x => x.UsedOnUTC == null & x.CancelledOnUTC == null & x.PurchasedCurrency == (CurrencyEnum)PurchasedCurrency).ToList();
+            int a = 1;
             return ValidCoupons;
         }
     }
