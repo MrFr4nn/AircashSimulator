@@ -12,10 +12,16 @@ app.config(function ($stateProvider) {
         });
 });
 
+dashboardModule.service("dashboardService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope',
+    function ($http, $q, handleResponseService, config, $rootScope) {
+    }
+]);
+
 dashboardModule.controller("DashboardCtrl",
-    ['$scope', '$state', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, dashboardService, $state, $filter, $http, JwtParser, $uibModal, $rootScope)
-    {
+    ['$scope', '$state', 'dashboardService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
+        function ($scope, $state, dashboardService, $filter, $http, JwtParser, $uibModal, $rootScope)
+        {
+            console.log($rootScope);
         //$scope.Currency = JwtParser.getProperty('currency');
         
     }
