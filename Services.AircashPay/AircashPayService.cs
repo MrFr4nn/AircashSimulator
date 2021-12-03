@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Services.AircashPay
 {
-    public class AircashPayService
+    public class AircashPayService : IAircashPayService
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
@@ -25,31 +25,31 @@ namespace Services.AircashPay
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
         }
-        async Task<object> GeneratePartnerCode(string partnerId, decimal amount, string isoCurrencyId, string description, int validForPeriod, string locationId)
+        public async Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO)
         {
 
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == new Guid(partnerId)).FirstOrDefault();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == generatePartnerCodeDTO.PartnerId).FirstOrDefault();
             var preparedTransaction = new PreparedAircashTransactionEntity
             {
-                PartnerId = new Guid(partnerId),
-                Amount = amount,
-                ISOCurrencyId = (CurrencyEnum)int.Parse(isoCurrencyId),
-                Description = description,
-                ValidForPeriod = validForPeriod,
-                LocationId = locationId
+                PartnerId = generatePartnerCodeDTO.PartnerId,
+                Amount = generatePartnerCodeDTO.Amount,
+                ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                PartnerTransactionId = Guid.NewGuid(),
+                Description = generatePartnerCodeDTO.Description,
+                ValidForPeriod = int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
+                LocationId = generatePartnerCodeDTO.LocationId
             };
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();
             var aircashGeneratePartnerCodeResponse = new object();
-            var aircashGeneratePartnerCodeRequest = new AircashGeneratePartnerCodeRequest
+            var aircashGeneratePartnerCodeRequest = new AircashGeneratePartnerCodeRequest 
             {
-                PartnerId = partnerId,
-                Amount = amount,
-                ISOCurrencyId = isoCurrencyId,
-                Description = description,
-                ValidForPeriod = validForPeriod,
-                LocationId = locationId
-
+                PartnerID = preparedTransaction.PartnerId,
+                Amount = preparedTransaction.Amount,
+                CurrencyID = preparedTransaction.ISOCurrencyId,
+                PartnerTransactionID = preparedTransaction.PartnerTransactionId,
+                Description = preparedTransaction.Description,
+                LocationID = preparedTransaction.LocationId
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
@@ -64,6 +64,23 @@ namespace Services.AircashPay
                 aircashGeneratePartnerCodeResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
             return aircashGeneratePartnerCodeResponse;
+        }
+
+        public Task<object> ConfirmTransaction(TransactionDTO transactionDTO)
+        {
+            AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                {
+                    Amount = transactionDTO.Amount,
+                    ISOCurrencyId = (CurrencyEnum)transactionDTO.ISOCurrencyId,
+                    PartnerId = transactionDTO.PartnerId,
+                    AircashTransactionId = transactionDTO.AircashTransactionId,
+                    TransactionId = transactionDTO.PartnerTransactionId,
+                    ServiceId = ServiceEnum.AircashPayment,
+                    UserId = transactionDTO.UserId,
+                    RequestDateTimeUTC = DateTime.UtcNow,
+                    ResponseDateTimeUTC = DateTime.UtcNow
+                });
+            return (Task<object>)new object();
         }
     }
 }

@@ -14,6 +14,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using AircashSimulator.Extensions;
+using Services.AircashPay;
 
 namespace AircashSimulator
 {
@@ -73,7 +75,10 @@ namespace AircashSimulator
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IAircashPayService, AircashPayService>();
+            services.AddTransient<UserContext>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
+            services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  
         }
 

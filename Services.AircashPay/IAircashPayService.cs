@@ -9,6 +9,7 @@ namespace Services.AircashPay
 {
     public interface IAircashPayService
     {
-        Task<object> GeneratePartnerCode(string PartnerId, decimal Amount, string ISOCurrencyId, string Description, int ValidForPeriod, string LocationId);
+        Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO);
+        Task<object> ConfirmTransaction(TransactionDTO transactionDTO);
     }
 }
