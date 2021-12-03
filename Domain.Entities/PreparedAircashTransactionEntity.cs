@@ -7,6 +7,7 @@ namespace Domain.Entities
 {
     public class PreparedAircashTransactionEntity
     {
+        public int Id { get; set; }
         public Guid PartnerId { get; set; }
         public decimal Amount { get; set; }
         public CurrencyEnum ISOCurrencyId { get; set; }
