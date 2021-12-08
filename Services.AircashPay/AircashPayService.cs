@@ -102,9 +102,47 @@ namespace Services.AircashPay
             }
         }
 
-        public Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO)
+        public async Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO)
         {
-            throw new NotImplementedException();
+            var aircashCancelTransactionRequest = new AircashCancelTransactionRequest
+            {
+                PartnerID = cancelTransactionDTO.PartnerId.ToString(),
+                PartnerTransactionID = cancelTransactionDTO.PartnerTransactionId.ToString()
+            };
+            var partner = AircashSimulatorContext.Partners.FirstOrDefault(x => x.PartnerId == cancelTransactionDTO.PartnerId);
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashCancelTransactionRequest);
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+            aircashCancelTransactionRequest.Signature = signature;
+            var requestDateTimeUTC = DateTime.UtcNow;
+            var response = await HttpRequestService.SendRequestAircash(aircashCancelTransactionRequest, HttpMethod.Post, $"{AircashConfiguration.BaseUrl}{AircashConfiguration.CancelTransactionEndpoint}");
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                var aircashCancelTransactionResponse = JsonConvert.DeserializeObject<AircashCancelTransactionResponse>(response.ResponseContent);
+                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == cancelTransactionDTO.PartnerTransactionId);
+                AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                {
+                    Amount = transaction.Amount,
+                    ISOCurrencyId = (CurrencyEnum)transaction.ISOCurrencyId,
+                    PartnerId = transaction.PartnerId,
+                    AircashTransactionId = aircashCancelTransactionResponse.CancelTransactionID,
+                    TransactionId = transaction.TransactionId,
+                    ServiceId = ServiceEnum.AircashCancellation,
+                    UserId = cancelTransactionDTO.UserId,
+                    RequestDateTimeUTC = requestDateTimeUTC,
+                    ResponseDateTimeUTC = DateTime.UtcNow,
+                    PointOfSaleId = transaction.PointOfSaleId
+                });
+                AircashSimulatorContext.SaveChanges();
+                return new HttpResponse
+                {
+                    ResponseCode = System.Net.HttpStatusCode.OK,
+                    ResponseContent = "Transaction cancelled successfully"
+                };
+            }
+            else
+            {
+                return JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
         }
     }
 }

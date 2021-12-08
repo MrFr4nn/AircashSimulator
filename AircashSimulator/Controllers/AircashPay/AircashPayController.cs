@@ -7,6 +7,7 @@ using AircashSignature;
 using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Extensions;
 using Services.HttpRequest;
+using AircashSimulator.Controllers.AircashPay;
 
 namespace AircashSimulator.Controllers
 {
@@ -65,13 +66,32 @@ namespace AircashSimulator.Controllers
                 {
                     return BadRequest(response);
                 }
-                
+
             }
             else
             {
                 return Unauthorized("Invalid signature.");
             }
-            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CancelTransaction(CancelTransaction cancelTransactionRequest)
+        {
+            var cancelTransactionDTO = new CancelTransactionDTO
+            {
+                PartnerId = new Guid(cancelTransactionRequest.PartnerID),
+                PartnerTransactionId = new Guid(cancelTransactionRequest.PartnerTransactionID),
+                UserId = UserContext.GetUserId(User)
+            };
+            var response = await AircashPayService.CancelTransaction(cancelTransactionDTO);
+            if (((HttpResponse)response).ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return BadRequest(response);
+            }
         }
     }
 }
