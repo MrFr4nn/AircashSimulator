@@ -8,6 +8,8 @@ using AircashSignature;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Domain.Entities;
+using Domain.Entities.Enum;
 
 namespace Services.AircashPayout
 {
@@ -15,13 +17,13 @@ namespace Services.AircashPayout
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private AbonConfiguration AbonConfiguration;
+        private AircashConfiguration AircashConfiguration;
 
-        public AircashPayoutService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AbonConfiguration> abonConfiguration)
+        public AircashPayoutService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
-            AbonConfiguration = abonConfiguration.CurrentValue;
+            AircashConfiguration = aircashConfiguration.CurrentValue;
         }
 
         public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId)
@@ -30,24 +32,95 @@ namespace Services.AircashPayout
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var checkUserRequest = new CheckUserRequest()
             {
-                PartnerId=partnerId.ToString(),
+                PartnerID=partnerId.ToString(),
                 PhoneNumber=phoneNumber,
-                PartnerUserId=partnerUserId
+                PartnerUserID=partnerUserId
                 
             };
             var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             checkUserRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{AbonConfiguration.BaseUrl}{AbonConfiguration.CheckUserEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{AircashConfiguration.M2BaseUrl}{AircashConfiguration.CheckUserEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<CheckUserResponse>(response.ResponseContent);
+                checkUserResponse=successResponse;
             }
             else
             {
                 //checkUserResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
             return checkUserResponse;
+        }
+        public async Task<object> CreatePayout(string phoneNumber, decimal amount, string partnerUserId, Guid partnerId)
+        {
+            var createPayoutResponse = new object();
+            var requestDateTimeUTC = DateTime.UtcNow;
+            var transactionId = Guid.NewGuid();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var createPayoutRequest = new CreatePayoutRequest()
+            {
+                PartnerID = partnerId.ToString(),
+                PartnerTransactionID=transactionId.ToString(),
+                Amount=amount,
+                PhoneNumber = phoneNumber,
+                PartnerUserID = partnerUserId,
+                CurrencyID=partner.CurrencyId
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
+            var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
+            createPayoutRequest.Signature = signature;
+            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{AircashConfiguration.M2BaseUrl}{AircashConfiguration.CreatePayoutEndpoint}");
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                var successResponse = JsonConvert.DeserializeObject<CreatePayoutResponse>(response.ResponseContent);
+                var responseDateTimeUTC = DateTime.UtcNow;
+                AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                {
+                    Amount = amount,
+                    ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                    PartnerId = partnerId,
+                    AircashTransactionId = successResponse.AircashTransactionId,
+                    TransactionId = transactionId,
+                    ServiceId = ServiceEnum.AircashPayment,
+                    //trebat ce promijeniti UserId
+                    UserId = Guid.NewGuid(),
+                    RequestDateTimeUTC = requestDateTimeUTC,
+                    ResponseDateTimeUTC = responseDateTimeUTC                    
+                });
+                AircashSimulatorContext.SaveChanges();
+                createPayoutResponse = successResponse;
+            }
+            else
+            {
+                createPayoutResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+            return createPayoutResponse;
+        }
+        public async Task<object> CheckTransactionStatus(Guid partnerTransactionId)
+        {
+            var checkTransactionStatusResponse = new object();
+            var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionId).FirstOrDefault();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == transaction.PartnerId).FirstOrDefault();
+            var checkTransactionStatusRequest = new CheckTransactionStatusRequest()
+            {
+                PartnerID = transaction.PartnerId.ToString(),
+                PartnerTransactionID=partnerTransactionId.ToString(),           
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
+            var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
+            checkTransactionStatusRequest.Signature = signature;
+            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{AircashConfiguration.M2BaseUrl}{AircashConfiguration.CheckTransactionStatusEndpoint}");
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                var successResponse = JsonConvert.DeserializeObject<CheckTransactionStatusResponse>(response.ResponseContent);
+                checkTransactionStatusResponse = successResponse;
+            }
+            else
+            {
+                //checkUserResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+            return checkTransactionStatusResponse;
         }
     }
 }

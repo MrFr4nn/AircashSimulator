@@ -9,9 +9,9 @@ namespace Services.AircashPayout
 {
     public class CheckTransactionStatusRequest:ISignature
     {
-        public string PartnerId { get; set; }
-        public string PartnerTransactionId { get; set; }
-        public string AircashTransactionId { get; set; }
+        public string PartnerID { get; set; }
+        public string PartnerTransactionID { get; set; }
+        public string AircashTransactionID { get; set; }
         public string Signature { get; set; }
     }
 }

@@ -76,7 +76,7 @@ namespace AircashSimulator
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
-            services.AddTransient<AircashPayoutService, AircashPayoutService>();
+            services.AddTransient<IAircashPayoutService, AircashPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<UserContext>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));

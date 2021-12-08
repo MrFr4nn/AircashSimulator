@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Services.AircashPayout
 {
-    public class IAircashPayoutService
+    public interface IAircashPayoutService
     {
         Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId);
+        Task<object> CreatePayout(string phoneNumber, decimal amount, string partnerUserId, Guid partnerId);
+        Task<object> CheckTransactionStatus(Guid partnerTransactionId);
     }
 }
