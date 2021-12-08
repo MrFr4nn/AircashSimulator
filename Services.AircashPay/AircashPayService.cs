@@ -37,7 +37,8 @@ namespace Services.AircashPay
                 PartnerTransactionId = Guid.NewGuid(),
                 Description = generatePartnerCodeDTO.Description,
                 ValidForPeriod = int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
-                LocationId = generatePartnerCodeDTO.LocationId
+                LocationId = generatePartnerCodeDTO.LocationId,
+                UserId = generatePartnerCodeDTO.UserId
             };
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();
@@ -66,9 +67,12 @@ namespace Services.AircashPay
             return aircashGeneratePartnerCodeResponse;
         }
 
-        public Task<object> ConfirmTransaction(TransactionDTO transactionDTO)
+        public async Task<object> ConfirmTransaction(TransactionDTO transactionDTO)
         {
-            AircashSimulatorContext.Transactions.Add(new TransactionEntity
+            if (AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == transactionDTO.PartnerTransactionId) == null)
+            {
+                var preparedTransaction = AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId);
+                AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = transactionDTO.Amount,
                     ISOCurrencyId = (CurrencyEnum)transactionDTO.ISOCurrencyId,
@@ -76,11 +80,31 @@ namespace Services.AircashPay
                     AircashTransactionId = transactionDTO.AircashTransactionId,
                     TransactionId = transactionDTO.PartnerTransactionId,
                     ServiceId = ServiceEnum.AircashPayment,
-                    UserId = transactionDTO.UserId,
+                    UserId = preparedTransaction.UserId,
                     RequestDateTimeUTC = DateTime.UtcNow,
-                    ResponseDateTimeUTC = DateTime.UtcNow
+                    ResponseDateTimeUTC = DateTime.UtcNow,
+                    PointOfSaleId = preparedTransaction.LocationId
                 });
-            return (Task<object>)new object();
+                AircashSimulatorContext.SaveChanges();
+                return new HttpResponse
+                {
+                    ResponseCode = System.Net.HttpStatusCode.OK,
+                    ResponseContent = "Transaction confirmed successfully"
+                };
+            }
+            else
+            {
+                return new HttpResponse
+                {
+                    ResponseCode = System.Net.HttpStatusCode.BadRequest,
+                    ResponseContent = "Transaction already confirmed"
+                };
+            }
+        }
+
+        public Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO)
+        {
+            throw new NotImplementedException();
         }
     }
 }

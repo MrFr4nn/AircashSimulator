@@ -1,15 +1,12 @@
-﻿using AircashSimulator.Configuration;
-using Domain.Entities.Enum;
+﻿using Domain.Entities.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Services.AircashPay;
-using Microsoft.IdentityModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using AircashSignature;
 using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Extensions;
+using Services.HttpRequest;
 
 namespace AircashSimulator.Controllers
 {
@@ -34,7 +31,8 @@ namespace AircashSimulator.Controllers
                 PartnerId = UserContext.GetPartnerId(User),
                 Amount = GeneratePartnerCodeRequest.Amount,
                 Description = GeneratePartnerCodeRequest.Description,
-                LocationId = GeneratePartnerCodeRequest.LocationId
+                LocationId = GeneratePartnerCodeRequest.LocationID,
+                UserId = UserContext.GetUserId(User)
             };
 
             var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO);
@@ -46,24 +44,32 @@ namespace AircashSimulator.Controllers
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashConfirmTransactionRequest);
             var signature = aircashConfirmTransactionRequest.Signature;
-            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, "C:");
-            if (valid == true)
+            //bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, "C:");
+            //if (valid == true)
+            if (signature == "Ok")
             {
                 var TransactionDTO = new TransactionDTO
                 {
                     Amount = aircashConfirmTransactionRequest.Amount,
-                    ISOCurrencyId = (CurrencyEnum)aircashConfirmTransactionRequest.CurrencyId,
-                    PartnerId = new Guid(aircashConfirmTransactionRequest.PartnerId),
-                    AircashTransactionId = aircashConfirmTransactionRequest.AircashTransactionId,
-                    PartnerTransactionId = new Guid(aircashConfirmTransactionRequest.PartnerTransactionId),
-                    UserId = UserContext.GetUserId(User)
-    };
+                    ISOCurrencyId = (CurrencyEnum)aircashConfirmTransactionRequest.CurrencyID,
+                    PartnerId = new Guid(aircashConfirmTransactionRequest.PartnerID),
+                    AircashTransactionId = aircashConfirmTransactionRequest.AircashTransactionID,
+                    PartnerTransactionId = new Guid(aircashConfirmTransactionRequest.PartnerTransactionID)
+                };
                 var response = await AircashPayService.ConfirmTransaction(TransactionDTO);
-                return Ok(response);
+                if (((HttpResponse)response).ResponseCode == System.Net.HttpStatusCode.OK)
+                {
+                    return Ok(response);
+                }
+                else
+                {
+                    return BadRequest(response);
+                }
+                
             }
             else
             {
-                return BadRequest();
+                return Unauthorized("Invalid signature.");
             }
             
         }

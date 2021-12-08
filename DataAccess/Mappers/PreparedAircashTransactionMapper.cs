@@ -21,6 +21,7 @@ namespace DataAccess.Mappers
             builder.Property(x => x.Description).IsRequired(false);
             builder.Property(x => x.ValidForPeriod).IsRequired(false);
             builder.Property(x => x.LocationId).IsRequired(false);
+            builder.Property(x => x.UserId).IsRequired(true);
         }
     }
 }
