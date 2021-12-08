@@ -55,7 +55,7 @@ namespace Services.AircashPay
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashGeneratePartnerCodeRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{AircashConfiguration.BaseUrl}{AircashConfiguration.GeneratePartnerCodeEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{AircashConfiguration.M3BaseUrl}{AircashConfiguration.GeneratePartnerCodeEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 aircashGeneratePartnerCodeResponse = JsonConvert.DeserializeObject<AircashGeneratePartnerCodeResponse>(response.ResponseContent);
@@ -114,7 +114,7 @@ namespace Services.AircashPay
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashCancelTransactionRequest.Signature = signature;
             var requestDateTimeUTC = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(aircashCancelTransactionRequest, HttpMethod.Post, $"{AircashConfiguration.BaseUrl}{AircashConfiguration.CancelTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashCancelTransactionRequest, HttpMethod.Post, $"{AircashConfiguration.M3BaseUrl}{AircashConfiguration.CancelTransactionEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var aircashCancelTransactionResponse = JsonConvert.DeserializeObject<AircashCancelTransactionResponse>(response.ResponseContent);

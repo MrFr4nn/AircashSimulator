@@ -75,6 +75,7 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CancelTransaction(CancelTransaction cancelTransactionRequest)
         {
             var cancelTransactionDTO = new CancelTransactionDTO
