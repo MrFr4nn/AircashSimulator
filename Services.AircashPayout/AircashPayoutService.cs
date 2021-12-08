@@ -52,7 +52,7 @@ namespace Services.AircashPayout
             }
             return checkUserResponse;
         }
-        public async Task<object> CreatePayout(string phoneNumber, decimal amount, string partnerUserId, Guid partnerId)
+        public async Task<object> CreatePayout(string phoneNumber, decimal amount, Guid partnerUserId, Guid partnerId)
         {
             var createPayoutResponse = new object();
             var requestDateTimeUTC = DateTime.UtcNow;
@@ -64,7 +64,7 @@ namespace Services.AircashPayout
                 PartnerTransactionID=transactionId.ToString(),
                 Amount=amount,
                 PhoneNumber = phoneNumber,
-                PartnerUserID = partnerUserId,
+                PartnerUserID = partnerUserId.ToString(),
                 CurrencyID=partner.CurrencyId
             };
             var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
@@ -83,8 +83,7 @@ namespace Services.AircashPayout
                     AircashTransactionId = successResponse.AircashTransactionId,
                     TransactionId = transactionId,
                     ServiceId = ServiceEnum.AircashPayment,
-                    //trebat ce promijeniti UserId
-                    UserId = Guid.NewGuid(),
+                    UserId = partnerUserId,
                     RequestDateTimeUTC = requestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC                    
                 });
