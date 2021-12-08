@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Extensions;
 using Services.HttpRequest;
 using AircashSimulator.Controllers.AircashPay;
+using AircashSimulator.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace AircashSimulator.Controllers
 {
@@ -17,10 +19,12 @@ namespace AircashSimulator.Controllers
     {
         private IAircashPayService AircashPayService;
         private UserContext UserContext;
-        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext)
+        private AircashConfiguration AircashConfiguration;
+        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             AircashPayService = aircashPayService;
             UserContext = userContext;
+            AircashConfiguration = aircashConfiguration.CurrentValue;
         }
         
         [HttpPost]
@@ -45,9 +49,8 @@ namespace AircashSimulator.Controllers
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashConfirmTransactionRequest);
             var signature = aircashConfirmTransactionRequest.Signature;
-            //bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, "C:");
-            //if (valid == true)
-            if (signature == "Ok")
+            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+            if (valid == true)
             {
                 var TransactionDTO = new TransactionDTO
                 {

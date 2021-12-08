@@ -74,11 +74,11 @@ namespace Services.AircashPay
                 var preparedTransaction = AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId);
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
-                    Amount = transactionDTO.Amount,
-                    ISOCurrencyId = (CurrencyEnum)transactionDTO.ISOCurrencyId,
-                    PartnerId = transactionDTO.PartnerId,
+                    Amount = preparedTransaction.Amount,
+                    ISOCurrencyId = (CurrencyEnum)preparedTransaction.ISOCurrencyId,
+                    PartnerId = preparedTransaction.PartnerId,
                     AircashTransactionId = transactionDTO.AircashTransactionId,
-                    TransactionId = transactionDTO.PartnerTransactionId,
+                    TransactionId = preparedTransaction.PartnerTransactionId,
                     ServiceId = ServiceEnum.AircashPayment,
                     UserId = preparedTransaction.UserId,
                     RequestDateTimeUTC = DateTime.UtcNow,
