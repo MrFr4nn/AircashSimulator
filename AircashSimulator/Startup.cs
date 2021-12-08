@@ -15,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Services.AircashPayout;
+using AircashSimulator.Extensions;
+using Services.AircashPay;
 
 namespace AircashSimulator
 {
@@ -75,7 +77,10 @@ namespace AircashSimulator
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<AircashPayoutService, AircashPayoutService>();
+            services.AddTransient<IAircashPayService, AircashPayService>();
+            services.AddTransient<UserContext>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
+            services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  
         }
 
