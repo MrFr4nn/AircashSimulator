@@ -35,18 +35,19 @@ namespace AircashSimulator
         {
             var jwtConfiguration = Configuration.GetSection("JwtConfiguration").Get<JwtConfiguration>();
             services.AddDbContext<AircashSimulatorContext>(options => options.UseSqlServer(Configuration["AbonSimulatorConfiguration:ConnectionString"]), ServiceLifetime.Transient);
-            
-            
-            services.AddControllers();
+
             services.AddCors(config =>
             {
-                config.AddPolicy("open", options =>
+                config.AddDefaultPolicy( options =>
                 {
-                    options.AllowAnyOrigin();
-                    options.AllowAnyMethod();
-                    options.AllowAnyHeader();
+                    options
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
                 });
             });
+
+            services.AddControllers();
 
             services.AddAuthentication(x =>
             {
@@ -92,6 +93,8 @@ namespace AircashSimulator
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
+
             app.UseExceptionHandler("/api/Error");
 
            // app.UseSerilogRequestLogging();
@@ -99,8 +102,6 @@ namespace AircashSimulator
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors("open");
 
             app.UseAuthentication();
 
