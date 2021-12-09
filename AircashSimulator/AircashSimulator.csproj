@@ -23,7 +23,9 @@
     <ProjectReference Include="..\Services.AbonOnlinePartner\Services.AbonOnlinePartner.csproj" />
     <ProjectReference Include="..\Services.AbonSalePartner\Services.AbonSalePartner.csproj" />
     <ProjectReference Include="..\Services.AircashPay\Services.AircashPay.csproj" />
+    <ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
     <ProjectReference Include="..\Services.Authentication\Services.Authentication.csproj" />
+    <ProjectReference Include="..\Services.Coupon\Services.Coupon.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
   </ItemGroup>
 
