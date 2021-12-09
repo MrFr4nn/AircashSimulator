@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Services.AbonOnlinePartner;
+using Microsoft.AspNetCore.Authorization;
+using AircashSimulator.Extensions;
 
 namespace AircashSimulator
 {
@@ -12,25 +14,30 @@ namespace AircashSimulator
     public class AbonOnlinePartnerController : ControllerBase
     {
         private IAbonOnlinePartnerService AbonOnlinePartnerService;
-        public AbonOnlinePartnerController(IAbonOnlinePartnerService abonOnlinePartnerService)
+        private UserContext UserContext;
+        public AbonOnlinePartnerController(IAbonOnlinePartnerService abonOnlinePartnerService, UserContext userContext)
         {
             AbonOnlinePartnerService = abonOnlinePartnerService;
+            UserContext = userContext;
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ValidateCoupon(ValidateCouponRequest validateCouponRequest)
         {
-            var response=await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"));
+            var partnerId = UserContext.GetPartnerId(User);
+            var response = await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, partnerId);
             return Ok(response);
-            //return Ok(AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode));
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response=await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, confirmTransactionRequest.UserId, new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"));
+            var partnerId = UserContext.GetPartnerId(User);
+            var userId = UserContext.GetUserId(User);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, partnerId);
             return Ok(response);
-            //return Ok(AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, confirmTransactionRequest.UserId).ToString());
         }
     }
 }

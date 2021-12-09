@@ -51,7 +51,7 @@ namespace Services.AbonOnlinePartner
             return validateCouponResponse;    
         }
 
-        public async Task<object> ConfirmTransaction(string couponCode, string userId, Guid providerId)
+        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
             var coupon = AircashSimulatorContext.Coupons.Where(x => x.CouponCode == couponCode).FirstOrDefault();
@@ -62,7 +62,7 @@ namespace Services.AbonOnlinePartner
                 CouponCode = couponCode,
                 ProviderId = providerId,
                 ProviderTransactionId = providerTransactionId,
-                UserId = userId
+                UserId = userId.ToString()
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
@@ -78,7 +78,7 @@ namespace Services.AbonOnlinePartner
                 coupon.UsedAmount = successResponse.CouponValue;
                 coupon.UsedCountryIsoCode = partner.CountryCode;
                 coupon.UsedCurrency = successResponse.ISOCurrency;
-                coupon.UserId = userId;
+                coupon.UserId = userId.ToString();
                 AircashSimulatorContext.Coupons.Update(coupon);
                 var newTransaction = new TransactionEntity
                 {

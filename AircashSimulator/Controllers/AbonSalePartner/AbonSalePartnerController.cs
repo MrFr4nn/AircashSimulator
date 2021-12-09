@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Services.AbonSalePartner;
+using Microsoft.AspNetCore.Authorization;
+using AircashSimulator.Extensions;
 
 namespace AircashSimulator
 {
@@ -12,21 +14,27 @@ namespace AircashSimulator
     public class AbonSalePartnerController : ControllerBase
     {
         private IAbonSalePartnerService AbonSalePartnerService;
-        public AbonSalePartnerController(IAbonSalePartnerService abonSalePartnerService)
+        private UserContext UserContext;
+        public AbonSalePartnerController(IAbonSalePartnerService abonSalePartnerService, UserContext userContext)
         {
             AbonSalePartnerService = abonSalePartnerService;
+            UserContext = userContext;
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateCoupon(CreateCouponRequest createCouponRequest)
         {
-            var response=await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"));
+            var partnerId = UserContext.GetPartnerId(User);
+            var response=await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, partnerId);
             return Ok(response);
         }
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CancelCoupon(CancelCouponRequest cancelCouponRequest)
         {
-            var response=await AbonSalePartnerService.CancelCoupon(cancelCouponRequest.SerialNumber, cancelCouponRequest.PointOfSaleId, new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"));
+            var partnerId = UserContext.GetPartnerId(User);
+            var response=await AbonSalePartnerService.CancelCoupon(cancelCouponRequest.SerialNumber, cancelCouponRequest.PointOfSaleId, partnerId);
             return Ok(response);
         }
     }
