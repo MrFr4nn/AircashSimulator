@@ -3,6 +3,7 @@ using AircashSimulator.Configuration;
 using DataAccess;
 using Domain.Entities;
 using Domain.Entities.Enum;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Services.HttpRequest;
@@ -18,12 +19,14 @@ namespace Services.AircashPay
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
         private AircashConfiguration AircashConfiguration;
+        private ILogger<AircashPayService> Logger;
 
-        public AircashPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        public AircashPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashPayService> logger)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
+            Logger = logger;
         }
         public async Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO)
         {
@@ -53,6 +56,7 @@ namespace Services.AircashPay
                 LocationID = preparedTransaction.LocationId
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequest);
+            Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashGeneratePartnerCodeRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{AircashConfiguration.M3BaseUrl}{AircashConfiguration.GeneratePartnerCodeEndpoint}");
