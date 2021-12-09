@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Services.AircashPayout
 {
-    public class CheckUserResponse
+    public class AircashCheckTransactionStatusResponse
     {
         public int Status { get; set; }
+        public string AircashTransactionId { get; set; }
     }
 }

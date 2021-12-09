@@ -30,7 +30,7 @@ namespace Services.AircashPayout
         {
             var checkUserResponse = new object();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
-            var checkUserRequest = new CheckUserRequest()
+            var checkUserRequest = new AircashCheckUserRequest()
             {
                 PartnerID=partnerId.ToString(),
                 PhoneNumber=phoneNumber,
@@ -43,7 +43,7 @@ namespace Services.AircashPayout
             var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{AircashConfiguration.M2BaseUrl}{AircashConfiguration.CheckUserEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                var successResponse = JsonConvert.DeserializeObject<CheckUserResponse>(response.ResponseContent);
+                var successResponse = JsonConvert.DeserializeObject<AircashCheckUserResponse>(response.ResponseContent);
                 checkUserResponse=successResponse;
             }
             else
@@ -58,7 +58,7 @@ namespace Services.AircashPayout
             var requestDateTimeUTC = DateTime.UtcNow;
             var transactionId = Guid.NewGuid();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
-            var createPayoutRequest = new CreatePayoutRequest()
+            var createPayoutRequest = new AircashCreatePayoutRequest()
             {
                 PartnerID = partnerId.ToString(),
                 PartnerTransactionID=transactionId.ToString(),
@@ -73,7 +73,7 @@ namespace Services.AircashPayout
             var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{AircashConfiguration.M2BaseUrl}{AircashConfiguration.CreatePayoutEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                var successResponse = JsonConvert.DeserializeObject<CreatePayoutResponse>(response.ResponseContent);
+                var successResponse = JsonConvert.DeserializeObject<AircashCreatePayoutResponse>(response.ResponseContent);
                 var responseDateTimeUTC = DateTime.UtcNow;
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
@@ -101,7 +101,7 @@ namespace Services.AircashPayout
             var checkTransactionStatusResponse = new object();
             var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionId).FirstOrDefault();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == transaction.PartnerId).FirstOrDefault();
-            var checkTransactionStatusRequest = new CheckTransactionStatusRequest()
+            var checkTransactionStatusRequest = new AircashCheckTransactionStatusRequest()
             {
                 PartnerID = transaction.PartnerId.ToString(),
                 PartnerTransactionID=partnerTransactionId.ToString(),           
@@ -112,7 +112,7 @@ namespace Services.AircashPayout
             var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{AircashConfiguration.M2BaseUrl}{AircashConfiguration.CheckTransactionStatusEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                var successResponse = JsonConvert.DeserializeObject<CheckTransactionStatusResponse>(response.ResponseContent);
+                var successResponse = JsonConvert.DeserializeObject<AircashCheckTransactionStatusResponse>(response.ResponseContent);
                 checkTransactionStatusResponse = successResponse;
             }
             else

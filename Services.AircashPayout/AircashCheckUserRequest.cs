@@ -7,7 +7,7 @@ using AircashSignature;
 
 namespace Services.AircashPayout
 {
-    class CheckUserRequest : ISignature
+    class AircashCheckUserRequest : ISignature
     {
         public string PartnerID { get; set; }
         public string PhoneNumber { get; set; }
