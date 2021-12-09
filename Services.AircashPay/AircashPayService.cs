@@ -41,7 +41,8 @@ namespace Services.AircashPay
                 Description = generatePartnerCodeDTO.Description,
                 ValidForPeriod = int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
                 LocationId = generatePartnerCodeDTO.LocationId,
-                UserId = generatePartnerCodeDTO.UserId
+                UserId = generatePartnerCodeDTO.UserId,
+                Status = AcPayTransactionSatusEnum.Pending
             };
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();
@@ -76,6 +77,7 @@ namespace Services.AircashPay
             if (AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == transactionDTO.PartnerTransactionId) == null)
             {
                 var preparedTransaction = AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId);
+                preparedTransaction.Status = AcPayTransactionSatusEnum.Confirmed;
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = preparedTransaction.Amount,
@@ -123,6 +125,8 @@ namespace Services.AircashPay
             {
                 var aircashCancelTransactionResponse = JsonConvert.DeserializeObject<AircashCancelTransactionResponse>(response.ResponseContent);
                 var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == cancelTransactionDTO.PartnerTransactionId);
+                var preparedTransaction = AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == cancelTransactionDTO.PartnerTransactionId);
+                preparedTransaction.Status = AcPayTransactionSatusEnum.Cancelled;
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = transaction.Amount,

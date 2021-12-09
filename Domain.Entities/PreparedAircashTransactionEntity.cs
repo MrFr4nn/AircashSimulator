@@ -16,5 +16,6 @@ namespace Domain.Entities
         public int? ValidForPeriod { get; set; }
         public string LocationId { get; set; }
         public Guid UserId { get; set; }
+        public AcPayTransactionSatusEnum Status { get; set; }
     }
 }
