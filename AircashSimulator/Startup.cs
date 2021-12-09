@@ -16,6 +16,7 @@ using System;
 using System.Text;
 using AircashSimulator.Extensions;
 using Services.AircashPay;
+using Serilog;
 
 namespace AircashSimulator
 {
@@ -97,7 +98,7 @@ namespace AircashSimulator
 
             app.UseExceptionHandler("/api/Error");
 
-           // app.UseSerilogRequestLogging();
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
