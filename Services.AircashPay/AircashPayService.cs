@@ -42,7 +42,8 @@ namespace Services.AircashPay
                 ValidForPeriod = int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
                 LocationId = generatePartnerCodeDTO.LocationId,
                 UserId = generatePartnerCodeDTO.UserId,
-                Status = AcPayTransactionSatusEnum.Pending
+                Status = AcPayTransactionSatusEnum.Pending,
+                RequestDateTimeUTC = DateTime.UtcNow
             };
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();
@@ -78,6 +79,7 @@ namespace Services.AircashPay
             {
                 var preparedTransaction = AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId);
                 preparedTransaction.Status = AcPayTransactionSatusEnum.Confirmed;
+                preparedTransaction.ResponseDateTimeUTC = DateTime.UtcNow;
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = preparedTransaction.Amount,
@@ -87,8 +89,8 @@ namespace Services.AircashPay
                     TransactionId = preparedTransaction.PartnerTransactionId,
                     ServiceId = ServiceEnum.AircashPayment,
                     UserId = preparedTransaction.UserId,
-                    RequestDateTimeUTC = DateTime.UtcNow,
-                    ResponseDateTimeUTC = DateTime.UtcNow,
+                    RequestDateTimeUTC = preparedTransaction.RequestDateTimeUTC,
+                    ResponseDateTimeUTC = preparedTransaction.ResponseDateTimeUTC,
                     PointOfSaleId = preparedTransaction.LocationId
                 });
                 AircashSimulatorContext.SaveChanges();

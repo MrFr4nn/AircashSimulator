@@ -22,6 +22,9 @@ namespace DataAccess.Mappers
             builder.Property(x => x.ValidForPeriod).IsRequired(false);
             builder.Property(x => x.LocationId).IsRequired(false);
             builder.Property(x => x.UserId).IsRequired(true);
+            builder.Property(x => x.Status).IsRequired(true);
+            builder.Property(x => x.RequestDateTimeUTC).HasColumnType("datetime2").IsRequired(false);
+            builder.Property(x => x.ResponseDateTimeUTC).HasColumnType("datetime2").IsRequired(false);
         }
     }
 }

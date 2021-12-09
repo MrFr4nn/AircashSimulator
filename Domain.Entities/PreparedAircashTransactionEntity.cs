@@ -17,5 +17,7 @@ namespace Domain.Entities
         public string LocationId { get; set; }
         public Guid UserId { get; set; }
         public AcPayTransactionSatusEnum Status { get; set; }
+        public DateTime? RequestDateTimeUTC { get; set; }
+        public DateTime? ResponseDateTimeUTC { get; set; }
     }
 }
