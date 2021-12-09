@@ -5,7 +5,8 @@ var app = angular.module('app', [
     'ngStorage',
     'ngSanitize',
     'dashboard',
-    'transactions'
+    'abonSp',
+    'abonOp',
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)

@@ -15,6 +15,9 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Services.Coupon;
+using AircashSimulator.Extensions;
+using Services.AircashPay;
+using Serilog;
 
 namespace AircashSimulator
 {
@@ -34,18 +37,19 @@ namespace AircashSimulator
         {
             var jwtConfiguration = Configuration.GetSection("JwtConfiguration").Get<JwtConfiguration>();
             services.AddDbContext<AircashSimulatorContext>(options => options.UseSqlServer(Configuration["AbonSimulatorConfiguration:ConnectionString"]), ServiceLifetime.Transient);
-            
-            
-            services.AddControllers();
+
             services.AddCors(config =>
             {
-                config.AddPolicy("open", options =>
+                config.AddDefaultPolicy( options =>
                 {
-                    options.AllowAnyOrigin();
-                    options.AllowAnyMethod();
-                    options.AllowAnyHeader();
+                    options
+                    .AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
                 });
             });
+
+            services.AddControllers();
 
             services.AddAuthentication(x =>
             {
@@ -74,29 +78,33 @@ namespace AircashSimulator
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
+            services.AddTransient<IAircashPayService, AircashPayService>();
+            services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
+            services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  
         }
 
         
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AircashSimulatorContext context)
         {
+            context.Database.Migrate();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors();
+
             app.UseExceptionHandler("/api/Error");
 
-           // app.UseSerilogRequestLogging();
+            app.UseSerilogRequestLogging();
 
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseCors("open");
 
             app.UseAuthentication();
 

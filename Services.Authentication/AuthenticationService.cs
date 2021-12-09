@@ -78,7 +78,8 @@ namespace Services.Authentication
             claims.Add(new Claim("partnerId", partner.PartnerId.ToString()));
             claims.Add(new Claim("username", user.Username));
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
-            
+            claims.Add(new Claim("userId", user.UserId.ToString()));
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfiguration.Secret));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
