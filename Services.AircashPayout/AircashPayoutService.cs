@@ -82,7 +82,7 @@ namespace Services.AircashPayout
                     PartnerId = partnerId,
                     AircashTransactionId = successResponse.AircashTransactionId,
                     TransactionId = transactionId,
-                    ServiceId = ServiceEnum.AircashPayment,
+                    ServiceId = ServiceEnum.AircashPayout,
                     UserId = partnerUserId,
                     RequestDateTimeUTC = requestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC                    
