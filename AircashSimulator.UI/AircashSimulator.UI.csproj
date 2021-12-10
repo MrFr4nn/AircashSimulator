@@ -4,4 +4,11 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="wwwroot\app\abon_sp\NewFolder\**" />
+    <Content Remove="wwwroot\app\abon_sp\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\app\abon_sp\NewFolder\**" />
+    <None Remove="wwwroot\app\abon_sp\NewFolder\**" />
+  </ItemGroup>
+
 </Project>
