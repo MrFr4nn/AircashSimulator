@@ -14,6 +14,14 @@ using System.Linq;
 
 namespace Services.AbonOnlinePartner
 {
+    public class Response
+    {
+        public object ServiceRequest { get; set; }
+        public object ServiceResponse { get; set; }
+        public string Sequence { get; set; }
+        public DateTime RequestDateTimeUTC { get; set; }
+        public DateTime ResponseDateTimeUTC { get; set; }
+    }
     public class AbonOnlinePartnerService : IAbonOnlinePartnerService
     {
         private AircashSimulatorContext AircashSimulatorContext;
@@ -39,7 +47,8 @@ namespace Services.AbonOnlinePartner
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             abonValidateCouponRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{AbonConfiguration.BaseUrl}{AbonConfiguration.ValidateCouponEndpoint}");            
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{AbonConfiguration.BaseUrl}{AbonConfiguration.ValidateCouponEndpoint}");
+            DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 validateCouponResponse = JsonConvert.DeserializeObject<AbonValidateCouponResponse>(response.ResponseContent);
@@ -48,7 +57,15 @@ namespace Services.AbonOnlinePartner
             {
                 validateCouponResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
-            return validateCouponResponse;    
+            var frontResponse = new Response
+            {
+                ServiceRequest = abonValidateCouponRequest,
+                ServiceResponse = validateCouponResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
         }
 
         public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId)
