@@ -14,13 +14,26 @@ app.config(function ($stateProvider) {
 
 abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
-        validateCoupon: validateCoupon
+        validateCoupon: validateCoupon,
+        confirmTransaction: confirmTransaction
     });
     function validateCoupon(couponCode) {
         console.log(config);
         var request = $http({
             method: 'POST',
             url: "https://localhost:44374/api/AbonOnlinePartner/ValidateCoupon",
+            data: {
+                CouponCode: couponCode
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function confirmTransaction(couponCode) {
+        console.log(config);
+        var request = $http({
+            method: 'POST',
+            url: "https://localhost:44374/api/AbonOnlinePartner/ConfirmTransaction",
             data: {
                 CouponCode: couponCode
             }
@@ -34,6 +47,10 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.validateCouponModel = {
         couponCode: ""
     };
+    $scope.confirmTransactionModel = {
+        couponCode: ""
+    };
+
     $scope.validateResponded = false;
     $scope.validateBusy = false;
     $scope.validateCoupon = function () {
@@ -53,6 +70,30 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 }
                 $scope.validateBusy = false;
                 $scope.validateResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.confirmResponded = false;
+    $scope.confirmBusy = false;
+    $scope.confirmTransaction = function () {
+        console.log($scope.confirmTransactionModel.couponCode);
+        $scope.confirmBusy = true;
+        abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode)
+            .then(function (response) {
+                if (response) {
+                    console.log(response);
+                    $scope.RequestDateTimeUTC = response.requestDateTimeUTC;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+
+                    $scope.ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+
+                }
+                $scope.confirmBusy = false;
+                $scope.confirmResponded = true;
             }, () => {
                 console.log("error");
             });

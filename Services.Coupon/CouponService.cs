@@ -17,6 +17,7 @@ namespace Services.Coupon
         }
         public async Task<object> GetUnusedCoupons(int PurchasedCurrency)
         {
+            //filtriraj po vrijednosti
             var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x => x.UsedOnUTC == null & x.CancelledOnUTC == null & x.PurchasedCurrency == (CurrencyEnum)PurchasedCurrency).ToList();
             return ValidCoupons;
         }
