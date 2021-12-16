@@ -41,11 +41,11 @@ namespace AircashSimulator
             return Ok(response);
         }
 
-        [HttpPost]
-        [Authorize]
-        public void GetUnusedCoupons(GetUnusedCouponsRequest getUnusedCouponsRequest)
-        {
-            RedirectToAction("GetUnusedCoupons", "CouponController");
-        }
+        //[HttpPost]
+        //[Authorize]
+        //public void GetUnusedCoupons(GetUnusedCouponsRequest getUnusedCouponsRequest)
+        //{
+        //    RedirectToAction("GetUnusedCoupons", "CouponController");
+        //}
     }
 }

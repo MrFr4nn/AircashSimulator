@@ -22,9 +22,9 @@ namespace AircashSimulator.Controllers
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> GetUnusedCoupons(GetUnusedCouponsRequest getUnusedCouponsRequest)
+        public async Task<IActionResult> GetUnusedCoupon(GetUnusedCouponsRequest getUnusedCouponsRequest)
         {
-            var response = await CouponService.GetUnusedCoupons(getUnusedCouponsRequest.PurchasedCurrency, getUnusedCouponsRequest.Value);
+            var response = await CouponService.GetUnusedCoupon(getUnusedCouponsRequest.PurchasedCurrency, getUnusedCouponsRequest.Value);
             return Ok(response);
         }
     }
