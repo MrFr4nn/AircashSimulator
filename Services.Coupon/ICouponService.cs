@@ -10,6 +10,6 @@ namespace Services.Coupon
 {
     public interface ICouponService
     {
-        Task<object> GetUnusedCoupons(int PurchasedCurrency);
+        Task<object> GetUnusedCoupons(int PurchasedCurrency, decimal Value);
     }
 }

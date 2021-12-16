@@ -15,10 +15,12 @@ namespace Services.Coupon
         {
             AircashSimulatorContext = aircashSimulatorContext;
         }
-        public async Task<object> GetUnusedCoupons(int PurchasedCurrency)
+        public async Task<object> GetUnusedCoupons(int PurchasedCurrency, decimal Value)
         {
-            //filtriraj po vrijednosti
-            var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x => x.UsedOnUTC == null & x.CancelledOnUTC == null & x.PurchasedCurrency == (CurrencyEnum)PurchasedCurrency).ToList();
+            var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x =>  x.UsedOnUTC == null & 
+                                                                            x.CancelledOnUTC == null & 
+                                                                            x.PurchasedCurrency == (CurrencyEnum)PurchasedCurrency &
+                                                                            x.PurchasedAmount == Value).ToList();
             return ValidCoupons;
         }
     }

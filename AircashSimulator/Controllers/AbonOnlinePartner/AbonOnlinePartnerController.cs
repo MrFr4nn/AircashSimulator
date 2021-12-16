@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Services.AbonOnlinePartner;
 using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Extensions;
+using AircashSimulator.Controllers;
 
 namespace AircashSimulator
 {
@@ -38,6 +39,13 @@ namespace AircashSimulator
             var userId = UserContext.GetUserId(User);
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, partnerId);
             return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public void GetUnusedCoupons(GetUnusedCouponsRequest getUnusedCouponsRequest)
+        {
+            RedirectToAction("GetUnusedCoupons", "CouponController");
         }
     }
 }

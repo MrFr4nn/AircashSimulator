@@ -71,7 +71,6 @@ namespace Services.AbonOnlinePartner
         public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
-            //add no coupon exception
             var coupon = AircashSimulatorContext.Coupons.Where(x => x.CouponCode == couponCode).FirstOrDefault();
             var confirmTransactionResponse = new object();
             var providerTransactionId = Guid.NewGuid();
@@ -86,6 +85,16 @@ namespace Services.AbonOnlinePartner
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             abonConfirmTransactionRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
+            if (coupon == null)
+            {
+                return new Response
+                {
+                    ServiceRequest = abonConfirmTransactionRequest,
+                    ServiceResponse = new ErrorResponse { Code = 3, Message = "Invalid coupon code." },
+                    RequestDateTimeUTC = requestDateTime,
+                    ResponseDateTimeUTC = DateTime.UtcNow               
+                };
+            }
             var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, $"{AbonConfiguration.BaseUrl}{AbonConfiguration.ConfirmTransactionEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
