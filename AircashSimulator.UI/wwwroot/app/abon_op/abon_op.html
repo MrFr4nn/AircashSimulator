@@ -297,7 +297,7 @@
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         <form action="/" method="POST">
                             <fieldset>
                                 <div class="mb-3">
@@ -312,40 +312,43 @@
                             </fieldset>
                         </form>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         <div>
                             <label class="form-label" for="exampleInputEmail1">Get unused coupon</label>
-                            <select class="form-control"
-                                    ng-options="item as item.Value group by item.Currency for item in items"
-                                    ng-model="selected">
-                            </select>
                         </div>
-                        <br />
-                        <div>
-                            <button ng-click="getUnusedCoupon(selected)" class="btn btn-primary w-100px me-5px">Get</button>
+                        <div class="input-group">
+                            <div>
+                                <select class="form-control"
+                                        ng-options="item as item.Value group by item.Currency for item in items"
+                                        ng-model="selectedValidate">
+                                </select>
+                            </div>
+                            <span style="float: right">
+                                <button ng-click="getUnusedCouponValidate(selectedValidate)" class="btn btn-primary w-100px me-5px">Get</button>
+                            </span>
                         </div>
                     </div>
-                </div>
-                <br />
-                <div ng-hide="!validateResponded">
-                    <p>
-                        <i>Your request:</i>
-                    </p>
+                    <br />
+                    <div ng-hide="!validateResponded" class="col-md-4">
+                        <p>
+                            <i>Your request:</i>
+                        </p>
 <pre>
 Request DateTimeUTC: {{RequestDateTimeUTC}}
 Request content:
 <code>{{ServiceRequest}}</code>
 </pre>
-                </div>
-                <div ng-hide="!validateResponded">
-                    <p>
-                        <i>Your response:</i>
-                    </p>
+                    </div>
+                    <div ng-hide="!validateResponded" class="col-md-4">
+                        <p>
+                            <i>Your response:</i>
+                        </p>
 <pre>
 Response DateTimeUTC: {{ResponseDateTimeUTC}}
 Response content:
 <code>{{ServiceResponse}}</code>
 </pre>
+                    </div>
                 </div>
             </uib-tab>
         </uib-tabset>
@@ -554,41 +557,59 @@ Response content:
         </pre>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
-                <div class="col-md-5">
-                    <form action="/" method="POST">
-                        <fieldset>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code">
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="nf_checkbox_css_1">
+                                    <a href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow">I accept the A-bon Terms&Conditions</a>
+                                </div>
+                                <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox">Confirm transaction <i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-2">
+                        <div>
+                            <label class="form-label" for="exampleInputEmail1">Get unused coupon</label>
+                        </div>
+                        <div class="input-group">
+                            <div>
+                                <select class="form-control"
+                                        ng-options="item as item.Value group by item.Currency for item in items"
+                                        ng-model="selectedConfirm">
+                                </select>
                             </div>
-                            <div class="form-check mb-3">
-                                <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="nf_checkbox_css_1">
-                                <a href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow">I accept the A-bon Terms&Conditions</a>
-                            </div>
-                            <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox">Confirm transaction <i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
-                        </fieldset>
-                    </form>
-                </div>
-                <br />
-                <div ng-hide="!confirmResponded">
-                    <p>
-                        <i>Your request:</i>
-                    </p>
+                            <span style="float: right">
+                                <button ng-click="getUnusedCouponConfirm(selectedConfirm)" class="btn btn-primary w-100px me-5px">Get</button>
+                            </span>
+                        </div>
+                    </div>
+                    <br />
+                    <div ng-hide="!confirmResponded" class="col-md-4">
+                        <p>
+                            <i>Your request:</i>
+                        </p>
 <pre>
 Request DateTimeUTC: {{RequestDateTimeUTC}}
 Request content:
 <code>{{ServiceRequest}}</code>
 </pre>
-                </div>
-                <div ng-hide="!confirmResponded">
-                    <p>
-                        <i>Your response:</i>
-                    </p>
+                    </div>
+                    <div ng-hide="!confirmResponded" class="col-md-4">
+                        <p>
+                            <i>Your response:</i>
+                        </p>
 <pre>
 Response DateTimeUTC: {{ResponseDateTimeUTC}}
 Response content:
 <code>{{ServiceResponse}}</code>
 </pre>
+                    </div>
                 </div>
             </uib-tab>
         </uib-tabset>

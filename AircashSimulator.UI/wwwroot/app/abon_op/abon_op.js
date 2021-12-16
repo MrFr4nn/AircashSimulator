@@ -44,11 +44,20 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
 
     function getUnusedCoupon(selected) {
         console.log(config);
+        switch (selected.Currency) {
+            case "EUR":
+                currency = 977;
+                break;
+            case "HRK":
+                currency = 191;
+                break;
+            }
         var request = $http({
             method: 'POST',
             url: "https://localhost:44374/api/Coupon/GetUnusedCoupon",
             data: {
-                GetUnusedCouponRequest: selected
+                PurchasedCurrency: currency,
+                Value: selected.Value
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -152,14 +161,26 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             });
     }
 
-    $scope.getUnusedCoupon = function (selected) {
-        console.log(selected);
-        $scope.selected = selected;
-        abonOpService.getUnusedCoupon($scope.selected)
+    $scope.getUnusedCouponValidate = function (selectedValidate) {
+        console.log(selectedValidate);
+        abonOpService.getUnusedCoupon(selectedValidate)
             .then(function (response) {
                 if (response) {
                     console.log(response);
-                    $scope.couponCode = response.Coupon.CouponCode;
+                    $scope.validateCouponModel.couponCode = response.couponCode;
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.getUnusedCouponConfirm = function (selectedConfirm) {
+        console.log(selectedConfirm);
+        abonOpService.getUnusedCoupon(selectedConfirm)
+            .then(function (response) {
+                if (response) {
+                    console.log(response);
+                    $scope.confirmTransactionModel.couponCode = response.couponCode;
                 }
             }, () => {
                 console.log("error");

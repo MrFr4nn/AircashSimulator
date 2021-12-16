@@ -17,11 +17,11 @@ namespace Services.Coupon
         }
         public async Task<object> GetUnusedCoupon(int PurchasedCurrency, decimal Value)
         {
-            var ValidCoupons =  AircashSimulatorContext.Coupons.Where(x =>  x.UsedOnUTC == null & 
+            var ValidCoupon =  AircashSimulatorContext.Coupons.Where(x =>  x.UsedOnUTC == null & 
                                                                             x.CancelledOnUTC == null & 
                                                                             x.PurchasedCurrency == (CurrencyEnum)PurchasedCurrency &
-                                                                            x.PurchasedAmount == Value).ToList();
-            return ValidCoupons;
+                                                                            x.PurchasedAmount == Value).FirstOrDefault();
+            return ValidCoupon;
         }
     }
 }
