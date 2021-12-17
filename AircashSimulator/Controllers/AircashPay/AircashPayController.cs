@@ -83,7 +83,7 @@ namespace AircashSimulator.Controllers
         {
             var cancelTransactionDTO = new CancelTransactionDTO
             {
-                PartnerId = new Guid(cancelTransactionRequest.PartnerID),
+                PartnerId = UserContext.GetPartnerId(User),
                 PartnerTransactionId = new Guid(cancelTransactionRequest.PartnerTransactionID),
                 UserId = UserContext.GetUserId(User)
             };

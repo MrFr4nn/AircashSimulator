@@ -14,6 +14,14 @@ using System.Threading.Tasks;
 
 namespace Services.AircashPay
 {
+    public class Response
+    {
+        public object ServiceRequest { get; set; }
+        public object ServiceResponse { get; set; }
+        public string Sequence { get; set; }
+        public DateTime RequestDateTimeUTC { get; set; }
+        public DateTime ResponseDateTimeUTC { get; set; }
+    }
     public class AircashPayService : IAircashPayService
     {
         private AircashSimulatorContext AircashSimulatorContext;
@@ -30,7 +38,7 @@ namespace Services.AircashPay
         }
         public async Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO)
         {
-
+            var requestDateTime = DateTime.UtcNow;
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == generatePartnerCodeDTO.PartnerId).FirstOrDefault();
             var preparedTransaction = new PreparedAircashTransactionEntity
             {
@@ -62,6 +70,7 @@ namespace Services.AircashPay
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashGeneratePartnerCodeRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{AircashConfiguration.M3BaseUrl}{AircashConfiguration.GeneratePartnerCodeEndpoint}");
+            var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 aircashGeneratePartnerCodeResponse = JsonConvert.DeserializeObject<AircashGeneratePartnerCodeResponse>(response.ResponseContent);
@@ -70,7 +79,15 @@ namespace Services.AircashPay
             {
                 aircashGeneratePartnerCodeResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
-            return aircashGeneratePartnerCodeResponse;
+            var frontResponse = new Response
+            {
+                ServiceRequest = aircashGeneratePartnerCodeRequest,
+                ServiceResponse = aircashGeneratePartnerCodeResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
         }
 
         public async Task<object> ConfirmTransaction(TransactionDTO transactionDTO)

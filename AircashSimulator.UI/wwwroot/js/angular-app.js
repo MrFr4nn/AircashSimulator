@@ -7,6 +7,7 @@ var app = angular.module('app', [
     'dashboard',
     'abonSp',
     'abonOp',
+    'acPay'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
