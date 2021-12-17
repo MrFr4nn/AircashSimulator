@@ -108,71 +108,20 @@
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
                 <code>
-                        {
-                            "Value": 100.0,
-                            "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                            "PointOfSaleId": "VP001",
-                            "ISOCurrencySymbol": "EUR",
-                            "PartnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
-                            "ContentType": "pdf",
-                            "ContentWidth": 80,
-                            "Signature": "123...abc"
-                        }
-                    </code>
+                {
+                    "Value": 100.0,
+                    "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "PointOfSaleId": "VP001",
+                    "ISOCurrencySymbol": "EUR",
+                    "PartnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
+                    "ContentType": "pdf",
+                    "ContentWidth": 80,
+                    "Signature": "123...abc"
+                }
+                </code>
                 </pre>
             </uib-tab>
-
-            <uib-tab index="request-tab-2" heading="Try it out" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-4">
-                        <form action="/" method="POST">
-                            <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label">Value</label>
-                                    <input ng-model="createCouponModel.value" class="form-control" type="number" placeholder="Enter value" ng-disabled="createServiceBusy">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
-                                    <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy">
-                                </div>
-                                <button ng-click="createCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="col-md-4" ng-if="createServiceResponse">
-                        Request ({{requestDateTimeUTC}})
-<pre>
-<code>
-{{serviceRequest}}
-</code>
-</pre>
-                        Sequence: {{sequence}}<br />
-                    </div>
-                    <div class="col-md-4" ng-if="createServiceResponse">
-                        Response ({{responseDateTimeUTC}})
-<pre>
-<code>
-{{serviceResponse}}
-</code>
-</pre>
-                    </div>
-                </div>
-            </uib-tab>
-        </uib-tabset>
-    </div>
-</div>
-
-
-<p>
-    Where the Signature parameter is created by signing the following sequence:<br />
-    <i>ContentType=pdf&ContentWidth=80&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=9059ca5c-675a-48b5-b41a-e04ab5b981ae&PointOfSaleId=VP001&Value=100</i>
-</p>
-
-
-<div class="row">
-    <div class="col-md-7">
-        <uib-tabset>
-            <uib-tab index="response-tab-0" heading="200 OK Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -218,7 +167,7 @@
                     </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="response-tab-1" heading="200 OK Response example" classes="nav-item">
+            <uib-tab index="request-tab-3" heading="200 OK Response example" classes="nav-item">
                 <pre>
                 <code>
                             {
@@ -232,7 +181,7 @@
                     </code>
                 </pre>
             </uib-tab>
-            <uib-tab index="response-tab-2" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover table-consendent">
                     <thead>
                         <tr>
@@ -280,26 +229,70 @@
                     </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="response-tab-3" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
                 <pre>
                 <code>
-                        {
-                            "code": 6,
-                            "message": "Coupon exists for the given PartnerTransactionId",
-                            "additionalData": {
-                                "serialNumber": "8023200631484066",
-                                "value": 100.00,
-                                "isoCurrencySymbol": "EUR",
-                                "partnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae"
-                                }
+                {
+                    "code": 6,
+                    "message": "Coupon exists for the given PartnerTransactionId",
+                    "additionalData": {
+                        "serialNumber": "8023200631484066",
+                        "value": 100.00,
+                        "isoCurrencySymbol": "EUR",
+                        "partnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae"
                         }
-
-                        </code>
+                }
+                </code>
                 </pre>
+            </uib-tab>
+
+            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="/" method="POST">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">Value</label>
+                                    <input ng-model="createCouponModel.value" class="form-control" type="number" placeholder="Enter value" ng-disabled="createServiceBusy">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
+                                    <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy">
+                                </div>
+                                <button ng-click="createCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-4" ng-if="createServiceResponse">
+                        Request ({{requestDateTimeUTC}})
+<pre>
+<code>
+{{serviceRequest}}
+</code>
+</pre>
+                        Sequence: {{sequence}}<br />
+                    </div>
+                    <div class="col-md-4" ng-if="createServiceResponse">
+                        Response ({{responseDateTimeUTC}})
+<pre>
+<code>
+{{serviceResponse}}
+</code>
+</pre>
+                    </div>
+                </div>
             </uib-tab>
         </uib-tabset>
     </div>
 </div>
+
+
+<p>
+    Where the Signature parameter is created by signing the following sequence:<br />
+    <i>ContentType=pdf&ContentWidth=80&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=9059ca5c-675a-48b5-b41a-e04ab5b981ae&PointOfSaleId=VP001&Value=100</i>
+</p>
+
+
 
 
 
@@ -369,72 +362,19 @@
                 </table>
             </uib-tab>
             <uib-tab index="request1-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-                <code>
-                            {
-                            "SerialNumber": "5722230340416087",
-                            "PartnerTransactionId": null,
-                            "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                            "PointOfSaleId": "VP001",
-                            "Signature": "abc...123"
-                            }
-                        </code>
-                </pre>
+            <pre>
+            <code>
+            {
+                "SerialNumber": "5722230340416087",
+                "PartnerTransactionId": null,
+                "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                "PointOfSaleId": "VP001",
+                "Signature": "abc...123"
+            }
+            </code>
+            </pre>
             </uib-tab>
-            <uib-tab index="request1-tab-2" heading="Try it out" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-4">
-                        <form action="/" method="POST">
-                            <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label">Serial Number</label>
-                                    <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
-                                    <input ng-model="cancelCouponModel.cancelPointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="cancelServiceBusy">
-                                </div>
-                                <button ng-click="cancelCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelServiceBusy">Cancel coupon <i ng-if="cancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="col-md-4" ng-if="cancelServiceResponse">
-                        Request ({{cancelRequestDateTimeUTC}})
-<pre>
-<code>
-{{cancelServiceRequest}}
-</code>
-</pre>
-                        Sequence: {{cancelSequence}}<br />
-                    </div>
-                    <div class="col-md-4" ng-if="cancelServiceResponse">
-                        Response ({{cancelResponseDateTimeUTC}})<br />
-{{cancelResponse}}
-                    </div>
-                </div>
-            </uib-tab>
-        </uib-tabset>
-    </div>
-</div>
-
-{{cancelRequestDateTimeUTC}}
-
-<p>
-    Where the Signature parameter is created by signing the following sequence:<br />
-    <i>
-        PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=&PointOfSaleId=VP001&Serial
-        Number=5722230340416087
-    </i>
-</p>
-
-<p>
-    In case of successful cancellation, a HTTP 200 OK response message will be returned with an empty body.
-</p>
-
-<div class="row">
-    <div class="col-md-7">
-        <uib-tabset active="active">
-            <uib-tab index="response1-tab-0" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request1-tab-2" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover table-consendent">
                     <thead>
                         <tr>
@@ -502,7 +442,7 @@
                     </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="response1-tab-1" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request1-tab-3" heading="400 Error response example" classes="nav-item">
                 <pre>
                 <code>
                             {
@@ -513,9 +453,57 @@
                         </code>
                     </pre>
             </uib-tab>
+            <uib-tab index="request1-tab-4" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="/" method="POST">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">Serial Number</label>
+                                    <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
+                                    <input ng-model="cancelCouponModel.cancelPointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="cancelServiceBusy">
+                                </div>
+                                <button ng-click="cancelCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelServiceBusy">Cancel coupon <i ng-if="cancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-4" ng-if="cancelServiceResponse">
+                        Request ({{cancelRequestDateTimeUTC}})
+<pre>
+<code>
+{{cancelServiceRequest}}
+</code>
+</pre>
+                        Sequence: {{cancelSequence}}<br />
+                    </div>
+                    <div class="col-md-4" ng-if="cancelServiceResponse">
+                        Response ({{cancelResponseDateTimeUTC}})<br />
+                        {{cancelResponse}}
+                    </div>
+                </div>
+            </uib-tab>
         </uib-tabset>
     </div>
 </div>
+
+{{cancelRequestDateTimeUTC}}
+
+<p>
+    Where the Signature parameter is created by signing the following sequence:<br />
+    <i>
+        PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=&PointOfSaleId=VP001&Serial
+        Number=5722230340416087
+    </i>
+</p>
+
+<p>
+    In case of successful cancellation, a HTTP 200 OK response message will be returned with an empty body.
+</p>
+
+
 
 <h1>Edge cases</h1>
 <p style="text-align:justify">

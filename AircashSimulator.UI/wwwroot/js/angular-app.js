@@ -7,6 +7,7 @@ var app = angular.module('app', [
     'dashboard',
     'abonSp',
     'abonOp',
+    'aircashPayout'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
