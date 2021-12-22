@@ -1,5 +1,5 @@
 ﻿using DataAccess;
-using Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,31 +15,28 @@ namespace Services.Transactions
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-        public async Task<List<Transaction>> GetTransactions(Guid partnerId)
+        public async Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber)
         {
-            var listOfTransactions = AircashSimulatorContext.Transactions.ToList();
-            List<Transaction> list = new List<Transaction>();
-
-            foreach (var transactionEntity in listOfTransactions)
-            {
-                var transaction = new Transaction()
+            var transactions = await AircashSimulatorContext.Transactions
+                .Where(x => x.PartnerId == partnerId)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(x => new Transaction 
                 {
-                    Id = transactionEntity.Id,
-                    Amount = transactionEntity.Amount,
-                    ISOCurrencyId = transactionEntity.ISOCurrencyId,
-                    PartnerId = transactionEntity.PartnerId,
-                    AircashTransactionId = transactionEntity.AircashTransactionId,
-                    TransactionId = transactionEntity.TransactionId,
-                    RequestDateTimeUTC = transactionEntity.RequestDateTimeUTC,
-                    ResponseDateTimeUTC = transactionEntity.ResponseDateTimeUTC,
-                    ServiceId = transactionEntity.ServiceId,
-                    UserId = transactionEntity.UserId,
-                    PointOfSaleId = transactionEntity.PointOfSaleId
-                };
-                list.Add(transaction);
-            }
+                    Id = x.Id,
+                    Amount = x.Amount,
+                    ISOCurrencyId = x.ISOCurrencyId,
+                    PartnerId = x.PartnerId,
+                    AircashTransactionId = x.AircashTransactionId,
+                    TransactionId = x.TransactionId,
+                    RequestDateTimeUTC = x.RequestDateTimeUTC,
+                    ResponseDateTimeUTC = x.ResponseDateTimeUTC,
+                    ServiceId = x.ServiceId,
+                    UserId = x.UserId,
+                    PointOfSaleId = x.PointOfSaleId
+                }).ToListAsync();
 
-            return list;
+            return transactions;
         }
     }
 }

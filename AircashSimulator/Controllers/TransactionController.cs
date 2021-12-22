@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AircashSimulator.Extensions;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Services.Transactions;
 using System;
 using System.Collections.Generic;
@@ -12,16 +14,20 @@ namespace AircashSimulator
     public class TransactionController : ControllerBase
     {
         private ITransactionService TransactionService;
-        public TransactionController(ITransactionService transactionService)
+        private UserContext UserContext;
+
+        public TransactionController(ITransactionService transactionService, UserContext userContext)
         {
             TransactionService = transactionService;
+            UserContext = userContext;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetTransactions()
+        [Authorize]
+        public async Task<IActionResult> GetTransactions(int pageSize, int pageNumber)
         {
-            //poziv poslovne logike
-            var transactions = await TransactionService.GetTransactions(new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"));
+            var partnerId = UserContext.GetPartnerId(User);
+            var transactions = await TransactionService.GetTransactions(partnerId, pageSize, pageNumber);
             return Ok(transactions);
         }
     }
