@@ -19,9 +19,10 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
     });
     function generatePartnerCode(amount, description, locationID) {
         console.log(config);
+        console.log($rootScope);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPay/GeneratePartnerCode",
+            url: config.baseUrl + "AircashPay/GeneratePartnerCode",
             data: {
                 Amount: amount,
                 Description: description,
@@ -35,7 +36,7 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPay/CancelTransaction",
+            url: config.baseUrl + "AircashPay/CancelTransaction",
             data: {
                 partnerTransactionID: partnerTransactionID
             }

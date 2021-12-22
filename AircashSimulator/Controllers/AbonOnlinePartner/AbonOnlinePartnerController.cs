@@ -40,12 +40,5 @@ namespace AircashSimulator
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, partnerId);
             return Ok(response);
         }
-
-        //[HttpPost]
-        //[Authorize]
-        //public void GetUnusedCoupons(GetUnusedCouponsRequest getUnusedCouponsRequest)
-        //{
-        //    RedirectToAction("GetUnusedCoupons", "CouponController");
-        //}
     }
 }
