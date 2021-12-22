@@ -15,7 +15,8 @@ app.config(function ($stateProvider) {
 acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         generatePartnerCode: generatePartnerCode,
-        cancelTransaction: cancelTransaction
+        cancelTransaction: cancelTransaction,
+        getTransactions: getTransactions
     });
     function generatePartnerCode(amount, description, locationID) {
         console.log(config);
@@ -43,19 +44,36 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function getTransactions(transactionAmountFactor) {
+        console.log(config);
+        console.log(transactionAmountFactor);
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "Transaction/GetTransactions",
+            params: {
+                TransactionAmountFactor: transactionAmountFactor
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
 }
 ]);
 
 acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope) {
     $scope.generatePartnerCodeModel = {
-        amount: 10.00,
-        description: "desc",
-        locationID: "loc"
+        amount: null,
+        description: null,
+        locationID: null
     };
 
     $scope.cancelTransactionModel = {
         partnerTransactionID: ""
     };
+
+    $scope.transactions = null;
+    $scope.transactionAmountFactor = 0;
 
     $scope.showQRCode = function () {
         console.log("test");
@@ -93,10 +111,10 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
 
     $scope.cancelResponded = false;
     $scope.cancelBusy = false;
-    $scope.cancelTransaction = function () {
+    $scope.cancelTransaction = function (transactionId) {
         console.log($scope.cancelTransactionModel.partnerTransactionID);
         $scope.cancelBusy = true;
-        acPayService.cancelTransaction($scope.cancelTransactionModel.partnerTransactionID)
+        acPayService.cancelTransaction(transactionId)
             .then(function (responseCancel) {
                 console.log(responseCancel);
                 if (responseCancel) {
@@ -112,6 +130,25 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
             }, () => {
                 console.log("error");
             });
+    }
+
+    $scope.getTransactions = function () {
+        console.log($scope.transactionAmountFactor);
+        $scope.transactionAmountFactor = $scope.transactionAmountFactor + 1;
+        acPayService.getTransactions($scope.transactionAmountFactor)
+            .then(function (responseGetTransactions) {
+                console.log(responseGetTransactions);
+                if (responseGetTransactions) {
+                    $scope.transactions = responseGetTransactions;
+                    console.log($scope.transactions[1].transactionId);
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.copyTransactionId = function (transactionId) {
+        $scope.cancelTransactionModel.partnerTransactionID = transactionId;
     }
 
 }]);

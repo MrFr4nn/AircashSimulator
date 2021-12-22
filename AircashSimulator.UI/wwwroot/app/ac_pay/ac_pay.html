@@ -587,16 +587,21 @@ Response content:
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Try it out" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-2">
-                        <form action="/" method="POST">
-                            <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Partner Transaction ID</label>
-                                    <input ng-model="cancelTransactionModel.partnerTransactionID" type="text" class="form-control" required>
-                                </div>
-                                <button ng-click="cancelTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelBusy">Cancel Transaction <i ng-if="cancelBusy" class="fa fa-cog fa-spin"></i></button>
-                            </fieldset>
-                        </form>
+                    <div class="col-md-3">
+                        <br />
+                        <p>Recent transactions:</p>
+                        <div>
+                            <div ng-repeat="transaction in transactions">
+                                Transaction ID: {{transaction.transactionId}}
+                                <br />
+                                Location ID: {{transaction.location}}
+                                <br />
+                                Description: {{transaction.description}}
+                                <button ng-click="cancelTransaction(transaction.transactionId)" class="btn btn-primary w-100 me-5px">Try to cancel this transaction</button>
+                                <hr />
+                            </div>
+                        </div>
+                        <button ng-click="getTransactions()" class="btn btn-primary w-100px me-5px">Load more transactions</button>
                     </div>
 
                     <br />

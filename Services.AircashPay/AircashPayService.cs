@@ -63,6 +63,8 @@ namespace Services.AircashPay
             aircashGeneratePartnerCodeRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{AircashConfiguration.M3BaseUrl}{AircashConfiguration.GeneratePartnerCodeEndpoint}");
             var responseDateTime = DateTime.UtcNow;
+            preparedTransaction.ResponseDateTimeUTC = responseDateTime;
+            AircashSimulatorContext.Update(preparedTransaction);
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 aircashGeneratePartnerCodeResponse = JsonConvert.DeserializeObject<AircashGeneratePartnerCodeResponse>(response.ResponseContent);
