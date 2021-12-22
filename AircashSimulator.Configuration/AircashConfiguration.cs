@@ -15,5 +15,10 @@ namespace AircashSimulator.Configuration
         public string CancelTransactionEndpoint { get; set; }
         public string ValidForPeriod { get; set; }
         public string AcPayPublicKey { get; set; }
+        public string CheckCodeEndpoint { get; set; }
+        public string ConfirmTransactionEndpoint { get; set; }
+        public string PaymentCheckTransactionStatusEndpoint { get; set; }
+
+        public string PaymentCancelTransactionEndpoint { get; set; }
     }
 }
