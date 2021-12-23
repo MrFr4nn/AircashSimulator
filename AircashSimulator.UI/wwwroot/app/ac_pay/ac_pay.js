@@ -77,7 +77,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.setDefaults = function () {
         $scope.transactions = [];
         $scope.pageSize = 5;
-        $scope.pageNumber = 0;
+        $scope.pageNumber = 1;
         $scope.totalLoaded = 0;
         $scope.busy = false;
     };
@@ -86,17 +86,6 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         console.log("test");
         $("#QRModal").modal("show");
     }
-
-    acPayService.getTransactions($scope.pageSize, 1)
-        .then(function (responseGetTransactions) {
-            console.log(responseGetTransactions);
-            if (responseGetTransactions) {
-                $scope.transactions = responseGetTransactions;
-                console.log($scope.transactions[0].transactionId);
-            }
-        }, () => {
-            console.log("error");
-        });
 
     $scope.generateResponded = false;
     $scope.generateBusy = false;
@@ -150,19 +139,14 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
             });
     }
 
-    $scope.getTransactions = function (pageSize, pageNumber) {
+    $scope.getTransactions = function () {
         console.log($scope.pageSize);
         console.log($scope.pageNumber);
-        if (reset) {
-            $scope.setDefaults();
-        }
-        $scope.pageNumber = pageNumber;
-        $scope.pageSize = pageSize;
         acPayService.getTransactions($scope.pageSize, $scope.pageNumber)
             .then(function (response) {
                 console.log(response);
                 $scope.pageNumber += 1;
-                if (responseGetTransactions) {
+                if (response) {
                     $scope.totalLoaded = response.length;
                     $scope.transactions = $scope.transactions.concat(response);
                 }
@@ -173,7 +157,12 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
 
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
-        $scope.load();
+        console.log(pageSize);
+        $scope.getTransactions();
     };
+
+    $scope.setDefaults();
+
+    $scope.getTransactions();
 
 }]);

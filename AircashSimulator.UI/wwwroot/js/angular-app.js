@@ -60,4 +60,3 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
         }
     });
 }]);
-

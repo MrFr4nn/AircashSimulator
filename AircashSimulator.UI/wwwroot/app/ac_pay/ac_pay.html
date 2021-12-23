@@ -591,32 +591,35 @@ Response content:
                         <br />
                         <p>Recent transactions:</p>
                         <div>
-                            <ngb-pagination>
-                                <div>
-                                    <div class="d-inline-block" style="width: 30%">
-                                        <label for="pageNumber">Page Number</label><br />
-                                        <input name="pageNumber" type="number"  step="1" min="0" max="10" ng-change="getTransactions(pageSize, pageNumber)" ng-model="pageNumber" value="{{pageNumber}}">
-                                    </div>
-                                    <div class="d-inline-block" style="width: 30%">
-                                        <label for="pageSize">Page Size</label><br />
-                                        <input name="pageSize" type="number" style="width: 50px" step="1" min="1" max="10" ng-change="getTransactions(pageSize, pageNumber)" ng-model="pageSize" value="{{pageSize}}">
-                                    </div>
-                                </div>
-                            </ngb-pagination>
-                        </div>
-                        <br />
-                        <div>
-                            <div ng-repeat="transaction in transactions">
-                                Transaction ID: {{transaction.transactionId}}
-                                <br />
-                                Location ID: {{transaction.location}}
-                                <br />
-                                Description: {{transaction.description}}
-                                <button ng-click="cancelTransaction(transaction.transactionId)" class="btn btn-primary w-100 me-5px">Try to cancel this transaction</button>
-                                <hr />
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Transaction ID</th>
+                                            <th>Amount</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="totalLoaded == 0 && !busy">
+                                            <td colspan="12" align="center">
+                                                <i>No data</i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="transaction in transactions">
+                                            <td>{{$index + 1}}.</td>
+                                            <td>{{transaction.transactionId}}</td>
+                                            <td>{{transaction.amount | number:2}}</td>
+                                            <td style="text-align: center; vertical-align: inherit">
+                                                <button class="btn btn-danger fa fa-remove" ng-click="cancelTransaction(transaction.transactionId)">Cancel transaction</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
-</div>
+                        </div>
                     </div>
 
                     <br />
