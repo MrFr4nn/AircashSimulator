@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Transaction
+namespace Services.Transactions
 {
     public interface ITransactionService
     {
-        Task<object> GetTransactions(Guid partnerId, int transactionAmount);
+        Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber);
     }
 }

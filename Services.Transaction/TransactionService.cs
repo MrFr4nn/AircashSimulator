@@ -1,12 +1,11 @@
-﻿using Domain.Entities.Enum;
-using DataAccess;
+﻿using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Services.Transaction
+namespace Services.Transactions
 {
     public class TransactionService : ITransactionService
     {
@@ -14,28 +13,30 @@ namespace Services.Transaction
         public TransactionService(AircashSimulatorContext aircashSimulatorContext)
         {
             AircashSimulatorContext = aircashSimulatorContext;
-        } 
+        }
 
-        public async Task<object> GetTransactions(Guid partnerId, int transactionAmount)
+        public async Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber)
         {
-            var listOfTransactions = AircashSimulatorContext.Transactions.AsNoTracking().Where(x => x.PartnerId == partnerId && x.ServiceId == ServiceEnum.AircashPay)
-                                                                                        .Take(transactionAmount)
-                                                                                        .OrderBy(x => x.ResponseDateTimeUTC)
-                                                                                        .ToList();
-            List<TransactionDTO> transactionDTOs = new List<TransactionDTO>();
-            foreach (var transaction in listOfTransactions)
-            {
-                var preparedTransaction = await AircashSimulatorContext.PreparedAircashTransactions.FirstAsync(x => x.PartnerTransactionId == transaction.TransactionId);
-                var transactionDTO = new TransactionDTO
+            var transactions = await AircashSimulatorContext.Transactions
+                .Where(x => x.PartnerId == partnerId)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(x => new Transaction 
                 {
-                    TransactionId = transaction.TransactionId,
-                    Description = preparedTransaction.Description,
-                    Location = preparedTransaction.LocationId,
-                    RequestTime = preparedTransaction.RequestDateTimeUTC
-                };
-                transactionDTOs.Add(transactionDTO);
-            }
-            return transactionDTOs;
+                    Id = x.Id,
+                    Amount = x.Amount,
+                    ISOCurrencyId = x.ISOCurrencyId,
+                    PartnerId = x.PartnerId,
+                    AircashTransactionId = x.AircashTransactionId,
+                    TransactionId = x.TransactionId,
+                    RequestDateTimeUTC = x.RequestDateTimeUTC,
+                    ResponseDateTimeUTC = x.ResponseDateTimeUTC,
+                    ServiceId = x.ServiceId,
+                    UserId = x.UserId,
+                    PointOfSaleId = x.PointOfSaleId
+                }).ToListAsync();
+
+            return transactions;
         }
     }
 }

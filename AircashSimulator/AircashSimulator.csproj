@@ -27,7 +27,7 @@
     <ProjectReference Include="..\Services.Authentication\Services.Authentication.csproj" />
     <ProjectReference Include="..\Services.Coupon\Services.Coupon.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
-    <ProjectReference Include="..\Services.Transaction\Services.Transaction.csproj" />
+    <ProjectReference Include="..\Services.Transaction\Services.Transactions.csproj" />
   </ItemGroup>
 
 </Project>
