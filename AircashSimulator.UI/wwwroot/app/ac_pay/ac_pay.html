@@ -587,9 +587,24 @@ Response content:
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Try it out" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <br />
                         <p>Recent transactions:</p>
+                        <div>
+                            <ngb-pagination>
+                                <div>
+                                    <div class="d-inline-block" style="width: 30%">
+                                        <label for="pageNumber">Page Number</label><br />
+                                        <input name="pageNumber" type="number"  step="1" min="0" max="10" ng-change="getTransactions(pageSize, pageNumber)" ng-model="pageNumber" value="{{pageNumber}}">
+                                    </div>
+                                    <div class="d-inline-block" style="width: 30%">
+                                        <label for="pageSize">Page Size</label><br />
+                                        <input name="pageSize" type="number" style="width: 50px" step="1" min="1" max="10" ng-change="getTransactions(pageSize, pageNumber)" ng-model="pageSize" value="{{pageSize}}">
+                                    </div>
+                                </div>
+                            </ngb-pagination>
+                        </div>
+                        <br />
                         <div>
                             <div ng-repeat="transaction in transactions">
                                 Transaction ID: {{transaction.transactionId}}
@@ -600,8 +615,8 @@ Response content:
                                 <button ng-click="cancelTransaction(transaction.transactionId)" class="btn btn-primary w-100 me-5px">Try to cancel this transaction</button>
                                 <hr />
                             </div>
-                        </div>
-                        <button ng-click="getTransactions()" class="btn btn-primary w-100px me-5px">Load more transactions</button>
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+</div>
                     </div>
 
                     <br />

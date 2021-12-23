@@ -7,6 +7,7 @@ namespace AircashSimulator.Controllers.Transaction
 {
     public class GetTransactionsRequest
     {
-        public int TransactionAmountFactor { get; set; }
+        public int PageSize { get; set; }
+        public int PageNumber { get; set; }
     }
 }

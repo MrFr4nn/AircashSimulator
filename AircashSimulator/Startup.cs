@@ -20,6 +20,7 @@ using AircashSimulator.Extensions;
 using Services.AircashPay;
 using Serilog;
 using Services.Transaction;
+using Services.Transactions;
 
 namespace AircashSimulator
 {

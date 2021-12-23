@@ -45,14 +45,16 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function getTransactions(transactionAmountFactor) {
+    function getTransactions(pageSize, pageNumber) {
         console.log(config);
-        console.log(transactionAmountFactor);
+        console.log(pageSize);
+        console.log(pageNumber);
         var request = $http({
             method: 'GET',
             url: config.baseUrl + "Transaction/GetTransactions",
             params: {
-                TransactionAmountFactor: transactionAmountFactor
+                PageSize: pageSize,
+                PageNumber: pageNumber
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -72,13 +74,29 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         partnerTransactionID: ""
     };
 
-    $scope.transactions = null;
-    $scope.transactionAmountFactor = 0;
+    $scope.setDefaults = function () {
+        $scope.transactions = [];
+        $scope.pageSize = 5;
+        $scope.pageNumber = 0;
+        $scope.totalLoaded = 0;
+        $scope.busy = false;
+    };
 
     $scope.showQRCode = function () {
         console.log("test");
         $("#QRModal").modal("show");
     }
+
+    acPayService.getTransactions($scope.pageSize, 1)
+        .then(function (responseGetTransactions) {
+            console.log(responseGetTransactions);
+            if (responseGetTransactions) {
+                $scope.transactions = responseGetTransactions;
+                console.log($scope.transactions[0].transactionId);
+            }
+        }, () => {
+            console.log("error");
+        });
 
     $scope.generateResponded = false;
     $scope.generateBusy = false;
@@ -132,23 +150,30 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
             });
     }
 
-    $scope.getTransactions = function () {
-        console.log($scope.transactionAmountFactor);
-        $scope.transactionAmountFactor = $scope.transactionAmountFactor + 1;
-        acPayService.getTransactions($scope.transactionAmountFactor)
-            .then(function (responseGetTransactions) {
-                console.log(responseGetTransactions);
+    $scope.getTransactions = function (pageSize, pageNumber) {
+        console.log($scope.pageSize);
+        console.log($scope.pageNumber);
+        if (reset) {
+            $scope.setDefaults();
+        }
+        $scope.pageNumber = pageNumber;
+        $scope.pageSize = pageSize;
+        acPayService.getTransactions($scope.pageSize, $scope.pageNumber)
+            .then(function (response) {
+                console.log(response);
+                $scope.pageNumber += 1;
                 if (responseGetTransactions) {
-                    $scope.transactions = responseGetTransactions;
-                    console.log($scope.transactions[1].transactionId);
+                    $scope.totalLoaded = response.length;
+                    $scope.transactions = $scope.transactions.concat(response);
                 }
             }, () => {
                 console.log("error");
             });
     }
 
-    $scope.copyTransactionId = function (transactionId) {
-        $scope.cancelTransactionModel.partnerTransactionID = transactionId;
-    }
+    $scope.loadMore = function (pageSize) {
+        $scope.pageSize = pageSize;
+        $scope.load();
+    };
 
 }]);

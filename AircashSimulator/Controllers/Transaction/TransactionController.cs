@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services.Transaction;
+using Services.Transactions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,9 @@ namespace AircashSimulator
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetTransactions([FromQuery(Name = "TransactionAmountFactor")] int transactionAmountFactor)
+        public async Task<IActionResult> GetTransactions([FromQuery(Name = "PageSize")] int pageSize, [FromQuery(Name = "PageNumber")] int pageNumber)
         {
-            var transactionAmount = transactionAmountFactor * AircashConfiguration.TransactionAmountPerPage;
-            var response = await TransactionService.GetTransactions(UserContext.GetPartnerId(User), transactionAmount);
+            var response = await TransactionService.GetTransactions(UserContext.GetPartnerId(User), pageSize, pageNumber);
             return Ok(response);
         }
     }
