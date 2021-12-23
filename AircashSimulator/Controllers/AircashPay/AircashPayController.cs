@@ -29,14 +29,14 @@ namespace AircashSimulator.Controllers
         
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> GeneratePartnerCode(GeneratePartnerCodeRequest GeneratePartnerCodeRequest)
+        public async Task<IActionResult> GeneratePartnerCode(GeneratePartnerCodeRequest generatePartnerCodeRequest)
         {
             var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
             {
                 PartnerId = UserContext.GetPartnerId(User),
-                Amount = GeneratePartnerCodeRequest.Amount,
-                Description = GeneratePartnerCodeRequest.Description,
-                LocationId = GeneratePartnerCodeRequest.LocationID,
+                Amount = generatePartnerCodeRequest.Amount,
+                Description = generatePartnerCodeRequest.Description,
+                LocationId = generatePartnerCodeRequest.LocationID,
                 UserId = UserContext.GetUserId(User)
             };
 
@@ -52,7 +52,7 @@ namespace AircashSimulator.Controllers
             bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
             if (valid == true)
             {
-                var TransactionDTO = new TransactionDTO
+                var transactionDTO = new TransactionDTO
                 {
                     Amount = aircashConfirmTransactionRequest.Amount,
                     ISOCurrencyId = (CurrencyEnum)aircashConfirmTransactionRequest.CurrencyID,
@@ -60,20 +60,20 @@ namespace AircashSimulator.Controllers
                     AircashTransactionId = aircashConfirmTransactionRequest.AircashTransactionID,
                     PartnerTransactionId = new Guid(aircashConfirmTransactionRequest.PartnerTransactionID)
                 };
-                var response = await AircashPayService.ConfirmTransaction(TransactionDTO);
-                if (((HttpResponse)response).ResponseCode == System.Net.HttpStatusCode.OK)
+                var response = await AircashPayService.ConfirmTransaction(transactionDTO);
+                if (((ConfirmResponse)response).ResponseCode == 1)
                 {
-                    return Ok(response);
+                    return Ok("Transaction confirmed successfully");
                 }
                 else
                 {
-                    return BadRequest(response);
+                    return BadRequest("Unable to find transaction");
                 }
 
             }
             else
             {
-                return Unauthorized("Invalid signature.");
+                return BadRequest("Invalid signatue");
             }
         }
 
@@ -83,7 +83,7 @@ namespace AircashSimulator.Controllers
         {
             var cancelTransactionDTO = new CancelTransactionDTO
             {
-                PartnerId = new Guid(cancelTransactionRequest.PartnerID),
+                PartnerId = UserContext.GetPartnerId(User),
                 PartnerTransactionId = new Guid(cancelTransactionRequest.PartnerTransactionID),
                 UserId = UserContext.GetUserId(User)
             };

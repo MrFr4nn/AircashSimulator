@@ -15,5 +15,6 @@ namespace AircashSimulator.Configuration
         public string CancelTransactionEndpoint { get; set; }
         public string ValidForPeriod { get; set; }
         public string AcPayPublicKey { get; set; }
+        public int TransactionAmountPerPage { get; set; }
     }
 }
