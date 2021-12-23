@@ -88,14 +88,7 @@ namespace AircashSimulator.Controllers
                 UserId = UserContext.GetUserId(User)
             };
             var response = await AircashPayService.CancelTransaction(cancelTransactionDTO);
-            if (((HttpResponse)response).ResponseCode == System.Net.HttpStatusCode.OK)
-            {
-                return Ok(response);
-            }
-            else
-            {
-                return BadRequest(response);
-            }
+            return Ok(response);
         }
     }
 }

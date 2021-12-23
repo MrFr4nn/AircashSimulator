@@ -612,7 +612,7 @@ Response content:
                                             <td>{{transaction.transactionId}}</td>
                                             <td>{{transaction.amount | number:2}}</td>
                                             <td style="text-align: center; vertical-align: inherit">
-                                                <button class="btn btn-danger fa fa-remove" ng-click="cancelTransaction(transaction.transactionId)">Cancel transaction</button>
+                                                <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.transactionId)"><i class="fa fa-remove"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
