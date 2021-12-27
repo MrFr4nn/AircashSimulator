@@ -109,7 +109,7 @@
         </p>
 
         <i>Endpoints:</i>
-        <table class="table table-hover">
+        <table class="table table-active">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -283,7 +283,7 @@
 <code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Error responses" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -319,7 +319,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Code</th>
@@ -329,7 +329,7 @@
                     <tr>
                         <td><b>1</b></td>
                         <td>
-                            "Invalid ProviderId" – wrong partner identifier (ProviderId)
+                            "Invalid provider id" – wrong partner identifier (ProviderId)
                         </td>
                         <td>
                             -
@@ -338,7 +338,7 @@
                     <tr>
                         <td><b>3</b></td>
                         <td>
-                            "ValidationErorr" – Missing mandatory parameter
+                            "Validation erorr" – Missing mandatory parameter
                         </td>
                         <td>
                             -
@@ -347,7 +347,7 @@
                     <tr>
                         <td><b>1004</b></td>
                         <td>
-                            "PartnerTransactionAlreadyExists " – PartnerTransacatinID must be unique
+                            "Partner transaction already exists " – PartnerTransacatinID must be unique
                         </td>
                         <td>
                             -
@@ -356,7 +356,7 @@
                     <tr>
                         <td><b>3000</b></td>
                         <td>
-                            "InvalidCurrency " currency missmatch
+                            "Invalid currency " currency missmatch
                         </td>
                         <td>
                             -
@@ -364,7 +364,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
                 <pre>
                 <code>{</code>
                 <code>    "code": 1,</code>
@@ -373,23 +373,87 @@
                 <code>}</code>
 </pre>
             </uib-tab>
+            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Pay Type</label>
+                                    <select ng-model="initiateModel.payType" class="form-control" required name="payType">
+                                        <option value="0">Payment</option>
+                                        <option value="1">Payout</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Pay Method</label>
+                                    <select ng-model="initiateModel.payMethod" class="form-control" required name="payMethod">
+                                        <option value="0">Abon</option>
+                                        <option value="1">AC Pay</option>
+                                        <option value="2">Payout</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Amount</label>
+                                    <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" required name="amount">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Currency ID</label>
+                                    <select ng-model="initiateModel.currency" class="form-control" required name="payType">
+                                        <option value="191">HRK</option>
+                                        <option value="977">EUR</option>
+                                    </select>
+                                </div>
+                                <button ng-click="initiate()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy">Initiate <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!initiateResponded" class="col-md-4">
+                        <p>
+                            <i>Your request:</i>
+                        </p>
+                        <pre style="height: 100%">
+Request DateTimeUTC: {{InitiateRequestDateTimeUTC}}
+Request content:
+<code>{{InitiateServiceRequest}}</code>
+</pre>
+                    </div>
+                    <div ng-hide="!initiateResponded" class="col-md-6">
+                        <p>
+                            <i>Your response:</i>
+                        </p>
+                        <pre>
+Response DateTimeUTC: {{InitiateResponseDateTimeUTC}}
+Response content:
+<code>{{InitiateServiceResponse}}</code>
+</pre>
+                    </div>
+                </div>
+            </uib-tab>
         </uib-tabset>
         <br />
         <h4>Notification</h4>
         <p>
-            After transaction is processed, Aircash system will sends notification to the NotificationUrl provided within the initiate request.
+            After transaction is processed, Aircash system will send notification to the NotificationUrl provided within the initiate request.
         </p>
-        <p>Notification example (HTTP GET):</p>
-        <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
-        <p>If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL:</p>
-        <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+        <p>
+            Notification example (HTTP GET): <br />
+            <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
+        </p>
+        <br />
+        <p>
+            If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL: <br />
+            <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+        </p>
         <br />
         <h4>Transaction status</h4>
         <p>
             Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
         </p>
         <i>Endpoints:</i>
-        <table class="table table-hover">
+        <table class="table table-active">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -438,7 +502,6 @@
                         <td>string</td>
                         <td>
                             A sequence that has been digitally signed with the provider's private signature, used for authentication
-                            <!--primjer sequencea-->
                         </td>
                     </tr>
                 </table>
@@ -497,40 +560,40 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-3" heading="Error responses" classes="nav-item">
-            <table class="table table-hover">
-                <tr>
-                    <th>Http response</th>
-                    <th>Description</th>
-                    <th>Solution</th>
-                </tr>
-                <tr>
-                    <td><b>400</b></td>
-                    <td>
-                        An invalid request was made
-                    </td>
-                    <td>
-                        The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>401</b></td>
-                    <td>
-                        In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
-                    </td>
-                    <td>
-                        Verify that ProviderId and Signature are correct in your request.
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>500</b></td>
-                    <td>
-                        An unknown error occured
-                    </td>
-                    <td>
-                        Contact Aircash support
-                    </td>
-                </tr>
-            </table>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>
+                            An invalid request was made
+                        </td>
+                        <td>
+                            The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
+                        </td>
+                        <td>
+                            Verify that ProviderId and Signature are correct in your request.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>500</b></td>
+                        <td>
+                            An unknown error occured
+                        </td>
+                        <td>
+                            Contact Aircash support
+                        </td>
+                    </tr>
+                </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover">
@@ -542,7 +605,7 @@
                     <tr>
                         <td><b>1</b></td>
                         <td>
-                            "InvalidSignatureOrPartnerId" – wrong partner identifier or signaturer
+                            "Invalid signature or partner id" – wrong partner identifier or signature
                         </td>
                         <td>
                             -
@@ -551,7 +614,7 @@
                     <tr>
                         <td><b>3</b></td>
                         <td>
-                            "ValidationErorr" – Missing mandatory parameter
+                            "Validation erorr" – Missing mandatory parameter
                         </td>
                         <td>
                             -
@@ -560,7 +623,7 @@
                     <tr>
                         <td><b>1002</b></td>
                         <td>
-                            "TransactionDoesNotExist" – Transaction does not exist in the Aircash system
+                            "Transaction does not exist" – Transaction does not exist in the Aircash system
                         </td>
                         <td>
                             -
@@ -569,22 +632,81 @@
                     <tr>
                         <td><b>1003</b></td>
                         <td>
-                            "TransactionNotProcessed" - Transaction is not processed in the Aircash system
+                            "Transaction not processed" - Transaction is not processed in the Aircash system
                         </td>
                         <td>
                             -
                         </td>
                     </tr>
                 </table>
-                <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
-                    <pre>
-                    <code>{</code>
-                    <code>    "code": 1003,</code>
-                    <code>    "message": "Transaction not processed",</code>
-                    <code>    "additionalData": null</code>
-                    <code>}</code>
+            </uib-tab>
+            <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
+                <pre>
+                <code>{</code>
+                <code>    "code": 1003,</code>
+                <code>    "message": "Transaction not processed",</code>
+                <code>    "additionalData": null</code>
+                <code>}</code>
 </pre>
-                </uib-tab>
+            </uib-tab>
+            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Recent transactions:</p>
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Transaction ID</th>
+                                            <th>Amount</th>
+                                            <th>Check status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="totalLoaded == 0 && !busy">
+                                            <td colspan="12" align="center">
+                                                <i>No data</i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="transaction in transactions">
+                                            <td>{{$index + 1}}.</td>
+                                            <td>{{transaction.transactionId}}</td>
+                                            <td>{{transaction.amount | number:2}}</td>
+                                            <td style="text-align: center; vertical-align: inherit">
+                                                <button class="btn btn-primary fa fa-check" ng-click="transactionStatus(transaction.transactionId)"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!statusResponded" class="col-md-4">
+                        <p>
+                            <i>Your request:</i>
+                        </p>
+                        <pre style="height: 100%">
+Request DateTimeUTC: {{StatusRequestDateTimeUTC}}
+Request content:
+<code>{{StatusServiceRequest}}</code>
+</pre>
+                    </div>
+                    <div ng-hide="!statusResponded" class="col-md-6">
+                        <p>
+                            <i>Your response:</i>
+                        </p>
+                        <pre>
+Response DateTimeUTC: {{StatusResponseDateTimeUTC}}
+Response content:
+<code>{{StatusServiceResponse}}</code>
+</pre>
+                    </div>
+                </div>
             </uib-tab>
         </uib-tabset>
     </div>

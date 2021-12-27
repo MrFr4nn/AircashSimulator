@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj" />
+    <ProjectReference Include="..\Services.AircashPay\Services.AircashPay.csproj" />
+    <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
+  </ItemGroup>
+
+</Project>
