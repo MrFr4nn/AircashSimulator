@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Coupon;
@@ -20,9 +21,10 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetUnusedCoupons(GetUnusedCouponsRequest getUnusedCouponsRequest)
+        [Authorize]
+        public async Task<IActionResult> GetUnusedCoupon(GetUnusedCouponsRequest getUnusedCouponsRequest)
         {
-            var response = await CouponService.GetUnusedCoupons(getUnusedCouponsRequest.PurchasedCurrency);
+            var response = await CouponService.GetUnusedCoupon(getUnusedCouponsRequest.PurchasedCurrency, getUnusedCouponsRequest.Value);
             return Ok(response);
         }
     }

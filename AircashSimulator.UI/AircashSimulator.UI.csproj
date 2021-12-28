@@ -11,4 +11,10 @@
     <None Remove="wwwroot\app\abon_sp\NewFolder\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\images\abonExample.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
