@@ -19,6 +19,7 @@ namespace Services.Transactions
         {
             var transactions = await AircashSimulatorContext.Transactions
                 .Where(x => x.PartnerId == partnerId)
+                .OrderByDescending(x => x.RequestDateTimeUTC)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(x => new Transaction 
@@ -34,7 +35,36 @@ namespace Services.Transactions
                     ServiceId = x.ServiceId,
                     UserId = x.UserId,
                     PointOfSaleId = x.PointOfSaleId
-                }).ToListAsync();
+                })
+                .ToListAsync();
+
+            return transactions;
+        }
+
+        public async Task<List<PreparedAircashFrameTransaction>> GetAircashFramePreparedTransactions(Guid partnerId, int pageSize, int pageNumber)
+        {
+            var transactions = await AircashSimulatorContext.PreparedAircashFrameTransactions
+                .Where(x => x.PartnerId == partnerId)
+                .OrderByDescending(x => x.RequestDateTimeUTC)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(x => new PreparedAircashFrameTransaction
+                {
+                    Id = x.Id,
+                    PartnerTransactionId = x.PartnerTransactionId,
+                    PartnerId = x.PartnerId,
+                    UserId = x.UserId,
+                    Amount = x.Amount,
+                    ISOCurrencyId = x.ISOCurrencyId,
+                    PayType = x.PayType,
+                    PayMethod = x.PayMethod,
+                    NotificationUrl = x.NotificationUrl,
+                    SuccessUrl = x.SuccessUrl,
+                    DeclineUrl = x.DeclineUrl,
+                    RequestDateTimeUTC = x.RequestDateTimeUTC,
+                    ResponseDateTimeUTC = x.ResponseDateTimeUTC
+                })
+                .ToListAsync();
 
             return transactions;
         }

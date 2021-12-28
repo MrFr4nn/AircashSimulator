@@ -42,6 +42,12 @@ namespace AircashSimulator.Controllers.AircashFrame
             return Ok(response);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Notification([FromQuery(Name = "partnerTransactionId")] int partnerTransactionId)
+        {
+            return Ok();
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> TransactionStatus(TransactionStatusRequest transactionStatusRequest)
@@ -49,12 +55,6 @@ namespace AircashSimulator.Controllers.AircashFrame
             var partnerId = UserContext.GetPartnerId(User);
             var response = await AircashFrameService.TransactionStatus(partnerId, transactionStatusRequest.TransactionId);
             return Ok(response);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Notification([FromQuery(Name = "partnerTransactionId")] int partnerTransactionId)
-        {
-            return Ok();
         }
     }
 }

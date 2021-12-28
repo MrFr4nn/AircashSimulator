@@ -13,7 +13,7 @@ namespace Services.AircashFrame
         public string PartnerUserId { get; set; }
         public string PartnerTransactionId { get; set; }
         public string Amount { get; set; }
-        public int Currency { get; set; }
+        public int CurrencyId { get; set; }
         public int PayType { get; set; }
         public int PayMethod { get; set; }
         public string NotificationUrl { get; set; }

@@ -35,5 +35,13 @@ namespace AircashSimulator
             var response = await TransactionService.GetTransactions(UserContext.GetPartnerId(User), pageSize, pageNumber);
             return Ok(response);
         }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetAircashFramePreparedTransactions([FromQuery(Name = "PageSize")] int pageSize, [FromQuery(Name = "PageNumber")] int pageNumber)
+        {
+            var response = await TransactionService.GetAircashFramePreparedTransactions(UserContext.GetPartnerId(User), pageSize, pageNumber);
+            return Ok(response);
+        }
     }
 }

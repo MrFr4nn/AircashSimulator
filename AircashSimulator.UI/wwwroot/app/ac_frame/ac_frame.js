@@ -15,7 +15,8 @@ app.config(function ($stateProvider) {
 acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         initiate: initiate,
-        getTransactions: getTransactions
+        getTransactions: getTransactions,
+        transactionStatus: transactionStatus
     });
 
     function initiate(payType, payMethod, amount, currency) {
@@ -53,7 +54,7 @@ acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService',
         console.log(pageNumber);
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "Transaction/GetTransactions",
+            url: config.baseUrl + "Transaction/GetAircashFramePreparedTransactions",
             params: {
                 PageSize: pageSize,
                 PageNumber: pageNumber
@@ -67,7 +68,7 @@ acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService',
 acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrameService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acFrameService, $http, JwtParser, $uibModal, $rootScope) {
     $scope.initiateModel = {
         payType: 0,
-        payMethod: 0,
+        payMethod: 2,
         amount: 100,
         currency: 191
     };
@@ -96,12 +97,12 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
                 if (response) {
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
-
+                    $scope.sequenceInitiate = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-
-                    $scope.link = response.serviceResponse.url;
+                    $scope.frameUrl = response.serviceResponse.url;
+                    console.log($scope.frameUrl);
                 }
                 $scope.initiateBusy = false;
                 $scope.initiateResponded = true;
@@ -121,9 +122,12 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
                 if (response) {
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
-
+                    $scope.sequenceStatus = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.StatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.signature) {
+                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    }
                     $scope.StatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                 }
                 $scope.statusBusy = false;

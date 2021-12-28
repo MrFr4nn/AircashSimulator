@@ -389,8 +389,8 @@
                                     <label class="form-label" for="exampleInputEmail1">Pay Method</label>
                                     <select ng-model="initiateModel.payMethod" class="form-control" required name="payMethod">
                                         <option value="0">Abon</option>
-                                        <option value="1">AC Pay</option>
-                                        <option value="2">Payout</option>
+                                        <option value="2">AC Pay</option>
+                                        <option value="10">Payout</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
@@ -416,6 +416,7 @@
                         </p>
                         <pre style="height: 100%">
 Request DateTimeUTC: {{InitiateRequestDateTimeUTC}}
+Sequence to sign: {{sequenceInitiate}}
 Request content:
 <code>{{InitiateServiceRequest}}</code>
 </pre>
@@ -429,6 +430,7 @@ Response DateTimeUTC: {{InitiateResponseDateTimeUTC}}
 Response content:
 <code>{{InitiateServiceResponse}}</code>
 </pre>
+                        <a href="{{frameUrl}}" target="_blank">Open Aircash Frame</a>
                     </div>
                 </div>
             </uib-tab>
@@ -651,7 +653,7 @@ Response content:
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <p>Recent transactions:</p>
                         <div>
                             <div class="table-responsive">
@@ -672,10 +674,10 @@ Response content:
                                         </tr>
                                         <tr ng-repeat="transaction in transactions">
                                             <td>{{$index + 1}}.</td>
-                                            <td>{{transaction.transactionId}}</td>
+                                            <td>{{transaction.partnerTransactionId}}</td>
                                             <td>{{transaction.amount | number:2}}</td>
                                             <td style="text-align: center; vertical-align: inherit">
-                                                <button class="btn btn-primary fa fa-check" ng-click="transactionStatus(transaction.transactionId)"><i class="fa fa-remove"></i></button>
+                                                <button class="btn btn-primary fa fa-check" ng-click="transactionStatus(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -684,7 +686,6 @@ Response content:
                             <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
                         </div>
                     </div>
-
                     <br />
                     <div ng-hide="!statusResponded" class="col-md-4">
                         <p>
@@ -692,11 +693,12 @@ Response content:
                         </p>
                         <pre style="height: 100%">
 Request DateTimeUTC: {{StatusRequestDateTimeUTC}}
+Sequence to sign: {{sequenceStatus}}
 Request content:
 <code>{{StatusServiceRequest}}</code>
 </pre>
                     </div>
-                    <div ng-hide="!statusResponded" class="col-md-6">
+                    <div ng-hide="!statusResponded" class="col-md-4">
                         <p>
                             <i>Your response:</i>
                         </p>

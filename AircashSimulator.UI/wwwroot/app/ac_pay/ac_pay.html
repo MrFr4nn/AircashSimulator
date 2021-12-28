@@ -349,8 +349,9 @@
                         <p>
                             <i>Your request:</i>
                         </p>
-                        <pre style="height: 100%">
+                        <pre style="height: 90%">
 Request DateTimeUTC: {{GenerateRequestDateTimeUTC}}
+Sequence to sign: {{sequenceGenerate}}
 Request content:
 <code>{{GenerateServiceRequest}}</code>
 </pre>
@@ -359,7 +360,7 @@ Request content:
                         <p>
                             <i>Your response:</i>
                         </p>
-                        <pre>
+                        <pre style="height: 90%">
 Response DateTimeUTC: {{GenerateResponseDateTimeUTC}}
 Response content:
 <code>{{GenerateServiceResponse}}</code>
@@ -587,7 +588,7 @@ Response content:
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Try it out" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <br />
                         <p>Recent transactions:</p>
                         <div>
@@ -627,17 +628,18 @@ Response content:
                         <p>
                             <i>Your request:</i>
                         </p>
-                        <pre style="height: 100%">
+                        <pre style="height: 90%">
 Request DateTimeUTC: {{CancelRequestDateTimeUTC}}
+Sequence to sign: {{sequenceCancel}}
 Request content:
 <code>{{CancelServiceRequest}}</code>
 </pre>
                     </div>
-                    <div ng-hide="!cancelResponded" class="col-md-6">
+                    <div ng-hide="!cancelResponded" class="col-md-4">
                         <p>
                             <i>Your response:</i>
                         </p>
-                        <pre>
+                        <pre style="height: 90%">
 Response DateTimeUTC: {{CancelRequestDateTimeUTC}}
 Response content:
 <code>{{CancelServiceResponse}}</code>

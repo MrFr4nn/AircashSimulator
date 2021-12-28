@@ -105,10 +105,10 @@ namespace Services.AbonOnlinePartner
                     Amount = successResponse.CouponValue,
                     ISOCurrencyId = successResponse.ISOCurrency,
                     PartnerId = providerId,
-                    TransactionId = new Guid(),
+                    TransactionId = Guid.NewGuid(),
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = DateTime.UtcNow,
-                    UserId = new Guid(),
+                    UserId = userId,
                     ServiceId = ServiceEnum.AbonUsed
                 };
                 AircashSimulatorContext.Add(newTransaction);
