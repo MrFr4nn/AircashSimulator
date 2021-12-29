@@ -1,4 +1,5 @@
 ﻿using DataAccess;
+using Domain.Entities.Enum;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,11 @@ namespace Services.Transactions
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-        public async Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber)
+        public async Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber, List<ServiceEnum> services)
         {
             var transactions = await AircashSimulatorContext.Transactions
-                .Where(x => x.PartnerId == partnerId)
+                .Where(x => x.PartnerId == partnerId && services.Contains(x.ServiceId))
+                .OrderByDescending(x => x.RequestDateTimeUTC)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
                 .Select(x => new Transaction 

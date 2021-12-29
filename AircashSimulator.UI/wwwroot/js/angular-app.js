@@ -8,6 +8,8 @@ var app = angular.module('app', [
     'abonSp',
     'abonOp',
     'acPay',
+    'aircashPaymentAndPayout'
+    'acPay',
     'aircashPayout'
 ]);
 
