@@ -89,8 +89,29 @@
 <h2>CheckCode</h2>
 <p>
     Method used by the partner system to check whether there’s an active transaction in the Aircash system for a given barcode. All codes that start with AC1 or AC2 and have 16 or more digits are considered Aircash codes. <br />
-    Url: POST ~/api/SalesPartner/CheckCode
 </p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/CheckCode</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/CheckCode</td>
+    </tr>
+</table>
 
 <uib-tabset>
     <uib-tab index="CheckCode-tab-0" heading="Request parameters" classes="nav-item">
@@ -224,22 +245,22 @@
     <uib-tab index="CheckCode-tab-5" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
-                <form action="/" method="POST">
+                <form action="/" method="POST" name="transactionForm">
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">BarCode</label>
-                            <input ng-model="checkCodeModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy">
+                            <input ng-model="checkCodeModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">LocationID</label>
-                            <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy">
+                            <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="true">
                         </div>
-                        <button ng-click="checkCode()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeServiceBusy">Check <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="checkCode()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
             <div class="col-md-4" ng-if="checkCodeServiceResponse">
-                Request ({{checkCodeRequestDateTimeUTC}})
+                Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{checkCodeServiceRequest}}
@@ -248,7 +269,7 @@
                 Sequence: {{checkCodeSequence}}<br />
             </div>
             <div class="col-md-4" ng-if="checkCodeServiceResponse">
-                Response ({{checkCodeResponseDateTimeUTC}})
+                Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{checkCodeServiceResponse}}
@@ -263,8 +284,29 @@
 
 <p>
     Method used by the partner system to confirm the transaction in Aircash system. Aircash suggests setting the timeout to this call to a minimum of 30 seconds, in order to avoid unnecessary timeout errors.<br />
-    Url: POST ~/api/SalesPartner/ConfirmTransaction
 </p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+    </tr>
+</table>
 
 <uib-tabset>
     <uib-tab index="ConfirmTransaction-tab-0" heading="Request parameters" classes="nav-item">
@@ -423,22 +465,22 @@
     <uib-tab index="ConfirmTransaction-tab-5" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
-                <form action="/" method="POST">
+                <form action="/" method="POST" name="transactionForm1">
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">BarCode</label>
-                            <input ng-model="confirmTransactionModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="confirmTransactionServiceBusy">
+                            <input ng-model="confirmTransactionModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">LocationID</label>
                             <input ng-model="confirmTransactionModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="confirmTransactionServiceBusy">
                         </div>
-                        <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmTransactionServiceBusy">Confirm <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || transactionForm1.$invalid">Confirm <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
             <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
-                Request ({{confirmTransactionRequestDateTimeUTC}})
+                Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{confirmTransactionServiceRequest}}
@@ -447,7 +489,7 @@
                 Sequence: {{confirmTransactionSequence}}<br />
             </div>
             <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
-                Response ({{confirmTransactionResponseDateTimeUTC}})
+                Response ({{confirmTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{confirmTransactionServiceResponse}}
@@ -465,10 +507,30 @@
     Aircash recommends that the partner use this method in case of when the partner receives
     HTTP error 500 response on the ConfirmTransaction method. This way a partner will be able to
     verify if a transaction was successfully processed on the Aircash side as HTTP error 500
-    messages could be the result of communication issues between two systems.<br />
-    Url: POST ~/api/SalesPartner/CheckTransactionStatus
+    messages could be the result of communication issues between two systems.
 </p>
 
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
+    </tr>
+</table>
 
 <uib-tabset>
     <uib-tab index="CheckTransactionStatus-tab-0" heading="Request parameters" classes="nav-item">
@@ -611,7 +673,7 @@
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Try it out" classes="nav-item">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <br />
                 <p>Recent transactions:</p>
                 <div>
@@ -645,25 +707,22 @@
                     <load-more total-loaded="checkTotalLoaded" out="checkLoadMore"></load-more>
                 </div>
             </div>
-
+            <div class="col-md-0.5"></div>
             <br />
-            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
+            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-3.5">
                 <p>
-                    <i>Your request:</i>
+                    Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 </p>
                 <pre style="height: 100%">
-Request DateTimeUTC: {{checkTransactionStatusRequestDateTimeUTC}}
-Request content:
 <code>{{checkTransactionStatusServiceRequest}}</code>
 </pre>
             </div>
-            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
+            <div class="col-md-0.5"></div>
+            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-3.5">
                 <p>
-                    <i>Your response:</i>
+                    Response ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 </p>
                 <pre>
-Response DateTimeUTC: {{checkTransactionStatusRequestDateTimeUTC}}
-Response content:
 <code>{{checkTransactionStatusServiceResponse}}</code>
 </pre>
             </div>
@@ -675,8 +734,29 @@ Response content:
 
 <p>
     This method is called on the cash register in case casher needs to cancel payment (cashier's mistake, unpaid purchase, etc...) This method is intended for on-premise cancellation and can be called in a limited time interval after issuing the coupon (e.g. 5 minutes).<br />
-    Url: POST ~/api/SalesPartner/CancelTransaction
 </p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/CancelTransaction</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/CancelTransaction</td>
+    </tr>
+</table>
 
 <uib-tabset>
     <uib-tab index="CancelTransaction-tab-0" heading="Request parameters" classes="nav-item">
@@ -782,7 +862,7 @@ Response content:
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-5" heading="Try it out" classes="nav-item">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <br />
                 <p>Recent transactions:</p>
                 <div>
@@ -818,24 +898,25 @@ Response content:
                     <load-more total-loaded="cancelTotalLoaded" out="cancelLoadMore"></load-more>
                 </div>
             </div>
-
+            <div class="col-md-0.5"></div>
             <br />
-            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
+            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-3.5">
                 <p>
                     <i>Your request:</i>
                 </p>
                 <pre style="height: 100%">
-Request DateTimeUTC: {{cancelTransactionRequestDateTimeUTC}}
+Request DateTimeUTC: {{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Request content:
 <code>{{cancelTransactionServiceRequest}}</code>
 </pre>
             </div>
-            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
+            <div class="col-md-0.5"></div>
+            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-3.5">
                 <p>
                     <i>Your response:</i>
                 </p>
                 <pre>
-Response DateTimeUTC: {{cancelTransactionRequestDateTimeUTC}}
+Response DateTimeUTC: {{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Response content:
 <code>{{cancelTransactionServiceResponse}}</code>
 </pre>
