@@ -8,6 +8,7 @@ var app = angular.module('app', [
     'abonSp',
     'abonOp',
     'acPay',
+    'aircashPayout'
     'acFrame'
 ]);
 
@@ -70,7 +71,6 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         var publicPages = ['/login', '/success', '/decline'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
-        console.log(restrictedPage);
         if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');
         }
