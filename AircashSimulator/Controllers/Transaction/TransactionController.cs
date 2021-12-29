@@ -1,16 +1,10 @@
-﻿using AircashSimulator.Configuration;
-using AircashSimulator.Controllers.Transaction;
-using AircashSimulator.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Services.Transaction;
-using Services.Transactions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Services.Transactions;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using AircashSimulator.Extensions;
+using Microsoft.Extensions.Options;
+using AircashSimulator.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AircashSimulator
 {

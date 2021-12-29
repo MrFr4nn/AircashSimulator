@@ -1,13 +1,10 @@
-﻿using AircashSimulator.Configuration;
-using AircashSimulator.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Services.AircashFrame;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Services.AircashFrame;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using AircashSimulator.Extensions;
+using Microsoft.Extensions.Options;
+using AircashSimulator.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
