@@ -33,18 +33,8 @@
                     longer be used.
                 </p>
                 <p>
-                    An example of an Aircash a-bon is shown on Image 1.
+                    An example of an Aircash a-bon is shown <a href="" ng-click="showCoupon()">here</a>.
                 </p>
-            </div>
-            <div class="col-md-5">
-                <div>
-                    <img src="././images/abonExample.png" style="max-width: 200px" />
-                </div>
-                <div>
-                    <p style="max-width: 200px; text-align: center">
-                        Image 1 - A-bon coupon
-                    </p>
-                </div>
             </div>
         </div>
         <hr />
@@ -103,9 +93,29 @@
             check the coupon validity and in case it is valid, you can call the ConfirmTransaction method to use that
             coupon.
         </p>
-        <p>
-            URL: /rest/api/OnlineProvider/ValidateCoupon
-        </p>
+
+        <table class="table table-condensed col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-a-bon.aircash.eu/rest/api/OnlineProvider/ValidateCoupon</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/ValidateCoupon</td>
+            </tr>
+        </table>
+
         <uib-tabset active="active">
             <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
@@ -300,17 +310,17 @@
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-2">
-                        <form action="/" method="POST">
+                        <form action="/" method="POST" name="transactionForm0">
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                    <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code">
+                                    <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
                                 </div>
                                 <div class="form-check mb-3">
                                     <input ng-model="validateCheckBox" class="form-check-input" type="checkbox" id="nf_checkbox_css_1">
                                     <a href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow">I accept the A-bon Terms&Conditions</a>
                                 </div>
-                                <button ng-click="validateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="validateBusy || !validateCheckBox">Validate <i ng-if="validateBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="validateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="validateBusy || !validateCheckBox || transactionForm0.$invalid">Validate <i ng-if="validateBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
@@ -332,22 +342,15 @@
                     </div>
                     <br />
                     <div ng-hide="!validateResponded" class="col-md-4">
-                        <p>
-                            <i>Your request:</i>
-                        </p>
-<pre style="height: 100%">
-Request DateTimeUTC: {{ValidateRequestDateTimeUTC}}
-Request content:
+                        Request ({{ValidateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
 <code>{{ValidateServiceRequest}}</code>
 </pre>
+                        Sequence: {{sequenceValidate}}
                     </div>
                     <div ng-hide="!validateResponded" class="col-md-4">
-                        <p>
-                            <i>Your response:</i>
-                        </p>
-<pre style="height: 100%">
-Response DateTimeUTC: {{ValidateResponseDateTimeUTC}}
-Response content:
+                        Response ({{ValidateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
 <code>{{ValidateServiceResponse}}</code>
 </pre>
                     </div>
@@ -359,9 +362,29 @@ Response content:
         <p>
             Method that’s used to confirm the transfer of funds to the user’s online account.
         </p>
-        <p>
-            URL: /rest/api/OnlineProvider/ConfirmTransaction
-        </p>
+        <table class="table table-condensed col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-a-bon.aircash.eu/rest/api/OnlineProvider/ConfirmTransaction</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/ConfirmTransaction</td>
+            </tr>
+        </table>
+
+
         <uib-tabset>
             <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
@@ -561,17 +584,17 @@ Response content:
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-2">
-                        <form action="/" method="POST">
+                        <form action="/" method="POST" name="transactionForm1">
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code">
+                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
                                 </div>
                                 <div class="form-check mb-3">
                                     <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="nf_checkbox_css_1">
                                     <a href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow">I accept the A-bon Terms&Conditions</a>
                                 </div>
-                                <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox">Confirm transaction <i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox || transactionForm1.$invalid">Confirm transaction <i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
@@ -592,23 +615,16 @@ Response content:
                         </div>
                     </div>
                     <br />
-                    <div ng-hide="!confirmResponded" class="col-md-4">
-                        <p>
-                            <i>Your request:</i>
-                        </p>
-<pre style="height: 100%">
-Request DateTimeUTC: {{ConfirmRequestDateTimeUTC}}
-Request content:
+                    <div ng-hide="!confirmResponded" class="col-md-5">
+                        Request ({{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
 <code>{{ConfirmServiceRequest}}</code>
 </pre>
+                        Sequence: {{sequenceConfirm}}
                     </div>
-                    <div ng-hide="!confirmResponded" class="col-md-4">
-                        <p>
-                            <i>Your response:</i>
-                        </p>
-<pre style="height: 100%">
-Response DateTimeUTC: {{ConfirmResponseDateTimeUTC}}
-Response content:
+                    <div ng-hide="!confirmResponded" class="col-md-3">
+                        Response ({{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
 <code>{{ConfirmServiceResponse}}</code>
 </pre>
                     </div>
@@ -657,5 +673,24 @@ Response content:
             </div>
         </div>
     </div>
+
+    <!-- #modal-dialog -->
+    <div class="modal fade" id="couponModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">A-bon example</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body" align="center">
+                    <img src="../../images/abon.png" alt="A-bon">
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

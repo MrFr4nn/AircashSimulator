@@ -13,6 +13,8 @@ namespace Domain.Entities.Enum
         AbonUsed=5,
         AbonCancelled=6,
         AircashPay=7,
-        AircashPayCancellation=8
+        AircashPayCancellation=8,
+        AircashSalePartnerPayment=9,
+        AircashSalePartnerPayout=10
     }
 }

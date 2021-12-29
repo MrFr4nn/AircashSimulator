@@ -113,21 +113,26 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         }
     ];
 
+    $scope.showCoupon = function () {
+        console.log("test");
+        $("#couponModal").modal("show");
+    }
+
     $scope.validateResponded = false;
     $scope.validateBusy = false;
     $scope.validateCoupon = function () {
         console.log($scope.validateCouponModel.couponCode);
         $scope.validateBusy = true;
         abonOpService.validateCoupon($scope.validateCouponModel.couponCode)
-            .then(function (responseValidate) {
-                if (responseValidate) {
-                    console.log(responseValidate);
-                    $scope.ValidateRequestDateTimeUTC = responseValidate.requestDateTimeUTC;
-                    responseValidate.serviceRequest.signature = responseValidate.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.ValidateServiceRequest = JSON.stringify(responseValidate.serviceRequest, null, 4);
-
-                    $scope.ValidateResponseDateTimeUTC = responseValidate.responseDateTimeUTC;
-                    $scope.ValidateServiceResponse = JSON.stringify(responseValidate.serviceResponse, null, 4);
+            .then(function (response) {
+                if (response) {
+                    console.log(response);
+                    $scope.ValidateRequestDateTimeUTC = response.requestDateTimeUTC;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.ValidateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.sequenceValidate = response.sequence;
+                    $scope.ValidateResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.ValidateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
 
                 }
                 $scope.validateBusy = false;
@@ -143,15 +148,15 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         console.log($scope.confirmTransactionModel.couponCode);
         $scope.confirmBusy = true;
         abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode)
-            .then(function (responseConfirm) {
-                if (responseConfirm) {
-                    console.log(responseConfirm);
-                    $scope.ConfirmRequestDateTimeUTC = responseConfirm.requestDateTimeUTC;
-                    responseConfirm.serviceRequest.signature = responseConfirm.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.ConfirmServiceRequest = JSON.stringify(responseConfirm.serviceRequest, null, 4);
-
-                    $scope.ConfirmResponseDateTimeUTC = responseConfirm.responseDateTimeUTC;
-                    $scope.ConfirmServiceResponse = JSON.stringify(responseConfirm.serviceResponse, null, 4);
+            .then(function (response) {
+                if (response) {
+                    console.log(response);
+                    $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.ConfirmServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.sequenceConfirm = response.sequence;
+                    $scope.ConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.ConfirmServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
 
                 }
                 $scope.confirmBusy = false;

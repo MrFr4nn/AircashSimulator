@@ -709,15 +709,13 @@
             </div>
             <div class="col-md-0.5"></div>
             <br />
-            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-3.5">
-                <p>
-                    Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                </p>
-                <pre style="height: 100%">
+            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
+                Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
 <code>{{checkTransactionStatusServiceRequest}}</code>
 </pre>
+                Sequence: {{checkTransactionStatusSequence}}<br />
             </div>
-            <div class="col-md-0.5"></div>
             <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-3.5">
                 <p>
                     Response ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
@@ -900,24 +898,16 @@
             </div>
             <div class="col-md-0.5"></div>
             <br />
-            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-3.5">
-                <p>
-                    <i>Your request:</i>
-                </p>
-                <pre style="height: 100%">
-Request DateTimeUTC: {{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
-Request content:
+            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
+                Request({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
 <code>{{cancelTransactionServiceRequest}}</code>
 </pre>
+                Sequence: {{cancelTransactionSequence}}
             </div>
-            <div class="col-md-0.5"></div>
             <div ng-hide="!cancelTransactionServiceResponded" class="col-md-3.5">
-                <p>
-                    <i>Your response:</i>
-                </p>
-                <pre>
-Response DateTimeUTC: {{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
-Response content:
+                Response ({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
 <code>{{cancelTransactionServiceResponse}}</code>
 </pre>
             </div>

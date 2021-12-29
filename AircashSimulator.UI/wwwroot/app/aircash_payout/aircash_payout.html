@@ -82,9 +82,30 @@
 </p>
 <h2><i>CheckUser</i></h2>
 <p style="text-align:justify">
-    The method used by partner system to verify whether the user has an active account in Aircash system. <br />
-    Url: POST ~/api/PartnerV3/CheckUser
+    The method used by partner system to verify whether the user has an active account in Aircash system.
 </p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/PartnerV3/CheckUser</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/PartnerV3/CheckUser</td>
+    </tr>
+</table>
 
 <uib-tabset>
     <uib-tab index="checkUser1-tab-0" heading="Input parameters" classes="nav-item">
@@ -207,18 +228,19 @@
     <uib-tab index="checkUser1-tab-5" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
-                <form action="/" method="POST">
+                <form action="/" method="POST" name="transactionForm0">
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">Phone number</label>
-                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="checkUserServiceBusy">
+                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="checkUserServiceBusy" ng-required="true">
                         </div>
-                        <button ng-click="checkUser()" class="btn btn-primary w-100px me-5px" ng-disabled="checkUserServiceBusy">Check user <i ng-if="checkUserServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="checkUser()" class="btn btn-primary w-100px me-5px" ng-disabled="checkUserServiceBusy|| transactionForm0.$invalid">Check user <i ng-if="checkUserServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
+            <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse">
-                Request ({{checkUserRequestDateTimeUTC}})
+                Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{checkUserRequest}}
@@ -226,8 +248,8 @@
 </pre>
                 Sequence: {{checkUserSequence}}<br />
             </div>
-            <div class="col-md-4" ng-if="checkUserServiceResponse">
-                Response ({{checkUserResponseDateTimeUTC}})
+            <div class="col-md-3" ng-if="checkUserServiceResponse">
+                Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{checkUserResponse}}
@@ -253,8 +275,29 @@
             </ol>
         </li>
     </ul>
-    Url: POST ~/api/PartnerV3/CreatePayout
 </p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/PartnerV3/CreatePayout</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/PartnerV3/CreatePayout</td>
+    </tr>
+</table>
 
 <uib-tabset>
     <uib-tab index="createPayout1-tab-0" heading="Request parameters" classes="nav-item">
@@ -373,7 +416,7 @@
     </uib-tab>
     <uib-tab index="createPayout1-tab-4" heading="Error message" classes="nav-item">
         <div class="row">
-            <div class="col-md-12"> 
+            <div class="col-md-12">
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -408,8 +451,8 @@
                         </tr>
                     </tbody>
                 </table>
-                </div>
             </div>
+        </div>
     </uib-tab>
     <uib-tab index="createPayout1-tab-5" heading="Error message example" classes="nav-item">
         <pre>
@@ -424,22 +467,23 @@
     <uib-tab index="createPayout1-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
-                <form action="/" method="POST">
+                <form action="/" method="POST" name="transactionForm1">
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">Phone number</label>
-                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy">
+                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Amount</label>
-                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="createPayoutServiceBusy">
+                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
                         </div>
-                        <button ng-click="createPayout()" class="btn btn-primary w-100px me-5px" ng-disabled="createPayoutServiceBusy">Create payout <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="createPayout()" class="btn btn-primary w-100px me-5px" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
-            <div class="col-md-5" ng-if="createPayoutServiceResponse">
-                Request ({{createPayoutRequestDateTimeUTC}})
+            <div class="col-md-0.5"></div>
+            <div class="col-md-4" ng-if="createPayoutServiceResponse">
+                Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{createPayoutRequest}}
@@ -448,7 +492,7 @@
                 Sequence: {{createPayoutSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="createPayoutServiceResponse">
-                Response ({{createPayoutResponseDateTimeUTC}})
+                Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{createPayoutResponse}}
@@ -462,9 +506,29 @@
 <h2><i>CheckTransactionStatus</i></h2>
 <p style="text-align:justify">
     The method used by partner system to check individual transaction status in Aircash system. Aircash recommend using CheckTransactionStatus method in cases when an unknown error occurs on CreatePayout method. With CheckTransactionStatus, the partner system will be able to automatically resolve all unknown errors from Aircash system<br />
-    Url: POST ~/api/PartnerV2/CheckTransactionStatus
 </p>
 
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/PartnerV2/CheckTransactionStatus</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/PartnerV2/CheckTransactionStatus</td>
+    </tr>
+</table>
 
 <uib-tabset>
     <uib-tab index="CheckTransactionStatus-tab-0" heading="Input parameters" classes="nav-item">
@@ -603,18 +667,42 @@
     <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
-                <form action="/" method="POST">
-                    <fieldset>
-                        <div class="mb-3">
-                            <label class="form-label">PartnerTransactionId</label>
-                            <input ng-model="checkTransactionStatus.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="checkTransactionStatusServiceBusy">
-                        </div>
-                        <button ng-click="checkTransactionStatus()" class="btn btn-primary w-100px me-5px" ng-disabled="checkTransactionStatusServiceBusy">Check transaction status <i ng-if="checkTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    </fieldset>
-                </form>
+                <br />
+                <p>Recent transactions:</p>
+                <div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>Check</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="totalLoaded == 0 && !busy">
+                                    <td colspan="12" align="center">
+                                        <i>No data</i>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="transaction in transactions">
+                                    <td>{{$index + 1}}.</td>
+                                    <td>{{transaction.transactionId}}</td>
+                                    <td>{{transaction.amount | number:2}}</td>
+                                    <td style="text-align: center; vertical-align: inherit">
+                                        <button class="btn btn-primary fa fa-check" ng-click="checkTransactionStatus(transaction.transactionId)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                </div>
             </div>
-            <div class="col-md-5" ng-if="checkTransactionStatusServiceResponse">
-                Request ({{checkTransactionStatusRequestDateTimeUTC}})
+            <div class="col-md-0.5"></div>
+            <div class="col-md-4" ng-if="checkTransactionStatusServiceResponse">
+                Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{checkTransactionStatusRequest}}
@@ -623,7 +711,7 @@
                 Sequence: {{checkTransactionStatusSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkTransactionStatusServiceResponse">
-                Response ({{checkTransactionStatusResponseDateTimeUTC}})
+                Response ({{checkTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{checkTransactionStatusResponse}}

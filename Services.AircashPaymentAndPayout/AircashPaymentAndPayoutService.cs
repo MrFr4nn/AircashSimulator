@@ -99,8 +99,8 @@ namespace Services.AircashPaymentAndPayout
             {
                 ConfirmTransactionResponse successResponse = JsonConvert.DeserializeObject<ConfirmTransactionResponse>(response.ResponseContent);
                 ServiceEnum serviceId;
-                if (successResponse.Amount >= 0) { serviceId = ServiceEnum.AircashPayment; }
-                else { serviceId = ServiceEnum.AircashPayout; }
+                if (successResponse.Amount >= 0) { serviceId = ServiceEnum.AircashSalePartnerPayment; }
+                else { serviceId = ServiceEnum.AircashSalePartnerPayout; }
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = successResponse.Amount,

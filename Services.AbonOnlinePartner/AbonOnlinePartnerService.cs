@@ -83,6 +83,7 @@ namespace Services.AbonOnlinePartner
                 {
                     ServiceRequest = abonConfirmTransactionRequest,
                     ServiceResponse = new ErrorResponse { Code = 3, Message = "Invalid coupon code." },
+                    Sequence = dataToSign,
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = DateTime.UtcNow               
                 };

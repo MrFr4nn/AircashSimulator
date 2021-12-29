@@ -233,7 +233,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         if (reset) $scope.setDefaults();
         console.log($scope.checkPageSize);
         console.log($scope.checkPageNumber);
-        aircashPaymentAndPayoutService.getTransactions($scope.checkPageSize, $scope.checkPageNumber, [1, 2])
+        aircashPaymentAndPayoutService.getTransactions($scope.checkPageSize, $scope.checkPageNumber, [9, 10])
             .then(function (response) {
                 console.log(response);
                 $scope.checkPageNumber += 1;
@@ -250,7 +250,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         if (reset) $scope.setDefaults();
         console.log($scope.cancelPageSize);
         console.log($scope.cancelPageNumber);
-        aircashPaymentAndPayoutService.getTransactions($scope.cancelPageSize, $scope.cancelPageNumber, [1, 2])
+        aircashPaymentAndPayoutService.getTransactions($scope.cancelPageSize, $scope.cancelPageNumber, [9, 10])
             .then(function (response) {
                 console.log(response);
                 $scope.cancelPageNumber += 1;

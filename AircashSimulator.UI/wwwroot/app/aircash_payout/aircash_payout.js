@@ -16,6 +16,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
     return ({
         checkUser: checkUser,
         createPayout: createPayout,
+        getTransactions: getTransactions,
         checkTransactionStatus: checkTransactionStatus
     });
     function checkUser(phoneNumber) {
@@ -52,6 +53,21 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function getTransactions(pageSize, pageNumber, services) {
+        console.log(config);
+        console.log(pageSize);
+        console.log(pageNumber);
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "Transaction/GetTransactions",
+            params: {
+                PageSize: pageSize,
+                PageNumber: pageNumber,
+                Services: services
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 }
 ]);
 
@@ -67,8 +83,16 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         amount: 100
     };
 
+    $scope.setDefaults = function () {
+        $scope.transactions = [];
+        $scope.pageSize = 5;
+        $scope.pageNumber = 1;
+        $scope.totalLoaded = 0;
+        $scope.busy = false;
+    };
+
     $scope.checkTransactionStatusModel = {
-        partnerTransactionId: '1C002E8A-98BD-4C75-BA19-87476106DA87'
+        partnerTransactionId: null
     };
 
     $scope.checkUserServiceBusy = false;
@@ -117,6 +141,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.createPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.getTransactions(true);
                 }
                 $scope.createPayoutServiceBusy = false;
                 $scope.createPayoutServiceResponse = true;
@@ -125,10 +150,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             });
     }
 
-    $scope.checkTransactionStatus = function () {
+    $scope.checkTransactionStatus = function (transactionId) {
         console.log($scope.checkTransactionStatusModel.partnerTransactionId);
         $scope.checkTransactionStatusServiceBusy = true;
-        aircashPayoutService.checkTransactionStatus($scope.checkTransactionStatusModel.partnerTransactionId)
+        aircashPayoutService.checkTransactionStatus(transactionId)
             .then(function (response) {
 
                 if (response) {
@@ -146,4 +171,31 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 console.log("error");
             });
     }
+
+    $scope.getTransactions = function (reset) {
+        if (reset) $scope.setDefaults();
+        console.log($scope.pageSize);
+        console.log($scope.pageNumber);
+        aircashPayoutService.getTransactions($scope.pageSize, $scope.pageNumber, [1, 2])
+            .then(function (response) {
+                console.log(response);
+                $scope.checkPageNumber += 1;
+                if (response) {
+                    $scope.totalLoaded = response.length;
+                    $scope.transactions = $scope.transactions.concat(response);
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.loadMore = function (pageSize) {
+        $scope.pageSize = pageSize;
+        console.log(pageSize);
+        $scope.getTransactions(false);
+    };
+
+    $scope.setDefaults();
+
+    $scope.getTransactions();
 }]);

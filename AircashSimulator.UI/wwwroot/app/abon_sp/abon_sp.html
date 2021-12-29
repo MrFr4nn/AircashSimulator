@@ -30,9 +30,29 @@
 <h2>Coupon creation</h2>
 <p style="text-align:justify">
     The method used to let the sales partner request a new Aircash a-bon. Aircash A-bon is created using the CreateCoupon method that creates the coupon and immediately activates it.
-    <br /><br />
-    URL: /rest/api/CashRegister/CreateCoupon
 </p>
+
+<table class="table table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CreateCoupon</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://a-bon.aircash.eu/rest/api/CashRegister/CreateCoupon</td>
+    </tr>
+</table>
 
 <div class="row">
     <div class="col-md-12">
@@ -249,22 +269,22 @@
             <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
-                        <form action="/" method="POST">
+                        <form action="/" method="POST" name="transactionForm0">
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label">Value</label>
-                                    <input ng-model="createCouponModel.value" class="form-control" type="number" placeholder="Enter value" ng-disabled="createServiceBusy">
+                                    <input ng-model="createCouponModel.value" class="form-control" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
-                                    <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy">
+                                    <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
                                 </div>
-                                <button ng-click="createCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="createCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
                     <div class="col-md-4" ng-if="createServiceResponse">
-                        Request ({{requestDateTimeUTC}})
+                        Request ({{requestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{serviceRequest}}
@@ -273,7 +293,7 @@
                         Sequence: {{sequence}}<br />
                     </div>
                     <div class="col-md-4" ng-if="createServiceResponse">
-                        Response ({{responseDateTimeUTC}})
+                        Response ({{responseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{serviceResponse}}
@@ -298,7 +318,28 @@
 
 <h2>Coupon cancellation</h2>
 
-<p>URL: /rest/api/CashRegister/CancelCoupon</p>
+<table class="table table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+    </tr>
+</table>
+
 <p style="text-align:justify">
     This method is called on the cash register in case you need to cancel the coupon (cashier's mistake, the print failed, unpaid purchase etc.). This method is intended for on-premise cancellation, and can be called in a limited time interval after issuing the coupon. (e.g. 5 minutes).
     <br /> <br />
@@ -456,22 +497,22 @@
             <uib-tab index="request1-tab-4" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
-                        <form action="/" method="POST">
+                        <form action="/" method="POST" name="transactionForm1">
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label">Serial Number</label>
-                                    <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy">
+                                    <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
-                                    <input ng-model="cancelCouponModel.cancelPointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="cancelServiceBusy">
+                                    <input ng-model="cancelCouponModel.cancelPointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="cancelServiceBusy" ng-required="true">
                                 </div>
-                                <button ng-click="cancelCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelServiceBusy">Cancel coupon <i ng-if="cancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="cancelCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelServiceBusy || transactionForm1.$invalid">Cancel coupon <i ng-if="cancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
                     <div class="col-md-4" ng-if="cancelServiceResponse">
-                        Request ({{cancelRequestDateTimeUTC}})
+                        Request ({{cancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{cancelServiceRequest}}
@@ -480,7 +521,7 @@
                         Sequence: {{cancelSequence}}<br />
                     </div>
                     <div class="col-md-4" ng-if="cancelServiceResponse">
-                        Response ({{cancelResponseDateTimeUTC}})<br />
+                        Response ({{cancelResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})<br />
                         {{cancelResponse}}
                     </div>
                 </div>

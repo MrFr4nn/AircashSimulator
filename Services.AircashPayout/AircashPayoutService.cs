@@ -142,7 +142,7 @@ namespace Services.AircashPayout
             }
             else
             {
-                //checkUserResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+                checkTransactionStatusResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
             returnResponse.ServiceResponse = checkTransactionStatusResponse;
             return returnResponse;
