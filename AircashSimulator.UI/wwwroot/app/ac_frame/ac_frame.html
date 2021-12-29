@@ -692,7 +692,7 @@ Response content:
                             <i>Your request:</i>
                         </p>
                         <pre style="height: 90%">
-Request DateTimeUTC: {{StatusRequestDateTimeUTC}}
+Request DateTimeUTC: {{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Sequence to sign: {{sequenceStatus}}
 Request content:
 <code>{{StatusServiceRequest}}</code>
@@ -703,7 +703,7 @@ Request content:
                             <i>Your response:</i>
                         </p>
                         <pre>
-Response DateTimeUTC: {{StatusResponseDateTimeUTC}}
+Response DateTimeUTC: {{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Response content:
 <code>{{StatusServiceResponse}}</code>
 </pre>

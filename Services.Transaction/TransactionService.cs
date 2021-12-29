@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Domain.Entities.Enum;
 
 namespace Services.Transactions
 {
@@ -15,10 +16,10 @@ namespace Services.Transactions
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-        public async Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber)
+        public async Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber, List<ServiceEnum> services)
         {
             var transactions = await AircashSimulatorContext.Transactions
-                .Where(x => x.PartnerId == partnerId)
+                .Where(x => x.PartnerId == partnerId && services.Contains(x.ServiceId))
                 .OrderByDescending(x => x.RequestDateTimeUTC)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)
@@ -67,6 +68,11 @@ namespace Services.Transactions
                 .ToListAsync();
 
             return transactions;
+        }
+
+        public Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber)
+        {
+            throw new NotImplementedException();
         }
     }
 }

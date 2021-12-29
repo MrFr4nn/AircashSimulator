@@ -162,8 +162,29 @@
             Partner system will receive one parameter in a successful response. That parameter is a link
             that the partner system should display to users as QR code to simplify the payment process.
         </p>
+        <i>Endpoints:</i>
+        <table class="table table-active">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://m3.aircash.eu/api/v1/AircashPay/GeneratePartnerCode</td>
+            </tr>
+        </table>
         <br />
-        <p>URL: /api/AircashPay/GeneratePartnerCode</p>
         <uib-tabset active="active">
             <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
@@ -350,7 +371,7 @@
                             <i>Your request:</i>
                         </p>
                         <pre style="height: 90%">
-Request DateTimeUTC: {{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
+Request DateTimeUTC: {{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Sequence to sign: {{sequenceGenerate}}
 Request content:
 <code>{{GenerateServiceRequest}}</code>
@@ -361,7 +382,7 @@ Request content:
                             <i>Your response:</i>
                         </p>
                         <pre>
-Response DateTimeUTC: {{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
+Response DateTimeUTC: {{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Response content:
 <code>{{GenerateServiceResponse}}</code>
 </pre>
@@ -383,9 +404,29 @@ Response content:
             unsuccessful confirmation.
         </p>
         <p>Partner should provide an url where Aircash will send all transaction confirmations.</p>
-        <p>
-            URL: /api/AircashPay/ConfirmTransaction
-        </p>
+        <i>Endpoints:</i>
+        <table class="table table-active">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/AircashPay/ConfirmTransaction</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://m3.aircash.eu/api/v1/AircashPay/ConfirmTransaction</td>
+            </tr>
+        </table>
+        <br />
         <uib-tabset>
             <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
@@ -629,7 +670,7 @@ Response content:
                             <i>Your request:</i>
                         </p>
                         <pre style="height: 90%">
-Request DateTimeUTC: {{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
+Request DateTimeUTC: {{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Sequence to sign: {{sequenceCancel}}
 Request content:
 <code>{{CancelServiceRequest}}</code>
@@ -640,7 +681,7 @@ Request content:
                             <i>Your response:</i>
                         </p>
                         <pre style="height: 90%">
-Response DateTimeUTC: {{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
+Response DateTimeUTC: {{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Response content:
 <code>{{CancelServiceResponse}}</code>
 </pre>

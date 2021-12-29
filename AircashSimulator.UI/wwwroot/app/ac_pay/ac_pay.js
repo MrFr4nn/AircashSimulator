@@ -54,7 +54,8 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
             url: config.baseUrl + "Transaction/GetTransactions",
             params: {
                 PageSize: pageSize,
-                PageNumber: pageNumber
+                PageNumber: pageNumber,
+                Services: [7]
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));

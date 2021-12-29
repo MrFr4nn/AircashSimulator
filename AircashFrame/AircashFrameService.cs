@@ -101,6 +101,16 @@ namespace AircashFrame
             AircashSimulatorContext.Update(preparedAircashFrameTransaction);
             var aircashTransactionStatusResponse = (AircashTransactionStatusResponse)frontResponse.ServiceResponse;
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashTransactionStatusResponse);
+            var serviceId = ServiceEnum.AircashPay;
+            if (preparedAircashFrameTransaction.PayType == 0)
+            {
+                if (preparedAircashFrameTransaction.PayMethod == 0) { serviceId = ServiceEnum.AbonUsed; }
+                else if (preparedAircashFrameTransaction.PayMethod == 2) { serviceId = ServiceEnum.AircashPay; }
+            }
+            else
+            {
+                if (preparedAircashFrameTransaction.PayMethod == 10) { serviceId = ServiceEnum.AircashPayout; }
+            }
             if (AircashSignatureService.VerifySignature(dataToVerify, aircashTransactionStatusResponse.Signature, $"{AircashConfiguration.AcFramePublicKey}")) 
             {
                 if (aircashTransactionStatusResponse.Status == 2)
@@ -114,6 +124,7 @@ namespace AircashFrame
                         TransactionId = preparedAircashFrameTransaction.PartnerTransactionId,
                         RequestDateTimeUTC = preparedAircashFrameTransaction.RequestDateTimeUTC,
                         ResponseDateTimeUTC = preparedAircashFrameTransaction.ResponseDateTimeUTC,
+                        ServiceId = serviceId,
                         UserId = preparedAircashFrameTransaction.UserId
                     });
                     AircashSimulatorContext.SaveChanges();

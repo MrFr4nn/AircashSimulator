@@ -5,6 +5,8 @@ using AircashSimulator.Extensions;
 using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Domain.Entities.Enum;
+using System.Collections.Generic;
 
 namespace AircashSimulator
 {
@@ -24,9 +26,9 @@ namespace AircashSimulator
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetTransactions([FromQuery(Name = "PageSize")] int pageSize, [FromQuery(Name = "PageNumber")] int pageNumber)
+        public async Task<IActionResult> GetTransactions([FromQuery(Name = "PageSize")] int pageSize, [FromQuery(Name = "PageNumber")] int pageNumber, [FromQuery(Name = "Services")] List<ServiceEnum> services)
         {
-            var response = await TransactionService.GetTransactions(UserContext.GetPartnerId(User), pageSize, pageNumber);
+            var response = await TransactionService.GetTransactions(UserContext.GetPartnerId(User), pageSize, pageNumber, services);
             return Ok(response);
         }
 
