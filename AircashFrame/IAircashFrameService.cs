@@ -1,9 +1,5 @@
-﻿using Domain.Entities;
-using Services.HttpRequest;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
+using Domain.Entities;
 using System.Threading.Tasks;
 
 namespace Services.AircashFrame
@@ -12,6 +8,6 @@ namespace Services.AircashFrame
     {
         public Task<object> Initiate(InitiateRequestDTO initiateRequestDTO);
         public Task<object> TransactionStatus(Guid partnerId, string transactionId);
-        public Task<HttpResponse> CheckTransactionStatus(PartnerEntity partner, string transactionId);
+        public Task<Response> CheckTransactionStatus(PartnerEntity partner, string transactionId);
     }
 }
