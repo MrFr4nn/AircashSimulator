@@ -45,7 +45,8 @@ namespace AircashFrame
                 NotificationUrl = $"{AircashConfiguration.NotificationUrl}",
                 SuccessUrl = $"{AircashConfiguration.SuccessUrl}",
                 DeclineUrl = $"{AircashConfiguration.DeclineUrl}",
-                RequestDateTimeUTC = requestDateTime
+                RequestDateTimeUTC = requestDateTime,
+                TransactionSatus = AcFramePreparedTransactionStatusEnum.Pending
             };
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();
@@ -57,8 +58,8 @@ namespace AircashFrame
                 PartnerTransactionId = preparedTransaction.PartnerTransactionId.ToString(),
                 Amount = preparedTransaction.Amount.ToString(),
                 CurrencyId = initiateRequestDTO.Currency,
-                PayType = preparedTransaction.PayType,
-                PayMethod = preparedTransaction.PayMethod,
+                PayType = (int)preparedTransaction.PayType,
+                PayMethod = (int)preparedTransaction.PayMethod,
                 NotificationUrl = preparedTransaction.NotificationUrl,
                 SuccessUrl = preparedTransaction.SuccessUrl,
                 DeclineUrl = preparedTransaction.DeclineUrl,
@@ -91,30 +92,35 @@ namespace AircashFrame
             return frontResponse;
         }
 
-        public async void Notification(string transactionId)
+        public async Task<int> Notification(string transactionId)
         {
             var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == new Guid(transactionId)).FirstOrDefault();
+            if (preparedAircashFrameTransaction.TransactionSatus == AcFramePreparedTransactionStatusEnum.Confirmed)
+            {
+                return 0;
+            }
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == preparedAircashFrameTransaction.PartnerId).FirstOrDefault();
             var frontResponse = await CheckTransactionStatus(partner, transactionId);
             var responseDateTime = DateTime.UtcNow;
-            preparedAircashFrameTransaction.ResponseDateTimeUTC = responseDateTime;
-            AircashSimulatorContext.Update(preparedAircashFrameTransaction);
             var aircashTransactionStatusResponse = (AircashTransactionStatusResponse)frontResponse.ServiceResponse;
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashTransactionStatusResponse);
             var serviceId = ServiceEnum.AircashPay;
-            if (preparedAircashFrameTransaction.PayType == 0)
+            if (preparedAircashFrameTransaction.PayType == PayTypeEnum.Payment)
             {
-                if (preparedAircashFrameTransaction.PayMethod == 0) { serviceId = ServiceEnum.AbonUsed; }
-                else if (preparedAircashFrameTransaction.PayMethod == 2) { serviceId = ServiceEnum.AircashPay; }
+                if (preparedAircashFrameTransaction.PayMethod == PayMethodEnum.Abon) { serviceId = ServiceEnum.AbonUsed; }
+                else if (preparedAircashFrameTransaction.PayMethod == PayMethodEnum.AcPay) { serviceId = ServiceEnum.AircashPay; }
             }
             else
             {
-                if (preparedAircashFrameTransaction.PayMethod == 10) { serviceId = ServiceEnum.AircashPayout; }
+                if (preparedAircashFrameTransaction.PayMethod == PayMethodEnum.Payout) { serviceId = ServiceEnum.AircashPayout; }
             }
-            if (AircashSignatureService.VerifySignature(dataToVerify, aircashTransactionStatusResponse.Signature, $"{AircashConfiguration.AcFramePublicKey}")) 
+            if (AircashSignatureService.VerifySignature(dataToVerify, aircashTransactionStatusResponse.Signature, $"{AircashConfiguration.AcFramePublicKey}"))
             {
-                if (aircashTransactionStatusResponse.Status == 2)
+                if (aircashTransactionStatusResponse.Status == AcFrameTransactionStatusEnum.Success)
                 {
+                    preparedAircashFrameTransaction.ResponseDateTimeUTC = responseDateTime;
+                    preparedAircashFrameTransaction.TransactionSatus = AcFramePreparedTransactionStatusEnum.Confirmed;
+                    AircashSimulatorContext.Update(preparedAircashFrameTransaction);
                     AircashSimulatorContext.Add(new TransactionEntity
                     {
                         Amount = preparedAircashFrameTransaction.Amount,
@@ -129,7 +135,9 @@ namespace AircashFrame
                     });
                     AircashSimulatorContext.SaveChanges();
                 }
+                return 1;
             }
+            else return 2;
         }
 
         public async Task<object> TransactionStatus(Guid partnerId, string transactionId)

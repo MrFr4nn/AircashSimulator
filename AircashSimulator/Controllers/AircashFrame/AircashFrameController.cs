@@ -40,9 +40,21 @@ namespace AircashSimulator.Controllers.AircashFrame
         }
 
         [HttpGet]
-        public async Task<IActionResult> Notification([FromQuery(Name = "partnerTransactionId")] int partnerTransactionId)
+        public async Task<IActionResult> Notification([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
         {
-            return Ok();
+            var response = await AircashFrameService.Notification(partnerTransactionId);
+            if (response == 0)
+            {
+                return Ok("Transaction already confirmed");
+            }
+            else if(response == 1)
+            {
+                return Ok("Transaction confirmed");
+            }
+            else
+            {
+                return BadRequest("Invalid signature");
+            }
         }
 
         [HttpPost]

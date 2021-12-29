@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.Enum;
+using System;
 
 namespace Services.AircashFrame
 {
@@ -8,7 +9,7 @@ namespace Services.AircashFrame
         public Guid UserId { get; set; }
         public decimal Amount { get; set; }
         public int Currency { get; set; }
-        public int PayType { get; set; }
-        public int PayMethod { get; set; }
+        public PayTypeEnum PayType { get; set; }
+        public PayMethodEnum PayMethod { get; set; }
     }
 }
