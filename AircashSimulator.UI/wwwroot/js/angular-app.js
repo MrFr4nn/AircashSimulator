@@ -30,6 +30,20 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             params: {
                 username: ""
             }
+        })
+        .state('success', {
+            url: '/success',
+            templateUrl: 'app/result/success.html',
+            controller: 'SuccessCtrl',
+            controllerAs: 'vm',
+            params: {}
+        })
+        .state('decline', {
+            url: '/decline',
+            templateUrl: 'app/result/decline.html',
+            controller: 'DeclineCtrl',
+            controllerAs: 'vm',
+            params: {}
         });
 }]);
 
@@ -54,10 +68,17 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login'];
+        var publicPages = ['/login', '/success', '/decline'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
+        console.log(restrictedPage);
         if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');
         }
     });
+}]);
+
+app.filter('trusted', ['$sce', function ($sce) {
+    return function (url) {
+        return $sce.trustAsResourceUrl(url);
+    };
 }]);

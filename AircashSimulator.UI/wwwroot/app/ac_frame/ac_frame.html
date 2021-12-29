@@ -414,8 +414,8 @@
                         <p>
                             <i>Your request:</i>
                         </p>
-                        <pre style="height: 100%">
-Request DateTimeUTC: {{InitiateRequestDateTimeUTC}}
+                        <pre style="height: 90%">
+Request DateTimeUTC: {{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Sequence to sign: {{sequenceInitiate}}
 Request content:
 <code>{{InitiateServiceRequest}}</code>
@@ -426,11 +426,11 @@ Request content:
                             <i>Your response:</i>
                         </p>
                         <pre>
-Response DateTimeUTC: {{InitiateResponseDateTimeUTC}}
+Response DateTimeUTC: {{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
 Response content:
 <code>{{InitiateServiceResponse}}</code>
 </pre>
-                        <a href="{{frameUrl}}" target="_blank">Open Aircash Frame</a>
+                        <a href="" ng-click="showFrame()">Open Aircash Frame</a>
                     </div>
                 </div>
             </uib-tab>
@@ -691,7 +691,7 @@ Response content:
                         <p>
                             <i>Your request:</i>
                         </p>
-                        <pre style="height: 100%">
+                        <pre style="height: 90%">
 Request DateTimeUTC: {{StatusRequestDateTimeUTC}}
 Sequence to sign: {{sequenceStatus}}
 Request content:
@@ -711,6 +711,24 @@ Response content:
                 </div>
             </uib-tab>
         </uib-tabset>
+    </div>
+
+    <!-- #modal-dialog -->
+    <div class="modal fade" id="frameModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aircash Frame</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                </div>
+                <div class="modal-body" align="center">
+                    <iframe src="{{frameUrl | trusted}}" title="Aircash Frame" width="450px" height="700px" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -336,7 +336,7 @@
                             <i>Your request:</i>
                         </p>
                         <pre style="height: 90%">
-Request DateTimeUTC: {{ValidateRequestDateTimeUTC}}
+Request DateTimeUTC: {{ValidateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Sequence to sign: {{sequenceValidate}}
 Request content:
 <code>{{ValidateServiceRequest}}</code>
@@ -346,8 +346,8 @@ Request content:
                         <p>
                             <i>Your response:</i>
                         </p>
-<pre style="height: 90%">
-Response DateTimeUTC: {{ValidateResponseDateTimeUTC}}
+                        <pre style="height: 90%">
+Response DateTimeUTC: {{ValidateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Response content:
 <code>{{ValidateServiceResponse}}</code>
 </pre>
@@ -598,7 +598,7 @@ Response content:
                             <i>Your request:</i>
                         </p>
                         <pre style="height: 90%">
-Request DateTimeUTC: {{ConfirmRequestDateTimeUTC}}
+Request DateTimeUTC: {{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Sequence to sign: {{sequenceConfirm}}
 Request content:
 <code>{{ConfirmServiceRequest}}</code>
@@ -608,8 +608,8 @@ Request content:
                         <p>
                             <i>Your response:</i>
                         </p>
-<pre style="height: 90%">
-Response DateTimeUTC: {{ConfirmResponseDateTimeUTC}}
+                        <pre style="height: 90%">
+Response DateTimeUTC: {{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Response content:
 <code>{{ConfirmServiceResponse}}</code>
 </pre>

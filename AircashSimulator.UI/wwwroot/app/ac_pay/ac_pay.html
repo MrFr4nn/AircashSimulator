@@ -350,7 +350,7 @@
                             <i>Your request:</i>
                         </p>
                         <pre style="height: 90%">
-Request DateTimeUTC: {{GenerateRequestDateTimeUTC}}
+Request DateTimeUTC: {{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Sequence to sign: {{sequenceGenerate}}
 Request content:
 <code>{{GenerateServiceRequest}}</code>
@@ -361,7 +361,7 @@ Request content:
                             <i>Your response:</i>
                         </p>
                         <pre>
-Response DateTimeUTC: {{GenerateResponseDateTimeUTC}}
+Response DateTimeUTC: {{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Response content:
 <code>{{GenerateServiceResponse}}</code>
 </pre>
@@ -629,7 +629,7 @@ Response content:
                             <i>Your request:</i>
                         </p>
                         <pre style="height: 90%">
-Request DateTimeUTC: {{CancelRequestDateTimeUTC}}
+Request DateTimeUTC: {{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Sequence to sign: {{sequenceCancel}}
 Request content:
 <code>{{CancelServiceRequest}}</code>
@@ -640,7 +640,7 @@ Request content:
                             <i>Your response:</i>
                         </p>
                         <pre style="height: 90%">
-Response DateTimeUTC: {{CancelRequestDateTimeUTC}}
+Response DateTimeUTC: {{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss}}
 Response content:
 <code>{{CancelServiceResponse}}</code>
 </pre>

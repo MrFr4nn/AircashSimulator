@@ -69,11 +69,16 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.initiateModel = {
         payType: 0,
         payMethod: 2,
-        amount: 100,
+        amount: 25,
         currency: 191
     };
 
     $scope.transactionId;
+
+    $scope.showFrame = function () {
+        console.log("test");
+        $("#frameModal").modal("show");
+    }
 
     $scope.setDefaults = function () {
         $scope.transactions = [];
