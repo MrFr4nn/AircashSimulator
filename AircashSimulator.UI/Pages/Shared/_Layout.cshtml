@@ -16,6 +16,7 @@
     <link href="~/css/fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="~/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
     <link href="~/assets/plugins/datetimePicker/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- ================== END BASE CSS STYLE ================== -->
     <!-- ================== BEGIN BASE ANGULAR JS ================== -->
     <script src="~/js/angular.min.js"></script>
@@ -59,6 +60,8 @@
     <script src="~/assets/plugins/gritter/js/jquery.gritter.min.js"></script>
     <script src="~/assets/plugins/datetimePicker/bootstrap-datepicker.js"></script>
     <script src="~/js/plugins/ngStorage.min.js"></script>
+    <script src="~/js/plugins/qrcode.js"></script>
+
     <!-- ================== END BASE JS ================== -->
     <!-- ================== BEGIN PAGE LEVEL JS ================== -->
     <script src="~/js/app.js" asp-append-version="true"></script>
@@ -67,7 +70,7 @@
     <script src="~/js/angular-controller.js" asp-append-version="true"></script>
     <script src="~/js/angular-directive.js" asp-append-version="true"></script>
     <script src="~/js/plugins/angular-sanitize.js" asp-append-version="true"></script>
-
+    <script src="~/js/plugins/select-2.js" asp-append-version="true"></script>
     <script>
         (function(){
             app.factory('config', ['$rootScope', function ($rootScope) {
@@ -97,6 +100,8 @@
     <script src="~/app/dashboard/dashboard.js" asp-append-version="true"></script>
     <script src="~/app/abon_op/abon_op.js" asp-append-version="true"></script>
     <script src="~/app/abon_sp/abon_sp.js" asp-append-version="true"></script>
+    <script src="~/app/ac_pay/ac_pay.js" asp-append-version="true"></script>
+    <script src="~/js/component.js" asp-append-version="true"></script>
     <script src="~/app/aircash_payout/aircash_payout.js" asp-append-version="true"></script>
     <!-- ================== END CUSTOM JS ================== -->
 </body>

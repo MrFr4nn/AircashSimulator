@@ -39,7 +39,8 @@ namespace Services.AbonOnlinePartner
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             abonValidateCouponRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{AbonConfiguration.BaseUrl}{AbonConfiguration.ValidateCouponEndpoint}");            
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{AbonConfiguration.BaseUrl}{AbonConfiguration.ValidateCouponEndpoint}");
+            DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 validateCouponResponse = JsonConvert.DeserializeObject<AbonValidateCouponResponse>(response.ResponseContent);
@@ -48,7 +49,15 @@ namespace Services.AbonOnlinePartner
             {
                 validateCouponResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
-            return validateCouponResponse;    
+            var frontResponse = new Response
+            {
+                ServiceRequest = abonValidateCouponRequest,
+                ServiceResponse = validateCouponResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
         }
 
         public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId)
@@ -68,7 +77,18 @@ namespace Services.AbonOnlinePartner
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             abonConfirmTransactionRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
+            if (coupon == null)
+            {
+                return new Response
+                {
+                    ServiceRequest = abonConfirmTransactionRequest,
+                    ServiceResponse = new ErrorResponse { Code = 3, Message = "Invalid coupon code." },
+                    RequestDateTimeUTC = requestDateTime,
+                    ResponseDateTimeUTC = DateTime.UtcNow               
+                };
+            }
             var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, $"{AbonConfiguration.BaseUrl}{AbonConfiguration.ConfirmTransactionEndpoint}");
+            var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<AbonConfirmTransactionResponse>(response.ResponseContent);
@@ -99,7 +119,15 @@ namespace Services.AbonOnlinePartner
             {
                 confirmTransactionResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
-            return confirmTransactionResponse;
+            var frontResponse = new Response
+            {
+                ServiceRequest = abonConfirmTransactionRequest,
+                ServiceResponse = confirmTransactionResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
 
 
         }

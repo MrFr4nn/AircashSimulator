@@ -7,6 +7,7 @@ var app = angular.module('app', [
     'dashboard',
     'abonSp',
     'abonOp',
+    'acPay'
     'aircashPayout'
 ]);
 
@@ -60,4 +61,3 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
         }
     });
 }]);
-
