@@ -139,7 +139,7 @@
 {
     "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
     "BarCode": "AC11234567890123",
-    "Signature"": "12345....abc"
+    "Signature": "12345....abc"
 }
 
     </code>
@@ -166,7 +166,7 @@
                     <td>Amount</td>
                     <td>Number</td>
                     <td>
-                        A positive amount represents payment (cashier takes the money from the user), and a negative ramount represents payout (cashier hands the money to the user)
+                        A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
                     </td>
                     <td>YES</td>
                 </tr>
@@ -350,7 +350,7 @@
                     <td>Amount</td>
                     <td>Number</td>
                     <td>
-                        A positive amount represents payment (cashier takes the money from the user), and a negative ramount represents payout (cashier hands the money to the user)
+                        A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
                     </td>
                     <td>YES</td>
                 </tr>                
@@ -615,17 +615,35 @@
                 <br />
                 <p>Recent transactions:</p>
                 <div>
-                    <div ng-repeat="transaction in transactions">
-                        Transaction ID: {{transaction.transactionId}}
-                        <br />
-                        Location ID: {{transaction.location}}
-                        <br />
-                        Description: {{transaction.description}}
-                        <button ng-click="checkTransactionStatus(transaction.transactionId)" class="btn btn-primary w-100 me-5px">Check status</button>
-                        <hr />
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>Check</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="checkTotalLoaded == 0 && !checkBusy">
+                                    <td colspan="12" align="center">
+                                        <i>No data</i>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="transaction in checkTransactions">
+                                    <td>{{$index + 1}}.</td>
+                                    <td>{{transaction.transactionId}}</td>
+                                    <td>{{transaction.amount | number:2}}</td>
+                                    <td style="text-align: center; vertical-align: inherit">
+                                        <button class="btn btn-primary fa fa-check" ng-click="checkTransactionStatus(transaction.transactionId)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    <load-more total-loaded="checkTotalLoaded" out="checkLoadMore"></load-more>
                 </div>
-                <button ng-click="getTransactions()" class="btn btn-primary w-100px me-5px">Load more transactions</button>
             </div>
 
             <br />
@@ -633,23 +651,21 @@
                 <p>
                     <i>Your request:</i>
                 </p>
-                <div class="col-md-4" ng-if="checkTransactionStatusServiceResponse">
-                    Request ({{checkTransactionStatusRequestDateTimeUTC}})
-<pre>
-                    <code>
-        {{checkTransactionStatusServiceRequest}}
-    </code>
+                <pre style="height: 100%">
+Request DateTimeUTC: {{checkTransactionStatusRequestDateTimeUTC}}
+Request content:
+<code>{{checkTransactionStatusServiceRequest}}</code>
 </pre>
-                    Sequence: {{checkTransactionStatusSequence}}<br />
-                </div>
-                <div class="col-md-4" ng-if="checkTransactionStatusServiceResponded">
-                    Response ({{checkTransactionStatusResponseDateTimeUTC}})
-<pre>
-    <code>
-        {{checkTransactionStatusServiceResponse}}
-    </code>
+            </div>
+            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
+                <p>
+                    <i>Your response:</i>
+                </p>
+                <pre>
+Response DateTimeUTC: {{checkTransactionStatusRequestDateTimeUTC}}
+Response content:
+<code>{{checkTransactionStatusServiceResponse}}</code>
 </pre>
-                </div>
             </div>
         </div>
     </uib-tab>
@@ -694,7 +710,7 @@
                     <td>
                         Sales partner location identifier, in case the partner wants to have reports per location, a unique location identifier should be sent for each location. If the partner wants the reports per something else, e.g. the user, he can send the user identifier etc.
                     </td>
-                    <td>YES</td>
+                    <td>NO</td>
                 </tr>
                 <tr>
                     <td>Signature </td>
@@ -765,7 +781,66 @@
         </p>
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-5" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <br />
+                <p>Recent transactions:</p>
+                <div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>LocationID</th>
+                                    <th>Cancel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="cancelTotalLoaded == 0 && !cancelBusy">
+                                    <td colspan="12" align="center">
+                                        <i>No data</i>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="transaction in cancelTransactions">
+                                    <td>{{$index + 1}}.</td>
+                                    <td>{{transaction.transactionId}}</td>
+                                    <td>{{transaction.amount | number:2}}</td>
+                                    <td>{{transaction.pointOfSaleId}}</td>
+                                    <td style="text-align: center; vertical-align: inherit">
+                                        <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.transactionId, transaction.pointOfSaleId)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <load-more total-loaded="cancelTotalLoaded" out="cancelLoadMore"></load-more>
+                </div>
+            </div>
 
+            <br />
+            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
+                <p>
+                    <i>Your request:</i>
+                </p>
+                <pre style="height: 100%">
+Request DateTimeUTC: {{cancelTransactionRequestDateTimeUTC}}
+Request content:
+<code>{{cancelTransactionServiceRequest}}</code>
+</pre>
+            </div>
+            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
+                <p>
+                    <i>Your response:</i>
+                </p>
+                <pre>
+Response DateTimeUTC: {{cancelTransactionRequestDateTimeUTC}}
+Response content:
+<code>{{cancelTransactionServiceResponse}}</code>
+</pre>
+            </div>
+        </div>
     </uib-tab>
 </uib-tabset>
 
@@ -821,7 +896,7 @@
                 Invalid bar code
             </td>
             <td>
-                The barcode that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                The barcode that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
             </td>
         </tr>
         <tr>

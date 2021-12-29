@@ -154,7 +154,8 @@ namespace Services.AircashPaymentAndPayout
             {
                 checkTransactionStatusResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
-            return checkTransactionStatusResponse;
+            returnResponse.ServiceResponse = checkTransactionStatusResponse;
+            return returnResponse;
 
         }
 
@@ -202,7 +203,8 @@ namespace Services.AircashPaymentAndPayout
             {
                 cancelTransactionResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
-            return cancelTransactionResponse;
+            returnResponse.ServiceResponse = cancelTransactionResponse;
+            return returnResponse;
 
         }
     }

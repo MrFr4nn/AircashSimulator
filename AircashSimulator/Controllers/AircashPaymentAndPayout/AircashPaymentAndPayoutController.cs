@@ -51,7 +51,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> CancelTransaction(CheckTransactionStatusRequest cancelTransactionRequest)
+        public async Task<IActionResult> CancelTransaction(CancelTransactionRequest cancelTransactionRequest)
         {
             var partnerId = UserContext.GetPartnerId(User);
             var userId = UserContext.GetUserId(User);

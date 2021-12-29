@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Services.Transactions
 {
     public interface ITransactionService
     {
-        Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber);
+        Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber, List<ServiceEnum> services);
     }
 }

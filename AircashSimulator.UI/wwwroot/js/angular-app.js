@@ -7,7 +7,7 @@ var app = angular.module('app', [
     'dashboard',
     'abonSp',
     'abonOp',
-    'acPay'
+    'acPay',
     'aircashPaymentAndPayout'
 ]);
 
