@@ -24,7 +24,7 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPaymentAndPayout/CheckCode",
+            url: config.baseUrl+"AircashPaymentAndPayout/CheckCode",
             data: {
                 BarCode: barCode,
                 LocationID: locationID
@@ -36,7 +36,7 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPaymentAndPayout/ConfirmTransaction",
+            url: config.baseUrl+"AircashPaymentAndPayout/ConfirmTransaction",
             data: {
                 BarCode: barCode,
                 LocationID: locationID
@@ -48,7 +48,7 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPaymentAndPayout/CheckTransactionStatus",
+            url: config.baseUrl+"AircashPaymentAndPayout/CheckTransactionStatus",
             data: {
                 PartnerTransactionID: partnerTransactionID
             }
@@ -60,7 +60,7 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         console.log(locationID);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPaymentAndPayout/CancelTransaction",
+            url: config.baseUrl+"AircashPaymentAndPayout/CancelTransaction",
             data: {
                 PartnerTransactionID: partnerTransactionID,
                 LocationID: locationID
