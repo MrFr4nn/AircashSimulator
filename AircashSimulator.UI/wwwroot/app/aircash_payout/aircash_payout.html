@@ -1,0 +1,733 @@
+﻿<h1>Overview</h1>
+<p style="text-align:justify">
+    Aircash is a financial platform for the transfer of money, and at the same time a licensed payment institution with an approval issued by the Croatian National Bank, valid in the European Union. In addition to the technical aspects, the platform meets the required regulations and procedures for preventing money laundering. Functionally, the Aircash platform enables fast and easy transfer of money between different users, regardless of whether they are a legal or natural person. The purpose of this document is to provide documentation for the integration of the payment process where the user pays the money from the partner system to the Aircash system
+</p>
+<h1>Payout process</h1>
+<p style="text-align:justify">
+    This chapter describes the payment process. The described process explains how the user can transfer assets from the Partner system to the Aircash system.<br />
+    The transfer process consists of three steps:
+</p>
+<ol>
+    <li>
+        Partner User Check (CheckUser)
+        <ul>
+            <li>
+                The user within the partner system inputs the number of mobile phone he used while registering in the Aircash application
+            </li>
+            <li>
+                Mobile phone is unique user identifier in Aircash system
+            </li>
+            <li>
+                The partner system can use this method to verify whether the user with the specified number exists in the Aircash system
+            </li>
+            <li>
+                The implementation of this method on a partner system is not mandatory, but is recommended by Aircash
+            </li>
+        </ul>
+    </li>
+    <li>
+        Partner Confirm transaction (CreatePayout)
+        <ul>
+            <li>
+                The user inputs transaction amount, along with phone number from step
+            </li>
+            <li>
+                On the user confirmation to make a payment, the partner system reserves the user's funds in partner system from the account and the partner system makes request to the Aircash system
+                <ol type="i">
+                    <li>
+                        in the case of a successful payment, partner should confirm transaction in the partner system
+                    </li>
+                    <li>
+                        in the case of a known error from the Aircash system, the funds can be returned to the user's account with the appropriate message
+                    </li>
+                    <li>
+                        In the case of an unknown error the partner system is obliged to leave the reserved funds until the problem is resolved
+                    </li>
+                </ol>
+            </li>
+            <li>
+                In the case of successful execution of this method, the Aircash system provides funds to the user account with which it has
+            </li>
+        </ul>
+    </li>
+    <li>
+        Partner Check Transaction Status (CheckTransactionStatus)
+        <ul>
+            <li>
+                In the case of an unknown payment error, the error recovery can be automated by checking the transaction status in the Aircash system
+            </li>
+            <li>
+                The implementation of this method is not necessary, but it is recommended.
+            </li>
+        </ul>
+    </li>
+</ol>
+
+<h1>Technical connectivity features</h1>
+<h2>Access</h2>
+<p style="text-align:justify">
+    The Aircash system allows the HTTPS / TLS 1.2 protocol on its access points. Aircash system is restricting its access points by the IP address of the partner. Partner is obliged to submit static (one or more) IPs that will access the Aircash test environment.<br />
+    The Aircash system's test domain is: https://staging-api.aircash.eu/
+</p>
+
+<h2>Authentication</h2>
+<p style="text-align:justify">
+    Authentication is achieved with digital signature on each request. In case of payout, the partner will need to generate an X.509 certificate and use a private key to sign partners requests towards Aircash. Partner will need to send the public key to Aircash, and Aircash will use that public key to verify the digital signature on each request. We discuss in detail how to generate certificates and how to generate digital signatures in latter chapters.
+</p>
+
+
+<h1>Methods called by the partner system on Aircash system</h1>
+<p style="text-align:justify">
+    The partner should connect to REST methods that receive JSON objects in order to successfully make payments.
+</p>
+<h2><i>CheckUser</i></h2>
+<p style="text-align:justify">
+    The method used by partner system to verify whether the user has an active account in Aircash system. <br />
+    Url: POST ~/api/PartnerV3/CheckUser
+</p>
+
+<uib-tabset>
+    <uib-tab index="checkUser1-tab-0" heading="Input parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PartnerId</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PhoneNumber</td>
+                    <td>String</td>
+                    <td>
+                        Phone number is unique identifier in Aircash system, and can uniquely define Aircash user. Phone number must be in MSISDN format. Eg. 3859812345678 (State Number 385, number of operators 98, number of users 1234567)
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PartnerUserID</td>
+                    <td>String</td>
+                    <td>
+                        User identifier in the merchant system.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature generated by the partner system that will be verified by Aircash system before processing request.
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
+        <pre>
+        <code>
+            {
+                "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
+                "PhoneNumber": "385981234567",
+                "PartnerUserID" : "12345",
+                "Signature": "12345....abc"
+            }
+
+            </code>        
+        </pre>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-2" heading="Output parameters" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameters</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Status </td>
+                            <td>Int</td>
+                            <td>
+                                1 - an unknown phone number<br />
+                                3 - there is a user, it is possible to make a payment
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-3" heading="Output parameters example" classes="nav-item">
+        <pre>
+        <code>
+            {
+                "status": 1
+            }
+                or
+            {
+                "status": 3
+            }
+            </code>
+        </pre>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-4" heading="Error message" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Http response</th>
+                    <th>Description</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>401  </td>
+                    <td>
+                        In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response
+                    </td>
+                    <td>
+                        Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-5" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="checkUserServiceBusy">
+                        </div>
+                        <button ng-click="checkUser()" class="btn btn-primary w-100px me-5px" ng-disabled="checkUserServiceBusy">Check user <i ng-if="checkUserServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-4" ng-if="checkUserServiceResponse">
+                Request ({{checkUserRequestDateTimeUTC}})
+<pre>
+<code>
+{{checkUserRequest}}
+</code>
+</pre>
+                Sequence: {{checkUserSequence}}<br />
+            </div>
+            <div class="col-md-4" ng-if="checkUserServiceResponse">
+                Response ({{checkUserResponseDateTimeUTC}})
+<pre>
+<code>
+{{checkUserResponse}}
+</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h2><i>CreatePayout</i></h2>
+<p style="text-align:justify">
+    The method used by partner system to create transaction in Aircash system. On each successful request Aircash system will deposit funds on user account. In case Aircash system returns error to the partner system, partner system should:
+    <ul>
+        <li>
+            in case of known error, the partner system should return money to the user account and display corresponding message to the user
+        </li>
+        <li>
+            in case of unknown error, the partner system should, reserve funds until issue is resolved. Issue can be resolved:
+            <ol type="i">
+                <li>Manually by the partner support</li>
+                <li>Automatically, by using CheckTransactionStatus method in Aircash system</li>
+            </ol>
+        </li>
+    </ul>
+    Url: POST ~/api/PartnerV3/CreatePayout
+</p>
+
+<uib-tabset>
+    <uib-tab index="createPayout1-tab-0" heading="Request parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PartnerId</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PartnerTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Transaction ID in the partner system
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td>Decimal</td>
+                    <td>
+                        Transaction amount
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PhoneNumber</td>
+                    <td>String</td>
+                    <td>
+                        Phone number is unique identifier in Aircash system, and can uniquely define Aircash user. Phone number must be in MSISDN format. Eg. 3859812345678 (State Number 385, number of operators 98, number of users 1234567)
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PartnerUserID</td>
+                    <td>String</td>
+                    <td>
+                        User identifier in the merchant system.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>CurrencyID</td>
+                    <td>Int</td>
+                    <td>
+                        ISO 4217 code of the currency the payout will be made in
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature generated by the partner system that will be verified by Aircash system before processing request.
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-1" heading="Request parameters example" classes="nav-item">
+        <pre>
+        <code>
+            {
+                "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
+                "PhoneNumber": "385981234567",
+                "PartnerUserID" : "12345",
+                "Amount": 123.00,
+                "CurrencyID": 191,
+                "PartnerTransactionID": "123..abc..123",
+                "Signature": "12345....abc"
+            }
+            </code>        
+        </pre>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-2" heading="Response parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AircashTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Transaction ID from Aircash system. Returns only in case of successful payment.
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-3" heading="Response parameters example" classes="nav-item">
+        <pre>
+        <code>
+        {
+            "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc "
+        }
+            </code>
+        </pre>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-4" heading="Error message" classes="nav-item">
+        <div class="row">
+            <div class="col-md-12"> 
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>401</td>
+                            <td>
+                                In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response
+                            </td>
+                            <td>
+                                Verify that PartnerID and Signature are correct in your request. If they are all according to documentation please contact Aircash support
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>
+                                Aircash system returns in this case response containing the error code with error info that partner system can send corresponding message to the partner.
+                            </td>
+                            <td>
+                                4000 - unknown phone number - warn user that user with inputted number doesn't exist in Aircash system<br />
+                                4002 - transaction with PartnerTransactionID already exists<br />
+                                4003 - amount is below limit<wbr />
+                                4004 - amount is over limit<br />
+                                4005 - user is blocked or user has reached limit<br />
+                                4006 - currencies do not match<br />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-5" heading="Error message example" classes="nav-item">
+        <pre>
+        <code>
+        {
+            "code": 4000,
+            "message": "User phone number isn't valid or doesn't exist in Aircash system"
+        }
+            </code>
+        </pre>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-6" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="createPayoutServiceBusy">
+                        </div>
+                        <button ng-click="createPayout()" class="btn btn-primary w-100px me-5px" ng-disabled="createPayoutServiceBusy">Create payout <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-5" ng-if="createPayoutServiceResponse">
+                Request ({{createPayoutRequestDateTimeUTC}})
+<pre>
+<code>
+{{createPayoutRequest}}
+</code>
+</pre>
+                Sequence: {{createPayoutSequence}}<br />
+            </div>
+            <div class="col-md-3" ng-if="createPayoutServiceResponse">
+                Response ({{createPayoutResponseDateTimeUTC}})
+<pre>
+<code>
+{{createPayoutResponse}}
+</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h2><i>CheckTransactionStatus</i></h2>
+<p style="text-align:justify">
+    The method used by partner system to check individual transaction status in Aircash system. Aircash recommend using CheckTransactionStatus method in cases when an unknown error occurs on CreatePayout method. With CheckTransactionStatus, the partner system will be able to automatically resolve all unknown errors from Aircash system<br />
+    Url: POST ~/api/PartnerV2/CheckTransactionStatus
+</p>
+
+
+<uib-tabset>
+    <uib-tab index="CheckTransactionStatus-tab-0" heading="Input parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PartnerId</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PartnerTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Transaction ID in the partner system
+                    </td>
+                    <td>
+                        YES, in case AircashTransactionID wasn't sent
+                    </td>
+                </tr>
+                <tr>
+                    <td>AircashTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Transaction ID from Aircash system.
+                    </td>
+                    <td>
+                        YES, in case PartnerTransactionID wasn't sent
+                    </td>
+                </tr>
+                <tr>
+                    <td>Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature generated by the partner system that will be verified by Aircash system before processing request.
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-1" heading="Input parameters example" classes="nav-item">
+        <pre>
+        <code>
+        {
+            "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
+            "AircashTransactionID": null,
+            "PartnerTransactionID": "123..abc..123",
+            "Signature": "12345....abc"
+        }
+        </code>        
+        </pre>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-2" heading="Response parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Status</td>
+                    <td>Int</td>
+                    <td>
+                        2 - The transaction exist in Aircash system<br />
+                        0 - The transaction doesn’t exist in Aircash system
+                        and the partner can cancel the transaction in the
+                        partner system
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>AircashTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        ID transakcije u Aircash sustavu. Vraća se samo u slučaju uspješne isplate (svi statusi osim statusa 0).
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-3" heading="Output parameters example" classes="nav-item">
+        <pre>
+        <code>
+        {
+            "status": 2,
+            "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc "
+        }
+            </code>
+        </pre>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-4" heading="Error message" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Http response</th>
+                    <th>Description</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>401</td>
+                    <td>
+                        In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response
+                    </td>
+                    <td>
+                        Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-5" heading="Error message example" classes="nav-item">
+        <pre>
+        <code>
+        {
+            "code": 4000,
+            "message": "User phone number isn't valid or doesn't exist in Aircash system"
+        }
+        </code>
+        </pre>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">PartnerTransactionId</label>
+                            <input ng-model="checkTransactionStatus.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="checkTransactionStatusServiceBusy">
+                        </div>
+                        <button ng-click="checkTransactionStatus()" class="btn btn-primary w-100px me-5px" ng-disabled="checkTransactionStatusServiceBusy">Check transaction status <i ng-if="checkTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-5" ng-if="checkTransactionStatusServiceResponse">
+                Request ({{checkTransactionStatusRequestDateTimeUTC}})
+<pre>
+<code>
+{{checkTransactionStatusRequest}}
+</code>
+</pre>
+                Sequence: {{checkTransactionStatusSequence}}<br />
+            </div>
+            <div class="col-md-3" ng-if="checkTransactionStatusServiceResponse">
+                Response ({{checkTransactionStatusResponseDateTimeUTC}})
+<pre>
+<code>
+{{checkTransactionStatusResponse}}
+</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h1>Production process</h1>
+<p>
+    The production process consists of several steps:
+    <ol>
+        <li>All acceptance criteria are checked and are performing in line with expectations</li>
+        <li>
+            Aircash support will add partner in Aircash production system and allow access to Aircash production system from the partner IP addresses
+        </li>
+        <li>
+            The partner will test connection to production and allow payments for individual users (if possible) in order to test integration in “silent” production
+        </li>
+        <li>
+            After the first 3 steps are in line with expectations, the partner will enable service for all user
+        </li>
+    </ol>
+</p>
+
+<h2>Acceptance criteria</h2>
+<p>
+    To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
+</p>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Scenario</th>
+            <th>Test description</th>
+            <th>Mandatory</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>CheckUser</td>
+            <td>
+                The Check User user method returns a successful check and allows the user to make a payment
+            </td>
+            <td>
+                YES, in case partner use this method
+            </td>
+        </tr>
+        <tr>
+            <td>CheckUser - error</td>
+            <td>
+                An appropriate message is printed to the user
+            </td>
+            <td>
+                YES, in case partner use this method
+            </td>
+        </tr>
+        <tr>
+            <td>CreatePayout</td>
+            <td>
+                The partner system should take funds from the user. The user should receive funds in Aircash application.
+            </td>
+            <td>
+                YES
+            </td>
+        </tr>
+        <tr>
+            <td>
+                CreatePayout - user doesn't exist with requested data
+            </td>
+            <td>
+                An appropriate message is printed to the user
+            </td>
+            <td>
+                YES
+            </td>
+        </tr>
+        <tr>
+            <td>
+                CreatePayout - disable a user to exceed max transaction amount
+            </td>
+            <td>
+                There is no need to call the method but only to disable user to make a call with a smaller or larger amount of the transaction
+            </td>
+            <td>
+                YES
+        </tr>
+        <tr>
+            <td>CheckTransactionStatus</td>
+            <td>
+                Check transaction status
+            </td>
+            <td>
+                YES, in case partner use this method
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<h1>Conclusion</h1>
+<p>
+    This document describes the technical aspect Aircash payout process where the partner can transfer funds from the partner system to Aircash system.<br />
+    For any questions, please contact: <a href="mailto:info@aircash.eu">info@aircash.eu</a>
+</p>
+
