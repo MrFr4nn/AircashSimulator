@@ -5,6 +5,7 @@ using AircashSimulator.Extensions;
 using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Authorization;
+using Domain.Entities.Enum;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -32,8 +33,8 @@ namespace AircashSimulator.Controllers.AircashFrame
                 UserId = UserContext.GetUserId(User),
                 Amount = initiateRequest.Amount,
                 Currency = initiateRequest.Currency,
-                PayType = initiateRequest.PayType,
-                PayMethod = initiateRequest.PayMethod
+                PayType = (PayTypeEnum)initiateRequest.PayType,
+                PayMethod = (PayMethodEnum)initiateRequest.PayMethod
             };
             var response = await AircashFrameService.Initiate(initiateRequestDTO);
             return Ok(response);

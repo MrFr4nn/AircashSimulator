@@ -67,10 +67,10 @@ acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService',
 
 acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrameService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acFrameService, $http, JwtParser, $uibModal, $rootScope) {
     $scope.initiateModel = {
-        payType: 0,
-        payMethod: 2,
-        amount: 25,
-        currency: 191
+        payType: null,
+        payMethod: null,
+        amount: null,
+        currency: null
     };
 
     $scope.transactionId;

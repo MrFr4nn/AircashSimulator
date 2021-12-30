@@ -11,8 +11,8 @@ namespace Services.Transactions
         public Guid UserId { get; set; }
         public decimal Amount { get; set; }
         public CurrencyEnum ISOCurrencyId { get; set; }
-        public int PayType { get; set; }
-        public int PayMethod { get; set; }
+        public PayTypeEnum PayType { get; set; }
+        public PayMethodEnum PayMethod { get; set; }
         public string NotificationUrl { get; set; }
         public string SuccessUrl { get; set; }
         public string DeclineUrl { get; set; }

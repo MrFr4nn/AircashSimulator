@@ -376,18 +376,18 @@
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-2">
-                        <form action="/" method="POST">
+                        <form action="/" method="POST" name="initiateForm">
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Pay Type</label>
-                                    <select ng-model="initiateModel.payType" class="form-control" required name="payType">
+                                    <select ng-model="initiateModel.payType" class="form-control" ng-required="true" name="payType">
                                         <option value="0">Payment</option>
                                         <option value="1">Payout</option>
                                     </select>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Pay Method</label>
-                                    <select ng-model="initiateModel.payMethod" class="form-control" required name="payMethod">
+                                    <select ng-model="initiateModel.payMethod" class="form-control" ng-required="true" name="payMethod">
                                         <option value="0">Abon</option>
                                         <option value="2">AC Pay</option>
                                         <option value="10">Payout</option>
@@ -395,39 +395,32 @@
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Amount</label>
-                                    <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" required name="amount">
+                                    <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" ng-required="true" name="amount">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Currency ID</label>
-                                    <select ng-model="initiateModel.currency" class="form-control" required name="payType">
+                                    <select ng-model="initiateModel.currency" class="form-control" ng-required="true" name="currencyId">
                                         <option value="191">HRK</option>
                                         <option value="977">EUR</option>
                                     </select>
                                 </div>
-                                <button ng-click="initiate()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy">Initiate <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="initiate()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">Initiate <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
 
                     <br />
-                    <div ng-hide="!initiateResponded" class="col-md-4">
-                        <p>
-                            <i>Your request:</i>
-                        </p>
-                        <pre style="height: 90%">
-Request DateTimeUTC: {{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
-Sequence to sign: {{sequenceInitiate}}
-Request content:
+                    <div ng-hide="!initiateResponded" class="col-md-5">
+                        Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
 <code>{{InitiateServiceRequest}}</code>
 </pre>
+
+                        Sequence: {{sequenceInitiate}}
                     </div>
-                    <div ng-hide="!initiateResponded" class="col-md-6">
-                        <p>
-                            <i>Your response:</i>
-                        </p>
-                        <pre>
-Response DateTimeUTC: {{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
-Response content:
+                    <div ng-hide="!initiateResponded" class="col-md-5">
+                        Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre style="height: 25%">
 <code>{{InitiateServiceResponse}}</code>
 </pre>
                         <a href="" ng-click="showFrame()">Open Aircash Frame</a>
@@ -653,7 +646,7 @@ Response content:
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <p>Recent transactions:</p>
                         <div>
                             <div class="table-responsive">
@@ -688,23 +681,15 @@ Response content:
                     </div>
                     <br />
                     <div ng-hide="!statusResponded" class="col-md-4">
-                        <p>
-                            <i>Your request:</i>
-                        </p>
-                        <pre style="height: 90%">
-Request DateTimeUTC: {{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
-Sequence to sign: {{sequenceStatus}}
-Request content:
+                        Request ({{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
 <code>{{StatusServiceRequest}}</code>
 </pre>
+                        Sequence: {{sequenceStatus}}
                     </div>
                     <div ng-hide="!statusResponded" class="col-md-4">
-                        <p>
-                            <i>Your response:</i>
-                        </p>
+                        Request ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <pre>
-Response DateTimeUTC: {{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}}
-Response content:
 <code>{{StatusServiceResponse}}</code>
 </pre>
                     </div>

@@ -1,4 +1,6 @@
 ﻿
+using Domain.Entities.Enum;
+
 namespace AircashSimulator.Controllers.AircashFrame
 {
     public class InitiateRequest
