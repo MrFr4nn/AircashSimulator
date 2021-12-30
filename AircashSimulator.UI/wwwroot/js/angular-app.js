@@ -8,7 +8,8 @@ var app = angular.module('app', [
     'abonSp',
     'abonOp',
     'acPay',
-    'aircashPayout'
+    'aircashPayout',
+    'signature'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)

@@ -1,0 +1,235 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Generate certificates</h1>
+    <p>
+        The easiest way to generate Provider certificates is through openSSL and running the following
+        command:
+    </p>
+    <div>
+        <code>openssl req -x509 -sha256 -newkey rsa:4096 -keyout PrivateKey.pem -out PublicKey.pem</code>
+    </div>
+    <br />
+    <p>
+        After starting the command, openSSL will require several data before generating the certificate:
+    </p>
+    <ul>
+        <li>Enter PEM pass phrase - the password you need to remember</li>
+        <li>Country name</li>
+        <li>State or Province name</li>
+        <li>Locality Name</li>
+        <li>Organization Unit Name</li>
+        <li>Common Name</li>
+        <li>Email Address</li>
+    </ul>
+    <p>
+        After entering all of these data, OpenSSL will generate two files:
+    </p>
+    <ul>
+        <li>
+            PrivateKey.pem - partner's certificate used to sign the request. Only a partner may have
+            access to this certificate and a partner should not share it (Aircash Support will never ask
+            to send this certificate, nor will Aircash support have access to this certificate). If a
+            partner believes this certificate has been compromised, or if someone unauthorized had
+            access to it, the partner must report that to Aircash Support. In this case, the partner is
+            obliged to repeat the certificate generation process and send public certificate to the
+            Aircash support.
+        </li>
+        <li>
+            PublicKey.pem - partner's public certificate that the partner must provide to Aircash
+            Support.
+        </li>
+    </ul>
+    <p>
+        In case the Provider needs a pfx format certificate, using the following command can generate a
+        pfx certificate. To generate pfx certificate, the partner will need the password entered while generating
+        the keys (running the first openSSL command).
+    </p>
+    <div>
+        <code>openssl pkcs12 -export -out PrivateKeyPfxFile.pfx -inkey PrivateKey.pem -in PublicKey.pem</code>
+    </div>
+    <br />
+    <hr />
+    <h1>Generating partner's signature</h1>
+    <p>
+        In each request, the partner system sends the signature in order to achieve undeniability that
+        partner is actually making the request to Aircash system. The Aircash signature is generated so that all
+        the parameters are ordered alphabetically, and then the pairs of parameter names and parameter
+        values are joined into a single string. This string is then signed with a private certificate that only partner
+        has and sent in the Signature parameter.
+    </p>
+    <p>
+        After receiving the request, Aircash system is required to generate a string that matches the one
+        signed by the partner, and check its validity using the Signature and the public certificate (which the
+        partner will provide before the start of integration).
+    </p>
+    <p>Rules when generating the signature:</p>
+    <ul>
+        <li>For complex objects, the parameter order is alphabetical</li>
+        <li>
+            For decimal numbers, decimal points should be used. Also numbers in signature should be
+            trimmed out of unnecessary zeros behind decimal point
+            <ul>
+                <li>123 in signature is represented by 123</li>
+                <li>123.4 in signature is represented by 123.4</li>
+                <li>123.45 is signature is represented by 123.45</li>
+            </ul>
+        </li>
+        <li>
+            For lists, the parameter order is always the same as it was received, and parameters are joined
+            by a comma
+        </li>
+        <li>
+            For each parameter, the parameter name is printed first, and then the value joined by an
+            equation symbol
+        </li>
+        <li>
+            In case the value of a parameter is empty or null, only the parameter name is printed and the
+            value is skipped
+        </li>
+        <li>All parameters are connected with sign &</li>
+        <li>All parameter names are capitalized</li>
+    </ul>
+    Example:
+    <pre style="height: 130px">
+<code>{</code>
+<code>      "partnerID": "3de97a57-e9c7-42a8-aed0-ee864bf6d042",</code>
+<code>      "phoneNumber": "385981234567",</code>
+<code>      "personalID": null,</code>
+<code>      "amount": 123.00,</code>
+<code>      "partnerTransactionID": "2fe93582-8628-486c-b1a8-4f033c7ac009",</code>
+<code>      "signature": "abc... 123"</code>
+<code>}</code>
+</pre>
+    <p>Sequence that is signed :</p>
+    <p>
+        <b>Amount</b>=123&<b>PartnerID</b>=3de97a57-e9c7-42a8-aed0-ee864bf6d042&<b>PartnerTransactionID</b>=2fe93582-8
+        628-486c-b1a8-4f033c7ac009&<b>PersonalID</b>=&<b>PhoneNumber</b>=385981234567
+    </p>
+    <br />
+    <br />
+    <h4>.Net signature code example</h4>
+    <div style="width: 800px">
+        <pre style="background-color: white">
+
+    <span style="color: green">/// &lt;summary&gt;
+    /// Method used to generate signatures based on input data and selected certificates.
+    /// &lt;/summary&gt;
+    /// &lt;param name="dataToSign"&gt;Data for signature generation.&lt;/param&gt;
+    /// &lt;param name="certificatePath"&gt;Physical path to certificate.&lt;/param&gt;
+    /// &lt;param name="certificatePass"&gt;Certificate password.&lt;/param&gt;
+    /// &lt;returns&gt;Return generated signature.&lt;/returns&gt;</span>
+        <span style="color: blue">public static string</span> GenerateSignature( <span style="color: blue">string</span> dataToSign, <span style="color: blue">string</span> certificatePath, <span style="color: blue">string</span> certificatePass)
+    {
+        <span style="color: blue">var</span> certificate = <span style="color: blue">new</span> X509Certificate2(certificatePath, certificatePass, X509KeyStorageFlags.Exportable);
+        <span style="color: green">// Create byte arrays to hold original, encrypted, and decrypted data.</span>
+        <span style="color: blue">var</span> originalData = Encoding.UTF8.GetBytes(dataToSign);
+        <span style="color: green">// Create a new instance of the RSACryptoServiceProvider class</span>
+        <span style="color: blue">using</span> ( <span style="color: blue">var</span> rsa = certificate.GetRSAPrivateKey())
+        {
+        <span style="color: blue">var</span> signeddata = rsa.SignData(originalData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        <span style="color: blue">return</span> Convert.ToBase64String(signeddata);
+        }
+    }
+
+</pre>
+    </div>
+    <br />
+    <hr />
+    <h1>Verifying signature received from Aircash</h1>
+    <p>
+        In each request, the Aircash system sends the signature in order to achieve undeniability that
+        Aircash is actually making the request to the partner system. The Aircash signature is generated so
+        that all the parameters are ordered alphabetically, and then the pairs of parameter names and
+        parameter values are joined into a single string. This string is then signed with a private certificate
+        that only Aircash has and sent in the Signature parameter.
+    </p>
+    <p>
+        After receiving the request, the partner system is required to generate a string that
+        matches the one signed by Aircash, and check its validity using the Signature and the public
+        certificate (which Aircash support will provide before the start of integration).
+    </p>
+    <p>Rules when generating the signature:</p>
+    <ul>
+        <li>For complex objects, the parameter order is alphabetical</li>
+        <li>
+            For decimal numbers, decimal points should be used. Also numbers in signature should be
+            trimmed out of unnecessary zeros behind decimal point
+            <ul>
+                <li>123 in signature is represented by 123</li>
+                <li>123.4 in signature is represented by 123.4</li>
+                <li>123.45 is signature is represented by 123.45</li>
+            </ul>
+        </li>
+        <li>
+            For lists, the parameter order is always the same as it was received, and parameters are joined
+            by a comma
+        </li>
+        <li>
+            For each parameter, the parameter name is printed first, and then the value joined by an
+            equation symbol
+        </li>
+        <li>
+            In case the value of a parameter is empty or null, only the parameter name is printed and the
+            value is skipped
+        </li>
+        <li>All parameters are connected with sign &</li>
+        <li>All parameter names are capitalized</li>
+    </ul>
+    Example:
+    <pre style="height: 200px">
+<code>{</code>
+<code>      "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
+<code>      "Amount": 123.45,</code>
+<code>      "Parameters": [{</code>
+<code>              "Value": "Aircash",</code>
+<code>              "Key": "userName"</code>
+<code>      },</code>
+<code>      {</code>
+<code>              "Value": "385981234567",</code>
+<code>              "Key": "phoneNumber"</code>
+<code>      }]</code>
+<code>}</code>
+</pre>
+    <p>Sequence that is signed:</p>
+    <p>
+        <b>Amount</b>=123.45&<b>Parameters</b>=<b>Key</b>=userName&<b>Value</b>=Aircash<b>,Key</b>=phoneNumber&<b>Value</b>=38598123
+        4567&<b>TransactionID</b>=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
+    </p>
+    <br />
+    <br />
+    <h4>.Net signature code example</h4>
+    <br />
+    <div style="width: 800px">
+        <pre style="background-color: white">
+
+    <span style="color: green">/// &lt;summary&gt;
+    /// Method that verify signature for requests received from Aircash service.
+    /// &lt;/summary&gt;
+    /// &lt;param name=&quot;ceftificatePath&quot;&gt;Physical path to public certificate.&lt;/param&gt;
+    /// &lt;param name=&quot;signature&quot;&gt;Signature property received form Aircash in request.&lt;/param&gt;
+    /// &lt;param name=&quot;dataToSign&quot;&gt;All parameters expect signature joined in one string as Aircash documentation state.&lt;/param&gt;
+    /// &lt;returns&gt;Returns true in case signature verification was successful or false otherwise.&lt;/returns&gt;</span>
+        <span style="color: blue">public static bool</span> VerifySignature(<span style="color: blue">string</span> ceftificatePath, <span style="color: blue">string</span> signature, <span style="color: blue">string</span> dataToVerify)
+    {
+        <span style="color: green">// Load the certificate we’ll use to verify the signature from a file.</span>
+        <span style="color: blue">var</span> certificate = <span style="color: blue">new</span> X509Certificate2(ceftificatePath);
+        <span style="color: green">// Create byte arrays to hold original, encrypted, and decrypted data.</span>
+        <span style="color: blue">var</span> dataToVerifyBytes = Encoding.UTF8.GetBytes(dataToVerify);
+        <span style="color: blue">var</span> signatureBytes = Convert.FromBase64String(signature);
+        <span style="color: green">// Create a new instance of the RSACryptoServiceProvider class.</span>
+        <span style="color: blue">using</span> (<span style="color: blue">var</span> rsaAlg = (RSACryptoServiceProvider)certificate.PublicKey.Key)
+        <span style="color: blue">using</span> (<span style="color: blue">var</span> sha256 = <span style="color: blue">new</span> SHA256Managed())
+        {
+        <span style="color: blue">return</span> rsaAlg.VerifyData(dataToVerifyBytes, sha256, signatureBytes);
+        }
+    }
+
+</pre>
+    </div>
+</body>
+</html>
