@@ -54,7 +54,8 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
             url: config.baseUrl + "Transaction/GetTransactions",
             params: {
                 PageSize: pageSize,
-                PageNumber: pageNumber
+                PageNumber: pageNumber,
+                Services: [7]
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -95,17 +96,17 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         console.log($scope.generatePartnerCodeModel.locationID);
         $scope.generateBusy = true;
         acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
-            .then(function (responseGenerate) {
-                console.log(responseGenerate);
-                if (responseGenerate) {
-                    $scope.GenerateRequestDateTimeUTC = responseGenerate.requestDateTimeUTC;
-                    $scope.GenerateResponseDateTimeUTC = responseGenerate.responseDateTimeUTC;
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+                    $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.GenerateResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceGenerate = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
 
-                    responseGenerate.serviceRequest.signature = responseGenerate.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.GenerateServiceRequest = JSON.stringify(responseGenerate.serviceRequest, null, 4);
-                    $scope.GenerateServiceResponse = JSON.stringify(responseGenerate.serviceResponse, null, 4);
-
-                    $scope.codeLink = responseGenerate.serviceResponse.codeLink;
+                    $scope.codeLink = response.serviceResponse.codeLink;
                     new QRCode(document.getElementById("qrcode"), $scope.codeLink);
 
                 }
@@ -122,15 +123,16 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         console.log($scope.cancelTransactionModel.partnerTransactionID);
         $scope.cancelBusy = true;
         acPayService.cancelTransaction(transactionId)
-            .then(function (responseCancel) {
-                console.log(responseCancel);
-                if (responseCancel) {
-                    $scope.CancelRequestDateTimeUTC = responseCancel.requestDateTimeUTC;
-                    $scope.CancelResponseDateTimeUTC = responseCancel.responseDateTimeUTC;
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+                    $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.CancelResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceCancel = response.sequence;
 
-                    responseCancel.serviceRequest.signature = responseCancel.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.CancelServiceRequest = JSON.stringify(responseCancel.serviceRequest, null, 4);
-                    $scope.CancelServiceResponse = JSON.stringify(responseCancel.serviceResponse, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.CancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.CancelServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                 }
                 $scope.cancelBusy = false;
                 $scope.cancelResponded = true;

@@ -1,16 +1,15 @@
-﻿using DataAccess;
+﻿using System;
+using DataAccess;
+using System.Linq;
 using Domain.Entities;
-using System;
-using System.Threading.Tasks;
-using Domain.Entities.Enum;
-using AircashSignature;
 using System.Net.Http;
 using Newtonsoft.Json;
-using System.Net.Http.Headers;
+using AircashSignature;
+using Domain.Entities.Enum;
 using Services.HttpRequest;
-using AircashSimulator.Configuration;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using System.Linq;
+using AircashSimulator.Configuration;
 
 namespace Services.AbonOnlinePartner
 {
@@ -106,10 +105,10 @@ namespace Services.AbonOnlinePartner
                     Amount = successResponse.CouponValue,
                     ISOCurrencyId = successResponse.ISOCurrency,
                     PartnerId = providerId,
-                    TransactionId = new Guid(),
+                    TransactionId = Guid.NewGuid(),
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = DateTime.UtcNow,
-                    UserId = new Guid(),
+                    UserId = userId,
                     ServiceId = ServiceEnum.AbonUsed
                 };
                 AircashSimulatorContext.Add(newTransaction);
