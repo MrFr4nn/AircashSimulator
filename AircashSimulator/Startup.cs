@@ -22,6 +22,7 @@ using Serilog;
 using Services.Transaction;
 using Services.Transactions;
 using Services.AircashPaymentAndPayout;
+using Services.PartnerAbonDenominations;
 
 namespace AircashSimulator
 {
@@ -89,6 +90,7 @@ namespace AircashSimulator
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
+            services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  

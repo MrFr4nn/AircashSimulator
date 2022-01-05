@@ -15,7 +15,8 @@ app.config(function ($stateProvider) {
 abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         createCoupon: createCoupon,
-        cancelCoupon: cancelCoupon
+        cancelCoupon: cancelCoupon,
+        getDenominations: getDenominations
     });
     function createCoupon(value, pointOfSaleId) {
         console.log(config);
@@ -41,6 +42,15 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function getDenominations() {
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "Denominations/GetDenominations",
+            params: {
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 }
 ]);
 
@@ -62,10 +72,19 @@ abonSpModule.controller("abonSpCtrl",['$scope', '$state', 'abonSpService', '$fil
     $scope.cancelServiceBusy = false;
     $scope.cancelServiceResponse = false;
 
+    $scope.setDefaults = function () {
+        $scope.denominations = [];
+        $scope.busy = false;
+    };
 
     $scope.showCoupon = function () {
         console.log("test");
         $("#couponModal").modal("show");
+    }
+
+    $scope.showContent = function () {
+        console.log("test");
+        $("#contentModal").modal("show");
     }
 
     $scope.createCoupon = function () {
@@ -113,4 +132,20 @@ abonSpModule.controller("abonSpCtrl",['$scope', '$state', 'abonSpService', '$fil
                 console.log("error");
             });
     }
+
+    $scope.getDenominations = function () {;
+        abonSpService.getDenominations()
+            .then(function (response) {                
+                if (response) {
+                    console.log(response);
+                    $scope.denominations = $scope.denominations.concat(response);
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.setDefaults();
+
+    $scope.getDenominations();
 }]);
