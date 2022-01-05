@@ -1,16 +1,16 @@
-﻿using AircashSignature;
-using AircashSimulator.Configuration;
+﻿using System;
 using DataAccess;
-using Domain.Entities;
-using Domain.Entities.Enum;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using Services.HttpRequest;
-using System;
 using System.Linq;
 using System.Net.Http;
+using Domain.Entities;
+using Newtonsoft.Json;
+using AircashSignature;
+using Domain.Entities.Enum;
+using Services.HttpRequest;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using AircashSimulator.Configuration;
 
 namespace Services.AircashPay
 {

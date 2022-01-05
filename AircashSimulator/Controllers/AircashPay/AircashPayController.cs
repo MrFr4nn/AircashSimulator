@@ -1,15 +1,14 @@
-﻿using Domain.Entities.Enum;
-using Microsoft.AspNetCore.Mvc;
-using Services.AircashPay;
-using System;
-using System.Threading.Tasks;
+﻿using System;
 using AircashSignature;
-using Microsoft.AspNetCore.Authorization;
+using Services.AircashPay;
+using Domain.Entities.Enum;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using AircashSimulator.Extensions;
-using Services.HttpRequest;
-using AircashSimulator.Controllers.AircashPay;
-using AircashSimulator.Configuration;
 using Microsoft.Extensions.Options;
+using AircashSimulator.Configuration;
+using Microsoft.AspNetCore.Authorization;
+using AircashSimulator.Controllers.AircashPay;
 
 namespace AircashSimulator.Controllers
 {

@@ -1,7 +1,5 @@
-﻿using Domain.Entities.Enum;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Domain.Entities.Enum;
 
 namespace Domain.Entities
 {
