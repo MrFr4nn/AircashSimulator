@@ -188,7 +188,7 @@
                         <td><b>PayType</b></td>
                         <td>int</td>
                         <td>
-                            0 - Fixed value
+                            Pay type identifier ( 0 - Payment; 1 - Payout )
                         </td>
                         <td>YES</td>
                     </tr>
@@ -196,7 +196,7 @@
                         <td><b>PayMethod</b></td>
                         <td>int</td>
                         <td>
-                            2 – Fixed value
+                            Pay method identifier ( 0 - A-bon; 2 - Aircash Pay; 10 - Aircash Payout )
                         </td>
                         <td>YES</td>
                     </tr>
@@ -244,20 +244,20 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "Amount": 100,</code>
-                <code>    "CurrencyId": 978,</code>
-                <code>    "DeclineUrl": "https://aircash.eu?success=false",</code>
-                <code>    "Locale": "en-US",</code>
-                <code>    "NotificationUrl": "https://aircash.eu",</code>
-                <code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-                <code>    "PartnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-                <code>    "PartnerUserId": "5e82a3d1-5b05-40e4-9443-92b21fb43a34",</code>
-                <code>    "PayMethod": 2,</code>
-                <code>    "PayType": 0,</code>
-                <code>    "SuccessUrl": "https://aircash.eu?success=true",</code>
-                <code>    "Signature": "123...abc"</code>
-                <code>}</code>
+<code>{</code>
+<code>    "Amount": 100,</code>
+<code>    "CurrencyId": 978,</code>
+<code>    "DeclineUrl": "https://aircash.eu?success=false",</code>
+<code>    "Locale": "en-US",</code>
+<code>    "NotificationUrl": "https://aircash.eu",</code>
+<code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
+<code>    "PartnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
+<code>    "PartnerUserId": "5e82a3d1-5b05-40e4-9443-92b21fb43a34",</code>
+<code>    "PayMethod": 2,</code>
+<code>    "PayType": 0,</code>
+<code>    "SuccessUrl": "https://aircash.eu?success=true",</code>
+<code>    "Signature": "123...abc"</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
@@ -279,7 +279,7 @@
             <uib-tab index="request-tab-3" heading="200 OK Response example" classes="nav-item">
 <pre>
 <code>{</code>
-<code>"Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
+<code>    "Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
 <code>}</code>
 </pre>
             </uib-tab>
@@ -366,11 +366,11 @@
             </uib-tab>
             <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "code": 1,</code>
-                <code>    "message": "Invalid ProviderId",</code>
-                <code>    "additionalData": null</code>
-                <code>}</code>
+<code>{</code>
+<code>    "code": 1,</code>
+<code>    "message": "Invalid ProviderId",</code>
+<code>    "additionalData": null</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
@@ -503,11 +503,11 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "partnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-                <code>    "partnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-                <code>    "signature": "12345....abc"</code>
-                <code>}</code>
+<code>{</code>
+<code>    "partnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
+<code>    "partnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
@@ -637,11 +637,11 @@
             </uib-tab>
             <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "code": 1003,</code>
-                <code>    "message": "Transaction not processed",</code>
-                <code>    "additionalData": null</code>
-                <code>}</code>
+<code>{</code>
+<code>    "code": 1003,</code>
+<code>    "message": "Transaction not processed",</code>
+<code>    "additionalData": null</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
