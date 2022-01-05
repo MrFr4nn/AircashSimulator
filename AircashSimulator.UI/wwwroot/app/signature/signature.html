@@ -10,8 +10,10 @@
         The easiest way to generate Provider certificates is through openSSL and running the following
         command:
     </p>
-    <div>
-        <code>openssl req -x509 -sha256 -newkey rsa:4096 -keyout PrivateKey.pem -out PublicKey.pem</code>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <code>openssl req -x509 -sha256 -newkey rsa:4096 -keyout PrivateKey.pem -out PublicKey.pem</code>
+        </div>
     </div>
     <br />
     <p>
@@ -94,50 +96,104 @@
         <li>All parameters are connected with sign &</li>
         <li>All parameter names are capitalized</li>
     </ul>
-    Example:
-    <pre style="height: 130px">
-<code>{</code>
-<code>      "partnerID": "3de97a57-e9c7-42a8-aed0-ee864bf6d042",</code>
-<code>      "phoneNumber": "385981234567",</code>
-<code>      "personalID": null,</code>
-<code>      "amount": 123.00,</code>
-<code>      "partnerTransactionID": "2fe93582-8628-486c-b1a8-4f033c7ac009",</code>
-<code>      "signature": "abc... 123"</code>
-<code>}</code>
-</pre>
-    <p>Sequence that is signed :</p>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Example:</b></h5>
+            <pre><code>{{examplePartner}}</code></pre>
+        </div>
+    </div>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Sequence that is signed:</b></h5>
+            {{sequencePartner}}
+        </div>
+    </div>
+    <!--<p>Sequence that is signed :</p>
     <p>
         <b>Amount</b>=123&<b>PartnerID</b>=3de97a57-e9c7-42a8-aed0-ee864bf6d042&<b>PartnerTransactionID</b>=2fe93582-8
         628-486c-b1a8-4f033c7ac009&<b>PersonalID</b>=&<b>PhoneNumber</b>=385981234567
-    </p>
+    </p>-->
     <br />
     <br />
-    <h4>.Net signature code example</h4>
-    <div style="width: 800px">
-        <pre style="background-color: white">
-
-    <span style="color: green">/// &lt;summary&gt;
-    /// Method used to generate signatures based on input data and selected certificates.
-    /// &lt;/summary&gt;
-    /// &lt;param name="dataToSign"&gt;Data for signature generation.&lt;/param&gt;
-    /// &lt;param name="certificatePath"&gt;Physical path to certificate.&lt;/param&gt;
-    /// &lt;param name="certificatePass"&gt;Certificate password.&lt;/param&gt;
-    /// &lt;returns&gt;Return generated signature.&lt;/returns&gt;</span>
-        <span style="color: blue">public static string</span> GenerateSignature( <span style="color: blue">string</span> dataToSign, <span style="color: blue">string</span> certificatePath, <span style="color: blue">string</span> certificatePass)
+    <uib-tabset active="active">
+        <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
+            <pre style="background-color: white">
+/// &lt;summary&gt;
+/// Method used to generate signatures based on input data and selected certificates.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;dataToSign&quot;&gt;Data for signature generation.&lt;/param&gt;
+/// &lt;param name=&quot;certificatePath&quot;&gt;Physical path to certificate.&lt;/param&gt;
+/// &lt;param name=&quot;certificatePass&quot;&gt;Certificate password.&lt;/param&gt;
+/// &lt;returns&gt;Return generated signature.&lt;/returns&gt;
+public static string GenerateSignature( string dataToSign, string certificatePath, string certificatePass)
+{
+    var certificate = new X509Certificate2(certificatePath, certificatePass, X509KeyStorageFlags.Exportable);
+    // Create byte arrays to hold original, encrypted, and decrypted data.
+    var originalData = Encoding.UTF8.GetBytes(dataToSign);
+    // Create a new instance of the RSACryptoServiceProvider class
+    using ( var rsa = certificate.GetRSAPrivateKey())
     {
-        <span style="color: blue">var</span> certificate = <span style="color: blue">new</span> X509Certificate2(certificatePath, certificatePass, X509KeyStorageFlags.Exportable);
-        <span style="color: green">// Create byte arrays to hold original, encrypted, and decrypted data.</span>
-        <span style="color: blue">var</span> originalData = Encoding.UTF8.GetBytes(dataToSign);
-        <span style="color: green">// Create a new instance of the RSACryptoServiceProvider class</span>
-        <span style="color: blue">using</span> ( <span style="color: blue">var</span> rsa = certificate.GetRSAPrivateKey())
-        {
-        <span style="color: blue">var</span> signeddata = rsa.SignData(originalData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
-        <span style="color: blue">return</span> Convert.ToBase64String(signeddata);
-        }
+        var signeddata = rsa.SignData(originalData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        return Convert.ToBase64String(signeddata);
     }
+}</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
+                <pre style="background-color: white">
+public  static String signData(String privateCertFilePath, String privateCertPass, String dataToSgin) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
+	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
+	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
+	keyStore.load(instream, privateCertPass.toCharArray());
+	Enumeration&lt;String&gt;  aliases = keyStore.aliases();
+	String alias = (String) aliases.nextElement();
 
-</pre>
-    </div>
+	PrivateKey privateKey = (PrivateKey)keyStore.getKey(alias, privateCertPass.toCharArray());
+
+	Signature sign = Signature.getInstance(&quot;SHA256withRSA&quot;);
+	sign.initSign(privateKey);
+	sign.update(dataToSgin.getBytes(&quot;UTF-8&quot;));
+	return new String(Base64.encodeBase64(sign.sign()), &quot;UTF-8&quot;);
+}
+
+public  static String signDataAbon(String privateCertFilePath, String privateCertPass, String dataToSgin, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
+	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
+	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
+	keyStore.load(instream, privateCertPass.toCharArray());
+	Enumeration&lt;String&gt;  aliases = keyStore.aliases();
+	String alias = (String) aliases.nextElement();
+	
+	PrivateKey privateKey = (PrivateKey)keyStore.getKey(alias, privateCertPass.toCharArray());
+	
+	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
+	sign.initSign(privateKey);
+	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
+	return new String(Base64.encodeBase64(sign.sign()), &quot;ASCII&quot;);
+}</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-2" heading="Ruby" classes="nav-item">
+            <pre style="background-color: white">
+def initialize
+    @url = "https://api.staging.aircash.eu/"
+    @guid = "79ce88c4-7f3b-41f2-91ec-e04ffe681190"
+    @fileLocation = "..../supersport.pfx" # file location
+    @pass = "....." # file password
+end
+
+def sign(dataToSign)
+    @cert = Chilkat::CkCert.new()
+    @success = @cert.LoadPfxFile(@fileLocation, @pass)
+    @publicKeyXml = @cert.ExportPublicKey().getXml()
+    @publicKeyXml.gsub! &#39;RSAPublicKey&#39;, &#39;RSAKeyValue&#39;
+
+    @p12 = OpenSSL::PKCS12.new(File.binread(@fileLocation), @pass)
+    @originalData = (dataToSign).bytes
+    @digest = OpenSSL::Digest::SHA1.new
+    @keypair = OpenSSL::PKey::RSA.new(@p12.key.to_pem)
+    @signature = @keypair.sign(@digest, dataToSign + @publicKeyXml)
+    return Base64.encode64(@signature).gsub(&quot;\n&quot;, &quot;&quot;)
+end</pre>
+        </uib-tab>
+    </uib-tabset>
     <br />
     <hr />
     <h1>Verifying signature received from Aircash</h1>
@@ -180,56 +236,105 @@
         <li>All parameters are connected with sign &</li>
         <li>All parameter names are capitalized</li>
     </ul>
-    Example:
-    <pre style="height: 200px">
-<code>{</code>
-<code>      "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
-<code>      "Amount": 123.45,</code>
-<code>      "Parameters": [{</code>
-<code>              "Value": "Aircash",</code>
-<code>              "Key": "userName"</code>
-<code>      },</code>
-<code>      {</code>
-<code>              "Value": "385981234567",</code>
-<code>              "Key": "phoneNumber"</code>
-<code>      }]</code>
-<code>}</code>
-</pre>
-    <p>Sequence that is signed:</p>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Example:</b></h5>
+            <pre><code>{{exampleAircash}}</code></pre>
+        </div>
+    </div>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Sequence that is signed:</b></h5>
+            {{sequenceAircash}}
+        </div>
+    </div>
+    <!--<p>Sequence that is signed:</p>
     <p>
         <b>Amount</b>=123.45&<b>Parameters</b>=<b>Key</b>=userName&<b>Value</b>=Aircash<b>,Key</b>=phoneNumber&<b>Value</b>=38598123
         4567&<b>TransactionID</b>=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
-    </p>
+    </p>-->
     <br />
     <br />
     <h4>.Net signature code example</h4>
     <br />
-    <div style="width: 800px">
-        <pre style="background-color: white">
-
-    <span style="color: green">/// &lt;summary&gt;
-    /// Method that verify signature for requests received from Aircash service.
-    /// &lt;/summary&gt;
-    /// &lt;param name=&quot;ceftificatePath&quot;&gt;Physical path to public certificate.&lt;/param&gt;
-    /// &lt;param name=&quot;signature&quot;&gt;Signature property received form Aircash in request.&lt;/param&gt;
-    /// &lt;param name=&quot;dataToSign&quot;&gt;All parameters expect signature joined in one string as Aircash documentation state.&lt;/param&gt;
-    /// &lt;returns&gt;Returns true in case signature verification was successful or false otherwise.&lt;/returns&gt;</span>
-        <span style="color: blue">public static bool</span> VerifySignature(<span style="color: blue">string</span> ceftificatePath, <span style="color: blue">string</span> signature, <span style="color: blue">string</span> dataToVerify)
+    <uib-tabset>
+        <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
+            <div style="width: 800px">
+                <pre style="background-color: white">
+/// &lt;summary&gt;
+/// &lt;summary&gt;
+/// Method that verify signature for requests received from Aircash service.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;ceftificatePath&quot;&gt;Physical path to public certificate.&lt;/param&gt;
+/// &lt;param name=&quot;signature&quot;&gt;Signature property received form Aircash in request.&lt;/param&gt;
+/// &lt;param name=&quot;dataToSign&quot;&gt;All parameters expect signature joined in one string as Aircash documentation state.&lt;/param&gt;
+/// &lt;returns&gt;Returns true in case signature verification was successful or false otherwise.&lt;/returns&gt;
+public static bool VerifySignature(string ceftificatePath, string signature, string dataToVerify)
+{
+// Load the certificate we’ll use to verify the signature from a file.
+var certificate = new X509Certificate2(ceftificatePath);
+// Create byte arrays to hold original, encrypted, and decrypted data.
+var dataToVerifyBytes = Encoding.UTF8.GetBytes(dataToVerify);
+var signatureBytes = Convert.FromBase64String(signature);
+// Create a new instance of the RSACryptoServiceProvider class.
+using (var rsaAlg = (RSACryptoServiceProvider)certificate.PublicKey.Key)
+using (var sha256 = new SHA256Managed())
     {
-        <span style="color: green">// Load the certificate we’ll use to verify the signature from a file.</span>
-        <span style="color: blue">var</span> certificate = <span style="color: blue">new</span> X509Certificate2(ceftificatePath);
-        <span style="color: green">// Create byte arrays to hold original, encrypted, and decrypted data.</span>
-        <span style="color: blue">var</span> dataToVerifyBytes = Encoding.UTF8.GetBytes(dataToVerify);
-        <span style="color: blue">var</span> signatureBytes = Convert.FromBase64String(signature);
-        <span style="color: green">// Create a new instance of the RSACryptoServiceProvider class.</span>
-        <span style="color: blue">using</span> (<span style="color: blue">var</span> rsaAlg = (RSACryptoServiceProvider)certificate.PublicKey.Key)
-        <span style="color: blue">using</span> (<span style="color: blue">var</span> sha256 = <span style="color: blue">new</span> SHA256Managed())
-        {
-        <span style="color: blue">return</span> rsaAlg.VerifyData(dataToVerifyBytes, sha256, signatureBytes);
-        }
+        return rsaAlg.VerifyData(dataToVerifyBytes, sha256, signatureBytes);
     }
+}</pre>
+            </div>
+        </uib-tab>
+        <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
+                <pre style="background-color: white">
+public  static boolean verifySignature(String publicCertFilePath, String dataToSgin, String signature) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
+	FileInputStream stream = new FileInputStream(publicCertFilePath);
+	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
+	java.security.cert.Certificate certificate = certificateFactory.generateCertificate(stream);
+	PublicKey publicKey = certificate.getPublicKey();    
+			
+	Signature sign = Signature.getInstance(&quot;SHA256withRSA&quot;);
+	sign.initVerify(publicKey);
+	sign.update(dataToSgin.getBytes(&quot;UTF-8&quot;));
+	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;UTF-8&quot;)));
+}
 
-</pre>
-    </div>
+public  static boolean verifySignatureAbon(String publicCertFilePath, String dataToSgin, String signature, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
+	FileInputStream stream = new FileInputStream(publicCertFilePath);
+	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
+	java.security.cert.Certificate certificate = certificateFactory.generateCertificate(stream);
+	PublicKey publicKey = certificate.getPublicKey();
+				
+	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
+	sign.initVerify(publicKey);
+	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
+	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;ASCII&quot;)));
+}</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-2" heading="Python" classes="nav-item">
+            <pre style="background-color: white">
+def verify_sign(public_key_loc, signature, data):
+    &#39;&#39;&#39;
+    Verifies with a public key from whom the data came that it was indeed 
+    signed by their private key
+    param: public_key_loc Path to public key
+    param: signature String signature to be verified
+    return: Boolean. True if the signature is valid; False otherwise. 
+    &#39;&#39;&#39;
+    from crypto.PublicKey import RSA 
+    from crypto.Signature import PKCS1_v1_5 
+    from crypto.Hash import SHA256 
+    from base64 import b64decode 
+    pub_key = open(public_key_loc, &quot;r&quot;).read() 
+    rsakey = RSA.importKey(pub_key) 
+    signer = PKCS1_v1_5.new(rsakey) 
+    digest = SHA256.new() 
+    # Assumes the data is base64 encoded to begin with
+    digest.update(str.encode(data))
+    if signer.verify(digest, b64decode(signature)):
+        return True
+    return False</pre>
+        </uib-tab>
+    </uib-tabset>
 </body>
 </html>
