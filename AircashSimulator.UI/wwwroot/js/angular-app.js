@@ -8,6 +8,7 @@ var app = angular.module('app', [
     'abonSp',
     'abonOp',
     'acPay',
+    'aircashPaymentAndPayout',
     'aircashPayout',
     'acFrame',
     'signature'

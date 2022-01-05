@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.Enum;
+using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Domain.Entities.Enum;

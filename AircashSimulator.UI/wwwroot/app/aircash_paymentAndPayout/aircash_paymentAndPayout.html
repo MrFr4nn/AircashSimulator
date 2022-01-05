@@ -1,0 +1,1176 @@
+﻿<h1>General</h1>
+<p>
+    Aircash is a financial platform for the transfer of money, and at the same time a licensed payment institution with an approval issued by the Croatian National Bank, valid in the European Union. In addition to the technical aspects, the platform meets the required rolling stock regulations and procedures for preventing money laundering. <br />
+    Functionally, the Aircash platform enables fast and easy transfer of money between different users, regardless of whether they are a legal or a natural person. <br />
+    The purpose of this document is to provide documentation for the integration of the payment process where the user pays the money from the partner system to the Aircash system.
+</p>
+
+<h1>Payment and payout process</h1>
+<p>
+    This chapter describes both the payment and payout process. From the sales partner point of view, the described process is the same for both, except that the funds should be either paid by the user or paid out to the user.
+</p>
+
+<p>
+    Participants:
+    <ul>
+        <li>
+            User – Aircash application user which wishes to make a payment/payout
+        </li>
+        <li>
+            Cashier – person scanning the barcode for Aircash payment/payout
+        </li>
+        <li>
+            Sales partner system – system that the partner has to implement to support Aircash payment/payout
+        </li>
+        <li>
+            Aircash system – system that the sales partner system has to integrate with to make the payment and payout process run smoothly
+        </li>
+    </ul>       
+</p>
+
+<p>
+    Process:
+    <ol>
+        <li>
+            The user comes to a sales partner location
+        </li>
+        <li>
+            The user shows the barcode to the cashier, and the cashier scans the barcode using the barcode scanner
+        </li>
+        <li>
+            Sales partner system calls the Aircash system using the scanned barcode(CheckCode)
+        </li>
+        <li>
+            Aircash system responds with the amound, and whether it’s a payment or payout transaction
+            <ol type="a">
+                <li>If it’s a payment
+                <ol type="i">
+                    <li>
+                        The cashier asks for the money from the user
+                    </li>
+                    <li>
+                        The cashier receives the money from the user. The cashier should always receive the money before taking the next step and confirming the transaction.
+                    </li>
+                    <li>The cashier confirms the transaction</li>
+                    <li>
+                        The sales partner system calls the Aircash system to confirm the transaction (ConfirmTransaction)
+                        <ul>
+                            Potential error recovery (CheckTransactionStatus)
+                        </ul>
+                    </li>
+                </ol>
+                </li>
+                <li>
+                If it’s a payout
+                <ol type="i">
+                    <li>
+                        The cashier confirms the payout transaction
+                    </li>               
+                    <li>
+                        The sales partner system calls the Aircash system to confirm the transaction (ConfirmTransaction)
+                        <ul>
+                            Potential error recovery (CheckTransactionStatus)
+                        </ul>
+                    </li>
+                    <li>
+                        The cashier hands the user his money
+                    </li>
+                </ol>
+                </li> 
+            </ol>
+    </ol>
+</p>
+
+<h1>Methods called by the sales partner system to the Aircash system</h1>
+<p>
+    The partner should connect to REST methods that receive JSON objects in order to successfully make requests.
+</p>
+
+<h2>CheckCode</h2>
+<p>
+    Method used by the partner system to check whether there’s an active transaction in the Aircash system for a given barcode. All codes that start with AC1 or AC2 and have 16 or more digits are considered Aircash codes. <br />
+</p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/CheckCode</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/CheckCode</td>
+    </tr>
+</table>
+
+<uib-tabset>
+    <uib-tab index="CheckCode-tab-0" heading="Request parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PartnerID</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>BarCode</td>
+                    <td>String</td>
+                    <td>User’s scanned barcode</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>LocationID</td>
+                    <td>String</td>
+                    <td>Sales partner location identifier</td>
+                    <td>NO</td>
+                </tr>
+                <tr>
+                    <td>Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature to confirm that the partner is indeed making the request. Data  to sign: BarCode={0}&LocationID={1}&PartnerID={2}
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
+<pre>
+<code>
+{
+    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
+    "BarCode": "AC11234567890123",
+    "Signature": "12345....abc"
+}
+
+    </code>
+</pre>
+    </uib-tab>
+    <uib-tab index="CheckCode-tab-2" heading="Response parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>BarCode</td>
+                    <td>String</td>
+                    <td>Barcode that was sent in the request</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td>Number</td>
+                    <td>
+                        A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
+                    </td>
+                    <td>YES</td>
+                </tr>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckCode-tab-3" heading="Response example" classes="nav-item">
+<pre>
+<code>
+{
+    "BarCode": "AC11234567890123",
+    "Amount": 123.45
+}
+</code>
+</pre>
+    </uib-tab>
+    <uib-tab index="CheckCode-tab-4" heading="Error responses" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Http response</th>
+                    <th>Description</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>401</td>
+                    <td>
+                        The partner is sending an unknown partner ID, or the signature is not valid.
+                    </td>
+                    <td>
+                        Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                    </td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>
+                        A list of errors that can occur can be found at the end of this chapter in Error codes
+                    </td>
+                    <td>
+                        Depends on the error as described in Error codes chapter.
+                    </td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>
+                        Unexpected system error
+                    </td>
+                    <td>
+                        Try again until the system recovers.
+                    </td>
+                </tr>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckCode-tab-5" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST" name="transactionForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">BarCode</label>
+                            <input ng-model="checkCodeModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">LocationID</label>
+                            <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                        </div>
+                        <button ng-click="checkCode()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-4" ng-if="checkCodeServiceResponse">
+                Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{checkCodeServiceRequest}}
+</code>
+</pre>
+                Sequence: {{checkCodeSequence}}<br />
+            </div>
+            <div class="col-md-4" ng-if="checkCodeServiceResponse">
+                Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{checkCodeServiceResponse}}
+</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h2>ConfirmTransaction</h2>
+
+<p>
+    Method used by the partner system to confirm the transaction in Aircash system. Aircash suggests setting the timeout to this call to a minimum of 30 seconds, in order to avoid unnecessary timeout errors.<br />
+</p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+    </tr>
+</table>
+
+<uib-tabset>
+    <uib-tab index="ConfirmTransaction-tab-0" heading="Request parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PartnerID</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>BarCode</td>
+                    <td>String</td>
+                    <td>User’s scanned barcode</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PartnerTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Partner’s unique identifier of the transaction
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>LocationID</td>
+                    <td>String</td>
+                    <td>
+                        Sales partner location identifier, in case the partner wants to have reports per location, a unique location identifier should be sent for each location. If the partner wants the reports per something else, e.g. the user, he can send the user identifier etc.
+                    </td>
+                    <td>NO</td>
+                </tr>
+                <tr>
+                    <td>Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature to confirm that the partner is indeed making the request. Data to sign is BarCode={0}&LocationID={1}&PartnerID={2}&PartnerTransactionID={3}
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
+<pre>
+<code>
+{
+    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
+    "BarCode": "AC11234567890123",
+    "PartnerTransactionID": "abc...123",
+    "Signature": "12345....abc"
+}
+</code>
+</pre>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-2" heading="Response parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>BarCode</td>
+                    <td>String</td>
+                    <td>Barcode that was sent in the request</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>Amount</td>
+                    <td>Number</td>
+                    <td>
+                        A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
+                    </td>
+                    <td>YES</td>
+                </tr>                
+                <tr>
+                    <td>AircashTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Aircash system’s unique identifier of the transaction
+                    </td>
+                    <td>YES</td>
+                </tr>
+</table>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-3" heading="Response example" classes="nav-item">
+<pre>
+<code>
+{
+    "BarCode": "AC11234567890123",
+    "Amount": 123.45,
+    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+}
+</code>
+</pre>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-4" heading="Error responses" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Http response</th>
+                    <th>Description</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>401</td>
+                    <td>
+                        The partner is sending an unknown partner ID, or the signature is not valid.
+                    </td>
+                    <td>
+                        Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                    </td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>
+                        A list of errors that can occur can be found at the end of this chapter in Error codes
+                    </td>
+                    <td>
+                        Depends on the error as described in Error codes chapter.
+                    </td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>
+                        Unexpected system error
+                    </td>
+                    <td>
+                        Try again until the system recovers.
+                    </td>
+                </tr>
+        </table>
+        <p>
+            Corner cases<br />
+            In case of Aircash system not returning a response to a ConfirmTransaction call, or
+            responding with an error 500, the sales partner system should check the transaction status in
+            Aircash system by calling the CheckTransactionStatus method.
+        </p>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-5" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">BarCode</label>
+                            <input ng-model="confirmTransactionModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">LocationID</label>
+                            <input ng-model="confirmTransactionModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="confirmTransactionServiceBusy">
+                        </div>
+                        <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || transactionForm1.$invalid">Confirm <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
+                Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{confirmTransactionServiceRequest}}
+</code>
+</pre>
+                Sequence: {{confirmTransactionSequence}}<br />
+            </div>
+            <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
+                Response ({{confirmTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{confirmTransactionServiceResponse}}
+</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h2>CheckTransactionStatus</h2>
+
+<p>
+    Method used by the sales partner to check the status of the transaction in the Aircash system.
+    Aircash recommends that the partner use this method in case of when the partner receives
+    HTTP error 500 response on the ConfirmTransaction method. This way a partner will be able to
+    verify if a transaction was successfully processed on the Aircash side as HTTP error 500
+    messages could be the result of communication issues between two systems.
+</p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
+    </tr>
+</table>
+
+<uib-tabset>
+    <uib-tab index="CheckTransactionStatus-tab-0" heading="Request parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PartnerID</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>                
+                <tr>
+                    <td>PartnerTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Partner’s unique identifier of the transaction
+                    </td>
+                    <td>YES</td>
+                </tr>                
+                <tr>
+                    <td>Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature to confirm that the partner is indeed making the request. Data to sign is PartnerID={0}&PartnerTransactionID={1}
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
+<pre>
+<code>
+{
+    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
+    "PartnerTransactionID": "abc...123",
+    "Signature": "12345....abc"
+}
+</code>
+</pre>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-2" heading="Response parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Amount</td>
+                    <td>Number</td>
+                    <td>
+                        A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>AircashTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Aircash system’s unique identifier of the transaction
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>LocationID</td>
+                    <td>String</td>
+                    <td>
+                        Location identifier that the partner sent on transaction confirmation. If the identifier was not sent, this parameter will remain empty.
+                    </td>
+                    <td>YES</td>
+                </tr>
+</table>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-3" heading="Response example" classes="nav-item">
+<pre>
+<code>
+{
+    "LocationID": "PartnerLocationID",
+    "Amount": 123.45,
+    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+}
+</code>
+</pre>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-4" heading="Error responses" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Http response</th>
+                    <th>Description</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>401</td>
+                    <td>
+                        The partner is sending an unknown partner ID, or the signature is not valid.
+                    </td>
+                    <td>
+                        Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                    </td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>
+                        A list of errors that can occur can be found at the end of this chapter in Error codes
+                    </td>
+                    <td>
+                        Depends on the error as described in Error codes chapter.
+                    </td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>
+                        Unexpected system error
+                    </td>
+                    <td>
+                        Try again until the system recovers.
+                    </td>
+                </tr>
+        </table>
+        <p>
+            Corner cases<br />
+            In case of Aircash system not returning a response to a ConfirmTransaction call, or responding with an error 500, the sales partner system should check the transaction status in Aircash system by calling the CheckTransactionStatus method.
+        </p>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-5" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <br />
+                <p>Recent transactions:</p>
+                <div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>Check</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="checkTotalLoaded == 0 && !checkBusy">
+                                    <td colspan="12" align="center">
+                                        <i>No data</i>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="transaction in checkTransactions">
+                                    <td>{{$index + 1}}.</td>
+                                    <td>{{transaction.transactionId}}</td>
+                                    <td>{{transaction.amount | number:2}}</td>
+                                    <td style="text-align: center; vertical-align: inherit">
+                                        <button class="btn btn-primary fa fa-check" ng-click="checkTransactionStatus(transaction.transactionId)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <load-more total-loaded="checkTotalLoaded" out="checkLoadMore"></load-more>
+                </div>
+            </div>
+            <div class="col-md-0.5"></div>
+            <br />
+            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
+                Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>{{checkTransactionStatusServiceRequest}}</code>
+</pre>
+                Sequence: {{checkTransactionStatusSequence}}<br />
+            </div>
+            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-3.5">
+                <p>
+                    Response ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                </p>
+                <pre>
+<code>{{checkTransactionStatusServiceResponse}}</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h2>CancelTransaction</h2>
+
+<p>
+    This method is called on the cash register in case casher needs to cancel payment (cashier's mistake, unpaid purchase, etc...) This method is intended for on-premise cancellation and can be called in a limited time interval after issuing the coupon (e.g. 5 minutes).<br />
+</p>
+
+<table class="table  table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/SalesPartner/CancelTransaction</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/SalesPartner/CancelTransaction</td>
+    </tr>
+</table>
+
+<uib-tabset>
+    <uib-tab index="CancelTransaction-tab-0" heading="Request parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>PartnerID</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>PartnerTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Partner’s unique identifier of the transaction
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>LocationID</td>
+                    <td>String</td>
+                    <td>
+                        Sales partner location identifier, in case the partner wants to have reports per location, a unique location identifier should be sent for each location. If the partner wants the reports per something else, e.g. the user, he can send the user identifier etc.
+                    </td>
+                    <td>NO</td>
+                </tr>
+                <tr>
+                    <td>Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature to confirm that the partner is indeed making the request. Data to sign is LocationID={0}&PartnerID={1}&PartnerTransactionID={2}
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CancelTransaction-tab-1" heading="Request example" classes="nav-item">
+<pre>
+<code>
+{
+    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
+    "PartnerTransactionID": "abc...123",
+    "Signature": "12345....abc"
+}
+</code>
+</pre>
+    </uib-tab>
+    <uib-tab index="CancelTransaction-tab-2" heading="Response parameters" classes="nav-item">
+        Empty response
+    </uib-tab>
+    <uib-tab index="CancelTransaction-tab-4" heading="Error responses" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Http response</th>
+                    <th>Description</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>401</td>
+                    <td>
+                        The partner is sending an unknown partner ID, or the signature is not valid.
+                    </td>
+                    <td>
+                        Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                    </td>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>
+                        A list of errors that can occur can be found at the end of this chapter in Error codes
+                    </td>
+                    <td>
+                        Depends on the error as described in Error codes chapter.
+                    </td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>
+                        Unexpected system error
+                    </td>
+                    <td>
+                        Try again until the system recovers.
+                    </td>
+                </tr>
+        </table>
+        <p>
+            Corner cases<br />
+            In case of Aircash system not returning a response to a ConfirmTransaction call, or responding with an error 500, the sales partner system should check the transaction status in Aircash system by calling the CheckTransactionStatus method.
+        </p>
+    </uib-tab>
+    <uib-tab index="CancelTransaction-tab-5" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <br />
+                <p>Recent transactions:</p>
+                <div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>LocationID</th>
+                                    <th>Cancel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="cancelTotalLoaded == 0 && !cancelBusy">
+                                    <td colspan="12" align="center">
+                                        <i>No data</i>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="transaction in cancelTransactions">
+                                    <td>{{$index + 1}}.</td>
+                                    <td>{{transaction.transactionId}}</td>
+                                    <td>{{transaction.amount | number:2}}</td>
+                                    <td>{{transaction.pointOfSaleId}}</td>
+                                    <td style="text-align: center; vertical-align: inherit">
+                                        <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.transactionId, transaction.pointOfSaleId)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <load-more total-loaded="cancelTotalLoaded" out="cancelLoadMore"></load-more>
+                </div>
+            </div>
+            <div class="col-md-0.5"></div>
+            <br />
+            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
+                Request({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>{{cancelTransactionServiceRequest}}</code>
+</pre>
+                Sequence: {{cancelTransactionSequence}}
+            </div>
+            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-3.5">
+                Response ({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>{{cancelTransactionServiceResponse}}</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h1>Error codes</h1>
+<p>
+    This chapter describes all of the error codes that can occur when the sales partner system receives a HTTP response 400. When responding with a 400 error, Aircash will add additional info describing the error.
+</p>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ErrorCode</td>
+            <td>
+                int
+            </td>
+            <td>
+                Error code.
+            </td>
+            <td>YES</td>
+        </tr>
+        <tr>
+            <td>ErrorMessage</td>
+            <td>
+                String
+            </td>
+            <td>
+                Error description.
+            </td>
+            <td>YES</td>
+        </tr>
+</table>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Error code</th>
+            <th>Message</th>
+            <th>Solution</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>
+                Invalid bar code
+            </td>
+            <td>
+                The barcode that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
+            </td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>
+                Bar code already used
+            </td>
+            <td>
+                The barcode was already used.
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>
+                Transaction limit
+            </td>
+            <td>
+                The user has reached one or more Aircash system limits, and the transaction was refused. The exact reason of the refusal will be visible to the user in the Aircash app.
+            </td>
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>
+                PartnerTransactionID is not unique
+            </td>
+            <td>
+                Partner transaction ID is not unique for this sales partner. Aircash suggests using Guid for PartnerTransactionIDs to avoid this.
+            </td>
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>
+                Transaction doesn’t exist in Aircash system
+            </td>
+            <td>
+                The transaction with the given PartnerTransactionID doesn’t exist in the Aircash system. Sales partner can cancel the transaction in their system and repeat the confirmation process.
+            </td>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>
+                Unable to confirm transaction without calling check bar code first
+            </td>
+            <td>
+                First you have to call check code in order to confirm the transaction
+            </td>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>
+                Unable to cancel payout
+            </td>
+            <td>
+                You can’t cancel a payout, only payment
+            </td>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>
+                Transaction already canceled
+            </td>
+            <td>
+                You can’t cancel a transaction that was already canceled.
+            </td>
+        </tr>
+        <tr>
+            <td>9</td>
+            <td>
+                Transaction in wrong status
+            </td>
+            <td>
+                The transaction is in wrong status and can’t be canceled
+            </td>
+        </tr>
+        <tr>
+            <td>10</td>
+            <td>
+                Cancellation period expired
+            </td>
+            <td>
+                You have a predefined timespan that you can cancel the transaction in.
+            </td>
+        </tr>
+</table>
+<h1>Production release process</h1>
+
+<p>
+    The production process consists of several steps:
+    <ol>
+        <li>
+            All acceptance criteria are checked and are performing in line with expectations
+        </li>
+        <li>
+            Aircash support will add partner in Aircash production system and allow access to Aircash production system from the partner IP addresses
+        </li>
+        <li>
+            The partner will test connection to production on a single location (if possible) in order to test integration in “silent” production
+        </li>
+        <li>After first 3 steps are in line with expectations, the partner will enable service on all locations</li>
+    </ol>
+</p>
+
+<h2>Acceptance criteria</h2>
+<p>
+    To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
+</p>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Scenario</th>
+            <th>Test description</th>
+            <th>Required</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Checking the payment/payout barcode
+            </td>
+            <td>
+                The cashier scans the barcode. This test should verify that the amount and transaction type are correctly displayed to the cashier to confirm the transaction.
+            </td>
+            <td>YES</td>
+        </tr>
+        <tr>
+            <td>
+                Stopping the payout in case of insufficient funds in the cash register
+            </td>
+            <td>
+                Sales partner system should be able to block the payout confirmation in case there is no sufficient funds in the cash register for the payout amount.
+            </td>
+            <td>YES</td>
+        </tr>
+        <tr>
+            <td>
+                Confirming the transaction
+            </td>
+            <td>
+                After scanning the barcode, the cashier confirms the transaction.<br />
+                This test checks the validity of:
+                <ul>
+                    <li>
+                        PartnerTransactionID – it has to be unique for each request to the Aircash system
+                    </li>
+                    <li>The receipt printout</li>
+                </ul>
+            </td>
+            <td>YES</td>
+        </tr>
+        <tr>
+            <td>
+                Checking the transaction status
+            </td>
+            <td>
+                The sales partner system confirms the transaction, but receives an unknown error from Aircash system. This test checks:
+                <ul>
+                    <li>
+                        That the sales partner system recovers by checking the transaction status
+                    </li>
+                    <li>
+                        That in case of the transaction existing in the Aircash system, sales partner system should act as if the transaction was successfully confirmed on the first call
+                    </li>
+                </ul>
+            </td>
+            <td>YES</td>
+        </tr>
+        <tr>
+            <td>
+                Checking the appropriate messages to the cashier
+            </td>
+            <td>
+                This test validates the display of appropriate messages when errors happen:
+                <ul>
+                    <li>Barcode already used</li>
+                    <li>Barcode doesn’t exist</li>
+                    <li>User has reached the limit</li>
+                </ul>
+            </td>
+            <td>YES</td>
+        </tr>
+        <tr>
+            <td>
+                Checking canceling the transaction
+            </td>
+            <td>
+                If the sales partner implemented cancellation, they should be able to cancel the transaction in a predefined time period using the PartnerTransactionID
+                <ul>
+                    <li>Canceling a payment should succeed</li>
+                    <li>
+                        Canceling a payout should fail
+                    </li>
+                </ul>
+            </td>
+            <td>
+                YES (if used)
+            </td>
+        </tr>
+</table>
+
+<h1>Conclusion</h1>
+<p>
+    This document describes the technical aspects of the sales partner integration to the Aircash system, where the sales partner enables the payments to the user’s account and payouts from the user’s account.<br />
+    For any questions, please contact:<br />
+    <a href="mailto:info@aircash.eu">info@aircash.eu</a>
+</p>

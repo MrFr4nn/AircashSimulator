@@ -4,14 +4,16 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AircashSimulatorContext))]
-    partial class AircashSimulatorContextModelSnapshot : ModelSnapshot
+    [Migration("20220105085457_PartnerAbonDenominationsTableModified")]
+    partial class PartnerAbonDenominationsTableModified
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -142,57 +144,6 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Partners");
-                });
-
-            modelBuilder.Entity("Domain.Entities.PreparedAircashFrameTransactionEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("DeclineUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ISOCurrencyId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NotificationUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("PartnerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PartnerTransactionId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("PayMethod")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PayType")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("RequestDateTimeUTC")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("ResponseDateTimeUTC")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SuccessUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("TransactionSatus")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("PreparedAircashFrameTransactions");
                 });
 
             modelBuilder.Entity("Domain.Entities.PreparedAircashTransactionEntity", b =>

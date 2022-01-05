@@ -21,6 +21,8 @@ using Services.AircashPay;
 using Serilog;
 using Services.Transaction;
 using Services.Transactions;
+using Services.AircashPaymentAndPayout;
+using Services.PartnerAbonDenominations;
 using Services.AircashFrame;
 using AircashFrame;
 
@@ -85,11 +87,13 @@ namespace AircashSimulator
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IAircashPayoutService, AircashPayoutService>();
+            services.AddTransient<IAircashPaymentAndPayoutService, AircashPaymentAndPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<IAircashFrameService, AircashFrameService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
+            services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  

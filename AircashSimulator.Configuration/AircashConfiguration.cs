@@ -17,6 +17,10 @@ namespace AircashSimulator.Configuration
         public string AcPayPublicKey { get; set; }
         public string AcFramePublicKey { get; set; }
         public int TransactionAmountPerPage { get; set; }
+        public string CheckCodeEndpoint { get; set; }
+        public string ConfirmTransactionEndpoint { get; set; }
+        public string PaymentCheckTransactionStatusEndpoint { get; set; }
+        public string PaymentCancelTransactionEndpoint { get; set; }
         public string AircashFrameTestUrl { get; set; }
         public string AircashFrameProductionUrl { get; set; }
         public string InitiateEndpoint { get; set; }

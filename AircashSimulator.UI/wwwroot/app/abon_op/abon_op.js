@@ -113,6 +113,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         }
     ];
 
+    $scope.showCoupon = function () {
+        console.log("test");
+        $("#couponModal").modal("show");
+    }
+
     $scope.validateResponded = false;
     $scope.validateBusy = false;
     $scope.validateCoupon = function () {

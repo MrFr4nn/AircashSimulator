@@ -1,4 +1,4 @@
-﻿<h1>Intro</h1>
+﻿<h1 style="text-align:justify">Intro</h1>
 
 <div class="row">
 
@@ -12,7 +12,7 @@
         An example of an Aircash A-bon is shown  <a href="" ng-click="showCoupon()">here</a>
     </p>
 </div>
-<h1>Technical integration aspects – security and authentication</h1>
+<h1 style="text-align:justify">Technical integration aspects – security and authentication</h1>
 <p style="text-align:justify">
     Aircash a-bon system exposes a REST web API.
     <br /> <br />
@@ -26,13 +26,33 @@
     <br /> <br />
     The partners are provided with an integration environment (staging) where it is possible to test all of the methods for integration. All the integration details of the A-bon services are described in detail in the following chapters.
 </p>
-<h1>Sales Partner API</h1>
-<h2>Coupon creation</h2>
+<h1 style="text-align:justify">Sales Partner API</h1>
+<h2 style="text-align:justify">Coupon creation</h2>
 <p style="text-align:justify">
     The method used to let the sales partner request a new Aircash a-bon. Aircash A-bon is created using the CreateCoupon method that creates the coupon and immediately activates it.
-    <br /><br />
-    URL: /rest/api/CashRegister/CreateCoupon
 </p>
+
+<table class="table table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CreateCoupon</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://a-bon.aircash.eu/rest/api/CashRegister/CreateCoupon</td>
+    </tr>
+</table>
 
 <div class="row">
     <div class="col-md-12">
@@ -249,22 +269,25 @@
             <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
-                        <form action="/" method="POST">
+                        <form action="/" method="POST" name="transactionForm0">
                             <fieldset>
                                 <div class="mb-3">
-                                    <label class="form-label">Value</label>
-                                    <input ng-model="createCouponModel.value" class="form-control" type="number" placeholder="Enter value" ng-disabled="createServiceBusy">
+                                    <label class="form-label" for="exampleInputPassword1">Value</label>
+                                    <select class="form-control"
+                                            ng-options="item for item in denominations"
+                                            ng-model="createCouponModel.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true">
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
-                                    <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy">
+                                    <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
                                 </div>
-                                <button ng-click="createCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="createCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
                     <div class="col-md-4" ng-if="createServiceResponse">
-                        Request ({{requestDateTimeUTC}})
+                        Request ({{requestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{serviceRequest}}
@@ -273,12 +296,13 @@
                         Sequence: {{sequence}}<br />
                     </div>
                     <div class="col-md-4" ng-if="createServiceResponse">
-                        Response ({{responseDateTimeUTC}})
+                        Response ({{responseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{serviceResponse}}
 </code>
 </pre>
+                        <center><button href="" ng-click="showContent()" class="btn btn-primary w-100px me-5px">Preview</button></center>
                     </div>
                 </div>
             </uib-tab>
@@ -296,9 +320,30 @@
 
 
 
-<h2>Coupon cancellation</h2>
+<h2 style="text-align:justify">Coupon cancellation</h2>
 
-<p>URL: /rest/api/CashRegister/CancelCoupon</p>
+<table class="table table-condensed col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+    </tr>
+</table>
+
 <p style="text-align:justify">
     This method is called on the cash register in case you need to cancel the coupon (cashier's mistake, the print failed, unpaid purchase etc.). This method is intended for on-premise cancellation, and can be called in a limited time interval after issuing the coupon. (e.g. 5 minutes).
     <br /> <br />
@@ -456,22 +501,22 @@
             <uib-tab index="request1-tab-4" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
-                        <form action="/" method="POST">
+                        <form action="/" method="POST" name="transactionForm1">
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label">Serial Number</label>
-                                    <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy">
+                                    <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
-                                    <input ng-model="cancelCouponModel.cancelPointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="cancelServiceBusy">
+                                    <input ng-model="cancelCouponModel.cancelPointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="cancelServiceBusy" ng-required="true">
                                 </div>
-                                <button ng-click="cancelCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelServiceBusy">Cancel coupon <i ng-if="cancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="cancelCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelServiceBusy || transactionForm1.$invalid">Cancel coupon <i ng-if="cancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
                     <div class="col-md-4" ng-if="cancelServiceResponse">
-                        Request ({{cancelRequestDateTimeUTC}})
+                        Request ({{cancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>
 {{cancelServiceRequest}}
@@ -480,7 +525,7 @@
                         Sequence: {{cancelSequence}}<br />
                     </div>
                     <div class="col-md-4" ng-if="cancelServiceResponse">
-                        Response ({{cancelResponseDateTimeUTC}})<br />
+                        Response ({{cancelResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})<br />
                         {{cancelResponse}}
                     </div>
                 </div>
@@ -505,11 +550,11 @@
 
 
 
-<h1>Edge cases</h1>
+<h1 style="text-align:justify">Edge cases</h1>
 <p style="text-align:justify">
     This chapter will describe possible edge cases that can happen while calling the API, and how to do error recovery. Edge cases include power outage on the cash register, temporary Internet unavailability, or temporary a-bon service unavailability.
 </p>
-<h2>CreateCoupon method – invalid or no response</h2>
+<h2 style="text-align:justify">CreateCoupon method – invalid or no response</h2>
 <p style="text-align:justify">
     In the case of an unsuccessful CreateCoupon call, the following error recovery methods should be
     applied.
@@ -523,7 +568,7 @@
     </li>
 </ol>
 
-<h2>
+<h2 style="text-align:justify">
     CreateCoupon method – response received
 </h2>
 
@@ -540,7 +585,7 @@
     </li>
 </ol>
 
-<h2>CancelCoupon method – invalid response</h2>
+<h2 style="text-align:justify">CancelCoupon method – invalid response</h2>
 <p style="text-align:justify">
     The method supports repeated calls. The method can be called again with the same parameters in the case of an invalid response. In the event that the coupon was canceled by a previous call (whose response was not received), the return value contains the message 7: "Coupon has been already canceled".
 </p>
@@ -560,6 +605,22 @@
             </div>
             <div class="modal-body" align="center">
                 <img src="../../images/abon.png" alt="A-bon">
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="contentModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">A-bon preview</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+            </div>
+            <div class="modal-body"  id="content1">
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
