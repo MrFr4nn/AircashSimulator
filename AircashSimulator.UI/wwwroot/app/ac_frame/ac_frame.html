@@ -5,40 +5,7 @@
     <title></title>
 </head>
 <body>
-    <div style="width: 100%">
-        <h1>Overview</h1>
-        <p>
-            Aircash is a financial ICT platform for the transfer of money, and at the same time a licensed
-            payment institution with an approval issued by the Croatian National Bank, valid in the European
-            Union. In addition to the technical aspects, the platform meets the required regulations and
-            procedures for preventing money laundering.
-        </p>
-        <p>
-            Functionally, the Aircash platform enables fast and easy transfer of money between different
-            users, regardless of whether they are a legal or natural person.
-        </p>
-        <p>
-            The purpose of this document is to provide documentation for the integration of the
-            Aircash frame to the partner system.
-        </p>
-        <hr />
-        <h1>Technical connectivity features</h1>
-        <br />
-        <h4>Access</h4>
-        <p>
-            The partner system should enable the HTTPS / TLS 1.2 protocol on its access points.
-            Aircash test domain is: https://staging-m3.aircash.eu
-        </p>
-        <br />
-        <h4>Authentication</h4>
-        <p>
-            Authentication is achieved with digital signature on each request. In case of transaction
-            confirmation, Aircash uses Aircash private key to sign requests towards partners. Aircash will give the
-            partner its public key, and the partner will need to use that public key to verify the digital signature
-            on each request. In case of code generation and cancellation Partner will use his private key to sign
-            the request and Aircash will use the public key to verify the digital signature.
-        </p>
-        <hr />
+    <div style="width: 100%">       
         <h1>Frame API</h1>
         <br />
 

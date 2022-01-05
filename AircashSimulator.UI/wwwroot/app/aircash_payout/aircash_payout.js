@@ -23,7 +23,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPayout/CheckUser",
+            url: config.baseUrl + "AircashPayout/CheckUser",
             data: {
                 PhoneNumber: phoneNumber
             }
@@ -34,7 +34,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPayout/CreatePayout",
+            url: config.baseUrl + "AircashPayout/CreatePayout",
             data: {
                 PhoneNumber: phoneNumber,
                 Amount: amount
@@ -46,7 +46,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AircashPayout/CheckTransactionStatus",
+            url: config.baseUrl + "AircashPayout/CheckTransactionStatus",
             data: {
                 PartnerTransactionId: partnerTransactionId
             }

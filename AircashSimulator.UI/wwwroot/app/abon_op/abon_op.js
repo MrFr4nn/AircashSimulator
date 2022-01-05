@@ -22,7 +22,7 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AbonOnlinePartner/ValidateCoupon",
+            url: config.baseUrl + "AbonOnlinePartner/ValidateCoupon",
             data: {
                 CouponCode: couponCode
             }
@@ -34,7 +34,7 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AbonOnlinePartner/ConfirmTransaction",
+            url: config.baseUrl +"AbonOnlinePartner/ConfirmTransaction",
             data: {
                 CouponCode: couponCode
             }
@@ -54,7 +54,7 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
             }
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/Coupon/GetUnusedCoupon",
+            url: config.baseUrl +"Coupon/GetUnusedCoupon",
             data: {
                 PurchasedCurrency: currency,
                 Value: selected.Value
