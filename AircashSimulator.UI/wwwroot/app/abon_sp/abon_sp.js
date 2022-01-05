@@ -22,7 +22,7 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         console.log(config);
         var request = $http({
             method: 'POST',
-            url:"https://localhost:44374/api/AbonSalePartner/CreateCoupon",
+            url: config.baseUrl + "AbonSalePartner/CreateCoupon",
             data: {
                 Value: value,
                 PointOfSaleId: pointOfSaleId
@@ -34,7 +34,7 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         console.log(config);
         var request = $http({
             method: 'POST',
-            url: "https://localhost:44374/api/AbonSalePartner/CancelCoupon",
+            url: config.baseUrl +"AbonSalePartner/CancelCoupon",
             data: {
                 SerialNumber: serialNumber,
                 PointOfSaleId: cancelPointOfSaleId
