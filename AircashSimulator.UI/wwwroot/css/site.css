@@ -109,3 +109,8 @@ body {
 body #gritter-notice-wrapper .gritter-item-wrapper .gritter-item .gritter-close:before {
     content: attr(data-before);
 }
+
+code {
+    color: black;
+    background-color: transparent;
+}

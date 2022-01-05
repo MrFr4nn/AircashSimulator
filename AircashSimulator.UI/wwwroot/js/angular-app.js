@@ -9,7 +9,8 @@ var app = angular.module('app', [
     'abonOp',
     'acPay',
     'aircashPayout',
-    'acFrame'
+    'acFrame',
+    'signature'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
