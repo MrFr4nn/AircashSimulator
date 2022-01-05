@@ -21,6 +21,8 @@ using Services.AircashPay;
 using Serilog;
 using Services.Transaction;
 using Services.Transactions;
+using Services.AircashFrame;
+using AircashFrame;
 
 namespace AircashSimulator
 {
@@ -85,6 +87,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashPayoutService, AircashPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<IAircashFrameService, AircashFrameService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));

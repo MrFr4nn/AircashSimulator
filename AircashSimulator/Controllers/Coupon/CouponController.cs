@@ -1,12 +1,7 @@
-﻿using Domain.Entities;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Services.Coupon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Services.Coupon;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AircashSimulator.Controllers
 {
