@@ -107,6 +107,7 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
                     $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.frameUrl = response.serviceResponse.url;
+                    $scope.getTransactions(true);
                     console.log($scope.frameUrl);
                 }
                 $scope.initiateBusy = false;
@@ -142,7 +143,8 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
             });
     }
 
-    $scope.getTransactions = function () {
+    $scope.getTransactions = function (reset) {
+        if (reset) $scope.setDefaults();
         console.log($scope.pageSize);
         console.log($scope.pageNumber);
         acFrameService.getTransactions($scope.pageSize, $scope.pageNumber)

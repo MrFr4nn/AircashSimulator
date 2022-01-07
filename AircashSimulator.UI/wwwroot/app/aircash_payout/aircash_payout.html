@@ -2,6 +2,7 @@
 <p style="text-align:justify">
     Aircash is a financial platform for the transfer of money, and at the same time a licensed payment institution with an approval issued by the Croatian National Bank, valid in the European Union. In addition to the technical aspects, the platform meets the required regulations and procedures for preventing money laundering. Functionally, the Aircash platform enables fast and easy transfer of money between different users, regardless of whether they are a legal or natural person. The purpose of this document is to provide documentation for the integration of the payment process where the user pays the money from the partner system to the Aircash system
 </p>
+<hr />
 <h1>Payout process</h1>
 <p style="text-align:justify">
     This chapter describes the payment process. The described process explains how the user can transfer assets from the Partner system to the Aircash system.<br />
@@ -62,30 +63,35 @@
         </ul>
     </li>
 </ol>
-
+<hr />
 <h1>Technical connectivity features</h1>
-<h2>Access</h2>
+<h4>Access</h4>
 <p style="text-align:justify">
     The Aircash system allows the HTTPS / TLS 1.2 protocol on its access points. Aircash system is restricting its access points by the IP address of the partner. Partner is obliged to submit static (one or more) IPs that will access the Aircash test environment.<br />
-    The Aircash system's test domain is: https://staging-api.aircash.eu/
+    The Aircash system's test domain is: 
 </p>
+<div class="note note-gray-400 col-md-6">
+    <div class="note-content">
+        https://staging-api.aircash.eu/
+    </div>
+</div>
 
-<h2>Authentication</h2>
+<h4>Authentication</h4>
 <p style="text-align:justify">
     Authentication is achieved with digital signature on each request. In case of payout, the partner will need to generate an X.509 certificate and use a private key to sign partners requests towards Aircash. Partner will need to send the public key to Aircash, and Aircash will use that public key to verify the digital signature on each request. We discuss in detail how to generate certificates and how to generate digital signatures in latter chapters.
 </p>
-
+<hr />
 
 <h1>Methods called by the partner system on Aircash system</h1>
 <p style="text-align:justify">
     The partner should connect to REST methods that receive JSON objects in order to successfully make payments.
 </p>
-<h2><i>CheckUser</i></h2>
+<h4>CheckUser</h4>
 <p style="text-align:justify">
     The method used by partner system to verify whether the user has an active account in Aircash system.
 </p>
 
-<table class="table  table-condensed col-md-6">
+<table class="table  table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -106,7 +112,7 @@
         <td>https://api.aircash.eu/api/PartnerV3/CheckUser</td>
     </tr>
 </table>
-
+<br />
 <uib-tabset>
     <uib-tab index="checkUser1-tab-0" heading="Input parameters" classes="nav-item">
         <table class="table table-hover">
@@ -259,7 +265,7 @@
     </uib-tab>
 </uib-tabset>
 
-<h2><i>CreatePayout</i></h2>
+<h4>CreatePayout</h4>
 <p style="text-align:justify">
     The method used by partner system to create transaction in Aircash system. On each successful request Aircash system will deposit funds on user account. In case Aircash system returns error to the partner system, partner system should:
     <ul>
@@ -276,7 +282,7 @@
     </ul>
 </p>
 
-<table class="table  table-condensed col-md-6">
+<table class="table  table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -297,7 +303,7 @@
         <td>https://api.aircash.eu/api/PartnerV3/CreatePayout</td>
     </tr>
 </table>
-
+<br />
 <uib-tabset>
     <uib-tab index="createPayout1-tab-0" heading="Request parameters" classes="nav-item">
         <table class="table table-hover">
@@ -502,12 +508,12 @@
     </uib-tab>
 </uib-tabset>
 
-<h2><i>CheckTransactionStatus</i></h2>
+<h4>CheckTransactionStatus</h4>
 <p style="text-align:justify">
     The method used by partner system to check individual transaction status in Aircash system. Aircash recommend using CheckTransactionStatus method in cases when an unknown error occurs on CreatePayout method. With CheckTransactionStatus, the partner system will be able to automatically resolve all unknown errors from Aircash system<br />
 </p>
 
-<table class="table  table-condensed col-md-6">
+<table class="table  table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -528,7 +534,7 @@
         <td>https://api.aircash.eu/api/PartnerV2/CheckTransactionStatus</td>
     </tr>
 </table>
-
+<br />
 <uib-tabset>
     <uib-tab index="CheckTransactionStatus-tab-0" heading="Input parameters" classes="nav-item">
         <table class="table table-hover">
@@ -743,7 +749,7 @@
     To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
 </p>
 
-<table class="table table-hover">
+<table class="table table-active">
     <thead>
         <tr>
             <th>Scenario</th>

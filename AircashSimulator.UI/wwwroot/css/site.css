@@ -114,3 +114,17 @@ code {
     color: black;
     background-color: transparent;
 }
+
+li.nav-item.active {
+    background-color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+div.tab-content {
+    border-radius: 5px;
+}
+
+table {
+    border-radius: 5px;
+}

@@ -27,8 +27,13 @@
         <h4>Access</h4>
         <p>
             The partner system should enable the HTTPS / TLS 1.2 protocol on its access points.
-            Aircash test domain is: https://staging-m3.aircash.eu
+            Aircash test domain is: 
         </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                https://staging-m3.aircash.eu
+            </div>
+        </div>
         <br />
         <h4>Authentication</h4>
         <p>
@@ -109,7 +114,7 @@
         </p>
 
         <i>Endpoints:</i>
-        <table class="table table-active">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -412,7 +417,7 @@
                     <br />
                     <div ng-hide="!initiateResponded" class="col-md-5">
                         Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
+<pre>
 <code>{{InitiateServiceRequest}}</code>
 </pre>
 
@@ -420,7 +425,7 @@
                     </div>
                     <div ng-hide="!initiateResponded" class="col-md-5">
                         Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre style="height: 25%">
+<pre style="height: 25%">
 <code>{{InitiateServiceResponse}}</code>
 </pre>
                         <a href="" ng-click="showFrame()">Open Aircash Frame</a>
@@ -434,21 +439,29 @@
             After transaction is processed, Aircash system will send notification to the NotificationUrl provided within the initiate request.
         </p>
         <p>
-            Notification example (HTTP GET): <br />
-            <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
+            Notification example (HTTP GET):
         </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
         <br />
         <p>
-            If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL: <br />
-            <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+            If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL:
         </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
         <br />
         <h4>Transaction status</h4>
         <p>
             Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
         </p>
         <i>Endpoints:</i>
-        <table class="table table-active">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -704,7 +717,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Aircash Frame</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body" align="center">
                     <iframe src="{{frameUrl | trusted}}" title="Aircash Frame" width="450px" height="700px" frameborder="0"></iframe>

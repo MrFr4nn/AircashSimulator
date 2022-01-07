@@ -79,9 +79,13 @@
         <p>
             The checkbox has to contain a link to A-bon Terms and Conditions:
         </p>
-        <code>
-            &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the A-bon Terms&Conditions&lt/a&gt
-        </code>
+        <div class="note note-gray-400 col-md-8">
+            <div class="note-content">
+                <code>
+                    &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the A-bon Terms&Conditions&lt/a&gt
+                </code>
+            </div>
+        </div>
 
         <hr />
 
@@ -94,7 +98,7 @@
             coupon.
         </p>
 
-        <table class="table table-condensed col-md-6">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -115,7 +119,7 @@
                 <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/ValidateCoupon</td>
             </tr>
         </table>
-
+        <br />
         <uib-tabset active="active">
             <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
@@ -362,7 +366,7 @@
         <p>
             Method that’s used to confirm the transfer of funds to the user’s online account.
         </p>
-        <table class="table table-condensed col-md-6">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -383,8 +387,7 @@
                 <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/ConfirmTransaction</td>
             </tr>
         </table>
-
-
+        <br />
         <uib-tabset>
             <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
@@ -680,7 +683,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">A-bon example</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body" align="center">
                     <img src="../../images/abon.png" alt="A-bon">

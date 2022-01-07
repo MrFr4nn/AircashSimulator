@@ -141,7 +141,8 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
             });
     }
 
-    $scope.getTransactions = function () {
+    $scope.getTransactions = function (reset) {
+        if (reset) $scope.setDefaults();
         console.log($scope.pageSize);
         console.log($scope.pageNumber);
         acPayService.getTransactions($scope.pageSize, $scope.pageNumber)

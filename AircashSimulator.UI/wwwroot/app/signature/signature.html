@@ -10,7 +10,7 @@
         The easiest way to generate Provider certificates is through openSSL and running the following
         command:
     </p>
-    <div class="note note-gray-400">
+    <div class="note note-gray-400 col-md-6">
         <div class="note-content">
             <code>openssl req -x509 -sha256 -newkey rsa:4096 -keyout PrivateKey.pem -out PublicKey.pem</code>
         </div>
@@ -51,8 +51,10 @@
         pfx certificate. To generate pfx certificate, the partner will need the password entered while generating
         the keys (running the first openSSL command).
     </p>
-    <div>
-        <code>openssl pkcs12 -export -out PrivateKeyPfxFile.pfx -inkey PrivateKey.pem -in PublicKey.pem</code>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content">
+            <code>openssl pkcs12 -export -out PrivateKeyPfxFile.pfx -inkey PrivateKey.pem -in PublicKey.pem</code>
+        </div>
     </div>
     <br />
     <hr />
@@ -108,13 +110,8 @@
             {{sequencePartner}}
         </div>
     </div>
-    <!--<p>Sequence that is signed :</p>
-    <p>
-        <b>Amount</b>=123&<b>PartnerID</b>=3de97a57-e9c7-42a8-aed0-ee864bf6d042&<b>PartnerTransactionID</b>=2fe93582-8
-        628-486c-b1a8-4f033c7ac009&<b>PersonalID</b>=&<b>PhoneNumber</b>=385981234567
-    </p>-->
     <br />
-    <br />
+    <h4>Code examples:</h4>
     <uib-tabset active="active">
         <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
             <pre style="background-color: white">
@@ -248,15 +245,8 @@ end</pre>
             {{sequenceAircash}}
         </div>
     </div>
-    <!--<p>Sequence that is signed:</p>
-    <p>
-        <b>Amount</b>=123.45&<b>Parameters</b>=<b>Key</b>=userName&<b>Value</b>=Aircash<b>,Key</b>=phoneNumber&<b>Value</b>=38598123
-        4567&<b>TransactionID</b>=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
-    </p>-->
     <br />
-    <br />
-    <h4>.Net signature code example</h4>
-    <br />
+    <h4>Code examples:</h4>
     <uib-tabset>
         <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
             <div style="width: 800px">
