@@ -20,6 +20,5 @@ declineModule.service("declineService", ['$http', '$q', 'handleResponseService',
 declineModule.controller("DeclineCtrl",
     ['$scope', '$state', 'declineService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, declineService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-            console.log($rootScope);
         }
     ]);
