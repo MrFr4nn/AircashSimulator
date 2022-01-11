@@ -18,5 +18,6 @@ namespace Services.Transactions
         public string DeclineUrl { get; set; }
         public DateTime? RequestDateTimeUTC { get; set; }
         public DateTime? ResponseDateTimeUTC { get; set; }
+        public AcFramePreparedTransactionStatusEnum TransactionSatus { get; set; }
     }
 }

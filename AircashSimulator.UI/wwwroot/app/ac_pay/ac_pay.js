@@ -45,11 +45,10 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
     function getTransactions(pageSize, pageNumber) {
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "Transaction/GetTransactions",
+            url: config.baseUrl + "Transaction/GetAircashPayPreparedTransactions",
             params: {
                 PageSize: pageSize,
-                PageNumber: pageNumber,
-                Services: [7]
+                PageNumber: pageNumber
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));

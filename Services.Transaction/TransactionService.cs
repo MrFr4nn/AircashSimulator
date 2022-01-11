@@ -70,9 +70,31 @@ namespace Services.Transactions
             return transactions;
         }
 
-        public Task<List<Transaction>> GetTransactions(Guid partnerId, int pageSize, int pageNumber)
+        public async Task<List<PreparedAircashPayTransaction>> GetAircashPayPreparedTransactions(Guid partnerId, int pageSize, int pageNumber)
         {
-            throw new NotImplementedException();
+            var transactions = await AircashSimulatorContext.PreparedAircashPayTransactions
+                .Where(x => x.PartnerId == partnerId)
+                .OrderByDescending(x => x.RequestDateTimeUTC)
+                .Skip((pageNumber - 1) * pageSize)
+                .Take(pageSize)
+                .Select(x => new PreparedAircashPayTransaction
+                {
+                    Id = x.Id,
+                    PartnerId = x.PartnerId,
+                    Amount = x.Amount,
+                    ISOCurrencyId = x.ISOCurrencyId,
+                    PartnerTransactionId = x.PartnerTransactionId,
+                    Description = x.Description,
+                    ValidForPeriod = x.ValidForPeriod,
+                    LocationId = x.LocationId,
+                    UserId = x.UserId,
+                    Status = x.Status,
+                    RequestDateTimeUTC = x.RequestDateTimeUTC,
+                    ResponseDateTimeUTC = x.ResponseDateTimeUTC
+                })
+                .ToListAsync();
+
+            return transactions;
         }
     }
 }
