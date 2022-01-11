@@ -672,7 +672,7 @@
                                             <td>{{transaction.partnerTransactionId}}</td>
                                             <td>{{transaction.amount | number:2}}</td>
                                             <td style="text-align: center; vertical-align: inherit">
-                                                <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.transactionId)"><i class="fa fa-remove"></i></button>
+                                                <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
