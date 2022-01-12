@@ -20,7 +20,6 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         checkTransactionStatus: checkTransactionStatus
     });
     function checkUser(phoneNumber) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CheckUser",
@@ -31,7 +30,6 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function createPayout(phoneNumber, amount) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CreatePayout",
@@ -43,7 +41,6 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function checkTransactionStatus(partnerTransactionId) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CheckTransactionStatus",
@@ -54,9 +51,6 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function getTransactions(pageSize, pageNumber, services) {
-        console.log(config);
-        console.log(pageSize);
-        console.log(pageNumber);
         var request = $http({
             method: 'GET',
             url: config.baseUrl + "Transaction/GetTransactions",
@@ -73,7 +67,6 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
 
 aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircashPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, aircashPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope) {
 
-    //console.log($rootScope);
     $scope.checkUserModel = {
         phoneNumber: '38512345678'
     };
@@ -105,13 +98,11 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.checkTransactionStatusServiceResponse = false;
 
     $scope.checkUser = function () {
-        console.log($scope.checkUserModel.phoneNumber);
         $scope.checkUserServiceBusy = true;
         aircashPayoutService.checkUser($scope.checkUserModel.phoneNumber)
             .then(function (response) {
 
                 if (response) {
-                    console.log(response);
                     $scope.checkUserRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.checkUserResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkUserSequence = response.sequence;
@@ -127,14 +118,11 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     }
 
     $scope.createPayout = function () {
-        console.log($scope.createPayoutModel.phoneNumber);
-        console.log($scope.createPayoutModel.amount);
         $scope.createPayoutServiceBusy = true;
         aircashPayoutService.createPayout($scope.createPayoutModel.phoneNumber, $scope.createPayoutModel.amount)
             .then(function (response) {
 
                 if (response) {
-                    console.log(response);
                     $scope.createPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.createPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.createPayoutSequence = response.sequence;
@@ -151,13 +139,11 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     }
 
     $scope.checkTransactionStatus = function (transactionId) {
-        console.log($scope.checkTransactionStatusModel.partnerTransactionId);
         $scope.checkTransactionStatusServiceBusy = true;
         aircashPayoutService.checkTransactionStatus(transactionId)
             .then(function (response) {
 
                 if (response) {
-                    console.log(response);
                     $scope.checkTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.checkTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkTransactionStatusSequence = response.sequence;
@@ -174,11 +160,8 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
 
     $scope.getTransactions = function (reset) {
         if (reset) $scope.setDefaults();
-        console.log($scope.pageSize);
-        console.log($scope.pageNumber);
         aircashPayoutService.getTransactions($scope.pageSize, $scope.pageNumber, [1, 2])
             .then(function (response) {
-                console.log(response);
                 $scope.checkPageNumber += 1;
                 if (response) {
                     $scope.totalLoaded = response.length;
@@ -191,7 +174,6 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
 
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
-        console.log(pageSize);
         $scope.getTransactions(false);
     };
 

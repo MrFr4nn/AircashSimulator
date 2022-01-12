@@ -20,6 +20,5 @@ successModule.service("successService", ['$http', '$q', 'handleResponseService',
 successModule.controller("SuccessCtrl",
     ['$scope', '$state', 'successService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, successService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-            console.log($rootScope);
         }
     ]);

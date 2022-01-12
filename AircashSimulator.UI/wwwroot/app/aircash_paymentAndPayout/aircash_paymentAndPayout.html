@@ -79,12 +79,12 @@
     The partner should connect to REST methods that receive JSON objects in order to successfully make requests.
 </p>
 
-<h2>CheckCode</h2>
+<h4>CheckCode</h4>
 <p>
     Method used by the partner system to check whether there’s an active transaction in the Aircash system for a given barcode. All codes that start with AC1 or AC2 and have 16 or more digits are considered Aircash codes. <br />
 </p>
 
-<table class="table  table-condensed col-md-6">
+<table class="table  table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -273,13 +273,13 @@
     </uib-tab>
 </uib-tabset>
 
-<h2>ConfirmTransaction</h2>
+<h4>ConfirmTransaction</h4>
 
 <p>
     Method used by the partner system to confirm the transaction in Aircash system. Aircash suggests setting the timeout to this call to a minimum of 30 seconds, in order to avoid unnecessary timeout errors.<br />
 </p>
 
-<table class="table  table-condensed col-md-6">
+<table class="table  table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -493,7 +493,7 @@
     </uib-tab>
 </uib-tabset>
 
-<h2>CheckTransactionStatus</h2>
+<h4>CheckTransactionStatus</h4>
 
 <p>
     Method used by the sales partner to check the status of the transaction in the Aircash system.
@@ -503,7 +503,7 @@
     messages could be the result of communication issues between two systems.
 </p>
 
-<table class="table  table-condensed col-md-6">
+<table class="table  table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -721,13 +721,13 @@
     </uib-tab>
 </uib-tabset>
 
-<h2>CancelTransaction</h2>
+<h4>CancelTransaction</h4>
 
 <p>
     This method is called on the cash register in case casher needs to cancel payment (cashier's mistake, unpaid purchase, etc...) This method is intended for on-premise cancellation and can be called in a limited time interval after issuing the coupon (e.g. 5 minutes).<br />
 </p>
 
-<table class="table  table-condensed col-md-6">
+<table class="table  table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -914,7 +914,7 @@
     This chapter describes all of the error codes that can occur when the sales partner system receives a HTTP response 400. When responding with a 400 error, Aircash will add additional info describing the error.
 </p>
 
-<table class="table table-hover">
+<table class="table table-active col-md-6">
     <thead>
         <tr>
             <th>Parameter</th>
@@ -946,7 +946,7 @@
         </tr>
 </table>
 
-<table class="table table-hover">
+<table class="table table-active">
     <thead>
         <tr>
             <th>Error code</th>
@@ -1065,12 +1065,12 @@
     </ol>
 </p>
 
-<h2>Acceptance criteria</h2>
+<h4>Acceptance criteria</h4>
 <p>
     To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
 </p>
 
-<table class="table table-hover">
+<table class="table table-active">
     <thead>
         <tr>
             <th>Scenario</th>

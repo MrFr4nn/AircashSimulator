@@ -19,7 +19,6 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         getUnusedCoupon: getUnusedCoupon
     });
     function validateCoupon(couponCode) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonOnlinePartner/ValidateCoupon",
@@ -31,7 +30,6 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
     }
 
     function confirmTransaction(couponCode) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl +"AbonOnlinePartner/ConfirmTransaction",
@@ -43,7 +41,6 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
     }
 
     function getUnusedCoupon(selected) {
-        console.log(config);
         switch (selected.Currency) {
             case "EUR":
                 currency = 977;
@@ -113,20 +110,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         }
     ];
 
-    $scope.showCoupon = function () {
-        console.log("test");
-        $("#couponModal").modal("show");
-    }
-
     $scope.validateResponded = false;
     $scope.validateBusy = false;
     $scope.validateCoupon = function () {
-        console.log($scope.validateCouponModel.couponCode);
         $scope.validateBusy = true;
         abonOpService.validateCoupon($scope.validateCouponModel.couponCode)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.ValidateRequestDateTimeUTC = response.requestDateTimeUTC;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.ValidateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
@@ -145,12 +135,10 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.confirmResponded = false;
     $scope.confirmBusy = false;
     $scope.confirmTransaction = function () {
-        console.log($scope.confirmTransactionModel.couponCode);
         $scope.confirmBusy = true;
         abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.ConfirmServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
@@ -167,11 +155,9 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     }
 
     $scope.getUnusedCouponValidate = function (selectedValidate) {
-        console.log(selectedValidate);
         abonOpService.getUnusedCoupon(selectedValidate)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.validateCouponModel.couponCode = response.couponCode;
                 }
             }, () => {
@@ -180,11 +166,9 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     }
 
     $scope.getUnusedCouponConfirm = function (selectedConfirm) {
-        console.log(selectedConfirm);
         abonOpService.getUnusedCoupon(selectedConfirm)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.confirmTransactionModel.couponCode = response.couponCode;
                 }
             }, () => {

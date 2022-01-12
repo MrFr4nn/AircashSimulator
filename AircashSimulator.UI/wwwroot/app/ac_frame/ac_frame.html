@@ -76,7 +76,7 @@
         </p>
 
         <i>Endpoints:</i>
-        <table class="table table-active">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -155,7 +155,7 @@
                         <td><b>PayType</b></td>
                         <td>int</td>
                         <td>
-                            0 - Fixed value
+                            Pay type identifier ( 0 - Payment; 1 - Payout )
                         </td>
                         <td>YES</td>
                     </tr>
@@ -163,7 +163,7 @@
                         <td><b>PayMethod</b></td>
                         <td>int</td>
                         <td>
-                            2 – Fixed value
+                            Pay method identifier ( 0 - A-bon; 2 - Aircash Pay; 10 - Aircash Payout )
                         </td>
                         <td>YES</td>
                     </tr>
@@ -211,20 +211,20 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "Amount": 100,</code>
-                <code>    "CurrencyId": 978,</code>
-                <code>    "DeclineUrl": "https://aircash.eu?success=false",</code>
-                <code>    "Locale": "en-US",</code>
-                <code>    "NotificationUrl": "https://aircash.eu",</code>
-                <code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-                <code>    "PartnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-                <code>    "PartnerUserId": "5e82a3d1-5b05-40e4-9443-92b21fb43a34",</code>
-                <code>    "PayMethod": 2,</code>
-                <code>    "PayType": 0,</code>
-                <code>    "SuccessUrl": "https://aircash.eu?success=true",</code>
-                <code>    "Signature": "123...abc"</code>
-                <code>}</code>
+<code>{</code>
+<code>    "Amount": 100,</code>
+<code>    "CurrencyId": 978,</code>
+<code>    "DeclineUrl": "https://aircash.eu?success=false",</code>
+<code>    "Locale": "en-US",</code>
+<code>    "NotificationUrl": "https://aircash.eu",</code>
+<code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
+<code>    "PartnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
+<code>    "PartnerUserId": "5e82a3d1-5b05-40e4-9443-92b21fb43a34",</code>
+<code>    "PayMethod": 2,</code>
+<code>    "PayType": 0,</code>
+<code>    "SuccessUrl": "https://aircash.eu?success=true",</code>
+<code>    "Signature": "123...abc"</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
@@ -246,7 +246,7 @@
             <uib-tab index="request-tab-3" heading="200 OK Response example" classes="nav-item">
 <pre>
 <code>{</code>
-<code>"Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
+<code>    "Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
 <code>}</code>
 </pre>
             </uib-tab>
@@ -333,11 +333,11 @@
             </uib-tab>
             <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "code": 1,</code>
-                <code>    "message": "Invalid ProviderId",</code>
-                <code>    "additionalData": null</code>
-                <code>}</code>
+<code>{</code>
+<code>    "code": 1,</code>
+<code>    "message": "Invalid ProviderId",</code>
+<code>    "additionalData": null</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
@@ -379,7 +379,7 @@
                     <br />
                     <div ng-hide="!initiateResponded" class="col-md-5">
                         Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
+<pre>
 <code>{{InitiateServiceRequest}}</code>
 </pre>
 
@@ -387,7 +387,7 @@
                     </div>
                     <div ng-hide="!initiateResponded" class="col-md-5">
                         Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre style="height: 25%">
+<pre style="height: 25%">
 <code>{{InitiateServiceResponse}}</code>
 </pre>
                         <a href="" ng-click="showFrame()">Open Aircash Frame</a>
@@ -401,21 +401,29 @@
             After transaction is processed, Aircash system will send notification to the NotificationUrl provided within the initiate request.
         </p>
         <p>
-            Notification example (HTTP GET): <br />
-            <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
+            Notification example (HTTP GET):
         </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
         <br />
         <p>
-            If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL: <br />
-            <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+            If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL:
         </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
         <br />
         <h4>Transaction status</h4>
         <p>
             Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
         </p>
         <i>Endpoints:</i>
-        <table class="table table-active">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -470,11 +478,11 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "partnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-                <code>    "partnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-                <code>    "signature": "12345....abc"</code>
-                <code>}</code>
+<code>{</code>
+<code>    "partnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
+<code>    "partnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
@@ -604,11 +612,11 @@
             </uib-tab>
             <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "code": 1003,</code>
-                <code>    "message": "Transaction not processed",</code>
-                <code>    "additionalData": null</code>
-                <code>}</code>
+<code>{</code>
+<code>    "code": 1003,</code>
+<code>    "message": "Transaction not processed",</code>
+<code>    "additionalData": null</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
@@ -671,7 +679,6 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Aircash Frame</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                 </div>
                 <div class="modal-body" align="center">
                     <iframe src="{{frameUrl | trusted}}" title="Aircash Frame" width="450px" height="700px" frameborder="0"></iframe>

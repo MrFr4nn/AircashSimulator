@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Mappers
 {
-    class PreparedAircashTransactionMapper : IEntityTypeConfiguration<PreparedAircashTransactionEntity>
+    class PreparedAircashTransactionMapper : IEntityTypeConfiguration<PreparedAircashPayTransactionEntity>
     {
-        public void Configure(EntityTypeBuilder<PreparedAircashTransactionEntity> builder)
+        public void Configure(EntityTypeBuilder<PreparedAircashPayTransactionEntity> builder)
         {
-            builder.ToTable("PreparedAircashTransactions");
+            builder.ToTable("PreparedAircashPayTransactions");
             builder.Property(x => x.PartnerId).IsRequired();
             builder.Property(x => x.Amount).HasPrecision(18, 2).IsRequired();
             builder.Property(x => x.ISOCurrencyId).IsRequired();

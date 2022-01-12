@@ -1,18 +1,17 @@
 ﻿<h1 style="text-align:justify">Intro</h1>
 
 
-
-<p>
-    Aircash a-bon platform is intended for users that wish to make payments to their Online Provider accounts (betting sites, parking services, GSM topups etc.) via paper coupons that can be bought at cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas stations, etc.). The process of using Aircash A-bon can be observed from two perspectives: Sales Partner and Online Provider.
-    <br /> <br />
-    From the Sale Partner's perspective: the user comes to the cash register at a Sale Partner point of sale and asks to buy an Aircash A-bon coupon a specific value. The cash register system then contacts the Aircash backend system which then creates a coupon of the desired value. After that, the user pays for that amount, and the cash register prints out an Aircash A-bon coupon which is then given to the user.
-    <br /> <br />
-    From the Online Provider's perspective: the user logs in to a website or a mobile app of an Online Provider (e.g. a booking site), and chooses to deposit money via an Aircash a-bon coupon. He enters the 16-digit code from the coupon he bought, and confirms the transaction of funds to an Online Provider account. The funds are deposited to the user's online account, and the coupon gets expended and can no longer be used.
-    <br /> <br />
-    An example of an Aircash A-bon is shown  <a href="" ng-click="showCoupon()">here</a>
- </p>
+    <p style="text-align:justify">
+        Aircash a-bon platform is intended for users that wish to make payments to their Online Provider accounts (betting sites, parking services, GSM topups etc.) via paper coupons that can be bought at cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas stations, etc.). The process of using Aircash A-bon can be observed from two perspectives: Sales Partner and Online Provider.
+        <br /> <br />
+        From the Sale Partner's perspective: the user comes to the cash register at a Sale Partner point of sale and asks to buy an Aircash A-bon coupon a specific value. The cash register system then contacts the Aircash backend system which then creates a coupon of the desired value. After that, the user pays for that amount, and the cash register prints out an Aircash A-bon coupon which is then given to the user.
+        <br /> <br />
+        From the Online Provider's perspective: the user logs in to a website or a mobile app of an Online Provider (e.g. a booking site), and chooses to deposit money via an Aircash a-bon coupon. He enters the 16-digit code from the coupon he bought, and confirms the transaction of funds to an Online Provider account. The funds are deposited to the user's online account, and the coupon gets expended and can no longer be used.
+        <br /> <br />
+        An example of an Aircash A-bon is shown  <a href="" ng-click="showCoupon()">here</a>.
+    </p>
+</div>
 <hr />
-
 <h1 style="text-align:justify">Technical integration aspects – security and authentication</h1>
 <p>
     Aircash a-bon system exposes a REST web API.
@@ -29,12 +28,13 @@
 </p>
 <hr />
 <h1 style="text-align:justify">Sales Partner API</h1>
-<h2 style="text-align:justify">Coupon creation</h2>
+<br />
+<h4 style="text-align:justify">Coupon creation</h4>
 <p style="text-align:justify">
     The method used to let the sales partner request a new Aircash a-bon. Aircash A-bon is created using the CreateCoupon method that creates the coupon and immediately activates it.
 </p>
 
-<table class="table table-condensed col-md-6">
+<table class="table table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -55,7 +55,7 @@
         <td>https://a-bon.aircash.eu/rest/api/CashRegister/CreateCoupon</td>
     </tr>
 </table>
-
+<br />
 <div class="row">
     <div class="col-md-12">
         <uib-tabset>
@@ -129,18 +129,18 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-                <code>
-                {
-                    "Value": 100.0,
-                    "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "PointOfSaleId": "VP001",
-                    "ISOCurrencySymbol": "EUR",
-                    "PartnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
-                    "ContentType": "pdf",
-                    "ContentWidth": 80,
-                    "Signature": "123...abc"
-                }
-                </code>
+<code>
+{
+    "Value": 100.0,
+    "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "PointOfSaleId": "VP001",
+    "ISOCurrencySymbol": "EUR",
+    "PartnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
+    "ContentType": "pdf",
+    "ContentWidth": 80,
+    "Signature": "123...abc"
+}
+</code>
                 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
@@ -191,16 +191,16 @@
             </uib-tab>
             <uib-tab index="request-tab-3" heading="200 OK Response example" classes="nav-item">
                 <pre>
-                <code>
-                            {
-                                "serialNumber": "5722230340416087",
-                                "couponCode": "3542893940565049",
-                                "value": 100.0,
-                                "isoCurrencySymbol": "EUR",
-                                "content": "abc...123",
-                                "partnerTransactionId": "0b376282-1a6f-4c1a-a7a1-36153086d760"
-                            }
-                    </code>
+<code>
+{
+    "serialNumber": "5722230340416087",
+    "couponCode": "3542893940565049",
+    "value": 100.0,
+    "isoCurrencySymbol": "EUR",
+    "content": "abc...123",
+    "partnerTransactionId": "0b376282-1a6f-4c1a-a7a1-36153086d760"
+}
+</code>
                 </pre>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="400 Error response" classes="nav-item">
@@ -253,18 +253,18 @@
             </uib-tab>
             <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
                 <pre>
-                <code>
-                {
-                    "code": 6,
-                    "message": "Coupon exists for the given PartnerTransactionId",
-                    "additionalData": {
-                        "serialNumber": "8023200631484066",
-                        "value": 100.00,
-                        "isoCurrencySymbol": "EUR",
-                        "partnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae"
-                        }
-                }
-                </code>
+<code>
+{
+    "code": 6,
+    "message": "Coupon exists for the given PartnerTransactionId",
+    "additionalData": {
+        "serialNumber": "8023200631484066",
+        "value": 100.00,
+        "isoCurrencySymbol": "EUR",
+        "partnerTransactionId": "9059ca5c-675a-48b5-b41a-e04ab5b981ae"
+        }
+}
+</code>
                 </pre>
             </uib-tab>
 
@@ -312,19 +312,9 @@
     </div>
 </div>
 
+<h4 style="text-align:justify">Coupon cancellation</h4>
 
-<p>
-    Where the Signature parameter is created by signing the following sequence:<br />
-    <i>ContentType=pdf&ContentWidth=80&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=9059ca5c-675a-48b5-b41a-e04ab5b981ae&PointOfSaleId=VP001&Value=100</i>
-</p>
-
-
-
-
-
-<h2 style="text-align:justify">Coupon cancellation</h2>
-
-<table class="table table-condensed col-md-6">
+<table class="table table-active col-md-6">
     <tr>
         <th>Environment</th>
         <th>Method</th>
@@ -345,7 +335,7 @@
         <td>https://a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
     </tr>
 </table>
-
+<br />
 <p style="text-align:justify">
     This method is called on the cash register in case you need to cancel the coupon (cashier's mistake, the print failed, unpaid purchase etc.). This method is intended for on-premise cancellation, and can be called in a limited time interval after issuing the coupon. (e.g. 5 minutes).
     <br /> <br />
@@ -410,15 +400,15 @@
             </uib-tab>
             <uib-tab index="request1-tab-1" heading="Request example" classes="nav-item">
             <pre>
-            <code>
-            {
-                "SerialNumber": "5722230340416087",
-                "PartnerTransactionId": null,
-                "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                "PointOfSaleId": "VP001",
-                "Signature": "abc...123"
-            }
-            </code>
+<code>
+{
+    "SerialNumber": "5722230340416087",
+    "PartnerTransactionId": null,
+    "PartnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "PointOfSaleId": "VP001",
+    "Signature": "abc...123"
+}
+</code>
             </pre>
             </uib-tab>
             <uib-tab index="request1-tab-2" heading="400 Error response" classes="nav-item">
@@ -491,13 +481,13 @@
             </uib-tab>
             <uib-tab index="request1-tab-3" heading="400 Error response example" classes="nav-item">
                 <pre>
-                <code>
-                            {
-                            "code": 7,
-                            "message": "Coupon has been already cancelled",
-                            "additionalData": null
-                            }
-                        </code>
+<code>
+{
+    "code": 7,
+    "message": "Coupon has been already cancelled",
+    "additionalData": null
+}
+</code>
                     </pre>
             </uib-tab>
             <uib-tab index="request1-tab-4" heading="Try it out" classes="nav-item">
@@ -536,27 +526,17 @@
     </div>
 </div>
 
-{{cancelRequestDateTimeUTC}}
-
-<p>
-    Where the Signature parameter is created by signing the following sequence:<br />
-    <i>
-        PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=&PointOfSaleId=VP001&Serial
-        Number=5722230340416087
-    </i>
-</p>
-
 <p>
     In case of successful cancellation, a HTTP 200 OK response message will be returned with an empty body.
 </p>
 
-
 <hr />
+
 <h1 style="text-align:justify">Edge cases</h1>
 <p style="text-align:justify">
     This chapter will describe possible edge cases that can happen while calling the API, and how to do error recovery. Edge cases include power outage on the cash register, temporary Internet unavailability, or temporary a-bon service unavailability.
 </p>
-<h2 style="text-align:justify">CreateCoupon method – invalid or no response</h2>
+<h4 style="text-align:justify">CreateCoupon method – invalid or no response</h4>
 <p style="text-align:justify">
     In the case of an unsuccessful CreateCoupon call, the following error recovery methods should be
     applied.
@@ -570,9 +550,9 @@
     </li>
 </ol>
 
-<h2 style="text-align:justify">
+<h4 style="text-align:justify">
     CreateCoupon method – response received
-</h2>
+</h4>
 
 <p style="text-align:justify">
     Partner takes over the responsibility of delivering the actual coupon paper to the buyer. When a coupon was successfully received from CreateCoupon method, but not delivered to the buyer (e.g. lack of paper in the printer), there are two scenarios possible.
@@ -587,7 +567,7 @@
     </li>
 </ol>
 
-<h2 style="text-align:justify">CancelCoupon method – invalid response</h2>
+<h4 style="text-align:justify">CancelCoupon method – invalid response</h4>
 <p style="text-align:justify">
     The method supports repeated calls. The method can be called again with the same parameters in the case of an invalid response. In the event that the coupon was canceled by a previous call (whose response was not received), the return value contains the message 7: "Coupon has been already canceled".
 </p>
@@ -603,7 +583,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">A-bon example</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body" align="center">
                 <img src="../../images/abon.png" alt="A-bon">
@@ -620,7 +599,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">A-bon preview</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body"  id="content1">
             </div>

@@ -131,7 +131,7 @@
             that the partner system should display to users as QR code to simplify the payment process.
         </p>
         <i>Endpoints:</i>
-        <table class="table table-active">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -154,7 +154,7 @@
         </table>
         <br />
         <uib-tabset active="active">
-            <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
+            <uib-tab index="request-tab-0" heading="Request" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -253,21 +253,21 @@
 
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-                <code>{</code>
-                <code>    "partnerID": "PartnerID",</code>
-                <code>    "amount":123.45,</code>
-                <code>    "currencyID": 191,</code>
-                <code>    "partnerTransactionID": "partnerTransactionID1",</code>
-                <code>    "description": "Invoice 52.",</code>
-                <code>    "validForPeriod": 5,</code>
-                <code>    "locationID": "LocationID",</code>
-                <code>    "signature": "12345....abc"</code>
-                <code>}</code>
+            <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
+<pre>
+<code>{</code>
+<code>    "partnerID": "PartnerID",</code>
+<code>    "amount":123.45,</code>
+<code>    "currencyID": 191,</code>
+<code>    "partnerTransactionID": "partnerTransactionID1",</code>
+<code>    "description": "Invoice 52.",</code>
+<code>    "validForPeriod": 5,</code>
+<code>    "locationID": "LocationID",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="Response" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Return value</th>
@@ -284,14 +284,14 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Response example" classes="nav-item">
+            <uib-tab index="request-tab-3" heading="Response example" class="nav-item">
 <pre>
 <code>{</code>
 <code>"codeLink": " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "</code>
 <code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Bad request responses" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="Bad request responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Error code</th>
@@ -311,7 +311,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="Try it out" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
                 <div class="row">
                     <div class="col-md-2">
                         <form action="/" method="POST" name="generateForm">
@@ -354,6 +354,7 @@
                 </div>
             </uib-tab>
         </uib-tabset>
+
         <br />
         <h4>ConfirmTransaction</h4>
         <p>
@@ -365,7 +366,7 @@
         </p>
         <p>Partner should provide an url where Aircash will send all transaction confirmations.</p>
         <i>Endpoints:</i>
-        <table class="table table-active">
+        <table class="table table-active col-md-6">
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
@@ -460,14 +461,14 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "partnerID": "partnerID",</code>
-                <code>    "partnerTransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
-                <code>    "amount":123.45,</code>
-                <code>    "currencyID": 191,</code>
-                <code>    "signature": "12345....abc",</code>
-                <code>    "aircashTransactionID": "Aircash transaction id"</code>
-                <code>}</code>
+<code>{</code>
+<code>    "partnerID": "partnerID",</code>
+<code>    "partnerTransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
+<code>    "amount":123.45,</code>
+<code>    "currencyID": 191,</code>
+<code>    "signature": "12345....abc",</code>
+<code>    "aircashTransactionID": "Aircash transaction id"</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
@@ -490,9 +491,29 @@
             cancellation request Aircash system will process only the first request. For every other request
             Aircash system will not process cancellation request
         </p>
-        <p>
-            URL: /api/AircashPay/CancelTransaction
-        </p>
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/AircashPay/CancelTransaction</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://m3.aircash.eu/api/v1/AircashPay/CancelTransaction</td>
+            </tr>
+        </table>
+        <br />
         <uib-tabset>
             <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
@@ -534,11 +555,11 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-                <code>{</code>
-                <code>    "PartnerTransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
-                <code>    "PartnerID": "partnerID",</code>
-                <code>    "Signature: "12345...abc" </code>
-                <code>}</code>
+<code>{</code>
+<code>    "PartnerTransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
+<code>    "PartnerID": "partnerID",</code>
+<code>    "Signature: "12345...abc" </code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
@@ -611,10 +632,10 @@
                                         </tr>
                                         <tr ng-repeat="transaction in transactions">
                                             <td>{{$index + 1}}.</td>
-                                            <td>{{transaction.transactionId}}</td>
+                                            <td>{{transaction.partnerTransactionId}}</td>
                                             <td>{{transaction.amount | number:2}}</td>
                                             <td style="text-align: center; vertical-align: inherit">
-                                                <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.transactionId)"><i class="fa fa-remove"></i></button>
+                                                <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -661,7 +682,7 @@
             To release the service in the production, you need to make several tests to see if the integration is
             well-made and ready for production
         </p>
-        <table class="table table-hover">
+        <table class="table table-active">
             <tr>
                 <th>Scenario</th>
                 <th>Test description</th>
@@ -714,7 +735,6 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">QR Code</h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
             </div>
             <div class="modal-body" align="center">
                 <div id="qrcode"></div>

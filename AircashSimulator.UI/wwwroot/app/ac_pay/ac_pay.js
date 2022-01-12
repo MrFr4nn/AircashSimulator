@@ -19,8 +19,6 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         getTransactions: getTransactions
     });
     function generatePartnerCode(amount, description, locationID) {
-        console.log(config);
-        console.log($rootScope);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/GeneratePartnerCode",
@@ -34,7 +32,6 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
     }
 
     function cancelTransaction(partnerTransactionID) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/CancelTransaction",
@@ -46,16 +43,12 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
     }
 
     function getTransactions(pageSize, pageNumber) {
-        console.log(config);
-        console.log(pageSize);
-        console.log(pageNumber);
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "Transaction/GetTransactions",
+            url: config.baseUrl + "Transaction/GetAircashPayPreparedTransactions",
             params: {
                 PageSize: pageSize,
-                PageNumber: pageNumber,
-                Services: [7]
+                PageNumber: pageNumber
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -84,20 +77,15 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     };
 
     $scope.showQRCode = function () {
-        console.log("test");
         $("#QRModal").modal("show");
     }
 
     $scope.generateResponded = false;
     $scope.generateBusy = false;
     $scope.generatePartnerCode = function () {
-        console.log($scope.generatePartnerCodeModel.amount);
-        console.log($scope.generatePartnerCodeModel.description);
-        console.log($scope.generatePartnerCodeModel.locationID);
         $scope.generateBusy = true;
         acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
             .then(function (response) {
-                console.log(response);
                 if (response) {
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.GenerateResponseDateTimeUTC = response.responseDateTimeUTC;
@@ -105,10 +93,9 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-
                     $scope.codeLink = response.serviceResponse.codeLink;
                     new QRCode(document.getElementById("qrcode"), $scope.codeLink);
-
+                    $scope.getTransactions(true);
                 }
                 $scope.generateBusy = false;
                 $scope.generateResponded = true;
@@ -120,11 +107,9 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.cancelResponded = false;
     $scope.cancelBusy = false;
     $scope.cancelTransaction = function (transactionId) {
-        console.log($scope.cancelTransactionModel.partnerTransactionID);
         $scope.cancelBusy = true;
         acPayService.cancelTransaction(transactionId)
             .then(function (response) {
-                console.log(response);
                 if (response) {
                     $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.CancelResponseDateTimeUTC = response.responseDateTimeUTC;
@@ -141,12 +126,10 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
             });
     }
 
-    $scope.getTransactions = function () {
-        console.log($scope.pageSize);
-        console.log($scope.pageNumber);
+    $scope.getTransactions = function (reset) {
+        if (reset) $scope.setDefaults();
         acPayService.getTransactions($scope.pageSize, $scope.pageNumber)
             .then(function (response) {
-                console.log(response);
                 $scope.pageNumber += 1;
                 if (response) {
                     $scope.totalLoaded = response.length;
@@ -159,7 +142,6 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
 
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
-        console.log(pageSize);
         $scope.getTransactions();
     };
 

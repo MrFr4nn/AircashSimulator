@@ -32,7 +32,7 @@ namespace Services.AircashPay
         {
             var requestDateTime = DateTime.UtcNow;
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == generatePartnerCodeDTO.PartnerId).FirstOrDefault();
-            var preparedTransaction = new PreparedAircashTransactionEntity
+            var preparedTransaction = new PreparedAircashPayTransactionEntity
             {
                 PartnerId = generatePartnerCodeDTO.PartnerId,
                 Amount = generatePartnerCodeDTO.Amount,
@@ -86,9 +86,9 @@ namespace Services.AircashPay
 
         public async Task<object> ConfirmTransaction(TransactionDTO transactionDTO)
         {
-            if (AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId) != null)
+            if (AircashSimulatorContext.PreparedAircashPayTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId) != null)
             {
-                var preparedTransaction = AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId);
+                var preparedTransaction = AircashSimulatorContext.PreparedAircashPayTransactions.FirstOrDefault(x => x.PartnerTransactionId == transactionDTO.PartnerTransactionId);
                 preparedTransaction.Status = AcPayTransactionSatusEnum.Confirmed;
                 preparedTransaction.ResponseDateTimeUTC = DateTime.UtcNow;
                 AircashSimulatorContext.Update(preparedTransaction);
@@ -133,7 +133,7 @@ namespace Services.AircashPay
             {
                 aircashCancelTransactionResponse = JsonConvert.DeserializeObject<AircashCancelTransactionResponse>(response.ResponseContent);
                 var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == cancelTransactionDTO.PartnerTransactionId);
-                var preparedTransaction = AircashSimulatorContext.PreparedAircashTransactions.FirstOrDefault(x => x.PartnerTransactionId == cancelTransactionDTO.PartnerTransactionId);
+                var preparedTransaction = AircashSimulatorContext.PreparedAircashPayTransactions.FirstOrDefault(x => x.PartnerTransactionId == cancelTransactionDTO.PartnerTransactionId);
                 preparedTransaction.Status = AcPayTransactionSatusEnum.Cancelled;
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {

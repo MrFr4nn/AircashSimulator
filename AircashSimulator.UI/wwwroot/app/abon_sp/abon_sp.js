@@ -19,7 +19,6 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         getDenominations: getDenominations
     });
     function createCoupon(value, pointOfSaleId) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonSalePartner/CreateCoupon",
@@ -31,7 +30,6 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function cancelCoupon(serialNumber, cancelPointOfSaleId) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl +"AbonSalePartner/CancelCoupon",
@@ -78,24 +76,19 @@ abonSpModule.controller("abonSpCtrl",['$scope', '$state', 'abonSpService', '$fil
     };
 
     $scope.showCoupon = function () {
-        console.log("test");
         $("#couponModal").modal("show");
     }
 
     $scope.showContent = function () {
-        console.log("test");
         $("#contentModal").modal("show");
     }
 
     $scope.createCoupon = function () {
-        console.log($scope.createCouponModel.value);
-        console.log($scope.createCouponModel.pointOfSaleId);
         $scope.createServiceBusy = true;
         abonSpService.createCoupon($scope.createCouponModel.value, $scope.createCouponModel.pointOfSaleId)
             .then(function (response) {
                 
                 if (response) {
-                    console.log(response);
                     $scope.requestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.responseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequence = response.sequence;
@@ -103,7 +96,6 @@ abonSpModule.controller("abonSpCtrl",['$scope', '$state', 'abonSpService', '$fil
                     $scope.serviceResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.content = response.serviceResponse.content;
                     $scope.decodedContent = decodeURIComponent(escape(window.atob($scope.content)));
-                    console.log($scope.decodedContent);
                     document.querySelector('#content1').innerHTML = $scope.decodedContent;
                     $scope.serviceRequest = JSON.stringify(response.serviceRequest, null, 4);
                 }
@@ -115,14 +107,10 @@ abonSpModule.controller("abonSpCtrl",['$scope', '$state', 'abonSpService', '$fil
     }
 
     $scope.cancelCoupon = function () {
-        console.log($scope.cancelCouponModel.cancelSerialNumber);
-        console.log($scope.cancelCouponModel.cancelPointOfSaleId);
         $scope.cancelServiceBusy = true;
-        console.log($scope.cancelCouponModel.cancelPointOfSaleId);
         abonSpService.cancelCoupon($scope.cancelCouponModel.cancelSerialNumber, $scope.cancelCouponModel.cancelPointOfSaleId)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.cancelRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.cancelResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.cancelSequence = response.sequence;
@@ -141,7 +129,6 @@ abonSpModule.controller("abonSpCtrl",['$scope', '$state', 'abonSpService', '$fil
         abonSpService.getDenominations()
             .then(function (response) {                
                 if (response) {
-                    console.log(response);
                     $scope.denominations = $scope.denominations.concat(response);
                 }
             }, () => {
