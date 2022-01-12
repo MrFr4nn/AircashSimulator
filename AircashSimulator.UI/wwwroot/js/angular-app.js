@@ -47,6 +47,13 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'DeclineCtrl',
             controllerAs: 'vm',
             params: {}
+        })
+        .state('forbidden', {
+            url: '/forbidden',
+            templateUrl: 'app/forbidden/forbidden.html',
+            controller: 'ForbiddenCtrl',
+            controllerAs: 'vm',
+            params: {}
         });
 }]);
 
@@ -71,7 +78,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline'];
+        var publicPages = ['/login', '/success', '/decline', '/forbidden'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');

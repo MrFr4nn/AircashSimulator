@@ -57,7 +57,13 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
 }
 ]);
 
-acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope) {
+acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("AircashPay") == -1) {
+        $location.path('/forbidden');
+    }
+
     $scope.generatePartnerCodeModel = {
         amount: null,
         description: null,
@@ -148,5 +154,4 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.setDefaults();
 
     $scope.getTransactions();
-
 }]);

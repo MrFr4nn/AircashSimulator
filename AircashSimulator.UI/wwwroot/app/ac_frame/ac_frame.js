@@ -58,7 +58,13 @@ acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService',
 }
 ]);
 
-acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrameService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acFrameService, $http, JwtParser, $uibModal, $rootScope) {
+acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrameService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, acFrameService, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("AircashFrame") == -1) {
+        $location.path('/forbidden');
+    }
+
     $scope.initiateModel = {
         payType: null,
         payMethod: null,

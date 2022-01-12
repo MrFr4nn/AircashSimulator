@@ -6,6 +6,7 @@
 <p>
     The purpose of this document is to provide documentation for the integration of the payment process to the partner system through the Aircash application and for the integration of the payment process where the user pays the money from the partner system to the Aircash system.
 </p>
+<hr />
 
 <h1>Technical connectivity features</h1>
 <h2>Access</h2>
@@ -13,7 +14,7 @@
     The Aircash system allows the HTTPS / TLS 1.2 protocol on its access points. Aircash system is restricting its access points by the IP address of the partner. Partner is obliged to submit static (one or more) IPs that will access the Aircash test environment.<br />
 </p>
 
-<h2>Authentication</h2>
+<h4>Authentication</h4>
 <p style="text-align:justify">
     Authentication is achieved with digital signature on each request. In case of payout, the partner will need to generate an X.509 certificate and use a private key to sign partners requests towards Aircash. Partner will need to send the public key to Aircash, and Aircash will use that public key to verify the digital signature on each request. We discuss in detail how to generate certificates and how to generate digital signatures in latter chapters.
     In case of transaction confirmation, Aircash uses Aircash private key to sign requests towards partners. Aircash will give the
