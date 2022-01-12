@@ -69,6 +69,9 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.confirmTransactionModel = {
         couponCode: ""
     };
+    $scope.showCoupon = function () {
+        $("#couponModal").modal("show");
+    }
 
     $scope.selected = null;
     $scope.items = [
