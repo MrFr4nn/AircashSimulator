@@ -20,7 +20,6 @@ signatureModule.service("signatureService", ['$http', '$q', 'handleResponseServi
 signatureModule.controller("SignatureCtrl",
     ['$scope', '$state', 'signatureService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, signatureService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-            console.log($rootScope);
             $scope.examplePartner = JSON.stringify({
                 "partnerID": "3de97a57-e9c7-42a8-aed0-ee864bf6d042",
                 "phoneNumber": "385981234567",

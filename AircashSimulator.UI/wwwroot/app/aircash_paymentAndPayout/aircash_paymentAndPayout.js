@@ -21,7 +21,6 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         cancelTransaction: cancelTransaction
     });
     function checkCode(barCode, locationID) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/CheckCode",
@@ -33,7 +32,6 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function confirmTransaction(barCode, locationID) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/ConfirmTransaction",
@@ -45,7 +43,6 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function checkTransactionStatus(partnerTransactionID) {
-        console.log(config);
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/CheckTransactionStatus",
@@ -56,8 +53,6 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function cancelTransaction(partnerTransactionID,locationID) {
-        console.log(partnerTransactionID);
-        console.log(locationID);
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/CancelTransaction",
@@ -69,9 +64,6 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function getTransactions(pageSize, pageNumber, services) {
-        console.log(config);
-        console.log(pageSize);
-        console.log(pageNumber);
         var request = $http({
             method: 'GET',
             url: config.baseUrl + "Transaction/GetTransactions",
@@ -136,14 +128,11 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     $scope.transactionAmountFactor = 0;
 
     $scope.checkCode = function () {
-        console.log($scope.checkCodeModel.barCode);
-        console.log($scope.checkCodeModel.locationID);
         $scope.checkCodeServiceBusy = true;
         aircashPaymentAndPayoutService.checkCode($scope.checkCodeModel.barCode, $scope.checkCodeModel.locationID)
             .then(function (response) {
 
                 if (response) {
-                    console.log(response);
                     $scope.checkCodeRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.checkCodeResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkCodeSequence = response.sequence;
@@ -159,14 +148,11 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     }
 
     $scope.confirmTransaction = function () {
-        console.log($scope.confirmTransactionModel.barCode);
-        console.log($scope.confirmTransactionModel.locationID);
         $scope.confirmTransactionServiceBusy = true;
         aircashPaymentAndPayoutService.confirmTransaction($scope.confirmTransactionModel.barCode, $scope.confirmTransactionModel.locationID)
             .then(function (response) {
 
                 if (response) {
-                    console.log(response);
                     $scope.confirmTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.confirmTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.confirmTransactionSequence = response.sequence;
@@ -184,13 +170,10 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     }
 
     $scope.checkTransactionStatus = function (transactionId) {
-        console.log($scope.checkTransactionStatusModel.partnerTransactionID);
         $scope.checkTransactionStatusServiceBusy = true;
         aircashPaymentAndPayoutService.checkTransactionStatus(transactionId)
             .then(function (response) {
-
                 if (response) {
-                    console.log(response);
                     $scope.checkTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.checkTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkTransactionStatusSequence = response.sequence;
@@ -206,15 +189,10 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     }
 
     $scope.cancelTransaction = function (transactionId, pointOFSaleId) {
-        console.log(transactionId);
-        console.log($scope.cancelTransactionModel.partnerTransactionID);
-        console.log($scope.cancelTransactionModel.locationID);
         $scope.cancelTransactionServiceBusy = true;
-        console.log($scope.cancelTransactionServiceBusy);
         aircashPaymentAndPayoutService.cancelTransaction(transactionId, pointOFSaleId)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.cancelTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.cancelTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.cancelTransactionSequence = response.sequence;
@@ -231,11 +209,8 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.getCheckTransactions = function (reset) {
         if (reset) $scope.setDefaults();
-        console.log($scope.checkPageSize);
-        console.log($scope.checkPageNumber);
         aircashPaymentAndPayoutService.getTransactions($scope.checkPageSize, $scope.checkPageNumber, [9, 10])
             .then(function (response) {
-                console.log(response);
                 $scope.checkPageNumber += 1;
                 if (response) {
                     $scope.checkTotalLoaded = response.length;
@@ -248,11 +223,8 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.getCancelTransactions = function (reset) {
         if (reset) $scope.setDefaults();
-        console.log($scope.cancelPageSize);
-        console.log($scope.cancelPageNumber);
         aircashPaymentAndPayoutService.getTransactions($scope.cancelPageSize, $scope.cancelPageNumber, [9, 10])
             .then(function (response) {
-                console.log(response);
                 $scope.cancelPageNumber += 1;
                 if (response) {
                     $scope.cancelTotalLoaded = response.length;
@@ -265,13 +237,11 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.checkLoadMore = function (pageSize) {
         $scope.checkPageSize = pageSize;
-        console.log(pageSize);
         $scope.getCheckTransactions(false);
     };
 
     $scope.cancelLoadMore = function (pageSize) {
         $scope.cancelPageSize = pageSize;
-        console.log(pageSize);
         $scope.getCancelTransactions(false);
     };
 

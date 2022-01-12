@@ -15,7 +15,7 @@ namespace DataAccess
         public DbSet<CouponEntity> Coupons { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<PartnerAbonDenominationsEntity> PartnerAbonDenominations { get; set; }
-        public DbSet<PreparedAircashTransactionEntity> PreparedAircashTransactions { get; set; }
+        public DbSet<PreparedAircashPayTransactionEntity> PreparedAircashPayTransactions { get; set; }
         public DbSet<PreparedAircashFrameTransactionEntity> PreparedAircashFrameTransactions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

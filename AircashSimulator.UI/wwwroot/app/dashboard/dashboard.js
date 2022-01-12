@@ -21,8 +21,5 @@ dashboardModule.controller("DashboardCtrl",
     ['$scope', '$state', 'dashboardService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, dashboardService, $filter, $http, JwtParser, $uibModal, $rootScope)
         {
-            console.log($rootScope);
-        //$scope.Currency = JwtParser.getProperty('currency');
-        
     }
 ]);

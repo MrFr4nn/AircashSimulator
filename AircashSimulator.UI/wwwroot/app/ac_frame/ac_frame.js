@@ -20,8 +20,6 @@ acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService',
     });
 
     function initiate(payType, payMethod, amount, currency) {
-        console.log(config);
-        console.log($rootScope);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/Initiate",
@@ -36,8 +34,6 @@ acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService',
     }
 
     function transactionStatus(transactionId) {
-        console.log(config);
-        console.log($rootScope);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/TransactionStatus",
@@ -49,9 +45,6 @@ acFrameModule.service("acFrameService", ['$http', '$q', 'handleResponseService',
     }
 
     function getTransactions(pageSize, pageNumber) {
-        console.log(config);
-        console.log(pageSize);
-        console.log(pageNumber);
         var request = $http({
             method: 'GET',
             url: config.baseUrl + "Transaction/GetAircashFramePreparedTransactions",
@@ -76,7 +69,6 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.transactionId;
 
     $scope.showFrame = function () {
-        console.log("test");
         $("#frameModal").modal("show");
     }
 
@@ -91,14 +83,9 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.initiateResponded = false;
     $scope.initiateBusy = false;
     $scope.initiate = function () {
-        console.log($scope.initiateModel.payType);
-        console.log($scope.initiateModel.payMethod);
-        console.log($scope.initiateModel.amount);
-        console.log($scope.initiateModel.currency);
         $scope.initiateBusy = true;
         acFrameService.initiate($scope.initiateModel.payType, $scope.initiateModel.payMethod, $scope.initiateModel.amount, $scope.initiateModel.currency)
             .then(function (response) {
-                console.log(response);
                 if (response) {
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
@@ -107,7 +94,7 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
                     $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.frameUrl = response.serviceResponse.url;
-                    console.log($scope.frameUrl);
+                    $scope.getTransactions(true);
                 }
                 $scope.initiateBusy = false;
                 $scope.initiateResponded = true;
@@ -119,11 +106,9 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.statusResponded = false;
     $scope.statusBusy = false;
     $scope.transactionStatus = function (transactionId) {
-        console.log(transactionId);
         $scope.statusBusy = true;
         acFrameService.transactionStatus(transactionId)
             .then(function (response) {
-                console.log(response);
                 if (response) {
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
@@ -142,12 +127,10 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
             });
     }
 
-    $scope.getTransactions = function () {
-        console.log($scope.pageSize);
-        console.log($scope.pageNumber);
+    $scope.getTransactions = function (reset) {
+        if (reset) $scope.setDefaults();
         acFrameService.getTransactions($scope.pageSize, $scope.pageNumber)
             .then(function (response) {
-                console.log(response);
                 $scope.pageNumber += 1;
                 if (response) {
                     $scope.totalLoaded = response.length;
@@ -160,7 +143,6 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
 
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
-        console.log(pageSize);
         $scope.getTransactions();
     };
 
