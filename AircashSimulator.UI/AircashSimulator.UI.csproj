@@ -6,9 +6,13 @@
 
   <ItemGroup>
     <Compile Remove="wwwroot\app\abon_sp\NewFolder\**" />
+    <Compile Remove="wwwroot\app\NewFolder\**" />
     <Content Remove="wwwroot\app\abon_sp\NewFolder\**" />
+    <Content Remove="wwwroot\app\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\app\abon_sp\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\app\NewFolder\**" />
     <None Remove="wwwroot\app\abon_sp\NewFolder\**" />
+    <None Remove="wwwroot\app\NewFolder\**" />
   </ItemGroup>
 
   <ItemGroup>
