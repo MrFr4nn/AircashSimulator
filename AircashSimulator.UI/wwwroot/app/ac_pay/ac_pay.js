@@ -93,10 +93,9 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-
                     $scope.codeLink = response.serviceResponse.codeLink;
                     new QRCode(document.getElementById("qrcode"), $scope.codeLink);
-
+                    $scope.getTransactions(true);
                 }
                 $scope.generateBusy = false;
                 $scope.generateResponded = true;
