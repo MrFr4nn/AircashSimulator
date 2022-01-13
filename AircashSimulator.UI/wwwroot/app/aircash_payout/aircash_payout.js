@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
                 pageTitle: 'Payout'
             },
             url: "/Payout",
-            controller: 'aircashPayoutCtrl',
+            controller: 'aircashPayoutCtrl', 
             templateUrl: 'app/aircash_payout/aircash_payout.html'
         });
 });
