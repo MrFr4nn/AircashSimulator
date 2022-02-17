@@ -73,38 +73,38 @@
                         <tr>
                             <td>PartnerId</td>
                             <td>string</td>
-                            <td>identifier of the Sales Partner</td>
+                            <td>Unique partner identifier (per currency) provided by Aircash</td>
                             <td>YES</td>
                         </tr>
                         <tr>
                             <td>Value</td>
                             <td>decimal</td>
-                            <td>coupon value</td>
+                            <td>Coupon value</td>
                             <td>YES</td>
                         </tr>
                         <tr>
                             <td>PointOfSaleId</td>
                             <td>string</td>
-                            <td>identifier of the point of sale</td>
+                            <td>Identifier of the point of sale</td>
                             <td>YES</td>
                         </tr>
                         <tr>
                             <td>ISOCurrencySymbol</td>
                             <td>string</td>
-                            <td>currency code by ISO 4217 (e.g. for EUR)</td>
+                            <td>Currency code by ISO 4217 (e.g. for EUR)</td>
                             <td>YES</td>
                         </tr>
                         <tr>
                             <td>PartnerTransactionId</td>
                             <td>string</td>
-                            <td> identifier of the transaction in partner's system</td>
+                            <td>Identifier of the transaction in partner's system</td>
                             <td>YES</td>
                         </tr>
                         <tr>
                             <td>ContentType </td>
                             <td>string</td>
                             <td>
-                                coupon format – „pdf“, „txt“ or „xml“. If the parameter is invalid or missing, default partner settings are used
+                                Coupon format – „pdf“, „txt“ or „xml“. If the parameter is invalid or missing, default partner settings are used
                             </td>
                             <td>NO</td>
                         </tr>
@@ -112,7 +112,7 @@
                             <td>ContentWidth </td>
                             <td>int</td>
                             <td>
-                                width of the coupon (in mm for pdf, or character number for txt) Minimal value is 20. If the parameter is invalid or missing, default partner settings are used
+                                Width of the coupon (in mm for pdf, or character number for txt) Minimal value is 20. If the parameter is invalid or missing, default partner settings are used
                             </td>
                             <td>NO</td>
                         </tr>
@@ -120,7 +120,7 @@
                             <td>Signature </td>
                             <td>string</td>
                             <td>
-                                sequence that has been digitally signed with the provider's private signature, used for authentication
+                                Sequence that has been digitally signed with the provider's private signature, used for authentication
                             </td>
                             <td>YES</td>
                         </tr>
@@ -156,7 +156,7 @@
                         <tr>
                             <td>SerialNumber</td>
                             <td>string</td>
-                            <td>coupon serial number</td>
+                            <td>Coupon serial number</td>
                         </tr>
                         <tr>
                             <td>CouponCode</td>
@@ -166,25 +166,25 @@
                         <tr>
                             <td>Value</td>
                             <td>decimal</td>
-                            <td>coupon value</td>
+                            <td>Coupon value</td>
                         </tr>
                         <tr>
                             <td>ISOCurrencySymbol</td>
                             <td>string</td>
-                            <td>currency code by ISO 4217 (e.g. EUR)</td>
+                            <td>Currency code by ISO 4217 (e.g. EUR)</td>
                         </tr>
                         <tr>
                             <td>Content</td>
                             <td>string</td>
                             <td>
-                                base64 content in the format which was requested
+                                Base64 content in the format which was requested
                             </td>
                         </tr>
                         <tr>
                             <td>PartnerTransactionId</td>
                             <td>string</td>
                             <td>
-                                identifier of the transaction in partner's system
+                                Identifier of the transaction in partner's system
                             </td>
                     </tbody>
                 </table>
@@ -362,14 +362,14 @@
                         <tr>
                             <td>PartnerId</td>
                             <td>string</td>
-                            <td>identifier of the Sales Partner</td>
+                            <td>Unique partner identifier (per currency) provided by Aircash</td>
                             <td>YES</td>
                         </tr>
                         <tr>
                             <td>SerialNumber</td>
                             <td>string</td>
                             <td>
-                                coupon serial number, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
+                                Coupon serial number, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
                             </td>
                             <td>YES, optional</td>
                         </tr>
@@ -377,14 +377,14 @@
                             <td>PartnerTransactionId</td>
                             <td>string</td>
                             <td>
-                                identifier of the transaction in partner's system, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
+                                Identifier of the transaction in partner's system, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
                             </td>
                             <td>YES, optional</td>
                         </tr>
                         <tr>
                             <td>PointOfSaleId</td>
                             <td>string</td>
-                            <td>identifier of the point of sale</td>
+                            <td>Identifier of the point of sale</td>
                             <td>YES</td>
                         </tr>
                         <tr>
