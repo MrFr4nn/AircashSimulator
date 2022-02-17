@@ -1,0 +1,90 @@
+﻿<!-- begin #sidebar -->
+<div id="sidebar" class="sidebar" ng-controller="sidebarController" ng-class="{ 'sidebar-transparent': setting.layout.pageSidebarTransparent }">
+    <!-- begin sidebar scrollbar -->
+    <div data-scrollbar="true" data-height="100%">
+        <!-- begin sidebar user -->
+        <ul class="nav">
+            <li class="nav-profile">
+                <a href="javascript:;" data-toggle="nav-profile">
+                    <div class="cover with-shadow"></div>
+                    <div class="info">
+                            <b>{{partnerName}}</b>
+                    </div>
+                </a>
+            </li>
+            <li ng-if="false">
+                <ul class="nav nav-profile">
+                    <li><a href="javascript:;"><i class="fa fa-cog"></i> Settings</a></li>
+                    <li><a href="javascript:;"><i class="fa fa-pencil-alt"></i> Send Feedback</a></li>
+                    <li><a href="javascript:;"><i class="fa fa-question-circle"></i> Helps</a></li>
+                </ul>
+            </li>
+        </ul>
+        <!-- end sidebar user -->
+        <!-- begin sidebar nav -->
+        <ul class="nav">
+            <li class="nav-header">{{translations.menu_label}}</li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.dashboard">
+                    <i class="fa fa-list aIconRed"></i>
+                    <span>{{translations.dashboard_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.aircashPaymentAndPayout">
+                    <i class="fa fa-barcode aIconRed"></i>
+                    <span>{{translations.aircash_paymentAndPayout_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.acFrame">
+                    <i class="fa fa-desktop aIconRed"></i>
+                    <span>{{translations.ac_frame_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.acPay">
+                    <i class="fa fa-qrcode aIconRed" aria-hidden="true"></i>
+                    <span>{{translations.ac_pay_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.acPayment">
+                    <i class="fa fa-share-square aIconRed" aria-hidden="true"></i>
+                    <span>{{translations.ac_payment_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.aircashPayout">
+                    <i class="fa fa-mobile aIconRed"></i>
+                    <span>{{translations.aircash_payout_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.abonSp">
+                    <i class="fa fa-file-invoice aIconRed"></i>
+                    <span>{{translations.abon_sp_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.abonOp">
+                    <i class="fa fa-gamepad aIconRed" aria-hidden="true"></i>
+                    <span>{{translations.abon_op_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.signature">
+                    <i class="fa fa-pencil-alt aIconRed"></i>
+                    <span>{{translations.signature_label}}</span>
+                </a>
+            </li>
+            <!-- begin sidebar minify button -->
+            <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
+            <!-- end sidebar minify button -->
+        </ul>
+        <!-- end sidebar nav -->
+    </div>
+    <!-- end sidebar scrollbar -->
+</div>
+<div class="sidebar-bg"></div>
+<!-- end #sidebar --><!-- end #sidebar -->

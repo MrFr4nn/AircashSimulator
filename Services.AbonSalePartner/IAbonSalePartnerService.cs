@@ -7,7 +7,7 @@ namespace Services.AbonSalePartner
 {
     public interface IAbonSalePartnerService
     {
-        Task CreateCoupon();
-        Task CancelCoupon();
+        Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId);
+        Task<object> CancelCoupon(string serialNumber, string pointOfSaleId, Guid partnerId);
     }
 }

@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.11">
       <PrivateAssets>all</PrivateAssets>
@@ -12,12 +13,24 @@
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.11" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="3.3.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AircashFrame\Services.AircashFrame.csproj" />
+    <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Services.AbonOnlinePartner\Services.AbonOnlinePartner.csproj" />
     <ProjectReference Include="..\Services.AbonSalePartner\Services.AbonSalePartner.csproj" />
+    <ProjectReference Include="..\Services.AircashPaymentAndPayout\Services.AircashPaymentAndPayout.csproj" />
+    <ProjectReference Include="..\Services.AircashPay\Services.AircashPay.csproj" />
+    <ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
+    <ProjectReference Include="..\Services.Authentication\Services.Authentication.csproj" />
+    <ProjectReference Include="..\Services.Coupon\Services.Coupon.csproj" />
+    <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
+    <ProjectReference Include="..\Services.PartnerAbonDenominations\Services.PartnerAbonDenominations.csproj" />
+    <ProjectReference Include="..\Services.Transaction\Services.Transactions.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,50 @@
+﻿<!-- begin #header -->
+<div id="header" class="header navbar-default" ng-controller="headerController">
+    <!-- begin navbar-header -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle pull-left" data-click="sidebar-toggled" ng-if="setting.layout.pageTwoSidebar === true">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggle pull-right" data-click="right-sidebar-toggled" ng-if="setting.layout.pageTwoSidebar === true">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a href="#" ><img src="/images/aircash_logo.png" style="max-width: 200px" /></a>
+        <button type="button" class="navbar-toggle" data-click="sidebar-toggled" ng-if="!setting.layout.pageTwoSidebar && !(setting.layout.pageTopMenu && setting.layout.pageWithoutSidebar)">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <button type="button" class="navbar-toggle" data-click="top-menu-toggled" ng-if="setting.layout.pageTopMenu && setting.layout.pageWithoutSidebar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <!-- end navbar-header -->
+    <!-- begin header-nav -->
+    <ul class="navbar-nav navbar-right">
+        <li class="dropdown navbar-user">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <div class="image image-icon bg-black text-grey-darker">
+                    <i class="fa fa-user"></i>
+                </div>
+                <span class="d-none d-md-inline">{{username}}</span> <b class="caret"></b>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a href="/#!/login" class="dropdown-item">{{translations.logout_label}}</a>
+            </div>
+        </li>
+        <li class="divider d-none d-md-block" ng-if="setting.layout.pageTwoSidebar === true"></li>
+        <li class="d-none d-md-block" ng-if="setting.layout.pageTwoSidebar === true">
+            <a href="javascript:;" data-click="right-sidebar-toggled" class="f-s-14">
+                <i class="fa fa-th"></i>
+            </a>
+        </li>
+    </ul>
+    <!-- end header navigation right -->
+</div>
+<!-- end #header -->

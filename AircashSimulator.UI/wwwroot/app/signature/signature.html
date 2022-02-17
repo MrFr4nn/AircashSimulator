@@ -1,0 +1,330 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Generate certificates</h1>
+    <p>
+        The easiest way to generate Provider certificates is through openSSL and running the following
+        command:
+    </p>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content">
+            <code>openssl req -x509 -sha256 -newkey rsa:4096 -keyout PrivateKey.pem -out PublicKey.pem</code>
+        </div>
+    </div>
+    <br />
+    <p>
+        After starting the command, openSSL will require several data before generating the certificate:
+    </p>
+    <ul>
+        <li>Enter PEM pass phrase - the password you need to remember</li>
+        <li>Country name</li>
+        <li>State or Province name</li>
+        <li>Locality Name</li>
+        <li>Organization Unit Name</li>
+        <li>Common Name</li>
+        <li>Email Address</li>
+    </ul>
+    <p>
+        After entering all of these data, OpenSSL will generate two files:
+    </p>
+    <ul>
+        <li>
+            PrivateKey.pem - partner's certificate used to sign the request. Only a partner may have
+            access to this certificate and a partner should not share it (Aircash Support will never ask
+            to send this certificate, nor will Aircash support have access to this certificate). If a
+            partner believes this certificate has been compromised, or if someone unauthorized had
+            access to it, the partner must report that to Aircash Support. In this case, the partner is
+            obliged to repeat the certificate generation process and send public certificate to the
+            Aircash support.
+        </li>
+        <li>
+            PublicKey.pem - partner's public certificate that the partner must provide to Aircash
+            Support.
+        </li>
+    </ul>
+    <p>
+        In case the Provider needs a pfx format certificate, using the following command can generate a
+        pfx certificate. To generate pfx certificate, the partner will need the password entered while generating
+        the keys (running the first openSSL command).
+    </p>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content">
+            <code>openssl pkcs12 -export -out PrivateKeyPfxFile.pfx -inkey PrivateKey.pem -in PublicKey.pem</code>
+        </div>
+    </div>
+    <br />
+    <hr />
+    <h1>Generating partner's signature</h1>
+    <p>
+        In each request, the partner system sends the signature in order to achieve undeniability that
+        partner is actually making the request to Aircash system. The Aircash signature is generated so that all
+        the parameters are ordered alphabetically, and then the pairs of parameter names and parameter
+        values are joined into a single string. This string is then signed with a private certificate that only partner
+        has and sent in the Signature parameter.
+    </p>
+    <p>
+        After receiving the request, Aircash system is required to generate a string that matches the one
+        signed by the partner, and check its validity using the Signature and the public certificate (which the
+        partner will provide before the start of integration).
+    </p>
+    <p>Rules when generating the signature:</p>
+    <ul>
+        <li>For complex objects, the parameter order is alphabetical</li>
+        <li>
+            For decimal numbers, decimal points should be used. Also numbers in signature should be
+            trimmed out of unnecessary zeros behind decimal point
+            <ul>
+                <li>123 in signature is represented by 123</li>
+                <li>123.4 in signature is represented by 123.4</li>
+                <li>123.45 is signature is represented by 123.45</li>
+            </ul>
+        </li>
+        <li>
+            For lists, the parameter order is always the same as it was received, and parameters are joined
+            by a comma
+        </li>
+        <li>
+            For each parameter, the parameter name is printed first, and then the value joined by an
+            equation symbol
+        </li>
+        <li>
+            In case the value of a parameter is empty or null, only the parameter name is printed and the
+            value is skipped
+        </li>
+        <li>All parameters are connected with sign &</li>
+        <li>All parameter names are capitalized</li>
+    </ul>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Example:</b></h5>
+            <pre><code>{{examplePartner}}</code></pre>
+        </div>
+    </div>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Sequence that is signed:</b></h5>
+            {{sequencePartner}}
+        </div>
+    </div>
+    <br />
+    <h4>Code examples:</h4>
+    <uib-tabset active="active">
+        <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
+            <pre style="background-color: white">
+/// &lt;summary&gt;
+/// Method used to generate signatures based on input data and selected certificates.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;dataToSign&quot;&gt;Data for signature generation.&lt;/param&gt;
+/// &lt;param name=&quot;certificatePath&quot;&gt;Physical path to certificate.&lt;/param&gt;
+/// &lt;param name=&quot;certificatePass&quot;&gt;Certificate password.&lt;/param&gt;
+/// &lt;returns&gt;Return generated signature.&lt;/returns&gt;
+public static string GenerateSignature( string dataToSign, string certificatePath, string certificatePass)
+{
+    var certificate = new X509Certificate2(certificatePath, certificatePass, X509KeyStorageFlags.Exportable);
+    // Create byte arrays to hold original, encrypted, and decrypted data.
+    var originalData = Encoding.UTF8.GetBytes(dataToSign);
+    // Create a new instance of the RSACryptoServiceProvider class
+    using ( var rsa = certificate.GetRSAPrivateKey())
+    {
+        var signeddata = rsa.SignData(originalData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+        return Convert.ToBase64String(signeddata);
+    }
+}</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
+                <pre style="background-color: white">
+public  static String signData(String privateCertFilePath, String privateCertPass, String dataToSgin) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
+	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
+	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
+	keyStore.load(instream, privateCertPass.toCharArray());
+	Enumeration&lt;String&gt;  aliases = keyStore.aliases();
+	String alias = (String) aliases.nextElement();
+
+	PrivateKey privateKey = (PrivateKey)keyStore.getKey(alias, privateCertPass.toCharArray());
+
+	Signature sign = Signature.getInstance(&quot;SHA256withRSA&quot;);
+	sign.initSign(privateKey);
+	sign.update(dataToSgin.getBytes(&quot;UTF-8&quot;));
+	return new String(Base64.encodeBase64(sign.sign()), &quot;UTF-8&quot;);
+}
+
+public  static String signDataAbon(String privateCertFilePath, String privateCertPass, String dataToSgin, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
+	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
+	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
+	keyStore.load(instream, privateCertPass.toCharArray());
+	Enumeration&lt;String&gt;  aliases = keyStore.aliases();
+	String alias = (String) aliases.nextElement();
+	
+	PrivateKey privateKey = (PrivateKey)keyStore.getKey(alias, privateCertPass.toCharArray());
+	
+	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
+	sign.initSign(privateKey);
+	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
+	return new String(Base64.encodeBase64(sign.sign()), &quot;ASCII&quot;);
+}</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-2" heading="Ruby" classes="nav-item">
+            <pre style="background-color: white">
+def initialize
+    @url = "https://api.staging.aircash.eu/"
+    @guid = "79ce88c4-7f3b-41f2-91ec-e04ffe681190"
+    @fileLocation = "..../supersport.pfx" # file location
+    @pass = "....." # file password
+end
+
+def sign(dataToSign)
+    @cert = Chilkat::CkCert.new()
+    @success = @cert.LoadPfxFile(@fileLocation, @pass)
+    @publicKeyXml = @cert.ExportPublicKey().getXml()
+    @publicKeyXml.gsub! &#39;RSAPublicKey&#39;, &#39;RSAKeyValue&#39;
+
+    @p12 = OpenSSL::PKCS12.new(File.binread(@fileLocation), @pass)
+    @originalData = (dataToSign).bytes
+    @digest = OpenSSL::Digest::SHA1.new
+    @keypair = OpenSSL::PKey::RSA.new(@p12.key.to_pem)
+    @signature = @keypair.sign(@digest, dataToSign + @publicKeyXml)
+    return Base64.encode64(@signature).gsub(&quot;\n&quot;, &quot;&quot;)
+end</pre>
+        </uib-tab>
+    </uib-tabset>
+    <br />
+    <hr />
+    <h1>Verifying signature received from Aircash</h1>
+    <p>
+        In each request, the Aircash system sends the signature in order to achieve undeniability that
+        Aircash is actually making the request to the partner system. The Aircash signature is generated so
+        that all the parameters are ordered alphabetically, and then the pairs of parameter names and
+        parameter values are joined into a single string. This string is then signed with a private certificate
+        that only Aircash has and sent in the Signature parameter.
+    </p>
+    <p>
+        After receiving the request, the partner system is required to generate a string that
+        matches the one signed by Aircash, and check its validity using the Signature and the public
+        certificate (which Aircash support will provide before the start of integration).
+    </p>
+    <p>Rules when generating the signature:</p>
+    <ul>
+        <li>For complex objects, the parameter order is alphabetical</li>
+        <li>
+            For decimal numbers, decimal points should be used. Also numbers in signature should be
+            trimmed out of unnecessary zeros behind decimal point
+            <ul>
+                <li>123 in signature is represented by 123</li>
+                <li>123.4 in signature is represented by 123.4</li>
+                <li>123.45 is signature is represented by 123.45</li>
+            </ul>
+        </li>
+        <li>
+            For lists, the parameter order is always the same as it was received, and parameters are joined
+            by a comma
+        </li>
+        <li>
+            For each parameter, the parameter name is printed first, and then the value joined by an
+            equation symbol
+        </li>
+        <li>
+            In case the value of a parameter is empty or null, only the parameter name is printed and the
+            value is skipped
+        </li>
+        <li>All parameters are connected with sign &</li>
+        <li>All parameter names are capitalized</li>
+    </ul>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Example:</b></h5>
+            <pre><code>{{exampleAircash}}</code></pre>
+        </div>
+    </div>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>Sequence that is signed:</b></h5>
+            {{sequenceAircash}}
+        </div>
+    </div>
+    <br />
+    <h4>Code examples:</h4>
+    <uib-tabset>
+        <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
+            <div style="width: 800px">
+                <pre style="background-color: white">
+/// &lt;summary&gt;
+/// &lt;summary&gt;
+/// Method that verify signature for requests received from Aircash service.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;ceftificatePath&quot;&gt;Physical path to public certificate.&lt;/param&gt;
+/// &lt;param name=&quot;signature&quot;&gt;Signature property received form Aircash in request.&lt;/param&gt;
+/// &lt;param name=&quot;dataToSign&quot;&gt;All parameters expect signature joined in one string as Aircash documentation state.&lt;/param&gt;
+/// &lt;returns&gt;Returns true in case signature verification was successful or false otherwise.&lt;/returns&gt;
+public static bool VerifySignature(string ceftificatePath, string signature, string dataToVerify)
+{
+// Load the certificate we’ll use to verify the signature from a file.
+var certificate = new X509Certificate2(ceftificatePath);
+// Create byte arrays to hold original, encrypted, and decrypted data.
+var dataToVerifyBytes = Encoding.UTF8.GetBytes(dataToVerify);
+var signatureBytes = Convert.FromBase64String(signature);
+// Create a new instance of the RSACryptoServiceProvider class.
+using (var rsaAlg = (RSACryptoServiceProvider)certificate.PublicKey.Key)
+using (var sha256 = new SHA256Managed())
+    {
+        return rsaAlg.VerifyData(dataToVerifyBytes, sha256, signatureBytes);
+    }
+}</pre>
+            </div>
+        </uib-tab>
+        <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
+                <pre style="background-color: white">
+public  static boolean verifySignature(String publicCertFilePath, String dataToSgin, String signature) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
+	FileInputStream stream = new FileInputStream(publicCertFilePath);
+	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
+	java.security.cert.Certificate certificate = certificateFactory.generateCertificate(stream);
+	PublicKey publicKey = certificate.getPublicKey();    
+			
+	Signature sign = Signature.getInstance(&quot;SHA256withRSA&quot;);
+	sign.initVerify(publicKey);
+	sign.update(dataToSgin.getBytes(&quot;UTF-8&quot;));
+	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;UTF-8&quot;)));
+}
+
+public  static boolean verifySignatureAbon(String publicCertFilePath, String dataToSgin, String signature, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
+	FileInputStream stream = new FileInputStream(publicCertFilePath);
+	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
+	java.security.cert.Certificate certificate = certificateFactory.generateCertificate(stream);
+	PublicKey publicKey = certificate.getPublicKey();
+				
+	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
+	sign.initVerify(publicKey);
+	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
+	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;ASCII&quot;)));
+}</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-2" heading="Python" classes="nav-item">
+            <pre style="background-color: white">
+def verify_sign(public_key_loc, signature, data):
+    &#39;&#39;&#39;
+    Verifies with a public key from whom the data came that it was indeed 
+    signed by their private key
+    param: public_key_loc Path to public key
+    param: signature String signature to be verified
+    return: Boolean. True if the signature is valid; False otherwise. 
+    &#39;&#39;&#39;
+    from crypto.PublicKey import RSA 
+    from crypto.Signature import PKCS1_v1_5 
+    from crypto.Hash import SHA256 
+    from base64 import b64decode 
+    pub_key = open(public_key_loc, &quot;r&quot;).read() 
+    rsakey = RSA.importKey(pub_key) 
+    signer = PKCS1_v1_5.new(rsakey) 
+    digest = SHA256.new() 
+    # Assumes the data is base64 encoded to begin with
+    digest.update(str.encode(data))
+    if signer.verify(digest, b64decode(signature)):
+        return True
+    return False</pre>
+        </uib-tab>
+    </uib-tabset>
+</body>
+</html>

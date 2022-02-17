@@ -1,0 +1,693 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="width: 100%">       
+        <h1>Frame API</h1>
+        <br />
+
+        <p>The process consists of the following steps:</p>
+        <ol>
+            <li>
+                The user selects Aircash as the deposit option and enters the amount he wants to deposit.
+            </li>
+            <li>
+                Partner’s system initiates the payment with the amount, currency, transaction id and other
+                mandatory parameters.
+            </li>
+            <li>
+                Aircash system responds with a URL to which user needs to be redirected.
+            </li>
+            <li>
+                A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
+                popped-up authorization screen)
+            </li>
+            <li>
+                Aircash system notifies partner’s system by sending notification to designated URL
+            </li>
+            <li>
+                Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
+                the user’s account
+            </li>
+        </ol>
+        <br />
+        <p>Methods called by partner system on the Aircash system:</p>
+        <ul>
+            <li>
+                Initiate – POST method used to generate Aircash frame URL
+            </li>
+            <li>
+                Status – POST method to validate the status of the transaction
+            </li>
+        </ul>
+        <p>Methods called by Aircash on the partner system</p>
+        <ul>
+            <li>
+                The Partner should open one GET method to which Aircash will send notification about transaction status change.
+            </li>
+        </ul>
+        <br />
+        <p>In each method partner should send header Content-Type with value application/json</p>
+        <br />
+        <p>All Aircash methods have common behaviour in case of responses:</p>
+        <ul>
+            <li>
+                In case of successful response Aircash system will return HTTP response 200 OK with JSON content
+                in response.
+            </li>
+            <li>
+                In case of server error Aircash system will return HTTP response 500 Server error
+            </li>
+            <li>
+                In case of bad request Aircash system will return HTTP response 400 Bad request with json content
+                about error
+            </li>
+            <li>
+                In case of invalid partner ID or invalid signature, Aircash system will return 401 Unauthorized
+            </li>
+        </ul>
+
+        <h4>Initiate</h4>
+        <p>
+            Method used to generate the link of the Aircash frame panel, using which the customer will proceed with the required steps of the payment process. In the tables below you can find additional information important for the correct integration of Aircash frame hosted payment page.
+        </p>
+
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://dev-frame-api.aircash.eu/api/v1/initiate</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://frame-api.aircash.eu/api/v1/initiate</td>
+            </tr>
+        </table>
+        <br />
+        <p>
+            To receive the frame link, partner needs to send a POST request to the URL of a desired environment using parameters in the table below within the JSON request body.
+        </p>
+        <br />
+        <uib-tabset active="active">
+            <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameters</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Required</th>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier (per currency) provided by Aircash
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerUserId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique user identifier in the merchant’s system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique transaction id in partner’s system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>string</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Currency</b></td>
+                        <td>int</td>
+                        <td>
+                            ISO-4217 currency code
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PayType</b></td>
+                        <td>int</td>
+                        <td>
+                            Pay type identifier ( 0 - Payment; 1 - Payout )
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PayMethod</b></td>
+                        <td>int</td>
+                        <td>
+                            Pay method identifier ( 0 - A-bon; 2 - Aircash Pay; 10 - Aircash Payout )
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>NotificationUrl</b></td>
+                        <td>string</td>
+                        <td>
+                            URL to which notification after the authorization has been successfully completed.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>SuccessUrl</b></td>
+                        <td>string</td>
+                        <td>
+                            Aircash frame redirects the customer back to the success URL if the payment is successful
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>DeclineUrl</b></td>
+                        <td>string</td>
+                        <td>
+                            Aircash frame redirects the customer back to the decline URL in case payment failed
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Locale</b></td>
+                        <td>string</td>
+                        <td>
+                            Frame language
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            A sequence that has been digitally signed with the provider's private signature, used for authentication
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                <pre>
+<code>{</code>
+<code>    "Amount": 100,</code>
+<code>    "CurrencyId": 978,</code>
+<code>    "DeclineUrl": "https://aircash.eu?success=false",</code>
+<code>    "Locale": "en-US",</code>
+<code>    "NotificationUrl": "https://aircash.eu",</code>
+<code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
+<code>    "PartnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
+<code>    "PartnerUserId": "5e82a3d1-5b05-40e4-9443-92b21fb43a34",</code>
+<code>    "PayMethod": 2,</code>
+<code>    "PayType": 0,</code>
+<code>    "SuccessUrl": "https://aircash.eu?success=true",</code>
+<code>    "Signature": "123...abc"</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><b>URL</b></td>
+                        <td>string</td>
+                        <td>
+                            Url that needs to be opened within merchant's web
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="200 OK Response example" classes="nav-item">
+<pre>
+<code>{</code>
+<code>    "Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>
+                            An invalid request was made
+                        </td>
+                        <td>
+                            The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
+                        </td>
+                        <td>
+                            Verify that ProviderId and Signature are correct in your request.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>500</b></td>
+                        <td>
+                            An unknown error occured
+                        </td>
+                        <td>
+                            Contact Aircash support
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-5" heading="400 Error response" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Code</th>
+                        <th>Message</th>
+                        <th>Additional data</th>
+                    </tr>
+                    <tr>
+                        <td><b>1</b></td>
+                        <td>
+                            "Invalid provider id" – wrong partner identifier (ProviderId)
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>3</b></td>
+                        <td>
+                            "Validation erorr" – missing mandatory parameter
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>1004</b></td>
+                        <td>
+                            "Partner transaction already exists " – PartnerTransacatinID must be unique
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>3000</b></td>
+                        <td>
+                            "Invalid currency " currency missmatch
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
+                <pre>
+<code>{</code>
+<code>    "code": 1,</code>
+<code>    "message": "Invalid ProviderId",</code>
+<code>    "additionalData": null</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST" name="initiateForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Pay Type</label>
+                                    <select ng-model="initiateModel.payType" class="form-control" ng-required="true" name="payType">
+                                        <option value="0">Payment</option>
+                                        <option value="1">Payout</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Pay Method</label>
+                                    <select ng-model="initiateModel.payMethod" class="form-control" ng-required="true" name="payMethod">
+                                        <option value="0">Abon</option>
+                                        <option value="2">AC Pay</option>
+                                        <option value="10">Payout</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Amount</label>
+                                    <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" ng-required="true" name="amount">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Currency ID</label>
+                                    <select ng-model="initiateModel.currency" class="form-control" ng-required="true" name="currencyId">
+                                        <option value="191">HRK</option>
+                                        <option value="977">EUR</option>
+                                    </select>
+                                </div>
+                                <button ng-click="initiate()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">Initiate <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!initiateResponded" class="col-md-5">
+                        Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>{{InitiateServiceRequest}}</code>
+</pre>
+
+                        Sequence: {{sequenceInitiate}}
+                    </div>
+                    <div ng-hide="!initiateResponded" class="col-md-5">
+                        Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre style="height: 25%">
+<code>{{InitiateServiceResponse}}</code>
+</pre>
+                        <a href="" ng-click="showFrame()">Open Aircash Frame</a>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+        <br />
+        <h4>Notification</h4>
+        <p>
+            After transaction is processed, Aircash system will send notification to the NotificationUrl provided within the initiate request.
+        </p>
+        <p>
+            Notification example (HTTP GET):
+        </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
+        <br />
+        <p>
+            If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL:
+        </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
+        <br />
+        <h4>Transaction status</h4>
+        <p>
+            Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
+        </p>
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://dev-frame-api.aircash.eu/api/v1/status</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://frame-api.aircash.eu/api/v1/status</td>
+            </tr>
+        </table>
+        <br />
+        <uib-tabset>
+            <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier (per currency) provided by Aircash
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique transaction id in partner’s system
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            A sequence that has been digitally signed with the provider's private signature, used for authentication
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                <pre>
+<code>{</code>
+<code>    "partnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
+<code>    "partnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><b>Status</b></td>
+                        <td>int</td>
+                        <td>
+                            Transaction status, 1 – declined, 2 - success
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>decimal</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Currency</b></td>
+                        <td>int</td>
+                        <td>
+                            ISO-4217 currency code
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>AircashTransactionId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique transaction id in the Aircash system
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            A sequence that has been digitally signed with the Aircash private key.
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="Error responses" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>
+                            An invalid request was made
+                        </td>
+                        <td>
+                            The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
+                        </td>
+                        <td>
+                            Verify that ProviderId and Signature are correct in your request.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>500</b></td>
+                        <td>
+                            An unknown error occured
+                        </td>
+                        <td>
+                            Contact Aircash support
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="400 Error response" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Code</th>
+                        <th>Message</th>
+                        <th>Additional data</th>
+                    </tr>
+                    <tr>
+                        <td><b>1</b></td>
+                        <td>
+                            "Invalid signature or partner id" – wrong partner identifier or signature
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>3</b></td>
+                        <td>
+                            "Validation erorr" – missing mandatory parameter
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>1002</b></td>
+                        <td>
+                            "Transaction does not exist" – transaction does not exist in the Aircash system
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>1003</b></td>
+                        <td>
+                            "Transaction not processed" - transaction is not processed in the Aircash system
+                        </td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
+                <pre>
+<code>{</code>
+<code>    "code": 1003,</code>
+<code>    "message": "Transaction not processed",</code>
+<code>    "additionalData": null</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Recent transactions:</p>
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Transaction ID</th>
+                                            <th>Amount</th>
+                                            <th>Check status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="totalLoaded == 0 && !busy">
+                                            <td colspan="12" align="center">
+                                                <i>No data</i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="transaction in transactions">
+                                            <td>{{$index + 1}}.</td>
+                                            <td>{{transaction.partnerTransactionId}}</td>
+                                            <td>{{transaction.amount | number:2}}</td>
+                                            <td style="text-align: center; vertical-align: inherit">
+                                                <button class="btn btn-primary fa fa-check" ng-click="transactionStatus(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                        </div>
+                    </div>
+                    <br />
+                    <div ng-hide="!statusResponded" class="col-md-4">
+                        Request ({{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{StatusServiceRequest}}</code>
+</pre>
+                        Sequence: {{sequenceStatus}}
+                    </div>
+                    <div ng-hide="!statusResponded" class="col-md-4">
+                        Request ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{StatusServiceResponse}}</code>
+</pre>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+
+    <!-- #modal-dialog -->
+    <div class="modal fade" id="frameModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aircash Frame</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <iframe src="{{frameUrl | trusted}}" title="Aircash Frame" width="450px" height="700px" frameborder="0"></iframe>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+﻿<!-- begin #header -->
+<div ng-include src="'template/header.html'"></div>
+<!-- end #header -->
+
+<div>
+    <!-- begin #sidebar -->
+    <div ng-include src="'template/sidebar.html'"></div>
+    <!-- end #sidebar -->
+</div>
+
+<!-- begin #content -->
+<div id="content" view-content class="content" ng-class="{
+	'content-full-width': setting.layout.pageContentFullWidth,
+	'height-full': setting.layout.pageContentFullHeight,
+	'content-inverse-mode': setting.layout.pageContentInverseMode
+}">
+    <div ui-view ng-class="{ 'height-full': setting.layout.pageContentFullHeight }"></div>
+</div>
+<!-- end #content -->
+
+<div ng-if="setting.layout.pageWithFooter">
+    <!-- begin #footer -->
+    <div id="footer" class="footer"></div>
+    <!-- end #footer -->
+</div>
+
+<div ng-if="setting.layout.pageTwoSidebar === true">
+    <!-- begin #sidebar-right -->
+    <div ng-include src="'template/sidebar-right.html'"></div>
+    <!-- end #sidebar-right -->
+</div>
+<!-- begin scroll to top btn -->
+<a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+<!-- end scroll to top btn -->
