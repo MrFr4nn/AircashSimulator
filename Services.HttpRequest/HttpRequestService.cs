@@ -56,15 +56,15 @@ namespace Services.HttpRequest
 
         public string GetEnvironmentBaseUri(EnvironmentEnum environment, EndpointEnum endpoint)
         {
-            switch ((int)endpoint)
+            switch (endpoint)
             {
-                case 1:
+                case EndpointEnum.Abon:
                     return AbonConfiguration.BaseUrl;
-                case 2:
+                case EndpointEnum.M2:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.M2StagingBaseUrl : AircashConfiguration.M2DevBaseUrl;
-                case 3:
+                case EndpointEnum.M3:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.M3StagingBaseUrl : AircashConfiguration.M3DevBaseUrl;
-                case 4:
+                case EndpointEnum.Frame:
                     return AircashConfiguration.AircashFrameTestUrl;
                 default:
                     return string.Empty;
