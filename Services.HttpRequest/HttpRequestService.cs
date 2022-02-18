@@ -2,18 +2,25 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using AircashSimulator.Configuration;
+using Microsoft.Extensions.Options;
+using Domain.Entities.Enum;
 using Newtonsoft.Json;
 
 namespace Services.HttpRequest
 {
     public class HttpRequestService : IHttpRequestService
     {
-
+        private AircashConfiguration AircashConfiguration;
+        private AbonConfiguration AbonConfiguration;
         private readonly HttpClient HttpClient;
-        public HttpRequestService(HttpClient httpClient)
+        public HttpRequestService(HttpClient httpClient, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IOptionsMonitor<AbonConfiguration> abonConfiguration)
         {
             HttpClient = httpClient;
+            AircashConfiguration = aircashConfiguration.CurrentValue;
+            AbonConfiguration = abonConfiguration.CurrentValue;
         }
+
         public async Task<HttpResponse> SendRequestAircash(object toSend, HttpMethod method, string uri)
         {
             
@@ -46,5 +53,24 @@ namespace Services.HttpRequest
             };
             return responseContent;*/
         }
+
+        public string GetEnvironmentBaseUri(EnvironmentEnum environment, EndpointEnum endpoint)
+        {
+            switch ((int)endpoint)
+            {
+                case 1:
+                    return AbonConfiguration.BaseUrl;
+                case 2:
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.M2StagingBaseUrl : AircashConfiguration.M2DevBaseUrl;
+                case 3:
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.M3StagingBaseUrl : AircashConfiguration.M3DevBaseUrl;
+                case 4:
+                    return AircashConfiguration.AircashFrameTestUrl;
+                default:
+                    return string.Empty;
+            }
+                    
+        }
+
     }
 }

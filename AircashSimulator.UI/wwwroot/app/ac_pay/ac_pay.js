@@ -83,6 +83,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.generateResponded = false;
     $scope.generateBusy = false;
     $scope.generatePartnerCode = function () {
+        $("#qrcode").empty();
         $scope.generateBusy = true;
         acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
             .then(function (response) {
