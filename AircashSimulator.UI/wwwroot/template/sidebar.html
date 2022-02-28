@@ -48,8 +48,14 @@
                     <span>{{translations.ac_pay_label}}</span>
                 </a>
             </li>
-            <li>
-                <a ui-sref="app.aircashPayout" ng-if="partnerRoles.indexOf('AircashPayout') != -1">
+            <li ui-sref-active="active">
+                <a ui-sref="app.acPayment">
+                    <i class="fa fa-share-square aIconRed" aria-hidden="true"></i>
+                    <span>{{translations.ac_payment_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.aircashPayout">
                     <i class="fa fa-mobile aIconRed"></i>
                     <span>{{translations.aircash_payout_label}}</span>
                 </a>
