@@ -11,7 +11,8 @@ namespace Domain.Entities.Enum
         AircashPay = 2,
         AircashPayout = 3,
         AbonGenerate = 4,
-        AbonDeposit = 5
+        AbonDeposit = 5,
+        AircashPayment = 6
 
     }
 }
