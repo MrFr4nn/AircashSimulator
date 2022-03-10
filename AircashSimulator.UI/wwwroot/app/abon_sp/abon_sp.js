@@ -52,7 +52,12 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonSpModule.controller("abonSpCtrl",['$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope) {
+abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("AbonGenerate") == -1) {
+        $location.path('/forbidden');
+    }
 
     $scope.createCouponModel = {
         value : 100,

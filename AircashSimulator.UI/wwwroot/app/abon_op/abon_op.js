@@ -62,7 +62,13 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope) {
+abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("AbonDeposit") == -1) {
+        $location.path('/forbidden');
+    }
+
     $scope.validateCouponModel = {
         couponCode: ""
     };

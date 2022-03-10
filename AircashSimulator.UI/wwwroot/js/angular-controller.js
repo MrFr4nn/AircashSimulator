@@ -86,11 +86,13 @@ app.controller('appController', ['$rootScope', '$scope', function ($rootScope, $
 /* -------------------------------
    2.0 CONTROLLER - Sidebar
 ------------------------------- */
-app.controller('sidebarController', function ($scope, $rootScope, $state, JwtParser) {
+app.controller('sidebarController', ['$scope', '$rootScope', '$state', 'JwtParser', '$localStorage', function ($scope, $rootScope, $state, JwtParser, $localStorage) {
   angular.element(document).ready(function () {
       $scope.pName = JwtParser.getProperty("pName");
   });
-});
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+}]);
 
 
 /* -------------------------------

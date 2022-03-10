@@ -78,7 +78,13 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
 }
 ]);
 
-aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope', '$state', 'aircashPaymentAndPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, aircashPaymentAndPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope) {
+aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope', '$state', 'aircashPaymentAndPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage,', function ($scope, $state, aircashPaymentAndPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("SalePartner") == -1) {
+        $location.path('/forbidden');
+    }
+
     $scope.checkCodeModel = {
         barCode: null,
         locationID: '123'

@@ -1,9 +1,11 @@
 ﻿using AircashSimulator.Configuration;
 using DataAccess;
 using Domain.Entities;
+using Domain.Entities.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -73,12 +75,19 @@ namespace Services.Authentication
                 throw new Exception("Invalid password");
 
             var partner = await AircashSimulatorContext.Partners.Where(p => p.PartnerId == user.PartnerId).SingleOrDefaultAsync();
+            var partnerRoleEntityList = await AircashSimulatorContext.PartnerRoles.Where(r => r.PartnerId == partner.PartnerId).ToListAsync();
+            var partnerRoles = new List<string>();
+            foreach (var partnerRoleEntity in partnerRoleEntityList)
+            {
+                partnerRoles.Add(partnerRoleEntity.PartnerRole.ToString());
+            }
 
             var claims = new List<Claim>();
             claims.Add(new Claim("partnerId", partner.PartnerId.ToString()));
             claims.Add(new Claim("username", user.Username));
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim("userId", user.UserId.ToString()));
+            claims.Add(new Claim("partnerRoles", JsonConvert.SerializeObject(partnerRoles)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfiguration.Secret));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

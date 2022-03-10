@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
                 pageTitle: 'Payout'
             },
             url: "/Payout",
-            controller: 'aircashPayoutCtrl',
+            controller: 'aircashPayoutCtrl', 
             templateUrl: 'app/aircash_payout/aircash_payout.html'
         });
 });
@@ -65,7 +65,12 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
 }
 ]);
 
-aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircashPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, aircashPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope) {
+aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircashPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, aircashPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("AircashPayout") == -1) {
+        $location.path('/forbidden');
+    }
 
     $scope.checkUserModel = {
         phoneNumber: '38512345678'
