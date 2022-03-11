@@ -25,6 +25,7 @@ using Services.AircashPaymentAndPayout;
 using Services.PartnerAbonDenominations;
 using Services.AircashFrame;
 using AircashFrame;
+using Services.Partner;
 
 namespace AircashSimulator
 {
@@ -90,6 +91,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashPaymentAndPayoutService, AircashPaymentAndPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<IPartnerService, PartnerService>();
             services.AddTransient<IAircashFrameService, AircashFrameService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();

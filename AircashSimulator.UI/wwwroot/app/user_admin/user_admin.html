@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="width: 100%">
+        <h1>USER ADMIN</h1>
+        <br />
+        <p>
+            This chapter describes the top up process using the Aircash application. The described
+            process explains how the user can pay the invoice in the partner system using AircashPay.
+        </p>
+        <p>
+            The transfer process consists of three steps:
+        </p>
+        <ol>
+            <li>
+                <b>Generate transaction code (GeneratePartnerCode)</b>
+                <ul>
+                    <li>
+                        Partner system must send information to the Aircash system in order to generate
+                        payment code for invoice/transaction
+                    </li>
+                    <li>
+                        Transaction must have partnerid, currency, amount and some unique transaction
+                        identifier
+                    </li>
+                    <li>
+                        Partner system should display transaction code on invoice/POS so that user can take
+                        photo of that code
+                    </li>
+                    <li>
+                        In case integration is done for multiple business entities, integration must have
+                        option to send different partnerid for each transaction
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>User payment</b>
+                <ul>
+                    <li>
+                        Once a user takes a photo of that code via Aircash app, Aircash system will display
+                        information to the user about the transaction.
+                    </li>
+                    <li>User will have option to confirm or reject transaction payment</li>
+                </ul>
+            </li>
+            <li>
+                <b>Transaction confirmation (ConfirmTransaction)</b>
+                <ul>
+                    <li>
+                        Once user confirm transaction Aircash system will send information to partner
+                        system about payment
+                    </li>
+                    <li>
+                        The partner system is obliged to provide an access point through which funds are
+                        transferred to the user's account
+                    </li>
+                    <li>
+                        Partner system must ensure that transaction is confirmed and processed only once
+                        as Aircash can confirm one transaction several times in case of network issues
+                    </li>
+                    <li>Partner system must acknowledge each processed transaction to Aircash system</li>
+                </ul>
+            </li>
+        </ol>
+        <hr />
+    </div>
+</body>
+</html>
