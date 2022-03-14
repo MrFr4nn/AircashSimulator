@@ -12,146 +12,110 @@ app.config(function ($stateProvider) {
         });
 });
 
-partnerAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
+userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
-        generatePartnerCode: generatePartnerCode,
-        cancelTransaction: cancelTransaction,
-        getTransactions: getTransactions
+        getUsers: getUsers,
+        getUserDetails: getUserDetails,
+        saveUser: saveUser,
+        getPartners: getPartners
     });
-    function generatePartnerCode(amount, description, locationID) {
-        var request = $http({
-            method: 'POST',
-            url: config.baseUrl + "AircashPay/GeneratePartnerCode",
-            data: {
-                Amount: amount,
-                Description: description,
-                LocationID: locationID
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
 
-    function cancelTransaction(partnerTransactionID) {
-        var request = $http({
-            method: 'POST',
-            url: config.baseUrl + "AircashPay/CancelTransaction",
-            data: {
-                partnerTransactionID: partnerTransactionID
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-
-    function getTransactions(pageSize, pageNumber) {
+    function getUsers() {
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "Transaction/GetAircashPayPreparedTransactions",
+            url: config.baseUrl + "User/GetUsers"
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function getUserDetails(userId) {
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "User/GetUserDetails",
             params: {
-                PageSize: pageSize,
-                PageNumber: pageNumber
+                userId: userId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
+    function saveUser(user) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "User/SaveUser",
+            data: {
+                UserId: user.userId,
+                UserName: user.userName,
+                Email: user.email,
+                PartnerId: user.partnerId,
+                Password: user.password
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function getPartners() {
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "Partner/GetPartners"
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 }
 ]);
 
 userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'userAdminService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, userAdminService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
-    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
-    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
-    if ($scope.partnerRoles.indexOf("AircashPay") == -1) {
-        $location.path('/forbidden');
-    }
 
-    $scope.generatePartnerCodeModel = {
-        amount: null,
-        description: null,
-        locationID: null
-    };
-
-    $scope.cancelTransactionModel = {
-        partnerTransactionID: ""
-    };
 
     $scope.setDefaults = function () {
-        $scope.transactions = [];
-        $scope.pageSize = 5;
-        $scope.pageNumber = 1;
-        $scope.totalLoaded = 0;
-        $scope.busy = false;
+        $scope.user = null;
+        $scope.selectedUser = null;
     };
 
-    $scope.showQRCode = function () {
-        $("#QRModal").modal("show");
-    }
-
-    $scope.generateResponded = false;
-    $scope.generateBusy = false;
-    $scope.generatePartnerCode = function () {
-        $scope.generateBusy = true;
-        acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
+    $scope.getUsers = function () {
+        userAdminService.getUsers()
             .then(function (response) {
                 if (response) {
-                    $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.GenerateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceGenerate = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.codeLink = response.serviceResponse.codeLink;
-                    new QRCode(document.getElementById("qrcode"), $scope.codeLink);
-                    $scope.getTransactions(true);
+                    $scope.users = response;
                 }
-                $scope.generateBusy = false;
-                $scope.generateResponded = true;
             }, () => {
-                console.log("error");
+                console.log("Error, could not fetch users.");
+            });
+    };
+
+    $scope.getUserDetails = function () {
+        userAdminService.getUserDetails($scope.selectedUser)
+            .then(function (response) {
+                if (response) {
+                    $scope.user = response;
+                }
+            }, () => {
+                console.log("Error, could not fetch user details.");
+            });
+    };
+
+    $scope.saveUser = function () {
+        userAdminService.saveUser($scope.user)
+            .then(function (response) {
+                $scope.setDefaults();
+                $scope.getUsers;
+            }, () => {
+                console.log("Error, could not fetch roles.");
             });
     }
 
-    $scope.cancelResponded = false;
-    $scope.cancelBusy = false;
-    $scope.cancelTransaction = function (transactionId) {
-        $scope.cancelBusy = true;
-        acPayService.cancelTransaction(transactionId)
+    $scope.getPartners = function () {
+        userAdminService.getPartners()
             .then(function (response) {
                 if (response) {
-                    $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.CancelResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceCancel = response.sequence;
-
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.CancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.CancelServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                }
-                $scope.cancelBusy = false;
-                $scope.cancelResponded = true;
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.getTransactions = function (reset) {
-        if (reset) $scope.setDefaults();
-        acPayService.getTransactions($scope.pageSize, $scope.pageNumber)
-            .then(function (response) {
-                $scope.pageNumber += 1;
-                if (response) {
-                    $scope.totalLoaded = response.length;
-                    $scope.transactions = $scope.transactions.concat(response);
+                    $scope.partners = response;
                 }
             }, () => {
-                console.log("error");
+                console.log("Error, could not fetch partners.");
             });
-    }
-
-    $scope.loadMore = function (pageSize) {
-        $scope.pageSize = pageSize;
-        $scope.getTransactions();
     };
 
     $scope.setDefaults();
-
-    $scope.getTransactions();
+    $scope.getUsers();
+    $scope.getPartners();
 }]);

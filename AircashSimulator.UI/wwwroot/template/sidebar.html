@@ -82,13 +82,13 @@
                 <hr />
             </li>
             <li>
-                <a ui-sref="app.partnerAdmin">
+                <a ui-sref="app.partnerAdmin" ng-if="partnerRoles.indexOf('Admin') != -1">
                     <i class="fa fa-people-arrows aIconRed"></i>
                     <span>{{translations.partner_admin_label}}</span>
                 </a>
             </li>
             <li>
-                <a ui-sref="app.userAdmin">
+                <a ui-sref="app.userAdmin"  ng-if="partnerRoles.indexOf('Admin') != -1">
                     <i class="fa fa-user aIconRed"></i>
                     <span>{{translations.user_admin_label}}</span>
                 </a>

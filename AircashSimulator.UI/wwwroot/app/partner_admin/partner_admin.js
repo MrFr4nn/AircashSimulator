@@ -15,9 +15,9 @@ app.config(function ($stateProvider) {
 partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         getPartners: getPartners,
-        getPartnerRoles: getPartnerRoles,
+        getPartnerDetails: getPartnerDetails,
         getRoles: getRoles,
-        saveRoles: saveRoles
+        savePartner: savePartner
     });
 
     function getPartners() {
@@ -36,10 +36,10 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function getPartnerRoles(partnerId) {
+    function getPartnerDetails(partnerId) {
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "Partner/GetPartnerRoles",
+            url: config.baseUrl + "Partner/GetPartnerDetails",
             params: {
                 partnerId: partnerId
             }
@@ -47,12 +47,18 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function saveRoles(partnerId, roles) {
+    function savePartner(partner, roles) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "Partner/SaveRoles",
+            url: config.baseUrl + "Partner/SavePartner",
             data: {
-                PartnerId: partnerId,
+                PartnerId: partner.partnerId,
+                PartnerName: partner.partnerName,
+                PrivateKey: partner.privateKey,
+                PrivateKeyPass: partner.privateKeyPass,
+                CurrencyId: partner.currencyId,
+                CountryCode: partner.countryCode,
+                Environment: parseInt(partner.environment),
                 Roles: roles
             }
         });
@@ -66,7 +72,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
 
     $scope.setDefaults = function () {
         $scope.roleTags = [];
-        $scope.activePartner = null;
+        $scope.partner = null;
         $scope.selectedPartner = null;
     };
 
@@ -92,12 +98,13 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
             });
     };
 
-    $scope.getPartnerRoles = function () {
-        partnerAdminService.getPartnerRoles($scope.selectedPartner)
+    $scope.getPartnerDetails = function () {
+        partnerAdminService.getPartnerDetails($scope.selectedPartner)
             .then(function (response) {
                 if (response) {
-                    $scope.activePartner = response.partnerId;
-                    $scope.roleTags = response.roles;
+                    $scope.partner = response;
+                    $scope.partner.environment = $scope.partner.environment.toString();
+                    $scope.roleTags = $scope.partner.roles;
                 }
             }, () => {
                 console.log("Error, could not fetch partner roles.");
@@ -141,10 +148,11 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         return contains;
     }
 
-    $scope.saveRoles = function () {
-        partnerAdminService.saveRoles($scope.activePartner, $scope.roleTags)
+    $scope.savePartner = function () {
+        partnerAdminService.savePartner($scope.partner, $scope.roleTags)
             .then(function (response) {
                 $scope.setDefaults();
+                $scope.getPartners;
             }, () => {
                 console.log("Error, could not fetch roles.");
             });

@@ -37,15 +37,15 @@ namespace AircashSimulator.Controllers.Partner
         [Authorize]
         public async Task<IActionResult> GetPartnerDetails(Guid partnerId)
         {
-            var roles = await PartnerService.GetPartnerDetails(partnerId);
-            return Ok(roles);
+            var partner = await PartnerService.GetPartnerDetails(partnerId);
+            return Ok(partner);
         }
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SaveRoles(PartnerDetailVM request)
+        public async Task<IActionResult> SavePartner(PartnerDetailVM request)
         {
-            await PartnerService.SaveRoles(request);
+            await PartnerService.SavePartner(request);
             return Ok();
         }
     }

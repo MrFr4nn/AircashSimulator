@@ -13,7 +13,8 @@ var app = angular.module('app', [
     'acFrame',
     'signature',
     'acPayment',
-    'partnerAdmin'
+    'partnerAdmin',
+    'userAdmin'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)

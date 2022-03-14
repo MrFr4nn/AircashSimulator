@@ -58,28 +58,57 @@ namespace Services.Partner
                 Roles = roles
             };
 
-            return partnerRoles;
+            return partnerDetails;
         }
 
-        public async Task SaveRoles(PartnerDetailVM request)
+        public async Task SavePartner(PartnerDetailVM request)
         {
-            var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
+            Guid id;
+            if (request.PartnerId != null)
+            {
+                var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
+                id = partner.PartnerId;
+                partner.PartnerName = request.PartnerName;
+                partner.PrivateKey = request.PrivateKey;
+                partner.PrivateKeyPass = request.PrivateKeyPass;
+                partner.CurrencyId = request.CurrencyId;
+                partner.CountryCode = request.CountryCode;
+                partner.Environment = request.Environment;
 
-            foreach (var role in roles)
-                AircashSimulatorContext.PartnerRoles.Remove(role);
+                var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
+                foreach (var role in roles)
+                    AircashSimulatorContext.PartnerRoles.Remove(role);
+
+                AircashSimulatorContext.Partners.Update(partner);
+            }
+            else
+            {
+                id = Guid.NewGuid();
+                await AircashSimulatorContext.Partners.AddAsync(new PartnerEntity
+                {
+                    PartnerId = id,
+                    PartnerName = request.PartnerName,
+                    PrivateKey = request.PrivateKey,
+                    PrivateKeyPass = request.PrivateKeyPass,
+                    CurrencyId = request.CurrencyId,
+                    CountryCode = request.CountryCode,
+                    Environment = request.Environment
+                });
+            }
 
             if (request.Roles.Count > 0)
             {
                 foreach (var role in request.Roles)
                 {
-                    AircashSimulatorContext.PartnerRoles.Add(new PartnerRoleEntity
+                    await AircashSimulatorContext.PartnerRoles.AddAsync(new PartnerRoleEntity
                     {
-                        PartnerId = request.PartnerId,
+                        PartnerId = id,
                         PartnerRole = role.RoleId
                     });
                 }
             }
-            AircashSimulatorContext.SaveChanges();
+
+            await AircashSimulatorContext.SaveChangesAsync();
         }
     }
 }
