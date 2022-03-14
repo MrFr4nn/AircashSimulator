@@ -35,8 +35,9 @@ namespace Services.Partner
             return roles;
         }
 
-        public async Task<PartnerRolesVM> GetPartnerRoles(Guid partnerId)
+        public async Task<PartnerDetailVM> GetPartnerDetails(Guid partnerId)
         {
+            var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == partnerId);
             var roles = await AircashSimulatorContext.PartnerRoles
                 .Where(x => x.PartnerId == partnerId)
                 .Select(x => new Role
@@ -45,16 +46,22 @@ namespace Services.Partner
                     RoleName = x.PartnerRole.ToString()
                 }).ToListAsync();
 
-            var partnerRoles = new PartnerRolesVM
+            var partnerDetails = new PartnerDetailVM
             {
-                PartnerId = partnerId,
+                PartnerId = partner.PartnerId,
+                PartnerName = partner.PartnerName,
+                PrivateKey = partner.PrivateKey,
+                PrivateKeyPass = partner.PrivateKeyPass,
+                CurrencyId = partner.CurrencyId,
+                CountryCode = partner.CountryCode,
+                Environment = partner.Environment,
                 Roles = roles
             };
 
             return partnerRoles;
         }
 
-        public async Task SaveRoles(PartnerRolesVM request)
+        public async Task SaveRoles(PartnerDetailVM request)
         {
             var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
 

@@ -10,7 +10,7 @@ namespace Services.Partner
     {
         Task<List<PartnerVM>> GetPartners();
         List<Role> GetRoles();
-        Task<PartnerRolesVM> GetPartnerRoles(Guid partnerId);
-        Task SaveRoles(PartnerRolesVM request);
+        Task<PartnerDetailVM> GetPartnerDetails(Guid partnerId);
+        Task SaveRoles(PartnerDetailVM request);
     }
 }
