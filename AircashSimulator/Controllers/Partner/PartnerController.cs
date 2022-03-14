@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Services.Partner;
 using System;
+using AircashSimulator.Extensions;
+using DataAccess;
+using System.Linq;
+using Services.Authentication;
 
 namespace AircashSimulator.Controllers.Partner
 {
@@ -12,15 +16,22 @@ namespace AircashSimulator.Controllers.Partner
     public class PartnerController : ControllerBase
     {
         private readonly IPartnerService PartnerService;
-        public PartnerController(IPartnerService partnerService)
+        private readonly IAuthenticationService AuthenticationService;
+        private readonly UserContext UserContext;
+
+        public PartnerController(IPartnerService partnerService, UserContext userContext, IAuthenticationService authenticationService)
         {
             PartnerService = partnerService;
+            UserContext = userContext;
+            AuthenticationService = authenticationService;
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetPartners()
         {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+
             var partners = await PartnerService.GetPartners();
             return Ok(partners);
         }
@@ -29,6 +40,8 @@ namespace AircashSimulator.Controllers.Partner
         [Authorize]
         public async Task<IActionResult> GetRoles()
         {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+
             var roles = PartnerService.GetRoles();
             return Ok(roles);
         }
@@ -37,6 +50,8 @@ namespace AircashSimulator.Controllers.Partner
         [Authorize]
         public async Task<IActionResult> GetPartnerDetails(Guid partnerId)
         {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+
             var partner = await PartnerService.GetPartnerDetails(partnerId);
             return Ok(partner);
         }
@@ -45,6 +60,8 @@ namespace AircashSimulator.Controllers.Partner
         [Authorize]
         public async Task<IActionResult> SavePartner(PartnerDetailVM request)
         {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+
             await PartnerService.SavePartner(request);
             return Ok();
         }

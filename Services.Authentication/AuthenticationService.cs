@@ -27,39 +27,14 @@ namespace Services.Authentication
             JwtConfiguration = jwtConfiguration.CurrentValue;
             AircashSimulatorContext = aircashSimulatorContext;
         }
-        public async Task CreateUser(string username, string password, Guid partnerId, string email)
-        {
-            string hash = "";
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                hash = builder.ToString();
-            }
-            
-            await AircashSimulatorContext.Users.AddAsync(new UserEntity
-            {
-                UserId = Guid.NewGuid(),
-                Username = username,
-                Email = email,
-                PartnerId = partnerId,
-                PasswordHash = hash
-            });
-           
-            await AircashSimulatorContext.SaveChangesAsync();
-        }
 
         public async Task<string> Login(string username, string password)
         {
             var user = await AircashSimulatorContext.Users.Where(u => u.Username == username).SingleOrDefaultAsync();
-            
+
             if (user is null)
                 throw new Exception("User not found");
-            
+
             string passwordHash = "";
             using (SHA256 sha256Hash = SHA256.Create())
             {
@@ -104,6 +79,13 @@ namespace Services.Authentication
             var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
 
             return tokenJson;
+        }
+
+        public async Task ValidateAdmin(Guid partnerId)
+        {
+            var authorizedPartners = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerRole == RoleEnum.Admin).Select(x => x.PartnerId).ToListAsync();
+            if (!authorizedPartners.Contains(partnerId))
+                throw new UnauthorizedAccessException();
         }
     }
 }

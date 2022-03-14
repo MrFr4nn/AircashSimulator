@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AircashSimulator.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Services.Authentication;
@@ -12,20 +13,24 @@ namespace AircashSimulator.Controllers.User
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class PartnerController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly IAuthenticationService AuthenticationService;
         private readonly IUserService UserService;
-        public PartnerController(IAuthenticationService authenticationService, IUserService userService)
+        private readonly UserContext UserContext;
+        public UserController(IAuthenticationService authenticationService, IUserService userService, UserContext userContext)
         {
             AuthenticationService = authenticationService;
             UserService = userService;
+            UserContext = userContext;
         }
 
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetUsers()
         {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+
             var users = await UserService.GetUsers();
             return Ok(users);
         }
@@ -34,6 +39,8 @@ namespace AircashSimulator.Controllers.User
         [Authorize]
         public async Task<IActionResult> GetUserDetail(Guid userId)
         {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+
             var user = await UserService.GetUserDetail(userId);
             return Ok(user);
         }
@@ -42,6 +49,8 @@ namespace AircashSimulator.Controllers.User
         [Authorize]
         public async Task<IActionResult> SaveUser(UserDetailVM request)
         {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+
             await UserService.SaveUser(request);
             return Ok();
         }

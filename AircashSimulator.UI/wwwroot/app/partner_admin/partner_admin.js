@@ -68,7 +68,11 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
 ]);
 
 partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter', 'partnerAdminService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, partnerAdminService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
-
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("Admin") == -1) {
+        $location.path('/forbidden');
+    }
 
     $scope.setDefaults = function () {
         $scope.roleTags = [];

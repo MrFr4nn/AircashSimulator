@@ -15,7 +15,7 @@ app.config(function ($stateProvider) {
 userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         getUsers: getUsers,
-        getUserDetails: getUserDetails,
+        getUserDetail: getUserDetail,
         saveUser: saveUser,
         getPartners: getPartners
     });
@@ -28,10 +28,10 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function getUserDetails(userId) {
+    function getUserDetail(userId) {
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "User/GetUserDetails",
+            url: config.baseUrl + "User/GetUserDetail",
             params: {
                 userId: userId
             }
@@ -65,7 +65,11 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
 ]);
 
 userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'userAdminService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, userAdminService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
-
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    if ($scope.partnerRoles.indexOf("Admin") == -1) {
+        $location.path('/forbidden');
+    }
 
     $scope.setDefaults = function () {
         $scope.user = null;
@@ -83,8 +87,8 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
             });
     };
 
-    $scope.getUserDetails = function () {
-        userAdminService.getUserDetails($scope.selectedUser)
+    $scope.getUserDetail = function () {
+        userAdminService.getUserDetail($scope.selectedUser)
             .then(function (response) {
                 if (response) {
                     $scope.user = response;

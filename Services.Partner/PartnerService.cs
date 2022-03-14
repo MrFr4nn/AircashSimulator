@@ -32,6 +32,7 @@ namespace Services.Partner
         public List<Role> GetRoles()
         {
             var roles = Enum.GetValues(typeof(RoleEnum)).Cast<RoleEnum>().ToList().Select(x => new Role { RoleId = x, RoleName = x.ToString() }).ToList();
+            roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
             return roles;
         }
 
