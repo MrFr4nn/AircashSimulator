@@ -69,7 +69,7 @@ namespace AircashFrame
             Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashInitiateRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{AircashConfiguration.AircashFrameTestUrl}{AircashConfiguration.InitiateEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{AircashConfiguration.InitiateEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);
@@ -159,7 +159,7 @@ namespace AircashFrame
             Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashTransactionStatusRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, $"{AircashConfiguration.AircashFrameTestUrl}{AircashConfiguration.TransactionStatusEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{AircashConfiguration.TransactionStatusEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             var aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponse>(response.ResponseContent);
             var frontResponse = new Response
