@@ -102,7 +102,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         userAdminService.saveUser($scope.user)
             .then(function (response) {
                 $scope.setDefaults();
-                $scope.getUsers;
+                $scope.getUsers();
             }, () => {
                 console.log("Error, could not fetch roles.");
             });
