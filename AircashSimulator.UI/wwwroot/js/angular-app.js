@@ -12,7 +12,9 @@ var app = angular.module('app', [
     'aircashPayout',
     'acFrame',
     'signature',
-    'acPayment'
+    'acPayment',
+    'partnerAdmin',
+    'userAdmin'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
