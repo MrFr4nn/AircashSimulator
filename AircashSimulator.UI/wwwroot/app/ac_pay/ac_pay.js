@@ -16,6 +16,7 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
     return ({
         generatePartnerCode: generatePartnerCode,
         cancelTransaction: cancelTransaction,
+        refundTransaction: refundTransaction,
         getTransactions: getTransactions
     });
     function generatePartnerCode(amount, description, locationID) {
@@ -41,7 +42,7 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
+    
     function getTransactions(pageSize, pageNumber) {
         var request = $http({
             method: 'GET',
@@ -67,7 +68,9 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.cancelTransactionModel = {
         partnerTransactionID: ""
     };
-
+    $scope.refundTransactionModel = {
+        amount: null
+    };
     $scope.setDefaults = function () {
         $scope.transactions = [];
         $scope.pageSize = 5;
@@ -121,6 +124,28 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                 }
                 $scope.cancelBusy = false;
                 $scope.cancelResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.refundTransaction = function (transactionId) {
+        alert("Not implemented.");
+        return;
+        $scope.refundBusy = true;
+        acPayService.refundTransaction(transactionId)
+            .then(function (response) {
+                if (response) {
+                    $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.refundSequence = response.sequence;
+
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.refundBusy = false;
+                $scope.refundResponded = true;
             }, () => {
                 console.log("error");
             });

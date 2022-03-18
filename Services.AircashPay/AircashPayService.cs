@@ -164,5 +164,56 @@ namespace Services.AircashPay
             };
             return frontResponse;
         }
+
+        public async Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO)
+        {
+            var requestDateTime = DateTime.UtcNow;
+            var aircashRefundTransactionResponse = new object();
+            var aircashRefundTransactionRequest = new AircashRefundTransactionRequest
+            {
+                PartnerID = refundTransactionDTO.PartnerId.ToString(),
+                PartnerTransactionID = refundTransactionDTO.PartnerTransactionId.ToString(),
+                RefundTransactionID = refundTransactionDTO.RefundTransactionId.ToString(),
+                Amount = refundTransactionDTO.Amount
+            };
+            var partner = AircashSimulatorContext.Partners.FirstOrDefault(x => x.PartnerId == refundTransactionDTO.PartnerId);
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashRefundTransactionRequest);
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+            aircashRefundTransactionRequest.Signature = signature;
+            var response = await HttpRequestService.SendRequestAircash(aircashRefundTransactionRequest, HttpMethod.Post, $"{AircashConfiguration.M3BaseUrl}{AircashConfiguration.RefundTransactionEndpoint}");
+            var responseDateTime = DateTime.UtcNow;
+
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                aircashRefundTransactionResponse = JsonConvert.DeserializeObject<AircashRefundTransactionResponse>(response.ResponseContent);
+                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == refundTransactionDTO.PartnerTransactionId);
+
+                AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                {
+                    Amount = refundTransactionDTO.Amount,
+                    ISOCurrencyId = transaction.ISOCurrencyId,
+                    AircashTransactionId = ((AircashRefundTransactionResponse)aircashRefundTransactionResponse).TransactionId,
+                    TransactionId = refundTransactionDTO.RefundTransactionId,
+                    ServiceId = ServiceEnum.AircashPayCancellation,
+                    RequestDateTimeUTC = requestDateTime,
+                    ResponseDateTimeUTC = responseDateTime,
+                    PointOfSaleId = transaction.PointOfSaleId
+                });
+                AircashSimulatorContext.SaveChanges();
+            }
+            else
+            {
+                aircashRefundTransactionResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+            var frontResponse = new Response
+            {
+                ServiceRequest = aircashRefundTransactionRequest,
+                ServiceResponse = aircashRefundTransactionResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
+        }
     }
 }

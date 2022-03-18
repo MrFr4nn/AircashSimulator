@@ -89,5 +89,20 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayService.CancelTransaction(cancelTransactionDTO);
             return Ok(response);
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RefundTransaction(RefundTransaction refundTransactionRequest)
+        {
+            var refundTransactionDTO = new RefundTransactionDTO
+            {
+                PartnerId = UserContext.GetPartnerId(User),
+                PartnerTransactionId = new Guid(refundTransactionRequest.TransactionID),
+                RefundTransactionId = Guid.NewGuid(),
+                Amount= refundTransactionRequest.Amount
+            };
+            var response = await AircashPayService.RefundTransaction(refundTransactionDTO);
+            return Ok();
+        }
     }
 }
