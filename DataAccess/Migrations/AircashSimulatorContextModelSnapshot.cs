@@ -123,6 +123,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("CurrencyId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Environment")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("PartnerId")
                         .HasColumnType("uniqueidentifier");
 
@@ -142,6 +145,24 @@ namespace DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Partners");
+                });
+
+            modelBuilder.Entity("Domain.Entities.PartnerRoleEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<Guid>("PartnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("PartnerRole")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PartnerRoles");
                 });
 
             modelBuilder.Entity("Domain.Entities.PreparedAircashFrameTransactionEntity", b =>

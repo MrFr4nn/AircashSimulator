@@ -1,0 +1,65 @@
+﻿<div style="width: 100%">
+    <h1>PARTNER ADMIN</h1>
+</div>
+<br />
+<div class="row">
+    <div class="col-sm-2">
+        <div class="form-group">
+            <label>Select partner:</label>
+            <select class="form-control" ng-options="sPartner.id as sPartner.name for sPartner in partners" ng-change="getPartnerDetails()" ng-model="selectedPartner"></select>
+            <button style="margin-top: 25px" ng-disabled="partner == null" type="button" class="btn btn-default" ng-click="setDefaults();">Clear</button>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-sm-2">
+        <div class="mb-3">
+            <label class="form-label">Partner Name</label>
+            <input ng-model="partner.partnerName" class="form-control" type="text" ng-required="true">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Private Key Path</label>
+            <input ng-model="partner.privateKey" class="form-control" type="text" ng-required="true">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Private Key Pass</label>
+            <input ng-model="partner.privateKeyPass" class="form-control" type="text" ng-required="true">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Currency ID</label>
+            <input ng-model="partner.currencyId" class="form-control" type="number" step="1" ng-required="true">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Country Code</label>
+            <input ng-model="partner.countryCode" class="form-control" type="text" ng-required="true">
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Environment</label>
+            <select class="form-control" ng-model="partner.environment">
+                <option value="1">Dev</option>
+                <option value="2">Staging</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Select roles:</label>
+            <select class="form-control" ng-options="role as role.roleName for role in allRoles" ng-change="insertRoleTag()" ng-model="selectedRole"></select>
+        </div>
+        <div style="float: right;">
+            <button class="btn btn-warning" style="margin-top: 25px" ng-click="removeAllRoleTags()" ng-disabled="roleTags.length == 0">Remove all</button>
+            <button class="btn btn-primary" style="margin-top: 25px" ng-click="addAllRoleTags()" ng-disabled="roleTags.length == allRoles.length">Add all</button>
+        </div>
+    </div>
+    <div class="col-md-7" style="margin-top: 25px;">
+        <button style="margin-right: 10px" ng-repeat="roleTag in roleTags" class="btn btn-danger" ng-click="removeRoleTag(roleTag)">{{roleTag.roleName}} <i class="fa fa-remove"></i></button>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2">
+        <button class="btn btn-primary" style="margin-top: 25px" ng-hide="selectedPartner != null" ng-click="savePartner()" ng-disabled="partner.partnerName == '' || partner.partnerName == null">Add partner</button>
+        <button class="btn btn-primary" style="margin-top: 25px" ng-hide="selectedPartner == null" ng-click="savePartner()">Save partner</button>
+    </div>
+</div>

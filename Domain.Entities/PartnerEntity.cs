@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.Enum;
+using System;
 
 namespace Domain.Entities
 {
@@ -17,5 +18,6 @@ namespace Domain.Entities
         public int CurrencyId { get; set; }
 
         public string CountryCode { get; set; }
+        public EnvironmentEnum Environment { get; set; }
     }
 }

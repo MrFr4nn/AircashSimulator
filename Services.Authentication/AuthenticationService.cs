@@ -1,9 +1,11 @@
 ﻿using AircashSimulator.Configuration;
 using DataAccess;
 using Domain.Entities;
+using Domain.Entities.Enum;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -25,39 +27,14 @@ namespace Services.Authentication
             JwtConfiguration = jwtConfiguration.CurrentValue;
             AircashSimulatorContext = aircashSimulatorContext;
         }
-        public async Task CreateUser(string username, string password, Guid partnerId, string email)
-        {
-            string hash = "";
-            using (SHA256 sha256Hash = SHA256.Create())
-            {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
-                {
-                    builder.Append(bytes[i].ToString("x2"));
-                }
-                hash = builder.ToString();
-            }
-            
-            await AircashSimulatorContext.Users.AddAsync(new UserEntity
-            {
-                UserId = Guid.NewGuid(),
-                Username = username,
-                Email = email,
-                PartnerId = partnerId,
-                PasswordHash = hash
-            });
-           
-            await AircashSimulatorContext.SaveChangesAsync();
-        }
 
         public async Task<string> Login(string username, string password)
         {
             var user = await AircashSimulatorContext.Users.Where(u => u.Username == username).SingleOrDefaultAsync();
-            
+
             if (user is null)
                 throw new Exception("User not found");
-            
+
             string passwordHash = "";
             using (SHA256 sha256Hash = SHA256.Create())
             {
@@ -73,12 +50,19 @@ namespace Services.Authentication
                 throw new Exception("Invalid password");
 
             var partner = await AircashSimulatorContext.Partners.Where(p => p.PartnerId == user.PartnerId).SingleOrDefaultAsync();
+            var partnerRoleEntityList = await AircashSimulatorContext.PartnerRoles.Where(r => r.PartnerId == partner.PartnerId).ToListAsync();
+            var partnerRoles = new List<string>();
+            foreach (var partnerRoleEntity in partnerRoleEntityList)
+            {
+                partnerRoles.Add(partnerRoleEntity.PartnerRole.ToString());
+            }
 
             var claims = new List<Claim>();
             claims.Add(new Claim("partnerId", partner.PartnerId.ToString()));
             claims.Add(new Claim("username", user.Username));
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim("userId", user.UserId.ToString()));
+            claims.Add(new Claim("partnerRoles", JsonConvert.SerializeObject(partnerRoles)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfiguration.Secret));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -95,6 +79,13 @@ namespace Services.Authentication
             var tokenJson = new JwtSecurityTokenHandler().WriteToken(token);
 
             return tokenJson;
+        }
+
+        public async Task ValidateAdmin(Guid partnerId)
+        {
+            var authorizedPartners = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerRole == RoleEnum.Admin).Select(x => x.PartnerId).ToListAsync();
+            if (!authorizedPartners.Contains(partnerId))
+                throw new UnauthorizedAccessException();
         }
     }
 }

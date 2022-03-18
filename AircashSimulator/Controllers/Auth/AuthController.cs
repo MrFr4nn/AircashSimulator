@@ -21,12 +21,5 @@ namespace AircashSimulator.Controllers.Auth
             var token = await AuthenticationService.Login(login.Username, login.Password);
             return token;
         }
-
-        [HttpPost("CreateUser")]
-        public async Task<IActionResult> CreateUser(CreateUserRequest createUserRequest)
-        {
-            await AuthenticationService.CreateUser(createUserRequest.Username, createUserRequest.Password, createUserRequest.PartnerId, createUserRequest.Email);
-            return Ok();
-        }
     }
 }

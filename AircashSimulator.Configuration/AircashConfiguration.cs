@@ -7,8 +7,10 @@ namespace AircashSimulator.Configuration
     public class AircashConfiguration
     {
         public string RefundTransactionEndpoint;
-        public string M3BaseUrl { get; set; }
-        public string M2BaseUrl { get; set; }
+        public string M3StagingBaseUrl { get; set; }
+        public string M3DevBaseUrl { get; set; }
+        public string M2StagingBaseUrl { get; set; }
+        public string M2DevBaseUrl { get; set; }
         public string GeneratePartnerCodeEndpoint { get; set; }
         public string CheckUserEndpoint { get; set; }
         public string CreatePayoutEndpoint { get; set; }
