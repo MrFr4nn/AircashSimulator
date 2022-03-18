@@ -180,7 +180,7 @@ namespace Services.AircashPay
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashRefundTransactionRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashRefundTransactionRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashRefundTransactionRequest, HttpMethod.Post, $"{AircashConfiguration.M3BaseUrl}{AircashConfiguration.RefundTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashRefundTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{AircashConfiguration.RefundTransactionEndpoint}");
             var responseDateTime = DateTime.UtcNow;
 
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
