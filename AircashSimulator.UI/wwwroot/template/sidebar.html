@@ -62,7 +62,7 @@
             </a>
         </li>-->
             <li ui-sref-active="active">
-                <a ui-sref="app.aircashPayout">
+                <a ui-sref="app.aircashPayout" ng-if="partnerRoles.indexOf('AircashPayout') != -1">
                     <i class="fa fa-mobile aIconRed"></i>
                     <span>{{translations.aircash_payout_label}}</span>
                 </a>
