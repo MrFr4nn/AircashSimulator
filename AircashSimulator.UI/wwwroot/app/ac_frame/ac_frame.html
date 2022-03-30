@@ -141,7 +141,7 @@
                         <td>
                             Transaction amount
                         </td>
-                        <td>YES</td>
+                        <td>YES, in case of A-bon method there is no entry</td>
                     </tr>
                     <tr>
                         <td><b>Currency</b></td>
@@ -346,7 +346,7 @@
                         <form action="/" method="POST" name="initiateForm">
                             <fieldset>
                                 <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Pay Type</label>
+                                    <label class="form-label" for="exampleInputEmail1">Aircash Method</label>
                                     <select ng-model="initiateModel.payType" class="form-control" ng-required="true" name="payType">
                                         <option value="0">Payment</option>
                                         <option value="1">Payout</option>

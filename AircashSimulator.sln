@@ -49,7 +49,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashFrame", "Ai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Partner", "Services.Partner\Services.Partner.csproj", "{9E953204-3D58-4401-8858-3A02E6391F98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.User", "Services.User\Services.User.csproj", "{94B1BA37-D13A-48AC-B1B7-00D15B576120}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.User", "Services.User\Services.User.csproj", "{94B1BA37-D13A-48AC-B1B7-00D15B576120}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

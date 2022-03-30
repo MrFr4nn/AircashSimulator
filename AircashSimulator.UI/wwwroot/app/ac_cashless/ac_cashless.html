@@ -1,0 +1,1148 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="width: 100%">
+        <h1>Aircash cashless</h1>
+        <br />
+        <p>
+            This chapter describes the process of paying into an Aircash wallet and making payments through the Aircash cashless system.
+        </p>
+        <p>
+            Payment Process:
+        </p>
+        <ol>
+            <li>
+                <b>Payment process on Aircash wallet</b>
+                <ul>
+                    <li>
+                        The customer defines the amount he wants to pay at the point of sale
+                    </li>
+                    <li>
+                        The user attaches his bracelet to the scanner which is associated with his Aircash wallet
+                    </li>
+                    <li>
+                        The partner system makes a request for payment to the Aircash wallet via the TopUp method
+                    </li>
+                    <li>
+                        The Aircash system returns information to the partner system about the execution of the transaction
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>The process of canceling a payment transaction on an Aircash wallet</b>
+                <ul>
+                    <li>
+                        The cashier at the point of sale has the option to cancel payment transactions via the CancelTopUp method
+                    </li>
+                    <li>
+                        The transaction must be canceled in full, partial cancellation of the transaction is not possible
+                    </li>
+                    <li>
+                        The partner system should call the CancelTopUp cancellation method if the Aircash system does not respond
+                        in a timely manner to the partner system in order to make a refund to the user.
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>Payment process with Aircash wallet</b>
+                <ul>
+                    <li>
+                        At the point of sale, the user selects the services he wants to
+                        buy
+                    </li>
+                    <li>
+                        The user attaches his bracelet to the scanner which is connected
+                        to his wallet
+                    </li>
+                    <li>
+                        The partner system makes a request to pay the Aircash system via
+                        the Purchase method
+                    </li>
+                    <li>
+                        The Aircash system returns information to the partner system about
+                        the execution of the transaction
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>The process of canceling a payment transaction with an Aircash wallet</b>
+                <ul>
+                    <li>
+                        The cashier at the point of sale has the option to cancel the
+                        transaction payment
+                    </li>
+                    <li>
+                        The transaction must be canceled in full, partial cancellation of
+                        the transaction is not possible
+                    </li>
+                    <li>
+                        The partner system should call the CancelPurchase cancellation method
+                        if the Aircash system does not respond in a timely manner to the
+                        partner system in order to make a return to the user.
+                    </li>
+                </ul>
+            </li>
+        </ol>
+        <hr />
+
+        <h2>Methods called by partner's system on the Aircash system</h2>
+        <p>
+            Aircash has an open REST API that receives JSON objects in the request in
+            order to successfully execute transactions.
+        </p>
+        <hr />
+        <br />
+        <h4>TopUp</h4>
+        <p>
+            The method used by the partner system to make a payment to the Aircash wallet.
+        </p>
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/TopUp</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/TopUp</td>
+            </tr>
+        </table>
+        <br />
+        <uib-tabset active="active">
+            <uib-tab index="request-tab-0" heading="Request" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier (per currency) provided by Aircash
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique identifier of the payment transaction in the
+                            partner system.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>decimal</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>CurrencyISOCode</b></td>
+                        <td>string</td>
+                        <td>
+                            Currency code by ISO 4217 (e.g. for EUR)
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Token</b></td>
+                        <td>string</td>
+                        <td>
+                            Identifier of the bracelet on which the payment is made
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>LocationID</b></td>
+                        <td>string</td>
+                        <td>
+                            Identifier of the cash register where the payment is made for
+                            better tracking in case of some problems or differences.
+                        </td>
+                        <td>NO, Recommended</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            Signature by which the partner system makes a request to the
+                            Aircash system
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
+<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
+<code>    "amount": 123.45,</code>
+<code>    "currencyIsoCode": "EUR",</code>
+<code>    "token": "65116",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Return value</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><b>AircashTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Aircash transaction identifier
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Balance</b></td>
+                        <td>decimal?</td>
+                        <td>
+                            Account balance after top-up, optional parameters to
+                            be returned as agreed with the partner
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>BalanceCurrencyISOCode</b></td>
+                        <td>string?</td>
+                        <td>
+                            Currency of the user account after top-up, optional
+                            parameters that are returned in accordance with the agreement
+                            with the partner
+                        </td>
+                    </tr>
+
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>    
+<code>    "balance": 253.04,</code>
+<code>    "balanceCurrencyISOCode": "EUR",</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the provider sends an unknown provider ID or invalid
+                            signature a-bon system will return this response
+                        </td>
+                        <td>
+                            Verify that ProviderId and Signature are correct in your request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>
+                            An invalid request was made
+                        </td>
+                        <td>
+                            The response will contain an error code, message and optionally
+                            additional data. See "400 Error responses" table for possible 400
+                            responses
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="400 Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Error code</th>
+                        <th>Description</th>
+                        <th>Additional Data</th>
+                    </tr>
+                    <tr>
+                        <td><b>0</b></td>
+                        <td>
+                            Invalid request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>1</b></td>
+                        <td>
+                            Unknown Token, the user has not linked the bracelet to the
+                            Aircash wallet and is unable to make a transaction until he does so.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>2</b></td>
+                        <td>
+                            The user cannot make a transaction
+                        </td>
+                        <td>
+                            Customer Support needs to be contacted to perform a status check
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "code": 1,</code>    
+<code>    "message": "Unknown Token, the user has not linked the bracelet to the 
+                    Aircash wallet and is unable to make a transaction until he does so.",</code>
+<code>    "additionalData": null,</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+
+            <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST" name="generateForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Amount</label>
+                                    <input ng-model="generatePartnerCodeModel.amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                                </div>
+                                <button ng-click="generatePartnerCode()" class="btn btn-primary w-100px me-5px" ng-disabled="generateBusy || generateForm.$invalid">Generate <i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!generateResponded" class="col-md-4">
+                        Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{GenerateServiceRequest}}</code>
+</pre>
+                        Sequence: {{sequenceGenerate}}
+                    </div>
+                    <div ng-hide="!generateResponded" class="col-md-6">
+                        Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{GenerateServiceResponse}}</code>
+</pre>
+                        <div>
+                            <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
+        <br />
+        <h4>CancelTopUp</h4>
+        <p>
+            The method used by the partner's system to cancel the payment on the Aircash wallet. Cancellations are always
+            made in full without the possibility of partial refunds. The Aircash system takes care that one transaction
+            can be canceled only once, in case of multiple calls the Aircash system will return the same message as on
+            the first attempt.
+        </p>
+        <p>Partner should provide an url where Aircash will send all transaction confirmations.</p>
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/CancelTopUp</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/CancelTopUp</td>
+            </tr>
+        </table>
+        <br />
+        <uib-tabset active="active">
+            <uib-tab index="request-tab-0" heading="Request" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier (per currency) provided by Aircash
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique identifier of the transaction in the partner system that it
+                            wishes to cancel
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            Signature by which the partner system makes a request to the
+                            Aircash system
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
+<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Return value</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><b>AircashTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Aircash transaction identifier
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>  
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the provider sends an unknown provider ID or invalid
+                            signature a-bon system will return this response
+                        </td>
+                        <td>
+                            Verify that ProviderId and Signature are correct in your request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>
+                            An invalid request was made
+                        </td>
+                        <td>
+                            The response will contain an error code, message and optionally
+                            additionalData. See "400 Error responses" table for possible 400
+                            responses
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="400 Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Error code</th>
+                        <th>Description</th>
+                        <th>Additional Data</th>
+                    </tr>
+                    <tr>
+                        <td><b>0</b></td>
+                        <td>
+                            Invalid request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>3</b></td>
+                        <td>
+                            The transaction does not exist in the Aircash system, the
+                            cashier can return the funds to the user
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "code": 1,</code>    
+<code>    "message": "The transaction does not exist in the Aircash system, the
+    cashier can return the funds to the user",</code>
+<code>    "additionalData": null,</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-5" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <br />
+                        <p>Recent transactions:</p>
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Transaction ID</th>
+                                            <th>Amount</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="totalLoaded == 0 && !busy">
+                                            <td colspan="12" align="center">
+                                                <i>No data</i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="transaction in transactions">
+                                            <td>{{$index + 1}}.</td>
+                                            <td>{{transaction.partnerTransactionId}}</td>
+                                            <td>{{transaction.amount | number:2}}</td>
+                                            <td style="text-align: center; vertical-align: inherit">
+                                                <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!cancelResponded" class="col-md-4">
+                        Request ({{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{CancelServiceRequest}}</code>
+</pre>
+                        Sequence: {{sequenceCancel}}
+                    </div>
+                    <div ng-hide="!cancelResponded" class="col-md-4">
+                        Response ({{CancelResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{CancelServiceResponse}}</code>
+</pre>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
+        <br />
+        <h4>Purchase</h4>
+        <p>
+            The method used by the partner's system to make a payment via Aircash wallet / bracelet.
+        </p>
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/Purchase</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/Purchase</td>
+            </tr>
+        </table>
+        <br />
+        <uib-tabset active="active">
+            <uib-tab index="request-tab-0" heading="Request" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier (per currency) provided by Aircash
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique identifier of the payment transaction in the
+                            partner system.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>decimal</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>CurrencyISOCode</b></td>
+                        <td>string</td>
+                        <td>
+                            Currency code by ISO 4217 (e.g. for EUR)
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>CashRegisterId</b></td>
+                        <td>string</td>
+                        <td>
+                            Cashier identifier for better tracking in case of any problems
+                            or differences.
+                        </td>
+                        <td>NO, Recommended</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            Signature by which the partner system makes a request to the
+                            Aircash system
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
+<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
+<code>    "amount": 123.45,</code>
+<code>    "currencyIsoCode": "EUR",</code>
+<code>    "cashRegisterId": "651169059",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Return value</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><b>AircashTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Aircash transaction identifier
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Balance</b></td>
+                        <td>decimal?</td>
+                        <td>
+                            Account balance after top-up, optional parameters to
+                            be returned as agreed with the partner
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>BalanceCurrencyISOCode</b></td>
+                        <td>string?</td>
+                        <td>
+                            Currency of the user account after top-up, optional
+                            parameters that are returned in accordance with the agreement
+                            with the partner
+                        </td>
+                    </tr>
+
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>    
+<code>    "balance": 253.04,</code>
+<code>    "balanceCurrencyISOCode": "EUR",</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the provider sends an unknown provider ID or invalid
+                            signature a-bon system will return this response
+                        </td>
+                        <td>
+                            Verify that ProviderId and Signature are correct in your request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>
+                            An invalid request was made
+                        </td>
+                        <td>
+                            The response will contain an error code, message and optionally
+                            additionalData. See "400 Error responses" table for possible 400
+                            responses
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="400 Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Error code</th>
+                        <th>Description</th>
+                        <th>Additional Data</th>
+                    </tr>
+                    <tr>
+                        <td><b>0</b></td>
+                        <td>
+                            Invalid request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>1</b></td>
+                        <td>
+                            Unknown Token, the user has not linked the bracelet to the
+                            Aircash wallet and is unable to make a transaction until he does so
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>2</b></td>
+                        <td>
+                            The user cannot make a transaction
+                        </td>
+                        <td>
+                            Customer Support needs to be contacted to perform a status check
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>4</b></td>
+                        <td>
+                            Unknown Token, the user has not linked the bracelet to the
+                            Aircash wallet and is unable to make a transaction until he does so
+                        </td>
+                        <td>
+                            The user does not have enough funds to make a transaction
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "code": 1,</code>    
+<code>    "message": "Unknown Token, the user has not linked the bracelet to the 
+                    Aircash wallet and is unable to make a transaction until he does so.",</code>
+<code>    "additionalData": null,</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+
+            <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST" name="generateForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Amount</label>
+                                    <input ng-model="generatePartnerCodeModel.amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                                </div>
+                                <button ng-click="generatePartnerCode()" class="btn btn-primary w-100px me-5px" ng-disabled="generateBusy || generateForm.$invalid">Generate <i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!generateResponded" class="col-md-4">
+                        Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{GenerateServiceRequest}}</code>
+</pre>
+                        Sequence: {{sequenceGenerate}}
+                    </div>
+                    <div ng-hide="!generateResponded" class="col-md-6">
+                        Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{GenerateServiceResponse}}</code>
+</pre>
+                        <div>
+                            <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
+        <br />
+        <h4>CancelPurchase</h4>
+        <p>
+            The method used by the partner's system to cancel a payment from an Aircash wallet / bracelet.
+            The cancellation is always done in full without the possibility of partial refunds. The Aircash
+            system takes care that one transaction can be canceled only once, in case of multiple calls the
+            Aircash system will return the same message as on the first attempt
+        </p>
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/CancelPurchase</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/cashless/CancelPurchase</td>
+            </tr>
+        </table>
+        <br />
+        <uib-tabset active="active">
+            <uib-tab index="request-tab-0" heading="Request" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier (per currency) provided by Aircash
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique identifier of the transaction in the partner system that it
+                            wishes to cancel
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            Signature by which the partner system makes a request to the
+                            Aircash system
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
+<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
+<code>    "signature": "12345....abc"</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <td><b>AircashTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Aircash transaction identifier
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>  
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the provider sends an unknown provider ID or invalid
+                            signature a-bon system will return this response
+                        </td>
+                        <td>
+                            Verify that ProviderId and Signature are correct in your request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>
+                            An invalid request was made
+                        </td>
+                        <td>
+                            The response will contain an error code, message and optionally
+                            additionalData. See "400 Error responses" table for possible 400
+                            responses
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="400 Error Responses" class="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Error code</th>
+                        <th>Description</th>
+                        <th>Additional Data</th>
+                    </tr>
+                    <tr>
+                        <td><b>0</b></td>
+                        <td>
+                            Invalid request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>3</b></td>
+                        <td>
+                            The transaction does not exist in the Aircash system, the cashier can
+                            return the funds to the user
+                        </td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
+                <pre>
+<code>{</code>
+<code>    "code": 3,</code>    
+<code>    "message": "The transaction does not exist in the Aircash system, the cashier can return 
+                    the funds to the user.",</code>
+<code>    "additionalData": null,</code>
+<code>}</code>
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST" name="generateForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Amount</label>
+                                    <input ng-model="generatePartnerCodeModel.amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                                </div>
+                                <button ng-click="generatePartnerCode()" class="btn btn-primary w-100px me-5px" ng-disabled="generateBusy || generateForm.$invalid">Generate <i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!generateResponded" class="col-md-4">
+                        Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{GenerateServiceRequest}}</code>
+</pre>
+                        Sequence: {{sequenceGenerate}}
+                    </div>
+                    <div ng-hide="!generateResponded" class="col-md-6">
+                        Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{GenerateServiceResponse}}</code>
+</pre>
+                        <div>
+                            <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
+                        </div>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+
+        <hr />
+        <h1>Production process</h1>
+        <br />
+        <p>The production process consists of several steps that take place sequentially:</p>
+        <ol>
+            <li>All acceptance criteria are checked and are performing in line with expectations</li>
+            <li>Aircash places a partner in production and allows access to production from the partner's IP addresses</li>
+            <li>
+                The partner tests the connection to the production and allows payments to individual users, if possible, in
+                order to perform the test in a "silent" production
+            </li>
+            <li>If all tests are passed successfully, the service is provided to all partner's users</li>
+        </ol>
+        <br />
+        <h4>Acceptance criteria</h4>
+        <br />
+        <p>
+            To release the service in the production, you need to make several tests to see if the integration is
+            well-made and ready for production
+        </p>
+        <table class="table table-active">
+            <tr>
+                <th>Scenario</th>
+                <th>Test description</th>
+                <th>Mandatory</th>
+            </tr>
+            <tr>
+                <td><b>TopUp</b></td>
+                <td>
+                    Test the top-up process on your Aircash wallet
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>TopUp - Error Messages</b></td>
+                <td>
+                    Test the payment process with errors for individual user statuses in the Aircash system
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>Cancel Top Up - Manually</b></td>
+                <td>
+                    Test the reversal process of top-ups on an Aircash wallet
+                </td>
+                <td>
+                    YES
+                </td>
+            </tr>
+            <tr>
+                <td><b>Cancel Top Up - Automatically</b></td>
+                <td>
+                    Set a short timeout on the partner system according to Aircash and make an
+                    automatic cancellation call when the Aircash system does not respond to the
+                    message to cancelt
+                </td>
+                <td>
+                    YES
+                </td>
+            </tr>
+            <tr>
+                <td><b>Purchase</b></td>
+                <td>
+                    Test the payment process with funds on an Aircash wallet
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>Purchase - Error Messages</b></td>
+                <td>
+                    Test the payment process for errors (insufficient funds, blocked user, etc.)
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>Cancel Purchase - Manually</b></td>
+                <td>
+                    Test the process of canceling payments with funds on the Aircash wallet
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>Cancel Purchase - Automatically</b></td>
+                <td>
+                    Set a short timeout on the partner system according to Aircash and make an
+                    automatic cancellation call when the Aircash system does not respond to the
+                    message to cancel
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>CheckBalance</b></td>
+                <td>
+                    Check the balance of the user account amount on the bracelet
+                </td>
+                <td>YES</td>
+            </tr>
+        </table>
+    </div>
+    <h1>Conclusion</h1>
+    <p>
+        This document describes the technical aspect of connecting the partner's system with the Aircash system in order
+        to achieve the process of payout / payment of funds between the two.<br />
+        For any questions, please contact: <a href="mailto:info@aircash.eu">info@aircash.eu</a>
+    </p>
+</body>
+</html>
