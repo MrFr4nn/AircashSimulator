@@ -32,7 +32,6 @@ namespace AircashSimulator.Controllers.AircashFrame
                 PartnerId = UserContext.GetPartnerId(User),
                 UserId = UserContext.GetUserId(User),
                 Amount = initiateRequest.Amount,
-                Currency = initiateRequest.Currency,
                 PayType = (PayTypeEnum)initiateRequest.PayType,
                 PayMethod = (PayMethodEnum)initiateRequest.PayMethod
             };

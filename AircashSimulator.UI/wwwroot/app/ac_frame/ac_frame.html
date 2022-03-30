@@ -5,35 +5,42 @@
     <title></title>
 </head>
 <body>
-    <div style="width: 100%">       
+    <div style="width: 100%">
         <h1>Frame API</h1>
-        <br />
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Aircash pay</h2>
+                <p>The process consists of the following steps:</p>
+                <ol>
+                    <li>
+                        The user selects Aircash as the deposit option and enters the amount he wants to deposit.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payment with the amount, currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
+                        popped-up authorization screen)
+                    </li>
+                    <li>
+                        Aircash system notifies partner’s system by sending notification to designated URL
+                    </li>
+                    <li>
+                        Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
+                        the user’s account
+                    </li>
+                </ol>
+            </div>
+            <div class="col-md-6">
+                <img src="../../app/ac_frame/img/frame_acPay.svg"/>
+            </div>
+        </div>
 
-        <p>The process consists of the following steps:</p>
-        <ol>
-            <li>
-                The user selects Aircash as the deposit option and enters the amount he wants to deposit.
-            </li>
-            <li>
-                Partner’s system initiates the payment with the amount, currency, transaction id and other
-                mandatory parameters.
-            </li>
-            <li>
-                Aircash system responds with a URL to which user needs to be redirected.
-            </li>
-            <li>
-                A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
-                popped-up authorization screen)
-            </li>
-            <li>
-                Aircash system notifies partner’s system by sending notification to designated URL
-            </li>
-            <li>
-                Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
-                the user’s account
-            </li>
-        </ol>
-        <br />
         <p>Methods called by partner system on the Aircash system:</p>
         <ul>
             <li>
@@ -112,7 +119,7 @@
                         <th>Required</th>
                     </tr>
                     <tr>
-                        <td><b>PartnerID</b></td>
+                        <td><b>PartnerId</b></td>
                         <td>string</td>
                         <td>
                             Unique partner identifier (per currency) provided by Aircash
@@ -342,42 +349,36 @@
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" ng-value="0" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
+                            <label class="form-check-label" for="inlineRadio1">Aircash payment</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" ng-value="1" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
+                            <label class="form-check-label" for="customRadio2">A-bon deposit</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" ng-value="2" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
+                            <label class="form-check-label" for="customRadio2">Aircash withdrawal</label>
+                        </div>
                         <form action="/" method="POST" name="initiateForm">
                             <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Pay Type</label>
-                                    <select ng-model="initiateModel.payType" class="form-control" ng-required="true" name="payType">
-                                        <option value="0">Payment</option>
-                                        <option value="1">Payout</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Pay Method</label>
-                                    <select ng-model="initiateModel.payMethod" class="form-control" ng-required="true" name="payMethod">
-                                        <option value="0">Abon</option>
-                                        <option value="2">AC Pay</option>
-                                        <option value="10">Payout</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
+                                <div class="mb-3" ng-hide="initiateModelSelected == 1">
                                     <label class="form-label" for="exampleInputEmail1">Amount</label>
                                     <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" ng-required="true" name="amount">
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Currency ID</label>
-                                    <select ng-model="initiateModel.currency" class="form-control" ng-required="true" name="currencyId">
-                                        <option value="191">HRK</option>
-                                        <option value="978">EUR</option>
-                                    </select>
-                                </div>
-                                <button ng-click="initiate()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">Initiate <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="initiate()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">
+                                    <i ng-if="initiateModelSelected == 0 || initiateModelSelected == 1">DEPOSIT </i>
+                                    <i ng-if="initiateModelSelected == 2">PAYOUT </i>
+                                    <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i>
+                                </button>
+
                             </fieldset>
                         </form>
                     </div>
-
                     <br />
-                    <div ng-hide="!initiateResponded" class="col-md-5">
+                    <div ng-hide="!initiateResponded" class="col-md-4">
                         Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
 <pre>
 <code>{{InitiateServiceRequest}}</code>

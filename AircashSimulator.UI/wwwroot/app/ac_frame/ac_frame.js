@@ -65,11 +65,36 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
         $location.path('/forbidden');
     }
 
-    $scope.initiateModel = {
-        payType: null,
-        payMethod: null,
-        amount: null,
-        currency: null
+    $scope.initiateModels = [0, 1, 2];
+
+    $scope.initiateModelSelected = $scope.initiateModels[0];
+
+    $scope.initiateModels =
+    [
+        {
+            payType: 0,
+            payMethod: 2,
+            amount: 10,
+            selected :true
+        },
+        {
+            payType: 0,
+            payMethod: 0,
+            amount: 0,
+            selected: true
+        },
+        {
+            payType: 1,
+            payMethod: 10,
+            amount: 10,
+            selected :true
+        }
+    ];
+    $scope.initiateModel = $scope.initiateModels[0];
+
+    $scope.setInititateModel = function (value) {
+        $scope.initiateModel = $scope.initiateModels[value.initiateModelSelected];
+        $scope.initiateModelSelected = value.initiateModelSelected;
     };
 
     $scope.transactionId;
