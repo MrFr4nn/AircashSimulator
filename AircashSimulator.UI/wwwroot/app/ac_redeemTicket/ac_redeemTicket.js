@@ -1,5 +1,5 @@
 ﻿var aircashRedeemTicketModule = angular.module('acRedeemTicket', []);
-Payout
+
 app.config(function ($stateProvider) {
     $stateProvider
         .state('app.acRedeemTicket', {
@@ -7,17 +7,16 @@ app.config(function ($stateProvider) {
                 pageTitle: 'Redeem Ticket'
             },
             url: "/RedeemTicket",
-            controller: 'acRedeemTicketCtrl',
+            controller: 'aircashRedeemTicketCtrl',
             templateUrl: 'app/ac_redeemTicket/ac_redeemTicket.html'
         });
 });
 
-aircashRedeemTicketModule.service("acRedeemTicketService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
+aircashRedeemTicketModule.service("aircashRedeemTicketService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         checkTicket: checkTicket,
         createRedeemTicket: createRedeemTicket,
-        getTransactions: getTransactions,
-        checkTransactionStatus: checkTransactionStatus
+        getTransactions: getTransactions
     });
     function checkTicket(phoneNumber) {
         var request = $http({
