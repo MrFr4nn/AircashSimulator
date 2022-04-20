@@ -9,21 +9,21 @@
         <h1>Aircash Reedem Ticket</h1>
         <br />
         <p>
-            This chapter describes the process of paying the ticket to the Aircash wallet. The described process explains
+            This chapter describes the process of paying out tickets in an Aircash wallet. The described process explains 
             how the user can pay out the winning ticket on the Aircash wallet
         </p>
         <p>
-            Payment Process:
+            Transaction Process:
         </p>
         <ol>
             <li>
                 <b>Check Ticket</b>
                 <ul>
                     <li>
-                        Within the Aircash application, the user selects the option of paying for tickets from a new partner
+                        Within the Aircash application, the user selects the option of payout for tickets from a new partner
                     </li>
                     <li>
-                        Ticket payment fields are displayed to the user (fields are configured per partner and depending
+                        Ticket payout fields are displayed to the user (fields are configured per partner and depending
                         on the number of partner fields are displayed in the Aircash application)
                     </li>
                     <li>
@@ -36,7 +36,7 @@
                     </li>
                     <li>
                         If the ticket is winning, the Aircash system will immediately call the following method to make the
-                        ticket pay off (RedeemTicket)
+                        ticket payout (RedeemTicket)
                     </li>
                 </ul>
             </li>
@@ -60,13 +60,13 @@
         <h2>Methods called by partner's system on the Aircash system</h2>
         <p>
             The partner needs to open the REST methods on his system that receive the JSON objects in the request in order
-            to make the payment successfully.
+            to make the payment successfully
         </p>
         <hr />
         <br />
         <h4>CheckTicket</h4>
         <p>
-            The method used by the Aircash system to check if there is a ticket status in the partner system.
+            The method used by the Aircash system to check if there is a ticket status in the partner system
         </p>
         <i>Endpoints:</i>
         <table class="table table-active col-md-6">
@@ -108,9 +108,9 @@
                             <td colspan="2">Parameters</td>
                             <td>List &lt;Object&gt;</td>
                             <td>
-                                List of parameters according to the partner system that the user must enter in order to
+                                List of parameters according to the partner's system that the user must enter in order to
                                 successfully make a ticket payment. Aircash will define the name of the parameters in
-                                agreement with the partner, the number of parameters depends on the partner's system and is
+                                agreement with the partner. The number of parameters depends on the partner's system and is
                                 not limited by Aircash
                             </td>
                             <td>YES</td>
@@ -137,7 +137,7 @@
                             <td colspan="2">Signature </td>
                             <td>String</td>
                             <td>
-                                Signature by Aircash system confirming that Aircash is sending request to the partner's system
+                                Signature by Aircash's system confirming that Aircash is sending request to the partner's system
                             </td>
                             <td>YES</td>
                         </tr>
@@ -146,19 +146,19 @@
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
 <pre>
-                <code>
+    <code>
         {
-        "Parameters": [
-        {
-        “Key”: “TicketID”,
-        “Value”: “123456789”
-        },
-        {
-        “Key”: “PIN”,
-        “Value”: “1234”
-        }
-        ],
-        Signature: "12345....abc"
+            "Parameters": [
+                {
+                    "Key": "TicketID",
+                    "Value": "123456789"
+                },
+                {
+                    "Key": "PIN",
+                    "Value": "1234"
+                }
+            ],
+                "Signature": "12345....abc"
         }
     </code>        
 </pre>
@@ -193,9 +193,7 @@
                                         Amount of winning if ticket status is obtained.
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
+                                <tr>                                    
                                     <td>CurrencyISOCode</td>
                                     <td>String?</td>
                                     <td>
@@ -210,15 +208,17 @@
             </uib-tab>
             <uib-tab index="checkUser1-tab-3" heading="Output parameters example" classes="nav-item">
 <pre>
-                <code>
+    <code>
         {
-        "Status": 1
+            "Status": 1
         }
+
         Ili
+
         {
-        "Status": 5,
-        “Amount”: 123.45
-        “CurrencyISOCode”: “EUR”
+            "Status": 5,
+            "Amount": 123.45
+            "CurrencyISOCode": "EUR"
         }
     </code>
 </pre>
@@ -233,58 +233,24 @@
                     <tr>
                         <td><b>401</b></td>
                         <td>
-                            In case the provider sends an unknown provider ID or invalid
-                            signature a-bon system will return this response
+                            In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
                         </td>
                         <td>
-                            Verify that ProviderId and Signature are correct in your request
+                            Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
                         </td>
                     </tr>
                 </table>
-            </uib-tab>
-            <uib-tab index="checkUser1-tab-5" heading="Try it out" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-4">
-                        <form action="/" method="POST" name="transactionForm0">
-                            <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label">Phone number</label>
-                                    <input ng-model="checkTicketModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="checkTicketServiceBusy" ng-required="true">
-                                </div>
-                                <button ng-click="checkTicket()" class="btn btn-primary w-100px me-5px" ng-disabled="checkTicketServiceBusy|| transactionForm0.$invalid">Check user <i ng-if="checkTicketServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="col-md-0.5"></div>
-                    <div class="col-md-4" ng-if="checkTicketServiceResponse">
-                        Request ({{checkTicketRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTicketRequest}}
-</code>
-</pre>
-                        Sequence: {{checkTicketSequence}}<br />
-                    </div>
-                    <div class="col-md-3" ng-if="checkTicketServiceResponse">
-                        Response ({{checkTicketResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTicketResponse}}
-</code>
-</pre>
-                    </div>
-                </div>
-            </uib-tab>
+            </uib-tab>           
         </uib-tabset>
 
         <h2 style="text-align:justify">RedeemTicket</h2>
         <p style="text-align:justify">
-            The method is used to make the Aircash system make a payment to the partner system.
-            The partner system is obliged to ensure the idempotence of the method so that the
-            system can automatically recover from errors and make payments. Idempotence must be
+            The method is used so that the Aircash system can make a payout from the partner's system.
+            The partner's system is obliged to ensure the idempotence of the method so that the
+            system can automatically recover from errors and make payouts. Idempotence must be
             manifested only in the case when the Aircash system sends identical data to the
-            partner system as in the initial payment (AircashTransactionID parameter must
-            correspond to the paid transaction)
+            partner's system as in the initial payment ( AircashTransactionID parameter must
+            correspond to the paid transaction )
         </p>
         <p style="text-align: justify">
             The Aircash system will not invoke this method if the CheckTicket method returns
@@ -332,12 +298,6 @@
                             <td>YES</td>
                         </tr>
                         <tr>
-                            <td colspan="2">Amount</td>
-                            <td>Decimal</td>
-                            <td>Transaction Amount</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
                             <td colspan="2">Parameters</td>
                             <td>List&lt;Object&gt;</td>
                             <td>
@@ -380,22 +340,21 @@
             </uib-tab>
             <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Input parameters example" classes="nav-item">
 <pre>
-                <code>
+    <code>
         {
-        “AircashTransactionID”: “11112406-f672-4c27-a415-e26eb3ecd111”
-        "Parameters": [
-        {
-        “Key”: “TicketID”,
-        “Value”: “123456789”
-        },
-        {
-        “Key”: “PIN”,
-        “Value”: “1234”
-        }
+            "AircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
+                "Parameters": [
+                {
+                    "Key": "TicketID",
+                    "Value: "123456789"
+                },
+                {
+                    "Key": "PIN",
+                    "Value": "1234"
+                }
         ],
-        Signature: "12345....abc"
+            "Signature": "12345....abc"
         }
-
     </code>        
 </pre>
             </uib-tab>
@@ -430,15 +389,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td>CurrencyISOCode</td>
-                                    <td>String?</td>
+                                    <td colspan="3">CurrencyISOCode</td>                                   <td>String?</td>
                                     <td>
                                         Winning currency if ticket status is obtained. ISO currency code:
                                         HRK, EUR, CZK
                                     </td>
-                                </tr>
+                                </tr>                               
                                 <tr>
                                     <td colspan="3">PartnerTransactionID</td>
                                     <td>String?</td>
@@ -454,16 +410,18 @@
             </uib-tab>
             <uib-tab index="checkUser1-tab-3" heading="Output parameters example" classes="nav-item">
 <pre>
-                <code>
+    <code>
         {
-        "Status": 1
+            "Status": 1
         }
+
         Ili
+
         {
-        "Status": 5,
-        “Amount”: 123.45
-        “CurrencyISOCode”: “EUR”,
-        “PartnerTransactionID”: “ABC…123”
+            "Status": 5,
+            "Amount": 123.45
+            "CurrencyISOCode": "EUR",
+            "PartnerTransactionID": "ABC…123"
         }
     </code>
 </pre>
@@ -478,52 +436,14 @@
                     <tr>
                         <td><b>401</b></td>
                         <td>
-                            In case the provider sends an unknown provider ID or invalid signature a-bon system
-                            will return this response
+                            In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
                         </td>
                         <td>
-                            Verify that ProviderId and Signature are correct in your request
+                            Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
                         </td>
                     </tr>
                 </table>
-            </uib-tab>
-            <uib-tab index="createPayout1-tab-6" heading="Try it out" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-4">
-                        <form action="/" method="POST" name="transactionForm1">
-                            <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label">Phone number</label>
-                                    <input ng-model="createRedeemTicketModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="createRedeemTicketServiceBusy" ng-required="true">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Amount</label>
-                                    <input ng-model="createRedeemTicketModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="createRedeemTicketServiceBusy" ng-required="true">
-                                </div>
-                                <button ng-click="createRedeemTicket()" class="btn btn-primary w-100px me-5px" ng-disabled="createRedeemTicketServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="createRedeemTicketServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                            </fieldset>
-                        </form>
-                    </div>
-                    <div class="col-md-0.5"></div>
-                    <div class="col-md-4" ng-if="createRedeemTicketServiceResponse">
-                        Request ({{createRedeemTicketRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>
-    {{createRedeemTicketRequest}}
-</code>
-</pre>
-                        Sequence: {{createRedeemTicketSequence}}<br />
-                    </div>
-                    <div class="col-md-3" ng-if="createRedeemTicketServiceResponse">
-                        Response ({{createRedeemTicketResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>
-    {{createRedeemTicketResponse}}
-</code>
-</pre>
-                    </div>
-                </div>
-            </uib-tab>
+            </uib-tab>            
         </uib-tabset>
 
         <hr />
@@ -563,7 +483,7 @@
             <tr>
                 <td><b>RedeemTicket</b></td>
                 <td>
-                    Successful payment of the winning ticket. Re-create the CheckTicket method for a successful
+                    Successful payout of the winning ticket. Re-create the CheckTicket method for a successful
                     payout to test that the partner's system marks the ticket as a payouted
                 </td>
                 <td>YES</td>
@@ -571,7 +491,7 @@
             <tr>
                 <td><b>RedeemTicket - idempotence</b></td>
                 <td>
-                    Simulate an Aircash-side error when entering a successful payout - and re-call the Aircash
+                    Simulate an Aircash-side error when entering a successful payout - and re-call of the Aircash
                     system of this method with the same parameters to test system recovery
                 </td>
                 <td>
@@ -580,11 +500,5 @@
             </tr>
         </table>
     </div>
-    <h1>Conclusion</h1>
-    <p>
-        This document describes the technical aspect of connecting the partner's system and Aircash in order to achieve 
-        the ticket payment process to the Aircash system.<br />
-        For any questions, please contact: <a href="mailto:info@aircash.eu">info@aircash.eu</a>
-    </p>
 </body>
 </html>
