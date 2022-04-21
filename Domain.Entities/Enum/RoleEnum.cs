@@ -13,8 +13,7 @@ namespace Domain.Entities.Enum
         AbonGenerate = 4,
         AbonDeposit = 5,
         AircashPayment = 6,
-
+        AircashRedeemTicket = 7,
         Admin = 100
-
     }
 }
