@@ -25,10 +25,10 @@
                         Ticket payout fields are displayed to the user. When agreeing to this method, Aircash will need a list of parameters that partner needs in order to uniquely determine which ticket needs to be paid out.
                     </li>
                     <li>
-                        The user enters the appropriate information about the ticket and the Aircash system sends the CheckTicket request towards partner's system
+                        The user enters the mandatory information about the ticket and the Aircash system sends the CheckTicket request towards the partner's system
                     </li>
                     <li>
-                        Aircash system will need a list of responses from partner system in order to validate the ticket status. In case the partner system responds negatively to this request, partner will need to send some unique error code. Those error codes need mapping in the Aircash system in order to display correct messages to the end user. Example of responses: non-existent ticket, ticket in progress, ticket not won, ticket already paid out, ticket won
+                        Aircash system will need a list of responses from partner system in order to validate the ticket status. In case the partner system responds negatively to this request, partner will need to send some unique status code. Those status codes need mapping in the Aircash system in order to display correct messages to the end user. Example of responses: non-existent ticket, ticket in progress, ticket not won, ticket already paid out, ticket won
                     </li>
                     <li>
                         If the ticket is winning, the Aircash system will immediately call the following method to make the ticket payout (RedeemTicket)
@@ -97,7 +97,7 @@
                     <tbody>
                         <tr>
                             <td colspan="2">Parameters</td>
-                            <td>List &lt;Object&gt;</td>
+                            <td width="100">List &lt;Object&gt;</td>
                             <td>
                                 List of parameters according to the partner's system that the user must enter in order to
                                 successfully payout the winning ticket. Aircash will define the name of the parameters in
@@ -181,15 +181,14 @@
                                     <td colspan="3">Amount</td>
                                     <td>Decimal?</td>
                                     <td>
-                                        Amount of winning if ticket status is obtained.
+                                        Amount of the ticket if the status is winning.
                                     </td>
                                 </tr>
                                 <tr>                                    
-                                    <td>CurrencyISOCode</td>
+                                    <td  colspan="3">CurrencyISOCode</td>
                                     <td>String?</td>
                                     <td>
-                                        Winning currency if ticket status is obtained. ISO currency code:
-                                        HRK, EUR, CZK
+                                        Winning ticket ISO currency code (HRK, EUR, CZK)
                                     </td>
                                 </tr>
                             </tbody>
@@ -204,7 +203,7 @@
             "Status": 1
         }
 
-        Ili
+       or
 
         {
             "Status": 5,
@@ -244,7 +243,7 @@
             correspond to the initial transaction )
         </p>
         <p style="text-align: justify">
-            The Aircash system will not invoke this method if the CheckTicket method returns error response.
+            The Aircash system will not invoke this method if the CheckTicket method not returns response with winning status.
         </p>
         <i>Endpoints:</i>
         <table class="table table-active col-md-6">
@@ -375,14 +374,14 @@
                                     <td colspan="3">Amount</td>
                                     <td>Decimal?</td>
                                     <td>
-                                        Amount of winning if ticket status is obtained.
+                                        Amount of the ticket if the status is winning.
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3">CurrencyISOCode</td>                                   <td>String?</td>
+                                    <td colspan="3">CurrencyISOCode</td>                           
+                                    <td>String?</td>
                                     <td>
-                                        Winning currency if ticket status is obtained. ISO currency code:
-                                        HRK, EUR, CZK
+                                        Winning ticket ISO currency code (HRK, EUR, CZK)
                                     </td>
                                 </tr>                               
                                 <tr>
