@@ -9,8 +9,7 @@
         <h1>Aircash Reedem Ticket</h1>
         <br />
         <p>
-            This chapter describes the process of paying out tickets in an Aircash wallet. The described process explains 
-            how the user can pay out the winning ticket on the Aircash wallet
+            This chapter describes the process of paying out winning tickets using the Aircash wallet.
         </p>
         <p>
             Transaction Process:
@@ -20,23 +19,19 @@
                 <b>Check Ticket</b>
                 <ul>
                     <li>
-                        Within the Aircash application, the user selects the option of payout for tickets from a new partner
+                        Within the Aircash application, the user selects the ticket payout option
                     </li>
                     <li>
-                        Ticket payout fields are displayed to the user (fields are configured per partner and depending
-                        on the number of partner fields are displayed in the Aircash application)
+                        Ticket payout fields are displayed to the user. When agreeing to this method, Aircash will need a list of parameters that partner needs in order to uniquely determine which ticket needs to be paid out.
                     </li>
                     <li>
-                        The user enters the appropriate information about the ticket and the Aircash system calls the
-                        CheckTicket method according to the partner's system
+                        The user enters the appropriate information about the ticket and the Aircash system sends the CheckTicket request towards partner's system
                     </li>
                     <li>
-                        The method restores the current status of the ticket: non-existent ticket, ticket in progress, ticket
-                        not won, ticket already paid out, ticket won
+                        Aircash system will need a list of responses from partner system in order to validate the ticket status. In case the partner system responds negatively to this request, partner will need to send some unique error code. Those error codes need mapping in the Aircash system in order to display correct messages to the end user. Example of responses: non-existent ticket, ticket in progress, ticket not won, ticket already paid out, ticket won
                     </li>
                     <li>
-                        If the ticket is winning, the Aircash system will immediately call the following method to make the
-                        ticket payout (RedeemTicket)
+                        If the ticket is winning, the Aircash system will immediately call the following method to make the ticket payout (RedeemTicket)
                     </li>
                 </ul>
             </li>
@@ -44,20 +39,16 @@
                 <b>Redeem Ticket</b>
                 <ul>
                     <li>
-                        The Aircash system will only call this method if the partner system returns information that the ticket
-                        was obtained when calling the CheckTicket method
+                        The Aircash system will only call this method if the partner system returns valid response in the first, CheckTicket request
                     </li>
                     <li>
-                        The method must be idempotent, if it is called 2 times with the same parameters it must give the same
-                        answer - this is used in case of ticket payment if there is an error in communication between the two
-                        systems
-                    </li>
+                        The method must be idempotent, if it is called multiple times with the same parameters it must respond with the same message - this is used in case of ticket payment if there is an error in communication between the two systems.                    </li>
                 </ul>
             </li>
         </ol>
         <hr />
 
-        <h2>Methods called by partner's system on the Aircash system</h2>
+        <h2>Methods called by Aircash system on partner's system</h2>
         <p>
             The partner needs to open the REST methods on his system that receive the JSON objects in the request in order
             to make the payment successfully
@@ -66,7 +57,7 @@
         <br />
         <h4>CheckTicket</h4>
         <p>
-            The method used by the Aircash system to check if there is a ticket status in the partner system
+            The method used by the Aircash system to validate the ticket.
         </p>
         <i>Endpoints:</i>
         <table class="table table-active col-md-6">
@@ -109,7 +100,7 @@
                             <td>List &lt;Object&gt;</td>
                             <td>
                                 List of parameters according to the partner's system that the user must enter in order to
-                                successfully make a ticket payment. Aircash will define the name of the parameters in
+                                successfully payout the winning ticket. Aircash will define the name of the parameters in
                                 agreement with the partner. The number of parameters depends on the partner's system and is
                                 not limited by Aircash
                             </td>
@@ -180,9 +171,9 @@
                                     <td>Int</td>
                                     <td>
                                         1 - non-existent ticket,<br />
-                                        2 - ticket in progress,<br />
-                                        3 - ticket not obtained,<br />
-                                        4 - ticket already paid,<br />
+                                        2 - pending,<br />
+                                        3 - non-winning ticket,<br />
+                                        4 - ticket already paid out,<br />
                                         5 - winning ticket - be sure to return the amount and currency parameters
                                     </td>
                                 </tr>
@@ -245,16 +236,15 @@
 
         <h2 style="text-align:justify">RedeemTicket</h2>
         <p style="text-align:justify">
-            The method is used so that the Aircash system can make a payout from the partner's system.
+            The method is used so that the Aircash system can make a ticket payout from the partner's system.
             The partner's system is obliged to ensure the idempotence of the method so that the
-            system can automatically recover from errors and make payouts. Idempotence must be
-            manifested only in the case when the Aircash system sends identical data to the
-            partner's system as in the initial payment ( AircashTransactionID parameter must
-            correspond to the paid transaction )
+            system can automatically recover from errors and make ticket payouts. Idempotence must be
+            ensured only in the case when the Aircash system sends identical data to the
+            partner's system as in the initial request ( AircashTransactionID parameter must
+            correspond to the initial transaction )
         </p>
         <p style="text-align: justify">
-            The Aircash system will not invoke this method if the CheckTicket method returns
-            that the ticket was not won.
+            The Aircash system will not invoke this method if the CheckTicket method returns error response.
         </p>
         <i>Endpoints:</i>
         <table class="table table-active col-md-6">
@@ -302,7 +292,7 @@
                             <td>List&lt;Object&gt;</td>
                             <td>
                                 List of parameters according to the partner system that the user must enter
-                                in order to successfully make a ticket payment. Aircash will define the name
+                                in order to successfully make a ticket payout. Aircash will define the name
                                 of the parameters in agreement with the partner, the number of parameters
                                 depends on the partner's system and is not limited by Aircash
                             </td>
@@ -415,7 +405,7 @@
             "Status": 1
         }
 
-        Ili
+        or
 
         {
             "Status": 5,
@@ -455,9 +445,9 @@
             <li>The partner system sets all parameters in production</li>
             <li>
                 Aircash puts a partner into production and tests several ticket transactions to see if
-                everything is working well
+                everything is working as expected.
             </li>
-            <li>If all tests are passed successfully, the service is provided to all partner's users</li>
+            <li>If all tests are passed successfully, the service will be enabled to all partner's users</li>
         </ol>
         <br />
         <h4>Acceptance criteria</h4>
