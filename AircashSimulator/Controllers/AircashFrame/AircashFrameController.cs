@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Entities.Enum;
+using Services.AircashFrameV2;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -14,11 +15,13 @@ namespace AircashSimulator.Controllers.AircashFrame
     public class AircashFrameController : Controller
     {
         private IAircashFrameService AircashFrameService;
+        private IAircashFrameV2Service AircashFrameV2Service;
         private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
-        public AircashFrameController(IAircashFrameService aircashFrameService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        public AircashFrameController(IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             AircashFrameService = aircashFrameService;
+            AircashFrameV2Service = aircashFrameV2Service;
             UserContext = userContext;
             AircashConfiguration = aircashConfiguration.CurrentValue;
         }
@@ -36,6 +39,26 @@ namespace AircashSimulator.Controllers.AircashFrame
                 PayMethod = (PayMethodEnum)initiateRequest.PayMethod
             };
             var response = await AircashFrameService.Initiate(initiateRequestDTO);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> InitiateV2(InitiateRequest initiateRequest)
+        {
+            var initiateRequestDTO = new InititateRequestV2Dto
+            {
+                PartnerId = UserContext.GetPartnerId(User),
+                UserId = UserContext.GetUserId(User),
+                Amount = initiateRequest.Amount,
+                PayType = (PayTypeEnum)initiateRequest.PayType,
+                PayMethod = (PayMethodEnum)initiateRequest.PayMethod,
+                OriginUrl = initiateRequest.OriginUrl,
+                DeclineUrl = initiateRequest.DeclineUrl,
+                SuccessUrl = initiateRequest.SuccessUrl,
+                CancelUrl = initiateRequest.CancelUrl
+            };
+            var response = await AircashFrameV2Service.Initiate(initiateRequestDTO);
             return Ok(response);
         }
 
