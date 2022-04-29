@@ -9,6 +9,7 @@ namespace Domain.Entities.Enum
         Abon = 1,
         M2 = 2,
         M3 = 3,
-        Frame = 4
+        Frame = 4,
+        FrameV2 = 5
     }
 }

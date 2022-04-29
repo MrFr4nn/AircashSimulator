@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Partner", "Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.User", "Services.User\Services.User.csproj", "{94B1BA37-D13A-48AC-B1B7-00D15B576120}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.AircashFrameV2", "Services.AircashFrameV2\Services.AircashFrameV2.csproj", "{AE99D470-01B9-421A-AAB7-9F548A93C99D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -129,6 +131,10 @@ Global
 		{94B1BA37-D13A-48AC-B1B7-00D15B576120}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{94B1BA37-D13A-48AC-B1B7-00D15B576120}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94B1BA37-D13A-48AC-B1B7-00D15B576120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE99D470-01B9-421A-AAB7-9F548A93C99D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE99D470-01B9-421A-AAB7-9F548A93C99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE99D470-01B9-421A-AAB7-9F548A93C99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE99D470-01B9-421A-AAB7-9F548A93C99D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +158,7 @@ Global
 		{8FF0BFB8-1ADD-436A-9E43-1B0EB49672CF} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{9E953204-3D58-4401-8858-3A02E6391F98} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{94B1BA37-D13A-48AC-B1B7-00D15B576120} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
+		{AE99D470-01B9-421A-AAB7-9F548A93C99D} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7CF481FF-2B5A-4460-9F34-6A4EAED13029}

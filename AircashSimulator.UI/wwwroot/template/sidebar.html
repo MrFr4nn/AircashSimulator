@@ -42,6 +42,14 @@
                     <span>{{translations.ac_frame_label}}</span>
                 </a>
             </li>
+
+            <li>
+                <a ui-sref="app.aircashFrameV2" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1">
+                    <i class="fa fa-desktop aIconRed"></i>
+                    <span>{{translations.ac_frame_label}}</span>
+                </a>
+            </li>
+
             <li>
                 <a ui-sref="app.acPay" ng-if="partnerRoles.indexOf('AircashPay') != -1">
                     <i class="fa fa-qrcode aIconRed" aria-hidden="true"></i>
@@ -53,7 +61,7 @@
                     <i class="fa fa-share-square aIconRed" aria-hidden="true"></i>
                     <span>{{translations.ac_payment_label}}</span>
                 </a>
-            </li>            
+            </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.acRedeemTicket" ng-if="partnerRoles.indexOf('AircashRedeemTicket') != -1">
                     <i class="fa fa-pager aIconRed" aria-hidden="true"></i>

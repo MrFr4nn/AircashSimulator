@@ -33,6 +33,6 @@ namespace AircashSimulator.Configuration
         public string DeclineUrl { get; set; }
         public string CheckTicketEndpoint { get; set; }
         public string RedeemTicketEndpoint { get; set; }
-
+        public string AircashFrameBaseUrl { get; set; }
     }
 }
