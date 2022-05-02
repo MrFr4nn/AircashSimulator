@@ -97,8 +97,8 @@ namespace AircashSimulator.Controllers
             var refundTransactionDTO = new RefundTransactionDTO
             {
                 PartnerId = UserContext.GetPartnerId(User),
-                PartnerTransactionId = new Guid(refundTransactionRequest.TransactionID),
-                RefundTransactionId = Guid.NewGuid(),
+                PartnerTransactionId = new Guid(refundTransactionRequest.PartnerTransactionID),
+                RefundPartnerTransactionId = Guid.NewGuid(),
                 Amount= refundTransactionRequest.Amount
             };
             var response = await AircashPayService.RefundTransaction(refundTransactionDTO);
