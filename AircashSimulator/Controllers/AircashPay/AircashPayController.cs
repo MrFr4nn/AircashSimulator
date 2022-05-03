@@ -102,7 +102,7 @@ namespace AircashSimulator.Controllers
                 Amount= refundTransactionRequest.Amount
             };
             var response = await AircashPayService.RefundTransaction(refundTransactionDTO);
-            return Ok();
+            return Ok(response);
         }
     }
 }
