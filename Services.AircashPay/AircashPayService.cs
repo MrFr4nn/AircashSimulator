@@ -173,7 +173,7 @@ namespace Services.AircashPay
             {
                 PartnerID = refundTransactionDTO.PartnerId.ToString(),
                 PartnerTransactionID = refundTransactionDTO.PartnerTransactionId.ToString(),
-                RefundTransactionID = refundTransactionDTO.RefundTransactionId.ToString(),
+                RefundPartnerTransactionID = refundTransactionDTO.RefundPartnerTransactionId.ToString(),
                 Amount = refundTransactionDTO.Amount
             };
             var partner = AircashSimulatorContext.Partners.FirstOrDefault(x => x.PartnerId == refundTransactionDTO.PartnerId);
@@ -193,7 +193,7 @@ namespace Services.AircashPay
                     Amount = refundTransactionDTO.Amount,
                     ISOCurrencyId = transaction.ISOCurrencyId,
                     AircashTransactionId = ((AircashRefundTransactionResponse)aircashRefundTransactionResponse).TransactionId,
-                    TransactionId = refundTransactionDTO.RefundTransactionId,
+                    TransactionId = refundTransactionDTO.RefundPartnerTransactionId,
                     ServiceId = ServiceEnum.AircashPayCancellation,
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = responseDateTime,

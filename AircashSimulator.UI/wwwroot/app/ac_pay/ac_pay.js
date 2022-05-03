@@ -42,6 +42,18 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function refundTransaction(amount, partnerTransactionID) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPay/RefundTransaction",
+            data: {
+                partnerTransactionID: partnerTransactionID,
+                amount: amount,
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     
     function getTransactions(pageSize, pageNumber) {
         var request = $http({
@@ -75,6 +87,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         partnerTransactionID: ""
     };
     $scope.refundTransactionModel = {
+        partnerTransactionID: "",
         amount: null
     };
     $scope.setDefaults = function () {
@@ -136,11 +149,10 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
             });
     }
 
+    $scope.refundResponded = false;
     $scope.refundTransaction = function (transactionId) {
-        alert("Not implemented.");
-        return;
         $scope.refundBusy = true;
-        acPayService.refundTransaction(transactionId)
+        acPayService.refundTransaction($scope.refundTransactionModel.amount, transactionId)
             .then(function (response) {
                 if (response) {
                     $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;

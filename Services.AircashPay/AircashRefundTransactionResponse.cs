@@ -5,6 +5,6 @@ namespace Services.AircashPay
     {
         public string TransactionId { get; set; }
         public string PartnerTransactionID { get; set; }
-        public string RefundTransactionID { get; set; }
+        public string RefundPartnerTransactionId { get; set; }
     }
 }
