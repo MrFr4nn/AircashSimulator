@@ -81,7 +81,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
 acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
-    if ($scope.partnerRoles.indexOf("AircashFrame") == -1) {
+    if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
         $location.path('/forbidden');
     }
 

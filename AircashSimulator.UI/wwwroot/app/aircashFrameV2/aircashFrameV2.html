@@ -212,14 +212,14 @@
                 <td>
                     POST
                 </td>
-                <td>https://staging-frame-api.aircash.eu/api/v1/initiate</td>
+                <td>https://staging-frame-api.aircash.eu/api/v2/initiate</td>
             </tr>
             <tr>
                 <td><b>Production</b></td>
                 <td>
                     POST
                 </td>
-                <td>https://frame-api.aircash.eu/api/v1/initiate</td>
+                <td>https://frame-api.aircash.eu/api/v2/initiate</td>
             </tr>
         </table>
         <br />
@@ -280,7 +280,7 @@
                         <td><b>PayType</b></td>
                         <td>int</td>
                         <td>
-                            Pay type identifier ( 0 - Payment; 1 - Payout )
+                            Pay type identifier: 0 - Payment
                         </td>
                         <td>YES</td>
                     </tr>
@@ -288,7 +288,7 @@
                         <td><b>PayMethod</b></td>
                         <td>int</td>
                         <td>
-                            Pay method identifier ( 0 - A-bon; 2 - Aircash Pay; 10 - Aircash Payout )
+                            2 - Aircash Pay
                         </td>
                         <td>YES</td>
                     </tr>
@@ -306,7 +306,7 @@
                         <td>
                             Aircash frame redirects the customer back to the success URL if the payment is successful
                         </td>
-                        <td>YES</td>
+                        <td>YES, conditonally</td>
                     </tr>
                     <tr>
                         <td><b>DeclineUrl</b></td>
@@ -314,7 +314,7 @@
                         <td>
                             Aircash frame redirects the customer back to the decline URL in case payment failed
                         </td>
-                        <td>YES</td>
+                        <td>YES, conditonally</td>
                     </tr>
                     </tr>
                     <tr>
@@ -323,7 +323,7 @@
                         <td>
                             URL where the client will be redirected after manual transaction cancelation
                         </td>
-                        <td>YES</td>
+                        <td>YES, conditonally</td>
                     </tr>
                     </tr>
                     <tr>
@@ -332,7 +332,7 @@
                         <td>
                             domain where your web application runs
                         </td>
-                        <td>YES</td>
+                        <td>YES, conditonally</td>
                     </tr>
                     <tr>
                         <td><b>Locale</b></td>
@@ -494,18 +494,18 @@
 <code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
                     <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" ng-value="0" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="inlineRadio1">Aircash payment</label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline" style="display:none">
                             <input class="form-check-input" type="radio" ng-value="1" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">A-bon deposit</label>
                         </div>
-                        <div class="form-check form-check-inline">
+                        <div class="form-check form-check-inline"  style="display:none">
                             <input class="form-check-input" type="radio" ng-value="2" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">Aircash withdrawal</label>
                         </div>
@@ -767,7 +767,7 @@
 <code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
                     <div class="col-md-4">
                         <p>Recent transactions:</p>
