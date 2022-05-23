@@ -12,7 +12,7 @@
             <uib-tab index="checkUser1-tab-0" heading="Aircash pay" classes="nav-item">
                 <div class="row">
                     <div class="col-md-6">
-                        <h2>Aircash pay</h2>
+                        <h2>Aircash Pay</h2>
                         <p>
                             This chapter describes the top up process using the Aircash application. The described
                             process explains how the user can transfer funds from the Aircash system to the partner's system.
@@ -60,7 +60,6 @@
                             stations, etc.).
                         </p>
                         <p>
-
                             The process consists of the following steps:
                         </p>
 
@@ -268,7 +267,7 @@
                         <td>YES, in case of A-bon method there is no entry</td>
                     </tr>
                     <tr>
-                        <td><b>Currency</b></td>
+                        <td><b>CurrencyId</b></td>
                         <td>int</td>
                         <td>
                             ISO-4217 currency code
@@ -315,7 +314,6 @@
                         </td>
                         <td>YES, conditonally</td>
                     </tr>
-                    </tr>
                     <tr>
                         <td><b>CancelUrl</b></td>
                         <td>string</td>
@@ -324,12 +322,11 @@
                         </td>
                         <td>YES, conditonally</td>
                     </tr>
-                    </tr>
                     <tr>
                         <td><b>OriginUrl</b></td>
                         <td>string</td>
                         <td>
-                            domain where your web application runs
+                            Domain where your web application runs
                         </td>
                         <td>YES, conditonally</td>
                     </tr>
@@ -356,7 +353,6 @@
 <code>{</code>
 <code>    "Amount": 100,</code>
 <code>    "CurrencyId": 978,</code>
-<code>    "DeclineUrl": "https://domain.com?trasnactionId=123....abc",</code>
 <code>    "Locale": "en-US",</code>
 <code>    "NotificationUrl": "domain.com",</code>
 <code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
@@ -390,7 +386,7 @@
                         <td><b>Transaction ID</b></td>
                         <td>string</td>
                         <td>
-                            URL of the transaction in the Aircash system
+                            Id of the transaction in the Aircash system
                         </td>
                     </tr>
                 </table>
@@ -400,7 +396,7 @@
 <code>{</code>
 <code>    "Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
 <code>    "transactionId": "5eed21f5-38bf-4c65-9f5c-e93647a4a322"</code>
-    <code>}</code>
+<code>}</code>
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
@@ -458,7 +454,7 @@
                     <tr>
                         <td><b>3</b></td>
                         <td>
-                            "Validation erorr" – missing mandatory parameter
+                            "Validation error" – missing mandatory parameter
                         </td>
                         <td>
                             -
@@ -504,7 +500,7 @@
                             <input class="form-check-input" type="radio" ng-value="1" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">A-bon deposit</label>
                         </div>
-                        <div class="form-check form-check-inline"  style="display:none">
+                        <div class="form-check form-check-inline" style="display:none">
                             <input class="form-check-input" type="radio" ng-value="2" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">Aircash withdrawal</label>
                         </div>
@@ -731,7 +727,7 @@
                     <tr>
                         <td><b>3</b></td>
                         <td>
-                            "Validation erorr" – missing mandatory parameter
+                            "Validation error" – missing mandatory parameter
                         </td>
                         <td>
                             -
@@ -819,6 +815,160 @@
             </uib-tab>
         </uib-tabset>
     </div>
+
+    <hr />
+    <h2>SDK</h2>
+    <h4>General</h4>
+    <p>
+        There are two ways to integrate with Aircash Frame; Window Checkout and Redirect Checkout. Each of them will be described in its own section,
+        including the required parameters and how to use the script after initiating. To use the Aircash Frame checkout script, the partner’s system
+        must include a minified Javascript file on the web application. The partner's system is also responsible to ensure that script is loaded before
+        calling any of the functions in it. This is an example how to load/include script:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<< script src="https://firebasestorage.googleapis.com/v0/b/aircash-dev/o/Frame%2Fjs%2Faircashframe-sdk-web.min.js?alt=media">< /script></code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        Aircash will provide a link to the script additionally.
+    </p>
+    <h4>Integration types</h4>
+    <h5>Window Checkout</h5>
+    <p>
+        This integration type offers you a solution where, with a few passed parameters to Aircash Frame SDK, script opens a new window with Aircash Frame
+        in it. After finishing transaction it will close and handle the rest of the process for you.
+        Below are the required parameters for initiating a transaction:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  {</code>
+<code>      ... //rest of the parameters for API v2</code>
+<code>      "SuccessUrl": null,                                     //this must be 'null' when using this type of checkout</code>
+<code>      "DeclineUrl": null,                                     //this must be 'null' when using this type of checkout</code>
+<code>      "CancelUrl": null,                                      //this must be 'null' when using this type of checkout</code>
+<code>      "OriginUrl": "https://domain.com",                      //this must be domain where your web application runs Aircash Frame SDK</code>
+<code>      ... //rest of the parameters for API v2</code>
+<code>  }</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        After a successful transaction initiate Aircash Frame will return the following response:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  {</code>
+<code>      "TransactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
+<code>      "Url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
+<code>  }</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        When the partner's system gets a response from Aircash Frame it's necessary to call the SDK function which
+        can be done as in the following example:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  new AircashFrame.WindowCheckout({</code>
+<code>      transactionId: response.transactionId,                  //this is a "TransactionId" parameter from the Aircash Frame system response</code>
+<code>      onSuccess: onSuccess,                                   //a function that's needed to be defined in the partner's system, it's called after successful transaction</code>
+<code>      onDecline: onDecline,                                   //a function that's needed to be defined in the partner's system, it's called after declined transaction</code>
+<code>      onCancel: onCancel,                                     //a function that's needed to be defined in the partner's system, it's called after transaction cancel by user through an 'x' button in the AC Frame</code>
+<code>      originUrl: "https://yourwebclientapplication.com",      //partner's system web application domain, this is where is SDK loaded from</code>
+<code>      debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console</code>
+<code>      environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production</code>
+<code>  });</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        It's recommended but not mandatory that onSuccess, onDecline and onCancel functions support receiving JSON
+        object as the Aircash Frame system on calling these functions will send a JSON object with details of the
+        transaction. An example of the paylod is below:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  {</code>
+<code>      "amount": 100.0,</code>
+<code>      "currencyId": 191                                       //ISO-4217 currency code</code>
+<code>  }</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        In case of user closese window by pressing 'close' button in browser, onCancel function is called with the following payload:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  {</code>
+<code>      "byUser": true</code>
+<code>  }</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+
+    <hr />
+    <h5>Redirect Checkout</h5>
+    <p>
+        This integration type offers you a simple checkout solution where, with a few passed parameters, a client will be fully redirected to
+        the Aircash Frame system and after finishing the transaction, Frame system will redirect to one of the predefined URLs depending on
+        transaction status. Below are the required parameters for initiating a transaction:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  {</code>
+<code>      ... //rest of the parameters for API v2</code>
+<code>      "SuccessUrl": "https://domain.com/success",             //this is the URL where the client will be redirected after successfull transaction</code>
+<code>      "DeclineUrl":"https://domain.com/decline",              //this is the URL where the client will be redirected after declined transaction</code>
+<code>      "CancelUrl":"https://domain.com/cancel",                //this is the URL where the client will be redirected after manual transaction cancelation</code>
+<code>      "OriginUrl": null,                                      //this must be 'null' when using this type of checkout</code>
+<code>      ... //rest of the parameters for API v2</code>
+<code>  }</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        After a successful transaction initiate Aircash Frame will return the following response:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  {</code>
+<code>      "TransactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
+<code>      "Url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
+<code>  }</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        When the partner's system gets a response from Aircash Frame it's necessary to call the SDK function
+        which can be done as in the following example:
+    </p>
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
+            <pre>
+<code>  new AircashFrame.RedirectCheckout({</code>
+<code>      transactionId: response.transactionId,                  //this is a "TransactionId" parameter from the Aircash Frame system response</code>
+<code>      debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console</code>
+<code>      environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production</code>
+<code>  });</code>
+</pre>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        Now, the client will be fully redirected to the Aircash Frame and after finishing the transaction it
+        will be returned (redirected) to one of the URLs defined by the partner's system on transaction initiate.
+    </p>
 
     <!-- #modal-dialog -->
     <div class="modal fade" id="frameModal">
