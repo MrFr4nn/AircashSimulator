@@ -350,25 +350,52 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "Amount": 100,</code>
-<code>    "CurrencyId": 978,</code>
-<code>    "Locale": "en-US",</code>
-<code>    "NotificationUrl": "domain.com",</code>
-<code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-<code>    "PartnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-<code>    "PartnerUserId": "5e82a3d1-5b05-40e4-9443-92b21fb43a34",</code>
-<code>    "PayMethod": 2,</code>
-<code>    "PayType": 0,</code>
-<code>    "SuccessUrl": "https://domain.com/success",</code>
-<code>    "DeclineUrl": "https://domain.com/decline ",</code>
-<code>    "CancelUrl": "https://domain.com/cancel",</code>
-<code>    "OriginUrl": "https://domain.com",</code>
-<code>    "Signature": "123...abc"</code>
-<code>}</code>
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766",
+    "amount": "100",
+    "currencyId": 191,
+    "payType": 0,
+    "payMethod": 2,
+    "notificationUrl": "https://aircash.eu",
+    "successUrl": null,
+    "declineUrl": null,
+    "cancelUrl": null,
+    "originUrl": null,
+    "locale": "en-US",
+    "signature": "tc5NZjj7hO..."
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766",
+    "amount": "100",
+    "currencyId": 191,
+    "payType": 0,
+    "payMethod": 2,
+    "notificationUrl": "https://aircash.eu",
+    "successUrl": null,
+    "declineUrl": null,
+    "cancelUrl": null,
+    "originUrl": null,
+    "locale": "en-US",
+    "signature": "tc5NZjj7hO..."
+}
+
+Sequence:
+Amount=100&CancelUrl=&CurrencyId=191&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=
+
+Signaure:
+tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJPS5SsKaCyPNRxQudthErgwzNCNPM1BD7Wwrf2obrmTzNNgRbC1sfU0HXjP7lTRS8HblzNGjksiUG0wED/QJBmZiQyTUAaO60tg1f4BpeFPAwqsOA/URKB8A72MAzIrsm6w3LOIWzAtiXBwzqkKQ2ChBMsDUx+ba8R2JdU6N1X//65KcXEAHUGOIFberWNDVIcHbZHXDNVFVlFjXtl2VR0VxASioSyh7ZrLl+pyd6BkuK0ee9z6IibAZk0xIfW6TIC4VuHxnwKLmnjxZcXesQjiz+E3xg8V00g1QX23//973WFDMFDfAqOX/1kqlTcPY+Ih8wgTeVVfLXpE7nveTn7vBMLiJE2ONxYNdp2v+ba79ro5ifAkUHcXtEaPLJxpw3d+kvO7J/uDkyc6Re2GotY1Q1leY/qp0qAPjmFvDE5wOnLJp3yDkQv34i8P591xFcLf297jaoAGrn4d2fjGszPC14TxP8VqNdhE0HO8qP3IZWVw6+QnoYMCZy+GkH8uV8Wp7P+eZWGoinJTR4nodU7H8vuWfjiJzhfSKUfYAEotxfcsNKanClrmCrvY4iRlp/BqnR/PETmqVR7bJafKNhyZ6rtb00=
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="200 OK Response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -391,15 +418,15 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="200 OK Response example" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
-<code>    "transactionId": "5eed21f5-38bf-4c65-9f5c-e93647a4a322"</code>
-<code>}</code>
+{
+    "transactionId": "e22cd71a-276e-47e1-b7af-3d3a504e0ef9",
+    "url": "https://stage-frame.aircash.eu/e22cd71a-276e-47e1-b7af-3d3a504e0ef9"
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -435,7 +462,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Code</th>
@@ -480,27 +507,27 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-7" heading="400 Error response example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "code": 1,</code>
-<code>    "message": "Invalid ProviderId",</code>
-<code>    "additionalData": null</code> 
-<code>}</code>
+{
+    "code": 1,
+    "message": "Invalid ProviderId",
+    "additionalData": null 
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
-                    <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
+                    <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px" >
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" ng-value="0" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="inlineRadio1">Aircash payment</label>
                         </div>
-                        <div class="form-check form-check-inline" style="display:none">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" ng-value="1" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">A-bon deposit</label>
                         </div>
-                        <div class="form-check form-check-inline" style="display:none">
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" ng-value="2" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">Aircash withdrawal</label>
                         </div>
@@ -515,7 +542,6 @@
                                     <i ng-if="initiateModelSelected == 2">PAYOUT </i>
                                     <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i>
                                 </button>
-
                             </fieldset>
                         </form>
                     </div>
@@ -621,14 +647,30 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "partnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-<code>    "partnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-<code>    "signature": "12345....abc"</code>
-<code>}</code>
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766",
+    "signature": "12345....abc"
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766c",
+    "signature": "dUrE4gtau5..."
+}
+
+Sequence: 
+PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766
+
+Signature:
+dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzUD82VwiLZ//gw8XJ5DLoMzud/34vzQS3MiubD1c/Sw9rWJlXm1wJW+cOgUYtz4GwnU2iViWlYcpzpCSeBB8Z4gbKPR1tDKjvXR2mSO+HQBSeUVRQHKY4rXse1lzJHsKqyQi8I3WoyPLdmUv/fUHuhBLSFbg+yEuazRJhWYhv561Zt0bIemGAsei80cnUU8TOxCZoaQQ9M+h0uWdS7i1OX92iauysj1wENKpcS+JMJxQh4YUgLvOXtoh8boYnNITYQiLy2fTA9hH/nJKiRAb/lMalXqw9r2/E574IHrC26QNEFreui0whQas7GsT37+RtrgRcwP6R59UOn+ZEC05BOoMPXhzvcTgspLOTciFEL5goVt9n2AjUOt8rX2hUvNcpnFDwgTlPyNaUTs5LYhm/qP279Cn6hhrlCilcM8BwBWfCORD3Y5y5MH+B+MaUGIgF7toJh8wCaCUVV+Bd5lPNcrpInz5hmGb3kNz2cbz+ao6HdNcMxNRbvC6ahdx5H+MN4Q7d9quiyczrnE1tqO9stuqgkUT8QcG0bj/x1E97Fx4ehpB6b0aOe/H3Cs5ZoKOmeOf6xiE0pCtPELq11pv96NMUUyGI=
+                </pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="Response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -672,7 +714,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Error responses" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -708,7 +750,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Code</th>
@@ -753,16 +795,16 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "code": 1003,</code>
-<code>    "message": "Transaction not processed",</code>
-<code>    "additionalData": null</code>
-<code>}</code>
+{
+    "code": 1003,
+    "message": "Transaction not processed",
+    "additionalData": null
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
                     <div class="col-md-4">
                         <p>Recent transactions:</p>
@@ -847,10 +889,10 @@
             <pre>
 <code>  {</code>
 <code>      ... //rest of the parameters for API v2</code>
-<code>      "SuccessUrl": null,                                     //this must be 'null' when using this type of checkout</code>
-<code>      "DeclineUrl": null,                                     //this must be 'null' when using this type of checkout</code>
-<code>      "CancelUrl": null,                                      //this must be 'null' when using this type of checkout</code>
-<code>      "OriginUrl": "https://domain.com",                      //this must be domain where your web application runs Aircash Frame SDK</code>
+<code>      "successUrl": null,                                     //this must be 'null' when using this type of checkout</code>
+<code>      "declineUrl": null,                                     //this must be 'null' when using this type of checkout</code>
+<code>      "cancelUrl": null,                                      //this must be 'null' when using this type of checkout</code>
+<code>      "originUrl": "https://domain.com",                      //this must be domain where your web application runs Aircash Frame SDK</code>
 <code>      ... //rest of the parameters for API v2</code>
 <code>  }</code>
 </pre>
@@ -863,8 +905,8 @@
         <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
             <pre>
 <code>  {</code>
-<code>      "TransactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
-<code>      "Url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
+<code>      "transactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
+<code>      "url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
 <code>  }</code>
 </pre>
         </uib-tab>
@@ -928,10 +970,10 @@
             <pre>
 <code>  {</code>
 <code>      ... //rest of the parameters for API v2</code>
-<code>      "SuccessUrl": "https://domain.com/success",             //this is the URL where the client will be redirected after successfull transaction</code>
-<code>      "DeclineUrl":"https://domain.com/decline",              //this is the URL where the client will be redirected after declined transaction</code>
-<code>      "CancelUrl":"https://domain.com/cancel",                //this is the URL where the client will be redirected after manual transaction cancelation</code>
-<code>      "OriginUrl": null,                                      //this must be 'null' when using this type of checkout</code>
+<code>      "successUrl": "https://domain.com/success",             //this is the URL where the client will be redirected after successfull transaction</code>
+<code>      "declineUrl":"https://domain.com/decline",              //this is the URL where the client will be redirected after declined transaction</code>
+<code>      "cancelUrl":"https://domain.com/cancel",                //this is the URL where the client will be redirected after manual transaction cancelation</code>
+<code>      "originUrl": null,                                      //this must be 'null' when using this type of checkout</code>
 <code>      ... //rest of the parameters for API v2</code>
 <code>  }</code>
 </pre>
@@ -944,8 +986,8 @@
         <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
             <pre>
 <code>  {</code>
-<code>      "TransactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
-<code>      "Url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
+<code>      "transactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
+<code>      "url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
 <code>  }</code>
 </pre>
         </uib-tab>

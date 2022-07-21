@@ -138,17 +138,32 @@
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
         <pre>
-<code>
 {
-    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID" : "12345",
-    "Signature": "12345....abc"
-}
-</code>        
+    "partnerID": " 8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserID": " 574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "phoneNumber": 385995712738,
+    "signature": "VA514erV6V..."
+}      
         </pre>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-2" heading="Output parameters" classes="nav-item">
+    <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "partnerID": " 8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserID": " 574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "phoneNumber": 385995712738,
+    "signature": "VA514erV6V..."
+}  
+
+Sequence:
+PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerUserID=574f32a7-4ecb-48b2-9723-ac660b9c835d&PhoneNumber=385995712738
+
+Signature:
+VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52Snu8F33glR6GW+yLEvqthW7b8dv4Xk8WfHUYb2EEANAADe7UL4a37UqO7mWJ3iRx7s9A3gJM6Xjc5aTr/s/7ms0ZAixgNQ/R2BEk0eUg6Y0JNOgyuE+fXk5M56RU+0MgUgbIQ+uWcK43ypBb16A7ibGqvvVBUgA4v3/GMHxdjJ4cImUgD5kIZrJgXsviX2jA3sQyyI9MlEBRf7IZ5WdXFrWSbqN7e2g+cODtYDdQEca4zCVaKAYhs5Mb9AWCv0kaJrWJxRfsBdiRZqACoaP0QRZdm+jz4cqk4ojXm/yL1Qz3y342zzhL4sgBBZNROYzjLjFkIGv4JbVr6KAlAnHl01FagBwQJ2KaVTBAv7hFK5oJ5wPn/Jpwyd6RxX/GzdTyKCqlKfrRlxxLtD7pfp71kb7vL5VMOOaTCXbK3lYWbYfIgku4A5DHAXPz8vjWTbpe51I+a+mZdgS7aPNNYGh1MnkFuYSgf6SgWsM4iha6VmGdopXK+4EeejCdqxrJAnkZDOXKd1btxXuqMUi/DSE8NhdcSMqSe6MDw07aEG7avqVSaLPNP6VN34pusD2BQtmZh+4BvWjueWKTE061V+LyCemB6Qdg=     
+        </pre>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <table class="table table-hover">
@@ -173,7 +188,7 @@
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-3" heading="Output parameters example" classes="nav-item">
+    <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
         <pre>
 <code>
 {
@@ -186,7 +201,7 @@
 </code>
         </pre>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-4" heading="Error message" classes="nav-item">
+    <uib-tab index="checkUser1-tab-5" heading="Error message" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -208,7 +223,7 @@
             </tbody>
         </table>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-5" heading="Try it out" classes="nav-item">
+    <uib-tab index="checkUser1-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <form action="/" method="POST" name="transactionForm0">
@@ -353,20 +368,37 @@
     </uib-tab>
     <uib-tab index="createPayout1-tab-1" heading="Request parameters example" classes="nav-item">
         <pre>
-<code>
 {
-    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID" : "12345",
-    "Amount": 123.00,
-    "CurrencyID": 191,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "12345....abc"
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "amount": 100,
+    "phoneNumber": "385995712738",
+    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "currencyID": 191,
+    "signature": "Hm38lRCyOP..."
 }
-</code>        
         </pre>
     </uib-tab>
-    <uib-tab index="createPayout1-tab-2" heading="Response parameters" classes="nav-item">
+    <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "amount": 100,
+    "phoneNumber": "385995712738",
+    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "currencyID": 191,
+    "signature": "Hm38lRCyOP..."
+}
+       
+Sequence:
+Amount=100&CurrencyID=191&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=45c38393-274b-4761-902e-23db30736563&PartnerUserID=574f32a7-4ecb-48b2-9723-ac660b9c835d&PhoneNumber=385995712738
+
+Signature:
+Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QAYS3pFuVPmiICaZiHOAZwNVrOA7MTaZQswFL7STLvm3OPnAgIZ8jDrE8LOuud4VThBef7CEOPuQioKl0tP9eEa107tRU7VQ6Wgn8aN0jsW87xFyMq82xt2amXBLjrvc6KMEvQkPW1DSwnhZPJdSt3o/xo5rNXkwo1vMcG7hrK8wultESJ23yDyPag9TI3VDgN6OUrXw9WdzlRewmyXicTC0airw5ZNsk2Yq5Drgy41/o8eygSHr6FM1szfIcCdjByHSNDT71TwVvB0WpWUa59upXaja55/qYwoszBwFNKlERgtINgjTRuU6nBxSHTXMk1+Nm3JD8+kWmPsdRk65m70XE3uJwVYQdCzbUi46e5BCC0U6k3V2jrbAFUCUP5W83jJB/u6j1sGZO0GQEYmFbdqeCNuDy9DWg6vVJoeejBO1SYcSaojRySTrcfGGcFgl8VBNj9pBn7n2zy5YZirzamvljhVYexjSvy7w9gsQsxFfprS9uiyJ4Jzq/fIdsiq8R29kyerPzkJJWQzUHLGgByPXP/YcaFLq5hvvTBSUarjJ96tGtUCOUygxvgW0aiqtfnIS67AKqSN2/OwXFWPdVoibGM50c=        </pre>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -388,7 +420,7 @@
             </tbody>
         </table>
     </uib-tab>
-    <uib-tab index="createPayout1-tab-3" heading="Response parameters example" classes="nav-item">
+    <uib-tab index="createPayout1-tab-4" heading="Response parameters example" classes="nav-item">
         <pre>
 <code>
 {
@@ -397,7 +429,7 @@
 </code>
         </pre>
     </uib-tab>
-    <uib-tab index="createPayout1-tab-4" heading="Error message" classes="nav-item">
+    <uib-tab index="createPayout1-tab-5" heading="Error message" classes="nav-item">
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-hover">
@@ -437,7 +469,7 @@
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="createPayout1-tab-5" heading="Error message example" classes="nav-item">
+    <uib-tab index="createPayout1-tab-6" heading="Error message example" classes="nav-item">
         <pre>
 <code>
 {
@@ -447,7 +479,7 @@
 </code>
         </pre>
     </uib-tab>
-    <uib-tab index="createPayout1-tab-6" heading="Try it out" classes="nav-item">
+    <uib-tab index="createPayout1-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <form action="/" method="POST" name="transactionForm1">
@@ -564,17 +596,32 @@
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Input parameters example" classes="nav-item">
         <pre>
-<code>
 {
-    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
-    "AircashTransactionID": null,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "12345....abc"
-}
-</code>        
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "aircashTransactionID": null,
+    "signature": "BBjas91N8B..."
+}      
         </pre>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-2" heading="Response parameters" classes="nav-item">
+    <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "aircashTransactionID": null,
+    "signature": "BBjas91N8B..."
+}
+
+Sequence:
+AircashTransactionID=&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=45c38393-274b-4761-902e-23db30736563
+
+Signature:
+BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIHJAicIKVM4WK59hnNk+HCQ9X/xzeDyDK8DD7s9Md1AKiKY6AMNIig+X5vygtnAxVkda4Zyvh9gspJXOzap6RppervGNbzGXhynWpiybHzmkUnhCt0oeq3kONgZdkwwr8GjDhp7vRPGW4Hp12akGb7XQ1m+dqzsESzO2rtuQPHz0yoYrr75ckQguLAuh983uez1LcMQ75Pl/R6liPjuAddtELBtsjZikYf1Yy5wMpc01VCWgKd1vsbZ6AQsUybdbqURJlTYguS/g8rAxlB+x0HZ9eopoePhuEX117VI1KHIPeob3hraGMF2hHCih5wzCiEpS7Otye7gh41bgAjh6QfqNnIlXsnwZJwJMJcAmmHvW7aWH1JJ4G3WVyLGuF1GRkcWY30yuDW0L3GbBe1gJN0obuanlZTuI5VoWpyzS7VWbz7vvj/yZgYdZWBhvml5rccbEiZzJ+7hHcGK4DzTP94kbRyh+TSnLi/k69GSYX2lFFHwPYXJ2gpbUmhBpeP/PJD8oZ+yu3xWBsYah8Hol5yeFBErqkP/fNAQHXy5zu+dp6KXic4yl9TJSZ8eR5SOMRaVbtcuIokorHUVF8Q4FXKrmr5dKU=
+    </pre>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -605,7 +652,7 @@
             </tbody>
         </table>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-3" heading="Output parameters example" classes="nav-item">
+    <uib-tab index="CheckTransactionStatus-tab-4" heading="Output parameters example" classes="nav-item">
         <pre>
 <code>
 {
@@ -615,7 +662,7 @@
 </code>
         </pre>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-4" heading="Error message" classes="nav-item">
+    <uib-tab index="CheckTransactionStatus-tab-5" heading="Error message" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -637,7 +684,7 @@
             </tbody>
         </table>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-5" heading="Error message example" classes="nav-item">
+    <uib-tab index="CheckTransactionStatus-tab-6" heading="Error message example" classes="nav-item">
         <pre>
 <code>
 {
@@ -647,7 +694,7 @@
 </code>
         </pre>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item">
+    <uib-tab index="CheckTransactionStatus-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <br />
