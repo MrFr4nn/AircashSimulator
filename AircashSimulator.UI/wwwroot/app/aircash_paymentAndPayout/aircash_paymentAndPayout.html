@@ -148,18 +148,32 @@
         </table>
     </uib-tab>
     <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
-<pre>
-<code>
+        <pre>
 {
-    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
-    "BarCode": "AC11234567890123",
-    "Signature": "12345....abc"
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "QDyIrReELi..."
 }
-
-    </code>
 </pre>
     </uib-tab>
-    <uib-tab index="CheckCode-tab-2" heading="Response parameters" classes="nav-item">
+    <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "QDyIrReELi..."
+}
+
+Sequence:
+BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
+
+Signature:
+QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloBMJiFZc9eMrSqmlAP0XxHMmn6OHp+pr9G9jFZZ0bM6AxA1BduGYmIDPl9rGMhNXXUU6RQbWvmDD6N3Digcwf2Vr7qHzNow6rDCXpWCXJXQCXJvF86HTaF5pF/kS/R13PtIl7zn3lcvSTgWguy8DM0zwkumSzrclpo98xv/YIn3irgTiLYDD8Dz2Bh1gIOeEF+XN7OvyPGC/3JQf/P6D10Y4GNaFXHjAoCrPPBD91a8kbdYiirqjMOxiBsE4SpK7GsGsp9258TfggAhFYXF7i/B4beuNilZXzMvWY28iy28b5J/mSfEDSfMRF3EWIK5mkgoN634fjkboRB1UNW69FsZmHr3gpN807uP+o9zGrVEi0yFLua7qnbBWLfQfwvnQMHFebBUGcXqNIIjQ1ksqs17Hxxosr3GrxqHXx8EkJysp679wdAs7AmY2Z/HbhbPO1JufCluMeqYrVz3ue3F6Kru5Nw+tLuZCuJJ7YsEgHKC5QhCao40CKbceAj3BFFlq5rP6nHg8wkfFq14oSsnAZK8/W109x8GN1z9fhxzhbZKfVL7v+IigmOPGcBaAsf9Bmpo8uEAP2HcdzecWQ0xWUw/M2N4tc=</pre>
+    </uib-tab>
+    <uib-tab index="CheckCode-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -186,17 +200,15 @@
                 </tr>
         </table>
     </uib-tab>
-    <uib-tab index="CheckCode-tab-3" heading="Response example" classes="nav-item">
-<pre>
-<code>
+    <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
+        <pre>
 {
-    "BarCode": "AC11234567890123",
-    "Amount": 123.45
+    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "Amount": 2,000.00
 }
-</code>
 </pre>
     </uib-tab>
-    <uib-tab index="CheckCode-tab-4" heading="Error responses" classes="nav-item">
+    <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -235,7 +247,7 @@
                 </tr>
         </table>
     </uib-tab>
-    <uib-tab index="CheckCode-tab-5" heading="Try it out" classes="nav-item">
+    <uib-tab index="CheckCode-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <form action="/" method="POST" name="transactionForm">
@@ -353,18 +365,35 @@
         </table>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
-<pre>
-<code>
+        <pre>
 {
-    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
-    "BarCode": "AC11234567890123",
-    "PartnerTransactionID": "abc...123",
-    "Signature": "12345....abc"
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
+    "locationID": "123",
+    "signature": "Iz+gMcrdNA..."
 }
-</code>
 </pre>
     </uib-tab>
-    <uib-tab index="ConfirmTransaction-tab-2" heading="Response parameters" classes="nav-item">
+    <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
+    "locationID": "123",
+    "signature": "Iz+gMcrdNA..."
+}
+
+Sequence:
+BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=11888f0c-7923-42db-8513-5c1f32cc83e0
+
+Signature:
+Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVIdS46h8vFaCJrykurUrTG/SZ8FCuI+zC00Tvgai1Kic6G7s+rLKJcFpmOT8qy2XjEunoWgiyFu3qUZtJHfjWKFJnXwTE7KIei5G6eaN9up9o3Wx3V2bb5lgbc6/m/+HYWIQPpeWXzOjOAB9Z0QYhLazJnYh7gBLqLp9M5+Rd714tncLpIheMSiCy2Z3lq44IvPgFjko+CIK9eXV878fUTeuMc/muFp6iSUk9p4CHq9cZF/sKSEpGZ6AkzkNHQj0jr3FM4wdtQ+A14cjcdVJq8tIHn6Y5lwkYNG3LI/8W378lGsW9J3qsVDgWautEwDOiONWoSpIoSZc4A66kfBpdn611tkpoYtflp4WbL+FMUZ8xlOc41/0gjv83tNYiTBbQ87iKvqQMEfw31GKRgmvZs1GW3QsN99yRpguHedn3fXvzn2o57AhmIUstwrVOZwJDBIGEzJ5/Pg/FELb7HmTV+sMXTtTzcho/ibOzmb1mokuIDXD4t6gAaxjfVjSqpQ3slQpI8WNAhRaUvIK2MBoUxXzs4F+Pif0IbdRxZTL+TUEKAP08wBJ43AOMOo8/LsOIQBCLpNAJ9tTgxsiy6AhEDst/cVAw=    
+</pre>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -388,7 +417,7 @@
                         A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
                     </td>
                     <td>YES</td>
-                </tr>                
+                </tr>
                 <tr>
                     <td>AircashTransactionID</td>
                     <td>String</td>
@@ -397,20 +426,18 @@
                     </td>
                     <td>YES</td>
                 </tr>
-</table>
+        </table>
     </uib-tab>
-    <uib-tab index="ConfirmTransaction-tab-3" heading="Response example" classes="nav-item">
-<pre>
-<code>
+    <uib-tab index="ConfirmTransaction-tab-4" heading="Response example" classes="nav-item">
+        <pre>
 {
-    "BarCode": "AC11234567890123",
-    "Amount": 123.45,
+    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "Amount": 2,000.00,
     "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
 }
-</code>
 </pre>
     </uib-tab>
-    <uib-tab index="ConfirmTransaction-tab-4" heading="Error responses" classes="nav-item">
+    <uib-tab index="ConfirmTransaction-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -455,7 +482,7 @@
             Aircash system by calling the CheckTransactionStatus method.
         </p>
     </uib-tab>
-    <uib-tab index="ConfirmTransaction-tab-5" heading="Try it out" classes="nav-item">
+    <uib-tab index="ConfirmTransaction-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <form action="/" method="POST" name="transactionForm1">
@@ -542,7 +569,7 @@
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
-                </tr>                
+                </tr>
                 <tr>
                     <td>PartnerTransactionID</td>
                     <td>String</td>
@@ -550,7 +577,7 @@
                         Partner’s unique identifier of the transaction
                     </td>
                     <td>YES</td>
-                </tr>                
+                </tr>
                 <tr>
                     <td>Signature </td>
                     <td>String</td>
@@ -563,17 +590,30 @@
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-<pre>
-<code>
+        <pre>
 {
-    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
-    "PartnerTransactionID": "abc...123",
-    "Signature": "12345....abc"
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "signature": "ueIZMgee7G..."
 }
-</code>
 </pre>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-2" heading="Response parameters" classes="nav-item">
+    <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "signature": "ueIZMgee7G..."
+}
+
+Sequence:
+PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=05cd4905-982b-4a36-8634-0719290e4341
+
+Signature:
+ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2yVXyNA/XhVHGAwaIr2bnaKpLVlz6K17c0FjuJUiDIxsO/R3wRQ+xpiG5pWTwKAV3m0NO8GBaqm1mavUCzflcuPhJmO/CAKVnhYCtvWaE/ZVjItzwHi0oF+y5vRhplno2l5q8r8mabPTIpL27WLe3/Rk7etcPz/FRngyGzhu0LDd0zuy7YctBHJKCaGKaBEyiUcIXdfqqnYIEoDs0h0Ec0IW5BuTJDCbRuwmmu6vkvXN/lEKwEA5S6qAd0/sw54u+fIuF8wSbxEFvRnLrAnQTEzMSP36ra/0COMJPPDZMTBUG4vwsfjjVbuqy2P6sddwILylIbgihnU6tspmMbUN4/5YavhbsXHbidpH1Pwtaoucu6CNf0WR6UBXZ13I0GHYGOQ3R15LbO9XyfaHai1mX7Wuh5S0455+gBYFe1iYwZp6x7HYGZMtZj7T4OhVjbtSmt8SdBaK/cSnfes+U1Qq26z9YlIiAaa0q+LWixOS2QN3e02qXkk0CtKwPNaq/DcL4XQmlccR/QZYVnNP7gBS/IBP+XvNLW2QjQTnmvU8v3IIYSwPwgCXluWxPVK9WGf5mtL+f4lbldpk1BOlz2itDcRoq+m4=</pre>
+</uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -608,20 +648,20 @@
                     </td>
                     <td>YES</td>
                 </tr>
-</table>
+        </table>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-3" heading="Response example" classes="nav-item">
+    <uib-tab index="CheckTransactionStatus-tab-4" heading="Response example" classes="nav-item">
 <pre>
-<code>
-{
-    "LocationID": "PartnerLocationID",
-    "Amount": 123.45,
-    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-}
-</code>
+    <code>
+        {
+        "LocationID": "123",
+        "Amount": 2,000.00,
+        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+        }
+    </code>
 </pre>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-4" heading="Error responses" classes="nav-item">
+    <uib-tab index="CheckTransactionStatus-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -664,7 +704,7 @@
             In case of Aircash system not returning a response to a ConfirmTransaction call, or responding with an error 500, the sales partner system should check the transaction status in Aircash system by calling the CheckTransactionStatus method.
         </p>
     </uib-tab>
-    <uib-tab index="CheckTransactionStatus-tab-5" heading="Try it out" classes="nav-item">
+    <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <br />
@@ -795,17 +835,33 @@
         </table>
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-1" heading="Request example" classes="nav-item">
-<pre>
-<code>
+        <pre>
 {
-    "PartnerID": "33352406-f672-4c27-a415-e26eb3ecd691",
-    "PartnerTransactionID": "abc...123",
-    "Signature": "12345....abc"
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "AEXHWNFQD9..."
 }
-</code>
 </pre>
     </uib-tab>
-    <uib-tab index="CancelTransaction-tab-2" heading="Response parameters" classes="nav-item">
+    <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "AEXHWNFQD9..."
+}
+
+Sequence:
+PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=05cd4905-982b-4a36-8634-0719290e4341
+
+Signature:
+AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL435r/v1qKUz0yxiJ0pqXDJud9ofY2AmfFWFvpxZRUsImcyi/jY8Ah1+/8ODbQeISJz701V7ScOBGd47JySpIq4KlPed/06qhCQmfsg8Y/ESpgik9w2PhclupCaMZ/fVXOEwcMC75i3J3mhpD6XnTGwRbte0KOVfx1Ge8QitWpVYVb6+rGEkxxZM+dhGB6nEwfYH9rVD4JTKLbB/HCL5P5SpUcNuRa0DuXzj9rG/KN/dbeipWqotoSaqQxJw2bX5xOFa8qu3Wo6ifkL5Qp/sb52sI5bx22EYV1E+P4IEF+7IBdHFCJK/ekhaPIL1m797H61fvhaz7ewNGKQxnvMmAo3SHQ0wdqnLWfqu0AAvx+MoZWXpvCNmD46DPhZEcxBcH4srXKDOPfqVF34qmhF1jjaOryzpcs8Qh6wtZikmHWmxv1HLzsjDYLsT34HNK5WQTvpnqfOKVjZTTyUQh/8jlV9oWxfpUxOVKFsdRVKhAcOJLsRFEEDVlWBC9SO/MauKRotWQZkHe26WTAPxquffgCSkzClzcwGEGmpH5wBB2CfGM2VvH+Y8jt6lgHiWkEQaCIodPylt372Z7oDtvRZdLBNERS8og=
+</pre>
+</uib-tab>
+    <uib-tab index="CancelTransaction-tab-3" heading="Response parameters" classes="nav-item">
         Empty response
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-4" heading="Error responses" classes="nav-item">
