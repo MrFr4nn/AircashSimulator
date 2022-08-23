@@ -148,7 +148,7 @@ public static string GenerateSignature( string dataToSign, string certificatePat
 }</pre>
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
-                <pre style="background-color: white">
+            <pre style="background-color: white">
 public  static String signData(String privateCertFilePath, String privateCertPass, String dataToSgin) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
 	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
 	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
@@ -201,6 +201,24 @@ def sign(dataToSign)
     @signature = @keypair.sign(@digest, dataToSign + @publicKeyXml)
     return Base64.encode64(@signature).gsub(&quot;\n&quot;, &quot;&quot;)
 end</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
+            <pre style="background-color: white">
+function generate_signature($sequence)
+	{
+		if(!file_exists($this->privateKeyPath)) 
+		{
+			throw new Exception("File not found");
+		}
+		$pkcs12 = file_get_contents($this->privateKeyPath);
+		openssl_pkcs12_read($pkcs12, $certs, $this->privateKeyPass);
+		$privateKey = $certs['pkey'];		
+		$binary_signature = "";
+		openssl_sign(utf8_encode($sequence), $binarySignature, $privateKey, OPENSSL_ALGO_SHA256);
+		$signature = base64_encode($binarySignature);
+
+		return $signature;
+	}</pre>
         </uib-tab>
     </uib-tabset>
     <br />
@@ -288,7 +306,7 @@ using (var sha256 = new SHA256Managed())
             </div>
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
-                <pre style="background-color: white">
+            <pre style="background-color: white">
 public  static boolean verifySignature(String publicCertFilePath, String dataToSgin, String signature) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
 	FileInputStream stream = new FileInputStream(publicCertFilePath);
 	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
@@ -336,6 +354,19 @@ def verify_sign(public_key_loc, signature, data):
     if signer.verify(digest, b64decode(signature)):
         return True
     return False</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
+            <pre style="background-color: white">
+function verify_signature($sequence, $signature)
+	{
+		$pub_key = openssl_get_publickey (file_get_contents($this->publicKeyPath));
+		
+		if(!file_exists($this->publicKeyPath)) 
+		{
+			throw new Exception("File not found");
+		}		
+		return  openssl_verify($sequence, base64_decode($signature), $pub_key, OPENSSL_ALGO_SHA256);
+	}</pre>
         </uib-tab>
     </uib-tabset>
 </body>
