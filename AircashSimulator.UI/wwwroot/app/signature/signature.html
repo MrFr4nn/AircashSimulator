@@ -116,9 +116,24 @@
     </div>
     <div class="note note-gray-400">
         <div class="note-content">
-            <h5><b>Sequence that is signed:</b></h5>
+            <h5><b>Sequence:</b></h5>
             <pre>
 Amount=123.45&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=7f087237-b81a-48af-8dce-bc048fede397
+</pre>
+        </div>
+    </div>
+    <div>
+        <p>
+            To generate signatures with OpenSSL commands, the sequence string must be within the sequence.txt file.
+        </p>
+    </div>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>OpenSSL commands for generating signature:</b></h5>
+            <pre>
+pkcs12 -in AircashTestPrivateKey.pfx -nocerts -out ac_private.key
+dgst -sha256 -sign ac_private.key -out signature.txt.sha256 sequence.txt
+enc -e -base64 -in signature.txt.sha256 -out signature.txt.base64
 </pre>
         </div>
     </div>
@@ -148,7 +163,7 @@ public static string GenerateSignature( string dataToSign, string certificatePat
 }</pre>
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
-                <pre style="background-color: white">
+            <pre style="background-color: white">
 public  static String signData(String privateCertFilePath, String privateCertPass, String dataToSgin) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
 	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
 	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
@@ -253,8 +268,17 @@ end</pre>
     </div>
     <div class="note note-gray-400">
         <div class="note-content">
-            <h5><b>Sequence that is signed:</b></h5>
+            <h5><b>Sequence:</b></h5>
             {{sequenceAircash}}
+        </div>
+    </div>
+    <div class="note note-gray-400">
+        <div class="note-content">
+            <h5><b>OpenSSL command for verifying previously generated signature:</b></h5>
+            <pre>
+x509 -in AircashTestPublicKey.pem -pubkey -noout -out AircashTestPublicKeyOpenSSL.pem
+dgst -sha256 -verify AircashTestPublicKeyOpenSSL.pem -signature signature.txt.sha256 sequence.txt
+            </pre>
         </div>
     </div>
     <br />
@@ -288,7 +312,7 @@ using (var sha256 = new SHA256Managed())
             </div>
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
-                <pre style="background-color: white">
+            <pre style="background-color: white">
 public  static boolean verifySignature(String publicCertFilePath, String dataToSgin, String signature) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
 	FileInputStream stream = new FileInputStream(publicCertFilePath);
 	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
