@@ -42,7 +42,8 @@
                         The Aircash system will only call this method if the partner system returns valid response in the first, CheckTicket request
                     </li>
                     <li>
-                        The method must be idempotent, if it is called multiple times with the same parameters it must respond with the same message - this is used in case of ticket payment if there is an error in communication between the two systems.                    </li>
+                        The method must be idempotent, if it is called multiple times with the same parameters it must respond with the same message - this is used in case of ticket payment if there is an error in communication between the two systems.
+                    </li>
                 </ul>
             </li>
         </ol>
@@ -67,14 +68,18 @@
                 <th>URL</th>
             </tr>
             <tr>
-                <td><b>Test</b></td>
+                <td>
+                    <b>Test</b>
+                </td>
                 <td>
                     POST
                 </td>
                 <td>URL defined by partner</td>
             </tr>
             <tr>
-                <td><b>Production</b></td>
+                <td>
+                    <b>Production</b>
+                </td>
                 <td>
                     POST
                 </td>
@@ -136,25 +141,45 @@
                 </table>
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
-<pre>
-    <code>
-        {
-            "Parameters": [
-                {
-                    "Key": "TicketID",
-                    "Value": "123456789"
-                },
-                {
-                    "Key": "PIN",
-                    "Value": "1234"
-                }
-            ],
-                "Signature": "12345....abc"
-        }
-    </code>        
+                <pre>
+{
+    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
+    "parameters": [{
+        "key": "TicketID",
+        "value: "123456789"
+    },
+    {
+        "key": "PIN",
+        "value": "1234"
+    }],
+    "signature": "i6lNUCLl3...."
+}      
 </pre>
             </uib-tab>
-            <uib-tab index="checkUser1-tab-2" heading="Output parameters" classes="nav-item">
+            <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
+    "parameters": [{
+        "key": "TicketID",
+        "value: "123456789"
+    },
+    {
+        "key": "PIN",
+        "value": "1234"
+    }],
+    "signature": "i6lNUCLl3...."
+}
+
+Sequence:
+AircashTransactionID=11112406-f672-4c27-a415-e26eb3ecd111&Parameters=Key=TicketID&Value=123456789,Key=PIN&Value=1234
+
+Signature:
+i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+</pre>
+            </uib-tab>
+            <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-hover">
@@ -170,10 +195,14 @@
                                     <td colspan="3">Status</td>
                                     <td>Int</td>
                                     <td>
-                                        1 - non-existent ticket,<br />
-                                        2 - pending,<br />
-                                        3 - non-winning ticket,<br />
-                                        4 - ticket already paid out,<br />
+                                        1 - non-existent ticket,
+                                        <br />
+                                        2 - pending,
+                                        <br />
+                                        3 - non-winning ticket,
+                                        <br />
+                                        4 - ticket already paid out,
+                                        <br />
                                         5 - winning ticket - be sure to return the amount and currency parameters
                                     </td>
                                 </tr>
@@ -184,8 +213,8 @@
                                         Amount of the ticket if the status is winning.
                                     </td>
                                 </tr>
-                                <tr>                                    
-                                    <td  colspan="3">CurrencyISOCode</td>
+                                <tr>
+                                    <td colspan="3">CurrencyISOCode</td>
                                     <td>String?</td>
                                     <td>
                                         Winning ticket ISO currency code (HRK, EUR, CZK)
@@ -196,24 +225,22 @@
                     </div>
                 </div>
             </uib-tab>
-            <uib-tab index="checkUser1-tab-3" heading="Output parameters example" classes="nav-item">
-<pre>
-    <code>
-        {
-            "Status": 1
-        }
+            <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
+                <pre>
+{
+	"status": 1
+}
 
-       or
+	   or
 
-        {
-            "Status": 5,
-            "Amount": 123.45
-            "CurrencyISOCode": "EUR"
-        }
-    </code>
+{
+	"status": 5,
+	"amount": 123.45
+	"currencyISOCode": "EUR"
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+            <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -221,7 +248,9 @@
                         <th>Solution</th>
                     </tr>
                     <tr>
-                        <td><b>401</b></td>
+                        <td>
+                            <b>401</b>
+                        </td>
                         <td>
                             In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
                         </td>
@@ -230,7 +259,7 @@
                         </td>
                     </tr>
                 </table>
-            </uib-tab>           
+            </uib-tab>
         </uib-tabset>
 
         <h2 style="text-align:justify">RedeemTicket</h2>
@@ -253,14 +282,18 @@
                 <th>URL</th>
             </tr>
             <tr>
-                <td><b>Test</b></td>
+                <td>
+                    <b>Test</b>
+                </td>
                 <td>
                     POST
                 </td>
                 <td>URL defined by partner</td>
             </tr>
             <tr>
-                <td><b>Production</b></td>
+                <td>
+                    <b>Production</b>
+                </td>
                 <td>
                     POST
                 </td>
@@ -328,26 +361,45 @@
                 </table>
             </uib-tab>
             <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Input parameters example" classes="nav-item">
-<pre>
-    <code>
-        {
-            "AircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
-                "Parameters": [
-                {
-                    "Key": "TicketID",
-                    "Value: "123456789"
-                },
-                {
-                    "Key": "PIN",
-                    "Value": "1234"
-                }
-        ],
-            "Signature": "12345....abc"
-        }
-    </code>        
+                <pre>
+{
+    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
+    "parameters": [{
+        "key": "TicketID",
+        "value: "123456789"
+    },
+    {
+        "key": "PIN",
+        "value": "1234"
+    }],
+    "signature": "i6lNUCLl3...."
+}      
 </pre>
             </uib-tab>
-            <uib-tab index="checkUser1-tab-2" heading="Output parameters" classes="nav-item">
+            <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
+    "parameters": [{
+        "key": "TicketID",
+        "value: "123456789"
+    },
+    {
+        "key": "PIN",
+        "value": "1234"
+    }],
+    "signature": "i6lNUCLl3...."
+}
+
+Sequence:
+AircashTransactionID=11112406-f672-4c27-a415-e26eb3ecd111&Parameters=Key=TicketID&Value=123456789,Key=PIN&Value=1234
+
+Signature:
+i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+</pre>
+            </uib-tab>
+            <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-hover">
@@ -363,10 +415,14 @@
                                     <td colspan="3">Status</td>
                                     <td>Int</td>
                                     <td>
-                                        1 - non-existent ticket,<br />
-                                        2 - ticket in progress,<br />
-                                        3 - ticket not obtained,<br />
-                                        4 - ticket already paid,<br />
+                                        1 - non-existent ticket,
+                                        <br />
+                                        2 - ticket in progress,
+                                        <br />
+                                        3 - ticket not obtained,
+                                        <br />
+                                        4 - ticket already paid,
+                                        <br />
                                         5 - winning ticket - be sure to return the amount and currency parameters
                                     </td>
                                 </tr>
@@ -378,12 +434,12 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3">CurrencyISOCode</td>                           
+                                    <td colspan="3">CurrencyISOCode</td>
                                     <td>String?</td>
                                     <td>
                                         Winning ticket ISO currency code (HRK, EUR, CZK)
                                     </td>
-                                </tr>                               
+                                </tr>
                                 <tr>
                                     <td colspan="3">PartnerTransactionID</td>
                                     <td>String?</td>
@@ -397,25 +453,23 @@
                     </div>
                 </div>
             </uib-tab>
-            <uib-tab index="checkUser1-tab-3" heading="Output parameters example" classes="nav-item">
-<pre>
-    <code>
-        {
-            "Status": 1
-        }
+            <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
+                <pre>
+{
+	"status": 1
+}
 
-        or
+	or
 
-        {
-            "Status": 5,
-            "Amount": 123.45
-            "CurrencyISOCode": "EUR",
-            "PartnerTransactionID": "ABC…123"
-        }
-    </code>
+{
+	"status": 5,
+	"amount": 123.45
+	"currencyISOCode": "EUR",
+	"partnerTransactionID": "ABC…123"
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+            <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -423,7 +477,9 @@
                         <th>Solution</th>
                     </tr>
                     <tr>
-                        <td><b>401</b></td>
+                        <td>
+                            <b>401</b>
+                        </td>
                         <td>
                             In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
                         </td>
@@ -432,7 +488,7 @@
                         </td>
                     </tr>
                 </table>
-            </uib-tab>            
+            </uib-tab>
         </uib-tabset>
 
         <hr />
@@ -462,7 +518,9 @@
                 <th>Mandatory</th>
             </tr>
             <tr>
-                <td><b>CheckTicket</b></td>
+                <td>
+                    <b>CheckTicket</b>
+                </td>
                 <td>
                     Check all statuses of the CheckTicket method and validate whether information is successfully
                     returned for each ticket type
@@ -470,7 +528,9 @@
                 <td>YES</td>
             </tr>
             <tr>
-                <td><b>RedeemTicket</b></td>
+                <td>
+                    <b>RedeemTicket</b>
+                </td>
                 <td>
                     Successful payout of the winning ticket. Re-create the CheckTicket method for a successful
                     payout to test that the partner's system marks the ticket as a payouted
@@ -478,7 +538,9 @@
                 <td>YES</td>
             </tr>
             <tr>
-                <td><b>RedeemTicket - idempotence</b></td>
+                <td>
+                    <b>RedeemTicket - idempotence</b>
+                </td>
                 <td>
                     Simulate an Aircash-side error when entering a successful payout - and re-call of the Aircash
                     system of this method with the same parameters to test system recovery

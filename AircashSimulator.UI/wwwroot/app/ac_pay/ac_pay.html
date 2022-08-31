@@ -149,7 +149,7 @@
                 <td>
                     POST
                 </td>
-                <td>https://m3.aircash.eu/api/v1/AircashPay/GeneratePartnerCode</td>
+                <td>https://m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
             </tr>
         </table>
         <br />
@@ -252,20 +252,39 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
-<pre>
-<code>{</code>
-<code>    "partnerID": "PartnerID",</code>
-<code>    "amount":123.45,</code>
-<code>    "currencyID": 191,</code>
-<code>    "partnerTransactionID": "partnerTransactionID1",</code>
-<code>    "description": "Invoice 52.",</code>
-<code>    "validForPeriod": 5,</code>
-<code>    "locationID": "LocationID",</code>
-<code>    "signature": "12345....abc"</code>
-<code>}</code>
-</pre>
+                <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "amount": 100,
+    "currencyID": 191,
+    "partnerTransactionID": "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+    "description": "test",
+    "locationID": "test",
+    "signature": "WUY3NyUagi..."
+}
+                </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" class="nav-item">
+            <uib-tab index="request-tab-2" heading="Signature" class="nav-item">
+                <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "amount": 100,
+    "currencyID": 191,
+    "partnerTransactionID": "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+    "description": "test",
+    "locationID": "test",
+    "signature": "WUY3NyUagi..."
+}
+
+Sequence:
+Amount=100&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=ef52ca13-33b4-4564-8bca-0cbfc7c5a37d
+
+Signature:
+WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3gLqGBXG8BK8fA8GQJoG+by4u1eyZDJ4/sx/4zMaAWa02KrxYofo4Bb9l4y2oTPVJzZcHto8dvFZptZayTcvqm++oUGuEtKhLZjvUEK0w3lNYvWxPSf7XD1in1c/eqxbeROi2uTw+QPYBa/ueWNxVApAuQYh7Kh8di1p+CZSEUR611e+j4gVlTX7JciVoOr6Nq0p1OZcQfrKCHKZ7RJxEdkSVoikCWGZM+pBwsqDWTQTUA3wOR/+WP4XR0SXxthWy4IjQl1pLrTpalohCPDWPisb9HASmFghDvppNTS5j7Emt1xz97RMZWZB8bd6wEwgQWSs9gBEmGZjpehCOzbIaACUKV4qRMJN5RmB15gTFjOdVpTDeSM+z2iwN0M6QZO3wQIjjoNba55/7ELqpTfVi/ud7fCgOFDHTxAW3qv2ihE8E+1LhNPy6uHLG1JZOy7rtgQ2evjMbqxjRIxslY8E07Ia4Ayb+E3/YhX30QU4HCgbmUz4FqoH/NwK/WKGLFNER2cGrr/+y0SG+vVfb5p295Vfv/ZrTuw4zQ5rplTyN8t11PM/XUCXRo0d3Q3lrHhvtJi5qWZiNr/oUPIkX3GkadEanrWo=
+                </pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="Response" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Return value</th>
@@ -282,14 +301,14 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Response example" class="nav-item">
-<pre>
-<code>{</code>
-<code>"codeLink": " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "</code>
-<code>}</code>
+            <uib-tab index="request-tab-4" heading="Response example" class="nav-item">
+                <pre>
+{
+    "codeLink": "https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3da14cfc86-fb75-4e07-a02f-630db813e91e&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay&efr=1"
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Bad request responses" class="nav-item">
+            <uib-tab index="request-tab-5" heading="Bad request responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Error code</th>
@@ -309,7 +328,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
+            <uib-tab index="request-tab-6" heading="Try it out" class="nav-item">
                 <div class="row">
                     <div class="col-md-2">
                         <form action="/" method="POST" name="generateForm">
@@ -382,7 +401,7 @@
                 <td>
                     POST
                 </td>
-                <td>https://m3.aircash.eu/api/v1/AircashPay/ConfirmTransaction</td>
+                <td>https://m3.aircash.eu/api/AircashPay/ConfirmTransaction</td>
             </tr>
         </table>
         <br />
@@ -459,14 +478,14 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "partnerID": "partnerID",</code>
-<code>    "partnerTransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
-<code>    "amount":123.45,</code>
-<code>    "currencyID": 191,</code>
-<code>    "signature": "12345....abc",</code>
-<code>    "aircashTransactionID": "Aircash transaction id"</code>
-<code>}</code>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+    "amount": 100,
+    "currencyID": 191,
+    "aircashTransactionID": "122e5e33-b5fb-4398-b138-c60582b9fa2b"
+    "signature": "Ff3oSWm20n...",
+}
 </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
@@ -508,7 +527,7 @@
                 <td>
                     POST
                 </td>
-                <td>https://m3.aircash.eu/api/v1/AircashPay/CancelTransaction</td>
+                <td>https://m3.aircash.eu/api/AircashPay/CancelTransaction</td>
             </tr>
         </table>
         <br />
@@ -553,14 +572,29 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "PartnerTransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
-<code>    "PartnerID": "partnerID",</code>
-<code>    "Signature: "12345...abc" </code>
-<code>}</code>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "28f0f0db-69cf-4350-8084-a0d431c2c837",
+    "signature": "Idc2x5SVby..."
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "28f0f0db-69cf-4350-8084-a0d431c2c837",
+    "signature": "Idc2x5SVby..."
+}
+
+Sequence:
+PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=28f0f0db-69cf-4350-8084-a0d431c2c837
+
+Signature:
+Idc2x5SVbyNrA3+7vFyJJJ79mgUsuMs3j9Geu9R4aHSAbdYVqzgPja7fHBHpEHBjIP9frZ1ZObR04gJUKzvNJciN6NakB/mhxl4gzx4s7eLp+ijkvCdiwCTCf93jukw6BS4B8KRVZzGsaXKH2i1UAJgsnwN3Q6DFGarDZCHVbpqwySQ+fTT5OymS4xkKcfUZ2KVnxEwD18Qf38oP2RBBGhfAasoLw8Mzb7FzJj/zMaAMX20eoQPL5ohEkxCGO0H3n5U356S6FHz6NijewttE2WfjHEGGL2LgBlkrZ71UJpEYnnei2i06ddgmNAgXbR/11Ohe7OyueZvyqsyc2SbH+c28QvvFmkj0KL1UhlbpWWMpW6jsJ4tVbaHXMgTNq8V0DaojygR6yIwhkyqzUTQZKuElPCHSK1zUSYBKwQkuLnavMxKFOooANj3CIh99rdVz1L+CSB86654uCtHCTRjP2cx9FiZEhFLjDrgGk1Ob6wM/kHz80TZ5lFCw0jNn+W1EP5TbGkUYjta73L7T4Mw6I1D7rVJ7wJc6FQnq982nfzvXewaV0t2NzpNi8KE+aPc+APnx3YJDBdmxb4YXrZBOHwAxVVFFag9knmEOZefPpi4AHZtzzGqqXlEMHhGTb8DTlMDFDG3kKPlIp0wu5r32YLcwrc4Z5I+XxOSp0CEJwMg=</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="Response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -754,16 +788,33 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "PartnerID": "partnerID",</code>
-<code>    "PartnerTransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",</code>
-<code>    "RequestTransactionID": "partnerID",</code>
-<code>    "Amount":123.45,</code>
-<code>    "Signature": "12345....abc",</code>
-<code>}</code>
+{
+    "amount": 50,
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "28f0f0db-69cf-4350-8084-a0d431c2c837",
+    "refundPartnerTransactionID": "abc66734-9d5a-4f7f-891a-185e1bb3144a",
+    "signature": "CQ83DaMKix..."
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "amount": 50,
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "28f0f0db-69cf-4350-8084-a0d431c2c837",
+    "refundPartnerTransactionID": "abc66734-9d5a-4f7f-891a-185e1bb3144a",
+    "signature": "CQ83DaMKix..."
+}
+
+Sequence:
+Amount=50&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=28f0f0db-69cf-4350-8084-a0d431c2c837&RefundPartnerTransactionID=abc66734-9d5a-4f7f-891a-185e1bb3144a
+
+Signature:
+CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUNV6VaclQ2pDj+ONQOatj5QkZXlxEVyxxwmDYGB+HMJJXta9bPwRWW4CpCgzJykoEMr/g71EYqAUc/H8XqSi2IWeRNmF77mLxbvIEwGpRnidlnNoJM042NxNF0KBJILjv17JT/GMHTSUWT98CNlupYE+PDW6F9s1A1RaOMhwrMaqDlpqOkAWcxNCP1BeUNNzyxJFBsrD1MfFlM23p7MzktCQ1eNpM+DWeB6wlu8s2wMzUtsY1ia7PYS/vUpHFmCBJnvRannCC2KmBKXnL/hmCPJjiUVTVQSjuQdfNPRAiT+E6LLpPoV/LTxTEB+kwhc89qIqE6NvcecWAtyYP1OqKmFKlgapoCwjk6kVpDk9ynmtwb9SY788cICaGbXuPEDV81DudLuXlbIpDKJLPlRa0fnCBqi7FZrbXQbg9DRHfEcyc78x6hvZrITDGYE/rx0uKHeaVCXYYcbraj4T7xKohQsezw55pv8FNJB8JE167WFY8pSX4yduTT2TpDINa2wahMC/Y0Z9RXjBtfQfdZbgEZN63+fNsYyxrzHONmvDgnG1rcEgjKe+yMcTxxa973PxFju4wpNfYxw5x/BdVUkEIt+XkQE6Y=</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="200 OK Response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -799,7 +850,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Error responses" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <td><b>Http response</b></td>
@@ -839,7 +890,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Bad request responses" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="Bad request responses" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Error code</th>
@@ -871,7 +922,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="Try it out" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-2">
                         <form action="/" method="POST" name="generateForm">
@@ -884,54 +935,54 @@
                     </div>
                 </div>
                 <div class="row">
-                            <div class="col-md-4">
-                                <p>Recent transactions:</p>
-                                <div>
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered table-striped table-condensed">
-                                            <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Transaction ID</th>
-                                                    <th>Amount</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-if="totalLoaded == 0 && !busy">
-                                                    <td colspan="12" align="center">
-                                                        <i>No data</i>
-                                                    </td>
-                                                </tr>
-                                                <tr ng-repeat="transaction in transactions">
-                                                    <td>{{$index + 1}}.</td>
-                                                    <td>{{transaction.partnerTransactionId}}</td>
-                                                    <td>{{transaction.amount | number:2}}</td>
-                                                    <td style="text-align: center; vertical-align: inherit">
-                                                        <button class="btn btn-danger fa fa-ban" ng-click="refundTransaction(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
-                                </div>
+                    <div class="col-md-4">
+                        <p>Recent transactions:</p>
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Transaction ID</th>
+                                            <th>Amount</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="totalLoaded == 0 && !busy">
+                                            <td colspan="12" align="center">
+                                                <i>No data</i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="transaction in transactions">
+                                            <td>{{$index + 1}}.</td>
+                                            <td>{{transaction.partnerTransactionId}}</td>
+                                            <td>{{transaction.amount | number:2}}</td>
+                                            <td style="text-align: center; vertical-align: inherit">
+                                                <button class="btn btn-danger fa fa-ban" ng-click="refundTransaction(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                        </div>
+                    </div>
 
-                            <br />
-                            <div ng-hide="!refundResponded" class="col-md-4">
-                                Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <pre>
-                                <code>{{RefundServiceResponse}}</code>
+                    <br />
+                    <div ng-hide="!refundResponded" class="col-md-4">
+                        Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+                        <code>{{RefundServiceResponse}}</code>
 </pre>
-                                Sequence: {{sequenceRefund}}
-                            </div>
-                            <div ng-hide="!refundResponded" class="col-md-4">
-                                Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <pre>
+                        Sequence: {{sequenceRefund}}
+                    </div>
+                    <div ng-hide="!refundResponded" class="col-md-4">
+                        Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
 <code>{{RefundServiceResponse}}</code>
 </pre>
-                            </div>
+                    </div>
                 </div>
             </uib-tab>
         </uib-tabset>

@@ -1,9 +1,11 @@
-﻿<h1 style="text-align:justify">Payment process</h1>
+﻿
+<h1 style="text-align:justify">Payment process</h1>
 
 
 <p style="text-align:justify">
     This chapter describes the top up process using the Aircash application. The described
-    process explains how the user can transfer funds from the Aircash system to the partner system.<br />
+    process explains how the user can transfer funds from the Aircash system to the partner system.
+    <br />
     <br />
     The transfer process consists of three steps:
     <ol>
@@ -77,12 +79,14 @@
     parameter(s) that will identify his account in the partner system (e.g. username in partner system).
     Aircash system will send CheckPlayer request using input parameter(s) to partner system in order to
     verify if the account exists in partner system. Aircash system will not allow the user to make payment
-    in case the partner system doesn’t respond positively to this request.<br />
+    in case the partner system doesn’t respond positively to this request.
+    <br />
     Aircash system will need a list of negative responses from partner system in order to map
     them in the system. In case the partner system responds negatively to this request, partner will need
     to send some unique error code. Those error codes need mapping in the Aircash system in order to
     display correct messages to the end user. Example error codes: user doesn’t exist in the system, user
-    account blocked in partner system, user account not verified in partner system…<br />
+    account blocked in partner system, user account not verified in partner system…
+    <br />
     If the partner system has multiple user identifiers, Aircash can allow the user to choose which
     identifier to enter.
 </p>
@@ -136,23 +140,43 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
-<pre>
-<code>
+        <pre>
+{
+    "parameters": [{
+        "key": "userName",
+        "value": "aircash"
+    },
     {
-        "Parameters": [{
-            "Key": "userName",
-            "Value": "aircash"
-        },
-        {
-            "Key": "phoneNumber",
-            "Value": "385981234567"
-        }],
-        Signature: "12345....abc"
-    }
-</code>        
+        "key": "phoneNumber",
+        "value": "385981234567"
+    }],
+    "signature: "i6lNUCLl3l...."
+}        
 </pre>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-2" heading="Output parameters" classes="nav-item">
+    <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "parameters": [{
+        "key": "userName",
+        "value": "aircash"
+    },
+    {
+        "key": "phoneNumber",
+        "value": "385981234567"
+    }],
+    "signature: "i6lNUCLl3l...."
+} 
+
+Sequence:
+Parameters=Key=userName&Value=aircash,Key=phoneNumber&Value=385981234567
+
+Signature:
+i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+</pre>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-hover">
@@ -243,44 +267,40 @@
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-3" heading="Output parameters example" classes="nav-item">
+    <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
 <pre>
-<code>
 {
-    "IsPlayer": true,
-    "Error": null,
-    "Parameters": [{
-        "Key": "balance",
-        "Value": "123.45",
-        "Type": "Decimal"
+    "isPlayer": true,
+    "error": null,
+    "parameters": [{
+        "key": "balance",
+        "value": "123.45",
+        "type": "Decimal"
     },
     {
-        "Key": "minTransactionAmount",
-        "Value": "1100.00",
-        "Type": "Decimal"
+        "key": "minTransactionAmount",
+        "value": "1100.00",
+        "type": "Decimal"
     },
     {
-        "Key": "validUntil",
-        "Value": "2018-10-15",
-        "Type": "Date"
+        "key": "validUntil",
+        "value": "2018-10-15",
+        "type": "Date"
     }]
 }
-</code>
 </pre>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-4" heading="Error message" classes="nav-item">
+    <uib-tab index="checkUser1-tab-5" heading="Error message" classes="nav-item">
         <pre>
-<code>
 {
-    "IsPlayer": false,
-    "Error": {
-        "ErrorCode": 500,
-        "ErrorMessage": "Unable to find user account"
+    "isPlayer": false,
+    "error": {
+        "errorCode": 500,
+        "errorMessage": "Unable to find user account"
     },
-    "Parameters":null
+    "parameters":null
 }
-</code>
-</pre>        
+</pre>
     </uib-tab>
 </uib-tabset>
 
@@ -357,25 +377,47 @@
         </table>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Input parameters example" classes="nav-item">
-<pre>
-<code>
+        <pre>
+{
+    "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
+    "amount": 123.45,
+    "parameters": [{
+        "key": "userName",
+        "value": "aircash"
+    },
     {
-        "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-        "Amount": 123.45,
-        "Parameters": [{
-            "Key": "userName",
-            "Value": "aircash"
-        },
-        {
-            "Key": "phoneNumber",
-            "Value": "385981234567"
-        }],
-        Signature: "12345....abc"
-    }
-</code>        
+        "key": "phoneNumber",
+        "value": "385981234567"
+    }],
+    "signature: "i6lNUCLl3l...."
+}   
 </pre>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-2" heading="Output parameters" classes="nav-item">
+    <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
+    "amount": 123.45,
+    "parameters": [{
+        "key": "userName",
+        "value": "aircash"
+    },
+    {
+        "key": "phoneNumber",
+        "value": "385981234567"
+    }],
+    "signature: "i6lNUCLl3l...."
+} 
+
+Sequence:
+Amount=123.45&Parameters=Key=userName&Value=aircash,Key=phoneNumber&Value=385981234567&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
+
+Signature:
+i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+</pre>
+    </uib-tab>
+    <uib-tab index="CreateAndConfirmPayment1-tab-3" heading="Output parameters" classes="nav-item">
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-hover">
@@ -469,43 +511,39 @@
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-3" heading="Output parameters example" classes="nav-item">
+    <uib-tab index="CreateAndConfirmPayment1-tab-4" heading="Output parameters example" classes="nav-item">
 <pre>
-<code>
 {
-    "Success": true,
-    "PartnerTransactionID": "ABC...123",
-    "Parameters": [{
-        "Key": "balance",
-        "Value": "123.45",
-        "Type": "Decimal"
+    "success": true,
+    "partnerTransactionID": "ABC...123",
+    "parameters": [{
+        "key": "balance",
+        "value": "123.45",
+        "type": "Decimal"
     },
     {
-        "Key": "minTransactionAmount",
-        "Value": "1100.00",
-        "Type": "Decimal"
+        "key": "minTransactionAmount",
+        "value": "1100.00",
+        "type": "Decimal"
     },
     {
-        "Key": "validUntil",
-        "Value": "2018-10-15",
-        "Type": "Date"
+        "key": "validUntil",
+        "value": "2018-10-15",
+        "type": "Date"
     }]
 }
-</code>
 </pre>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-4" heading="Error message" classes="nav-item">
+    <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error message" classes="nav-item">
         <pre>
-<code>
 {
-    " Success ": false,
-    "Error": {
-        "ErrorCode": 500,
-        "ErrorMessage": "Unable to find user account"
+    "success": false,
+    "error": {
+        "errorCode": 500,
+        "errorMessage": "Unable to find user account"
     },
-    "Parameters":null
+    "parameters":null
 }
-</code>
 </pre>
     </uib-tab>
 </uib-tabset>
@@ -566,7 +604,8 @@
     identifier used in partner system is user personal ID (Croatian OIB - unique user identifier).
 </p>
 <p>
-    Link example:<br />
+    Link example:
+    <br />
     <a href="https://aircashtest.page.link/?link=https://m3.staging.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D%7BpartnerID%7D%26oib%3D%7Boib%7D%26amount%3D%7Bamount%7D%26phoneNumber%3D%7BphoneNumber%7D">https://aircashtest.page.link/?link=https://m3.staging.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D%7BpartnerID%7D%26oib%3D%7Boib%7D%26amount%3D%7Bamount%7D%26phoneNumber%3D%7BphoneNumber%7D</a>
 </p>
 <p>
@@ -597,7 +636,8 @@
     </ul>
 </p>
 <p>
-    Result link should look like this:<br />
+    Result link should look like this:
+    <br />
     <a href="https://aircashtest.page.link/?link=https://m3.staging.aircash.eu/api/DeepLink/PartnerPayment?par%20tnerID%3D%204287b04b-9f7e-418b-bdcc-bf2b5d174bc9%26oib%3D70342452345%26amount%3D1234%26phoneNumber%3D385981234567">https://aircashtest.page.link/?link=https://m3.staging.aircash.eu/api/DeepLink/PartnerPayment?par%20tnerID%3D%204287b04b-9f7e-418b-bdcc-bf2b5d174bc9%26oib%3D70342452345%26amount%3D1234%26phoneNumber%3D385981234567</a>
 </p>
 <p>
@@ -733,8 +773,10 @@
 <h1 style="text-align:justify">Conclusion</h1>
 <p>
     This chapter describes the technical aspect of Aircash payment process where user can
-    transfer funds from Aircash application to the user account in the partner system.<br />
+    transfer funds from Aircash application to the user account in the partner system.
     <br />
-    For any questions, please contact:<br />
+    <br />
+    For any questions, please contact:
+    <br />
     <a href="mailto: info@aircash.eu">info@aircash.eu</a>
 </p>

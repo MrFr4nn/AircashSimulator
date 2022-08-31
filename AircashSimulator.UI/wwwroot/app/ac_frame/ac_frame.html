@@ -270,7 +270,7 @@
                         <td>YES, in case of A-bon method there is no entry</td>
                     </tr>
                     <tr>
-                        <td><b>Currency</b></td>
+                        <td><b>CurrencyId</b></td>
                         <td>int</td>
                         <td>
                             ISO-4217 currency code
@@ -337,23 +337,48 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "Amount": 100,</code>
-<code>    "CurrencyId": 978,</code>
-<code>    "DeclineUrl": "https://aircash.eu?success=false",</code>
-<code>    "Locale": "en-US",</code>
-<code>    "NotificationUrl": "https://aircash.eu",</code>
-<code>    "PartnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-<code>    "PartnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-<code>    "PartnerUserId": "5e82a3d1-5b05-40e4-9443-92b21fb43a34",</code>
-<code>    "PayMethod": 2,</code>
-<code>    "PayType": 0,</code>
-<code>    "SuccessUrl": "https://aircash.eu?success=true",</code>
-<code>    "Signature": "123...abc"</code>
-<code>}</code>
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
+    "amount": "10",
+    "currencyId": 191,
+    "payType": 0,
+    "payMethod": 2,
+    "notificationUrl": "https://aircash.eu",
+    "successUrl": "https://localhost:44317/#!/success",
+    "declineUrl": "https://localhost:44317/#!/decline",
+    "locale": "en-US",
+    "signature": "CsXX21BpQg..."
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="200 OK Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
+    "amount": "10",
+    "currencyId": 191,
+    "payType": 0,
+    "payMethod": 2,
+    "notificationUrl": "https://aircash.eu",
+    "successUrl": "https://localhost:44317/#!/success",
+    "declineUrl": "https://localhost:44317/#!/decline",
+    "locale": "en-US",
+    "signature": "CsXX21BpQg..."
+}
+
+Sequence: 
+Amount=10&CurrencyId=191&DeclineUrl=https://localhost:44317/#!/decline&Locale=en-US&NotificationUrl=https://aircash.eu&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=https://localhost:44317/#!/success
+
+Signature:
+CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZcpzN/Yhg95J7yvOkkH10TAnP0uvy8IqEdQJt8G9pec4lRGp2X7xm155OS4djYS1g41uPZBEU9W7pcqiL5R4N+7wc9OOJ8ss8eRX4DEKs9sAozT3eWhfqd22Y/LhbyIoH0s5c6+Lyl2pU5R5wN/iBYR0vGr8tAZjMFq0dANel2W8jf21uFh0vOnTmesLLI+fz/oOXypd7lIAmb8gYj/Sf2jwMipmpK6lMBd2UtxFQ4ayfNWudAN9OYQrZbqYKuA3ospaMYs+jxURRE3JhynZqt+Tk93Z2T6UYKFE8L0k4aO624X7KSR4hSvR0Cwz9HjjncWQhKd7bDjFi43NxLIWzCjC2+kfNUgjxZW6xSnj3Du5QP+5sW/OMoX/HZ79C+L8RzV720HzdLIcMNF2UAxlY+HVdaEVXufvMKSR9aYKLIQPxExxalZuo4uQPv2+89vDJqcLAsLhQEaEDxuxLXDYAzmm56i2ajWI5/9ne9KmDVm9/5yz7ckT9vwqlu/0mYC1qbF+P7GSD5sY5c8Wc4/nSaWTkr5pDT0mOaWRdjDQHzhukU2gARVjKe6ePdycVxzzfpPRBv7e7XUfzypmaayQdkvwo574E=
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="200 OK Response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -369,14 +394,14 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="200 OK Response example" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
 <pre>
 <code>{</code>
-<code>    "Url": " https://frame.aircash.eu?Id=ad6dc137-46b3-4470-a77b-aef75f647834"</code>
+<code>    "url": "https://aircash.eu?Id=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac"</code>
 <code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -412,7 +437,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Code</th>
@@ -457,7 +482,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-7" heading="400 Error response example" classes="nav-item">
                 <pre>
 <code>{</code>
 <code>    "code": 1,</code>
@@ -466,7 +491,7 @@
 <code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
                         <div class="form-check form-check-inline">
@@ -492,7 +517,6 @@
                                     <i ng-if="initiateModelSelected == 2">PAYOUT </i>
                                     <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i>
                                 </button>
-
                             </fieldset>
                         </form>
                     </div>
@@ -598,14 +622,29 @@
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <pre>
-<code>{</code>
-<code>    "partnerId": "8b6a0abb-42c7-4460-8156-8ba5c4b20812",</code>
-<code>    "partnerTransactionId": "e132bca0-1ac2-4f30-9008-3355fe83ac44",</code>
-<code>    "signature": "12345....abc"</code>
-<code>}</code>
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
+    "signature": "dUrE4gtau5..."
+}
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+{
+    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
+    "signature": "dUrE4gtau5..."
+}
+
+Sequence: 
+PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac
+
+Signature:
+dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzUD82VwiLZ//gw8XJ5DLoMzud/34vzQS3MiubD1c/Sw9rWJlXm1wJW+cOgUYtz4GwnU2iViWlYcpzpCSeBB8Z4gbKPR1tDKjvXR2mSO+HQBSeUVRQHKY4rXse1lzJHsKqyQi8I3WoyPLdmUv/fUHuhBLSFbg+yEuazRJhWYhv561Zt0bIemGAsei80cnUU8TOxCZoaQQ9M+h0uWdS7i1OX92iauysj1wENKpcS+JMJxQh4YUgLvOXtoh8boYnNITYQiLy2fTA9hH/nJKiRAb/lMalXqw9r2/E574IHrC26QNEFreui0whQas7GsT37+RtrgRcwP6R59UOn+ZEC05BOoMPXhzvcTgspLOTciFEL5goVt9n2AjUOt8rX2hUvNcpnFDwgTlPyNaUTs5LYhm/qP279Cn6hhrlCilcM8BwBWfCORD3Y5y5MH+B+MaUGIgF7toJh8wCaCUVV+Bd5lPNcrpInz5hmGb3kNz2cbz+ao6HdNcMxNRbvC6ahdx5H+MN4Q7d9quiyczrnE1tqO9stuqgkUT8QcG0bj/x1E97Fx4ehpB6b0aOe/H3Cs5ZoKOmeOf6xiE0pCtPELq11pv96NMUUyGI=</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="Response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -649,7 +688,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Error responses" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -685,7 +724,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="400 Error response" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Code</th>
@@ -730,7 +769,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
                 <pre>
 <code>{</code>
 <code>    "code": 1003,</code>
@@ -739,7 +778,7 @@
 <code>}</code>
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
+            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
                         <p>Recent transactions:</p>
@@ -783,7 +822,7 @@
                         Sequence: {{sequenceStatus}}
                     </div>
                     <div ng-hide="!statusResponded" class="col-md-4">
-                        Request ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        Response ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <pre>
 <code>{{StatusServiceResponse}}</code>
 </pre>
