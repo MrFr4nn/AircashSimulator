@@ -19,5 +19,6 @@ namespace Domain.Entities
 
         public string CountryCode { get; set; }
         public EnvironmentEnum Environment { get; set; }
+        public bool UseDefaultPartner { get; set; }
     }
 }

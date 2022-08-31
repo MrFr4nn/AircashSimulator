@@ -21,6 +21,7 @@ namespace Services.Authentication
     {
         private readonly JwtConfiguration JwtConfiguration;
         private readonly AircashSimulatorContext AircashSimulatorContext;
+        private Guid DefaultPartnerID => new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
 
         public AuthenticationService(IOptionsMonitor<JwtConfiguration> jwtConfiguration, AircashSimulatorContext aircashSimulatorContext)
         {
@@ -56,9 +57,11 @@ namespace Services.Authentication
             {
                 partnerRoles.Add(partnerRoleEntity.PartnerRole.ToString());
             }
+            var partnerId = partner.PartnerId;
+            if (partner.UseDefaultPartner) partnerId = (await AircashSimulatorContext.Partners.Where(p => p.PartnerId == DefaultPartnerID).SingleOrDefaultAsync()).PartnerId;
 
             var claims = new List<Claim>();
-            claims.Add(new Claim("partnerId", partner.PartnerId.ToString()));
+            claims.Add(new Claim("partnerId", partnerId.ToString()));
             claims.Add(new Claim("username", user.Username));
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim("userId", user.UserId.ToString()));
