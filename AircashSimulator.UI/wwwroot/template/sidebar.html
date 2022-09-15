@@ -8,7 +8,7 @@
                 <a href="javascript:;" data-toggle="nav-profile">
                     <div class="cover with-shadow"></div>
                     <div class="info">
-                            <b>{{partnerName}}</b>
+                        <b>{{partnerName}}</b>
                     </div>
                 </a>
             </li>
@@ -26,84 +26,84 @@
             <li class="nav-header">{{translations.menu_label}}</li>
             <li ui-sref-active="active">
                 <a ui-sref="app.dashboard">
-                    <i class="fa fa-list aIconRed"></i>
+                    <i class="fa fa-list"></i>
                     <span>{{translations.dashboard_label}}</span>
                 </a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.aircashPaymentAndPayout" ng-if="partnerRoles.indexOf('SalePartner') != -1">
-                    <i class="fa fa-barcode aIconRed"></i>
+                    <i class="fa fa-barcode"></i>
                     <span>{{translations.aircash_paymentAndPayout_label}}</span>
                 </a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.acFrame" ng-if="partnerRoles.indexOf('AircashFrame') != -1">
-                    <i class="fa fa-desktop aIconRed"></i>
+                    <i class="fa fa-desktop"></i>
                     <span>{{translations.ac_frame_label}}</span>
                 </a>
             </li>
 
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.aircashFrameV2" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1">
-                    <i class="fa fa-desktop aIconRed"></i>
+                    <i class="fa fa-desktop"></i>
                     <span>{{translations.ac_frame_label}}</span>
                 </a>
             </li>
 
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.acPay" ng-if="partnerRoles.indexOf('AircashPay') != -1">
-                    <i class="fa fa-qrcode aIconRed" aria-hidden="true"></i>
+                    <i class="fa fa-qrcode" aria-hidden="true"></i>
                     <span>{{translations.ac_pay_label}}</span>
                 </a>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.acPayment" ng-if="partnerRoles.indexOf('AircashPayment') != -1">
-                    <i class="fa fa-share-square aIconRed" aria-hidden="true"></i>
+                    <i class="fa fa-share-square" aria-hidden="true"></i>
                     <span>{{translations.ac_payment_label}}</span>
                 </a>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.acRedeemTicket" ng-if="partnerRoles.indexOf('AircashRedeemTicket') != -1">
-                    <i class="fa fa-pager aIconRed" aria-hidden="true"></i>
+                    <i class="fa fa-pager" aria-hidden="true"></i>
                     <span>{{translations.ac_redeemTicket_label}}</span>
                 </a>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.aircashPayout" ng-if="partnerRoles.indexOf('AircashPayout') != -1">
-                    <i class="fa fa-mobile aIconRed"></i>
+                    <i class="fa fa-mobile"></i>
                     <span>{{translations.aircash_payout_label}}</span>
                 </a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.abonSp" ng-if="partnerRoles.indexOf('AbonGenerate') != -1">
-                    <i class="fa fa-file-invoice aIconRed"></i>
+                    <i class="fa fa-file-invoice"></i>
                     <span>{{translations.abon_sp_label}}</span>
                 </a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.abonOp" ng-if="partnerRoles.indexOf('AbonDeposit') != -1">
-                    <i class="fa fa-gamepad aIconRed" aria-hidden="true"></i>
+                    <i class="fa fa-gamepad" aria-hidden="true"></i>
                     <span>{{translations.abon_op_label}}</span>
                 </a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.signature">
-                    <i class="fa fa-pencil-alt aIconRed"></i>
+                    <i class="fa fa-pencil-alt"></i>
                     <span>{{translations.signature_label}}</span>
                 </a>
             </li>
             <li>
                 <hr />
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.partnerAdmin" ng-if="partnerRoles.indexOf('Admin') != -1">
-                    <i class="fa fa-people-arrows aIconRed"></i>
+                    <i class="fa fa-people-arrows"></i>
                     <span>{{translations.partner_admin_label}}</span>
                 </a>
             </li>
-            <li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.userAdmin" ng-if="partnerRoles.indexOf('Admin') != -1">
-                    <i class="fa fa-user aIconRed"></i>
+                    <i class="fa fa-user"></i>
                     <span>{{translations.user_admin_label}}</span>
                 </a>
             </li>

@@ -60,31 +60,41 @@
         <p>
             The method used by the Aircash system to validate the ticket.
         </p>
-        <i>Endpoints:</i>
         <table class="table table-active col-md-6">
+            <thead>
             <tr>
                 <th>Environment</th>
                 <th>Method</th>
                 <th>URL</th>
+                <th>IP addresses to whitelist</th>
             </tr>
-            <tr>
-                <td>
-                    <b>Test</b>
-                </td>
-                <td>
-                    POST
-                </td>
-                <td>URL defined by partner</td>
-            </tr>
-            <tr>
-                <td>
-                    <b>Production</b>
-                </td>
-                <td>
-                    POST
-                </td>
-                <td>URL defined by partner</td>
-            </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Test</b>
+                    </td>
+                    <td>
+                        POST
+                    </td>
+                    <td>URL defined by partner</td>
+                    <td>
+                        212.83.162.239 & 212.83.162.238
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Production</b>
+                    </td>
+                    <td>
+                        POST
+                    </td>
+                    <td>URL defined by partner</td>
+                    <td>
+                        212.129.44.205 & 212.129.36.132
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <br />
@@ -242,27 +252,31 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Http response</th>
-                        <th>Description</th>
-                        <th>Solution</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>401</b>
-                        </td>
-                        <td>
-                            In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
-                        </td>
-                        <td>
-                            Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>401</b>
+                            </td>
+                            <td>
+                                In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
+                            </td>
+                            <td>
+                                Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
         </uib-tabset>
 
-        <h2 style="text-align:justify">RedeemTicket</h2>
+        <h4 style="text-align:justify">RedeemTicket</h4>
         <p style="text-align:justify">
             The method is used so that the Aircash system can make a ticket payout from the partner's system.
             The partner's system is obliged to ensure the idempotence of the method so that the
@@ -274,39 +288,49 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
         <p style="text-align: justify">
             The Aircash system will not invoke this method if the CheckTicket method not returns response with winning status.
         </p>
-        <i>Endpoints:</i>
         <table class="table table-active col-md-6">
-            <tr>
-                <th>Environment</th>
-                <th>Method</th>
-                <th>URL</th>
-            </tr>
-            <tr>
-                <td>
-                    <b>Test</b>
-                </td>
-                <td>
-                    POST
-                </td>
-                <td>URL defined by partner</td>
-            </tr>
-            <tr>
-                <td>
-                    <b>Production</b>
-                </td>
-                <td>
-                    POST
-                </td>
-                <td>URL defined by partner</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                    <th>IP addresses to whitelist</th>
+                </tr>
+            </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <b>Test</b>
+                    </td>
+                    <td>
+                        POST
+                    </td>
+                    <td>URL defined by partner</td>
+                    <td>
+                        212.83.162.239 & 212.83.162.238
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Production</b>
+                    </td>
+                    <td>
+                        POST
+                    </td>
+                    <td>URL defined by partner</td>
+                    <td>
+                        212.129.44.205 & 212.129.36.132
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
-        <uib-tabset>
+        <uib-tabset active="active">
             <uib-tab index="CreateAndConfirmPayment1-tab-0" heading="Input parameters" classes="nav-item">
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th colspan="2">Parameter</th>
+                            <th>Parameter</th>
                             <th>Type</th>
                             <th>Description</th>
                             <th>Mandatory</th>
@@ -471,22 +495,26 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Http response</th>
-                        <th>Description</th>
-                        <th>Solution</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>401</b>
-                        </td>
-                        <td>
-                            In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
-                        </td>
-                        <td>
-                            Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>401</b>
+                            </td>
+                            <td>
+                                In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
+                            </td>
+                            <td>
+                                Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
         </uib-tabset>
@@ -512,43 +540,47 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             well-made and ready for production
         </p>
         <table class="table table-active">
-            <tr>
-                <th>Scenario</th>
-                <th>Test description</th>
-                <th>Mandatory</th>
-            </tr>
-            <tr>
-                <td>
-                    <b>CheckTicket</b>
-                </td>
-                <td>
-                    Check all statuses of the CheckTicket method and validate whether information is successfully
-                    returned for each ticket type
-                </td>
-                <td>YES</td>
-            </tr>
-            <tr>
-                <td>
-                    <b>RedeemTicket</b>
-                </td>
-                <td>
-                    Successful payout of the winning ticket. Re-create the CheckTicket method for a successful
-                    payout to test that the partner's system marks the ticket as a payouted
-                </td>
-                <td>YES</td>
-            </tr>
-            <tr>
-                <td>
-                    <b>RedeemTicket - idempotence</b>
-                </td>
-                <td>
-                    Simulate an Aircash-side error when entering a successful payout - and re-call of the Aircash
-                    system of this method with the same parameters to test system recovery
-                </td>
-                <td>
-                    YES
-                </td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Test description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>CheckTicket</b>
+                    </td>
+                    <td>
+                        Check all statuses of the CheckTicket method and validate whether information is successfully
+                        returned for each ticket type
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>RedeemTicket</b>
+                    </td>
+                    <td>
+                        Successful payout of the winning ticket. Re-create the CheckTicket method for a successful
+                        payout to test that the partner's system marks the ticket as a payouted
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>RedeemTicket - idempotence</b>
+                    </td>
+                    <td>
+                        Simulate an Aircash-side error when entering a successful payout - and re-call of the Aircash
+                        system of this method with the same parameters to test system recovery
+                    </td>
+                    <td>
+                        YES
+                    </td>
+                </tr>
+            </tbody>
         </table>
     </div>
 </body>
