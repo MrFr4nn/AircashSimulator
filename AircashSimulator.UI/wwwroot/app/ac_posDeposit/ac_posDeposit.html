@@ -1,0 +1,1201 @@
+﻿<h1>Cash to digital</h1>
+<h2>The Deposit initiated through the Merchant point of sale</h2>
+<p style="text-align:justify">
+    The Deposit process will start on the Merchant franchise location where the user will need to present QR code alongside with money/funds that the user would like to deposit to his Merchant account:
+</p>
+<p style="text-align:justify">
+    The Merchant system will generate a Deposit request with all required information to the Aircash system.
+    <ul>
+        <li>The Aircash system will generate a Deposit on the end-users Aircash account and send a notification to the user’s Aircash account.</li>
+        <li>Notification will enable the user to forward the funds to the Merchant account with one click.</li>
+        <li>User can confirm funds forward to his account (in this case Aircash system will use Merchant integration to send money to the user's Merchant account) or the user can decline it.</li>
+        <li>The user will have limited time (one minute) to confirm this transaction in his Aircash application.</li>
+        <li>
+            In case the user declines that transaction or it is timed out, the user still is able to transfer his funds to the Merchant account but with 2 clicks more within the Aircash marketplace (Merchant button selection).
+        </li>
+    </ul>
+</p>
+<p style="text-align:justify">
+    If the transaction is initiated on the PoS, the following API requests need to be implemented
+    <ol>
+        <li>CheckUser</li>
+        <li>CreatePayout</li>
+        <li>CheckPlayer</li>
+        <li>CreateAndConfirmPayment</li>
+    </ol>
+</p>
+<p style="text-align:justify">
+    The flow can be grouped into three separated phases:
+    <ol>
+        <li>Initiating transaction on the PoS</li>
+        <li>Accepting the payment on the Aircash application</li>
+        <li>Accepting the payment on the merchant system</li>
+    </ol>
+</p>
+<p>
+    <h4>Initiating transaction on the PoS</h4>
+    <ol>
+        <li>
+            User selects “cash deposit” within the SW application
+            <ol type="i">
+                <li>The customer opens his SW account and goes to deposit, enters the amount he wants to deposit, and method SW Cash</li>
+                <li>
+                    SW backend will check if the Aircash user exists in the Aircash system and whether the data is valid. To do so, Sportwetten will need to share the following information:
+                    <table class="table  table-active col-md-8">
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Used for</th>
+                        </tr>
+                        <tr>
+                            <td>First name</td>
+                            <td>personal data validation between Sportwetten and Aircash</td>
+                        </tr>
+                        <tr>
+                            <td>Last name</td>
+                            <td>personal data validation between Sportwetten and Aircash</td>
+                        </tr>
+                        <tr>
+                            <td>Birth date</td>
+                            <td>personal data validation between Sportwetten and Aircash</td>
+                        </tr>
+                        <tr>
+                            <td>Username</td>
+                            <td>account identifier in the deposit requests sent from Aircash to Sportwetten</td>
+                        </tr>
+                        <tr>
+                            <td>Phone number</td>
+                            <td>Aircash account identifier (the deposit notification will be sent to this phone number) - if the account details don’t contain the phone number, the cashier need to request it from the user (it is mandatory parameter while sending the request towards Aircash system)</td>
+                        </tr>
+                    </table>
+                </li>
+                <li>
+                    Data validation starts with sending a CheckUser request towards the Aircash system
+                </li>
+                <li>
+                    Using the account data (first name, last name, birth date) and the phone number Aircash system will validate the Aircash user and return the confirmation
+                    <ol type="i"><li>if the response is not valid (Aircash user with a provided phone number does not exist, personal data is not valid….) a proper message should be displayed to the SW user</li></ol>
+                </li>
+                <li>
+                    If the user exists, SW mobile application will prepare a QR code containing mandatory fields for further steps: Amount, SW User ID, First Name, Last Name, Phone Number
+                </li>
+            </ol>
+        </li>
+        <li>
+            The cashier will scan the QR code and request physical money from the user
+            <ol type="i">
+                <li>The cashier needs to confirm receiving the physical money</li>
+                <li>in this step, a transaction is initiated in the cashier system</li>
+                <li>the initiated transaction has a unique identifier that will be sent to the Aircash system</li>
+            </ol>
+        </li>
+        <li>
+            Once the cashier confirms the transaction, the deposit request is sent to the Aircash system
+            <ol type="i"><li>A deposit request is triggered by sending a CreatePayout request</li></ol>
+        </li>
+        <li>
+            Aircash system will send a confirmation response that the transaction is received
+            <ol type="i"><li>At this point, it is possible to reject the transaction because of user restrictions</li></ol>
+        </li>
+        <li>
+            Upon confirmation, the deposit process on the PoS is finished and the transaction can be treated as a successful one
+            <ol type="i">
+                <li>Cashier stores the physical money in the cashbox</li>
+                <li>A confirmation slip is printed</li>
+                <li>After this step, the deposit process is taken over by the Aircash system</li>
+            </ol>
+        </li>
+        </ol>
+        <br />
+        <h4>Accepting the payment on the Aircash application</h4>
+        <ol start="6"><li>Aircash will send the notification to the user asking for confirmation to deposit to his Sportwetten account</li></ol>
+        <br />
+        <h4>Accepting the payment on the merchant system</h4>
+        <ol start="7">
+        <li>
+            If the user confirms the transaction, Aircash will send the request to the merchant system asking does the user with the provided identifier exists and does the account data (first name, last name, birth date) matches
+            <ol type="i">
+                <li>This step is reused from the direct deposits via the Aircash app</li>
+                <li>Aircash will send the CheckPlayer request to the agreed endpoint</li>
+            </ol>
+        </li>
+        <li>
+            After confirmation that the user is able to receive the payment, the Aircash system will send the last request that will contain the amount of the deposit that needs to be credited to the user's online account
+            <ol type="i"><li>Confirming the payment will be handled by the CreateAndConfirmPayment request (sent from the Aircash system to the merchant system)</li></ol>
+        </li>
+        <li>
+            The merchant system will respond with the top-up confirmation
+            <ol type="i">
+                <li>If the account cannot be credited, the merchant will respond with the error message</li>
+                <li>If the account is credited, the merchant will return the transaction id</li>
+            </ol>
+        </li>
+    </ol>
+</p>
+<hr />
+<h2>The Deposit initiated through Aircash Wallet</h2>
+<p>The Deposit onto Merchant's user account can also be made directly from the Aircash application:</p>
+<ul>
+    <li>User enters the Aircash application.</li>
+    <li>Within the Aircash app Home screen, the user selects the Marketplace option</li>
+    <li>In the Marketplace section, the user is able to deposit funds in one tap by selecting the Merchants logo. The user is able to fill in the deposit amount and process payments towards Merchant’s online channels (player account).</li>
+    <li>The funds are visible instantly on the player account and can be used instantly on Merchant online channels.</li>
+</ul>
+<p>If the user is making a deposit to his Sportwetten account directly from the Aircash marketplace, then the process consists of the following REST API calls</p>
+<ol>
+    <li>CheckPlayer (Aircash -> Sportwetten)</li>
+    <li>CreateAndConfirmPayment (Aircash -> Sportwetten)</li>
+</ol>
+<p>
+    The flow is the same one as in the third phase of the previous chapter (Accepting the payment on the merchant system)
+</p>
+<hr />
+<h2>Methods called by the partner system on Aircash system</h2>
+<p style="text-align:justify">
+    The partner should connect to REST methods that receive JSON objects in order to successfully make payments.
+</p>
+
+<h4>CheckUser</h4>
+<p style="text-align:justify">
+    The method is used to verify whether the user has an active account in Aircash system.
+</p>
+
+<table class="table  table-active col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/PartnerV4/CheckUser</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/PartnerV4/CheckUser</td>
+    </tr>
+</table>
+<br />
+<uib-tabset>
+    <uib-tab index="checkUser1-tab-0" heading="Input parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="2">Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">PartnerID</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">PhoneNumber</td>
+                    <td>String</td>
+                    <td>
+                        Phone number is unique identifier in Aircash system, and can uniquely define Aircash user. Phone number must be in MSISDN format (eg. 3859812345678)
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">PartnerUserID</td>
+                    <td>String</td>
+                    <td>
+                        User identifier in the merchant system.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Parameters</td>
+                    <td>List&lt;Object&gt;</td>
+                    <td>List of parameters</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Key</td>
+                    <td>String</td>
+                    <td>The name of the parameter to be sent</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Value</td>
+                    <td>String</td>
+                    <td>The value of the parameter to be sent</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Signature</td>
+                    <td>String</td>
+                    <td>
+                        Signature generated by the partner system that will be verified by Aircash system before processing request.
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
+        <pre>
+{
+    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
+    "PhoneNumber": "385981234567",
+    "PartnerUserID": "12345",
+    "Parameters":[
+        {
+            "Key":"PayerFirstName",
+            "Value":"John"
+        },
+        {
+            "Key":"PayerLastName",
+            "Value":"Doe"
+        },
+        {
+            "Key":"PayerBirthDate",
+            "Value":"1990-01-01"
+        }
+    ],
+    "Signature": "ldzZxe....I8="
+}      
+        </pre>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
+    "PhoneNumber": "385981234567",
+    "PartnerUserID": "12345",
+    "Parameters":[
+        {
+            "Key":"PayerFirstName",
+            "Value":"John"
+        },
+        {
+            "Key":"PayerLastName",
+            "Value":"Doe"
+        },
+        {
+            "Key":"PayerBirthDate",
+            "Value":"1990-01-01"
+        }
+    ],
+    "Signature": "ldzZxe....I8="
+}
+
+    
+Sequence:
+Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=496fbe8e-ca5a-42df-8999-cdde0c14ae3a&PartnerUserID=12345&PhoneNumber=385981234567
+
+Signature:
+ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJzpfC773zoCRmlvmqkIccVyOG2PSznJX2b4MS7bEO2jlgHvhfLku2hDtGSG4nvdSiQ5EZN9pkAAG1JsE4mBAcfD0sb7VHwbelciRbMP+cRqOk38bVX7mZc4fFrURx3Le+6lqtbaISn7QmLYVcbFIIMG1q+4s+qz9eawXpZ8vBBoQqtoAaiObEiD06NZxTPctLabkiZyFGdPw46D05SEJ9reCMxpzCZXZKXFS2pzcjTNUaTAkMen08yhNbb3s2gs2PeRPRXRIwYKAIyromEhXVLbs4lCPRv9IgA2Ejmp1f+0OKdcDOiKk880rjkXZlU9Ym/EqgQrdEnbY+fCeOR4MrQjTLw5zBl3QvRqJIglgl08PimKDCnSIDZw+t96uGXg47uspTWz/Ax2muJR/giLP3/NDDinNV6nqK1aGqNblBSb1hjli8S41Pa7F/amhuUEfGbqjikP4tBOvyFFjOrDSuvRiM3Jp4rNeg0FezFoKFcZ+9R5rZPBR37JUWIQZXMRxVr5lCMCvz0lZdP+JtxBd4eUI4yF4PFGejYksE5yQSpEyXg+6bM928dd+pcFFa9RIJqP3yUSlgqKEdlSOesbGmOkYJSI8=
+
+</pre>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
+        <div class="row">
+            <div class="col-md-7">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameters</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Status </td>
+                            <td>Int</td>
+                            <td>
+                                1- an uknown phone number<br />
+                                2- there is a user, but the personal data is not matched. Transaction will be rejected.<br />
+                                3- there is a user, it is possible to make a payment<br />
+                                4-
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
+        <pre>
+<code>
+{
+    "status": 1
+}
+    or
+{
+    "status": 2
+}
+    or
+{
+    "status": 3
+}
+</code>
+        </pre>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-5" heading="Error message" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Http response</th>
+                    <th>Description</th>
+                    <th>Solution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>401  </td>
+                    <td>
+                        In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response
+                    </td>
+                    <td>
+                        Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="checkUser1-tab-6" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST" name="checkUserForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="checkUserServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="checkUserModel.firstName" class="form-control" type="text" placeholder="Enter first name" ng-disabled="checkUserServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="checkUserModel.lastName" class="form-control" type="text" placeholder="Enter last name" ng-disabled="checkUserServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="checkUserModel.birthDate" isOptional="false" out="setDate"></date-picker>
+                        </div>
+                        <button ng-click="checkUser()" class="btn btn-primary w-100px me-5px" ng-disabled="checkUserServiceBusy|| checkUserForm.$invalid">Check user <i ng-if="checkUserServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-0.5"></div>
+            <div class="col-md-4" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
+                Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{checkUserRequest}}
+</code>
+</pre>
+                Sequence: {{checkUserSequence}}<br />
+            </div>
+            <div class="col-md-3" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
+                Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{checkUserResponse}}
+</code>
+</pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h4>CreatePayout</h4>
+<p style="text-align:justify">
+    The method used by partner system to create transaction in Aircash system. On each successful request, Aircash system will deposit funds on user account.
+</p>
+
+<table class="table  table-active col-md-6">
+    <tr>
+        <th>Environment</th>
+        <th>Method</th>
+        <th>URL</th>
+    </tr>
+    <tr>
+        <td><b>Test</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://staging-api.aircash.eu/api/PartnerV4/CreatePayout</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://api.aircash.eu/api/PartnerV4/CreatePayout</td>
+    </tr>
+</table>
+<br />
+<uib-tabset>
+    <uib-tab index="createPayout1-tab-0" heading="Request parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="2">Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">PartnerID</td>
+                    <td>String</td>
+                    <td>Partner identifier</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">PartnerTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Transaction ID in the partner system
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Amount</td>
+                    <td>Decimal</td>
+                    <td>
+                        Transaction amount
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">PhoneNumber</td>
+                    <td>String</td>
+                    <td>
+                        Phone number is unique identifier in Aircash system, and can uniquely define Aircash user. Phone number must be in MSISDN format. Eg. 3859812345678 (State Number 385, number of operators 98, number of users 1234567)
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">PartnerUserID</td>
+                    <td>String</td>
+                    <td>
+                        User identifier in the merchant system.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Parameters</td>
+                    <td>List&lt;Object&gt;</td>
+                    <td>List of parameters</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Key</td>
+                    <td>String</td>
+                    <td>The name of the parameter to be sent</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Value</td>
+                    <td>String</td>
+                    <td>The value of the parameter to be sent</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td colspan="2">CurrencyID</td>
+                    <td>Int</td>
+                    <td>
+                        ISO 4217 code of the currency the payout will be made in
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Signature</td>
+                    <td>String</td>
+                    <td>
+                        Signature generated by the partner system that will be verified by Aircash system before processing request.
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-1" heading="Request parameters example" classes="nav-item">
+        <pre>
+{
+    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
+    "PhoneNumber": "385981234567",
+    "PartnerUserID": "12345",
+    "Parameters":[
+        {
+            "Key":"emai",
+            "Value":"user@example.net"
+        },
+        {
+            "Key":"PayerFirstName",
+            "Value":"John"
+        },
+        {
+            "Key":"PayerLastName",
+            "Value":"Doe"
+        },
+        {
+            "Key":"PayerBirthDate",
+            "Value":"1990-01-01"
+        }],
+    "Amount": 123.45,
+    "CurrencyID": 978,
+    "PartnerTransactionID": "123..abc..123",
+    "Signature": "CX9v6V....Bw="
+}
+
+        </pre>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
+    "PhoneNumber": "385981234567",
+    "PartnerUserID": "12345",
+    "Parameters":[
+        {
+            "Key":"emai",
+            "Value":"user@example.net"
+        },
+        {
+            "Key":"PayerFirstName",
+            "Value":"John"
+        },
+        {
+            "Key":"PayerLastName",
+            "Value":"Doe"
+        },
+        {
+            "Key":"PayerBirthDate",
+            "Value":"1990-01-01"
+        }],
+    "Amount": 123.45,
+    "CurrencyID": 978,
+    "PartnerTransactionID": "123..abc..123",
+    "Signature": "CX9v6V....Bw="
+}
+
+Sequence:
+Amount=123.45&CurrencyID=978&Parameters=Key=email&Value=user@example.net&Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=1b8a6445-d23c-4a3a-acc0-f05abcebb081&PartnerTransactionID=123..abc..123&PartnerUserID=12345&PhoneNumber=385981234567
+
+Signature:
+CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX/SvMh0Uh3jzKHlcgEB0rkInQZfrhSiZR7kU/Q5FmFhyJAls1h/PrVYFP3T4efCY8oMJqnCMZv18QiebpRXVhb/rTi1DFExRi43/nEJddTo34tkfsv35rL7dBD1KvISE07kmodBmViMiV47oHXpX/dY8y5ZgFz69/j4Cyue70yw4XeN31EPPfXBAa3rFoHIshZshgFtwOIoE/wHkVmTIY1YcuemK8dJeF9NxxSgaukLAiDvlUp4x046okWQvpdu89wLBgBZ4NIZPsEGU6zmFJ43Gp5UWobv5Y3QQ3Bqf+KGJL2jx3jNYHxfknlQXFG76n5RWo0m/MUWKhE/8rTPtU1PJLyL49enwY3o2xmzlsaq/XP3+gZFpT1m1WL/mzyZmJu1/fbB5zu3kdMMMP7o2iPT+LSnlS2kxH9/RR+igEhg7enLcuPjIUVoFHElMqKF2GRXXVcNIdS21yRHmH21Rr9KjRKOzQlLckEqtWw7O9glYLZR3qXbuK9KnwIVWjjPVOVEM06OlBzySYnosTfdkjWW7kZaLQaX0McY6roQdwpv287saPLRNSDfRd5I6x+iL8OVJe0D1kX3n/1agPrkUFgHvNDBw=
+
+</pre>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-3" heading="Response parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>AircashTransationID</td>
+                    <td>String</td>
+                    <td>Transaction ID from Aircash system. Returns only in case of successful payment.</td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-4" heading="Response parameters example" classes="nav-item">
+        <pre>
+{
+    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc"
+}
+    </pre>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-5" heading="Error message" classes="nav-item">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>401</td>
+                            <td>
+                                In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response
+                            </td>
+                            <td>
+                                Verify that PartnerID and Signature are correct in your request. If they are all according to documentation please contact Aircash support
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>400</td>
+                            <td>Aircash system returns in this case a response containing the error code with error info that the partner system can send corresponding message to the partner.</td>
+                            <td>
+                                4000 - unknown phone number - warn user that user with inputted number doesn't exist in Aircash system<br />
+                                4001 - user with phone number exists in Aircash system but doesn’t have correct PersonalID. This error can occur only in case the partner send personalID in request<br />
+                                4002 - transaction with PartnerTransactionID already exists<br />
+                                4003 - amount is below limit<br />
+                                4004 - amount is over limit<br />
+                                4005 - user is blocked or user has reached limit<br />
+                                4006 - currencies do not match<br />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-6" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input ng-model="createPayoutModel.email" class="form-control" type="email" placeholder="Enter email" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="createPayoutModel.firstName" class="form-control" type="text" placeholder="Enter username" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="createPayoutModel.lastName" class="form-control" type="text" placeholder="Enter username" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="createPayoutModel.birthDate" isOptional="false" out="setBirthDatePayout"></date-picker>
+                        </div>
+                        <button ng-click="createPayout()" class="btn btn-primary w-100px me-5px" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-0.5"></div>
+            <div class="col-md-4" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
+                Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+     <code>
+{{createPayoutRequest}}
+    </code>
+</pre>
+            </div>
+            <div class="col-md-3" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
+                Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{createPayoutResponse}}
+</code>
+</pre>
+            </div>
+            <div class="col-md-4"></div>
+            <div class="col-md-0.5"></div>
+            <div class="col-md-7" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy"><pre>Sequence: {{createPayoutSequence}}<br /></pre></div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h4>CheckPlayer</h4>
+<p style="text-align:justify">
+    The method used for Aircash platform to verify whether the user has an active account in the partner system and to enable the display of useful information (such as the user account status).
+</p>
+<p style="text-align:justify">
+    When agreeing to this method, Aircash will need a list of parameters that partner needs in order to uniquely determine which account is being subjected for payment. For example, if the user would like to make a payment to his account in the partner system, he will need to input parameter(s) that will identify his account in the partner system (e.g. username in partner system). The Aircash system will send a CheckPlayer request using input parameter(s) to the partner system in order to verify if the account exists in the partner system. The Aircash system will not allow the user to make payment in case the partner system doesn’t respond positively to this request.
+</p>
+<p style="text-align:justify">
+    The Aircash system will need a list of negative responses from the partner system in order to map them in the system. In case the partner system responds negatively to this request, the partner will need to send some unique error code. Those error codes need mapping in the Aircash system in order to display correct messages to the end user. Example error codes: user doesn’t exist in the system, user account blocked in partner system, user account not verified in partner system…
+</p>
+<p style="text-align:justify">
+    If the partner system has multiple user identifiers, Aircash can allow the user to choose which identifier to enter.
+</p>
+
+<br />
+<uib-tabset>
+    <uib-tab index="CheckPlayer-tab-0" heading="Input parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="2">Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">Parameters</td>
+                    <td>List&lt;Object&gt;</td>
+                    <td>List of parameters</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Key</td>
+                    <td>String</td>
+                    <td>The name of the parameter to be sent</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Value</td>
+                    <td>String</td>
+                    <td>The value of the parameter to be sent</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Signature</td>
+                    <td>String</td>
+                    <td>
+                        Signature by Aircash system confirming that Aircash is sending request to the partner system
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CheckPlayer-tab-1" heading="Input parameters example" classes="nav-item">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Email as identifier</h5>
+                <pre>
+{
+  "Parameters": [{
+            "Key":"PayerFirstName",
+            "Value":"John"
+        },
+        {
+            "Key":"PayerLastName",
+            "Value":"Doe"
+        },
+        {
+            "Key":"PayerBirthDate",
+            "Value":"1990-01-01"
+        },    
+        {
+            "Key": "email",
+            "Value": "user@example.net"
+        }],
+  "Signature": "c6RDz....Pc="
+}      
+        </pre>
+            </div>
+            <div class="col-md-6">
+                <h5>Username as identifier</h5>
+                <pre>
+{
+  "Parameters": [{
+            "Key":"PayerFirstName",
+            "Value":"John"
+        },
+        {
+            "Key":"PayerLastName",
+            "Value":"Doe"
+        },
+        {
+            "Key":"PayerBirthDate",
+            "Value":"1990-01-01"
+        },    
+        {
+            "Key": "username",
+            "Value": "aircash"
+        }],
+  "Signature": "123...abc"
+}      
+        </pre>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="CheckPlayer-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+  "Parameters": [{
+            "Key":"PayerFirstName",
+            "Value":"John"
+        },
+        {
+            "Key":"PayerLastName",
+            "Value":"Doe"
+        },
+        {
+            "Key":"PayerBirthDate",
+            "Value":"1990-01-01"
+        },    
+        {
+            "Key": "email",
+            "Value": "user@example.net"
+        }],
+  "Signature": "c6RDz....Pc="
+}
+
+    
+Sequence:
+Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=email&Value=user@example.net<br />
+
+Signature:
+c6RDzVTWgWwmdOloPtzT0fO9G5xYUkUfNGlyubACYpCyTYNhJeiKK0ieapy9ATV/lYRQ5M3Ek21gegF6UFMSyK+hddFSt/AJigoW6UGv7x053oRGK+IYVqp03S+y5pJ3OUYQ4KQnxmWXAwPmj2+btD5BdL+O/0vJIFDlDKL0eeu41a51wO9DQBLawSQxRGRVG2hPRzfmL2+Nk73CvEqx29DXleBjTne3vZrLbTuVG0igFn6rgtDhZCyFa5SWQ+g9UzgLiqk4S6vMRx+zZU7He2v/HDSer29kl3djcpkisqMZex3r51+rTT1pqiCWyy+yusXWV2A2MfkNjjuhsI5JlKGyD62+9WTx8Bt/x0377IfDoNGAEj8YBzCOx/epztLC68iKNYd80TtEIV5YUs/LhqRvFknTWfodXXjqC0Wc24/8mve6ylWY6MuoUhGPKK1wOx8FHND13c5Os+4noenGRYllcYb5BzzUvY5C7UWoxanaz2LPuTPCxEswn5dQH7/ARTQU5Z1VC6mdoNNM98Z1/6dEvKZiapPvx8QY7qCk5puQh9QAMbyw0SGW+1X9zYhW41N+fH4mJTj6rgBHhH5tunk7jHwmdmTk/aCIBnBlXQzDX/04fCQCgPEtNkryrB4L+Xit0plPYk3e74U7L6oEXKRcRcZ3OjfRp16pcNkHLPc=
+
+</pre>
+    </uib-tab>
+    <uib-tab index="CheckPlayer-tab-3" heading="Output parameters" classes="nav-item">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Return value</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">IsPlayer</td>
+                            <td>Bool</td>
+                            <td>
+                                True if there is an account with the above data
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Error</td>
+                            <td></td>
+                            <td>
+                                In case of returning an error (IsPlayer=false), return the corresponding error to get the user the correct error
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>ErrorCode</td>
+                            <td>Int</td>
+                            <td>
+                                Error codes and error messages are sent to user support for mapping to be printed in the mobile application.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>ErrorMessage</td>
+                            <td>String</td>
+                            <td>
+                                Error description.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Parameters</td>
+                            <td>List&lt;Object&gt;</td>
+                            <td>
+                                This parameter can be ignored if the user does not need to show additional information in the mobile app. In addition to the parameters, some values may be reversed by which the Aircash system defines different rules for this transaction, such as minimum transaction amount or maximum transaction amount. The parameters are agreed in cooperation with Aircash support.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Key</td>
+                            <td>String</td>
+                            <td>
+                                Parameter name
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Type</td>
+                            <td>String</td>
+                            <td>
+                                Parameter type: String, Date, Decimal, DateTime, Boolean
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>Value</td>
+                            <td>String</td>
+                            <td>
+                                Parameter value
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="CheckPlayer-tab-4" heading="Output parameters example" classes="nav-item">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Player found, deposit possible</h5>
+                <pre>
+{
+    "IsPlayer": true,
+    "Error": null,
+    "Parameters": [
+    {
+        "Key": "PartnerUserID",
+        "Value": "12345",
+        "Type": "String"
+    }
+  ]
+}
+        </pre>
+            </div>
+            <div class="col-md-6">
+                <h5>Deposit not possible</h5>
+                <pre>
+{
+    "IsPlayer": False,
+    "Error": 
+    {
+        "ErrorCode": 500,
+        "ErrorMessage": "Unable to find user account",
+    }
+    "Parameters": null
+}
+        </pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
+<h4>CreateAndConfirmPayment</h4>
+<p style="text-align:justify">
+    The method used to let the Aircash platform notify the partner system that the payment has been made and that the user's account should be charged with the specified amount.
+</p>
+<p style="text-align:justify">
+    When agreeing to this method, Aircash will send the same parameters as for the CheckPayer method to identify the reimbursement account.
+</p>
+<br />
+<uib-tabset>
+    <uib-tab index="CreateAndConfirmPayment-tab-0" heading="Input parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="2">Parameter</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">TransactionID</td>
+                    <td>String</td>
+                    <td>Id of transactions in the Aircash system</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Amount</td>
+                    <td>Decimal</td>
+                    <td>
+                        Transaction Amount
+                    </td>
+                    <td>
+                        YES
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Parameters</td>
+                    <td>List&lt;Object&gt;</td>
+                    <td>
+                        A list of parameters that uniquely define a user's account for a supplement of funds
+                    </td>
+                    <td>
+                        YES
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Key</td>
+                    <td>String</td>
+                    <td>The name of the parameter to be sent</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Value</td>
+                    <td>String</td>
+                    <td>The value of the parameter to be sent</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Signature </td>
+                    <td>String</td>
+                    <td>
+                        Signature by Aircash system confirming that Aircash is sending request to the partner system
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CreateAndConfirmPayment-tab-1" heading="Input parameters example" classes="nav-item">
+        <pre>
+{
+    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
+    "Amount": 123.45,
+    "Parameters": [
+        {
+            "Key": "email",
+            "Value": "user@example.net"
+        }
+    ],
+    "Signature": "Gng+D6.../4="
+}      
+        </pre>
+    </uib-tab>
+    <uib-tab index="CreateAndConfirmPayment-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+{
+    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
+    "Amount": 123.45,
+    "Parameters": [
+        {
+            "Key": "email",
+            "Value": "user@example.net"
+        }
+    ],
+    "Signature": "Gng+D6.../4="
+}
+
+
+Sequence:
+Amount=123.45&Parameters=Key=username&Value=aircash&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
+
+Signature:
+Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4HwdiNNda6gOJffI8ZVOFgPLbLuDhEVzJ/gwKKeNa6MqPxo3Us4VKbhPKdMgQoSS5zQp3w6ptSdey58iU/hxzMi/9PyaGYGYRsYGohInm721AyYnBFAmXe8az6efPsUnQT9YQGSechYRadF1QpBjVs2yNwnFz3p9IdhIqYPVetq5PXlrTtv8FGJ6ocK38imNVZrhxbciIIRDsCP6DxBvKYRY16yBEqJwLsSxmfx9ZZTkilkWtANczDnPHbl3x5FZNnmD2WC4MHgGabgyzQGn+zF3+Kf2m9mJZI7CT0nU9ZQLWM3Q+zkcmWC/mPpmDD3rKORPPIqT7M3aMEG8k+M1gNmvdaR/Xw8x1CCwINSQ3osYEghaZN+m+0H9ilx0NZVTOWyP3U8m0vzm7Cd3uc6h4z3LHirOr0DaFp6hk3/5fSwAbLATghQi3IkYuc9lJCenC5BXhWxrDkcby5foBqxDQcTolVKwOCSyO5r9j+DzzsXYcopNwlBfl9ZclRqYMQK9io9fbeu5RSCKa/jQv+q9Va9XA0T/He+KWUyK47yCVzOBcgoBurc+ycdbnPttrGbLiNuqicOnXIwZuHHN0krKzSmTOthyqP/4=
+
+    </pre>
+    </uib-tab>
+    <uib-tab index="CreateAndConfirmPayment-tab-3" heading="Response parameters" classes="nav-item">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th colspan="2">Parameters</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="2">Success</td>
+                    <td>Bool</td>
+                    <td>True if payment is successful, otherwise false</td>
+                </tr>
+                <tr>
+                    <td colspan="2">PartnerTransactionID</td>
+                    <td>String</td>
+                    <td>
+                        Transaction ID in the partner system must be unique.
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Error</td>
+                    <td>Object</td>
+                    <td>
+                        In case of error, return the corresponding error so that the user can see what went wrong
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>ErrorCode</td>
+                    <td>Int</td>
+                    <td>Possible error codes and error messages mappings should be sent to user support, so they can be displayed in the mobile application.</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>ErrorMessage</td>
+                    <td>String</td>
+                    <td>Error description.</td>
+                </tr>
+                <tr>
+                    <td colspan="2">Parameters</td>
+                    <td>List&lt;Object&gt;</td>
+                    <td>
+                        The List of objects of type ParameterRS. In the event that some additional parameters have to be shown to the user, they can be returned in this object. The parameters are agreed in cooperation with Aircash support.
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Key</td>
+                    <td>String</td>
+                    <td>Parameter name</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Type</td>
+                    <td>String</td>
+                    <td>Parameter type: String, Date, Decimal, DateTime, Booleane</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Value</td>
+                    <td>String</td>
+                    <td>Parameter value</td>
+                </tr>
+            </tbody>
+        </table>
+    </uib-tab>
+    <uib-tab index="CreateAndConfirmPayment-tab-4" heading="Output parameters example" classes="nav-item">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Successful transaction</h5>
+                <pre>
+<code>
+{
+    "Success": true,
+    "PartnerTransactionID": "ABC...123",
+    "Parameters": [
+        {
+            "Key": "PartnerUserID",
+            "Value": "12345",
+            "Type": "String"
+        }
+    ]
+}
+</code>
+        </pre>
+            </div>
+            <div class="col-md-6">
+                <h5>Transation with error</h5>
+                <pre>
+                <code>
+                        {
+                        "Success ": false,
+                        "Error": {
+                        "ErrorCode": 500,
+                        "ErrorMessage": "Unable to find user account"
+                        },
+                        "Parameters": null
+                        }
+
+                    </code>
+        </pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+

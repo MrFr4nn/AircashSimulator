@@ -15,6 +15,7 @@ namespace Domain.Entities.Enum
         AircashPayment = 6,
         AircashRedeemTicket = 7,
         AircashFrameV2 = 8,
+        AircashPosDeposit = 9,
         Admin = 100
     }
 }

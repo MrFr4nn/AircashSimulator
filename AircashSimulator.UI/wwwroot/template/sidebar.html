@@ -74,6 +74,12 @@
                     <span>{{translations.aircash_payout_label}}</span>
                 </a>
             </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.acPosDeposit" ng-if="partnerRoles.indexOf('AircashPosDeposit') != -1">
+                    <i class="fa fa-mobile aIconRed"></i>
+                    <span>{{translations.ac_posDeposit_label}}</span>
+                </a>
+            </li>
             <li>
                 <a ui-sref="app.abonSp" ng-if="partnerRoles.indexOf('AbonGenerate') != -1">
                     <i class="fa fa-file-invoice aIconRed"></i>
