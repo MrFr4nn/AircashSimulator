@@ -203,25 +203,29 @@
 
         <i>Endpoints:</i>
         <table class="table table-active col-md-6">
-            <tr>
-                <th>Environment</th>
-                <th>Method</th>
-                <th>URL</th>
-            </tr>
-            <tr>
-                <td><b>Test</b></td>
-                <td>
-                    POST
-                </td>
-                <td>https://dev-frame-api.aircash.eu/api/v1/initiate</td>
-            </tr>
-            <tr>
-                <td><b>Production</b></td>
-                <td>
-                    POST
-                </td>
-                <td>https://frame-api.aircash.eu/api/v1/initiate</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Test</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://dev-frame-api.aircash.eu/api/v1/initiate</td>
+                </tr>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://frame-api.aircash.eu/api/v1/initiate</td>
+                </tr>
+            </tbody>
         </table>
         <br />
         <p>
@@ -231,108 +235,112 @@
         <uib-tabset active="active">
             <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Parameters</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Required</th>
-                    </tr>
-                    <tr>
-                        <td><b>PartnerId</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique partner identifier (per currency) provided by Aircash
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>PartnerUserId</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique user identifier in the merchant’s system
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>PartnerTransactionId</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique transaction id in partner’s system
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>Amount</b></td>
-                        <td>decimal</td>
-                        <td>
-                            Transaction amount
-                        </td>
-                        <td>YES, in case of A-bon method there is no entry</td>
-                    </tr>
-                    <tr>
-                        <td><b>CurrencyId</b></td>
-                        <td>int</td>
-                        <td>
-                            ISO-4217 currency code
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>PayType</b></td>
-                        <td>int</td>
-                        <td>
-                            Pay type identifier ( 0 - Payment; 1 - Payout )
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>PayMethod</b></td>
-                        <td>int</td>
-                        <td>
-                            Pay method identifier ( 0 - A-bon; 2 - Aircash Pay; 10 - Aircash Payout )
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>NotificationUrl</b></td>
-                        <td>string</td>
-                        <td>
-                            URL to which notification after the authorization has been successfully completed.
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>SuccessUrl</b></td>
-                        <td>string</td>
-                        <td>
-                            Aircash frame redirects the customer back to the success URL if the payment is successful
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>DeclineUrl</b></td>
-                        <td>string</td>
-                        <td>
-                            Aircash frame redirects the customer back to the decline URL in case payment failed
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>Locale</b></td>
-                        <td>string</td>
-                        <td>
-                            Frame language
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>Signature</b></td>
-                        <td>string</td>
-                        <td>
-                            A sequence that has been digitally signed with the provider's private signature, used for authentication
-                        </td>
-                        <td>YES</td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Parameters</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerId</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique partner identifier (per currency) provided by Aircash
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerUserId</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique user identifier in the merchant’s system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionId</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique transaction id in partner’s system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Transaction amount
+                            </td>
+                            <td>YES, in case of A-bon method there is no entry</td>
+                        </tr>
+                        <tr>
+                            <td><b>CurrencyId</b></td>
+                            <td>int</td>
+                            <td>
+                                ISO-4217 currency code
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PayType</b></td>
+                            <td>int</td>
+                            <td>
+                                Pay type identifier ( 0 - Payment; 1 - Payout )
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PayMethod</b></td>
+                            <td>int</td>
+                            <td>
+                                Pay method identifier ( 0 - A-bon; 2 - Aircash Pay; 10 - Aircash Payout )
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>NotificationUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                URL to which notification after the authorization has been successfully completed.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>SuccessUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                Aircash frame redirects the customer back to the success URL if the payment is successful
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>DeclineUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                Aircash frame redirects the customer back to the decline URL in case payment failed
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Locale</b></td>
+                            <td>string</td>
+                            <td>
+                                Frame language
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature</b></td>
+                            <td>string</td>
+                            <td>
+                                A sequence that has been digitally signed with the provider's private signature, used for authentication
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
@@ -378,23 +386,27 @@ Signature:
 CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZcpzN/Yhg95J7yvOkkH10TAnP0uvy8IqEdQJt8G9pec4lRGp2X7xm155OS4djYS1g41uPZBEU9W7pcqiL5R4N+7wc9OOJ8ss8eRX4DEKs9sAozT3eWhfqd22Y/LhbyIoH0s5c6+Lyl2pU5R5wN/iBYR0vGr8tAZjMFq0dANel2W8jf21uFh0vOnTmesLLI+fz/oOXypd7lIAmb8gYj/Sf2jwMipmpK6lMBd2UtxFQ4ayfNWudAN9OYQrZbqYKuA3ospaMYs+jxURRE3JhynZqt+Tk93Z2T6UYKFE8L0k4aO624X7KSR4hSvR0Cwz9HjjncWQhKd7bDjFi43NxLIWzCjC2+kfNUgjxZW6xSnj3Du5QP+5sW/OMoX/HZ79C+L8RzV720HzdLIcMNF2UAxlY+HVdaEVXufvMKSR9aYKLIQPxExxalZuo4uQPv2+89vDJqcLAsLhQEaEDxuxLXDYAzmm56i2ajWI5/9ne9KmDVm9/5yz7ckT9vwqlu/0mYC1qbF+P7GSD5sY5c8Wc4/nSaWTkr5pDT0mOaWRdjDQHzhukU2gARVjKe6ePdycVxzzfpPRBv7e7XUfzypmaayQdkvwo574E=
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="200 OK Response" classes="nav-item">
+            <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td><b>URL</b></td>
-                        <td>string</td>
-                        <td>
-                            Url that needs to be opened within merchant's web
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>URL</b></td>
+                            <td>string</td>
+                            <td>
+                                Url that needs to be opened within merchant's web
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
+            <uib-tab index="request-tab-4" heading="Response example" classes="nav-item">
 <pre>
 <code>{</code>
 <code>    "url": "https://aircash.eu?Id=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac"</code>
@@ -403,86 +415,94 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Http response</th>
-                        <th>Description</th>
-                        <th>Solution</th>
-                    </tr>
-                    <tr>
-                        <td><b>400</b></td>
-                        <td>
-                            An invalid request was made
-                        </td>
-                        <td>
-                            The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>401</b></td>
-                        <td>
-                            In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
-                        </td>
-                        <td>
-                            Verify that ProviderId and Signature are correct in your request.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>500</b></td>
-                        <td>
-                            An unknown error occured
-                        </td>
-                        <td>
-                            Contact Aircash support
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>400</b></td>
+                            <td>
+                                An invalid request was made
+                            </td>
+                            <td>
+                                The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>401</b></td>
+                            <td>
+                                In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
+                            </td>
+                            <td>
+                                Verify that ProviderId and Signature are correct in your request.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>500</b></td>
+                            <td>
+                                An unknown error occured
+                            </td>
+                            <td>
+                                Contact Aircash support
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-6" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="400 Error responses" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Code</th>
-                        <th>Message</th>
-                        <th>Additional data</th>
-                    </tr>
-                    <tr>
-                        <td><b>1</b></td>
-                        <td>
-                            "Invalid provider id" – wrong partner identifier (ProviderId)
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>3</b></td>
-                        <td>
-                            "Validation erorr" – missing mandatory parameter
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>1004</b></td>
-                        <td>
-                            "Partner transaction already exists " – PartnerTransacatinID must be unique
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>3000</b></td>
-                        <td>
-                            "Invalid currency " currency missmatch
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Message</th>
+                            <th>Additional data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>1</b></td>
+                            <td>
+                                "Invalid provider id" – wrong partner identifier (ProviderId)
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>3</b></td>
+                            <td>
+                                "Validation erorr" – missing mandatory parameter
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>1004</b></td>
+                            <td>
+                                "Partner transaction already exists " – PartnerTransacatinID must be unique
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>3000</b></td>
+                            <td>
+                                "Invalid currency " currency missmatch
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-7" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
                 <pre>
 <code>{</code>
 <code>    "code": 1,</code>
@@ -568,56 +588,64 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
         </p>
         <i>Endpoints:</i>
         <table class="table table-active col-md-6">
-            <tr>
-                <th>Environment</th>
-                <th>Method</th>
-                <th>URL</th>
-            </tr>
-            <tr>
-                <td><b>Test</b></td>
-                <td>
-                    POST
-                </td>
-                <td>https://dev-frame-api.aircash.eu/api/v1/status</td>
-            </tr>
-            <tr>
-                <td><b>Production</b></td>
-                <td>
-                    POST
-                </td>
-                <td>https://frame-api.aircash.eu/api/v1/status</td>
-            </tr>
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Test</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://dev-frame-api.aircash.eu/api/v1/status</td>
+                </tr>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://frame-api.aircash.eu/api/v1/status</td>
+                </tr>
+            </tbody>
         </table>
         <br />
         <uib-tabset>
-            <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
+            <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td><b>PartnerID</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique partner identifier (per currency) provided by Aircash
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>PartnerTransactionId</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique transaction id in partner’s system
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Signature</b></td>
-                        <td>string</td>
-                        <td>
-                            A sequence that has been digitally signed with the provider's private signature, used for authentication
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique partner identifier (per currency) provided by Aircash
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionId</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique transaction id in partner’s system
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature</b></td>
+                            <td>string</td>
+                            <td>
+                                A sequence that has been digitally signed with the provider's private signature, used for authentication
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
@@ -644,132 +672,144 @@ PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=3d3dbc8d-954
 Signature:
 dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzUD82VwiLZ//gw8XJ5DLoMzud/34vzQS3MiubD1c/Sw9rWJlXm1wJW+cOgUYtz4GwnU2iViWlYcpzpCSeBB8Z4gbKPR1tDKjvXR2mSO+HQBSeUVRQHKY4rXse1lzJHsKqyQi8I3WoyPLdmUv/fUHuhBLSFbg+yEuazRJhWYhv561Zt0bIemGAsei80cnUU8TOxCZoaQQ9M+h0uWdS7i1OX92iauysj1wENKpcS+JMJxQh4YUgLvOXtoh8boYnNITYQiLy2fTA9hH/nJKiRAb/lMalXqw9r2/E574IHrC26QNEFreui0whQas7GsT37+RtrgRcwP6R59UOn+ZEC05BOoMPXhzvcTgspLOTciFEL5goVt9n2AjUOt8rX2hUvNcpnFDwgTlPyNaUTs5LYhm/qP279Cn6hhrlCilcM8BwBWfCORD3Y5y5MH+B+MaUGIgF7toJh8wCaCUVV+Bd5lPNcrpInz5hmGb3kNz2cbz+ao6HdNcMxNRbvC6ahdx5H+MN4Q7d9quiyczrnE1tqO9stuqgkUT8QcG0bj/x1E97Fx4ehpB6b0aOe/H3Cs5ZoKOmeOf6xiE0pCtPELq11pv96NMUUyGI=</pre>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Response" classes="nav-item">
+            <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Parameter</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                    <tr>
-                        <td><b>Status</b></td>
-                        <td>int</td>
-                        <td>
-                            Transaction status, 1 – declined, 2 - success
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Amount</b></td>
-                        <td>decimal</td>
-                        <td>
-                            Transaction amount
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Currency</b></td>
-                        <td>int</td>
-                        <td>
-                            ISO-4217 currency code
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>AircashTransactionId</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique transaction id in the Aircash system
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Signature</b></td>
-                        <td>string</td>
-                        <td>
-                            A sequence that has been digitally signed with the Aircash private key.
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Status</b></td>
+                            <td>int</td>
+                            <td>
+                                Transaction status, 1 – declined, 2 - success
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Transaction amount
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Currency</b></td>
+                            <td>int</td>
+                            <td>
+                                ISO-4217 currency code
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>AircashTransactionId</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique transaction id in the Aircash system
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature</b></td>
+                            <td>string</td>
+                            <td>
+                                A sequence that has been digitally signed with the Aircash private key.
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Http response</th>
-                        <th>Description</th>
-                        <th>Solution</th>
-                    </tr>
-                    <tr>
-                        <td><b>400</b></td>
-                        <td>
-                            An invalid request was made
-                        </td>
-                        <td>
-                            The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>401</b></td>
-                        <td>
-                            In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
-                        </td>
-                        <td>
-                            Verify that ProviderId and Signature are correct in your request.
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>500</b></td>
-                        <td>
-                            An unknown error occured
-                        </td>
-                        <td>
-                            Contact Aircash support
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>400</b></td>
+                            <td>
+                                An invalid request was made
+                            </td>
+                            <td>
+                                The response will contain an error code, message and optionally additionalData. See „400 Error response“ table for possible 400 responses
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>401</b></td>
+                            <td>
+                                In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
+                            </td>
+                            <td>
+                                Verify that ProviderId and Signature are correct in your request.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>500</b></td>
+                            <td>
+                                An unknown error occured
+                            </td>
+                            <td>
+                                Contact Aircash support
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="400 Error response" classes="nav-item">
+            <uib-tab index="request-tab-5" heading="400 Error responses" classes="nav-item">
                 <table class="table table-hover">
-                    <tr>
-                        <th>Code</th>
-                        <th>Message</th>
-                        <th>Additional data</th>
-                    </tr>
-                    <tr>
-                        <td><b>1</b></td>
-                        <td>
-                            "Invalid signature or partner id" – wrong partner identifier or signature
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>3</b></td>
-                        <td>
-                            "Validation erorr" – missing mandatory parameter
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>1002</b></td>
-                        <td>
-                            "Transaction does not exist" – transaction does not exist in the Aircash system
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>1003</b></td>
-                        <td>
-                            "Transaction not processed" - transaction is not processed in the Aircash system
-                        </td>
-                        <td>
-                            -
-                        </td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Message</th>
+                            <th>Additional data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>1</b></td>
+                            <td>
+                                "Invalid signature or partner id" – wrong partner identifier or signature
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>3</b></td>
+                            <td>
+                                "Validation erorr" – missing mandatory parameter
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>1002</b></td>
+                            <td>
+                                "Transaction does not exist" – transaction does not exist in the Aircash system
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>1003</b></td>
+                            <td>
+                                "Transaction not processed" - transaction is not processed in the Aircash system
+                            </td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-6" heading="400 Error response example" classes="nav-item">
+            <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <pre>
 <code>{</code>
 <code>    "code": 1003,</code>
