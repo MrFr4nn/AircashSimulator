@@ -175,15 +175,11 @@
         <pre>
 {
     "parameters": [{
-        "key": "userName",
+        "key": "username",
         "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
     }],
-    "signature: "i6lNUCLl3l...."
-}        
+    "signature: "HrlYnqqr...Cgs="
+}      
 </pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
@@ -191,21 +187,17 @@
 Request example:
 {
     "parameters": [{
-        "key": "userName",
+        "key": "username",
         "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
     }],
-    "signature: "i6lNUCLl3l...."
+    "signature: "HrlYnqqr...Cgs="
 } 
 
 Sequence:
-Parameters=Key=userName&Value=aircash,Key=phoneNumber&Value=385981234567
+Parameters=Key=username&Value=aircash
 
 Signature:
-i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQlqPcyncevT5DwAMVMdzQO2O7mP9hpP9lVmNrPLs3bTffHA7GkmrEnbg6+exD+wQKPeqric0tfVjJfoGLEq48+1/ndqXY+VqPdKdPQm23NWcWGytDr2Itrmw3a2pR9xbBkhChNT9X2WK+M9rPNzoGhZOFE2GHh/7/o4qJl0/ilCgi8uga1NK1z8Cl2fHQgxrJ/TcIGCW3/NmEvKX6YPXPoOPWXXB4wJ2pfHyNfTqt8klVYp0TpYcG+exYj9Vg7WJo90q9ZDtQFKp6GpXNLiNcZPzo0+Q251iPZfzIt2zPutkF/N93WnInEd6EvqXRn9P6FrC0GetcAhAx++p/i+ez3mRUgscdG9QHVQ3xPKl0u24yb9LvIzaBg9R6GcaZNBYdABjYV8vWIQY7Mkinp0gx4J+X/w8CVbdQvvS0GX0/WeMRnvYW34+I5uYcEkvqAB5BNYG/qVNi54e4qPYo7pxBjV/eXYdweWTIQ83icgFtuY4oEURJ5QUe5cq3yVePsOAw5pVzptwfxnJG/3zIoNGOf6EOvmVcAHLtgzzMNJi55wmqK+G8iZ/MG8YgRpUl78pJYAaA4iyWgpgtoqMAH4CHmi0uCgs=
 </pre>
     </uib-tab>
     <uib-tab index="checkUser1-tab-3" heading="Response parameters" classes="nav-item">
@@ -300,25 +292,15 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
         </div>
     </uib-tab>
     <uib-tab index="checkUser1-tab-4" heading="200 OK response example" classes="nav-item">
-<pre>
+        <pre>
 {
     "isPlayer": true,
     "error": null,
     "parameters": [{
-        "key": "balance",
-        "value": "123.45",
-        "type": "Decimal"
-    },
-    {
-        "key": "minTransactionAmount",
-        "value": "1100.00",
-        "type": "Decimal"
-    },
-    {
-        "key": "validUntil",
-        "value": "2018-10-15",
-        "type": "Date"
-    }]
+            "key": "partnerUserID",
+            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+            "type": "String"
+        }]
 }
 </pre>
     </uib-tab>    
@@ -414,15 +396,11 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
     "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
     "amount": 123.45,
     "parameters": [{
-        "key": "userName",
-        "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
-    }],
-    "signature: "i6lNUCLl3l...."
-}   
+            "key": "username",
+            "value": "aircash"
+        }],
+    "signature": "Gng+D6+3...P/4="
+}  
 </pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
@@ -432,21 +410,17 @@ Request example:
     "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
     "amount": 123.45,
     "parameters": [{
-        "key": "userName",
-        "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
-    }],
-    "signature: "i6lNUCLl3l...."
-} 
+            "key": "username",
+            "value": "aircash"
+        }],
+    "signature": "Gng+D6+3...P/4="
+}  
 
 Sequence:
-Amount=123.45&Parameters=Key=userName&Value=aircash,Key=phoneNumber&Value=385981234567&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
+Amount=123.45&Parameters=Key=username&Value=aircash&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
 
 Signature:
-i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4HwdiNNda6gOJffI8ZVOFgPLbLuDhEVzJ/gwKKeNa6MqPxo3Us4VKbhPKdMgQoSS5zQp3w6ptSdey58iU/hxzMi/9PyaGYGYRsYGohInm721AyYnBFAmXe8az6efPsUnQT9YQGSechYRadF1QpBjVs2yNwnFz3p9IdhIqYPVetq5PXlrTtv8FGJ6ocK38imNVZrhxbciIIRDsCP6DxBvKYRY16yBEqJwLsSxmfx9ZZTkilkWtANczDnPHbl3x5FZNnmD2WC4MHgGabgyzQGn+zF3+Kf2m9mJZI7CT0nU9ZQLWM3Q+zkcmWC/mPpmDD3rKORPPIqT7M3aMEG8k+M1gNmvdaR/Xw8x1CCwINSQ3osYEghaZN+m+0H9ilx0NZVTOWyP3U8m0vzm7Cd3uc6h4z3LHirOr0DaFp6hk3/5fSwAbLATghQi3IkYuc9lJCenC5BXhWxrDkcby5foBqxDQcTolVKwOCSyO5r9j+DzzsXYcopNwlBfl9ZclRqYMQK9io9fbeu5RSCKa/jQv+q9Va9XA0T/He+KWUyK47yCVzOBcgoBurc+ycdbnPttrGbLiNuqicOnXIwZuHHN0krKzSmTOthyqP/4=
 </pre>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-3" heading="Response parameters" classes="nav-item">
@@ -544,37 +518,27 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
         </div>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-4" heading="200 OK response example" classes="nav-item">
-<pre>
+        <pre>
 {
     "success": true,
-    "partnerTransactionID": "ABC...123",
+    "partnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
     "parameters": [{
-        "key": "balance",
-        "value": "123.45",
-        "type": "Decimal"
-    },
-    {
-        "key": "minTransactionAmount",
-        "value": "1100.00",
-        "type": "Decimal"
-    },
-    {
-        "key": "validUntil",
-        "value": "2018-10-15",
-        "type": "Date"
-    }]
+            "key": "partnerUserID",
+            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+            "type": "string"
+        }]
 }
 </pre>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error message example" classes="nav-item">
+    <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error response example" classes="nav-item">
         <pre>
 {
-    "success": false,
+    "success ": false,
     "error": {
         "errorCode": 500,
         "errorMessage": "Unable to find user account"
     },
-    "parameters":null
+    "parameters": null
 }
 </pre>
     </uib-tab>
