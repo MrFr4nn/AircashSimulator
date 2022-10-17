@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircashSimulator", "AircashSimulator\AircashSimulator.csproj", "{EBE1BE5B-D6AD-45C6-BB4C-C5E96FA9397D}"
 EndProject
@@ -51,7 +51,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Partner", "Service
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.User", "Services.User\Services.User.csproj", "{94B1BA37-D13A-48AC-B1B7-00D15B576120}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.AircashFrameV2", "Services.AircashFrameV2\Services.AircashFrameV2.csproj", "{AE99D470-01B9-421A-AAB7-9F548A93C99D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashFrameV2", "Services.AircashFrameV2\Services.AircashFrameV2.csproj", "{AE99D470-01B9-421A-AAB7-9F548A93C99D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.AircashPayment", "Services.AircashPayment\Services.AircashPayment.csproj", "{FFC42816-3269-425E-BB59-BE37FE5E3989}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -135,6 +137,10 @@ Global
 		{AE99D470-01B9-421A-AAB7-9F548A93C99D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE99D470-01B9-421A-AAB7-9F548A93C99D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE99D470-01B9-421A-AAB7-9F548A93C99D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFC42816-3269-425E-BB59-BE37FE5E3989}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC42816-3269-425E-BB59-BE37FE5E3989}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC42816-3269-425E-BB59-BE37FE5E3989}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC42816-3269-425E-BB59-BE37FE5E3989}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -159,6 +165,7 @@ Global
 		{9E953204-3D58-4401-8858-3A02E6391F98} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{94B1BA37-D13A-48AC-B1B7-00D15B576120} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{AE99D470-01B9-421A-AAB7-9F548A93C99D} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
+		{FFC42816-3269-425E-BB59-BE37FE5E3989} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7CF481FF-2B5A-4460-9F34-6A4EAED13029}

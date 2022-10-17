@@ -25,6 +25,7 @@
     <ProjectReference Include="..\Services.AbonSalePartner\Services.AbonSalePartner.csproj" />
     <ProjectReference Include="..\Services.AircashFrameV2\Services.AircashFrameV2.csproj" />
     <ProjectReference Include="..\Services.AircashPaymentAndPayout\Services.AircashPaymentAndPayout.csproj" />
+    <ProjectReference Include="..\Services.AircashPayment\Services.AircashPayment.csproj" />
     <ProjectReference Include="..\Services.AircashPay\Services.AircashPay.csproj" />
     <ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
     <ProjectReference Include="..\Services.Authentication\Services.Authentication.csproj" />

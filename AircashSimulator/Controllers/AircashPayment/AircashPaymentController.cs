@@ -4,6 +4,8 @@ using AircashSignature;
 using AircashSimulator.Controllers.AircashPayment;
 using AircashSimulator.Configuration;
 using Microsoft.Extensions.Options;
+using Services.AircashPaymentAndPayout;
+using Services.AircashPayment;
 
 namespace AircashSimulator.Controllers
 {
@@ -12,10 +14,12 @@ namespace AircashSimulator.Controllers
     public class AircashPaymentController : Controller
     {
         private AircashConfiguration AircashConfiguration;
+        private IAircashPaymentService AircashPaymentService;
 
-        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService)
         {
             AircashConfiguration = aircashConfiguration.CurrentValue;
+            AircashPaymentService = aircashPaymentService;
         }
 
         [HttpPost]
