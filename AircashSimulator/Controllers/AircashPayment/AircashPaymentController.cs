@@ -4,8 +4,9 @@ using AircashSignature;
 using AircashSimulator.Controllers.AircashPayment;
 using AircashSimulator.Configuration;
 using Microsoft.Extensions.Options;
-using Services.AircashPaymentAndPayout;
 using Services.AircashPayment;
+using System;
+using Services.AircashPay;
 
 namespace AircashSimulator.Controllers
 {
@@ -31,12 +32,24 @@ namespace AircashSimulator.Controllers
 
             if (valid == true)
             {
+                var transaction = new TransactionPayment
+                {
+                    TransactionId = new Guid(aircashPaymentCreateAndConfirmPayment.TransactionID),
+                    Amount = aircashPaymentCreateAndConfirmPayment.Amount
+                };
 
 
 
+                var response = await AircashPaymentService.CreateAndConfirmPayment(transaction);
+                if (((ConfirmResponse)response).ResponseCode == 1)
+                {
+                    return Ok("Transaction confirmed successfully");
+                }
+                else
+                {
+                    return BadRequest("Unable to find transaction");
+                }
 
-
-                return Ok();
             }
             else
             {

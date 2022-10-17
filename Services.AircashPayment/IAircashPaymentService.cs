@@ -8,6 +8,6 @@ namespace Services.AircashPayment
 {
     public interface IAircashPaymentService
     {
-         Task<object> CreateAndConfirmPayment();
+         Task<object> CreateAndConfirmPayment(TransactionPayment transaction);
     }
 }

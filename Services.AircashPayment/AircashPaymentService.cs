@@ -1,9 +1,8 @@
 ﻿using DataAccess;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Domain.Entities;
+using System;
+using Domain.Entities.Enum;
 
 namespace Services.AircashPayment
 {
@@ -16,9 +15,22 @@ namespace Services.AircashPayment
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-        public async Task<object> CreateAndConfirmPayment()
+        public async Task<object> CreateAndConfirmPayment(TransactionPayment transaction)
         {
-            return Ok()
+            AircashSimulatorContext.Transactions.Add(new TransactionEntity 
+            {
+                Amount = transaction.Amount,
+                TransactionId = transaction.TransactionId,
+                PartnerId = Guid.NewGuid(),
+                UserId = Guid.NewGuid(),
+                AircashTransactionId = Guid.NewGuid().ToString(),
+                ServiceId = ServiceEnum.AircashPayment,
+                RequestDateTimeUTC = DateTime.Today,
+                ResponseDateTimeUTC = DateTime.Now,
+            });
+            await AircashSimulatorContext.SaveChangesAsync()
+            
+           
         }
 
 
