@@ -97,69 +97,105 @@
         <p>
             Each QR code uniquely defines amount for the device or location that is going to be paid by scanning the QR code.
         </p>
-        <br />
-        <uib-tabset active="active">
-            <uib-tab index="request-tab-0" heading="QR code parameters" class="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Description</th>
-                            <th>Mandatory</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>PartnerID</b></td>
-                            <td>
-                                Unique partner identifier (per currency) provided by Aircash
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>PartnerTransactionID</b></td>
-                            <td>
-                                string that uniquely defines transaction, has format: locationID#Guid
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Amt</b></td>
-                            <td>
-                                Transaction Amount - user will not be able to change amount
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>CurrencyIsoCode</b></td>
-                            <td>
-                                Currency ID (e.g. 978)
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>LocationID</b></td>
-                            <td>
-                                location id (or device id) on which the QR code is scanned
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <pre>"codeLink": "https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID={partnerID}&amt={amount}&currencyIsoCode={currencyIsoCode}&locationID={locationID}"</pre>
-            </uib-tab>
-            <uib-tab index="request-tab-4" heading="Link example" class="nav-item">
-                <pre>
-{
-    "codeLink": "https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&amt=5&currencyIsoCode=EUR&locationID=test"
-}
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            URL from the example needs to be displayed as QR code
-        </p>
 
+        <p>QR code contains following parameters:</p>
+        <table class="table table-active col-md-6">
+            <thead>
+                <tr>
+                    <!--style="background-color:lightblue"-->
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>PartnerID</b></td>
+                    <td>
+                        Unique partner identifier (per currency) provided by Aircash
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>PartnerTransactionID</b></td>
+                    <td>
+                        string that uniquely defines transaction, has format: locationID#Guid
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>Amt</b></td>
+                    <td>
+                        Transaction Amount - user will not be able to change amount
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>CurrencyIsoCode</b></td>
+                    <td>
+                        Currency ID (e.g. 978)
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>LocationID</b></td>
+                    <td>
+                        location id (or device id) on which the QR code is scanned
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+        <p>Each parameter is part of the following link:</p>
+        <pre>https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID=<span class="AcStaticPayvaluesColor">{partnerID}</span>&amt=<span class="AcStaticPayvaluesColor">{amount}</span>
+&amp;currencyIsoCode=<span class="AcStaticPayvaluesColor">{currencyIsoCode}</span>&locationID=<span class="AcStaticPayvaluesColor">{locationID}</span></pre>
+
+        <p>Where the values in red needs to be replaced with payment details, as in the example below:</p>
+
+        <a target="_blank" href="https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&amt=5&currencyIsoCode=EUR&locationID=test" style="text-decoration:underline;">
+            https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&amt=5&ampcurrencyIsoCode=EUR&locationID=test
+        </a>
+        <br />
+        <br />
+
+        <p>This URL needs to be displayed as QR code:</p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <form action="javascript:void(0);" name="generateForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputCurrency">Currency</label>
+                            <input ng-model="generatePartnerCodeModel.currency" class="form-control" type="text" ng-required="true" placeholder="Enter currency">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputAmount">Amount</label>
+                            <input ng-model="generatePartnerCodeModel.amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01" placeholder="Enter amount">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputLocation">Location ID</label>
+                            <input ng-model="generatePartnerCodeModel.locationID" class="form-control" type="text" ng-required="true" placeholder="Enter location ID">
+                        </div>
+
+                    </fieldset>
+                </form>
+
+                <button ng-click="GenerateQRCode()" class="btn btn-primary w-100px me-5px" ng-disabled="generateBusy || generateForm.$invalid">Generate<i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                <div class="d-inline-block" ng-hide="!generateResponded">
+                    <button ng-click="ClearQRForm()" class="btn btn-primary w-100px me-5px">Reset</button>
+                </div>
+                <br/>
+            </div>
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-2">
+                <div id="qrcodeDiv"></div>
+            </div>
+        </div>
+        <br />
+
+        <hr />
         <br />
         <h4>ConfirmTransaction</h4>
         <p>
@@ -289,7 +325,10 @@
                 </p>
             </uib-tab>
         </uib-tabset>
+
+
         <br />
+        
         <hr />
         <h1>Production process</h1>
         <br />
@@ -344,8 +383,10 @@
                     </ul>
                 </td>
                 <td>YES</td>
-            </tr>           
+            </tr>
         </table>
     </div>
+
 </body>
 </html>
+

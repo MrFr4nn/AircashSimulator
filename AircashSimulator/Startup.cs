@@ -28,6 +28,8 @@ using AircashFrame;
 using Services.Partner;
 using Services.User;
 using Services.AircashFrameV2;
+using Services.AircashStaticCodePay;
+using AircashSimulator.Hubs;
 
 namespace AircashSimulator
 {
@@ -39,7 +41,6 @@ namespace AircashSimulator
         {
             Configuration = configuration;
         }
-
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
@@ -57,7 +58,7 @@ namespace AircashSimulator
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
-                });
+            });
             });
 
             services.AddControllers();
@@ -83,7 +84,6 @@ namespace AircashSimulator
                };
            });
 
-            
             services.AddHttpClient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAbonSalePartnerService, AbonSalePartnerService>();
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
@@ -92,6 +92,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashPayoutService, AircashPayoutService>();
             services.AddTransient<IAircashPaymentAndPayoutService, AircashPaymentAndPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
+            services.AddTransient<IAircashStaticCodePayService, AircashStaticCodePayService>(); // inserted
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<IPartnerService, PartnerService>();
             services.AddTransient<IUserService, UserService>();
@@ -102,10 +103,12 @@ namespace AircashSimulator
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
-            services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  
+            services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));
+
+            services.AddSignalR(o => o.EnableDetailedErrors = true);
+
         }
 
-        
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AircashSimulatorContext context)
         {
@@ -115,8 +118,6 @@ namespace AircashSimulator
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors();
-
             app.UseExceptionHandler("/api/Error");
 
             app.UseSerilogRequestLogging();
@@ -125,6 +126,13 @@ namespace AircashSimulator
 
             app.UseRouting();
 
+            app.UseCors(builder => builder
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .SetIsOriginAllowed((host) => true)
+            .AllowCredentials()
+            );
+
             app.UseAuthentication();
 
             app.UseAuthorization();
@@ -132,6 +140,7 @@ namespace AircashSimulator
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationHub>("/hubs/notificationhub");
             });
         }
     }

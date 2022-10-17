@@ -20,6 +20,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AircashFrame\Services.AircashFrame.csproj" />
     <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
+    <ProjectReference Include="..\AircashSimulator.UI\AircashSimulator.UI.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Services.AbonOnlinePartner\Services.AbonOnlinePartner.csproj" />
     <ProjectReference Include="..\Services.AbonSalePartner\Services.AbonSalePartner.csproj" />
@@ -27,6 +28,7 @@
     <ProjectReference Include="..\Services.AircashPaymentAndPayout\Services.AircashPaymentAndPayout.csproj" />
     <ProjectReference Include="..\Services.AircashPay\Services.AircashPay.csproj" />
     <ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
+    <ProjectReference Include="..\Services.AircashStaticCodePay\Services.AircashStaticCodePay.csproj" />
     <ProjectReference Include="..\Services.Authentication\Services.Authentication.csproj" />
     <ProjectReference Include="..\Services.Coupon\Services.Coupon.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />

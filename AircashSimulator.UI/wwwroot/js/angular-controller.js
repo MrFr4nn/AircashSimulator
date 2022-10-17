@@ -21,6 +21,7 @@ Website: http://www.seantheme.com/color-admin/
    1.0 CONTROLLER - App
 ------------------------------- */
 app.controller('appController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+ 
   $scope.$on('$includeContentLoaded', function () {
     handleSlimScroll();
   });
@@ -142,3 +143,30 @@ app.controller('pageLoaderController', function ($scope, $rootScope, $state) {
         App.initPageLoad();
     });
 });
+
+
+/* -------------------------------
+   7.0 CONTROLLER - SignalR
+------------------------------- */
+
+/*
+app.controller("signalRController", function ($scope, signalR) {
+    signalR.setHubName("notificationHub");
+    signalR.client().broadcastMessage = function (msg) {
+        var newNotification = { msg: msg};
+
+        $scope.$apply(function () {
+            $scope.message.push(newNotification);
+        });
+    };  
+    signalR.start(function () {
+        $scope.send = function () {
+            //var dt = new Date();
+            //var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+            signalR.server().send("Api request");
+        }
+    });
+
+}); */
+
+

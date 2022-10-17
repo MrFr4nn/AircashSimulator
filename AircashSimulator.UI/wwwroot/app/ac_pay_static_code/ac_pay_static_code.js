@@ -1,5 +1,6 @@
 ﻿var acPayStaticCodeModule = angular.module('acPayStaticCode', []);
 
+
 app.config(function ($stateProvider) {
     $stateProvider
         .state('app.acPayStaticCode', {
@@ -10,4 +11,6 @@ app.config(function ($stateProvider) {
             controller: 'ac_pay_static_codeCtrl',
             templateUrl: 'app/ac_pay_static_code/ac_pay_static_code.html'
         });
+   
+
 });

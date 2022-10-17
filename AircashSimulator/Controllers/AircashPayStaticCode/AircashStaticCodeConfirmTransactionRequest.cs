@@ -1,14 +1,14 @@
 ﻿using AircashSignature;
 
-namespace AircashSimulator.Controllers.AircashPay
+namespace AircashSimulator.Controllers.AircashPayStaticCode
 {
-    public class AircashConfirmTransactionRequest : ISignature
+    public class AircashStaticCodeConfirmTransactionRequest : ISignature
     {
         public string PartnerID { get; set; }
         public string PartnerTransactionID { get; set; }
         public decimal Amount { get; set; }
-        public int CurrencyID { get; set; }
-        public string AircashTransactionID { get; set; }
+        public int ISOCurrencyID { get; set; }
         public string Signature { get; set; }
+        public string AircashTransactionID { get; set; }
     }
 }

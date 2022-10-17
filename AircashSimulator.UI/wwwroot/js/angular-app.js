@@ -16,13 +16,17 @@ var app = angular.module('app', [
     'partnerAdmin',
     'userAdmin',
     'acRedeemTicket',
-    'acFrameV2'
+    'acFrameV2',
+    'acPayStaticCode'
 ]);
+
+
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
 {
+   
     $urlRouterProvider.otherwise('/app/dashboard');
-
+    
     $stateProvider
         .state('app', {
             url: '/app',
@@ -89,10 +93,17 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
             $location.path('/login');
         }
     });
-}]);
+
+     
+}]); 
 
 app.filter('trusted', ['$sce', function ($sce) {
     return function (url) {
         return $sce.trustAsResourceUrl(url);
     };
 }]);
+
+
+
+
+
