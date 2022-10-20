@@ -34,5 +34,7 @@ namespace AircashSimulator.Configuration
         public string CheckTicketEndpoint { get; set; }
         public string RedeemTicketEndpoint { get; set; }
         public string AircashFrameBaseUrl { get; set; }
+        public string AircashCheckUserV4Endpoint { get; set; }
+        public string AircashCreatePayoutV4Endpoint { get; set;  }
     }
 }
