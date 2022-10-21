@@ -8,6 +8,7 @@ namespace Services.AircashPayment
 {
     public interface IAircashPaymentService
     {
-         Task<object> CreateAndConfirmPayment(TransactionPayment transaction);
+         Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData);
+         Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameters);
     }
 }
