@@ -20,13 +20,13 @@ namespace AircashSimulator.Controllers
     {
         private AircashConfiguration AircashConfiguration;
         private IAircashPaymentService AircashPaymentService;
-        private AircashSimulatorContext AircashSimulatorContext;
+       // private AircashSimulatorContext AircashSimulatorContext;
 
-        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService, AircashSimulatorContext aircashSimulatorContext)
+        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService) //AircashSimulatorContext aircashSimulatorContext)
         {
             AircashConfiguration = aircashConfiguration.CurrentValue;
             AircashPaymentService = aircashPaymentService;
-            AircashSimulatorContext = aircashSimulatorContext;
+           // AircashSimulatorContext = aircashSimulatorContext;
         }
 
 
@@ -39,21 +39,9 @@ namespace AircashSimulator.Controllers
 
             if(valid == true)
             {
-                 var findUser = new List<CheckPlayerParameters>();
-               // var findUser = new CheckPlayerParameters 
-                //{
-                //    Key = aircashPaymentCheckPlayer.Parameters.Key,
-                //    Value = aircashPaymentCheckPlayer.Parameters.Value
-                //};
-                foreach (var d in aircashPaymentCheckPlayer.Parameters)
-                {
-                    findUser.Add(new CheckPlayerParameters
-                    {
-                        Key = d.Key,
-                        Value = d.Value
-                    });
-                }
-
+                var findUser = new List<CheckPlayerParameters>();
+             
+                aircashPaymentCheckPlayer.Parameters.ForEach(v => findUser.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
 
                 var response = await AircashPaymentService.CheckPlayer(findUser);
 
@@ -69,10 +57,8 @@ namespace AircashSimulator.Controllers
             else
             {
                 return BadRequest("Invalid signature");
-
             }
         }
-
 
        [HttpPost]
         public async Task<IActionResult> CreateAndConfirmPayment(AircashPaymentCreateAndConfirmPayment aircashPaymentCreateAndConfirmPayment)
@@ -84,32 +70,24 @@ namespace AircashSimulator.Controllers
             if (valid == true)
             {
                 var parameters = new List<CheckPlayerParameters>();
-                foreach (var d in aircashPaymentCreateAndConfirmPayment.Parameters)
-                {
-                    parameters.Add(new CheckPlayerParameters
-                    {
-                        Key = d.Key,
-                        Value = d.Value
-                    });
-                }
+              
+                aircashPaymentCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+
                 var send = new CreateAndConfirmPaymentReceive
                 {
                     AircashTransactionId = aircashPaymentCreateAndConfirmPayment.TransactionID,
                     Amount = aircashPaymentCreateAndConfirmPayment.Amount,
                     Parameters = parameters
                 };
-
                 var response = await AircashPaymentService.CreateAndConfirmPayment(send); 
                 if (((AircashPaymentResponse)response).Success == true)
                 {
-                    //return Ok("Transaction confirmed successfully");
                     return Ok(response);
                 }
                 else
                 {
-                    return BadRequest("Unable to find transaction");
+                    return BadRequest(response);
                 } 
-               
 ;            }
             else
             {
