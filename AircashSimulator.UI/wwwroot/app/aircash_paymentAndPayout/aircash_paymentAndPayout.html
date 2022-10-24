@@ -1,4 +1,5 @@
 ﻿<h1>Payment and payout process</h1>
+<br />
 <p>
     This chapter describes both the payment and payout process. From the sales partner point of view, the described process is the same for both, except that the funds should be either paid by the user or paid out to the user.
 </p>
@@ -85,25 +86,29 @@
 </p>
 
 <table class="table  table-active col-md-6">
-    <tr>
-        <th>Environment</th>
-        <th>Method</th>
-        <th>URL</th>
-    </tr>
-    <tr>
-        <td><b>Test</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://staging-api.aircash.eu/api/SalesPartner/CheckCode</td>
-    </tr>
-    <tr>
-        <td><b>Production</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://api.aircash.eu/api/SalesPartner/CheckCode</td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Environment</th>
+            <th>Method</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Test</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://staging-api.aircash.eu/api/SalesPartner/CheckCode</td>
+        </tr>
+        <tr>
+            <td><b>Production</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://api.aircash.eu/api/SalesPartner/CheckCode</td>
+        </tr>
+    </tbody>
 </table>
 
 <uib-tabset>
@@ -119,25 +124,25 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>PartnerID</td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>BarCode</td>
+                    <td><b>BarCode</b></td>
                     <td>String</td>
                     <td>User’s scanned barcode</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>LocationID</td>
+                    <td><b>LocationID</b></td>
                     <td>String</td>
                     <td>Sales partner location identifier</td>
                     <td>NO</td>
                 </tr>
                 <tr>
-                    <td>Signature </td>
+                    <td><b>Signature</b></td>
                     <td>String</td>
                     <td>
                         Signature to confirm that the partner is indeed making the request. Data  to sign: BarCode={0}&LocationID={1}&PartnerID={2}
@@ -185,13 +190,13 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             </thead>
             <tbody>
                 <tr>
-                    <td>BarCode</td>
+                    <td><b>BarCode</b></td>
                     <td>String</td>
                     <td>Barcode that was sent in the request</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>Amount</td>
+                    <td><b>Amount</b></td>
                     <td>Number</td>
                     <td>
                         A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
@@ -219,7 +224,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             </thead>
             <tbody>
                 <tr>
-                    <td>401</td>
+                    <td><b>401</b></td>
                     <td>
                         The partner is sending an unknown partner ID, or the signature is not valid.
                     </td>
@@ -228,7 +233,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                     </td>
                 </tr>
                 <tr>
-                    <td>400</td>
+                    <td><b>400</b></td>
                     <td>
                         A list of errors that can occur can be found at the end of this chapter in Error codes
                     </td>
@@ -237,7 +242,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                     </td>
                 </tr>
                 <tr>
-                    <td>500</td>
+                    <td><b>500</b></td>
                     <td>
                         Unexpected system error
                     </td>
@@ -292,25 +297,29 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
 </p>
 
 <table class="table  table-active col-md-6">
-    <tr>
-        <th>Environment</th>
-        <th>Method</th>
-        <th>URL</th>
-    </tr>
-    <tr>
-        <td><b>Test</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://staging-api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
-    </tr>
-    <tr>
-        <td><b>Production</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Environment</th>
+            <th>Method</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Test</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://staging-api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+        </tr>
+        <tr>
+            <td><b>Production</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+        </tr>
+    </tbody>
 </table>
 
 <uib-tabset>
@@ -326,19 +335,19 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             </thead>
             <tbody>
                 <tr>
-                    <td>PartnerID</td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>BarCode</td>
+                    <td><b>BarCode</b></td>
                     <td>String</td>
                     <td>User’s scanned barcode</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>PartnerTransactionID</td>
+                    <td><b>PartnerTransactionID</b></td>
                     <td>String</td>
                     <td>
                         Partner’s unique identifier of the transaction
@@ -346,7 +355,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>LocationID</td>
+                    <td><b>LocationID</b></td>
                     <td>String</td>
                     <td>
                         Sales partner location identifier, in case the partner wants to have reports per location, a unique location identifier should be sent for each location. If the partner wants the reports per something else, e.g. the user, he can send the user identifier etc.
@@ -354,7 +363,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                     <td>NO</td>
                 </tr>
                 <tr>
-                    <td>Signature </td>
+                    <td><b>Signature</b></td>
                     <td>String</td>
                     <td>
                         Signature to confirm that the partner is indeed making the request. Data to sign is BarCode={0}&LocationID={1}&PartnerID={2}&PartnerTransactionID={3}
@@ -405,13 +414,13 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
             </thead>
             <tbody>
                 <tr>
-                    <td>BarCode</td>
+                    <td><b>BarCode</b></td>
                     <td>String</td>
                     <td>Barcode that was sent in the request</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>Amount</td>
+                    <td><b>Amount</b></td>
                     <td>Number</td>
                     <td>
                         A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
@@ -419,7 +428,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>AircashTransactionID</td>
+                    <td><b>AircashTransactionID</b></td>
                     <td>String</td>
                     <td>
                         Aircash system’s unique identifier of the transaction
@@ -448,7 +457,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
             </thead>
             <tbody>
                 <tr>
-                    <td>401</td>
+                    <td><b>401</b></td>
                     <td>
                         The partner is sending an unknown partner ID, or the signature is not valid.
                     </td>
@@ -457,7 +466,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     </td>
                 </tr>
                 <tr>
-                    <td>400</td>
+                    <td><b>400</b></td>
                     <td>
                         A list of errors that can occur can be found at the end of this chapter in Error codes
                     </td>
@@ -466,7 +475,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     </td>
                 </tr>
                 <tr>
-                    <td>500</td>
+                    <td><b>500</b></td>
                     <td>
                         Unexpected system error
                     </td>
@@ -531,25 +540,29 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
 </p>
 
 <table class="table  table-active col-md-6">
-    <tr>
-        <th>Environment</th>
-        <th>Method</th>
-        <th>URL</th>
-    </tr>
-    <tr>
-        <td><b>Test</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://staging-api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
-    </tr>
-    <tr>
-        <td><b>Production</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Environment</th>
+            <th>Method</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Test</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://staging-api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
+        </tr>
+        <tr>
+            <td><b>Production</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
+        </tr>
+    </tbody>
 </table>
 
 <uib-tabset>
@@ -565,13 +578,13 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
             </thead>
             <tbody>
                 <tr>
-                    <td>PartnerID</td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>PartnerTransactionID</td>
+                    <td><b>PartnerTransactionID</b></td>
                     <td>String</td>
                     <td>
                         Partner’s unique identifier of the transaction
@@ -579,7 +592,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>Signature </td>
+                    <td><b>Signature</b></td>
                     <td>String</td>
                     <td>
                         Signature to confirm that the partner is indeed making the request. Data to sign is PartnerID={0}&PartnerTransactionID={1}
@@ -625,7 +638,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
             </thead>
             <tbody>
                 <tr>
-                    <td>Amount</td>
+                    <td><b>Amount</b></td>
                     <td>Number</td>
                     <td>
                         A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
@@ -633,7 +646,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>AircashTransactionID</td>
+                    <td><b>AircashTransactionID</b></td>
                     <td>String</td>
                     <td>
                         Aircash system’s unique identifier of the transaction
@@ -641,7 +654,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>LocationID</td>
+                    <td><b>LocationID</b></td>
                     <td>String</td>
                     <td>
                         Location identifier that the partner sent on transaction confirmation. If the identifier was not sent, this parameter will remain empty.
@@ -652,13 +665,11 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-4" heading="Response example" classes="nav-item">
 <pre>
-    <code>
-        {
-        "LocationID": "123",
-        "Amount": 2,000.00,
-        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-        }
-    </code>
+{
+    "LocationID": "123",
+    "Amount": 2,000.00,
+    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+}
 </pre>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Error responses" classes="nav-item">
@@ -672,7 +683,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
             </thead>
             <tbody>
                 <tr>
-                    <td>401</td>
+                    <td><b>401</b></td>
                     <td>
                         The partner is sending an unknown partner ID, or the signature is not valid.
                     </td>
@@ -681,7 +692,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     </td>
                 </tr>
                 <tr>
-                    <td>400</td>
+                    <td><b>400</b></td>
                     <td>
                         A list of errors that can occur can be found at the end of this chapter in Error codes
                     </td>
@@ -690,7 +701,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     </td>
                 </tr>
                 <tr>
-                    <td>500</td>
+                    <td><b>500</b></td>
                     <td>
                         Unexpected system error
                     </td>
@@ -768,25 +779,29 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
 </p>
 
 <table class="table  table-active col-md-6">
-    <tr>
-        <th>Environment</th>
-        <th>Method</th>
-        <th>URL</th>
-    </tr>
-    <tr>
-        <td><b>Test</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://staging-api.aircash.eu/api/SalesPartner/CancelTransaction</td>
-    </tr>
-    <tr>
-        <td><b>Production</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://api.aircash.eu/api/SalesPartner/CancelTransaction</td>
-    </tr>
+    <thead>
+        <tr>
+            <th>Environment</th>
+            <th>Method</th>
+            <th>URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Test</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://staging-api.aircash.eu/api/SalesPartner/CancelTransaction</td>
+        </tr>
+        <tr>
+            <td><b>Production</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://api.aircash.eu/api/SalesPartner/CancelTransaction</td>
+        </tr>
+    </tbody>
 </table>
 
 <uib-tabset>
@@ -794,7 +809,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th>Parameter</th>
+                    <th>Parameter</b></th>
                     <th>Type</th>
                     <th>Description</th>
                     <th>Required</th>
@@ -802,13 +817,13 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
             </thead>
             <tbody>
                 <tr>
-                    <td>PartnerID</td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>PartnerTransactionID</td>
+                    <td><b>PartnerTransactionID</b></td>
                     <td>String</td>
                     <td>
                         Partner’s unique identifier of the transaction
@@ -816,7 +831,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td>LocationID</td>
+                    <td><b>LocationID</b></td>
                     <td>String</td>
                     <td>
                         Sales partner location identifier, in case the partner wants to have reports per location, a unique location identifier should be sent for each location. If the partner wants the reports per something else, e.g. the user, he can send the user identifier etc.
@@ -824,7 +839,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     <td>NO</td>
                 </tr>
                 <tr>
-                    <td>Signature </td>
+                    <td><b>Signature</b></td>
                     <td>String</td>
                     <td>
                         Signature to confirm that the partner is indeed making the request. Data to sign is LocationID={0}&PartnerID={1}&PartnerTransactionID={2}
@@ -875,7 +890,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </thead>
             <tbody>
                 <tr>
-                    <td>401</td>
+                    <td><b>401</b></td>
                     <td>
                         The partner is sending an unknown partner ID, or the signature is not valid.
                     </td>
@@ -884,7 +899,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
                     </td>
                 </tr>
                 <tr>
-                    <td>400</td>
+                    <td><b>400</b></td>
                     <td>
                         A list of errors that can occur can be found at the end of this chapter in Error codes
                     </td>
@@ -893,7 +908,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
                     </td>
                 </tr>
                 <tr>
-                    <td>500</td>
+                    <td><b>500</b></td>
                     <td>
                         Unexpected system error
                     </td>
@@ -981,7 +996,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
     </thead>
     <tbody>
         <tr>
-            <td>ErrorCode</td>
+            <td><b>ErrorCode</b></td>
             <td>
                 int
             </td>
@@ -991,7 +1006,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             <td>YES</td>
         </tr>
         <tr>
-            <td>ErrorMessage</td>
+            <td><b>ErrorMessage</b></td>
             <td>
                 String
             </td>
@@ -1012,7 +1027,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
     </thead>
     <tbody>
         <tr>
-            <td>1</td>
+            <td><b>1</b></td>
             <td>
                 Invalid bar code
             </td>
@@ -1021,7 +1036,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>2</td>
+            <td><b>2</b></td>
             <td>
                 Bar code already used
             </td>
@@ -1030,7 +1045,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>3</td>
+            <td><b>3</b></td>
             <td>
                 Transaction limit
             </td>
@@ -1039,7 +1054,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>4</td>
+            <td><b>4</b></td>
             <td>
                 PartnerTransactionID is not unique
             </td>
@@ -1048,7 +1063,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>5</td>
+            <td><b>5</b></td>
             <td>
                 Transaction doesn’t exist in Aircash system
             </td>
@@ -1057,7 +1072,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>6</td>
+            <td><b>6</b></td>
             <td>
                 Unable to confirm transaction without calling check bar code first
             </td>
@@ -1066,7 +1081,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>7</td>
+            <td><b>7</b></td>
             <td>
                 Unable to cancel payout
             </td>
@@ -1075,7 +1090,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>8</td>
+            <td><b>8</b></td>
             <td>
                 Transaction already canceled
             </td>
@@ -1084,7 +1099,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>9</td>
+            <td><b>9</b></td>
             <td>
                 Transaction in wrong status
             </td>
@@ -1093,7 +1108,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
         </tr>
         <tr>
-            <td>10</td>
+            <td><b>10</b></td>
             <td>
                 Cancellation period expired
             </td>
@@ -1137,7 +1152,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
     <tbody>
         <tr>
             <td>
-                Checking the payment/payout barcode
+                <b>Checking the payment/payout barcode</b>
             </td>
             <td>
                 The cashier scans the barcode. This test should verify that the amount and transaction type are correctly displayed to the cashier to confirm the transaction.
@@ -1146,7 +1161,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
         </tr>
         <tr>
             <td>
-                Stopping the payout in case of insufficient funds in the cash register
+                <b>Stopping the payout in case of insufficient funds in the cash register</b>
             </td>
             <td>
                 Sales partner system should be able to block the payout confirmation in case there is no sufficient funds in the cash register for the payout amount.
@@ -1155,7 +1170,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
         </tr>
         <tr>
             <td>
-                Confirming the transaction
+                <b>Confirming the transaction</b>
             </td>
             <td>
                 After scanning the barcode, the cashier confirms the transaction.<br />
@@ -1171,7 +1186,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
         </tr>
         <tr>
             <td>
-                Checking the transaction status
+                <b>Checking the transaction status</b>
             </td>
             <td>
                 The sales partner system confirms the transaction, but receives an unknown error from Aircash system. This test checks:
@@ -1188,7 +1203,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
         </tr>
         <tr>
             <td>
-                Checking the appropriate messages to the cashier
+                <b>Checking the appropriate messages to the cashier</b>
             </td>
             <td>
                 This test validates the display of appropriate messages when errors happen:
@@ -1202,7 +1217,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
         </tr>
         <tr>
             <td>
-                Checking canceling the transaction
+                <b>Checking canceling the transaction</b>
             </td>
             <td>
                 If the sales partner implemented cancellation, they should be able to cancel the transaction in a predefined time period using the PartnerTransactionID

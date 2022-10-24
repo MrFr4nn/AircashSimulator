@@ -28,6 +28,7 @@ using AircashFrame;
 using Services.Partner;
 using Services.User;
 using Services.AircashFrameV2;
+using Services.AircashPosDeposit;
 
 namespace AircashSimulator
 {
@@ -100,6 +101,7 @@ namespace AircashSimulator
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
+            services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));  

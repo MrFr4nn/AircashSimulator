@@ -1,7 +1,5 @@
-﻿
-<h1 style="text-align:justify">Payment process</h1>
-
-
+﻿<h1 style="text-align:justify">Payment process</h1>
+<br />
 <p style="text-align:justify">
     This chapter describes the top up process using the Aircash application. The described
     process explains how the user can transfer funds from the Aircash system to the partner system.
@@ -91,9 +89,43 @@
     identifier to enter.
 </p>
 
+<table class="table  table-active col-md-6">
+    <thead>
+        <tr>
+            <th>Environment</th>
+            <th>Method</th>
+            <th>URL</th>
+            <th>IP addresse to whitelist</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>Test</b></td>
+            <td>
+                POST
+            </td>
+            <td>URL defined by partner</td>
+            <td>
+                212.83.162.238
+            </td>
+            <td>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Production</b></td>
+            <td>
+                POST
+            </td>
+            <td>URL defined by partner</td>
+            <td>
+                212.129.36.132
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <uib-tabset>
-    <uib-tab index="checkUser1-tab-0" heading="Input parameters" classes="nav-item">
+    <uib-tab index="checkUser1-tab-0" heading="Request parameters" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -105,14 +137,14 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="2">Parameters</td>
+                    <td colspan="2"><b>Parameters</b></td>
                     <td>List &lt;Object&gt;</td>
                     <td>List of parameters</td>
                     <td>YES</td>
                 </tr>
                 <tr>
                     <td colspan="1"></td>
-                    <td colspan="1">Key</td>
+                    <td colspan="1"><b>Key</b></td>
                     <td>String</td>
                     <td>
                         The name of the parameter to be sent
@@ -121,7 +153,7 @@
                 </tr>
                 <tr>
                     <td colspan="1"></td>
-                    <td colspan="1">Value</td>
+                    <td colspan="1"><b>Value</b></td>
                     <td>String</td>
                     <td>
                         The value of the parameter to be sent
@@ -129,7 +161,7 @@
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Signature </td>
+                    <td colspan="2"><b>Signature</b></td>
                     <td>String</td>
                     <td>
                         Signature by Aircash system confirming that Aircash is sending request to the partner system
@@ -139,19 +171,15 @@
             </tbody>
         </table>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
+    <uib-tab index="checkUser1-tab-1" heading="Request example" classes="nav-item">
         <pre>
 {
     "parameters": [{
-        "key": "userName",
+        "key": "username",
         "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
     }],
-    "signature: "i6lNUCLl3l...."
-}        
+    "signature: "HrlYnqqr...Cgs="
+}      
 </pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
@@ -159,24 +187,20 @@
 Request example:
 {
     "parameters": [{
-        "key": "userName",
+        "key": "username",
         "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
     }],
-    "signature: "i6lNUCLl3l...."
+    "signature: "HrlYnqqr...Cgs="
 } 
 
 Sequence:
-Parameters=Key=userName&Value=aircash,Key=phoneNumber&Value=385981234567
+Parameters=Key=username&Value=aircash
 
 Signature:
-i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQlqPcyncevT5DwAMVMdzQO2O7mP9hpP9lVmNrPLs3bTffHA7GkmrEnbg6+exD+wQKPeqric0tfVjJfoGLEq48+1/ndqXY+VqPdKdPQm23NWcWGytDr2Itrmw3a2pR9xbBkhChNT9X2WK+M9rPNzoGhZOFE2GHh/7/o4qJl0/ilCgi8uga1NK1z8Cl2fHQgxrJ/TcIGCW3/NmEvKX6YPXPoOPWXXB4wJ2pfHyNfTqt8klVYp0TpYcG+exYj9Vg7WJo90q9ZDtQFKp6GpXNLiNcZPzo0+Q251iPZfzIt2zPutkF/N93WnInEd6EvqXRn9P6FrC0GetcAhAx++p/i+ez3mRUgscdG9QHVQ3xPKl0u24yb9LvIzaBg9R6GcaZNBYdABjYV8vWIQY7Mkinp0gx4J+X/w8CVbdQvvS0GX0/WeMRnvYW34+I5uYcEkvqAB5BNYG/qVNi54e4qPYo7pxBjV/eXYdweWTIQ83icgFtuY4oEURJ5QUe5cq3yVePsOAw5pVzptwfxnJG/3zIoNGOf6EOvmVcAHLtgzzMNJi55wmqK+G8iZ/MG8YgRpUl78pJYAaA4iyWgpgtoqMAH4CHmi0uCgs=
 </pre>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
+    <uib-tab index="checkUser1-tab-3" heading="Response parameters" classes="nav-item">
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-hover">
@@ -189,14 +213,14 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="3">IsPlayer</td>
+                            <td colspan="3"><b>IsPlayer</b></td>
                             <td>Bool</td>
                             <td>
                                 True if there is an account with the above data
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Error</td>
+                            <td colspan="3"><b>Error</b></td>
                             <td></td>
                             <td>
                                 In case of returning an error (IsPlayer = false), return
@@ -207,7 +231,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>ErrorCode</td>
+                            <td><b>ErrorCode</b></td>
                             <td>Int</td>
                             <td>
                                 Error codes and error messages are sent to user
@@ -218,14 +242,14 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>ErrorMessage</td>
+                            <td><b>ErrorMessage</b></td>
                             <td>String</td>
                             <td>
                                 Error description.
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Parameters</td>
+                            <td colspan="3"><b>Parameters</td>
                             <td>List &lt;Object&gt;</td>
                             <td>
                                 This parameter can be ignored if the user does not
@@ -241,14 +265,14 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>Key</td>
+                            <td><b>Key</b></td>
                             <td>String</td>
                             <td>Parameter name</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>Type</td>
+                            <td><b>Type</b></td>
                             <td>String</td>
                             <td>
                                 Parameter type: String, Date, Decimal, DateTime,
@@ -258,7 +282,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>Value</td>
+                            <td><b>Value</b></td>
                             <td>String</td>
                             <td>Parameter value</td>
                         </tr>
@@ -267,30 +291,20 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
-<pre>
+    <uib-tab index="checkUser1-tab-4" heading="200 OK response example" classes="nav-item">
+        <pre>
 {
     "isPlayer": true,
     "error": null,
     "parameters": [{
-        "key": "balance",
-        "value": "123.45",
-        "type": "Decimal"
-    },
-    {
-        "key": "minTransactionAmount",
-        "value": "1100.00",
-        "type": "Decimal"
-    },
-    {
-        "key": "validUntil",
-        "value": "2018-10-15",
-        "type": "Date"
-    }]
+            "key": "partnerUserID",
+            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+            "type": "String"
+        }]
 }
 </pre>
-    </uib-tab>
-    <uib-tab index="checkUser1-tab-5" heading="Error message" classes="nav-item">
+    </uib-tab>    
+    <uib-tab index="checkUser1-tab-6" heading="Error response example" classes="nav-item">
         <pre>
 {
     "isPlayer": false,
@@ -314,7 +328,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
     method to identify the reimbursement account.
 </p>
 <uib-tabset>
-    <uib-tab index="CreateAndConfirmPayment1-tab-0" heading="Input parameters" classes="nav-item">
+    <uib-tab index="CreateAndConfirmPayment1-tab-0" heading="Request parameters"" classes="nav-item">
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -326,19 +340,19 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="2">TransactionID</td>
+                    <td colspan="2"><b>TransactionID</b></td>
                     <td>String</td>
                     <td>Id of transactions in the Aircash system</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Amount</td>
+                    <td colspan="2"><b>Amount</b></td>
                     <td>Decimal</td>
                     <td>Transaction Amount</td>
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Parameters</td>
+                    <td colspan="2"><b>Parameters</b></td>
                     <td>List&lt;Object&gt;</td>
                     <td>
                         A list of parameters that uniquely define
@@ -349,7 +363,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 </tr>
                 <tr>
                     <td colspan="1"></td>
-                    <td colspan="1">Key</td>
+                    <td colspan="1"><b>Key</b></td>
                     <td>String</td>
                     <td>
                         The name of the parameter to be sent
@@ -358,7 +372,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 </tr>
                 <tr>
                     <td colspan="1"></td>
-                    <td colspan="1">Value</td>
+                    <td colspan="1"><b>Value</b></td>
                     <td>String</td>
                     <td>
                         The value of the parameter to be sent
@@ -366,7 +380,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                     <td>YES</td>
                 </tr>
                 <tr>
-                    <td colspan="2">Signature </td>
+                    <td colspan="2"><b>Signature</b></td>
                     <td>String</td>
                     <td>
                         Signature by Aircash system confirming that Aircash is sending request to the partner system
@@ -376,21 +390,17 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             </tbody>
         </table>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Input parameters example" classes="nav-item">
+    <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Request example" classes="nav-item">
         <pre>
 {
     "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
     "amount": 123.45,
     "parameters": [{
-        "key": "userName",
-        "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
-    }],
-    "signature: "i6lNUCLl3l...."
-}   
+            "key": "username",
+            "value": "aircash"
+        }],
+    "signature": "Gng+D6+3...P/4="
+}  
 </pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
@@ -400,24 +410,20 @@ Request example:
     "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
     "amount": 123.45,
     "parameters": [{
-        "key": "userName",
-        "value": "aircash"
-    },
-    {
-        "key": "phoneNumber",
-        "value": "385981234567"
-    }],
-    "signature: "i6lNUCLl3l...."
-} 
+            "key": "username",
+            "value": "aircash"
+        }],
+    "signature": "Gng+D6+3...P/4="
+}  
 
 Sequence:
-Amount=123.45&Parameters=Key=userName&Value=aircash,Key=phoneNumber&Value=385981234567&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
+Amount=123.45&Parameters=Key=username&Value=aircash&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
 
 Signature:
-i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil6G/50kdYPlTVY+qVi/cjE6ktQ79R8bJgFuo50Iymq1b/wzo/dwuuDroRU04Bxd0k8QiFcIXAswQkhWvVKL7b4sNd+zvbrhA4qsvIN5KNaHvJziEIf97vJxXjRT30Zzf/aPXJEB8Uep/NHjf0fXK38hYxWYlgszXDdWO05OXXlY7p2DjSUy5g6hIL7DSiGuITfvE1iCpJM5Eu7jeiI1vhGEKMSBo3y7c4O+/k9VfkszpZvsE/hnf3c9b7dmMqyWyCwEKrHGXNJ24OTZuJaLfe3zfAmmcO1b/dssgzgF2rIuuGbrb/vyJOs1iSAkzEBnh9Uhpzr3yw3dxq16voKjjXikGI5GELC/ON/I28RFbV55qyVsKAi+y8UyeIvpvxNt9SUk/OTLx/cHf/yU4jczFlwbgjf8wIdhecUXWN9n70HBxNOw4z6yUXhj6wHcSGPqyDH42ApINrLxd0Ig17Da91lPFmYVoaG4ClgRW+FMPdFIUYFfANlZOA6Uw2ib7x0KF1auxcFiEmxEGJ2GcZElkOjWrOybYpc8DSOFfn98G0ekGxX+oVqurpc6dJz+lZvDTR8vocI8XxIXgCOSQ54Tu7wgrvvYI=
+Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4HwdiNNda6gOJffI8ZVOFgPLbLuDhEVzJ/gwKKeNa6MqPxo3Us4VKbhPKdMgQoSS5zQp3w6ptSdey58iU/hxzMi/9PyaGYGYRsYGohInm721AyYnBFAmXe8az6efPsUnQT9YQGSechYRadF1QpBjVs2yNwnFz3p9IdhIqYPVetq5PXlrTtv8FGJ6ocK38imNVZrhxbciIIRDsCP6DxBvKYRY16yBEqJwLsSxmfx9ZZTkilkWtANczDnPHbl3x5FZNnmD2WC4MHgGabgyzQGn+zF3+Kf2m9mJZI7CT0nU9ZQLWM3Q+zkcmWC/mPpmDD3rKORPPIqT7M3aMEG8k+M1gNmvdaR/Xw8x1CCwINSQ3osYEghaZN+m+0H9ilx0NZVTOWyP3U8m0vzm7Cd3uc6h4z3LHirOr0DaFp6hk3/5fSwAbLATghQi3IkYuc9lJCenC5BXhWxrDkcby5foBqxDQcTolVKwOCSyO5r9j+DzzsXYcopNwlBfl9ZclRqYMQK9io9fbeu5RSCKa/jQv+q9Va9XA0T/He+KWUyK47yCVzOBcgoBurc+ycdbnPttrGbLiNuqicOnXIwZuHHN0krKzSmTOthyqP/4=
 </pre>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-3" heading="Output parameters" classes="nav-item">
+    <uib-tab index="CreateAndConfirmPayment1-tab-3" heading="Response parameters" classes="nav-item">
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-hover">
@@ -430,21 +436,21 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                     </thead>
                     <tbody>
                         <tr>
-                            <td colspan="3">Success</td>
+                            <td colspan="3"><b>Success</b></td>
                             <td>Bool</td>
                             <td>
                                 True if payment is successful, otherwise false
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">PartnerTransactionID</td>
+                            <td colspan="3"><b>PartnerTransactionID</b></td>
                             <td>String</td>
                             <td>
                                 Transaction ID in partner system, must be unique.
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Error</td>
+                            <td colspan="3"><b>Error</b></td>
                             <td>Object</td>
                             <td>
                                 In case of error, return the corresponding error so
@@ -454,7 +460,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>ErrorCode</td>
+                            <td><b>ErrorCode</b></td>
                             <td>Int</td>
                             <td>
                                 Possible error codes and error messages mappings
@@ -465,14 +471,14 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>ErrorMessage</td>
+                            <td><b>ErrorMessage</b></td>
                             <td>String</td>
                             <td>
                                 Error description.
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="3">Parameters</td>
+                            <td colspan="3"><b>Parameters</b></td>
                             <td>List &lt;Object&gt;</td>
                             <td>
                                 The List of objects of type ParameterRS. In the event
@@ -485,14 +491,14 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>Key</td>
+                            <td><b>Key</b></td>
                             <td>String</td>
                             <td>Parameter name</td>
                         </tr>
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>Type</td>
+                            <td><b>Type</b></td>
                             <td>String</td>
                             <td>
                                 Parameter type: String, Date, Decimal, DateTime,
@@ -502,7 +508,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                         <tr>
                             <td></td>
                             <td></td>
-                            <td>Value</td>
+                            <td><b>Value</b></td>
                             <td>String</td>
                             <td>Parameter value</td>
                         </tr>
@@ -511,38 +517,28 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             </div>
         </div>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-4" heading="Output parameters example" classes="nav-item">
-<pre>
+    <uib-tab index="CreateAndConfirmPayment1-tab-4" heading="200 OK response example" classes="nav-item">
+        <pre>
 {
     "success": true,
-    "partnerTransactionID": "ABC...123",
+    "partnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
     "parameters": [{
-        "key": "balance",
-        "value": "123.45",
-        "type": "Decimal"
-    },
-    {
-        "key": "minTransactionAmount",
-        "value": "1100.00",
-        "type": "Decimal"
-    },
-    {
-        "key": "validUntil",
-        "value": "2018-10-15",
-        "type": "Date"
-    }]
+            "key": "partnerUserID",
+            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+            "type": "string"
+        }]
 }
 </pre>
     </uib-tab>
-    <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error message" classes="nav-item">
+    <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error response example" classes="nav-item">
         <pre>
 {
-    "success": false,
+    "success ": false,
     "error": {
         "errorCode": 500,
         "errorMessage": "Unable to find user account"
     },
-    "parameters":null
+    "parameters": null
 }
 </pre>
     </uib-tab>
@@ -686,7 +682,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
         </thead>
         <tbody>
             <tr>
-                <td>Successful player verification</td>
+                <td><b>Successful player verification</b></td>
                 <td>
                     The check player method returns true only to users
                     that are able to receive money via Aircash
@@ -695,7 +691,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 <td>YES</td>
             </tr>
             <tr>
-                <td>Unsuccessful player verification</td>
+                <td><b>Unsuccessful player verification</b></td>
                 <td>
                     The partner system returns appropriate error code
                     in case when user is not able to receive money via
@@ -704,7 +700,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 <td>YES</td>
             </tr>
             <tr>
-                <td>Successful verification with additional parameters</td>
+                <td><b>Successful verification with additional parameters</b></td>
                 <td>
                     The method returns additional parameters with
                     agreed names and parameter types.
@@ -716,7 +712,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 </td>
             </tr>
             <tr>
-                <td>Payment confirmation </td>
+                <td><b>Payment confirmation</b></td>
                 <td>
                     The partner system insert transaction in the partner
                     system. The partner system returns valid response
@@ -725,11 +721,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 <td>YES</td>
             </tr>
             <tr>
-                <td>
-                    Payment confirmation
-                    with the same
-                    TransactionID
-                </td>
+                <td><b>Payment confirmation with the same TransactionID</b></td>
                 <td>
                     The partner system reject transaction with error
                     code that is associated with not unique
@@ -738,11 +730,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 <td>YES</td>
             </tr>
             <tr>
-                <td>
-                    Payment confirmation
-                    with additional
-                    parameters
-                </td>
+                <td><b>Payment confirmation with additional parameters </b></td>
                 <td>
                     The method returns additional parameters with
                     agreed names and parameter types in case of a new
@@ -756,7 +744,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 </td>
             </tr>
             <tr>
-                <td>Deep link test</td>
+                <td><b>Deep link test</b></td>
                 <td>
                     Check if generated link is well formatted and it all
                     parameters are inputted correctly
