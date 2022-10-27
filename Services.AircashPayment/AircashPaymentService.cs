@@ -120,22 +120,5 @@ namespace Services.AircashPayment
             return user != null ? user.UserId : Guid.Empty;
         }
 
-        public AircashPaymentResponse ReturnResponse(bool success, List<Parameters> parameters, ResponseError error, string transactionId )
-        {
-            AircashPaymentResponse response = new AircashPaymentResponse
-            {
-                Success = true,
-                PartnerTransactionId = transactionId,
-                Error = error,
-                Parameters = parameters
-                
-                
-            };
-
-            return response;
-
-        }
-
-
     }
 }

@@ -5,12 +5,7 @@ using AircashSimulator.Controllers.AircashPayment;
 using AircashSimulator.Configuration;
 using Microsoft.Extensions.Options;
 using Services.AircashPayment;
-using System;
 using System.Collections.Generic;
-using DataAccess;
-using Domain.Entities.Enum;
-using Domain.Entities;
-using System.Linq;
 
 namespace AircashSimulator.Controllers
 {
@@ -20,15 +15,12 @@ namespace AircashSimulator.Controllers
     {
         private AircashConfiguration AircashConfiguration;
         private IAircashPaymentService AircashPaymentService;
-       // private AircashSimulatorContext AircashSimulatorContext;
-
-        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService) //AircashSimulatorContext aircashSimulatorContext)
+     
+        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService)
         {
             AircashConfiguration = aircashConfiguration.CurrentValue;
             AircashPaymentService = aircashPaymentService;
-           // AircashSimulatorContext = aircashSimulatorContext;
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CheckPlayer(AircashPaymentCheckPlayer aircashPaymentCheckPlayer)
@@ -94,8 +86,5 @@ namespace AircashSimulator.Controllers
                 return BadRequest("Invalid signature");
             }
         }
-
-
-
     }
 }

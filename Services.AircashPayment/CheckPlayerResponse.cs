@@ -12,7 +12,5 @@ namespace Services.AircashPayment
         public ResponseError Error { get; set; }
         public List<Parameters> Parameters { get; set; }
 
-
-
     }
 }
