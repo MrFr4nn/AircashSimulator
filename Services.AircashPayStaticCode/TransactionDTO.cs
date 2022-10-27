@@ -1,7 +1,7 @@
 ﻿using System;
 using Domain.Entities.Enum;
 
-namespace Services.AircashStaticCodePay
+namespace Services.AircashPayStaticCode
 {
     public class TransactionDTO
     {

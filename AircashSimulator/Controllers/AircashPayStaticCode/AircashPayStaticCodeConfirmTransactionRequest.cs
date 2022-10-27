@@ -2,7 +2,7 @@
 
 namespace AircashSimulator.Controllers.AircashPayStaticCode
 {
-    public class AircashStaticCodeConfirmTransactionRequest : ISignature
+    public class AircashPayStaticCodeConfirmTransactionRequest : ISignature
     {
         public string PartnerID { get; set; }
         public string PartnerTransactionID { get; set; }

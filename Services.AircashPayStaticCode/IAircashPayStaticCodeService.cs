@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Services.AircashStaticCodePay
+namespace Services.AircashPayStaticCode
 {
-    public interface IAircashStaticCodePayService
+    public interface IAircashPayStaticCodeService
     {
         Task<object> ConfirmTransaction(TransactionDTO transactionDTO);
     }

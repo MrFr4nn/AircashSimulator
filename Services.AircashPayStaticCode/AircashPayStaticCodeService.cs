@@ -1,20 +1,15 @@
 ﻿using System;
 using DataAccess;
-using System.Linq;
 using Domain.Entities;
 using Domain.Entities.Enum;
 using System.Threading.Tasks;
-using AircashSimulator.Configuration;
-using Microsoft.Extensions.Logging;
-using Services.HttpRequest;
-using Microsoft.Extensions.Options;
 
-namespace Services.AircashStaticCodePay
+namespace Services.AircashPayStaticCode
 {
-    public class AircashStaticCodePayService : IAircashStaticCodePayService
+    public class AircashPayStaticCodeService : IAircashPayStaticCodeService
     {
         private AircashSimulatorContext AircashSimulatorContext;
-        public AircashStaticCodePayService(AircashSimulatorContext aircashSimulatorContext)
+        public AircashPayStaticCodeService(AircashSimulatorContext aircashSimulatorContext)
         {
             AircashSimulatorContext = aircashSimulatorContext;
            
@@ -34,7 +29,7 @@ namespace Services.AircashStaticCodePay
                 UserId = Guid.NewGuid()
             });
             await AircashSimulatorContext.SaveChangesAsync();
-            return new ConfirmResponse { ResponseCode = 1 };  
+            return null;
         }
     }
 }

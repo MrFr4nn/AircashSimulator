@@ -19,7 +19,6 @@ using Services.AircashPayout;
 using AircashSimulator.Extensions;
 using Services.AircashPay;
 using Serilog;
-using Services.Transaction;
 using Services.Transactions;
 using Services.AircashPaymentAndPayout;
 using Services.PartnerAbonDenominations;
@@ -28,8 +27,8 @@ using AircashFrame;
 using Services.Partner;
 using Services.User;
 using Services.AircashFrameV2;
-using Services.AircashStaticCodePay;
 using AircashSimulator.Hubs;
+using Services.AircashPayStaticCode;
 
 namespace AircashSimulator
 {
@@ -92,7 +91,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashPayoutService, AircashPayoutService>();
             services.AddTransient<IAircashPaymentAndPayoutService, AircashPaymentAndPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
-            services.AddTransient<IAircashStaticCodePayService, AircashStaticCodePayService>(); // inserted
+            services.AddTransient<IAircashPayStaticCodeService, AircashPayStaticCodeService>(); 
             services.AddTransient<ITransactionService, TransactionService>();
             services.AddTransient<IPartnerService, PartnerService>();
             services.AddTransient<IUserService, UserService>();

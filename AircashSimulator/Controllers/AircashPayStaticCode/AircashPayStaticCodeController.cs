@@ -3,12 +3,12 @@ using AircashSignature;
 using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Services.AircashStaticCodePay;
 using Microsoft.Extensions.Options;
 using Domain.Entities.Enum;
 using AircashSimulator.Controllers.AircashPayStaticCode;
 using AircashSimulator.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Services.AircashPayStaticCode;
 
 namespace AircashSimulator.Controllers
 {
@@ -16,12 +16,12 @@ namespace AircashSimulator.Controllers
     [ApiController]
     public class AircashPayStaticCodeController : Controller
     {
-        private IAircashStaticCodePayService AircashPayStaticCodeService;
+        private IAircashPayStaticCodeService AircashPayStaticCodeService;
        
         private AircashConfiguration AircashConfiguration;
         public readonly IHubContext<NotificationHub> _hubContext;
 
-        public AircashPayStaticCodeController(IAircashStaticCodePayService aircashPayStaticCodeService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext)
+        public AircashPayStaticCodeController(IAircashPayStaticCodeService aircashPayStaticCodeService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext)
         {
             AircashPayStaticCodeService = aircashPayStaticCodeService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
@@ -34,7 +34,7 @@ namespace AircashSimulator.Controllers
         }
 
        [HttpPost]
-        public async Task<IActionResult> ConfirmTransaction(AircashStaticCodeConfirmTransactionRequest aircashConfirmTransactionRequest)
+        public async Task<IActionResult> ConfirmTransaction(AircashPayStaticCodeConfirmTransactionRequest aircashConfirmTransactionRequest)
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashConfirmTransactionRequest);
             var signature = aircashConfirmTransactionRequest.Signature;
@@ -51,15 +51,10 @@ namespace AircashSimulator.Controllers
                     PartnerTransactionId = new Guid(aircashConfirmTransactionRequest.PartnerTransactionID)
                     };
                     var response = await AircashPayStaticCodeService.ConfirmTransaction(transaction);
-                    if (((ConfirmResponse)response).ResponseCode == 1)
+                    if (true)
                     {
                     await SendHubMessage("TransactionConfirmedMessage", "QR Code Payment received, </br>amount: "+transaction.Amount+" "+transaction.ISOCurrencyId+ ", </br>time: " + DateTime.Now, 1);
                     return Ok("Transaction confirmed successfully");
-                    }
-                    else
-                    {
-                    await SendHubMessage("TransactionFailedMessage", "Unable to find transaction </br>" + DateTime.Now, 2);
-                    return BadRequest("Unable to find transaction");
                     }
                 }
                 else

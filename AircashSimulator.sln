@@ -53,7 +53,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.User", "Services.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashFrameV2", "Services.AircashFrameV2\Services.AircashFrameV2.csproj", "{AE99D470-01B9-421A-AAB7-9F548A93C99D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashStaticCodePay", "Services.AircashStaticCodePay\Services.AircashStaticCodePay.csproj", "{3EFD82D1-1BBC-4CF4-9432-1964EAA46C2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashPayStaticCode", "Services.AircashPayStaticCode\Services.AircashPayStaticCode.csproj", "{3EFD82D1-1BBC-4CF4-9432-1964EAA46C2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
