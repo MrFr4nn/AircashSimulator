@@ -92,9 +92,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
         if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');
         }
-    });
-
-     
+    }); 
 }]); 
 
 app.filter('trusted', ['$sce', function ($sce) {

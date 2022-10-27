@@ -1,6 +1,5 @@
 ﻿var acPayStaticCodeModule = angular.module('acPayStaticCode', []);
 
-
 app.config(function ($stateProvider) {
     $stateProvider
         .state('app.acPayStaticCode', {
@@ -11,8 +10,6 @@ app.config(function ($stateProvider) {
             controller: 'ac_pay_static_codeCtrl',
             templateUrl: 'app/ac_pay_static_code/ac_pay_static_code.html'
         });
-   
-
 });
 
 acPayStaticCodeModule.service("acPayStaticCodeService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
@@ -32,7 +29,6 @@ acPayStaticCodeModule.service("acPayStaticCodeService", ['$http', '$q', 'handleR
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
 }
 ]);
 
@@ -60,7 +56,6 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
                     new QRCode(document.getElementById("qrcodeDiv"), response);
                     $scope.generateResponded = true;
                 }
-                
             }, () => {
                 console.log("error");
             });
@@ -91,7 +86,6 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
         else if (status == 3) {
             toastr.clear();
             toastr.error(msg);
-
         }
     };
 

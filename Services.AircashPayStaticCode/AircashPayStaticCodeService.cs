@@ -38,7 +38,6 @@ namespace Services.AircashPayStaticCode
         {
             string link = "https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID=0ffe2e26-59bd-4ad4-b0f7-976d333474ca&amt=" + generateQRLinkDTO.Amount +
             "&currencyIsoCode=" + generateQRLinkDTO.Currency + "&locationID=" + generateQRLinkDTO.Location;
-
             return link;
         }
     }

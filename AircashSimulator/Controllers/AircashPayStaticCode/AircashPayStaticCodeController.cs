@@ -63,6 +63,7 @@ namespace AircashSimulator.Controllers
                 }
         }
 
+        [HttpPost]
         public async Task<IActionResult> GenerateQRLink(GenerateQRLinkRequest generateQRLinkRequest)
         {
             GenerateQRLinkDTO parameters = new GenerateQRLinkDTO
@@ -75,7 +76,5 @@ namespace AircashSimulator.Controllers
              var response = await AircashPayStaticCodeService.GenerateQRLink(parameters);
              return Ok(response);  
         }
-
-
     }
 }
