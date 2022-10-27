@@ -3,6 +3,8 @@ using DataAccess;
 using Domain.Entities;
 using Domain.Entities.Enum;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
+using static System.Net.WebRequestMethods;
 
 namespace Services.AircashPayStaticCode
 {
@@ -30,6 +32,14 @@ namespace Services.AircashPayStaticCode
             });
             await AircashSimulatorContext.SaveChangesAsync();
             return null;
+        }
+
+        public async Task<object> GenerateQRLink(GenerateQRLinkDTO generateQRLinkDTO)
+        {
+            string link = "https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID=0ffe2e26-59bd-4ad4-b0f7-976d333474ca&amt=" + generateQRLinkDTO.Amount +
+            "&currencyIsoCode=" + generateQRLinkDTO.Currency + "&locationID=" + generateQRLinkDTO.Location;
+
+            return link;
         }
     }
 }

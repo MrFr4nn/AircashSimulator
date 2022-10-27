@@ -15,8 +15,28 @@ app.config(function ($stateProvider) {
 
 });
 
+acPayStaticCodeModule.service("acPayStaticCodeService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
+    return ({
+        generateQRLink: generateQRLink
+    
+    });
+    function generateQRLink(amount, currency, locationID) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayStaticCode/GenerateQRLink",
+            data: {
+                Amount: amount,
+                Currency: currency,
+                Location: locationID
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 
-acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
+}
+]);
+
+acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter', 'acPayStaticCodeService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, acPayStaticCodeService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AircashPayStaticCode") == -1) {
@@ -33,10 +53,17 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
     $scope.GenerateQRCode = function () {
         $("#qrcodeDiv").empty();
         $("#link").empty();
-        var link = "https://dev-m3.aircash.eu/api/acpay/acpay?type=12&partnerID=0ffe2e26-59bd-4ad4-b0f7-976d333474ca&amt=" + $scope.generatePartnerCodeModel.amount +
-            "&currencyIsoCode=" + $scope.generatePartnerCodeModel.currency + "&locationID=" + $scope.generatePartnerCodeModel.locationID + "";
-        new QRCode(document.getElementById("qrcodeDiv"), link);
-        $scope.generateResponded = true;
+
+        acPayStaticCodeService.generateQRLink($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.currency, $scope.generatePartnerCodeModel.locationID)
+            .then(function (response) {
+                if (response) {
+                    new QRCode(document.getElementById("qrcodeDiv"), response);
+                    $scope.generateResponded = true;
+                }
+                
+            }, () => {
+                console.log("error");
+            });
     }
 
     $scope.CustomNotification = function (msg, status) {
@@ -52,9 +79,6 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
             toastr.options.timeOut = 10000;
         };
         vm.setOptions();
-
-
-
 
         if (status == 1) {
             toastr.clear();

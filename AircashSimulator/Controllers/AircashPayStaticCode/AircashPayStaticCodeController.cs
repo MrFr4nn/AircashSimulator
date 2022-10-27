@@ -59,9 +59,23 @@ namespace AircashSimulator.Controllers
                 }
                 else
                 {
-                await SendHubMessage("InvalidSignatureMessage", "Invalid signature </br>" + DateTime.Now, 3);
                 return BadRequest("Invalid signature");
                 }
         }
+
+        public async Task<IActionResult> GenerateQRLink(GenerateQRLinkRequest generateQRLinkRequest)
+        {
+            GenerateQRLinkDTO parameters = new GenerateQRLinkDTO
+            {
+                Amount = generateQRLinkRequest.Amount,
+                Currency = generateQRLinkRequest.Currency,
+                Location = generateQRLinkRequest.Location
+
+            };
+             var response = await AircashPayStaticCodeService.GenerateQRLink(parameters);
+             return Ok(response);  
+        }
+
+
     }
 }
