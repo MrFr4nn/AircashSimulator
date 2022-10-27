@@ -20,11 +20,8 @@ var app = angular.module('app', [
     'acPayStaticCode'
 ]);
 
-
-
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
 {
-   
     $urlRouterProvider.otherwise('/app/dashboard');
     
     $stateProvider
