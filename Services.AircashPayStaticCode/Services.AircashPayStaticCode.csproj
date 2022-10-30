@@ -34,6 +34,7 @@
 		<ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
 		<ProjectReference Include="..\DataAccess\DataAccess.csproj" />
 		<ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj" />
+		<ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
 		<ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
 	</ItemGroup>
 

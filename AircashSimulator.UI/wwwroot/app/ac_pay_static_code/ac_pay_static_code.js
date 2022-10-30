@@ -46,14 +46,15 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
         currency: null
     };
 
+    $scope.generateBusy = false;
     $scope.GenerateQRCode = function () {
         $("#qrcodeDiv").empty();
-        $("#link").empty();
-
+        $scope.generateBusy = true;
         acPayStaticCodeService.generateQRLink($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.currency, $scope.generatePartnerCodeModel.locationID)
             .then(function (response) {
                 if (response) {
                     new QRCode(document.getElementById("qrcodeDiv"), response);
+                    $scope.generateBusy = false;
                     $scope.generateResponded = true;
                 }
             }, () => {
