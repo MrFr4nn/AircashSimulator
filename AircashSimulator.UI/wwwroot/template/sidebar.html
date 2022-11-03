@@ -119,6 +119,12 @@
                     <span>{{translations.user_admin_label}}</span>
                 </a>
             </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.partnerAdminV2" ng-if="partnerRoles.indexOf('Admin') != -1">
+                    <i class="fa fa-people-arrows"></i>
+                    <span>{{translations.partner_admin_labelV2}}</span>
+                </a>
+            </li>
             <!-- begin sidebar minify button -->
             <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->

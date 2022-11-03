@@ -48,12 +48,12 @@ namespace AircashSimulator.Controllers.Partner
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetPartnerDetails(Guid partnerId)
+        public async Task<IActionResult> GetPartnerDetails()
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
 
-            var partner = await PartnerService.GetPartnerDetails(partnerId);
-            return Ok(partner);
+            var partners = await PartnerService.GetPartnerDetails();
+            return Ok(partners);
         }
 
         [HttpPost]

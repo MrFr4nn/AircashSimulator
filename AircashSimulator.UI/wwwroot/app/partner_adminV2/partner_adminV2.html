@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="width: 100%">
+        <h1>Partner admin</h1>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-sm-2">
+            <div class="form-group">
+                <label>Search partner:</label>
+                <input type="search" placeholder="Search" class="form-control" ng-model="searchedPartner" />
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <button style="margin-top: 25px" ng-disabled="searchedPartner == null" type="button" class="btn btn-default" ng-click="setDefaults();">Clear</button>
+        </div>
+
+    </div>
+    <div>
+        <button class="btn btn-primary" ng-click="showPartnerModal();">Novi partner</button>
+    </div>
+
+    <hr />
+
+    <div ng-if="partners">
+        <table class="table table-hover" ng-table="PartnersTable">
+            <thead>
+                <tr>
+                    <th>Partner name</th>
+                    <th>Private Key Path</th>
+                    <th>Private Key Pass</th>
+                    <th>Currency ID</th>
+                    <th>Country Code</th>
+                    <th>Environment</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody dir-paginate="p in partners | itemsPerPage: 10 |filter:searchedPartner">
+                <tr id="{{p.partnerId}}">
+                    <td>{{p.partnerName}}</td>
+                    <td>{{p.privateKey}}</td>
+                    <td>{{p.privateKeyPass}}</td>
+                    <td>{{p.currencyId}}</td>
+                    <td>{{p.countryCode}}</td>
+                    <td>{{p.environment}}</td>
+                    <td style="cursor:pointer" ng-click="showPartnerModal();"><i class="fa fa-pen"></i></td>
+                    <td style="cursor:pointer"><i class="fa fa-trash"></i></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div ng-hide="searchedPartner">
+            <dir-pagination-controls boundary-links="true" direction-links="true"></dir-pagination-controls>
+        </div>
+
+    </div>
+    <div ng-if="!partners">
+        <p>Ne postoji ni jedan partner</p>
+    </div>
+
+</body>
+</html>
+
+
+<div class="modal fade" id="PartnerModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Partner</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <div id="qrcode"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
