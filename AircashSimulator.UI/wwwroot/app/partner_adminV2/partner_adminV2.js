@@ -62,12 +62,10 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     if ($scope.partnerRoles.indexOf("Admin") == -1) {
         $location.path('/forbidden');
     }
-
     $scope.setDefaults = function ()
     {
         $scope.searchedPartner = null;
     }
-
     $scope.getPartnerDetails = function () {
         partnerAdminV2Service.getPartnerDetails()
             .then(function (response) {
@@ -75,16 +73,29 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
                     $scope.partners = response;
                 }
             }, () => {
-                console.log("Error, could not fetch partner roles.");
+                console.log("Error, could not fetch partners!");
+                $("#EmptyPartnersMessage").append("<p>Ne postoji niti jedan partner!</p>")
             });
     };
 
-    $scope.showPartnerModal = function () {
+    $scope.showPartnerModal = function (partner) {
         $("#PartnerModal").modal("show");
+        $scope.partner = partner
+
+    }
+
+    $scope.savePartner = function ()
+    {
+        partnerAdminV2Service.savePartner()
+            .then(function (resposne) {
+            }, () =>
+            {
+                console.log("Error, could not save partner!");
+            });
+
     }
 
 
+
     $scope.getPartnerDetails();
-
-
 }]);

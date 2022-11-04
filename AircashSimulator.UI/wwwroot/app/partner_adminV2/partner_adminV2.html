@@ -10,26 +10,28 @@
     </div>
     <br />
 
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="form-group">
-                <label>Search partner:</label>
-                <input type="search" placeholder="Search" class="form-control" ng-model="searchedPartner" />
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <label>Search partner:</label>
+                    <input type="search" placeholder="Search" class="form-control" ng-model="searchedPartner" />
+                </div>
             </div>
+            <div class="col-sm-2">
+                <button style="margin-top: 25px" ng-disabled="searchedPartner == null" type="button" class="btn btn-default" ng-click="setDefaults();">Clear</button>
+            </div>
+
         </div>
-        <div class="col-sm-2">
-            <button style="margin-top: 25px" ng-disabled="searchedPartner == null" type="button" class="btn btn-default" ng-click="setDefaults();">Clear</button>
+        <div>
+            <button class="btn btn-primary" ng-click="showPartnerModal();">Novi partner</button>
         </div>
-
-    </div>
-    <div>
-        <button class="btn btn-primary" ng-click="showPartnerModal();">Novi partner</button>
     </div>
 
-    <hr />
+    <br />
 
-    <div ng-if="partners">
-        <table class="table table-hover" ng-table="PartnersTable">
+    <div ng-if="partners" class="container">
+        <table class="table table-hover col-sm" ng-table="PartnersTable">
             <thead>
                 <tr>
                     <th>Partner name</th>
@@ -38,19 +40,21 @@
                     <th>Currency ID</th>
                     <th>Country Code</th>
                     <th>Environment</th>
+                    <th>Roles</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
             </thead>
-            <tbody dir-paginate="p in partners | itemsPerPage: 10 |filter:searchedPartner">
-                <tr id="{{p.partnerId}}">
+            <tbody>
+                <tr dir-paginate="p in partners | filter:searchedPartner | itemsPerPage: 10" id="{{p.partnerId}}">
                     <td>{{p.partnerName}}</td>
                     <td>{{p.privateKey}}</td>
                     <td>{{p.privateKeyPass}}</td>
                     <td>{{p.currencyId}}</td>
                     <td>{{p.countryCode}}</td>
-                    <td>{{p.environment}}</td>
-                    <td style="cursor:pointer" ng-click="showPartnerModal();"><i class="fa fa-pen"></i></td>
+                    <td>{{p.environment == 1 ? "Dev" : "Staging"}}</td>
+                    <td></td>
+                    <td style="cursor:pointer" ng-click="showPartnerModal(p);"><i class="fa fa-pen"></i></td>
                     <td style="cursor:pointer"><i class="fa fa-trash"></i></td>
                 </tr>
             </tbody>
@@ -59,12 +63,10 @@
         <div ng-hide="searchedPartner">
             <dir-pagination-controls boundary-links="true" direction-links="true"></dir-pagination-controls>
         </div>
-
     </div>
-    <div ng-if="!partners">
-        <p>Ne postoji ni jedan partner</p>
+    <div id="EmptyPartnersMessage">
     </div>
-
+   
 </body>
 </html>
 
@@ -76,9 +78,46 @@
                 <h4 class="modal-title">Partner</h4>
             </div>
             <div class="modal-body" align="center">
-                <div id="qrcode"></div>
+
+                <div class="row">
+                    <div class="col-sm-5">
+                        <div class="mb-3">
+                            <label class="form-label">Partner Name</label>
+                            <input ng-model="partner.partnerName" class="form-control" type="text" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Private Key Path</label>
+                            <input ng-model="partner.privateKey" class="form-control" type="text" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Private Key Pass</label>
+                            <input ng-model="partner.privateKeyPass" class="form-control" type="text" ng-required="true">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-5">
+
+                        <div class="mb-3">
+                            <label class="form-label">Currency ID</label>
+                            <input ng-model="partner.currencyId" class="form-control" type="number" step="1" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Country Code</label>
+                            <input ng-model="partner.countryCode" class="form-control" type="text" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Environment</label>
+                            <select class="form-control" ng-model="partner.environment">
+                                <option value="1" ng-selected="partner.environment == 1">Dev</option>
+                                <option value="2" ng-selected="partner.environment == 2">Staging</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
+                <button class="btn btn-primary">Save</button>
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
             </div>
         </div>
