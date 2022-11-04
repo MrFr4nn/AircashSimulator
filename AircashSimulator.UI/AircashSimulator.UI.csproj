@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AircashSignature" Version="1.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Update="wwwroot\images\abonExample.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

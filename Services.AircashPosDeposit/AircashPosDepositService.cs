@@ -181,5 +181,57 @@ namespace Services.AircashPosDeposit
             }
             return user != null ? user : null;
         }
+
+        public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
+        {
+            var response = new AircashPaymentResponse();
+            UserEntity user = ReturnUser(ReceiveData.Parameters);
+
+            if (user == null)
+            {
+                response = new AircashPaymentResponse
+                {
+                    Success = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 500,
+                        ErrorMessage = "Unable to find user account"
+                    },
+                    Parameters = null
+                };
+                return response;
+            }
+
+            TransactionEntity transactionEntity = new TransactionEntity
+            {
+                Amount = ReceiveData.Amount,
+                TransactionId = Guid.NewGuid(),
+                PartnerId = new Guid("3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20"),
+                UserId = user.UserId,
+                AircashTransactionId = ReceiveData.AircashTransactionId,
+                ISOCurrencyId = CurrencyEnum.EUR,
+                ServiceId = ServiceEnum.AircashPayment,
+                RequestDateTimeUTC = DateTime.Today,
+                ResponseDateTimeUTC = DateTime.Now,
+            };
+            AircashSimulatorContext.Transactions.Add(transactionEntity);
+            await AircashSimulatorContext.SaveChangesAsync();
+
+            response = new AircashPaymentResponse
+            {
+                Success = true,
+                PartnerTransactionId = transactionEntity.TransactionId.ToString(),
+                Parameters = new List<Parameters>
+                {
+                new Parameters
+                    {
+                      Key = "partnerUserId",
+                      Value = user.UserId.ToString(),
+                      Type = "string"
+                    }
+                }
+            };
+            return response;
+        }
     }
 }

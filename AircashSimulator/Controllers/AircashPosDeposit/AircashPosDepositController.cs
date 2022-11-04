@@ -57,5 +57,30 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             return Ok(response);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAndConfirmPayment(AircashPosDepositCreateAndConfirmPayment aircashPosDepositCreateAndConfirmPayment)
+        {
+            var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashPosDepositCreateAndConfirmPayment);
+            var signature = aircashPosDepositCreateAndConfirmPayment.Signature;
+            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+
+            if (valid != true) return BadRequest("Invalid signature");
+
+            var parameters = new List<CheckPlayerParameters>();
+            aircashPosDepositCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+
+            var send = new CreateAndConfirmPaymentReceive
+            {
+                AircashTransactionId = aircashPosDepositCreateAndConfirmPayment.TransactionID,
+                Amount = aircashPosDepositCreateAndConfirmPayment.Amount,
+                Parameters = parameters
+            };
+            var response = await AircashPosDepositService.CreateAndConfirmPayment(send);
+
+            if (((AircashPaymentResponse)response).Success == true) return Ok(response);
+            
+            return BadRequest(response);
+        }
     }
 }

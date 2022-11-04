@@ -11,5 +11,6 @@ namespace Services.AircashPosDeposit
         Task<object> CreatePayout(Guid partnerId, decimal amount, string phoneNumber, string partnerUserID, List<Parameter> parameters);
         Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameter);
         public UserEntity ReturnUser(List<CheckPlayerParameters> checkPlayerParameters);
+        Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData);
     }
 }

@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AircashSignature" Version="1.4.1" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
   </ItemGroup>
