@@ -61,9 +61,8 @@ namespace AircashSimulator.Controllers.Partner
         public async Task<IActionResult> SavePartner(PartnerDetailVM request)
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-
             await PartnerService.SavePartner(request);
-            return Ok();
+            return Ok("Ok");
         }
     }
 }

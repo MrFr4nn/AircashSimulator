@@ -78,21 +78,26 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
             });
     };
 
+    $scope.partner = {};
     $scope.showPartnerModal = function (partner) {
         $("#PartnerModal").modal("show");
-        $scope.partner = partner
+        angular.copy(partner, $scope.partner);
+    }
 
+    $scope.hidePartnerModal = function () {
+        $("#PartnerModal").modal("hide");
     }
 
     $scope.savePartner = function ()
     {
-        partnerAdminV2Service.savePartner()
+        partnerAdminV2Service.savePartner($scope.partner,null)
             .then(function (resposne) {
+                $scope.getPartnerDetails();
             }, () =>
             {
                 console.log("Error, could not save partner!");
             });
-
+        $scope.hidePartnerModal();
     }
 
 

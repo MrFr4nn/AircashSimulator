@@ -36,9 +36,31 @@ namespace Services.Partner
             return roles;
         }
 
+        private List<PartnerDetailVM> FindPartnerRoles(List<PartnerDetailVM> partners)
+        {
+            List<Role> roles = GetRoles();
+            var partnersRoles = AircashSimulatorContext.PartnerRoles.Select(r => new PartnerRoleEntity { PartnerId = r.PartnerId, PartnerRole = r.PartnerRole }).ToList();
+
+            foreach(var p in partners)
+            {
+                List<PartnerRoleEntity> partnerRole = partnersRoles.Where(a => a.PartnerId == p.PartnerId).ToList();
+                if(partnerRole.Count() > 0)
+                {
+                    p.Roles = roles.Where(r => partnerRole.Select(r => r.PartnerRole).Contains(r.RoleId)).ToList();
+                }
+            }
+            return partners;
+        }
+
 
         public async Task<List<PartnerDetailVM>> GetPartnerDetails()
         {
+           
+
+            // roles.Where(r => partnerRoles.Select(p => p.PartnerId).Contains(x.PartnerId)).ToList()
+            //roles.Where(r => r.RoleId.ToString() == partnerRoles.Where(p=> p.PartnerId == x.PartnerId).Select(p=>p.PartnerRole).ToString()).ToList()
+            // roles.Where(r => partnerRoles.Where(p=> p.PartnerId == x.PartnerId).Select(parameter=> parameter.PartnerRole).Contains(r.RoleId)).ToList()
+
             var partnersDetails = await AircashSimulatorContext.Partners.Select(x => new PartnerDetailVM
             {
                 PartnerId = x.PartnerId,
@@ -51,6 +73,9 @@ namespace Services.Partner
                 Roles = null
             }).ToListAsync();
             
+            partnersDetails = FindPartnerRoles(partnersDetails);
+
+
             return partnersDetails;
         }
 
@@ -89,6 +114,8 @@ namespace Services.Partner
                 });
             }
 
+            if (request.Roles != null)
+            { 
             if (request.Roles.Count > 0)
             {
                 foreach (var role in request.Roles)
@@ -99,6 +126,7 @@ namespace Services.Partner
                         PartnerRole = role.RoleId
                     });
                 }
+            }
             }
 
             await AircashSimulatorContext.SaveChangesAsync();
