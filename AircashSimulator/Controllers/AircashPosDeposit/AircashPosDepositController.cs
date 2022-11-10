@@ -25,6 +25,13 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         }
 
         [HttpPost]
+        public async Task<IActionResult> MatchPersonalData(PersonalDataToCompare personalDataToCompare)
+        {
+            return Ok();
+        }
+
+
+        [HttpPost]
         public async Task<IActionResult> CheckUser(CheckUserRQ checkUserRQ)
         {
             var response = await AircashPosDepositService.CheckUser(checkUserRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User), checkUserRQ.Parameters);

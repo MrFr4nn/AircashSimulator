@@ -22,7 +22,7 @@ namespace Services.AircashPosDeposit
         public DateTime RequestDateTimeUTC { get; set; }
         public DateTime ResponseDateTimeUTC { get; set; }
     }
-   
+
 
     public class AircashPosDepositService : IAircashPosDepositService
     {
@@ -58,7 +58,7 @@ namespace Services.AircashPosDeposit
 
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserRS>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
-            
+
             return returnResponse;
         }
 
@@ -104,19 +104,19 @@ namespace Services.AircashPosDeposit
                     ResponseDateTimeUTC = responseDateTimeUTC
                 });
                 AircashSimulatorContext.SaveChanges();
-                }
+            }
 
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
 
             return returnResponse;
         }
 
-        public async Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameter) 
+        public async Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameter)
         {
             var response = new CheckPlayerResponse();
             UserEntity User = ReturnUser(checkPlayerParameter);
-            int errorcode=0;
-            string errormessage="";
+            int errorcode = 0;
+            string errormessage = "";
 
             if (User == null)
             {
@@ -138,7 +138,8 @@ namespace Services.AircashPosDeposit
                 errorcode = 5003;
                 errormessage = "User birth date do not match";
             }
-            if (errorcode != 0) {
+            if (errorcode != 0)
+            {
                 response = new CheckPlayerResponse
                 {
                     IsPlayer = false,
