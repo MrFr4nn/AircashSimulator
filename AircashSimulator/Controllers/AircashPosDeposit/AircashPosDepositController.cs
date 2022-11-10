@@ -4,6 +4,7 @@ using AircashSimulator.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services.AircashPosDeposit;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,6 +28,8 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         [HttpPost]
         public async Task<IActionResult> MatchPersonalData(PersonalDataToCompare personalDataToCompare)
         {
+            PersonalDataToCompare pdata = personalDataToCompare;
+            pdata.PartnerID = UserContext.GetPartnerId(User);
             return Ok();
         }
 

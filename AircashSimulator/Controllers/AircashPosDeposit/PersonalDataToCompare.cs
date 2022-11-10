@@ -1,8 +1,12 @@
-﻿namespace AircashSimulator.Controllers.AircashPosDeposit
+﻿using System;
+
+namespace AircashSimulator.Controllers.AircashPosDeposit
 {
     public class PersonalDataToCompare
     {
-        public PersonalData FirstUser { get; set; }
-        public PersonalData SecondUser { get; set; }
+        public Guid PartnerID { get; set; }
+        public PersonalData AircashUser { get; set; }
+        public PersonalData PartnerUser { get; set; }
+        
     }
 }

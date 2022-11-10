@@ -122,12 +122,12 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
     }
 
     $scope.matchPersonalDataModel = {
-        firstNameFirstUser: "",
-        lastNameFirstUser: "",
-        birthDateFirstUser: new Date(""),
-        firstNameSecondUser: "",
-        lastNameSecondUser: "",
-        birthDateSecondUser: new Date(""),
+        firstNameAircashUser: "",
+        lastNameAircashUser: "",
+        birthDateAircashUser: new Date(""),
+        firstNamePartnerUser: "",
+        lastNamePartnerUser: "",
+        birthDatePartnerUser: new Date(""),
     };
 
     $scope.matchPersonalDataServiceBusy = false;
@@ -135,15 +135,15 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
 
     $scope.matchPersonalData = function () {
         $scope.matchPersonalDataRequest = {
-            firstUser: {
-                firstName: $scope.matchPersonalDataModel.firstNameFirstUser,
-                lastName: $scope.matchPersonalDataModel.lastNameFirstUser,
-                birthDate: $scope.matchPersonalDataModel.birthDateFirstUser.toISOString().split('T')[0],
+            aircashUser: {
+                firstName: $scope.matchPersonalDataModel.firstNameAircashUser,
+                lastName: $scope.matchPersonalDataModel.lastNameAircashUser,
+                birthDate: $scope.matchPersonalDataModel.birthDateAircashUser.toISOString().split('T')[0],
             },
-            secondUser: {
-                firstName: $scope.matchPersonalDataModel.firstNameSecondUser,
-                lastName: $scope.matchPersonalDataModel.lastNameSecondUser,
-                birthDate: $scope.matchPersonalDataModel.birthDateSecondUser.toISOString().split('T')[0],
+            partnerUser: {
+                firstName: $scope.matchPersonalDataModel.firstNamePartnerUser,
+                lastName: $scope.matchPersonalDataModel.lastNamePartnerUser,
+                birthDate: $scope.matchPersonalDataModel.birthDatePartnerUser.toISOString().split('T')[0],
             },
         }
         $scope.matchPersonalDataServiceBusy = true;
@@ -172,11 +172,11 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
         $scope.createPayoutModel.birthDate = date;
     }
 
-    $scope.setPersonalDataDateFirstUser = function (date) {
-        $scope.matchPersonalDataModel.birthDateFirstUser = date;
+    $scope.setPersonalDataDateAircashUser = function (date) {
+        $scope.matchPersonalDataModel.birthDateAircashUser = date;
     }
 
-    $scope.setPersonalDataDateSecondUser = function (date) {
-        $scope.matchPersonalDataModel.birthDateSecondUser = date;
+    $scope.setPersonalDataDatePartnerUser = function (date) {
+        $scope.matchPersonalDataModel.birthDatePartnerUser = date;
     }
 }]);
