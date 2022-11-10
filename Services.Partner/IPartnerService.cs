@@ -12,5 +12,7 @@ namespace Services.Partner
         List<Role> GetRoles();
         Task<List<PartnerDetailVM>> GetPartnerDetails();
         Task SavePartner(PartnerDetailVM request);
+
+        Task DeletePartner(Guid PartnerId);
     }
 }

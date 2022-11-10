@@ -6,67 +6,95 @@
 </head>
 <body>
     <div style="width: 100%">
-        <h1>Partner admin</h1>
+        <h1 class="page-header">Partner admin</h1>
     </div>
     <br />
 
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-2">
-                <div class="form-group">
-                    <label>Search partner:</label>
-                    <input type="search" placeholder="Search" class="form-control" ng-model="searchedPartner" />
+    <div class="panel panel-inverse">
+
+        <div class="panel-heading">
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+            </div>
+            <h4 class="panel-title" style="margin-left:3px">Partners</h4>
+        </div>
+
+        <div class="panel-body">
+            <div class="col-sm-12">
+                <form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="form-group col-xs-3 col-md-3">
+                                <button class="btn btn-primary" style="margin-top: 25px" ng-click="showPartnerModal();">
+                                    <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Novi partner
+                                </button>
+                                <button class="btn btn-primary" style="margin-top: 25px" ng-click=""><i class="fa fa-search" aria-hidden="true" style="margin-right:3px;"></i>Filter</button>
+                            </div>
+                            <div class="col-sm-1">
+
+                            </div>
+
+                            <div class="form-group col-xs-3 col-md-3">
+                                <input type="search" style="margin-top:25px" placeholder="Search partners" class="form-control" ng-model="searchedPartner" ng-change="SearchTable();" />
+                            </div>
+                            <div class="col-sm-2">
+                                <button style="margin-top: 25px" ng-disabled="!searchedPartner" type="button" class="btn btn-primary" ng-click="setDefaults();">Clear</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div ng-if="partners" class="container">
+                    <div class="table-responsive" style="overflow-x:visible">
+                        <table class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
+                            <thead>
+                                <tr>
+                                    <th>Partner name</th>
+                                    <th>Private Key Path</th>
+                                    <th>Private Key Pass</th>
+                                    <th>Currency ID</th>
+                                    <th>Country Code</th>
+                                    <th>Environment</th>
+                                    <th>Roles</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="p in filter  | itemsPerPage: 10">
+                                    <!--| filter:searchedPartner-->
+                                    <td>{{p.partnerName}}</td>
+                                    <td>{{p.privateKey}}</td>
+                                    <td>{{p.privateKeyPass}}</td>
+                                    <td>{{p.currencyId}}</td>
+                                    <td>{{p.countryCode}}</td>
+                                    <td>{{p.environment == 1 ? "Dev" : "Staging"}}</td>
+                                    <td style="cursor:pointer" ng-click="ShowPartnerRolesModal(p)"><i class="fa fa-id-card"></i></td>
+                                    <td style="cursor:pointer" ng-click="showPartnerModal(p);"><i class="fa fa-pen"></i></td>
+                                    <td style="cursor:pointer" ng-click="confirmDeleteModal(p);"><i class="fa fa-trash"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div ng-hide="searchedPartner">
+                        <div class="col-sm-12">
+                            <div class="pull-left">
+                                <dir-pagination-controls boundary-links="true" direction-links="true"></dir-pagination-controls>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <div id="EmptyPartnersMessage">
+                </div>
+
             </div>
-            <div class="col-sm-2">
-                <button style="margin-top: 25px" ng-disabled="searchedPartner == null" type="button" class="btn btn-default" ng-click="setDefaults();">Clear</button>
-            </div>
-
-        </div>
-        <div>
-            <button class="btn btn-primary" ng-click="showPartnerModal();">Novi partner</button>
         </div>
     </div>
 
-    <br />
-
-    <div ng-if="partners" class="container">
-        <table class="table table-hover col-sm" ng-table="PartnersTable">
-            <thead>
-                <tr>
-                    <th>Partner name</th>
-                    <th>Private Key Path</th>
-                    <th>Private Key Pass</th>
-                    <th>Currency ID</th>
-                    <th>Country Code</th>
-                    <th>Environment</th>
-                    <th>Roles</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr dir-paginate="p in partners | filter:searchedPartner | itemsPerPage: 10" id="{{p.partnerId}}">
-                    <td>{{p.partnerName}}</td>
-                    <td>{{p.privateKey}}</td>
-                    <td>{{p.privateKeyPass}}</td>
-                    <td>{{p.currencyId}}</td>
-                    <td>{{p.countryCode}}</td>
-                    <td>{{p.environment == 1 ? "Dev" : "Staging"}}</td>
-                    <td style="cursor:pointer" ng-click=""><i class="fa fa-cogs"></i></td>
-                    <td style="cursor:pointer" ng-click="showPartnerModal(p);"><i class="fa fa-pen"></i></td>
-                    <td style="cursor:pointer"><i class="fa fa-trash"></i></td>
-                </tr>
-            </tbody>
-        </table>
-
-        <div ng-hide="searchedPartner">
-            <dir-pagination-controls boundary-links="true" direction-links="true"></dir-pagination-controls>
-        </div>
-    </div>
-    <div id="EmptyPartnersMessage">
-    </div>
-   
 </body>
 </html>
 
@@ -116,8 +144,59 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary"  ng-click="savePartner();">Save</button>
+                <button class="btn btn-primary" ng-click="savePartner();">Save</button>
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="PartnerRolesModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Partner roles</h4>
+            </div>
+            <div class="modal-body" align="center">
+            <div><h3>{{partner.partnerName}}</h3></div>
+                <!--<div class="row">
+                    <div class="col-md-4" ng-repeat="r in partner.roles">
+                        <button class="btn btn-danger" disabled>{{r.roleName}}</button>
+                    </div>
+                </div>-->
+
+                <table>
+                    <tbody>
+                        <tr ng-repeat="r in partner.roles">
+                            <td><button class="btn btn-danger" disabled>{{r.roleName}}</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="confirmDeleteModal">
+    <div class="modal fade confirmation-dialog" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Delete partner</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="span5">Are you sure you want to delete: {{partner.partnerName}}</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="button" ng-click="" class="btn btn-primary">Delete</button>
+                </div>
             </div>
         </div>
     </div>

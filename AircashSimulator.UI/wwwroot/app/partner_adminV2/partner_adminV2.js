@@ -17,7 +17,8 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
     return ({
         getPartnerDetails: getPartnerDetails,
         getRoles: getRoles,
-        savePartner: savePartner
+        savePartner: savePartner,
+        deletePartner:deletePartner
     });
 
     function getRoles() {
@@ -53,10 +54,23 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function deletePartner(partnerId) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "Partner/DeletePartner",
+            data: {
+                PartnerId: partnerId,
+                
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
 }
 ]);
 
-partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filter', 'partnerAdminV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, partnerAdminV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
+partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filter', 'partnerAdminV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location' ,function ($scope, $state, $filter, partnerAdminV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("Admin") == -1) {
@@ -64,13 +78,16 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     }
     $scope.setDefaults = function ()
     {
-        $scope.searchedPartner = null;
+        $scope.searchedPartner = "";
+        $scope.filter = $scope.partners;
     }
+
     $scope.getPartnerDetails = function () {
         partnerAdminV2Service.getPartnerDetails()
             .then(function (response) {
                 if (response) {
                     $scope.partners = response;
+                    $scope.filter = response;         
                 }
             }, () => {
                 console.log("Error, could not fetch partners!");
@@ -78,14 +95,20 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
             });
     };
 
-    $scope.partner = {};
-    $scope.showPartnerModal = function (partner) {
-        $("#PartnerModal").modal("show");
-        angular.copy(partner, $scope.partner);
+    $scope.SearchTable = function () {
+        $scope.filter = $scope.searchedPartner ? $filter('filter')($scope.partners, $scope.searchedPartner) : $scope.partners;
     }
 
-    $scope.hidePartnerModal = function () {
-        $("#PartnerModal").modal("hide");
+
+    $scope.partner = {};
+    $scope.showPartnerModal = function (partner) {
+        angular.copy(partner, $scope.partner);
+        $scope.toggePartnerModal(true);
+    }
+
+    $scope.toggePartnerModal = function (flag)
+    {
+        $("#PartnerModal").modal(flag ? 'show' : 'hide');
     }
 
     $scope.savePartner = function ()
@@ -97,9 +120,52 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
             {
                 console.log("Error, could not save partner!");
             });
-        $scope.hidePartnerModal();
+        $scope.toggePartnerModal();
     }
 
+
+    $scope.confirmDeleteModal = function (Partner) {
+        $scope.partner.partnerName = Partner.partnerName;
+        $scope.partner.partnerId = Partner.partnerId;
+        $scope.toggleDeleteModal(true);
+    };
+
+
+    $scope.toggleDeleteModal = function (flag) {
+        $("#confirmDeleteModal  .modal").modal(flag ? 'show' : 'hide');
+    };
+
+
+    $scope.deletePartner = function () {
+        partnerAdminV2Service.deletePartner($scope.partner.partnerId)
+            .then(function (resposne) {
+                $scope.getPartnerDetails();
+            }, () => {
+                console.log("Error, could not delete partner!");
+            });
+        $scope.toggleDeleteModal();
+    }
+
+
+
+
+    $scope.ShowPartnerRolesModal = function (Partner)
+    {
+        if (Partner.roles != null) {
+            $scope.partner.partnerName = Partner.partnerName;
+            $scope.partner.roles = Partner.roles;
+            $scope.togglePartnerRolesModal(true);
+        }
+        else { alert("Partner has no roles!"); }
+       
+
+
+    }
+
+    $scope.togglePartnerRolesModal = function (flag)
+    {
+        $("#PartnerRolesModal").modal(flag ? "show" : "hide");
+    }
 
 
     $scope.getPartnerDetails();

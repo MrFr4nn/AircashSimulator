@@ -52,15 +52,8 @@ namespace Services.Partner
             return partners;
         }
 
-
         public async Task<List<PartnerDetailVM>> GetPartnerDetails()
         {
-           
-
-            // roles.Where(r => partnerRoles.Select(p => p.PartnerId).Contains(x.PartnerId)).ToList()
-            //roles.Where(r => r.RoleId.ToString() == partnerRoles.Where(p=> p.PartnerId == x.PartnerId).Select(p=>p.PartnerRole).ToString()).ToList()
-            // roles.Where(r => partnerRoles.Where(p=> p.PartnerId == x.PartnerId).Select(parameter=> parameter.PartnerRole).Contains(r.RoleId)).ToList()
-
             var partnersDetails = await AircashSimulatorContext.Partners.Select(x => new PartnerDetailVM
             {
                 PartnerId = x.PartnerId,
@@ -128,8 +121,25 @@ namespace Services.Partner
                 }
             }
             }
+           
+            await AircashSimulatorContext.SaveChangesAsync();
+        }
+
+        public async Task DeletePartner(Guid PartnerId)
+        {
+            var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == PartnerId);
+            AircashSimulatorContext.Partners.Remove(partner);
+
+            var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == PartnerId).ToListAsync();
+            foreach (var role in roles)
+            {
+                AircashSimulatorContext.PartnerRoles.Remove(role);
+            }
+               
 
             await AircashSimulatorContext.SaveChangesAsync();
         }
+
+
     }
 }
