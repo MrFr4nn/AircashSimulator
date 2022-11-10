@@ -99,7 +99,6 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         $scope.filter = $scope.searchedPartner ? $filter('filter')($scope.partners, $scope.searchedPartner) : $scope.partners;
     }
 
-
     $scope.partner = {};
     $scope.showPartnerModal = function (partner) {
         angular.copy(partner, $scope.partner);
@@ -123,6 +122,19 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         $scope.toggePartnerModal();
     }
 
+    $scope.getRoles = function ()
+    {
+        partnerAdminV2Service.getRoles()
+            .then(function (response)
+            {
+                $scope.roles = response;
+            },
+            () => { console.log("Error, could not get roles!"); })
+    }
+
+
+
+
 
     $scope.confirmDeleteModal = function (Partner) {
         $scope.partner.partnerName = Partner.partnerName;
@@ -130,11 +142,9 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         $scope.toggleDeleteModal(true);
     };
 
-
     $scope.toggleDeleteModal = function (flag) {
-        $("#confirmDeleteModal  .modal").modal(flag ? 'show' : 'hide');
+        $("#confirmDeleteModal").modal(flag ? 'show' : 'hide');
     };
-
 
     $scope.deletePartner = function () {
         partnerAdminV2Service.deletePartner($scope.partner.partnerId)
@@ -146,9 +156,6 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         $scope.toggleDeleteModal();
     }
 
-
-
-
     $scope.ShowPartnerRolesModal = function (Partner)
     {
         if (Partner.roles != null) {
@@ -156,10 +163,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
             $scope.partner.roles = Partner.roles;
             $scope.togglePartnerRolesModal(true);
         }
-        else { alert("Partner has no roles!"); }
-       
-
-
+        else { alert("Partner has no roles!"); }  
     }
 
     $scope.togglePartnerRolesModal = function (flag)
@@ -167,6 +171,6 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         $("#PartnerRolesModal").modal(flag ? "show" : "hide");
     }
 
-
     $scope.getPartnerDetails();
+    $scope.getRoles();
 }]);

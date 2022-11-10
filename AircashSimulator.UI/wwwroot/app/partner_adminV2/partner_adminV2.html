@@ -142,6 +142,14 @@
                         </div>
                     </div>
                 </div>
+                <div>
+                    <label class="form-label">Select roles</label>
+                    <select ng-model="selectedRole" ng-options="role as role.roleName for role in roles">
+                    </select>
+
+                </div>
+
+
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="savePartner();">Save</button>
@@ -160,20 +168,12 @@
                 <h4 class="modal-title">Partner roles</h4>
             </div>
             <div class="modal-body" align="center">
-            <div><h3>{{partner.partnerName}}</h3></div>
-                <!--<div class="row">
+                <div><h3>{{partner.partnerName}}</h3></div>
+                <div class="row">
                     <div class="col-md-4" ng-repeat="r in partner.roles">
-                        <button class="btn btn-danger" disabled>{{r.roleName}}</button>
+                        <button class="btn btn-danger" style="margin-bottom:5px" disabled>{{r.roleName}}</button>
                     </div>
-                </div>-->
-
-                <table>
-                    <tbody>
-                        <tr ng-repeat="r in partner.roles">
-                            <td><button class="btn btn-danger" disabled>{{r.roleName}}</button></td>
-                        </tr>
-                    </tbody>
-                </table>
+                </div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
@@ -182,21 +182,18 @@
     </div>
 </div>
 
-
-<div id="confirmDeleteModal">
-    <div class="modal fade confirmation-dialog" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Delete partner</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="span5">Are you sure you want to delete: {{partner.partnerName}}</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" ng-click="" class="btn btn-primary">Delete</button>
-                </div>
+<div class="modal fade" id="confirmDeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Delete partner</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <div class="span5">Are you sure you want to delete partner: {{partner.partnerName}}</div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                <button type="button" ng-click="" class="btn btn-primary">Delete</button>
             </div>
         </div>
     </div>
