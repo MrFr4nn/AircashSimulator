@@ -65,10 +65,10 @@ namespace AircashSimulator.Controllers.Partner
             return Ok("Ok");
         }
 
-        public async Task<IActionResult> DeletePartner(Guid PartnerId)
+        public async Task<IActionResult> DeletePartner(PartnerDetailVM Partner)
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-            await PartnerService.DeletePartner(PartnerId);
+            await PartnerService.DeletePartner(Partner);
             return Ok();
         }
 

@@ -10,7 +10,7 @@ app.config(function ($stateProvider, paginationTemplateProvider) {
             controller: 'partnerAdminV2Ctrl',
             templateUrl: 'app/partner_adminV2/partner_adminV2.html'
         });
-    paginationTemplateProvider.setPath('app/partner_adminV2/customTemplate.html');
+    paginationTemplateProvider.setPath('app/partner_adminV2/customPaginationTemplate.html');
 });
 
 partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
@@ -60,8 +60,7 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
             method: 'POST',
             url: config.baseUrl + "Partner/DeletePartner",
             data: {
-                PartnerId: partnerId,
-                
+                PartnerId: partnerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -103,6 +102,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     $scope.showPartnerModal = function (partner) {
         angular.copy(partner, $scope.partner);
         $scope.toggePartnerModal(true);
+        $scope.checkPartnerRole();
     }
 
     $scope.toggePartnerModal = function (flag)
@@ -112,7 +112,19 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
 
     $scope.savePartner = function ()
     {
-        partnerAdminV2Service.savePartner($scope.partner,null)
+        $scope.sendRoles = [];
+        $scope.filteredRoles = $filter('filter')($scope.roles, { selected: true });
+        console.log($scope.filteredRoles);
+
+        for (var i = 0; i < $scope.filteredRoles.length; i++)
+        {
+            $scope.sendRoles.push({
+                RoleId: $scope.filteredRoles[i].roleId,
+                RoleName : $scope.filteredRoles[i].roleName
+            });  
+        }
+
+        partnerAdminV2Service.savePartner($scope.partner, $scope.sendRoles)
             .then(function (resposne) {
                 $scope.getPartnerDetails();
             }, () =>
@@ -128,13 +140,17 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
             .then(function (response)
             {
                 $scope.roles = response;
+                $scope.setCheckBoxSelected;
             },
             () => { console.log("Error, could not get roles!"); })
     }
 
-
-
-
+    $scope.setCheckBoxSelected = function ()
+    {
+        for (var i = 0; i < $scope.roles.length; i++) {
+            $scope.roles[i].selected = false;
+        }
+    }
 
     $scope.confirmDeleteModal = function (Partner) {
         $scope.partner.partnerName = Partner.partnerName;
@@ -147,6 +163,8 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     };
 
     $scope.deletePartner = function () {
+
+        console.log($scope.partner.partnerId);
         partnerAdminV2Service.deletePartner($scope.partner.partnerId)
             .then(function (resposne) {
                 $scope.getPartnerDetails();
@@ -169,6 +187,28 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     $scope.togglePartnerRolesModal = function (flag)
     {
         $("#PartnerRolesModal").modal(flag ? "show" : "hide");
+       
+    }
+
+
+    $scope.checkPartnerRole = function ()
+    {
+        $scope.setCheckBoxSelected();
+        if ($scope.partner.roles != null)
+        {
+            for (var i = 0; i < $scope.roles.length;i++)
+            {
+                for (var j = 0; j < $scope.partner.roles.length; j++)
+                {
+                    if ($scope.roles[i].roleId == $scope.partner.roles[j].roleId)
+                    {
+                        $scope.roles[i].selected = true;
+                        
+                    }
+                }
+            }
+        }
+      
     }
 
     $scope.getPartnerDetails();

@@ -86,9 +86,12 @@ namespace Services.Partner
                 partner.CountryCode = request.CountryCode;
                 partner.Environment = request.Environment;
 
+
                 var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
                 foreach (var role in roles)
                     AircashSimulatorContext.PartnerRoles.Remove(role);
+
+
 
                 AircashSimulatorContext.Partners.Update(partner);
             }
@@ -111,7 +114,7 @@ namespace Services.Partner
             { 
             if (request.Roles.Count > 0)
             {
-                foreach (var role in request.Roles)
+                    foreach (var role in request.Roles)
                 {
                     await AircashSimulatorContext.PartnerRoles.AddAsync(new PartnerRoleEntity
                     {
@@ -125,16 +128,21 @@ namespace Services.Partner
             await AircashSimulatorContext.SaveChangesAsync();
         }
 
-        public async Task DeletePartner(Guid PartnerId)
+        public async Task DeletePartner(PartnerDetailVM Partner)
         {
-            var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == PartnerId);
+            var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == Partner.PartnerId);
             AircashSimulatorContext.Partners.Remove(partner);
 
-            var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == PartnerId).ToListAsync();
-            foreach (var role in roles)
+            var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == Partner.PartnerId).ToListAsync();
+            if(roles != null)
             {
-                AircashSimulatorContext.PartnerRoles.Remove(role);
+                foreach (var role in roles)
+                {
+                    AircashSimulatorContext.PartnerRoles.Remove(role);
+                }
+
             }
+          
                
 
             await AircashSimulatorContext.SaveChangesAsync();

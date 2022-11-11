@@ -65,7 +65,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr dir-paginate="p in filter  | itemsPerPage: 10">
+                                <tr dir-paginate="p in filter | itemsPerPage: 10" current-page="">
                                     <!--| filter:searchedPartner-->
                                     <td>{{p.partnerName}}</td>
                                     <td>{{p.privateKey}}</td>
@@ -80,13 +80,9 @@
                             </tbody>
                         </table>
                     </div>
-                    <div ng-hide="searchedPartner">
-                        <div class="col-sm-12">
-                            <div class="pull-left">
-                                <dir-pagination-controls boundary-links="true" direction-links="true"></dir-pagination-controls>
-                            </div>
+                        <div>
+                             <dir-pagination-controls  boundary-links="true" direction-links="true" ></dir-pagination-controls>
                         </div>
-                    </div>
                 </div>
                 <div id="EmptyPartnersMessage">
                 </div>
@@ -142,14 +138,24 @@
                         </div>
                     </div>
                 </div>
-                <div>
-                    <label class="form-label">Select roles</label>
-                    <select ng-model="selectedRole" ng-options="role as role.roleName for role in roles">
-                    </select>
-
+                <div class="row">
+                    <div class="col-md-4">
+                        <table class="table table-bordered table-hover table-condensed table-striped">
+                            <tbody>
+                                <tr ng-repeat="r in roles">
+                                    <td>{{r.roleName}}</td>
+                                    <td>
+                                        <input type="checkbox"
+                                               name="selectedRoles[]"
+                                               value="{{r.roleName}}"
+                                               ng-model="r.selected"
+                                               />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary" ng-click="savePartner();">Save</button>
@@ -165,13 +171,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Partner roles</h4>
+                <h4 class="modal-title" >{{partner.partnerName}} roles</h4>
             </div>
             <div class="modal-body" align="center">
-                <div><h3>{{partner.partnerName}}</h3></div>
                 <div class="row">
                     <div class="col-md-4" ng-repeat="r in partner.roles">
-                        <button class="btn btn-danger" style="margin-bottom:5px" disabled>{{r.roleName}}</button>
+                        <button class="btn" style="margin-bottom: 5px; background-color:#008000; color: #FFFFFF; " disabled>{{r.roleName}}</button>
                     </div>
                 </div>
             </div>
@@ -193,7 +198,7 @@
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                <button type="button" ng-click="" class="btn btn-primary">Delete</button>
+                <button type="button" ng-click="deletePartner();" class="btn btn-primary">Delete</button>
             </div>
         </div>
     </div>

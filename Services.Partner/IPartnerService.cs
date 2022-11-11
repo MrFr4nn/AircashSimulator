@@ -13,6 +13,6 @@ namespace Services.Partner
         Task<List<PartnerDetailVM>> GetPartnerDetails();
         Task SavePartner(PartnerDetailVM request);
 
-        Task DeletePartner(Guid PartnerId);
+        Task DeletePartner(PartnerDetailVM Partner);
     }
 }
