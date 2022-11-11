@@ -153,7 +153,6 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
                     $scope.matchPersonalDataRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.matchPersonalDataResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.matchPersonalDataSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.matchPersonalDataResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.matchPersonalDataRequest = JSON.stringify(response.serviceRequest, null, 4);
                 }

@@ -1245,6 +1245,15 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
                     </fieldset>
                 </form>
             </div>
+            <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
+                Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <br />
+                <pre>
+<code>
+{{matchPersonalDataResponse}}
+</code>
+                </pre>
+            </div>
         </div>
     </uib-tab>
 </uib-tabset>

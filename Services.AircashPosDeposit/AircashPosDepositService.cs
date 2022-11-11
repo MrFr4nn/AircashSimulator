@@ -36,6 +36,24 @@ namespace Services.AircashPosDeposit
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
         }
+        public async Task<object> MatchPersonalData(AircashMatchPersonalData aircashMatchPersonalData) 
+        {
+            Response returnResponse = new Response();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == aircashMatchPersonalData.PartnerID).FirstOrDefault();
+            var request = new AircashMatchPersonalDataRQ()
+            {
+                PartnerID = aircashMatchPersonalData.PartnerID.ToString(),
+                AircashUser = aircashMatchPersonalData.AircashUser,
+                PartnerUser = aircashMatchPersonalData.PartnerUser,
+            };
+
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.MatchCompareIdentity}");
+
+            returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashMatchPersonalDataRS>(response.ResponseContent);
+            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
+  
+            return returnResponse;
+        }
         public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<AdditionalParameter> parameters)
         {
             Response returnResponse = new Response();

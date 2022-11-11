@@ -26,13 +26,12 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         }
 
         [HttpPost]
-        public async Task<IActionResult> MatchPersonalData(PersonalDataToCompare personalDataToCompare)
+        public async Task<IActionResult> MatchPersonalData(AircashMatchPersonalData aircashMatchPersonalDataRQ)
         {
-            PersonalDataToCompare pdata = personalDataToCompare;
-            pdata.PartnerID = UserContext.GetPartnerId(User);
-            return Ok();
+            aircashMatchPersonalDataRQ.PartnerID = UserContext.GetPartnerId(User);
+            var response = await AircashPosDepositService.MatchPersonalData(aircashMatchPersonalDataRQ);
+            return Ok(response);
         }
-
 
         [HttpPost]
         public async Task<IActionResult> CheckUser(CheckUserRQ checkUserRQ)
