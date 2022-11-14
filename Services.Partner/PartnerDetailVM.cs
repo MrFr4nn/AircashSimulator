@@ -24,4 +24,12 @@ namespace Services.Partner
         public RoleEnum RoleId { get; set; }
         public string RoleName { get; set; }
     }
+
+
+    public class Environment
+    {
+        public EnvironmentEnum EnvironmentId { get; set; }
+        public string EnvironmentName { get; set; }
+    }
+
 }

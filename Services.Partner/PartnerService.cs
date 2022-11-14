@@ -36,6 +36,7 @@ namespace Services.Partner
             return roles;
         }
 
+    
         private List<PartnerDetailVM> FindPartnerRoles(List<PartnerDetailVM> partners)
         {
             List<Role> roles = GetRoles();
@@ -65,7 +66,8 @@ namespace Services.Partner
                 Environment = x.Environment,
                 Roles = null
             }).ToListAsync();
-            
+            //Take(10).
+
             partnersDetails = FindPartnerRoles(partnersDetails);
 
 
@@ -85,7 +87,6 @@ namespace Services.Partner
                 partner.CurrencyId = request.CurrencyId;
                 partner.CountryCode = request.CountryCode;
                 partner.Environment = request.Environment;
-
 
                 var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
                 foreach (var role in roles)
@@ -148,6 +149,6 @@ namespace Services.Partner
             await AircashSimulatorContext.SaveChangesAsync();
         }
 
-
+      
     }
 }

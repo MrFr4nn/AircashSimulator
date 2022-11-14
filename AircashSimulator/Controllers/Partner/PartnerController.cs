@@ -46,6 +46,7 @@ namespace AircashSimulator.Controllers.Partner
             return Ok(roles);
         }
 
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetPartnerDetails()

@@ -17,6 +17,7 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
     return ({
         getPartnerDetails: getPartnerDetails,
         getRoles: getRoles,
+        getEnvironment: getEnvironment,
         savePartner: savePartner,
         deletePartner:deletePartner
     });
@@ -28,6 +29,16 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function getEnvironment() {
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "Partner/GetEnviromentEnum"
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+
 
     function getPartnerDetails() {
         var request = $http({
@@ -77,7 +88,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     }
     $scope.setDefaults = function ()
     {
-        $scope.searchedPartner = "";
+        $scope.searchedPartner = null;
         $scope.filter = $scope.partners;
     }
 
@@ -86,7 +97,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
             .then(function (response) {
                 if (response) {
                     $scope.partners = response;
-                    $scope.filter = response;         
+                    $scope.filter = response;  
                 }
             }, () => {
                 console.log("Error, could not fetch partners!");
@@ -114,7 +125,6 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     {
         $scope.sendRoles = [];
         $scope.filteredRoles = $filter('filter')($scope.roles, { selected: true });
-        console.log($scope.filteredRoles);
 
         for (var i = 0; i < $scope.filteredRoles.length; i++)
         {
@@ -127,6 +137,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         partnerAdminV2Service.savePartner($scope.partner, $scope.sendRoles)
             .then(function (resposne) {
                 $scope.getPartnerDetails();
+                $scope.setDefaults();
             }, () =>
             {
                 console.log("Error, could not save partner!");
@@ -168,6 +179,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         partnerAdminV2Service.deletePartner($scope.partner.partnerId)
             .then(function (resposne) {
                 $scope.getPartnerDetails();
+                $scope.setDefaults();
             }, () => {
                 console.log("Error, could not delete partner!");
             });
@@ -190,7 +202,6 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
        
     }
 
-
     $scope.checkPartnerRole = function ()
     {
         $scope.setCheckBoxSelected();
@@ -208,9 +219,10 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
                 }
             }
         }
-      
     }
 
     $scope.getPartnerDetails();
     $scope.getRoles();
+   
+
 }]);
