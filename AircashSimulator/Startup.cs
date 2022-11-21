@@ -29,6 +29,7 @@ using Services.Partner;
 using Services.User;
 using Services.AircashFrameV2;
 using Services.AircashPosDeposit;
+using Services.AircashPayoutV2;
 
 namespace AircashSimulator
 {
@@ -91,6 +92,7 @@ namespace AircashSimulator
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IAircashPayoutService, AircashPayoutService>();
+            services.AddTransient<IAircashPayoutV2Service, AircashPayoutV2Service>();
             services.AddTransient<IAircashPaymentAndPayoutService, AircashPaymentAndPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<ITransactionService, TransactionService>();
