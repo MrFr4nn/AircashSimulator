@@ -2,9 +2,11 @@
 using Domain.Entities;
 using Domain.Entities.Enum;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Services.Partner
@@ -70,9 +72,36 @@ namespace Services.Partner
 
             partnersDetails = FindPartnerRoles(partnersDetails);
 
-
+            
             return partnersDetails;
         }
+
+        public async Task<List<PartnerDetailVM>> GetPartnersPage(RequestParameter filter)
+        {
+               
+
+               var partners = await AircashSimulatorContext.Partners
+                     .Select(x => new PartnerDetailVM
+                     {
+                         PartnerId = x.PartnerId,
+                         PartnerName = x.PartnerName,
+                         PrivateKey = x.PrivateKey,
+                         PrivateKeyPass = x.PrivateKeyPass,
+                         CurrencyId = x.CurrencyId,
+                         CountryCode = x.CountryCode,
+                         Environment = x.Environment,
+                         Roles = null
+                     })
+                     .OrderBy(t => t.PartnerName)
+                     .Skip((filter.PageNum - 1) * filter.PageSize)
+                     .Take(filter.PageSize)
+                     .ToListAsync();
+
+                partners = FindPartnerRoles(partners);
+
+                return partners; 
+        } 
+
 
         public async Task SavePartner(PartnerDetailVM request)
         {

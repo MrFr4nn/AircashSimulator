@@ -26,10 +26,10 @@ namespace Services.Partner
     }
 
 
-    public class Environment
+  /*  public class Environment
     {
         public EnvironmentEnum EnvironmentId { get; set; }
         public string EnvironmentName { get; set; }
-    }
+    } */
 
 }

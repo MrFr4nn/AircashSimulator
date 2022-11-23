@@ -24,30 +24,24 @@
 
         <div class="panel-body">
             <div class="col-sm-12">
-                <form>
-                    <div class="container">
-                        <div class="row">
-                            <div class="form-group col-xs-3 col-md-3">
-                                <button class="btn btn-primary" style="margin-top: 25px" ng-click="showPartnerModal();">
-                                    <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Novi partner
-                                </button>
-                                <!--<button class="btn btn-primary" style="margin-top: 25px" ng-click=""><i class="fa fa-search" aria-hidden="true" style="margin-right:3px;"></i>Filter</button>-->
-                            </div>
-                            <div class="col-sm-1">
 
-                            </div>
-
-                            <div class="form-group col-xs-3 col-md-3">
-                                <input type="search" style="margin-top:25px" placeholder="Search partners" class="form-control" ng-model="searchedPartner.partnerName" ng-change="SearchTable();" />
-                            </div>
-                            <div class="col-sm-2">
-                                <button style="margin-top: 25px" ng-disabled="!searchedPartner" type="button" class="btn btn-primary" ng-click="setDefaults();">Clear</button>
-                            </div>
-
+                <div class="container">
+                    <div class="row" style="margin-top: 25px">
+                        <div class="form-group col-xs-3 col-md-3">
+                            <button class="btn btn-primary" ng-click="showPartnerModal();">
+                                <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Novi partner
+                            </button>
+                        </div>
+                        <div class="col-sm-1"></div>
+                        <div class="form-group col-xs-3 col-md-3">
+                            <input type="search" placeholder="Search partners" class="form-control" ng-model="searchedPartner" ng-change="SearchTable();" />
+                        </div>
+                        <div class="col-sm-1">
+                            <button ng-disabled="!searchedPartner" type="button" class="btn btn-primary" ng-click="setSearchBar();">Clear</button>
                         </div>
                     </div>
-                </form>
-                <br />
+                </div>
+
                 <div ng-if="partners" class="container">
                     <div class="table-responsive" style="overflow-x:visible">
                         <table class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
@@ -65,7 +59,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr dir-paginate="p in filter | itemsPerPage: 10" current-page="">
+                                <tr ng-repeat="p in partners">
                                     <td>{{p.partnerName}}</td>
                                     <td>{{p.privateKey}}</td>
                                     <td>{{p.privateKeyPass}}</td>
@@ -79,9 +73,11 @@
                             </tbody>
                         </table>
                     </div>
-                        <div>
-                             <dir-pagination-controls  boundary-links="true" direction-links="true" ></dir-pagination-controls>
+                    <div class="col-sm-12">
+                        <div class="pull-c">
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more> 
                         </div>
+                    </div>
                 </div>
                 <div id="EmptyPartnersMessage">
                 </div>

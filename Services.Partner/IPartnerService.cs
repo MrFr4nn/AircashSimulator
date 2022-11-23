@@ -11,6 +11,7 @@ namespace Services.Partner
         Task<List<PartnerVM>> GetPartners();
         List<Role> GetRoles();
         Task<List<PartnerDetailVM>> GetPartnerDetails();
+        Task<List<PartnerDetailVM>> GetPartnersPage(RequestParameter filter);
         Task SavePartner(PartnerDetailVM request);
 
         Task DeletePartner(PartnerDetailVM Partner);

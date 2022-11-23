@@ -16,6 +16,7 @@ app.config(function ($stateProvider, paginationTemplateProvider) {
 partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         getPartnerDetails: getPartnerDetails,
+        getPartnersPage: getPartnersPage,
         getRoles: getRoles,
         getEnvironment: getEnvironment,
         savePartner: savePartner,
@@ -38,13 +39,26 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-
-
     function getPartnerDetails() {
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "Partner/GetPartnerDetails",
+            url: config.baseUrl + "Partner/GetPartnerDetails"
+            
         });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function getPartnersPage(pageSize,pageNum,search) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "Partner/GetPartnersPage",
+            data: {
+                PageSize: pageSize,
+                PageNum: pageNum,
+                Search: search
+            }
+        }
+        );
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
@@ -80,33 +94,64 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
 }
 ]);
 
-partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filter', 'partnerAdminV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location' ,function ($scope, $state, $filter, partnerAdminV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
+partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filter', 'partnerAdminV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location','$q' ,function ($scope, $state, $filter, partnerAdminV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location,$q) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("Admin") == -1) {
         $location.path('/forbidden');
     }
-    $scope.setDefaults = function ()
-    {
+
+    $scope.partners = [];
+    $scope.pageSize = 10;
+    $scope.pageNumber = 1;
+    $scope.totalLoaded = 0;
+    $scope.busy = false;
+
+    $scope.searchedPartner = null;
+
+    $scope.setDefaults = function () {
         $scope.searchedPartner = null;
-        $scope.filter = $scope.partners;
+        $scope.partners = [];
+        $scope.pageNumber = 1;
     }
 
-    $scope.getPartnerDetails = function () {
-        partnerAdminV2Service.getPartnerDetails()
+    $scope.setSearchBar = function () {
+        $scope.searchedPartner = null;
+        $scope.SearchTable();
+    }
+
+
+    $scope.getPartnersPage = function () {
+        partnerAdminV2Service.getPartnersPage($scope.pageSize, $scope.pageNumber, $scope.searchedPartner)
             .then(function (response) {
                 if (response) {
-                    $scope.partners = response;
-                    $scope.filter = response;  
+                    $scope.totalLoaded = response.length;
+                    $scope.partners = $scope.partners.concat(response);
+                   
                 }
             }, () => {
                 console.log("Error, could not fetch partners!");
-                $("#EmptyPartnersMessage").append("<p>Ne postoji niti jedan partner!</p>")
             });
+
+    };
+
+    $scope.loadMore = function (pageSize) {
+        $scope.pageNumber += 1;
+        $scope.pageSize = pageSize;
+        $scope.getPartnersPage();
     };
 
     $scope.SearchTable = function () {
-        $scope.filter = $scope.searchedPartner ? $filter('filter')($scope.partners, $scope.searchedPartner) : $scope.partners;
+
+     /*   if ($scope.searchedPartner == null || $scope.searchedPartner == "")
+        {
+            $scope.setDefaults();
+            $scope.getPartnersPage();
+            console.log($scope.searchedPartner);
+        } */
+
+      
+
     }
 
     $scope.partner = {};
@@ -136,7 +181,8 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
 
         partnerAdminV2Service.savePartner($scope.partner, $scope.sendRoles)
             .then(function (resposne) {
-                $scope.getPartnerDetails();
+                $scope.setDefaults();
+                $scope.getPartnersPage();
                 $scope.setDefaults();
             }, () =>
             {
@@ -174,11 +220,10 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     };
 
     $scope.deletePartner = function () {
-
-        console.log($scope.partner.partnerId);
         partnerAdminV2Service.deletePartner($scope.partner.partnerId)
             .then(function (resposne) {
-                $scope.getPartnerDetails();
+                $scope.setDefaults();
+                $scope.getPartnersPage();
                 $scope.setDefaults();
             }, () => {
                 console.log("Error, could not delete partner!");
@@ -221,7 +266,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         }
     }
 
-    $scope.getPartnerDetails();
+    $scope.getPartnersPage();
     $scope.getRoles();
    
 
