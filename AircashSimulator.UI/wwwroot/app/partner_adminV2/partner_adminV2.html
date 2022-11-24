@@ -170,11 +170,12 @@
                 <h4 class="modal-title" >{{partner.partnerName}} roles</h4>
             </div>
             <div class="modal-body" align="center">
-                <div class="row">
+                <div class="row" ng-hide="partner.roles == null">
                     <div class="col-md-4" ng-repeat="r in partner.roles">
                         <button class="btn" style="margin-bottom: 5px; background-color:#008000; color: #FFFFFF; " disabled>{{r.roleName}}</button>
                     </div>
                 </div>
+                <div id="EmptyRoles"></div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>

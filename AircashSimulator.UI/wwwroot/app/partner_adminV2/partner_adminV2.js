@@ -15,7 +15,6 @@ app.config(function ($stateProvider, paginationTemplateProvider) {
 
 partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
-        getPartnerDetails: getPartnerDetails,
         getPartnersPage: getPartnersPage,
         getRoles: getRoles,
         getEnvironment: getEnvironment,
@@ -35,15 +34,6 @@ partnerAdminModule.service("partnerAdminV2Service", ['$http', '$q', 'handleRespo
         var request = $http({
             method: 'GET',
             url: config.baseUrl + "Partner/GetEnviromentEnum"
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-
-    function getPartnerDetails() {
-        var request = $http({
-            method: 'GET',
-            url: config.baseUrl + "Partner/GetPartnerDetails"
-            
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -111,7 +101,6 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
 
     $scope.setDefaults = function () {
         $scope.searchedPartner = null;
-        $scope.pageNumber = 1;
         $scope.SearchTable();
     }
 
@@ -140,7 +129,6 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         $scope.partners = [];
         $scope.pageNumber = 1;
         $scope.getPartnersPage();
-
     }
 
     $scope.partner = {};
@@ -170,9 +158,8 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
 
         partnerAdminV2Service.savePartner($scope.partner, $scope.sendRoles)
             .then(function (resposne) {
-                $scope.setDefaults();
-                $scope.getPartnersPage();
-                $scope.setDefaults();
+
+                $scope.SearchTable();
             }, () =>
             {
                 console.log("Error, could not save partner!");
@@ -211,9 +198,7 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     $scope.deletePartner = function () {
         partnerAdminV2Service.deletePartner($scope.partner.partnerId)
             .then(function (resposne) {
-                $scope.setDefaults();
-                $scope.getPartnersPage();
-                $scope.setDefaults();
+                $scope.SearchTable();
             }, () => {
                 console.log("Error, could not delete partner!");
             });
@@ -225,9 +210,15 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
         if (Partner.roles != null) {
             $scope.partner.partnerName = Partner.partnerName;
             $scope.partner.roles = Partner.roles;
+            $('#EmptyRoles').empty();
             $scope.togglePartnerRolesModal(true);
         }
-        else { alert("Partner has no roles!"); }  
+        else {
+            $scope.partner.partnerName = Partner.partnerName;
+            $scope.partner.roles = null;
+            $('#EmptyRoles').empty().append("<h6 style='color:#000000;' class=' alert alert-info'>Partner has no roles!</h6>");
+            $scope.togglePartnerRolesModal(true);
+        }  
     }
 
     $scope.togglePartnerRolesModal = function (flag)
