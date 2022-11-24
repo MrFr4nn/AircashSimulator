@@ -111,15 +111,9 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
 
     $scope.setDefaults = function () {
         $scope.searchedPartner = null;
-        $scope.partners = [];
         $scope.pageNumber = 1;
-    }
-
-    $scope.setSearchBar = function () {
-        $scope.searchedPartner = null;
         $scope.SearchTable();
     }
-
 
     $scope.getPartnersPage = function () {
         partnerAdminV2Service.getPartnersPage($scope.pageSize, $scope.pageNumber, $scope.searchedPartner)
@@ -143,14 +137,9 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
 
     $scope.SearchTable = function () {
 
-     /*   if ($scope.searchedPartner == null || $scope.searchedPartner == "")
-        {
-            $scope.setDefaults();
-            $scope.getPartnersPage();
-            console.log($scope.searchedPartner);
-        } */
-
-      
+        $scope.partners = [];
+        $scope.pageNumber = 1;
+        $scope.getPartnersPage();
 
     }
 
@@ -269,5 +258,4 @@ partnerAdminModule.controller("partnerAdminV2Ctrl", ['$scope', '$state', '$filte
     $scope.getPartnersPage();
     $scope.getRoles();
    
-
 }]);
