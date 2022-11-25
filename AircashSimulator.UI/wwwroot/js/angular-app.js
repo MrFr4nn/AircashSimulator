@@ -17,13 +17,13 @@ var app = angular.module('app', [
     'userAdmin',
     'acRedeemTicket',
     'acFrameV2',
-    'acPosDeposit'
+    'acPosDeposit',
+    'jsonFormatter'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
 {
     $urlRouterProvider.otherwise('/app/dashboard');
-
     $stateProvider
         .state('app', {
             url: '/app',
@@ -75,9 +75,10 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('interceptorService');
 });
 
-app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage', function ($rootScope, $state, setting, $http, $location, $localStorage) {
+app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage', 'JSONexamples', function ($rootScope, $state, setting, $http, $location, $localStorage, JSONexamples) {
     $rootScope.$state = $state;
     $rootScope.setting = setting;
+    $rootScope.JSONexamples = JSONexamples;
 
     if ($localStorage.currentUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
