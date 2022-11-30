@@ -19,29 +19,36 @@ namespace Services.User
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-        public async Task<List<UserVM>> GetUsers()
+        public async Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search)
         {
-            var users = await AircashSimulatorContext.Users
-                .Select(x => new UserVM
-                {
-                    Id = x.UserId,
-                    Name = x.Username
-                }).ToListAsync();
-            return users;
-        }
 
-        public async Task<UserDetailVM> GetUserDetail(Guid userId)
-        {
-            var user = await AircashSimulatorContext.Users
-                .Where(x => x.UserId == userId)
-                .Select(x => new UserDetailVM
-                {
-                    UserId = x.UserId,
-                    UserName = x.Username,
-                    Email = x.Email,
-                    PartnerId = x.PartnerId
-                }).FirstOrDefaultAsync();
-            return user;
+            var users = !String.IsNullOrEmpty(Search) ?
+                     await AircashSimulatorContext.Users
+                    .Where(s => s.Username.Contains(Search))
+                    .Select(x => new UserDetailVM
+                    {
+                        UserId = x.UserId,
+                        UserName = x.Username,
+                        Email = x.Email,
+                        PartnerId = x.PartnerId
+                    })
+                    .OrderBy(t => t.UserName)
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize).ToListAsync()
+                     :
+                     await AircashSimulatorContext.Users
+                    .Select(x => new UserDetailVM
+                    {
+                        UserId = x.UserId,
+                        UserName = x.Username,
+                        Email = x.Email,
+                        PartnerId = x.PartnerId
+                    })
+                    .OrderBy(t => t.UserName)
+                    .Skip((PageNumber - 1) * PageSize)
+                    .Take(PageSize).ToListAsync();
+ 
+            return users;
         }
 
         public async Task SaveUser(UserDetailVM request)

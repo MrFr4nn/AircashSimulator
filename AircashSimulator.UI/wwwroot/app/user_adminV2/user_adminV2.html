@@ -35,14 +35,14 @@
                         <div class="col-sm-1"></div>
                         <div class="form-group col-xs-3 col-md-3">
                             <input type="search"
-                                   placeholder="Search partners"
+                                   placeholder="Search users"
                                    class="form-control"
-                                   ng-model="searchedPartner"
+                                   ng-model="searchUser"
                                    ng-model-options="{debounce: 600}"
                                    ng-change="SearchTable();" />
                         </div>
                         <div class="col-sm-1">
-                            <button ng-disabled="!searchedPartner" type="button" class="btn btn-primary" ng-click="setDefaults();">Clear</button>
+                            <button ng-disabled="!searchUser" type="button" class="btn btn-primary" ng-click="setDefaults();">Clear</button>
                         </div>
                     </div>
                 </div>
@@ -52,20 +52,20 @@
                         <table class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
                             <thead>
                                 <tr>
-                                    <th>Partner name</th>
-                                    <th>Private Key Path</th>
-                                    <th>Private Key Pass</th>
-                                    <th>Currency ID</th>
-                                    <th>Country Code</th>
-                                    <th>Environment</th>
-                                    <th>Roles</th>
+                                    <th>User</th>
+                                    <th>Email</th>
+                                    <th>Partner</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                         
-                                
+                                <tr ng-repeat="u in users">
+                                    <td>{{u.userName}}</td>
+                                    <td>{{u.email}}</td>
+                                    <td>{{}}</td>
+                                    <td>{{}}</td>
+                                </tr>   
                             </tbody>
                         </table>
                     </div>
