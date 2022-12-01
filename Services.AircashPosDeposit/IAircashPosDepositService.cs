@@ -12,5 +12,6 @@ namespace Services.AircashPosDeposit
         Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameter);
         public UserEntity ReturnUser(List<CheckPlayerParameters> checkPlayerParameters);
         Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData);
+        Task<object> MatchPersonalData(AircashMatchPersonalData aircashMatchPersonalDataRQ);
     }
 }
