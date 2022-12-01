@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
             data: {
                 pageTitle: 'User Admin'
             },
-            url: "/userAdmin",
+            url: "/userAdminV2",
             controller: 'userAdminCtrl',
             templateUrl: 'app/user_admin/user_admin.html'
         });
@@ -15,25 +15,19 @@ app.config(function ($stateProvider) {
 userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         getUsers: getUsers,
-        getUserDetail: getUserDetail,
         saveUser: saveUser,
         getPartners: getPartners
     });
 
-    function getUsers() {
-        var request = $http({
-            method: 'GET',
-            url: config.baseUrl + "User/GetUsers"
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
 
-    function getUserDetail(userId) {
+    function getUsers(pageNumber, pageSize, search) {
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "User/GetUserDetail",
+            url: config.baseUrl + "User/GetUsers",
             params: {
-                userId: userId
+                PageNumber: pageNumber,
+                PageSize: pageSize,
+                Search: search
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -57,7 +51,8 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
     function getPartners() {
         var request = $http({
             method: 'GET',
-            url: config.baseUrl + "Partner/GetPartners"
+            url: config.baseUrl + "Partner/GetPartners",
+
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -71,55 +66,51 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         $location.path('/forbidden');
     }
 
+    $scope.users = [];
+    $scope.pageSize = 10;
+    $scope.pageNumber = 1;
+    $scope.totalLoaded = 0;
+    //$scope.busy = false;
+
+
     $scope.setDefaults = function () {
-        $scope.user = null;
-        $scope.selectedUser = null;
+        $scope.searchUser = null;
+        $scope.SearchTable();
     };
 
     $scope.getUsers = function () {
-        userAdminService.getUsers()
+        userAdminService.getUsers($scope.pageNumber, $scope.pageSize, $scope.searchUser)
             .then(function (response) {
-                if (response) {
-                    $scope.users = response;
-                }
+                $scope.totalLoaded = response.length;
+                $scope.users = $scope.users.concat(response);
             }, () => {
                 console.log("Error, could not fetch users.");
             });
-    };
-
-    $scope.getUserDetail = function () {
-        userAdminService.getUserDetail($scope.selectedUser)
-            .then(function (response) {
-                if (response) {
-                    $scope.user = response;
-                }
-            }, () => {
-                console.log("Error, could not fetch user details.");
-            });
-    };
-
-    $scope.saveUser = function () {
-        userAdminService.saveUser($scope.user)
-            .then(function (response) {
-                $scope.setDefaults();
-                $scope.getUsers();
-            }, () => {
-                console.log("Error, could not fetch roles.");
-            });
     }
 
-    $scope.getPartners = function () {
-        userAdminService.getPartners()
-            .then(function (response) {
-                if (response) {
-                    $scope.partners = response;
-                }
-            }, () => {
-                console.log("Error, could not fetch partners.");
-            });
+    $scope.loadMore = function (pageSize) {
+        $scope.pageNumber += 1;
+        $scope.pageSize = pageSize;
+        $scope.getUsers();
     };
 
-    $scope.setDefaults();
+    $scope.SearchTable = function () {
+
+        $scope.users = [];
+        $scope.pageNumber = 1;
+        $scope.getUsers();
+    }
+
+    $scope.addUserModal = function (user) {
+        $scope.toggleAddUserModal(true);
+    }
+
+
+    $scope.toggleAddUserModal = function (flag) {
+        $("#addUserModal").modal(flag ? 'show' : 'hide');
+    };
+
+
     $scope.getUsers();
-    $scope.getPartners();
+
 }]);

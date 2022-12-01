@@ -1,6 +1,7 @@
 ﻿using DataAccess;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Services.Partner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,21 @@ namespace Services.User
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
+        private List<UserDetailVM> GetPartnerName(List<UserDetailVM> users)
+        {
+           
+            foreach(UserDetailVM u in users)
+            {
+                PartnerEntity partner = AircashSimulatorContext.Partners.FirstOrDefault(p => p.PartnerId == u.Partner.Id);
+                if(partner != null)
+                {
+                    u.Partner = new PartnerVM {Id = partner.PartnerId,Name = partner.PartnerName};
+                }
+            }
+            return users;
+        }
+
+
         public async Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search)
         {
 
@@ -30,7 +46,7 @@ namespace Services.User
                         UserId = x.UserId,
                         UserName = x.Username,
                         Email = x.Email,
-                        PartnerId = x.PartnerId
+                        Partner = new PartnerVM {Id = x.PartnerId, Name = null}
                     })
                     .OrderBy(t => t.UserName)
                     .Skip((PageNumber - 1) * PageSize)
@@ -42,12 +58,17 @@ namespace Services.User
                         UserId = x.UserId,
                         UserName = x.Username,
                         Email = x.Email,
-                        PartnerId = x.PartnerId
+                        Partner = new PartnerVM { Id = x.PartnerId, Name = null }
                     })
                     .OrderBy(t => t.UserName)
                     .Skip((PageNumber - 1) * PageSize)
                     .Take(PageSize).ToListAsync();
- 
+
+            if(users != null)
+            {
+                users = GetPartnerName(users);
+            }
+
             return users;
         }
 
@@ -69,7 +90,7 @@ namespace Services.User
             {
                 var user = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == request.UserId);
                 user.Email = request.Email;
-                user.PartnerId = request.PartnerId;
+                user.PartnerId = request.Partner.Id;
                 user.PasswordHash = hash;
 
                 AircashSimulatorContext.Users.Update(user);
@@ -84,8 +105,8 @@ namespace Services.User
                     UserId = Guid.NewGuid(),
                     Username = request.UserName,
                     Email = request.Email,
-                    PartnerId = request.PartnerId,
-                    PasswordHash = hash
+                    PartnerId = request.Partner.Id,
+                PasswordHash = hash
                 });
             }
 

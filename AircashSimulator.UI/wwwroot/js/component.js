@@ -11,7 +11,7 @@
         totalLoaded: '<'
     },
     controller: function () {
-        this.pageSize = 5;
+        this.pageSize = 10;
         this.load = function () {
             console.log(this.pageSize);
             this.out(this.pageSize);
