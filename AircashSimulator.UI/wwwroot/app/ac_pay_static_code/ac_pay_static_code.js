@@ -137,4 +137,3 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
     }
     $scope.GenerateQRFilledForm();
 }]);
-
