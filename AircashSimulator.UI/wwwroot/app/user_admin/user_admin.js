@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
             data: {
                 pageTitle: 'User Admin'
             },
-            url: "/userAdminV2",
+            url: "/userAdmin",
             controller: 'userAdminCtrl',
             templateUrl: 'app/user_admin/user_admin.html'
         });
@@ -70,9 +70,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     $scope.pageSize = 10;
     $scope.pageNumber = 1;
     $scope.totalLoaded = 0;
-    //$scope.busy = false;
-
-
+   
     $scope.setDefaults = function () {
         $scope.searchUser = null;
         $scope.SearchTable();
@@ -101,16 +99,16 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         $scope.getUsers();
     }
 
-    $scope.addUserModal = function (user) {
-        $scope.toggleAddUserModal(true);
+    $scope.user = {};
+    $scope.addEditUserModal = function (user) {
+        angular.copy(user, $scope.user);
+        console.log($scope.user);
+        $scope.toggleAddEditUserModal(true);
     }
 
-
-    $scope.toggleAddUserModal = function (flag) {
+    $scope.toggleAddEditUserModal = function (flag) {
         $("#addUserModal").modal(flag ? 'show' : 'hide');
     };
 
-
     $scope.getUsers();
-
 }]);

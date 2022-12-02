@@ -28,7 +28,7 @@
                 <div class="container">
                     <div class="row" style="margin-top: 25px">
                         <div class="form-group col-xs-3 col-md-3">
-                            <button class="btn btn-primary" ng-click="addUserModal();">
+                            <button class="btn btn-primary" ng-click="addEditUserModal();">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>New user
                             </button>
                         </div>
@@ -64,7 +64,7 @@
                                     <td>{{u.userName}}</td>
                                     <td>{{u.email}}</td>
                                     <td>{{u.partner.name}}</td>
-                                    <td style="cursor:pointer" ng-click=""><i class="fa fa-pen"></i></td>
+                                    <td style="cursor:pointer" ng-click="addEditUserModal(u)"><i class="fa fa-pen"></i></td>
                                     <td style="cursor:pointer" ng-click=""><i class="fa fa-trash"></i></td>
                                 </tr>
                             </tbody>
@@ -91,16 +91,16 @@
             <div class="modal-body" align="center">
                 <div class="col-md-6">
                     <label class="form-label">Username: </label>
-                    <input type="text" class="form-control" />
+                    <input type="text" class="form-control" ng-model="user.userName" />
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Password: </label>
-                    <input type="password" class="form-control" />
+                    <input type="password" class="form-control" ng-model="user.password" />
                 </div>
 
                 <div class="col-md-6">
                     <label class="form-label">Email: </label>
-                    <input type="email" class="form-control" />
+                    <input type="email" class="form-control" ng-model="user.email" />
                 </div>
 
             </div>
