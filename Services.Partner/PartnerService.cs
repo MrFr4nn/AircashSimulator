@@ -20,7 +20,6 @@ namespace Services.Partner
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-
         public async Task<List<PartnerVM>> GetPartners()
         {
             var partners = await AircashSimulatorContext.Partners.Select(x => new PartnerVM
@@ -32,79 +31,51 @@ namespace Services.Partner
             return partners;
         }
 
-
-
-
         public List<Role> GetRoles()
         {
             var roles = Enum.GetValues(typeof(RoleEnum)).Cast<RoleEnum>().ToList().Select(x => new Role { RoleId = x, RoleName = x.ToString() }).ToList();
             roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
             return roles;
         }
-
-    
-        private List<PartnerDetailVM> FindPartnerRoles(List<PartnerDetailVM> partners)
-        {
-            List<Role> roles = GetRoles();
-            var partnersRoles = AircashSimulatorContext.PartnerRoles.Select(r => new PartnerRoleEntity { PartnerId = r.PartnerId, PartnerRole = r.PartnerRole }).ToList();
-
-            foreach(var p in partners)
-            {
-                List<PartnerRoleEntity> partnerRole = partnersRoles.Where(a => a.PartnerId == p.PartnerId).ToList();
-                if(partnerRole.Count() > 0)
-                {
-                    p.Roles = roles.Where(r => partnerRole.Select(r => r.PartnerRole).Contains(r.RoleId)).ToList();
-                }
-            }
-            return partners;
-        }
-
   
         public async Task<List<PartnerDetailVM>> GetPartnersDetail(int pageSize, int pageNumber, string search)
         {
-            var partners = !String.IsNullOrEmpty(search) ?
-                      await AircashSimulatorContext.Partners
-                     .Where(s => s.PartnerName.Contains(search))
-                     .Select(x => new PartnerDetailVM
-                     {
-                         PartnerId = x.PartnerId,
-                         PartnerName = x.PartnerName,
-                         PrivateKey = x.PrivateKey,
-                         PrivateKeyPass = x.PrivateKeyPass,
-                         CurrencyId = x.CurrencyId,
-                         CountryCode = x.CountryCode,
-                         Environment = x.Environment,
-                         Roles = null
-                     })
-                     .OrderBy(t => t.PartnerName)
-                     .Skip((pageNumber - 1) * pageSize)
-                     .Take(pageSize).ToListAsync()
-                      :
-                      await AircashSimulatorContext.Partners
-                     .Select(x => new PartnerDetailVM
-                     {
-                         PartnerId = x.PartnerId,
-                         PartnerName = x.PartnerName,
-                         PrivateKey = x.PrivateKey,
-                         PrivateKeyPass = x.PrivateKeyPass,
-                         CurrencyId = x.CurrencyId,
-                         CountryCode = x.CountryCode,
-                         Environment = x.Environment,
-                         Roles = null
-                     })
-                     .OrderBy(t => t.PartnerName)
-                     .Skip((pageNumber - 1) * pageSize)
-                     .Take(pageSize).ToListAsync();
-                     
+            var query = !String.IsNullOrEmpty(search) ? 
+                     await AircashSimulatorContext.Partners
+                    .Where(s => s.PartnerName.Contains(search)).OrderBy(t => t.PartnerName)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize).ToListAsync()
+                    : await AircashSimulatorContext.Partners.OrderBy(t => t.PartnerName)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize).ToListAsync();
 
-           // var partners = query.ToList();
+            var partners = query.Select(x => new PartnerDetailVM
+            {
+                PartnerId = x.PartnerId,
+                PartnerName = x.PartnerName,
+                PrivateKey = x.PrivateKey,
+                PrivateKeyPass = x.PrivateKeyPass,
+                CurrencyId = x.CurrencyId,
+                CountryCode = x.CountryCode,
+                Environment = x.Environment,
+                Roles = null
+            }).ToList();
 
             if (partners != null)
             {
-                partners = FindPartnerRoles(partners);
+                List<Role> roles = GetRoles();
+                var partnersRoles = AircashSimulatorContext.PartnerRoles.Select(r => new PartnerRoleEntity { PartnerId = r.PartnerId, PartnerRole = r.PartnerRole }).ToList();
+
+                foreach (var p in partners)
+                {
+                    List<PartnerRoleEntity> partnerRole = partnersRoles.Where(a => a.PartnerId == p.PartnerId).ToList();
+                    if (partnerRole.Count() > 0)
+                    {
+                        p.Roles = roles.Where(r => partnerRole.Select(r => r.PartnerRole).Contains(r.RoleId)).ToList();
+                    }
+                }
             }
             return partners;
-
         } 
 
 
@@ -126,8 +97,6 @@ namespace Services.Partner
                 foreach (var role in roles)
                     AircashSimulatorContext.PartnerRoles.Remove(role);
 
-
-
                 AircashSimulatorContext.Partners.Update(partner);
             }
             else
@@ -144,7 +113,6 @@ namespace Services.Partner
                     Environment = request.Environment
                 });
             }
-
             if (request.Roles != null)
             { 
             if (request.Roles.Count > 0)
@@ -159,7 +127,6 @@ namespace Services.Partner
                 }
             }
             }
-           
             await AircashSimulatorContext.SaveChangesAsync();
         }
 
@@ -175,14 +142,9 @@ namespace Services.Partner
                 {
                     AircashSimulatorContext.PartnerRoles.Remove(role);
                 }
-
             }
-          
-               
-
             await AircashSimulatorContext.SaveChangesAsync();
         }
 
-      
     }
 }
