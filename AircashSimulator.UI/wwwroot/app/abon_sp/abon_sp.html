@@ -64,7 +64,8 @@
                             <th>Parameters</th>
                             <th>Type</th>
                             <th>Description</th>
-                            <th>Required</th>
+                            <th>Mandatory</th>
+                            <th>Part of the sequence</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -73,11 +74,13 @@
                             <td>string</td>
                             <td>Unique partner identifier (per currency) provided by Aircash</td>
                             <td>YES</td>
+                            <td>YES</td>
                         </tr>
                         <tr>
                             <td><b>Value</b></td>
                             <td>decimal</td>
                             <td>Coupon value</td>
+                            <td>YES</td>
                             <td>YES</td>
                         </tr>
                         <tr>
@@ -85,17 +88,20 @@
                             <td>string</td>
                             <td>Identifier of the point of sale</td>
                             <td>YES</td>
+                            <td>YES</td>
                         </tr>
                         <tr>
                             <td><b>ISOCurrencySymbol</b></td>
                             <td>string</td>
                             <td>Currency code by ISO 4217 (e.g. for EUR)</td>
                             <td>YES</td>
+                            <td>YES</td>
                         </tr>
                         <tr>
                             <td><b>PartnerTransactionId</b></td>
                             <td>string</td>
                             <td>Identifier of the transaction in partner's system</td>
+                            <td>YES</td>
                             <td>YES</td>
                         </tr>
                         <tr>
@@ -105,6 +111,7 @@
                                 Coupon format – „pdf“, „txt“ or „xml“. If the parameter is invalid or missing, default partner settings are used
                             </td>
                             <td>NO</td>
+                            <td>YES</td>
                         </tr>
                         <tr>
                             <td><b>ContentWidth</b></td>
@@ -113,22 +120,25 @@
                                 Width of the coupon (in mm for pdf, or character number for txt) Minimal value is 20. If the parameter is invalid or missing, default partner settings are used
                             </td>
                             <td>NO</td>
+                            <td>YES</td>
                         </tr>
                         <tr>
-                            <td>Email </td>
+                            <td><b>Email</b></td>
                             <td>string</td>
                             <td>
                                 User email address
                             </td>
                             <td>NO</td>
+                            <td>NO</td>
                         </tr>
                         <tr>
-                            <td>Signature </td>
+                            <td><b>Signature</b></td>
                             <td>string</td>
                             <td>
                                 Sequence that has been digitally signed with the provider's private signature, used for authentication
                             </td>
                             <td>YES</td>
+                            <td>NO</td>
                         </tr>
                     </tbody>
                 </table>
@@ -395,7 +405,8 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                             <th>Parameters</th>
                             <th>Type</th>
                             <th>Description</th>
-                            <th>Required</th>
+                            <th>Mandatory</th>
+                            <th>Part of the sequence</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -403,6 +414,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                             <td><b>PartnerId</b></td>
                             <td>string</td>
                             <td>Unique partner identifier (per currency) provided by Aircash</td>
+                            <td>YES</td>
                             <td>YES</td>
                         </tr>
                         <tr>
@@ -412,6 +424,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                                 Coupon serial number, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
                             </td>
                             <td>YES, optional</td>
+                            <td>YES</td>
                         </tr>
                         <tr>
                             <td><b>PartnerTransactionId</b></td>
@@ -420,11 +433,13 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                                 Identifier of the transaction in partner's system, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
                             </td>
                             <td>YES, optional</td>
+                            <td>YES</td>
                         </tr>
                         <tr>
                             <td><b>PointOfSaleId</b></td>
                             <td>string</td>
                             <td>Identifier of the point of sale</td>
+                            <td>YES</td>
                             <td>YES</td>
                         </tr>
                         <tr>
@@ -434,6 +449,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                                 A sequence that has been digitally signed with the provider's private signature, used for authentication
                             </td>
                             <td>YES</td>
+                            <td>NO</td>
                         </tr>
                     </tbody>
                 </table>
