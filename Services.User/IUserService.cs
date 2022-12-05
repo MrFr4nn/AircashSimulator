@@ -11,5 +11,7 @@ namespace Services.User
        
         Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search);
         Task SaveUser(UserDetailVM request);
+
+        Task DeleteUser(UserDetailVM user);
     }
 }

@@ -20,6 +20,7 @@ namespace Services.User
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
+      
         public async Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search)
         {
             var query = !String.IsNullOrEmpty(Search) ?
@@ -96,6 +97,15 @@ namespace Services.User
             }
 
             await AircashSimulatorContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteUser(UserDetailVM user)
+        {
+            var findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+            AircashSimulatorContext.Users.Remove(findUser);
+
+            await AircashSimulatorContext.SaveChangesAsync();
+
         }
     }
 }

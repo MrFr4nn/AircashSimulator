@@ -16,9 +16,9 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
     return ({
         getUsers: getUsers,
         saveUser: saveUser,
-        getPartners: getPartners
+        getPartners: getPartners,
+        deleteUser: deleteUser
     });
-
 
     function getUsers(pageNumber, pageSize, search) {
         var request = $http({
@@ -41,7 +41,7 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
                 UserId: user.userId,
                 UserName: user.userName,
                 Email: user.email,
-                PartnerId: user.partnerId,
+                Partner: user.partner,
                 Password: user.password
             }
         });
@@ -56,6 +56,20 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function deleteUser(userId) {
+        console.log(userId);
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "User/DeleteUser",
+            data: {
+                UserId : userId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+
 }
 ]);
 
@@ -67,6 +81,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     }
 
     $scope.users = [];
+    $scope.partners = [];
     $scope.pageSize = 10;
     $scope.pageNumber = 1;
     $scope.totalLoaded = 0;
@@ -99,16 +114,71 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         $scope.getUsers();
     }
 
+    $scope.getPartners = function () {
+        userAdminService.getPartners()
+            .then(function (response) {
+                $scope.partners = response;
+            }, () => {
+                console.log("Error, could not find partners.");
+            });
+    }
+
     $scope.user = {};
     $scope.addEditUserModal = function (user) {
         angular.copy(user, $scope.user);
-        console.log($scope.user);
+        $scope.ConfirmPassword = null;
         $scope.toggleAddEditUserModal(true);
+        $scope.user.partner = $scope.user.partner;
+        
     }
 
     $scope.toggleAddEditUserModal = function (flag) {
         $("#addUserModal").modal(flag ? 'show' : 'hide');
     };
 
+
+    $scope.checkPassword = function () {
+        if ($scope.user.password == $scope.ConfirmPassword) {
+            $scope.saveUser();
+        }
+        else {
+            alert("Passwords do not match!");
+        }
+
+    }
+
+    $scope.saveUser = function () {
+        userAdminService.saveUser($scope.user)
+            .then(function (response) {
+                $scope.SearchTable();
+        }, () => {
+            console.log("Error, could not save user.");
+            });
+        $scope.toggleAddEditUserModal();
+    }
+
+    $scope.deleteUserModal = function (user) {
+        angular.copy(user, $scope.user);
+        $scope.toggleDeleteUserModal(true);
+    }
+
+    $scope.toggleDeleteUserModal = function (flag) {
+        $("#confirmDeleteModal").modal(flag ? 'show' : 'hide');
+    };
+
+
+    $scope.deleteUser = function () {
+        userAdminService.deleteUser($scope.user.userId)
+            .then(function (response) {
+                $scope.SearchTable();
+            }, () => {
+                console.log("Error, could not delete user.");
+            });
+        $scope.toggleDeleteUserModal();
+    }
+
+
+
     $scope.getUsers();
+    $scope.getPartners();
 }]);

@@ -45,5 +45,18 @@ namespace AircashSimulator.Controllers.User
             await UserService.SaveUser(request);
             return Ok();
         }
+
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteUser(UserDetailVM user)
+        {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+            await UserService.DeleteUser(user);
+            return Ok();
+        }
+
+
+
     }
 }
