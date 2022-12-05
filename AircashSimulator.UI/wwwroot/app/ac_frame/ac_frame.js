@@ -65,6 +65,13 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
         $location.path('/forbidden');
     }
 
+    $scope.initiateRequestExample = $rootScope.JSONexamples.aircashFrame.initiate.requestExample;
+    $scope.initiateResponseExample = $rootScope.JSONexamples.aircashFrame.initiate.responseExample;
+    $scope.initiateErrorResponseExample = $rootScope.JSONexamples.aircashFrame.initiate.errorResponseExample;
+
+    $scope.transactionStatusRequestExample = $rootScope.JSONexamples.aircashFrame.transactionStatus.requestExample;
+    $scope.transactionStatusErrorResponseExample = $rootScope.JSONexamples.aircashFrame.transactionStatus.errorResponseExample;
+
     $scope.initiateModels = [0, 1, 2];
 
     $scope.initiateModelSelected = $scope.initiateModels[0];
@@ -118,12 +125,16 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
         acFrameService.initiate($scope.initiateModel.payType, $scope.initiateModel.payMethod, $scope.initiateModel.amount, $scope.initiateModel.currency)
             .then(function (response) {
                 if (response) {
+                    $scope.copyInitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceInitiate = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.InitiateServiceRequestObject = response.serviceRequest;
+                    $scope.InitiateServiceResponseObject = response.serviceResponse;
                     $scope.frameUrl = response.serviceResponse.url;
                     $scope.getTransactions(true);
                 }
@@ -141,6 +152,8 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
         acFrameService.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
+                    $scope.copyStatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceStatus = response.sequence;
@@ -150,6 +163,8 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
                         response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
                     }
                     $scope.StatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.StatusServiceResponseObject = response.serviceResponse;
+                    $scope.StatusServiceRequestObject = response.serviceRequest;
                 }
                 $scope.statusBusy = false;
                 $scope.statusResponded = true;
@@ -180,5 +195,18 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.displayTooltip = [];
+
+    $scope.copyToClipboard = function (CopyRQ, i) {
+        navigator.clipboard.writeText(CopyRQ);
+
+        $scope.displayTooltip[i] = true;
+
+        setTimeout(function () {
+            $scope.displayTooltip[i] = false;
+            $scope.$apply();
+        }, 1000);
+    } 
 
 }]);

@@ -72,6 +72,18 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         $location.path('/forbidden');
     }
 
+    $scope.checkUserRequestExample = $rootScope.JSONexamples.aircashPayout.checkUser.requestExample;
+    $scope.checkUserResponseExample = $rootScope.JSONexamples.aircashPayout.checkUser.responseExample;
+    $scope.checkUserErrorResponseExample = $rootScope.JSONexamples.aircashPayout.checkUser.errorResponseExample;
+
+    $scope.createPayoutRequestExample = $rootScope.JSONexamples.aircashPayout.createPayout.requestExample;
+    $scope.createPayoutResponseExample = $rootScope.JSONexamples.aircashPayout.createPayout.responseExample;
+    $scope.createPayoutErrorResponseExample = $rootScope.JSONexamples.aircashPayout.createPayout.errorResponseExample;
+
+    $scope.checkTransactionStatusRequestExample = $rootScope.JSONexamples.aircashPayout.checkTransactionStatus.requestExample;
+    $scope.checkTransactionStatusResponseExample = $rootScope.JSONexamples.aircashPayout.checkTransactionStatus.responseExample;
+    $scope.checkTransactionStatusErrorResponseExample = $rootScope.JSONexamples.aircashPayout.checkTransactionStatus.errorResponseExample;
+
     $scope.checkUserModel = {
         phoneNumber: '38512345678'
     };
@@ -108,12 +120,16 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             .then(function (response) {
 
                 if (response) {
+                    $scope.copyCheckUserRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.checkUserRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.checkUserResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkUserSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.checkUserResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.checkUserRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkUserResponseObject = response.serviceResponse;
+                    $scope.checkUserRequestObject = response.serviceRequest;
                 }
                 $scope.checkUserServiceBusy = false;
                 $scope.checkUserServiceResponse = true;
@@ -128,12 +144,16 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             .then(function (response) {
 
                 if (response) {
+                    $scope.copyCreatePayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.createPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.createPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.createPayoutSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.createPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.createPayoutResponseObject = response.serviceResponse;
+                    $scope.createPayoutRequestObject = response.serviceRequest;
                     $scope.getTransactions(true);
                 }
                 $scope.createPayoutServiceBusy = false;
@@ -149,12 +169,16 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             .then(function (response) {
 
                 if (response) {
+                    $scope.copyCheckTransactionStatusRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.checkTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.checkTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkTransactionStatusSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.checkTransactionStatusResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.checkTransactionStatusRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkTransactionStatusResponseObject = response.serviceResponse;
+                    $scope.checkTransactionStatusRequestObject = response.serviceRequest;
                 }
                 $scope.checkTransactionStatusServiceBusy = false;
                 $scope.checkTransactionStatusServiceResponse = true;
@@ -185,4 +209,17 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.displayTooltip = [];
+
+    $scope.copyToClipboard = function (CopyRQ, i) {
+        navigator.clipboard.writeText(CopyRQ);
+
+        $scope.displayTooltip[i] = true;
+
+        setTimeout(function () {
+            $scope.displayTooltip[i] = false;
+            $scope.$apply();
+        }, 1000);
+    }
 }]);

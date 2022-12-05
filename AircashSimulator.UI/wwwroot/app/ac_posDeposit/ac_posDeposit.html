@@ -247,54 +247,13 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}      
-        </pre>
+        <json-formatter open="3" json=checkUserInputParametersExample></json-formatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}
-
-    
+            <json-formatter open="3" json=checkUserInputParametersExample></json-formatter>
+  
 Sequence:
 Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=496fbe8e-ca5a-42df-8999-cdde0c14ae3a&PartnerUserID=12345&PhoneNumber=385981234567
 
@@ -333,17 +292,16 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
     <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
         <pre>
 <code>
-{
-    "status": 1
-}
+    <json-formatter open="1" json=checkUserOutputParametersExample.first></json-formatter>
+
     or
-{
-    "status": 2
-}
+
+    <json-formatter open="1" json=checkUserOutputParametersExample.second></json-formatter>
+    
     or
-{
-    "status": 3
-}
+
+    <json-formatter open="1" json=checkUserOutputParametersExample.third></json-formatter>
+
 </code>
         </pre>
     </uib-tab>
@@ -397,20 +355,14 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserRequest}}
-</code>
-</pre>
+                <button ng-click="copyToClipboard(copyCheckUserRequest , 0);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <span ng-show="displayTooltip[0]" class="p-3"><b>Copied</b></span>
+                <json-formatter open="3" json=checkUserRequestObject></json-formatter>
                 Sequence: {{checkUserSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserResponse}}
-</code>
-</pre>
+                <json-formatter open="3" json=checkUserResponseObject></json-formatter>
             </div>
         </div>
     </uib-tab>
@@ -533,65 +485,12 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-1" heading="Request parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
-
-        </pre>
+        <json-formatter open="3" json=createPayoutRequestExample></json-formatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
+            <json-formatter open="3" json=createPayoutRequestExample></json-formatter>
 
 Sequence:
 Amount=123.45&CurrencyID=978&Parameters=Key=email&Value=user@example.net&Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=1b8a6445-d23c-4a3a-acc0-f05abcebb081&PartnerTransactionID=123..abc..123&PartnerUserID=12345&PhoneNumber=385981234567
@@ -622,11 +521,7 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-4" heading="Response parameters example" classes="nav-item">
-        <pre>
-{
-    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc"
-}
-    </pre>
+        <json-formatter open="1" json=createPayoutResponseExample></json-formatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-5" heading="Error message" classes="nav-item">
         <div class="row">
@@ -703,19 +598,13 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-     <code>
-{{createPayoutRequest}}
-    </code>
-</pre>
+                <button ng-click="copyToClipboard(copyCreatePayoutRequest , 1);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
+                <json-formatter open="3" json=createPayoutRequestObject></json-formatter>
             </div>
             <div class="col-md-3" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{createPayoutResponse}}
-</code>
-</pre>
+                <json-formatter open="3" json=createPayoutResponseObject></json-formatter>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-0.5"></div>
@@ -786,51 +675,11 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
         <div class="row">
             <div class="col-md-6">
                 <h5>Email as identifier</h5>
-                <pre>
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }],
-  "Signature": "c6RDz....Pc="
-}      
-        </pre>
+                <json-formatter open="3" json=checkPlayerInputParametersExample.emailAsIdentifier></json-formatter>
             </div>
             <div class="col-md-6">
                 <h5>Username as identifier</h5>
-                <pre>
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "username",
-            "Value": "aircash"
-        }],
-  "Signature": "123...abc"
-}      
-        </pre>
+                <json-formatter open="3" json=checkPlayerInputParametersExample.usernameAsIdentifier></json-formatter>
             </div>
         </div>
     </uib-tab>
@@ -838,25 +687,7 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
         <pre>
 Request example:
 {
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }],
-  "Signature": "c6RDz....Pc="
-}
-
+            <json-formatter open="3" json=checkPlayerInputParametersExample.emailAsIdentifier></json-formatter>
     
 Sequence:
 Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=email&Value=user@example.net<br />
@@ -948,33 +779,11 @@ c6RDzVTWgWwmdOloPtzT0fO9G5xYUkUfNGlyubACYpCyTYNhJeiKK0ieapy9ATV/lYRQ5M3Ek21gegF6
         <div class="row">
             <div class="col-md-6">
                 <h5>Player found, deposit possible</h5>
-                <pre>
-{
-    "IsPlayer": true,
-    "Error": null,
-    "Parameters": [
-    {
-        "Key": "PartnerUserID",
-        "Value": "12345",
-        "Type": "String"
-    }
-  ]
-}
-        </pre>
+                <json-formatter open="3" json=checkPlayerOutputParametersExample.depositPossible></json-formatter>
             </div>
             <div class="col-md-6">
                 <h5>Deposit not possible</h5>
-                <pre>
-{
-    "IsPlayer": False,
-    "Error": 
-    {
-        "ErrorCode": 500,
-        "ErrorMessage": "Unable to find user account",
-    }
-    "Parameters": null
-}
-        </pre>
+                <json-formatter open="3" json=checkPlayerOutputParametersExample.depositNotPossible></json-formatter>
             </div>
         </div>
     </uib-tab>
@@ -1052,34 +861,12 @@ c6RDzVTWgWwmdOloPtzT0fO9G5xYUkUfNGlyubACYpCyTYNhJeiKK0ieapy9ATV/lYRQ5M3Ek21gegF6
         </table>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment-tab-1" heading="Input parameters example" classes="nav-item">
-        <pre>
-{
-    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "Amount": 123.45,
-    "Parameters": [
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }
-    ],
-    "Signature": "Gng+D6.../4="
-}      
-        </pre>
+        <json-formatter open="3" json=createAndConfirmPaymentInputParametersExample></json-formatter>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-{
-    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "Amount": 123.45,
-    "Parameters": [
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }
-    ],
-    "Signature": "Gng+D6.../4="
-}
+            <json-formatter open="3" json=createAndConfirmPaymentInputParametersExample></json-formatter>
 
 
 Sequence:
@@ -1163,37 +950,11 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
         <div class="row">
             <div class="col-md-6">
                 <h5>Successful transaction</h5>
-                <pre>
-<code>
-{
-    "Success": true,
-    "PartnerTransactionID": "ABC...123",
-    "Parameters": [
-        {
-            "Key": "PartnerUserID",
-            "Value": "12345",
-            "Type": "String"
-        }
-    ]
-}
-</code>
-        </pre>
+                <json-formatter open="3" json=createAndConfirmPaymentOutputParametersExample.successfulTransaction></json-formatter>
             </div>
             <div class="col-md-6">
                 <h5>Transation with error</h5>
-                <pre>
-                <code>
-                        {
-                        "Success ": false,
-                        "Error": {
-                        "ErrorCode": 500,
-                        "ErrorMessage": "Unable to find user account"
-                        },
-                        "Parameters": null
-                        }
-
-                    </code>
-        </pre>
+                <json-formatter open="3" json=createAndConfirmPaymentOutputParametersExample.transationWithError></json-formatter>
             </div>
         </div>
     </uib-tab>

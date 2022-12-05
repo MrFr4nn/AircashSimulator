@@ -85,6 +85,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         $location.path('/forbidden');
     }
 
+    $scope.initiateRequestExample = $rootScope.JSONexamples.aircashFrameV2.initiate.requestExample;
+    $scope.initiateResponseExample = $rootScope.JSONexamples.aircashFrameV2.initiate.responseExample;
+    $scope.initiateErrorResponseExample = $rootScope.JSONexamples.aircashFrameV2.initiate.errorResponseExample;
+
+    $scope.transactionStatusRequestExample = $rootScope.JSONexamples.aircashFrameV2.transactionStatus.requestExample;
+    $scope.transactionStatusErrorResponseExample = $rootScope.JSONexamples.aircashFrameV2.transactionStatus.errorResponseExample;
+
     //$scope.successUrl = "https://localhost:44317/#!/success";
     //$scope.declineUrl = "https://localhost:44317/#!/decline";
     //$scope.cancelUrl = "https://localhost:44317/#!/decline";
@@ -157,6 +164,8 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.InitiateServiceRequestObject = response.serviceRequest;
+                    $scope.InitiateServiceResponseObject = response.serviceResponse;
 
                     //$scope.getRedirectModal(response.serviceResponse.transactionId);
                     new AircashFrame.WindowCheckout({
@@ -226,6 +235,8 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
                         response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
                     }
                     $scope.StatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.StatusServiceResponseObject = response.serviceResponse;
+                    $scope.StatusServiceRequestObject = response.serviceRequest;
                 }
                 $scope.statusBusy = false;
                 $scope.statusResponded = true;
