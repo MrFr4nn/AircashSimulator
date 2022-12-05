@@ -891,7 +891,6 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             <br />
             <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
                 Request({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-disabled="$ctrl.rgPartner.aircashIdentificator == null || editableForm.$visible" ng-click="$event.preventDefault(); $ctrl.copyToClipboard($ctrl.rgPartner.aircashIdentificator);" class="btn btn-default w-100px me-5px"><i class="fa fa-copy"></i></button>
                 <button ng-click="copyToClipboard(copyCancelTransactionServiceRequest,3);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
                 <span ng-show="displayTooltip[3]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="1" json=cancelTransactionServiceRequestObject></json-formatter>
