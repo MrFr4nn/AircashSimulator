@@ -158,6 +158,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
             .then(function (response) {
                 console.log(response);
                 if (response) {
+                    $scope.copyInitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceInitiate = response.sequence;
@@ -226,6 +227,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         acFrameV2Service.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
+                    $scope.copyStatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceStatus = response.sequence;
