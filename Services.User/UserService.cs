@@ -20,53 +20,38 @@ namespace Services.User
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-        private List<UserDetailVM> GetPartnerName(List<UserDetailVM> users)
-        {
-           
-            foreach(UserDetailVM u in users)
-            {
-                PartnerEntity partner = AircashSimulatorContext.Partners.FirstOrDefault(p => p.PartnerId == u.Partner.Id);
-                if(partner != null)
-                {
-                    u.Partner = new PartnerVM {Id = partner.PartnerId,Name = partner.PartnerName};
-                }
-            }
-            return users;
-        }
-
-
         public async Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search)
         {
-
-            var users = !String.IsNullOrEmpty(Search) ?
+            var query = !String.IsNullOrEmpty(Search) ?
                      await AircashSimulatorContext.Users
                     .Where(s => s.Username.Contains(Search))
-                    .Select(x => new UserDetailVM
-                    {
-                        UserId = x.UserId,
-                        UserName = x.Username,
-                        Email = x.Email,
-                        Partner = new PartnerVM {Id = x.PartnerId, Name = null}
-                    })
-                    .OrderBy(t => t.UserName)
+                    .OrderBy(t => t.Username)
                     .Skip((PageNumber - 1) * PageSize)
                     .Take(PageSize).ToListAsync()
                      :
                      await AircashSimulatorContext.Users
-                    .Select(x => new UserDetailVM
-                    {
-                        UserId = x.UserId,
-                        UserName = x.Username,
-                        Email = x.Email,
-                        Partner = new PartnerVM { Id = x.PartnerId, Name = null }
-                    })
-                    .OrderBy(t => t.UserName)
+                    .OrderBy(t => t.Username)
                     .Skip((PageNumber - 1) * PageSize)
                     .Take(PageSize).ToListAsync();
 
-            if(users != null)
+            var users = query.Select(x => new UserDetailVM
             {
-                users = GetPartnerName(users);
+                UserId = x.UserId,
+                UserName = x.Username,
+                Email = x.Email,
+                Partner = new PartnerVM { Id = x.PartnerId, Name = null }
+            }).ToList();
+
+            if (users != null)
+            {
+                foreach (UserDetailVM u in users)
+                {
+                    PartnerEntity partner = AircashSimulatorContext.Partners.FirstOrDefault(p => p.PartnerId == u.Partner.Id);
+                    if (partner != null)
+                    {
+                        u.Partner = new PartnerVM { Id = partner.PartnerId, Name = partner.PartnerName };
+                    }
+                }
             }
 
             return users;
