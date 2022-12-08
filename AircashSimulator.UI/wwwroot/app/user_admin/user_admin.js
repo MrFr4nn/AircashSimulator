@@ -125,7 +125,14 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     $scope.addEditUserModal = function (user) {
         angular.copy(user, $scope.user);
         $scope.ConfirmPassword = null;
-        $("#selPartner").val($scope.user.partner.id).change();
+        if ($scope.user.partner != undefined) {
+            $("#selPartner").val($scope.user.partner.id).change();
+        }
+        else
+        {
+            $("#selPartner").val(null).change();
+        }
+       
         $scope.toggleAddEditUserModal(true);
     }
 
@@ -146,8 +153,14 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         var partnerId = $('#selPartner').val();
         var filter = $filter('filter')($scope.partners, { 'id': partnerId }, true)[0];
 
+        if (filter == null) {
+            alert("Select partner!");
+            return;
+        }
+            
+
         $scope.user.partner = filter;
-     
+
         userAdminService.saveUser($scope.user)
             .then(function (response) {
                 $scope.SearchTable();
@@ -178,5 +191,5 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
 
     $scope.getUsers();
     $scope.getPartners();
-    $("#selPartner").select2();
+    $("#selPartner").select2({placeholder: "Select partner"});
 }]);
