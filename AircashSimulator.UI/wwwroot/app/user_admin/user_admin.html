@@ -115,15 +115,16 @@
 
                             <div class="form-group">
                                 <label class="form-label">Partner</label>
-                                <select class="form-control" ng-options="partner.name for partner in partners track by partner.id"  ng-model="user.partner">
-                                </select>
+                                <select id="selPartner">
+                                    <option ng-repeat="partner in partners" value="{{partner.id}}">{{partner.name}}</option>
+                               </select> 
                             </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                <button type="button" ng-click="checkPassword();" class="btn btn-primary" ng-disabled="user.userName == '' || user.password == '' || user.password == null || user.email == '' || user.partner == null">Save user</button>
+                <button type="button" ng-click="checkPassword();" class="btn btn-primary" ng-disabled="user.userName == '' || user.password == '' || user.password == null || ConfirmPassword == '' || ConfirmPassword == null || user.email == '' || user.partner == null">Save user</button>
             </div>
         </div>
     </div>

@@ -5,6 +5,7 @@ using Services.Partner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,26 @@ namespace Services.User
             AircashSimulatorContext = aircashSimulatorContext;
         }
 
-      
         public async Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search)
         {
+              //Expression<Func<UserEntity, bool>> predicate = x => true;
+              // if (!String.IsNullOrEmpty(Search))
+              //     predicate = predicate.AndAlso(x => x.PartnerName.Contains(Search));
+
+              //var users = await AircashSimulatorContext.Users
+              //        .Where(predicate)
+              //        .Select(x => new UserDetailVM
+              //        {
+              //            UserId = x.UserId,
+              //            UserName = x.Username,
+              //            Email = x.Email,
+              //            Partner = new PartnerVM { Id = x.PartnerId, Name = null }
+              //        })
+              //        .OrderBy(t => t.UserName)
+              //        .Skip((PageNumber - 1) * PageSize)
+              //        .Take(PageSize).ToListAsync();  
+
+
             var query = !String.IsNullOrEmpty(Search) ?
                      await AircashSimulatorContext.Users
                     .Where(s => s.Username.Contains(Search))
@@ -42,6 +60,8 @@ namespace Services.User
                 Email = x.Email,
                 Partner = new PartnerVM { Id = x.PartnerId, Name = null }
             }).ToList();
+
+            ////////////////////////////////////////////////////////////////////
 
             if (users != null)
             {

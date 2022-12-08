@@ -68,8 +68,6 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
-
 }
 ]);
 
@@ -127,8 +125,8 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     $scope.addEditUserModal = function (user) {
         angular.copy(user, $scope.user);
         $scope.ConfirmPassword = null;
+        $("#selPartner").val($scope.user.partner.id).change();
         $scope.toggleAddEditUserModal(true);
-        $scope.user.partner = $scope.user.partner; 
     }
 
     $scope.toggleAddEditUserModal = function (flag) {
@@ -145,13 +143,18 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     }
 
     $scope.saveUser = function () {
+        var partnerId = $('#selPartner').val();
+        var filter = $filter('filter')($scope.partners, { 'id': partnerId }, true)[0];
+
+        $scope.user.partner = filter;
+     
         userAdminService.saveUser($scope.user)
             .then(function (response) {
                 $scope.SearchTable();
         }, () => {
             console.log("Error, could not save user.");
             });
-        $scope.toggleAddEditUserModal();
+        $scope.toggleAddEditUserModal(); 
     }
 
     $scope.deleteUserModal = function (user) {
@@ -162,7 +165,6 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     $scope.toggleDeleteUserModal = function (flag) {
         $("#confirmDeleteModal").modal(flag ? 'show' : 'hide');
     };
-
 
     $scope.deleteUser = function () {
         userAdminService.deleteUser($scope.user.userId)
@@ -176,4 +178,5 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
 
     $scope.getUsers();
     $scope.getPartners();
+    $("#selPartner").select2();
 }]);
