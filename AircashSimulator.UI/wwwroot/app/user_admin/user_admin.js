@@ -128,14 +128,12 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         angular.copy(user, $scope.user);
         $scope.ConfirmPassword = null;
         $scope.toggleAddEditUserModal(true);
-        $scope.user.partner = $scope.user.partner;
-        
+        $scope.user.partner = $scope.user.partner; 
     }
 
     $scope.toggleAddEditUserModal = function (flag) {
         $("#addUserModal").modal(flag ? 'show' : 'hide');
     };
-
 
     $scope.checkPassword = function () {
         if ($scope.user.password == $scope.ConfirmPassword) {
@@ -144,7 +142,6 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         else {
             alert("Passwords do not match!");
         }
-
     }
 
     $scope.saveUser = function () {
@@ -176,8 +173,6 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
             });
         $scope.toggleDeleteUserModal();
     }
-
-
 
     $scope.getUsers();
     $scope.getPartners();

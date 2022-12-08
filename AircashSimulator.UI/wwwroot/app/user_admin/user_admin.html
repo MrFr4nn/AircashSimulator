@@ -95,7 +95,7 @@
                     <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label">Username: </label>
-                                <input type="text" class="form-control" ng-model="user.userName" disabled/>
+                                <input type="text" class="form-control" ng-model="user.userName"/>
                             </div>
 
                             <div class="mb-3">
@@ -116,20 +116,14 @@
                             <div class="form-group">
                                 <label class="form-label">Partner</label>
                                 <select class="form-control" ng-options="partner.name for partner in partners track by partner.id"  ng-model="user.partner">
-                                
-                                
                                 </select>
                             </div>
-
                     </div>
-
-                    <div class="col-md-3"></div>
-
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                <button type="button" ng-click="checkPassword();" class="btn btn-primary" ng-disabled="user.userName == '' || user.password == '' || user.password == null || user.email == '' || user.partner == null">Add user</button>
+                <button type="button" ng-click="checkPassword();" class="btn btn-primary" ng-disabled="user.userName == '' || user.password == '' || user.password == null || user.email == '' || user.partner == null">Save user</button>
             </div>
         </div>
     </div>
