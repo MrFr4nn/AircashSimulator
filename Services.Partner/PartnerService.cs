@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using AircashSimulator.Extensions;
 
 namespace Services.Partner
 {
@@ -40,26 +41,26 @@ namespace Services.Partner
   
         public async Task<List<PartnerDetailVM>> GetPartnersDetail(int pageSize, int pageNumber, string search)
         {
-            var query = !String.IsNullOrEmpty(search) ? 
-                     await AircashSimulatorContext.Partners
-                    .Where(s => s.PartnerName.Contains(search)).OrderBy(t => t.PartnerName)
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize).ToListAsync()
-                    : await AircashSimulatorContext.Partners.OrderBy(t => t.PartnerName)
+            Expression<Func<PartnerEntity, bool>> predicate = x => true;
+
+            if (!String.IsNullOrEmpty(search))
+                predicate = predicate.AndAlso(x => x.PartnerName.Contains(search));
+
+            var partners = await AircashSimulatorContext.Partners
+                    .Where(predicate).OrderBy(t => t.PartnerName)
+                    .Select(x => new PartnerDetailVM
+                    {
+                        PartnerId = x.PartnerId,
+                        PartnerName = x.PartnerName,
+                        PrivateKey = x.PrivateKey,
+                        PrivateKeyPass = x.PrivateKeyPass,
+                        CurrencyId = x.CurrencyId,
+                        CountryCode = x.CountryCode,
+                        Environment = x.Environment,
+                        Roles = null
+                    })
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToListAsync();
-
-            var partners = query.Select(x => new PartnerDetailVM
-            {
-                PartnerId = x.PartnerId,
-                PartnerName = x.PartnerName,
-                PrivateKey = x.PrivateKey,
-                PrivateKeyPass = x.PrivateKeyPass,
-                CurrencyId = x.CurrencyId,
-                CountryCode = x.CountryCode,
-                Environment = x.Environment,
-                Roles = null
-            }).ToList();
 
             if (partners != null)
             {
