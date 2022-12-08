@@ -129,32 +129,39 @@ namespace Services.AircashPosDeposit
             return returnResponse;
         }
 
-        public async Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameter)
+        public async Task<object> CheckPlayer(AircashUserData checkPlayer)
         {
             var response = new CheckPlayerResponse();
-            UserEntity User = ReturnUser(checkPlayerParameter);
+            UserEntity User = ReturnUser(checkPlayer.Identifier);
             int errorcode = 0;
             string errormessage = "";
+
+            AircashMatchPersonalData aircashMatchPersonalData = new AircashMatchPersonalData();
+            PersonalData personalDataUser = new PersonalData();
+            personalDataUser.FirstName = User.FirstName;
+            personalDataUser.LastName = User.LastName;
+            personalDataUser.BirthDate = User.BirthDate.Value.ToString("yyyy-MM-dd");
+            PersonalData personalDataRequest = new PersonalData();
+            personalDataRequest.FirstName = checkPlayer.FirstName;
+            personalDataRequest.LastName = checkPlayer.LastName;
+            personalDataRequest.BirthDate = checkPlayer.BirthDate;
+
+            aircashMatchPersonalData.AircashUser = personalDataUser;
+            aircashMatchPersonalData.PartnerUser = personalDataRequest;
+            aircashMatchPersonalData.PartnerID = User.PartnerId;
+
+            dynamic data = await MatchPersonalData(aircashMatchPersonalData);
+            
 
             if (User == null)
             {
                 errorcode = 500;
                 errormessage = "Unable to find user account";
             }
-            else if (!checkPlayerParameter.Where(attribute => attribute.Key == "PayerFirstName").Select(attribute => attribute.Value).Contains(User.FirstName))
+            else if (!data.ServiceResponse.matchResult)
             {
                 errorcode = 5001;
-                errormessage = "User first name do not match";
-            }
-            else if (!checkPlayerParameter.Where(attribute => attribute.Key == "PayerLastName").Select(attribute => attribute.Value).Contains(User.LastName))
-            {
-                errorcode = 5002;
-                errormessage = "User last name do not match";
-            }
-            else if (!checkPlayerParameter.Where(attribute => attribute.Key == "PayerBirthDate").Select(attribute => attribute.Value).Contains(User.BirthDate.Value.ToString("yyyy-MM-dd")))
-            {
-                errorcode = 5003;
-                errormessage = "User birth date do not match";
+                errormessage = "Data do not match, Birth date match: "+ data.ServiceResponse.birthDateMatch;
             }
             if (errorcode != 0)
             {
@@ -176,7 +183,7 @@ namespace Services.AircashPosDeposit
                 Key = "partnerUserID",
                 Value = User.UserId.ToString(),
                 Type = "String"
-            });
+            }); 
             response = new CheckPlayerResponse
             {
                 IsPlayer = true,
@@ -187,16 +194,14 @@ namespace Services.AircashPosDeposit
 
         }
 
-        public UserEntity ReturnUser(List<CheckPlayerParameters> checkPlayerParameters)
+        public UserEntity ReturnUser(string checkPlayerIdentifier)
         {
             UserEntity user = null;
-            if (checkPlayerParameters.Select(attribute => attribute.Key).Contains("username"))
+
+            user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayerIdentifier.Contains(v.Username));
+            if (user == null)
             {
-                user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayerParameters.Select(attribute => attribute.Value).Contains(v.Username));
-            }
-            else if (checkPlayerParameters.Select(attribute => attribute.Key).Contains("email"))
-            {
-                user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayerParameters.Select(attribute => attribute.Value).Contains(v.Email));
+                user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayerIdentifier.Contains(v.Email));
             }
             return user != null ? user : null;
         }
@@ -204,7 +209,7 @@ namespace Services.AircashPosDeposit
         public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
         {
             var response = new AircashPaymentResponse();
-            UserEntity user = ReturnUser(ReceiveData.Parameters);
+            UserEntity user = ReturnUser(ReceiveData.Data.Email);
 
             if (user == null)
             {
@@ -228,7 +233,7 @@ namespace Services.AircashPosDeposit
                 PartnerId = new Guid("3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20"),
                 UserId = user.UserId,
                 AircashTransactionId = ReceiveData.AircashTransactionId,
-                ISOCurrencyId = CurrencyEnum.EUR,
+                ISOCurrencyId = (CurrencyEnum)ReceiveData.Data.CurrencyID,
                 ServiceId = ServiceEnum.AircashPayment,
                 RequestDateTimeUTC = DateTime.Today,
                 ResponseDateTimeUTC = DateTime.Now,

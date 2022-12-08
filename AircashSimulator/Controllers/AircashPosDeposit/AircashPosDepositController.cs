@@ -6,6 +6,7 @@ using Microsoft.Extensions.Options;
 using Services.AircashPosDeposit;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AircashSimulator.Controllers.AircashPosDeposit
@@ -57,8 +58,12 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             if (valid != true) 
                 return BadRequest("Invalid signature");
 
-            var findUser = new List<CheckPlayerParameters>();
-            checkPlayerRq.Parameters.ForEach(v => findUser.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+            AircashUserData findUser = new AircashUserData();
+            findUser.Identifier = checkPlayerRq.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault();
+            findUser.FirstName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerFirstName").Select(v => v.Value).FirstOrDefault();
+            findUser.LastName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerLastName").Select(v => v.Value).FirstOrDefault();
+            findUser.BirthDate = checkPlayerRq.Parameters.Where(v => v.Key == "PayerBirthDate").Select(v => v.Value).FirstOrDefault();
+
             var response = await AircashPosDepositService.CheckPlayer(findUser);
 
             if (!((CheckPlayerResponse)response).IsPlayer) 
@@ -76,14 +81,16 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             if (valid != true) return BadRequest("Invalid signature");
 
-            var parameters = new List<CheckPlayerParameters>();
-            aircashPosDepositCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+            AircashCreateAndComfirmData aircashCreateAndComfirmData = new AircashCreateAndComfirmData();
+
+            aircashCreateAndComfirmData.Email = aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault();
+            aircashCreateAndComfirmData.CurrencyID = Convert.ToInt32(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "currencyID").Select(v => v.Value).FirstOrDefault());
 
             var send = new CreateAndConfirmPaymentReceive
             {
                 AircashTransactionId = aircashPosDepositCreateAndConfirmPayment.TransactionID,
                 Amount = aircashPosDepositCreateAndConfirmPayment.Amount,
-                Parameters = parameters
+                Data = aircashCreateAndComfirmData
             };
             var response = await AircashPosDepositService.CreateAndConfirmPayment(send);
 

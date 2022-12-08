@@ -9,8 +9,8 @@ namespace Services.AircashPosDeposit
     {
         Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<AdditionalParameter> customParameters);
         Task<object> CreatePayout(Guid partnerId, decimal amount, string phoneNumber, string partnerUserID, List<Parameter> parameters);
-        Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameter);
-        public UserEntity ReturnUser(List<CheckPlayerParameters> checkPlayerParameters);
+        Task<object> CheckPlayer(AircashUserData checkPlayer);
+        public UserEntity ReturnUser(string checkPlayerIdentifier);
         Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData);
         Task<object> MatchPersonalData(AircashMatchPersonalData aircashMatchPersonalDataRQ);
     }

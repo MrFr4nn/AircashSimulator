@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AircashCheckPlayerUser.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AircashSignature" Version="1.4.1" />
   </ItemGroup>
 

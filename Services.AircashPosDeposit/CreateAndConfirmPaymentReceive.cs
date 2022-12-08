@@ -10,6 +10,6 @@ namespace Services.AircashPosDeposit
     {
         public string AircashTransactionId { get; set; }
         public decimal Amount { get; set; }
-        public List<CheckPlayerParameters> Parameters { get; set; }
+        public AircashCreateAndComfirmData Data { get; set; }
     }
 }
