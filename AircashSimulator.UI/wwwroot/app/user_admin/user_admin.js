@@ -132,7 +132,6 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         {
             $("#selPartner").val(null).change();
         }
-       
         $scope.toggleAddEditUserModal(true);
     }
 
@@ -158,9 +157,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
             return;
         }
             
-
         $scope.user.partner = filter;
-
         userAdminService.saveUser($scope.user)
             .then(function (response) {
                 $scope.SearchTable();

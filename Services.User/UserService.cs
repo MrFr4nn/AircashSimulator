@@ -20,7 +20,6 @@ namespace Services.User
         {
             AircashSimulatorContext = aircashSimulatorContext;
         }
-
         public async Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search)
         {
               //Expression<Func<UserEntity, bool>> predicate = x => true;
@@ -38,8 +37,7 @@ namespace Services.User
               //        })
               //        .OrderBy(t => t.UserName)
               //        .Skip((PageNumber - 1) * PageSize)
-              //        .Take(PageSize).ToListAsync();  
-
+              //        .Take(PageSize).ToListAsync();    //PartnerAdminV2 branch contains code for this to work
 
             var query = !String.IsNullOrEmpty(Search) ?
                      await AircashSimulatorContext.Users
@@ -61,8 +59,6 @@ namespace Services.User
                 Partner = new PartnerVM { Id = x.PartnerId, Name = null }
             }).ToList();
 
-            ////////////////////////////////////////////////////////////////////
-
             if (users != null)
             {
                 foreach (UserDetailVM u in users)
@@ -74,7 +70,6 @@ namespace Services.User
                     }
                 }
             }
-
             return users;
         }
 
@@ -91,19 +86,15 @@ namespace Services.User
                 }
                 hash = builder.ToString();
             }
-
             if (request.UserId != null)
             {
                 var user = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == request.UserId);
-
                 if ((await AircashSimulatorContext.Users.Where(x => x.Username == request.UserName && x.UserId != request.UserId).ToListAsync()).Count() > 0)
                     throw new Exception("Username already taken.");
-
 
                 user.Email = request.Email;
                 user.PartnerId = request.Partner.Id;
                 user.PasswordHash = hash;
-
                 AircashSimulatorContext.Users.Update(user);
             }
             else
@@ -120,17 +111,13 @@ namespace Services.User
                 PasswordHash = hash
                 });
             }
-
             await AircashSimulatorContext.SaveChangesAsync();
         }
-
         public async Task DeleteUser(UserDetailVM user)
         {
             var findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId);
             AircashSimulatorContext.Users.Remove(findUser);
-
             await AircashSimulatorContext.SaveChangesAsync();
-
         }
     }
 }
