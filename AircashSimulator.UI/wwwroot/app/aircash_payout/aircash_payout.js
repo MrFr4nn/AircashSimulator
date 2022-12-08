@@ -210,16 +210,4 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
 
     $scope.getTransactions();
 
-    $scope.displayTooltip = [];
-
-    $scope.copyToClipboard = function (CopyRQ, i) {
-        navigator.clipboard.writeText(CopyRQ);
-
-        $scope.displayTooltip[i] = true;
-
-        setTimeout(function () {
-            $scope.displayTooltip[i] = false;
-            $scope.$apply();
-        }, 1000);
-    }
 }]);

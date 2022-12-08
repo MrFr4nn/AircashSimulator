@@ -95,19 +95,6 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     $scope.checkTransactionStatusResponseExample = $rootScope.JSONexamples.salesPartner.checkTransactionStatus.responseExample;
 
     $scope.cancelTransactionRequestExample = $rootScope.JSONexamples.salesPartner.cancelTransaction.requestExample;
-    
-    $scope.displayTooltip = [];
-
-    $scope.copyToClipboard = function (CopyRQ, i) {
-        navigator.clipboard.writeText(CopyRQ);
-
-        $scope.displayTooltip[i] = true;
-
-        setTimeout(function () {
-            $scope.displayTooltip[i] = false;
-            $scope.$apply();
-        }, 1000);
-    } 
 
     $scope.checkCodeModel = {
         barCode: null,

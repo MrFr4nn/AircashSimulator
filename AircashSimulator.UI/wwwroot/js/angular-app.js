@@ -80,6 +80,16 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
     $rootScope.setting = setting;
     $rootScope.JSONexamples = JSONexamples;
 
+    $rootScope.displayTooltip = [];
+    $rootScope.copyToClipboard = function (CopyRQ, i) {
+        navigator.clipboard.writeText(CopyRQ);
+        $rootScope.displayTooltip[i] = true;
+        setTimeout(function () {
+            $rootScope.displayTooltip[i] = false;
+            $rootScope.$apply();
+        }, 1000);
+    }
+
     if ($localStorage.currentUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
     }
