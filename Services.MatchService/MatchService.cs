@@ -32,7 +32,7 @@ namespace Services.MatchService
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
-    }
+        }
         public async Task<object> CompareIdentity(AircashMatchPersonalData aircashMatchPersonalData) {
             Response returnResponse = new Response();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == aircashMatchPersonalData.PartnerID).FirstOrDefault();

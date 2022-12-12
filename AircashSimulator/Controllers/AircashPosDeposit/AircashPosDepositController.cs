@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services.AircashPosDeposit;
 using Services.MatchService;
+using Services.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,15 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private AircashConfiguration AircashConfiguration;
         private IAircashPosDepositService AircashPosDepositService;
         private IMatchService MatchService;
+        private IUserService UserService;
 
-        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
+        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
         {
             AircashPosDepositService = aircashPosDepositService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             MatchService = matchService;
             UserContext = userContext;
+            UserService = userService;
         }
 
         [HttpPost]
@@ -54,24 +57,86 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         [HttpPost]
         public async Task<IActionResult> CheckPlayer(CheckPlayerRQ checkPlayerRq)
         {
+            var response = new CheckPlayerResponse();
             var dataToVerify = AircashSignatureService.ConvertObjectToString(checkPlayerRq);
             var signature = checkPlayerRq.Signature;
-            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+            var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
 
-            if (valid != true) 
-                return BadRequest("Invalid signature");
+            if (valid != true) {
+                response = new CheckPlayerResponse
+                {
+                    IsPlayer = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 501,
+                        ErrorMessage = "Invalid signature"
+                    },
+                    Parameters = null
+                };
+                return Ok(response);
+            }
 
-            AircashUserData findUser = new AircashUserData();
-            findUser.Identifier = checkPlayerRq.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault();
-            findUser.FirstName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerFirstName").Select(v => v.Value).FirstOrDefault();
-            findUser.LastName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerLastName").Select(v => v.Value).FirstOrDefault();
-            findUser.BirthDate = checkPlayerRq.Parameters.Where(v => v.Key == "PayerBirthDate").Select(v => v.Value).FirstOrDefault();
+            var user = await UserService.GetUserByIdentifier(checkPlayerRq.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault());
+            if (user == null) {
+                response = new CheckPlayerResponse
+                {
+                    IsPlayer = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 500,
+                        ErrorMessage = "Unable to find user account"
+                    },
+                    Parameters = null
+                };
+                return Ok(response);
+            }
 
-            var response = await AircashPosDepositService.CheckPlayer(findUser);
+            var aircashMatchPersonalData = new AircashMatchPersonalData
+            {
+                PartnerID = user.PartnerId,
+                AircashUser = new PersonalData
+                {
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    BirthDate = user.BirthDate.Value.ToString("yyyy-MM-dd")
+                },
+                PartnerUser = new PersonalData
+                {
+                    FirstName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerFirstName").Select(v => v.Value).FirstOrDefault(),
+                    LastName  = checkPlayerRq.Parameters.Where(v => v.Key == "PayerLastName").Select(v => v.Value).FirstOrDefault(),
+                    BirthDate = checkPlayerRq.Parameters.Where(v => v.Key == "PayerBirthDate").Select(v => v.Value).FirstOrDefault()
+                }
+            };
 
-            if (!((CheckPlayerResponse)response).IsPlayer) 
-                return BadRequest(response);
+            dynamic data = await MatchService.CompareIdentity(aircashMatchPersonalData);
 
+            if (!data.ServiceResponse.matchResult) {
+                response = new CheckPlayerResponse
+                {
+                    IsPlayer = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 503,
+                        ErrorMessage = "Data do not match, Birth date match: " + data.ServiceResponse.birthDateMatch
+                    },
+                    Parameters = null
+                };
+                return Ok(response);
+            }
+
+            var parameters = new List<Parameters>();
+            parameters.Add(new Parameters
+            {
+                Key = "partnerUserID",
+                Value = user.UserId.ToString(),
+                Type = "String"
+            });
+            response = new CheckPlayerResponse
+            {
+                IsPlayer = true,
+                Error = null,
+                Parameters = parameters
+            };
             return Ok(response);
         }
 
@@ -80,7 +145,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashPosDepositCreateAndConfirmPayment);
             var signature = aircashPosDepositCreateAndConfirmPayment.Signature;
-            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+            var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
 
             if (valid != true) return BadRequest("Invalid signature");
 

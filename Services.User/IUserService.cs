@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,7 @@ namespace Services.User
         Task<List<UserVM>> GetUsers();
         Task<UserDetailVM> GetUserDetail(Guid userId);
         Task SaveUser(UserDetailVM request);
+
+        Task<UserEntity> GetUserByIdentifier(string identifier);
     }
 }

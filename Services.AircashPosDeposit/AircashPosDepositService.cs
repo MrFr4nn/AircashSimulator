@@ -6,7 +6,6 @@ using Domain.Entities.Enum;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Services.HttpRequest;
-using Services.MatchService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,20 +23,17 @@ namespace Services.AircashPosDeposit
         public DateTime ResponseDateTimeUTC { get; set; }
     }
 
-
     public class AircashPosDepositService : IAircashPosDepositService
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
         private AircashConfiguration AircashConfiguration;
-        private IMatchService MatchService;
 
-        public AircashPosDepositService(AircashSimulatorContext aircashSimulatorContext, IMatchService matchService, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        public AircashPosDepositService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
-            MatchService = matchService;
         }
 
         public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<AdditionalParameter> parameters)
@@ -113,80 +109,6 @@ namespace Services.AircashPosDeposit
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
 
             return returnResponse;
-        }
-
-        public async Task<object> CheckPlayer(AircashUserData checkPlayer)
-        {
-            var response = new CheckPlayerResponse();
-            
-            UserEntity user = null;
-            user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayer.Identifier.Contains(v.Username));
-            if (user == null)
-            {
-                user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayer.Identifier.Contains(v.Email));
-            }
-            if (user == null)
-            {
-                response = new CheckPlayerResponse
-                {
-                    IsPlayer = false,
-                    Error = new ResponseError
-                    {
-                        ErrorCode = 500,
-                        ErrorMessage = "Unable to find user account"
-                    },
-                    Parameters = null
-                };
-                return response;
-            }
-
-            var aircashMatchPersonalData = new AircashMatchPersonalData
-            {
-                PartnerID = user.PartnerId,
-                AircashUser = new PersonalData 
-                { 
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    BirthDate = user.BirthDate.Value.ToString("yyyy-MM-dd")
-                },
-                PartnerUser = new PersonalData
-                {
-                    FirstName = checkPlayer.FirstName,
-                    LastName = checkPlayer.LastName,
-                    BirthDate = checkPlayer.BirthDate
-                }
-            };
-
-            dynamic data = await MatchService.CompareIdentity(aircashMatchPersonalData);
-
-            if (!data.ServiceResponse.matchResult)
-            {
-                response = new CheckPlayerResponse
-                {
-                    IsPlayer = false,
-                    Error = new ResponseError
-                    {
-                        ErrorCode = 5001,
-                        ErrorMessage = "Data do not match, Birth date match: " + data.ServiceResponse.birthDateMatch
-                    },
-                    Parameters = null
-                };
-                return response;
-            }
-            var parameters = new List<Parameters>();
-            parameters.Add(new Parameters
-            {
-                Key = "partnerUserID",
-                Value = user.UserId.ToString(),
-                Type = "String"
-            }); 
-            response = new CheckPlayerResponse
-            {
-                IsPlayer = true,
-                Error = null,
-                Parameters = parameters
-            };
-            return response;
         }
 
         public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
