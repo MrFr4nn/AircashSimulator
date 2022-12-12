@@ -4,6 +4,7 @@ using AircashSimulator.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services.AircashPosDeposit;
+using Services.MatchService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,13 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
         private IAircashPosDepositService AircashPosDepositService;
+        private IMatchService MatchService;
 
-        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
+        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
         {
             AircashPosDepositService = aircashPosDepositService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
+            MatchService = matchService;
             UserContext = userContext;
         }
 
@@ -30,7 +33,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         public async Task<IActionResult> MatchPersonalData(AircashMatchPersonalData aircashMatchPersonalDataRQ)
         {
             aircashMatchPersonalDataRQ.PartnerID = UserContext.GetPartnerId(User);
-            var response = await AircashPosDepositService.MatchPersonalData(aircashMatchPersonalDataRQ);
+            var response = await MatchService.CompareIdentity(aircashMatchPersonalDataRQ);
             return Ok(response);
         }
 
