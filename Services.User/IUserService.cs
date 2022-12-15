@@ -13,6 +13,6 @@ namespace Services.User
         Task<UserDetailVM> GetUserDetail(Guid userId);
         Task SaveUser(UserDetailVM request);
 
-        Task<UserEntity> GetUserByIdentifier(string identifier);
+        Task<UserDTO> GetUserByIdentifier(string identifier);
     }
 }

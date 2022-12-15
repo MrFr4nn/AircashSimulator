@@ -33,8 +33,7 @@ namespace Services.MatchService
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
         }
-        public async Task<object> CompareIdentity(AircashMatchPersonalData aircashMatchPersonalData) {
-            Response returnResponse = new Response();
+        public async Task<AircashMatchPersonalDataRS> CompareIdentity(AircashMatchPersonalData aircashMatchPersonalData) {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == aircashMatchPersonalData.PartnerID).FirstOrDefault();
             var request = new AircashMatchPersonalDataRQ()
             {
@@ -42,11 +41,8 @@ namespace Services.MatchService
                 AircashUser = aircashMatchPersonalData.AircashUser,
                 PartnerUser = aircashMatchPersonalData.PartnerUser,
             };
-
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.MatchCompareIdentity}");
-
-            returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashMatchPersonalDataRS>(response.ResponseContent);
-            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
+            var returnResponse = JsonConvert.DeserializeObject<AircashMatchPersonalDataRS>(response.ResponseContent);
 
             return returnResponse;
         }

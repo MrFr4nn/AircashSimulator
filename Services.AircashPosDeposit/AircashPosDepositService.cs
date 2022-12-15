@@ -150,9 +150,9 @@ namespace Services.AircashPosDeposit
             {
                 Success = true,
                 PartnerTransactionId = transactionEntity.TransactionId.ToString(),
-                Parameters = new List<Parameters>
+                Parameters = new List<CheckPlayeParameter>
                 {
-                new Parameters
+                new CheckPlayeParameter
                     {
                       Key = "partnerUserId",
                       Value = user.UserId.ToString(),

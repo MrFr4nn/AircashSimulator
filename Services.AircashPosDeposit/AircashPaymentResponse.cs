@@ -16,6 +16,6 @@ namespace Services.AircashPosDeposit
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ResponseError Error { get; set; }
-        public List<Parameters> Parameters { get; set; }
+        public List<CheckPlayeParameter> Parameters { get; set; }
     }
 }

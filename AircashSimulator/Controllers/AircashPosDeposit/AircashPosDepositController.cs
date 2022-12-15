@@ -62,7 +62,8 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             var signature = checkPlayerRq.Signature;
             var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
 
-            if (valid != true) {
+            if (valid != true) 
+            {
                 response = new CheckPlayerResponse
                 {
                     IsPlayer = false,
@@ -77,7 +78,8 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             }
 
             var user = await UserService.GetUserByIdentifier(checkPlayerRq.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault());
-            if (user == null) {
+            if (user == null) 
+            {
                 response = new CheckPlayerResponse
                 {
                     IsPlayer = false,
@@ -96,46 +98,47 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                 PartnerID = user.PartnerId,
                 AircashUser = new PersonalData
                 {
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    BirthDate = user.BirthDate.Value.ToString("yyyy-MM-dd")
+                    FirstName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerFirstName").Select(v => v.Value).FirstOrDefault(),
+                    LastName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerLastName").Select(v => v.Value).FirstOrDefault(),
+                    BirthDate = checkPlayerRq.Parameters.Where(v => v.Key == "PayerBirthDate").Select(v => v.Value).FirstOrDefault()
                 },
                 PartnerUser = new PersonalData
                 {
-                    FirstName = checkPlayerRq.Parameters.Where(v => v.Key == "PayerFirstName").Select(v => v.Value).FirstOrDefault(),
-                    LastName  = checkPlayerRq.Parameters.Where(v => v.Key == "PayerLastName").Select(v => v.Value).FirstOrDefault(),
-                    BirthDate = checkPlayerRq.Parameters.Where(v => v.Key == "PayerBirthDate").Select(v => v.Value).FirstOrDefault()
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    BirthDate = user.BirthDate
                 }
             };
 
-            dynamic data = await MatchService.CompareIdentity(aircashMatchPersonalData);
+            var data = await MatchService.CompareIdentity(aircashMatchPersonalData);
 
-            if (!data.ServiceResponse.matchResult) {
+            if (!data.matchResult) {
                 response = new CheckPlayerResponse
                 {
                     IsPlayer = false,
                     Error = new ResponseError
                     {
                         ErrorCode = 503,
-                        ErrorMessage = "Data do not match, Birth date match: " + data.ServiceResponse.birthDateMatch
+                        ErrorMessage = "Data do not match, Birth date match: " + data.birthDateMatch
                     },
                     Parameters = null
                 };
                 return Ok(response);
             }
 
-            var parameters = new List<Parameters>();
-            parameters.Add(new Parameters
-            {
-                Key = "partnerUserID",
-                Value = user.UserId.ToString(),
-                Type = "String"
-            });
             response = new CheckPlayerResponse
             {
                 IsPlayer = true,
                 Error = null,
-                Parameters = parameters
+                Parameters = new List<CheckPlayeParameter> 
+                {
+                    new CheckPlayeParameter
+                    {
+                        Key = "partnerUserID",
+                        Value = user.UserId,
+                        Type = "String"
+                    }
+                }
             };
             return Ok(response);
         }
@@ -149,10 +152,10 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             if (valid != true) return BadRequest("Invalid signature");
 
-            AircashCreateAndComfirmData aircashCreateAndComfirmData = new AircashCreateAndComfirmData();
-
-            aircashCreateAndComfirmData.Email = aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault();
-            aircashCreateAndComfirmData.CurrencyID = Convert.ToInt32(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "currencyID").Select(v => v.Value).FirstOrDefault());
+            var aircashCreateAndComfirmData = new AircashCreateAndComfirmData {
+                Email = aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault(),
+                CurrencyID = Convert.ToInt32(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "currencyID").Select(v => v.Value).FirstOrDefault())
+            };
 
             var send = new CreateAndConfirmPaymentReceive
             {
