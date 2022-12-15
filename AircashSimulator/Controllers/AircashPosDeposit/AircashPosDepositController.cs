@@ -1,6 +1,9 @@
 ﻿using AircashSignature;
 using AircashSimulator.Configuration;
 using AircashSimulator.Extensions;
+using DataAccess;
+using Domain.Entities;
+using Domain.Entities.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Services.AircashPosDeposit;
@@ -19,17 +22,19 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
     {
         private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
+        private AircashSimulatorContext AircashSimulatorContext;
         private IAircashPosDepositService AircashPosDepositService;
         private IMatchService MatchService;
         private IUserService UserService;
 
-        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
+        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
         {
             AircashPosDepositService = aircashPosDepositService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             MatchService = matchService;
             UserContext = userContext;
             UserService = userService;
+            AircashSimulatorContext = aircashSimulatorContext;
         }
 
         [HttpPost]
@@ -64,7 +69,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             if (valid != true) 
             {
-                response = new CheckPlayerResponse
+                return Ok(new CheckPlayerResponse
                 {
                     IsPlayer = false,
                     Error = new ResponseError
@@ -73,14 +78,13 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                         ErrorMessage = "Invalid signature"
                     },
                     Parameters = null
-                };
-                return Ok(response);
+                });
             }
 
             var user = await UserService.GetUserByIdentifier(checkPlayerRq.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault());
             if (user == null) 
             {
-                response = new CheckPlayerResponse
+                return Ok(new CheckPlayerResponse
                 {
                     IsPlayer = false,
                     Error = new ResponseError
@@ -89,8 +93,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                         ErrorMessage = "Unable to find user account"
                     },
                     Parameters = null
-                };
-                return Ok(response);
+                });
             }
 
             var aircashMatchPersonalData = new AircashMatchPersonalData
@@ -112,8 +115,9 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             var data = await MatchService.CompareIdentity(aircashMatchPersonalData);
 
-            if (!data.matchResult) {
-                response = new CheckPlayerResponse
+            if (!data.matchResult) 
+            {
+                return Ok(new CheckPlayerResponse
                 {
                     IsPlayer = false,
                     Error = new ResponseError
@@ -122,25 +126,23 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                         ErrorMessage = "Data do not match, Birth date match: " + data.birthDateMatch
                     },
                     Parameters = null
-                };
-                return Ok(response);
+                });
             }
 
-            response = new CheckPlayerResponse
+            return Ok(new CheckPlayerResponse
             {
                 IsPlayer = true,
                 Error = null,
-                Parameters = new List<CheckPlayeParameter> 
+                Parameters = new List<CheckPlayeParameter>
                 {
                     new CheckPlayeParameter
                     {
                         Key = "partnerUserID",
-                        Value = user.UserId,
+                        Value = user.UserId.ToString(),
                         Type = "String"
                     }
                 }
-            };
-            return Ok(response);
+            });
         }
 
         [HttpPost]
@@ -150,24 +152,64 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             var signature = aircashPosDepositCreateAndConfirmPayment.Signature;
             var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
 
-            if (valid != true) return BadRequest("Invalid signature");
-
-            var aircashCreateAndComfirmData = new AircashCreateAndComfirmData {
-                Email = aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault(),
-                CurrencyID = Convert.ToInt32(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "currencyID").Select(v => v.Value).FirstOrDefault())
-            };
-
-            var send = new CreateAndConfirmPaymentReceive
+            if (valid != true)
             {
-                AircashTransactionId = aircashPosDepositCreateAndConfirmPayment.TransactionID,
-                Amount = aircashPosDepositCreateAndConfirmPayment.Amount,
-                Data = aircashCreateAndComfirmData
-            };
-            var response = await AircashPosDepositService.CreateAndConfirmPayment(send);
+                return Ok(new AircashPaymentResponse
+                {
+                    Success = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 501,
+                        ErrorMessage = "Invalid signature"
+                    },
+                    Parameters = null
+                });
+            }
 
-            if (((AircashPaymentResponse)response).Success == true) return Ok(response);
-            
-            return BadRequest(response);
+            var user = await UserService.GetUserByIdentifier(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault());
+            if (user == null)
+            {
+                return Ok(new AircashPaymentResponse
+                {
+                    Success = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 500,
+                        ErrorMessage = "Unable to find user account"
+                    },
+                    Parameters = null
+                });
+            }
+
+            var transactionEntity = new TransactionEntity
+            {
+                Amount = aircashPosDepositCreateAndConfirmPayment.Amount,
+                TransactionId = Guid.NewGuid(),
+                PartnerId = new Guid("3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20"),
+                UserId = user.UserId,
+                AircashTransactionId = aircashPosDepositCreateAndConfirmPayment.TransactionID,
+                ISOCurrencyId = (CurrencyEnum)Convert.ToInt32(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "currencyID").Select(v => v.Value).FirstOrDefault()),
+                ServiceId = ServiceEnum.AircashPayment,
+                RequestDateTimeUTC = DateTime.Today,
+                ResponseDateTimeUTC = DateTime.Now,
+            };
+            AircashSimulatorContext.Transactions.Add(transactionEntity);
+            await AircashSimulatorContext.SaveChangesAsync();
+
+            return Ok(new AircashPaymentResponse
+            {
+                Success = true,
+                PartnerTransactionId = transactionEntity.TransactionId.ToString(),
+                Parameters = new List<CheckPlayeParameter>
+                {
+                new CheckPlayeParameter
+                    {
+                      Key = "partnerUserId",
+                      Value = user.UserId.ToString(),
+                      Type = "string"
+                    }
+                }
+            });
         }
     }
 }

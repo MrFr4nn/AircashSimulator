@@ -89,7 +89,7 @@ namespace Services.User
             return await AircashSimulatorContext.Users
                 .Where(x => x.Username == identifier || x.Email == identifier)
                 .Select(x => new UserDTO {
-                    UserId = x.UserId.ToString(),
+                    UserId = x.UserId,
                     PartnerId = x.PartnerId,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
