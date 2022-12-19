@@ -27,8 +27,9 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private IMatchService MatchService;
         private IUserService UserService;
         private const decimal minAmout = 1;
-        private const decimal maxAmout = 100;
-        private const string blockedUser = "pero";
+        private const decimal maxAmout = 1000;
+        private const string blockedUsername = "BLOCKED_USERNAME";
+        private const string blockedEmail = "BLOCKED_USER@gmail.com";
 
         public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
         {
@@ -68,7 +69,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             var response = new CheckPlayerResponse();
             var dataToVerify = AircashSignatureService.ConvertObjectToString(checkPlayerRq);
             var signature = checkPlayerRq.Signature;
-            var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+            var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPaymentPublicKey}");
 
             if (valid != true) 
             {
@@ -153,7 +154,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashPosDepositCreateAndConfirmPayment);
             var signature = aircashPosDepositCreateAndConfirmPayment.Signature;
-            var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+            var valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPaymentPublicKey}");
 
             if (valid != true)
             {
@@ -169,7 +170,8 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                 });
             }
 
-            if (blockedUser == aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault().ToLower())
+            var identifier = aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault();
+            if (blockedUsername == identifier || blockedEmail == identifier)
             {
                 return Ok(new AircashCreateAndComfirmResponseError
                 {
@@ -183,7 +185,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                 });
             }
 
-            var user = await UserService.GetUserByIdentifier(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault());
+            var user = await UserService.GetUserByIdentifier(identifier);
             if (user == null)
             {
                 return Ok(new AircashCreateAndComfirmResponseError

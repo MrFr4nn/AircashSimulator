@@ -19,6 +19,7 @@ namespace AircashSimulator.Configuration
         public string ValidForPeriod { get; set; }
         public string AcPayPublicKey { get; set; }
         public string AcFramePublicKey { get; set; }
+        public string AcPaymentPublicKey { get; set; }
         public int TransactionAmountPerPage { get; set; }
         public string CheckCodeEndpoint { get; set; }
         public string ConfirmTransactionEndpoint { get; set; }
