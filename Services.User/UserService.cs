@@ -91,6 +91,7 @@ namespace Services.User
                 .Select(x => new UserDTO {
                     UserId = x.UserId,
                     PartnerId = x.PartnerId,
+                    Username = x.Username,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     BirthDate = x.BirthDate.Value.ToString("yyyy-MM-dd")

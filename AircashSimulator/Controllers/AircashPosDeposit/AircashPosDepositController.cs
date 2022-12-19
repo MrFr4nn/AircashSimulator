@@ -26,6 +26,9 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private IAircashPosDepositService AircashPosDepositService;
         private IMatchService MatchService;
         private IUserService UserService;
+        private const decimal minAmout = 1;
+        private const decimal maxAmout = 100;
+        private const string blockedUser = "pero";
 
         public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
         {
@@ -154,7 +157,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             if (valid != true)
             {
-                return Ok(new AircashPaymentResponse
+                return Ok(new AircashCreateAndComfirmResponseError
                 {
                     Success = false,
                     Error = new ResponseError
@@ -166,16 +169,57 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                 });
             }
 
+            if (blockedUser == aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault().ToLower())
+            {
+                return Ok(new AircashCreateAndComfirmResponseError
+                {
+                    Success = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 505,
+                        ErrorMessage = "Account is blocked"
+                    },
+                    Parameters = null
+                });
+            }
+
             var user = await UserService.GetUserByIdentifier(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email").Select(v => v.Value).FirstOrDefault());
             if (user == null)
             {
-                return Ok(new AircashPaymentResponse
+                return Ok(new AircashCreateAndComfirmResponseError
                 {
                     Success = false,
                     Error = new ResponseError
                     {
                         ErrorCode = 500,
                         ErrorMessage = "Unable to find user account"
+                    },
+                    Parameters = null
+                });
+            }
+
+            if (aircashPosDepositCreateAndConfirmPayment.Amount < minAmout) 
+            {
+                return Ok(new AircashCreateAndComfirmResponseError
+                {
+                    Success = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 502,
+                        ErrorMessage = "Amount smaller then limit"
+                    },
+                    Parameters = null
+                });
+            } 
+            if (aircashPosDepositCreateAndConfirmPayment.Amount > maxAmout) 
+            {
+                return Ok(new AircashCreateAndComfirmResponseError
+                {
+                    Success = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 503,
+                        ErrorMessage = "Amout bigger then limit"
                     },
                     Parameters = null
                 });
@@ -196,7 +240,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             AircashSimulatorContext.Transactions.Add(transactionEntity);
             await AircashSimulatorContext.SaveChangesAsync();
 
-            return Ok(new AircashPaymentResponse
+            return Ok(new AircashCreateAndComfirmResponseSuccess
             {
                 Success = true,
                 PartnerTransactionId = transactionEntity.TransactionId.ToString(),
