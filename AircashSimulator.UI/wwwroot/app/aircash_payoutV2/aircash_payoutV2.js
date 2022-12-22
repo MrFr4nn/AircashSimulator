@@ -20,6 +20,8 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
         checkTransactionStatus: checkTransactionStatus
     });
     function checkUser(checkUserRequest) {
+        console.log(config.baseUrl + "aircashPayout / CheckUserV2");
+        console.log(checkUserRequest);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "aircashPayout/CheckUserV2",
@@ -78,6 +80,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
     $scope.checkUserServiceResponse = false;
 
     $scope.checkUser = function () {
+        console.log("CheckUser...");
         $scope.checkUserRequest = {
             phoneNumber: $scope.checkUserModel.phoneNumber,
             parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toISOString().split('T')[0] }]
@@ -85,6 +88,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
         $scope.checkUserServiceBusy = true;
         aircashPayoutV2Service.checkUser($scope.checkUserRequest)
             .then(function (response) {
+                console.log(response);
 
                 if (response) {
                     $scope.checkUserRequestDateTimeUTC = response.requestDateTimeUTC;

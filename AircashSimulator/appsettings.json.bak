@@ -35,7 +35,6 @@
     "M3DevBaseUrl": "https://dev-m3.aircash.eu/api/",
     "M2StagingBaseUrl": "https://staging-api.aircash.eu/api/",
     "M2DevBaseUrl": "https://dev-api.aircash.eu/api/",
-    "AircashFrameBaseUrl": "https://stage-frame-api.aircash.eu/api/v2/",
     "GeneratePartnerCodeEndpoint": "AircashPay/GeneratePartnerCode",
     "CheckUserEndpoint": "PartnerV3/CheckUser",
     "CreatePayoutEndpoint": "PartnerV3/CreatePayout",
@@ -56,9 +55,7 @@
     "CheckCodeEndpoint": "SalesPartner/CheckCode",
     "ConfirmTransactionEndpoint": "SalesPartner/ConfirmTransaction",
     "PaymentCheckTransactionStatusEndpoint": "SalesPartner/CheckTransactionStatus",
-    "PaymentCancelTransactionEndpoint": "SalesPartner/CancelTransaction",
-    "AircashCheckUserV4Endpoint": "PartnerV4/CheckUser",
-    "AircashCreatePayoutV4Endpoint": "PartnerV4/CreatePayout"
+    "PaymentCancelTransactionEndpoint": "SalesPartner/CancelTransaction"
   },
   "JwtConfiguration": {
     "Audience": "ResourceServer",
