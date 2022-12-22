@@ -286,22 +286,22 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
             </tbody>
         </table>
     </uib-tab>
-    <uib-tab index="checkUser1-tab-6" heading="Try it out" classes="nav-item" style="display: none;">
+    <uib-tab index="checkUser1-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
                 <form action="/" method="POST" name="checkUserForm">
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">Phone number</label>
-                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="checkUserServiceBusy" ng-required="true">
+                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" ng-init="checkUserModel.phoneNumber='385996734186'" ng-disabled="checkUserServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">First name</label>
-                            <input ng-model="checkUserModel.firstName" class="form-control" type="text" placeholder="Enter first name" ng-disabled="checkUserServiceBusy" ng-required="true">
+                            <input ng-model="checkUserModel.firstName" class="form-control" type="text"  ng-init="checkUserModel.firstName='Matej'" ng-disabled="checkUserServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Last name</label>
-                            <input ng-model="checkUserModel.lastName" class="form-control" type="text" placeholder="Enter last name" ng-disabled="checkUserServiceBusy" ng-required="true">
+                            <input ng-model="checkUserModel.lastName" class="form-control" type="text"  ng-init="checkUserModel.lastName='Zec'" ng-disabled="checkUserServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Birth date</label>
