@@ -1,5 +1,7 @@
 ﻿var aircashPayoutV2Module = angular.module('aircashPayoutV2', []);
 
+
+
 app.config(function ($stateProvider) {
     $stateProvider
         .state('app.aircashPayoutV2', {
@@ -30,6 +32,8 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function createPayout(createPayoutRequest) {
+        console.log(config.baseUrl + "aircashPayout / CreatePayoutV2");
+        console.log(createPayoutRequest);
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "aircashPayout/CreatePayoutV2",
@@ -62,6 +66,8 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
 }
 ]);
 
+
+
 aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'aircashPayoutV2Service', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, aircashPayoutV2Service, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
@@ -69,7 +75,13 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
         $location.path('/forbidden');
     }
 
+    
+    
+    
+
+
     $scope.checkUserModel = {
+
         phoneNumber: $scope.decodedToken.userPhoneNumber,
         firstName: $scope.decodedToken.userFirstName,
         lastName: $scope.decodedToken.userLastName,
@@ -83,7 +95,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
         console.log("CheckUser...");
         $scope.checkUserRequest = {
             phoneNumber: $scope.checkUserModel.phoneNumber,
-            parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toISOString().split('T')[0] }]
+            parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toLocaleDateString('en-CA') }]
         }
         $scope.checkUserServiceBusy = true;
         aircashPayoutV2Service.checkUser($scope.checkUserRequest)
@@ -123,7 +135,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             phoneNumber: $scope.createPayoutModel.phoneNumber,
             amount: $scope.createPayoutModel.amount,
             locationID: $scope.checkUserModel.locationID,
-            parameters: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutModel.birthDate.toISOString().split('T')[0] }, { key: "LocationID", value: $scope.createPayoutModel.locationID.toString() }]
+            parameters: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutModel.birthDate.toLocaleDateString('en-CA') }, { key: "LocationID", value: $scope.createPayoutModel.locationID.toString() }]
         }
         $scope.createPayoutServiceBusy = true;
         aircashPayoutV2Service.createPayout($scope.createPayoutRequest)
@@ -205,5 +217,8 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
 
     $scope.setDate = function (date) {
         $scope.checkUserModel.birthDate = date;
+    }
+    $scope.setBirthDatePayout = function (date) {
+        $scope.createPayoutModel.birthDate = date;
     }
 }]);
