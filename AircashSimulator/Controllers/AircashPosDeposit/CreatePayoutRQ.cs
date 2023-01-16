@@ -7,6 +7,6 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
     {
         public decimal Amount { get; set; }
         public string PhoneNumber { get; set; }
-        public List<Parameter> Parameters { get; set; }
+        public List<Services.AircashPosDeposit.Parameter> Parameters { get; set; }
     }
 }
