@@ -26,10 +26,10 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private IAircashPosDepositService AircashPosDepositService;
         private IMatchService MatchService;
         private IUserService UserService;
-        private const decimal minAmout = 1;
-        private const decimal maxAmout = 1000;
-        private const string blockedUsername = "BLOCKED_USERNAME";
-        private const string blockedEmail = "BLOCKED_USER@gmail.com";
+        private const decimal MinAmout = 1;
+        private const decimal MaxAmout = 1000;
+        private const string BlockedUsername = "BLOCKED_USERNAME";
+        private const string BlockedEmail = "BLOCKED_USER@gmail.com";
         private const string PartnerId = "3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20";
 
         public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
@@ -172,7 +172,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             }
 
             var identifier = aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault();
-            if (blockedUsername == identifier || blockedEmail == identifier)
+            if (BlockedUsername == identifier || BlockedEmail == identifier)
             {
                 return Ok(new AircashCreateAndConfirmResponseError
                 {
@@ -201,7 +201,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                 });
             }
 
-            if (aircashPosDepositCreateAndConfirmPayment.Amount < minAmout) 
+            if (aircashPosDepositCreateAndConfirmPayment.Amount < MinAmout) 
             {
                 return Ok(new AircashCreateAndConfirmResponseError
                 {
@@ -214,7 +214,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                     Parameters = null
                 });
             } 
-            if (aircashPosDepositCreateAndConfirmPayment.Amount > maxAmout) 
+            if (aircashPosDepositCreateAndConfirmPayment.Amount > MaxAmout) 
             {
                 return Ok(new AircashCreateAndConfirmResponseError
                 {
