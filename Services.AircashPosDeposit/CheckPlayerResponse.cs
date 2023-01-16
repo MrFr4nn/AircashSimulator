@@ -11,10 +11,10 @@ namespace Services.AircashPosDeposit
     {
         public bool IsPlayer { get; set; }
         public ResponseError Error { get; set; }
-        public List<CheckPlayeParameter> Parameters { get; set; }
+        public List<CheckPlayerParameter> Parameters { get; set; }
     }
 
-    public class CheckPlayeParameter
+    public class CheckPlayerParameter
     {
         public string Key { get; set; }
         public string Type { get; set; }

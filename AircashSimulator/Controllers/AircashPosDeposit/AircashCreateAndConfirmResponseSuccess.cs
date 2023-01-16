@@ -4,10 +4,10 @@ using System.Text.Json.Serialization;
 
 namespace AircashSimulator.Controllers.AircashPosDeposit
 {
-    public class AircashCreateAndComfirmResponseSuccess
+    public class AircashCreateAndConfirmResponseSuccess
     {
         public bool Success { get; set; }
         public string PartnerTransactionId { get; set; }
-        public List<CheckPlayeParameter> Parameters { get; set; }
+        public List<CheckPlayerParameter> Parameters { get; set; }
     }
 }

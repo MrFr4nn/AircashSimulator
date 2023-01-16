@@ -30,6 +30,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private const decimal maxAmout = 1000;
         private const string blockedUsername = "BLOCKED_USERNAME";
         private const string blockedEmail = "BLOCKED_USER@gmail.com";
+        private const string PartnerId = "3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20";
 
         public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
         {
@@ -137,9 +138,9 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             {
                 IsPlayer = true,
                 Error = null,
-                Parameters = new List<CheckPlayeParameter>
+                Parameters = new List<CheckPlayerParameter>
                 {
-                    new CheckPlayeParameter
+                    new CheckPlayerParameter
                     {
                         Key = "partnerUserID",
                         Value = user.UserId.ToString(),
@@ -158,7 +159,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             if (valid != true)
             {
-                return Ok(new AircashCreateAndComfirmResponseError
+                return Ok(new AircashCreateAndConfirmResponseError
                 {
                     Success = false,
                     Error = new ResponseError
@@ -173,7 +174,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             var identifier = aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "email" || v.Key == "username").Select(v => v.Value).FirstOrDefault();
             if (blockedUsername == identifier || blockedEmail == identifier)
             {
-                return Ok(new AircashCreateAndComfirmResponseError
+                return Ok(new AircashCreateAndConfirmResponseError
                 {
                     Success = false,
                     Error = new ResponseError
@@ -188,7 +189,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             var user = await UserService.GetUserByIdentifier(identifier);
             if (user == null)
             {
-                return Ok(new AircashCreateAndComfirmResponseError
+                return Ok(new AircashCreateAndConfirmResponseError
                 {
                     Success = false,
                     Error = new ResponseError
@@ -202,7 +203,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             if (aircashPosDepositCreateAndConfirmPayment.Amount < minAmout) 
             {
-                return Ok(new AircashCreateAndComfirmResponseError
+                return Ok(new AircashCreateAndConfirmResponseError
                 {
                     Success = false,
                     Error = new ResponseError
@@ -215,7 +216,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             } 
             if (aircashPosDepositCreateAndConfirmPayment.Amount > maxAmout) 
             {
-                return Ok(new AircashCreateAndComfirmResponseError
+                return Ok(new AircashCreateAndConfirmResponseError
                 {
                     Success = false,
                     Error = new ResponseError
@@ -231,7 +232,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             {
                 Amount = aircashPosDepositCreateAndConfirmPayment.Amount,
                 TransactionId = Guid.NewGuid(),
-                PartnerId = new Guid("3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20"),
+                PartnerId = new Guid(PartnerId),
                 UserId = user.UserId,
                 AircashTransactionId = aircashPosDepositCreateAndConfirmPayment.TransactionID,
                 ISOCurrencyId = (CurrencyEnum)Convert.ToInt32(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "currencyID").Select(v => v.Value).FirstOrDefault()),
@@ -242,13 +243,13 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             AircashSimulatorContext.Transactions.Add(transactionEntity);
             await AircashSimulatorContext.SaveChangesAsync();
 
-            return Ok(new AircashCreateAndComfirmResponseSuccess
+            return Ok(new AircashCreateAndConfirmResponseSuccess
             {
                 Success = true,
                 PartnerTransactionId = transactionEntity.TransactionId.ToString(),
-                Parameters = new List<CheckPlayeParameter>
+                Parameters = new List<CheckPlayerParameter>
                 {
-                new CheckPlayeParameter
+                new CheckPlayerParameter
                     {
                       Key = "partnerUserId",
                       Value = user.UserId.ToString(),
