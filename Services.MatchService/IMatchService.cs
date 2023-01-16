@@ -8,6 +8,6 @@ namespace Services.MatchService
 {
     public interface IMatchService
     {
-        Task<AircashMatchPersonalDataRS> CompareIdentity(AircashMatchPersonalData aircashMatchPersonalDataRQ);
+        Task<Response> CompareIdentity(AircashMatchPersonalData aircashMatchPersonalDataRQ);
     }
 }

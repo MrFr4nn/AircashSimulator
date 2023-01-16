@@ -120,7 +120,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
 
             var data = await MatchService.CompareIdentity(aircashMatchPersonalData);
 
-            if (!data.matchResult) 
+            if (!data.ServiceResponse.matchResult) 
             {
                 return Ok(new CheckPlayerResponse
                 {
@@ -128,7 +128,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
                     Error = new ResponseError
                     {
                         ErrorCode = 503,
-                        ErrorMessage = "Data do not match, Birth date match: " + data.birthDateMatch
+                        ErrorMessage = "Data do not match, Birth date match: " + data.ServiceResponse.birthDateMatch
                     },
                     Parameters = null
                 });
