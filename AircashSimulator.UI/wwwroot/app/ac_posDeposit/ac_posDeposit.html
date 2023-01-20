@@ -960,3 +960,61 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     </uib-tab>
 </uib-tabset>
 
+<h4>MatchPersonalData</h4>
+<uib-tabset>
+    <uib-tab index="MatchPersonalData-tab-1" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <h6><b>Aircash user</b></h6>
+                <hr />
+                <form action="/" method="POST" name="matchPersonalDataModelFirstForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="matchPersonalDataModel.firstNameAircashUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="matchPersonalDataModel.lastNameAircashUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="matchPersonalDataModel.birthDateAircashUser" isOptional="false" out="setPersonalDataDateAircashUser"></date-picker>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-0.5"></div>
+            <div class="col-md-4">
+                <h6><b>Partner user</b></h6>
+                <hr />
+                <form action="/" method="POST" name="matchPersonalDataModelSecondForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="matchPersonalDataModel.firstNamePartnerUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="matchPersonalDataModel.lastNamePartnerUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="matchPersonalDataModel.birthDatePartnerUser" isOptional="false" out="setPersonalDataDatePartnerUser"></date-picker>
+                        </div>
+                        <button ng-click="matchPersonalData()" class="btn btn-primary w-100px me-5px" ng-disabled="matchPersonalDataServiceBusy|| checkUserForm.$invalid">Compare users <i ng-if="matchPersonalDataServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
+                Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <br />
+                <pre>
+<code>
+{{matchPersonalDataResponse}}
+</code>
+                </pre>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -17,8 +17,9 @@ var app = angular.module('app', [
     'userAdmin',
     'acRedeemTicket',
     'acFrameV2',
-    'acPosDeposit',
     'jsonFormatter'
+    'acPosDeposit',
+    'acInAppPay'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
