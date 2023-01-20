@@ -258,7 +258,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             </div>
             <div class="col-md-4" ng-if="checkCodeServiceResponse">
                 Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})    
-                <button ng-click="copyToClipboard(copyCheckCodeServiceRequest, 0);"  class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCheckCodeServiceRequest, 0);"  class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                     <span ng-show="displayTooltip[0]" class="p-3" ><b>Copied</b></span>
                 <json-formatter open="1" json=checkCodeServiceRequestObject></json-formatter>
 
@@ -473,7 +473,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
             </div>
             <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
                 Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyConfirmTransactionServiceRequest, 1);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyConfirmTransactionServiceRequest, 1);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="1" json=confirmTransactionServiceRequestObject></json-formatter>
                 Sequence: {{confirmTransactionSequence}}<br />
@@ -696,7 +696,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
             <br />
             <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
                 Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCheckTransactionStatusServiceRequest, 2);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCheckTransactionStatusServiceRequest, 2);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[2]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="1" json=checkTransactionStatusServiceRequestObject></json-formatter>
                 Sequence: {{checkTransactionStatusSequence}}<br />
@@ -891,7 +891,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             <br />
             <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
                 Request({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCancelTransactionServiceRequest,3);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCancelTransactionServiceRequest,3);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[3]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="1" json=cancelTransactionServiceRequestObject></json-formatter>
                 Sequence: {{cancelTransactionSequence}}

@@ -48,7 +48,6 @@ app.constant("JSONexamples", {
                 locationID: "123",
                 signature: "AEXHWNFQD9..."
             },
-            //responseExample: {}
         }
     },
     aircashFrame: {
@@ -462,6 +461,10 @@ app.constant("JSONexamples", {
                     {
                         Key: "email",
                         Value: "user@example.net"
+                    },
+                    {
+                        Key: "currencyID",
+                        Value: "978"
                     }
                 ],
                 Signature: "Gng+D6.../4="
@@ -583,6 +586,38 @@ app.constant("JSONexamples", {
                 }
             }
         }
+    },
+    inAppPay: {
+        confirmTransaction: {
+            requestExample: {
+                amount: 123.45,
+                currencyID: 191,
+                aircashTransactionID: "Aircash transaction id,",
+                partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
+                user: "user 232",
+                signature: "12345....abc"
+            }
+        },
+        CheckTransactionStatus: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
+                signature: "12345....abc"
+            },
+            responseExample: {
+                amount: 123.45,
+                currencyID: 191,
+                aircashTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
+                user: "user 232",
+                signature: "12345....abc"
+            },
+            errorResponseExample:{
+                code: 6,
+                message: "Transaction exist in Aircash system but authorization time has expired",
+                additionalData: null,
+            }
+        }
+
     },
     signature: {
         examplePartner: {

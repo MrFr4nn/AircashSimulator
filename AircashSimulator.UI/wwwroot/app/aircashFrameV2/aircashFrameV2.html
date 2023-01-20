@@ -498,7 +498,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                     <br />
                     <div ng-hide="!initiateResponded" class="col-md-4">
                         Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <button ng-click="copyToClipboard(copyInitiateServiceRequest , 0);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                        <button ng-click="copyToClipboard(copyInitiateServiceRequest , 0);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                         <span ng-show="displayTooltip[0]" class="p-3"><b>Copied</b></span>
 
                         <json-formatter open="1" json=InitiateServiceRequestObject></json-formatter>
@@ -767,7 +767,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                     <br />
                     <div ng-hide="!statusResponded" class="col-md-4">
                         Request ({{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <button ng-click="copyToClipboard(copyStatusServiceRequest , 1);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                        <button ng-click="copyToClipboard(copyStatusServiceRequest , 1);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                         <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
 
                         <json-formatter open="1" json=StatusServiceRequestObject></json-formatter>

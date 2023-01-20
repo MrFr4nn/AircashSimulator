@@ -175,6 +175,8 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
                     $scope.matchPersonalDataSequence = response.sequence;
                     $scope.matchPersonalDataResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.matchPersonalDataRequest = JSON.stringify(response.serviceRequest, null, 4);
+
+                    $scope.matchPersonalDataResponseObject = response.serviceResponse;
                 }
                 $scope.matchPersonalDataServiceBusy = false;
                 $scope.matchPersonalDataServiceResponse = true;

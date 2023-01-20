@@ -355,7 +355,7 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCheckUserRequest , 0);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCheckUserRequest , 0);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[0]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="3" json=checkUserRequestObject></json-formatter>
                 Sequence: {{checkUserSequence}}<br />
@@ -598,7 +598,7 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCreatePayoutRequest , 1);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCreatePayoutRequest , 1);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="3" json=createPayoutRequestObject></json-formatter>
             </div>
@@ -1010,9 +1010,7 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
                 Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <br />
                 <pre>
-<code>
-{{matchPersonalDataResponse}}
-</code>
+                        <json-formatter open="3" json=matchPersonalDataResponseObject></json-formatter>
                 </pre>
             </div>
         </div>

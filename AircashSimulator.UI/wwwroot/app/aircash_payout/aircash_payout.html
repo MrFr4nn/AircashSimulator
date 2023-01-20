@@ -247,7 +247,7 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCheckUserRequest , 0);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCheckUserRequest , 0);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[0]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="1" json=checkUserRequestObject></json-formatter>
                 Sequence: {{checkUserSequence}}<br />
@@ -502,7 +502,7 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCreatePayoutRequest , 1);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCreatePayoutRequest , 1);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="1" json=createPayoutRequestObject></json-formatter>
                 Sequence: {{createPayoutSequence}}<br />
@@ -732,7 +732,7 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkTransactionStatusServiceResponse">
                 Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCheckTransactionStatusRequest , 2);" class="btn btn-light btn-xs w-100px me-5px">Copy</button>
+                <button ng-click="copyToClipboard(copyCheckTransactionStatusRequest , 2);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
                 <span ng-show="displayTooltip[2]" class="p-3"><b>Copied</b></span>
                 <json-formatter open="1" json=checkTransactionStatusRequestObject></json-formatter>
                 Sequence: {{checkTransactionStatusSequence}}<br />

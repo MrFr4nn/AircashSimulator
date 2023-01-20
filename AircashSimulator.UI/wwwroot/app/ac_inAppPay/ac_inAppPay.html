@@ -594,16 +594,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "amount":123.45,
-    "currencyID": 191,
-    "aircashTransactionID": "Aircash transaction id,"
-    "partnerTransactionID": "92597e93-6050-4478-85d4-1956dea450ff",
-    "user": user 232,
-    "signature": "12345....abc"
-}
-</pre>
+                <json-formatter open="3" json=confirmTransactionRequestExample></json-formatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
                 <p>
@@ -688,13 +679,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "92597e93-6050-4478-85d4-1956dea450ff",
-    "signature": "12345....abc"
-}
-</pre>
+                <json-formatter open="3" json=CheckTransactionStatusRequestExample></json-formatter>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-2" heading="Response" classes="nav-item">
                 <table class="table table-hover">
@@ -759,19 +744,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-3" heading="Response example" classes="nav-item">
-                <pre>
-
-                <pre>
-{
-    "amount":123.45,
-    "currencyID": 191,
-    "aircashTransactionID": "92597e93-6050-4478-85d4-1956dea450ff",
-    "user": "user 232",
-    "signature": "12345....abc"
-}
-</pre>
-
-        </pre>
+                <json-formatter open="3" json=CheckTransactionStatusResponseExample></json-formatter>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="400 Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -931,13 +904,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-10" heading="400 Error Response Example" class="nav-item">
-                <pre>
-{
-    "code": 6,    
-    "message": "Transaction exist in Aircash system but authorization time has expired",
-    "additionalData": null,
-}
-</pre>
+                <json-formatter open="3" json=CheckTransactionStatusErrorResponseExample></json-formatter>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
