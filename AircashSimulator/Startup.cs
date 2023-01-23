@@ -19,6 +19,7 @@ using Services.AircashPayout;
 using AircashSimulator.Extensions;
 using Services.AircashPay;
 using Serilog;
+using Services.Transaction;
 using Services.Transactions;
 using Services.AircashPaymentAndPayout;
 using Services.PartnerAbonDenominations;
@@ -27,6 +28,8 @@ using AircashFrame;
 using Services.Partner;
 using Services.User;
 using Services.AircashFrameV2;
+using Services.AircashPosDeposit;
+using Services.MatchService;
 using AircashSimulator.Hubs;
 using Services.AircashPayStaticCode;
 
@@ -57,7 +60,7 @@ namespace AircashSimulator
                     .AllowAnyOrigin()
                     .AllowAnyMethod()
                     .AllowAnyHeader();
-            });
+                });
             });
 
             services.AddControllers();
@@ -97,9 +100,11 @@ namespace AircashSimulator
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAircashFrameService, AircashFrameService>();
             services.AddTransient<IAircashFrameV2Service, AircashFrameV2Service>();
+            services.AddTransient<IMatchService, MatchService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
+            services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
             services.Configure<AbonConfiguration>(Configuration.GetSection("AbonConfiguration"));
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));

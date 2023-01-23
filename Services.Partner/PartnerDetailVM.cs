@@ -17,6 +17,7 @@ namespace Services.Partner
         public string CountryCode { get; set; }
         public EnvironmentEnum Environment { get; set; }
         public List<Role> Roles { get; set; }
+        public bool UseDefaultPartner { get; set; }
     }
 
     public class Role
@@ -24,4 +25,12 @@ namespace Services.Partner
         public RoleEnum RoleId { get; set; }
         public string RoleName { get; set; }
     }
+
+
+  /*  public class Environment
+    {
+        public EnvironmentEnum EnvironmentId { get; set; }
+        public string EnvironmentName { get; set; }
+    } */
+
 }

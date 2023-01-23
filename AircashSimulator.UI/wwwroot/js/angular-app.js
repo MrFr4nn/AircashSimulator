@@ -17,6 +17,8 @@ var app = angular.module('app', [
     'userAdmin',
     'acRedeemTicket',
     'acFrameV2',
+    'acPosDeposit',
+    'acInAppPay',
     'acPayStaticCode'
 ]);
 

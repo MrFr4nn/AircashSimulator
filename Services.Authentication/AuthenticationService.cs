@@ -66,6 +66,11 @@ namespace Services.Authentication
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim("userId", user.UserId.ToString()));
             claims.Add(new Claim("partnerRoles", JsonConvert.SerializeObject(partnerRoles)));
+            claims.Add(new Claim("userFirstName", user?.FirstName ?? ""));
+            claims.Add(new Claim("userLastName", user?.LastName ?? ""));
+            claims.Add(new Claim("userBirthDate", user.BirthDate.HasValue ? user.BirthDate.Value.ToString("yyyy-MM-dd") : ""));
+            claims.Add(new Claim("userPhoneNumber", user?.PhoneNumber ?? ""));
+            claims.Add(new Claim("email", user.Email));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfiguration.Secret));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
