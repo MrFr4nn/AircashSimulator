@@ -59,7 +59,8 @@ namespace Services.Partner
                         CurrencyId = x.CurrencyId,
                         CountryCode = x.CountryCode,
                         Environment = x.Environment,
-                        Roles = null
+                        Roles = null,
+                        UseDefaultPartner = x.UseDefaultPartner
                     })
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToListAsync();
@@ -95,6 +96,7 @@ namespace Services.Partner
                 partner.CurrencyId = request.CurrencyId;
                 partner.CountryCode = request.CountryCode;
                 partner.Environment = request.Environment;
+                partner.UseDefaultPartner = request.UseDefaultPartner;
 
                 var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
                 foreach (var role in roles)
@@ -113,8 +115,9 @@ namespace Services.Partner
                     PrivateKeyPass = request.PrivateKeyPass == null? DefaultPrivateKeyPass : request.PrivateKeyPass,
                     CurrencyId = request.CurrencyId,
                     CountryCode = request.CountryCode,
-                    Environment = request.Environment
-                });
+                    Environment = request.Environment,
+                    UseDefaultPartner = request.UseDefaultPartner
+            });
             }
             if (request.Roles != null)
             { 

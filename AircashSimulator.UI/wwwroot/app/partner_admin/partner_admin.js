@@ -63,7 +63,8 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
                 CurrencyId: partner.currencyId,
                 CountryCode: partner.countryCode,
                 Environment: parseInt(partner.environment),
-                Roles: roles
+                Roles: roles,
+                UseDefaultPartner: (partner.useDefaultPartner === 'true') 
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -128,7 +129,17 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
 
     $scope.partner = {};
     $scope.showPartnerModal = function (partner) {
-        angular.copy(partner, $scope.partner);
+        if (partner) {
+            console.log(partner);
+            partner.useDefaultPartner = String(partner.useDefaultPartner);
+            partner.environment = String(partner.environment);
+            angular.copy(partner, $scope.partner);
+        } else {
+            $scope.partner = {
+                useDefaultPartner: "false",
+                environment: "1"
+            };
+        }
         $scope.toggePartnerModal(true);
         $scope.checkPartnerRole();
     }

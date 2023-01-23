@@ -113,6 +113,13 @@
                                 <input ng-model="partner.privateKeyPass" class="form-control" type="text" ng-required="false">
 
                             </div>
+                            <div class="mb-3">
+                                <label class="form-label">Use Default Partner</label>
+                                <select class="form-control" ng-model="partner.useDefaultPartner" ng-required="true">
+                                    <option value="true" ng-selected="partner.useDefaultPartner == 1">Yes</option>
+                                    <option value="false" ng-selected="partner.useDefaultPartner == 2">No</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-5">
