@@ -22,7 +22,6 @@ namespace Services.AircashPosDeposit
         public DateTime RequestDateTimeUTC { get; set; }
         public DateTime ResponseDateTimeUTC { get; set; }
     }
-   
 
     public class AircashPosDepositService : IAircashPosDepositService
     {
@@ -36,6 +35,7 @@ namespace Services.AircashPosDeposit
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
         }
+
         public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<AdditionalParameter> parameters)
         {
             Response returnResponse = new Response();
@@ -58,7 +58,7 @@ namespace Services.AircashPosDeposit
 
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserRS>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
-            
+
             return returnResponse;
         }
 
@@ -104,12 +104,11 @@ namespace Services.AircashPosDeposit
                     ResponseDateTimeUTC = responseDateTimeUTC
                 });
                 AircashSimulatorContext.SaveChanges();
-                }
+            }
 
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
 
             return returnResponse;
         }
-
     }
 }
