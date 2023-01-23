@@ -97,43 +97,44 @@
                 <h4 class="modal-title">Partner</h4>
             </div>
             <div class="modal-body" align="center">
+                <form action="/" method="POST" name="addPartnerForm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label class="form-label">Partner Name</label>
+                                <input ng-model="partner.partnerName" class="form-control" type="text" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Private Key Path</label>
+                                <input ng-model="partner.privateKey" class="form-control" type="text" ng-required="false">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Private Key Pass</label>
+                                <input ng-model="partner.privateKeyPass" class="form-control" type="text" ng-required="false">
 
-                <div class="row">
-                    <div class="col-md-5">
-                        <div class="mb-3">
-                            <label class="form-label">Partner Name</label>
-                            <input ng-model="partner.partnerName" class="form-control" type="text" ng-required="true">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label">Private Key Path</label>
-                            <input ng-model="partner.privateKey" class="form-control" type="text" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Private Key Pass</label>
-                            <input ng-model="partner.privateKeyPass" class="form-control" type="text" ng-required="true">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-5">
 
+                            <div class="mb-3">
+                                <label class="form-label">Currency ID</label>
+                                <input ng-model="partner.currencyId" class="form-control" type="number" step="1" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Country Code</label>
+                                <input ng-model="partner.countryCode" class="form-control" type="text" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Environment</label>
+                                <select class="form-control" ng-model="partner.environment" ng-required="true">
+                                    <option value="1" ng-selected="partner.environment == 1">Dev</option>
+                                    <option value="2" ng-selected="partner.environment == 2">Staging</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-2"></div>
-                    <div class="col-md-5">
-
-                        <div class="mb-3">
-                            <label class="form-label">Currency ID</label>
-                            <input ng-model="partner.currencyId" class="form-control" type="number" step="1" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Country Code</label>
-                            <input ng-model="partner.countryCode" class="form-control" type="text" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Environment</label>
-                            <select class="form-control" ng-model="partner.environment">
-                                <option value="1" ng-selected="partner.environment == 1">Dev</option>
-                                <option value="2" ng-selected="partner.environment == 2">Staging</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                </form>
                 <div class="row">
                     <div class="col-md-4">
                         <table class="table table-bordered table-hover table-condensed table-striped">
@@ -153,7 +154,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-click="savePartner();">Save</button>
+                <button class="btn btn-primary" ng-disabled="addPartnerForm.$invalid" ng-click="savePartner();">Save</button>
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
             </div>
         </div>

@@ -15,6 +15,8 @@ namespace Services.Partner
     public class PartnerService : IPartnerService
     {
         private AircashSimulatorContext AircashSimulatorContext;
+        private const string DefaultPrivateKey = "-";
+        private const string DefaultPrivateKeyPass = "-";
 
         public PartnerService(AircashSimulatorContext aircashSimulatorContext)
         {
@@ -107,8 +109,8 @@ namespace Services.Partner
                 {
                     PartnerId = id,
                     PartnerName = request.PartnerName,
-                    PrivateKey = request.PrivateKey,
-                    PrivateKeyPass = request.PrivateKeyPass,
+                    PrivateKey = request.PrivateKey == null? DefaultPrivateKey : request.PrivateKey ,
+                    PrivateKeyPass = request.PrivateKeyPass == null? DefaultPrivateKeyPass : request.PrivateKeyPass,
                     CurrencyId = request.CurrencyId,
                     CountryCode = request.CountryCode,
                     Environment = request.Environment
@@ -116,17 +118,17 @@ namespace Services.Partner
             }
             if (request.Roles != null)
             { 
-            if (request.Roles.Count > 0)
-            {
-                    foreach (var role in request.Roles)
+                if (request.Roles.Count > 0)
                 {
-                    await AircashSimulatorContext.PartnerRoles.AddAsync(new PartnerRoleEntity
-                    {
-                        PartnerId = id,
-                        PartnerRole = role.RoleId
-                    });
+                        foreach (var role in request.Roles)
+                        {
+                            await AircashSimulatorContext.PartnerRoles.AddAsync(new PartnerRoleEntity
+                            {
+                                PartnerId = id,
+                                PartnerRole = role.RoleId
+                            });
+                        }
                 }
-            }
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
