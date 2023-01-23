@@ -1,14 +1,14 @@
 ﻿<h1 style="text-align:justify">Intro</h1>
 <br />
-    <p style="text-align:justify">
-        Aircash a-bon platform is intended for users that wish to make payments to their Online Provider accounts (betting sites, parking services, GSM topups etc.) via paper coupons that can be bought at cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas stations, etc.). The process of using Aircash A-bon can be observed from two perspectives: Sales Partner and Online Provider.
-        <br /> <br />
-        From the Sale Partner's perspective: the user comes to the cash register at a Sale Partner point of sale and asks to buy an Aircash A-bon coupon a specific value. The cash register system then contacts the Aircash backend system which then creates a coupon of the desired value. After that, the user pays for that amount, and the cash register prints out an Aircash A-bon coupon which is then given to the user.
-        <br /> <br />
-        From the Online Provider's perspective: the user logs in to a website or a mobile app of an Online Provider (e.g. a booking site), and chooses to deposit money via an Aircash a-bon coupon. He enters the 16-digit code from the coupon he bought, and confirms the transaction of funds to an Online Provider account. The funds are deposited to the user's online account, and the coupon gets expended and can no longer be used.
-        <br /> <br />
-        An example of an Aircash A-bon is shown  <a href="" ng-click="showCoupon()">here</a>.
-    </p>
+<p style="text-align:justify">
+    Aircash a-bon platform is intended for users that wish to make payments to their Online Provider accounts (betting sites, parking services, GSM topups etc.) via paper coupons that can be bought at cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas stations, etc.). The process of using Aircash A-bon can be observed from two perspectives: Sales Partner and Online Provider.
+    <br /> <br />
+    From the Sale Partner's perspective: the user comes to the cash register at a Sale Partner point of sale and asks to buy an Aircash A-bon coupon a specific value. The cash register system then contacts the Aircash backend system which then creates a coupon of the desired value. After that, the user pays for that amount, and the cash register prints out an Aircash A-bon coupon which is then given to the user.
+    <br /> <br />
+    From the Online Provider's perspective: the user logs in to a website or a mobile app of an Online Provider (e.g. a booking site), and chooses to deposit money via an Aircash a-bon coupon. He enters the 16-digit code from the coupon he bought, and confirms the transaction of funds to an Online Provider account. The funds are deposited to the user's online account, and the coupon gets expended and can no longer be used.
+    <br /> <br />
+    An example of an Aircash A-bon is shown  <a href="" ng-click="showCoupon()">here</a>.
+</p>
 
 <hr />
 <h1 style="text-align:justify">Technical integration aspects – security and authentication</h1>
@@ -285,7 +285,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                                 message and optionally additionalData.
 
                             </td>
-                        </tr>                       
+                        </tr>
                         <tr>
                             <td><b>500</b></td>
                             <td>An unknown error occured</td>
@@ -369,20 +369,20 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
         </tr>
     </thead>
     <tbody>
-    <tr>
-        <td><b>Test</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
-    </tr>
-    <tr>
-        <td><b>Production</b></td>
-        <td>
-            POST
-        </td>
-        <td>https://a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
-    </tr>
+        <tr>
+            <td><b>Test</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+        </tr>
+        <tr>
+            <td><b>Production</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+        </tr>
     </tbody>
 </table>
 <br />
@@ -545,7 +545,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 message and optionally additionalData.
 
                             </td>
-                        </tr>                       
+                        </tr>
                         <tr>
                             <td><b>500</b></td>
                             <td>An unknown error occured</td>
@@ -650,6 +650,65 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
     The method supports repeated calls. The method can be called again with the same parameters in the case of an invalid response. In the event that the coupon was canceled by a previous call (whose response was not received), the return value contains the message 7: "Coupon has been already canceled".
 </p>
 
+<h4 style="text-align:justify">EAN Codes</h4>
+<table class="table table-active col-md-2">
+    <thead>
+        <tr>
+            <th>Country</th>
+            <th>Download</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Austria</td>
+            <td><a href="https://docs.google.com/document/d/1D08Xz7NG41KYJ-_Lz1FBJOGylcgMpeHt/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Croatia</td>
+            <td><a href="https://docs.google.com/document/d/19FYiS7SUqvGi9kyAH8iPNQFgZTXqbLEz/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Cyprus</td>
+            <td><a href="https://docs.google.com/document/d/1PT-gT2WRSlvabCwytmFarkQ7zKAVL3RS/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Czechia</td>
+            <td><a href="https://docs.google.com/document/d/16ufbMKdiPuhe4JykksjF0lg1e051zeVB/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Germany</td>
+            <td><a href="https://docs.google.com/document/d/1IsDcm-cnJHI23bdP5-ELucZ4sJQaikqd/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Greece</td>
+            <td><a href="https://docs.google.com/document/d/16YLUlO2JuMzGLACAOs_2iygfb5hAXkoJ/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Poland</td>
+            <td><a href="https://docs.google.com/document/d/15dsMtq8TvKJ1hCAiKDr0nM6eR075PSpw/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Romania</td>
+            <td><a href="https://docs.google.com/document/d/1olE1j0GxDTrgG9UL58gkIjAPXlcfWVBv/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Slovakia</td>
+            <td><a href="https://docs.google.com/document/d/18dwcN1HW3ydFCDdBJTSGWlFLM72XBDbM/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Slovenia</td>
+            <td><a href="https://docs.google.com/document/d/1vZwUm3QkJazxJAjj6eQHwXeBomvQxLnp/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Spain</td>
+            <td><a href="https://docs.google.com/document/d/1M3bfqMIxktqQBCDvJNhfuZ2J3Lj1YBQx/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+        <tr>
+            <td>Switzerland</td>
+            <td><a href="https://docs.google.com/document/d/1Lj_H0QC95w9BZ-NiuufH60ZHa1jB81gj/edit?usp=share_link&ouid=110553381833413652820&rtpof=true&sd=true" target="_blank">Link</a></td>
+        </tr>
+    </tbody>
+</table>
 
 
 
@@ -678,7 +737,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
             <div class="modal-header">
                 <h4 class="modal-title">A-bon preview</h4>
             </div>
-            <div class="modal-body"  id="content1">
+            <div class="modal-body" id="content1">
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
