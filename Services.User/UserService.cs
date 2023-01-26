@@ -84,5 +84,17 @@ namespace Services.User
 
             await AircashSimulatorContext.SaveChangesAsync();
         }
+        public async Task<UserDTO> GetUserByIdentifier(string identifier) 
+        {
+            return await AircashSimulatorContext.Users
+                .Where(x => x.Username == identifier || x.Email == identifier)
+                .Select(x => new UserDTO {
+                    UserId = x.UserId,
+                    PartnerId = x.PartnerId,
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    BirthDate = x.BirthDate.Value.ToString("yyyy-MM-dd")
+                }).FirstOrDefaultAsync();
+        }
     }
 }

@@ -105,6 +105,12 @@
                 </a>
             </li>
             <li ui-sref-active="active">
+                <a ui-sref="app.acInAppPay" ng-if="partnerRoles.indexOf('AircashInAppPay') != -1">
+                    <i class="fa fa-gamepad" aria-hidden="true"></i>
+                    <span>{{translations.ac_in_app_pay}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.signature">
                     <i class="fa fa-pencil-alt"></i>
                     <span>{{translations.signature_label}}</span>

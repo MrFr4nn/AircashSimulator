@@ -17,8 +17,10 @@ var app = angular.module('app', [
     'userAdmin',
     'acRedeemTicket',
     'acFrameV2',
+    'acPosDeposit',
+    'acInAppPay',
     'aircashPayoutV2',
-    'acPosDeposit'
+    'cashier'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -85,7 +87,8 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline', '/forbidden'];
+        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/cashier', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
+            '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');

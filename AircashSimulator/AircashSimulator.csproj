@@ -36,6 +36,7 @@
     <ProjectReference Include="..\Services.Partner\Services.Partner.csproj" />
     <ProjectReference Include="..\Services.Transaction\Services.Transactions.csproj" />
     <ProjectReference Include="..\Services.User\Services.User.csproj" />
+    <ProjectReference Include="..\Services.MatchService\Services.MatchService.csproj" />
   </ItemGroup>
 
 </Project>
