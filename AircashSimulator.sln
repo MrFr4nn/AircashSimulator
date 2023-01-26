@@ -59,7 +59,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.MatchService", "Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AircashSimulator.Extensions", "AircashSimulator.Extensions\AircashSimulator.Extensions.csproj", "{BB27DAFD-DDDF-4184-BEE2-C4F2FB6318D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashPayoutV2", "Services.AircashPayoutV2\Services.AircashPayoutV2.csproj", "{2A5178C4-AEBA-4059-BD52-9254269B0292}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.AircashPayoutV2", "Services.AircashPayoutV2\Services.AircashPayoutV2.csproj", "{2A5178C4-AEBA-4059-BD52-9254269B0292}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
