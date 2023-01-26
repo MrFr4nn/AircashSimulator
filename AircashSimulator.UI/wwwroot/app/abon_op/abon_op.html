@@ -329,29 +329,9 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                                     <label class="form-label" for="exampleInputEmail1">Coupon code</label>
                                     <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
                                 </div>
-                                <div class="form-check mb-3">
-                                    <input ng-model="validateCheckBox" class="form-check-input" type="checkbox" id="nf_checkbox_css_1">
-                                    <a href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow">I accept the A-bon Terms&Conditions</a>
-                                </div>
-                                <button ng-click="validateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="validateBusy || !validateCheckBox || transactionForm0.$invalid">Validate <i ng-if="validateBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="validateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="validateBusy || transactionForm0.$invalid">Validate <i ng-if="validateBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
-                    </div>
-                    <div class="col-md-2">
-                        <div>
-                            <label class="form-label" for="exampleInputEmail1">Get unused coupon</label>
-                        </div>
-                        <div class="input-group">
-                            <div>
-                                <select class="form-control"
-                                        ng-options="item as item.Value group by item.Currency for item in items"
-                                        ng-model="selectedValidate">
-                                </select>
-                            </div>
-                            <span style="float: right">
-                                <button ng-click="getUnusedCouponValidate(selectedValidate)" class="btn btn-primary w-100px me-5px">Get</button>
-                            </span>
-                        </div>
                     </div>
                     <br />
                     <div ng-hide="!validateResponded" class="col-md-4">
