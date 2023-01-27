@@ -111,8 +111,8 @@
             </tr>
         </table>
         <br />
-        <uib-tabset active="active">
-            <uib-tab index="request-tab-0" heading="Request" class="nav-item">
+        <uib-tabset>
+            <uib-tab index="GenerateTransaction-tab-0" heading="Request" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -154,16 +154,6 @@
                             transactions
                         </td>
                         <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>Description</b></td>
-                        <td>string</td>
-                        <td>
-                            Transaction description, additional info
-                            about transaction ( e.g. payment for
-                            invoice 42)
-                        </td>
-                        <td>NO</td>
                     </tr>
                     <tr>
                         <td><b>ValidUntilUTC</b></td>
@@ -237,7 +227,7 @@
 
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-1" heading="Request example" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-1" heading="Request example" class="nav-item">
 <pre>
 {
     "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
@@ -249,7 +239,7 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" class="nav-item">
+            <uib-tab index="GenerateTransaction-tab-2" heading="Response" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Return value</th>
@@ -271,14 +261,14 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Response example" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-3" heading="Response example" class="nav-item">
 <pre>
 {
-"codeLink": " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "
+"url": " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+            <uib-tab index="GenerateTransaction-tab-4" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -435,7 +425,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-5" heading="400 Error Response Example" class="nav-item">
                 <pre>
 {
     "code": 6,    
@@ -444,7 +434,7 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="Try it out" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-6" heading="Try it out" class="nav-item">
                 <div class="row">
                     <div class="col-md-2">
                         <form action="/" method="POST" name="generateForm">
@@ -475,10 +465,6 @@
                         <pre>
 <code>{{GenerateServiceResponse}}</code>
 </pre>
-
-                        <div>
-                            <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
-                        </div>
                     </div>
                 </div>
             </uib-tab>
@@ -518,7 +504,7 @@
         </table>
         <br />
         <uib-tabset>
-            <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
+            <uib-tab index="ConfirmTransaction-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -593,7 +579,7 @@
 
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+            <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
                 <pre>
 {
     "amount":123.45,
@@ -605,12 +591,11 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
+            <uib-tab index="ConfirmTransaction-tab-2" heading="Response" classes="nav-item">
                 <p>
                     Aircash system expects an answer http answer 200 OK. In case the Aircash system gets any other response
                     the Aircash system will call this method again. The method is called 10 times in a period of 6 hours after
                     which the call is canceled and Aircash support is notified of the failed transaction confirmation.
-                </p>
                 </p>
             </uib-tab>
         </uib-tabset>
@@ -648,7 +633,7 @@
         </table>
         <br />
         <uib-tabset>
-            <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
+            <uib-tab index="CheckTransactionStatus-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -773,7 +758,7 @@
 
         </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="400 Error Responses" class="nav-item">
+            <uib-tab index="CheckTransactionStatus-tab-4" heading="400 Error Responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -930,7 +915,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-10" heading="400 Error Response Example" class="nav-item">
+            <uib-tab index="CheckTransactionStatus-tab-5" heading="400 Error Response Example" class="nav-item">
                 <pre>
 {
     "code": 6,    
@@ -939,7 +924,7 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
                         <br />

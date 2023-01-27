@@ -30,6 +30,7 @@ using Services.User;
 using Services.AircashFrameV2;
 using Services.AircashPosDeposit;
 using Services.MatchService;
+using Services.AircashInAppPay;
 
 namespace AircashSimulator
 {
@@ -100,6 +101,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashFrameService, AircashFrameService>();
             services.AddTransient<IAircashFrameV2Service, AircashFrameV2Service>();
             services.AddTransient<IMatchService, MatchService>();
+            services.AddTransient<IAircashInAppPayService, AircashInAppPayService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();

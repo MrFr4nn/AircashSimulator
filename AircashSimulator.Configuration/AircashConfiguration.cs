@@ -38,5 +38,6 @@ namespace AircashSimulator.Configuration
         public string AircashCheckUserV4Endpoint { get; set; }
         public string AircashCreatePayoutV4Endpoint { get; set;  }
         public string MatchCompareIdentity { get; set;  }
+        public string AircashPayGenerateTransaction { get; set; }
     }
 }
