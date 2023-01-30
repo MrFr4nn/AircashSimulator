@@ -344,41 +344,14 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
-    "amount": "10",
-    "currencyId": 191,
-    "payType": 0,
-    "payMethod": 2,
-    "notificationUrl": "https://aircash.eu",
-    "successUrl": "https://localhost:44317/#!/success",
-    "declineUrl": "https://localhost:44317/#!/decline",
-    "locale": "en-US",
-    "signature": "CsXX21BpQg..."
-}
-</pre>
+                <div class="jsonFormatter">{{initiateRequestExample}}</div>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
                 <pre>
 Request example:
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
-    "amount": "10",
-    "currencyId": 191,
-    "payType": 0,
-    "payMethod": 2,
-    "notificationUrl": "https://aircash.eu",
-    "successUrl": "https://localhost:44317/#!/success",
-    "declineUrl": "https://localhost:44317/#!/decline",
-    "locale": "en-US",
-    "signature": "CsXX21BpQg..."
-}
-
+</pre>
+                <div class="jsonFormatter">{{initiateRequestExample}}</div>
+<pre>
 Sequence: 
 Amount=10&CurrencyId=191&DeclineUrl=https://localhost:44317/#!/decline&Locale=en-US&NotificationUrl=https://aircash.eu&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=https://localhost:44317/#!/success
 
@@ -407,11 +380,7 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Response example" classes="nav-item">
-<pre>
-<code>{</code>
-<code>    "url": "https://aircash.eu?Id=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac"</code>
-<code>}</code>
-</pre>
+                <div class="jsonFormatter">{{initiateResponseExample}}</div>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">

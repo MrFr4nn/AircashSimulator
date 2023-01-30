@@ -181,4 +181,29 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
 
     $scope.getTransactions();
 
+    $scope.initiateRequestExample = {
+        "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+        "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+        "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
+        "amount": "10",
+        "currencyId": 191,
+        "payType": 0,
+        "payMethod": 2,
+        "notificationUrl": "https://aircash.eu",
+        "successUrl": "https://localhost:44317/#!/success",
+        "declineUrl": "https://localhost:44317/#!/decline",
+        "locale": "en-US",
+        "signature": "CsXX21BpQg..."
+    } ;
+
+    $scope.initiateResponseExample = {
+        "url": "https://aircash.eu?Id=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac"
+    };
+
+    //$scope.initiateErrorResponseExample = ;
+
+    angular.element(document).ready(function () {
+        $('.jsonFormatter').jsonFormatter();
+    });
+
 }]);
