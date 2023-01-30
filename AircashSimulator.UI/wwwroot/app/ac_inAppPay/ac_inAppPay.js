@@ -57,6 +57,13 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
 ]);
 
 acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'acInAppPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acInAppPayService, $http, JwtParser, $uibModal, $rootScope) {
+
+    $scope.confirmTransactionRequestExample = $rootScope.JSONexamples.inAppPay.confirmTransaction.requestExample;
+
+    $scope.CheckTransactionStatusRequestExample = $rootScope.JSONexamples.inAppPay.CheckTransactionStatus.requestExample;
+    $scope.CheckTransactionStatusResponseExample = $rootScope.JSONexamples.inAppPay.CheckTransactionStatus.responseExample;
+    $scope.CheckTransactionStatusErrorResponseExample = $rootScope.JSONexamples.inAppPay.CheckTransactionStatus.errorResponseExample;
+
     $scope.generateTransactionModel = {
         amount: null,
         description: null

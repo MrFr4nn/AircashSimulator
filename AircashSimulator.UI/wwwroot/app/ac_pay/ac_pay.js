@@ -77,6 +77,14 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         $location.path('/forbidden');
     }
 
+    $scope.generatePartnerCodeRequestExample = $rootScope.JSONexamples.aircashPay.generatePartnerCode.requestExample;
+    $scope.generatePartnerCodeResponseExample = $rootScope.JSONexamples.aircashPay.generatePartnerCode.responseExample;
+
+    $scope.confirmTransactionRequestExample = $rootScope.JSONexamples.aircashPay.confirmTransaction.requestExample;
+
+    $scope.refundTransactionRequestExample = $rootScope.JSONexamples.aircashPay.refundTransaction.requestExample;
+    $scope.refundTransactionErrorResponseExample = $rootScope.JSONexamples.aircashPay.refundTransaction.errorResponseExample;
+
     $scope.generatePartnerCodeModel = {
         amount: null,
         description: null,
@@ -110,12 +118,16 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
             .then(function (response) {
                 if (response) {
+                    $scope.copyGenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.GenerateResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceGenerate = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.GenerateServiceRequestObject = response.serviceRequest;
+                    $scope.GenerateServiceResponseObject = response.serviceResponse;
                     $scope.codeLink = response.serviceResponse.codeLink;
                     new QRCode(document.getElementById("qrcode"), $scope.codeLink);
                     $scope.getTransactions(true);
@@ -155,6 +167,8 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         acPayService.refundTransaction($scope.refundTransactionModel.amount, transactionId)
             .then(function (response) {
                 if (response) {
+                    $scope.copyRefundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.refundSequence = response.sequence;
@@ -162,6 +176,8 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.refundServiceRequestObject = response.serviceRequest;
+                    $scope.refundServiceResponseObject = response.serviceResponse;
                 }
                 $scope.refundBusy = false;
                 $scope.refundResponded = true;
@@ -192,4 +208,5 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.setDefaults();
 
     $scope.getTransactions();
+
 }]);

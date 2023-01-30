@@ -59,6 +59,13 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
         $location.path('/forbidden');
     }
 
+    $scope.couponCreationRequestExample = $rootScope.JSONexamples.aBonGenerate.couponCreation.requestExample;
+    $scope.couponCreationResponseExample = $rootScope.JSONexamples.aBonGenerate.couponCreation.responseExample;
+    $scope.couponCreationErrorResponseExample = $rootScope.JSONexamples.aBonGenerate.couponCreation.errorResponseExample;
+
+    $scope.couponCancellationRequestExample = $rootScope.JSONexamples.aBonGenerate.couponCancellation.requestExample;
+    $scope.couponCancellationErrorResponseExample = $rootScope.JSONexamples.aBonGenerate.couponCancellation.errorResponseExample;
+
     $scope.createCouponModel = {
         value : 100,
         pointOfSaleId : 'test'
@@ -94,6 +101,8 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             .then(function (response) {
                 
                 if (response) {
+                    $scope.copyServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.requestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.responseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequence = response.sequence;
@@ -103,6 +112,8 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     $scope.decodedContent = decodeURIComponent(escape(window.atob($scope.content)));
                     document.querySelector('#content1').innerHTML = $scope.decodedContent;
                     $scope.serviceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.serviceResponseObject = response.serviceResponse;
+                    $scope.serviceRequestObject = response.serviceRequest;
                 }
                 $scope.createServiceBusy = false;
                 $scope.createServiceResponse = true;
@@ -116,12 +127,15 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
         abonSpService.cancelCoupon($scope.cancelCouponModel.cancelSerialNumber, $scope.cancelCouponModel.cancelPointOfSaleId)
             .then(function (response) {
                 if (response) {
+                    $scope.copyCancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+
                     $scope.cancelRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.cancelResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.cancelSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.cancelResponse = response.serviceResponse;
                     $scope.cancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.cancelServiceRequestObject = response.serviceRequest;
                 }
                 $scope.cancelServiceBusy = false;
                 $scope.cancelServiceResponse = true;
@@ -144,4 +158,5 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
     $scope.setDefaults();
 
     $scope.getDenominations();
+
 }]);

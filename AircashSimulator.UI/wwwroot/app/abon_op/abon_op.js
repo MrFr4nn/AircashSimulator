@@ -49,6 +49,14 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         $location.path('/forbidden');
     }
 
+    $scope.validateCouponRequestExample = $rootScope.JSONexamples.aBonDeposit.validateCoupon.requestExample;
+    $scope.validateCouponResponseExample = $rootScope.JSONexamples.aBonDeposit.validateCoupon.responseExample;
+    $scope.validateCouponErrorResponseExample = $rootScope.JSONexamples.aBonDeposit.validateCoupon.errorResponseExample;
+
+    $scope.confirmTransactionRequestExample = $rootScope.JSONexamples.aBonDeposit.confirmTransaction.requestExample;
+    $scope.confirmTransactionResponseExample = $rootScope.JSONexamples.aBonDeposit.confirmTransaction.responseExample;
+    $scope.confirmTransactionErrorResponseExample = $rootScope.JSONexamples.aBonDeposit.confirmTransaction.errorResponseExample;
+
     $scope.validateCouponModel = {
         couponCode: ""
     };
@@ -72,6 +80,8 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     $scope.sequenceValidate = response.sequence;
                     $scope.ValidateResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.ValidateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.ValidateServiceResponseObject = response.serviceResponse;
+                    $scope.ValidateServiceRequestObject = response.serviceRequest;
 
                 }
                 $scope.validateBusy = false;
@@ -94,6 +104,8 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     $scope.sequenceConfirm = response.sequence;
                     $scope.ConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.ConfirmServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.ConfirmServiceResponseObject = response.serviceResponse;
+                    $scope.ConfirmServiceRequestObject = response.serviceRequest;
 
                 }
                 $scope.confirmBusy = false;
