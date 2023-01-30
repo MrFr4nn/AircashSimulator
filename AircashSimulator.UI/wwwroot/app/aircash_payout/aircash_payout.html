@@ -142,12 +142,24 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Request example" classes="nav-item">
-        <json-formatter open="1" json=checkUserRequestExample></json-formatter>
+        <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "phoneNumber": 385995712738,
+    "signature": "VA514erV6V..."
+}      
+        </pre>
     </uib-tab>
     <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-            <json-formatter open="1" json=checkUserRequestExample></json-formatter> 
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "phoneNumber": 385995712738,
+    "signature": "VA514erV6V..."
+}  
 
 Sequence:
 PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerUserID=574f32a7-4ecb-48b2-9723-ac660b9c835d&PhoneNumber=385995712738
@@ -182,7 +194,11 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
         </div>
     </uib-tab>
     <uib-tab index="checkUser1-tab-4" heading="200 OK Response example" classes="nav-item">
-        <json-formatter open="1" json=checkUserResponseExample></json-formatter>
+        <pre>
+{
+    "status": 3
+}
+        </pre>
     </uib-tab>
     <uib-tab index="checkUser1-tab-5" heading="Error response messages" classes="nav-item">
         <table class="table table-hover">
@@ -229,7 +245,11 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-6" heading="Error response example" classes="nav-item">
-        <json-formatter open="1" json=checkUserErrorResponseExample></json-formatter>
+        <pre>
+{
+    "message": "An error has occurred."
+}
+        </pre>
     </uib-tab>
     <uib-tab index="checkUser1-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -247,14 +267,20 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCheckUserRequest , 0);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                <span ng-show="displayTooltip[0]" class="p-3"><b>Copied</b></span>
-                <json-formatter open="1" json=checkUserRequestObject></json-formatter>
+<pre>
+<code>
+{{checkUserRequest}}
+</code>
+</pre>
                 Sequence: {{checkUserSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkUserServiceResponse">
                 Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <json-formatter open="1" json=checkUserResponseObject></json-formatter>
+<pre>
+<code>
+{{checkUserResponse}}
+</code>
+</pre>
             </div>
         </div>
     </uib-tab>
@@ -373,12 +399,30 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-1" heading="Request example" classes="nav-item">
-        <json-formatter open="1" json=createPayoutRequestExample></json-formatter>
+        <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "amount": 100,
+    "phoneNumber": "385995712738",
+    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "currencyID": 191,
+    "signature": "Hm38lRCyOP..."
+}
+        </pre>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-            <json-formatter open="1" json=createPayoutRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "amount": 100,
+    "phoneNumber": "385995712738",
+    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+    "currencyID": 191,
+    "signature": "Hm38lRCyOP..."
+}
        
 Sequence:
 Amount=100&CurrencyID=191&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=45c38393-274b-4761-902e-23db30736563&PartnerUserID=574f32a7-4ecb-48b2-9723-ac660b9c835d&PhoneNumber=385995712738
@@ -409,7 +453,11 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-4" heading="200 OK Response example" classes="nav-item">
-        <json-formatter open="1" json=createPayoutResponseExample></json-formatter>
+        <pre>
+{
+    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc "
+}
+        </pre>
     </uib-tab>
     <uib-tab index="createPayout1-tab-5" heading="Error response messages" classes="nav-item">
         <div class="row">
@@ -480,7 +528,12 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
         </div>
     </uib-tab>
     <uib-tab index="createPayout1-tab-6" heading="Error response example" classes="nav-item">
-        <json-formatter open="1" json=createPayoutErrorResponseExample></json-formatter>
+        <pre>
+{
+    "code": 4002,
+    "message": "PartnerTransactionID already exists"
+}
+        </pre>
     </uib-tab>
     <uib-tab index="createPayout1-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -502,14 +555,20 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCreatePayoutRequest , 1);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
-                <json-formatter open="1" json=createPayoutRequestObject></json-formatter>
+<pre>
+<code>
+{{createPayoutRequest}}
+</code>
+</pre>
                 Sequence: {{createPayoutSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="createPayoutServiceResponse">
                 Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <json-formatter open="1" json=createPayoutResponseObject></json-formatter>
+<pre>
+<code>
+{{createPayoutResponse}}
+</code>
+</pre>
             </div>
         </div>
     </uib-tab>
@@ -596,12 +655,24 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-        <json-formatter open="1" json=checkTransactionStatusRequestExample></json-formatter>
+        <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "aircashTransactionID": null,
+    "signature": "BBjas91N8B..."
+}      
+        </pre>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-            <json-formatter open="1" json=checkTransactionStatusRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
+    "aircashTransactionID": null,
+    "signature": "BBjas91N8B..."
+}
 
 Sequence:
 AircashTransactionID=&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=45c38393-274b-4761-902e-23db30736563
@@ -642,7 +713,12 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-4" heading="200 OK Response example" classes="nav-item">
-        <json-formatter open="1" json=checkTransactionStatusResponseExample></json-formatter>
+        <pre>
+{
+    "status": 2,
+    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc "
+}
+        </pre>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Error response messages" classes="nav-item">
         <table class="table table-hover">
@@ -691,7 +767,11 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-6" heading="Error response example" classes="nav-item">
-        <json-formatter open="1" json=checkTransactionStatusErrorResponseExample></json-formatter>
+        <pre>
+{
+    "message": "An error has occurred."
+}
+        </pre>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -732,14 +812,20 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkTransactionStatusServiceResponse">
                 Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCheckTransactionStatusRequest , 2);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                <span ng-show="displayTooltip[2]" class="p-3"><b>Copied</b></span>
-                <json-formatter open="1" json=checkTransactionStatusRequestObject></json-formatter>
+<pre>
+<code>
+{{checkTransactionStatusRequest}}
+</code>
+</pre>
                 Sequence: {{checkTransactionStatusSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkTransactionStatusServiceResponse">
                 Response ({{checkTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <json-formatter open="1" json=checkTransactionStatusResponseObject></json-formatter>
+<pre>
+<code>
+{{checkTransactionStatusResponse}}
+</code>
+</pre>
             </div>
         </div>
     </uib-tab>

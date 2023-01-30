@@ -20,13 +20,5 @@ acPaymentModule.service("acPaymentService", ['$http', '$q', 'handleResponseServi
 acPaymentModule.controller("acPaymentCtrl",
     ['$scope', '$state', 'acPaymentService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, acPaymentService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-
-            $scope.checkPlayerRequestExample = $rootScope.JSONexamples.aircashPayment.checkPlayer.requestExample;
-            $scope.checkPlayerResponseExample = $rootScope.JSONexamples.aircashPayment.checkPlayer.responseExample;
-            $scope.checkPlayerErrorResponseExample = $rootScope.JSONexamples.aircashPayment.checkPlayer.errorResponseExample;
-
-            $scope.createAndConfirmPaymentRequestExample = $rootScope.JSONexamples.aircashPayment.createAndConfirmPayment.requestExample;
-            $scope.createAndConfirmPaymentResponseExample = $rootScope.JSONexamples.aircashPayment.createAndConfirmPayment.responseExample;
-            $scope.createAndConfirmPaymentErrorResponseExample = $rootScope.JSONexamples.aircashPayment.createAndConfirmPayment.errorResponseExample;
         }
     ]);

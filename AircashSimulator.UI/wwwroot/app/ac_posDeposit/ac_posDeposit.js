@@ -52,18 +52,6 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
         $location.path('/forbidden');
     }
 
-    $scope.checkUserInputParametersExample = $rootScope.JSONexamples.aircashPoSDeposit.checkUser.inputParametersExample;
-    $scope.checkUserOutputParametersExample = $rootScope.JSONexamples.aircashPoSDeposit.checkUser.outputParametersExample;
-
-    $scope.createPayoutRequestExample = $rootScope.JSONexamples.aircashPoSDeposit.createPayout.requestExample;
-    $scope.createPayoutResponseExample = $rootScope.JSONexamples.aircashPoSDeposit.createPayout.responseExample;
-
-    $scope.checkPlayerInputParametersExample = $rootScope.JSONexamples.aircashPoSDeposit.checkPlayer.inputParametersExample;
-    $scope.checkPlayerOutputParametersExample = $rootScope.JSONexamples.aircashPoSDeposit.checkPlayer.outputParametersExample;
-
-    $scope.createAndConfirmPaymentInputParametersExample = $rootScope.JSONexamples.aircashPoSDeposit.createAndConfirmPayment.inputParametersExample;
-    $scope.createAndConfirmPaymentOutputParametersExample = $rootScope.JSONexamples.aircashPoSDeposit.createAndConfirmPayment.outputParametersExample;
-
     $scope.checkUserModel = {
         phoneNumber: $scope.decodedToken.userPhoneNumber,
         firstName: $scope.decodedToken.userFirstName,
@@ -83,16 +71,12 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
         acPosDepositService.checkUser($scope.checkUserRequest)
             .then(function (response) {
                 if (response) {
-                    $scope.copyCheckUserRequest = JSON.stringify(response.serviceRequest, null, 4);
-
                     $scope.checkUserRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.checkUserResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkUserSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.checkUserResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.checkUserRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.checkUserResponseObject = response.serviceResponse;
-                    $scope.checkUserRequestObject = response.serviceRequest;
                 }
                 $scope.checkUserServiceBusy = false;
                 $scope.checkUserServiceResponse = true;
@@ -123,16 +107,12 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
         acPosDepositService.createPayout($scope.createPayoutRequest)
             .then(function (response) {
                 if (response) {
-                    $scope.copyCreatePayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
-
                     $scope.createPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.createPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.createPayoutSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.createPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.createPayoutResponseObject = response.serviceResponse;
-                    $scope.createPayoutRequestObject = response.serviceRequest;
                 }
                 $scope.createPayoutServiceBusy = false;
                 $scope.createPayoutServiceResponse = true;
@@ -175,8 +155,6 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
                     $scope.matchPersonalDataSequence = response.sequence;
                     $scope.matchPersonalDataResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.matchPersonalDataRequest = JSON.stringify(response.serviceRequest, null, 4);
-
-                    $scope.matchPersonalDataResponseObject = response.serviceResponse;
                 }
                 $scope.matchPersonalDataServiceBusy = false;
                 $scope.matchPersonalDataServiceResponse = true;
