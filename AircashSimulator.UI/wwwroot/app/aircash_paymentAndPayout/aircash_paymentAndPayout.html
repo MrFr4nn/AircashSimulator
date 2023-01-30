@@ -154,13 +154,23 @@
     </uib-tab>
     <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
         <pre>
-        <json-formatter open="1" json=checkCodeRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "QDyIrReELi..."
+}
 </pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-            <json-formatter open="1" json=checkCodeRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "QDyIrReELi..."
+}
 
 Sequence:
 BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
@@ -197,7 +207,10 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
     </uib-tab>
     <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
         <pre>
-            <json-formatter open="1" json=checkCodeResponseExample></json-formatter>
+{
+    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "Amount": 2,000.00
+}
 </pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
@@ -257,17 +270,21 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                 </form>
             </div>
             <div class="col-md-4" ng-if="checkCodeServiceResponse">
-                Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})    
-                <button ng-click="copyToClipboard(copyCheckCodeServiceRequest, 0);"  class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                    <span ng-show="displayTooltip[0]" class="p-3" ><b>Copied</b></span>
-                <json-formatter open="1" json=checkCodeServiceRequestObject></json-formatter>
-
+                Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+<pre>
+<code>
+{{checkCodeServiceRequest}}
+</code>
+</pre>
                 Sequence: {{checkCodeSequence}}<br />
             </div>
             <div class="col-md-4" ng-if="checkCodeServiceResponse">
                 Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <json-formatter open="1" json=checkCodeServiceResponseObject></json-formatter>
-
+<pre>
+<code>
+{{checkCodeServiceResponse}}
+</code>
+</pre>
             </div>
         </div>
     </uib-tab>
@@ -357,12 +374,26 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
         </table>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
-            <json-formatter open="1" json=confirmTransactionRequestExample></json-formatter>
+        <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
+    "locationID": "123",
+    "signature": "Iz+gMcrdNA..."
+}
+</pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-            <json-formatter open="1" json=confirmTransactionRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
+    "locationID": "123",
+    "signature": "Iz+gMcrdNA..."
+}
 
 Sequence:
 BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=11888f0c-7923-42db-8513-5c1f32cc83e0
@@ -407,7 +438,13 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
         </table>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-4" heading="Response example" classes="nav-item">
-            <json-formatter open="1" json=confirmTransactionResponseExample></json-formatter>
+        <pre>
+{
+    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+    "Amount": 2,000.00,
+    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+}
+</pre>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
@@ -473,14 +510,20 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
             </div>
             <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
                 Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyConfirmTransactionServiceRequest, 1);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
-                <json-formatter open="1" json=confirmTransactionServiceRequestObject></json-formatter>
+<pre>
+<code>
+{{confirmTransactionServiceRequest}}
+</code>
+</pre>
                 Sequence: {{confirmTransactionSequence}}<br />
             </div>
             <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
                 Response ({{confirmTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <json-formatter open="1" json=confirmTransactionServiceResponseObject></json-formatter>
+<pre>
+<code>
+{{confirmTransactionServiceResponse}}
+</code>
+</pre>
             </div>
         </div>
     </uib-tab>
@@ -560,12 +603,22 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-        <json-formatter open="1" json=checkTransactionStatusRequestExample></json-formatter>
+        <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "signature": "ueIZMgee7G..."
+}
+</pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-            <json-formatter open="1" json=checkTransactionStatusRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "signature": "ueIZMgee7G..."
+}
 
 Sequence:
 PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=05cd4905-982b-4a36-8634-0719290e4341
@@ -611,7 +664,13 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-4" heading="Response example" classes="nav-item">
-        <json-formatter open="1" json=checkTransactionStatusResponseExample></json-formatter>
+<pre>
+{
+    "LocationID": "123",
+    "Amount": 2,000.00,
+    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+}
+</pre>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
@@ -696,16 +755,18 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
             <br />
             <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
                 Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCheckTransactionStatusServiceRequest, 2);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                <span ng-show="displayTooltip[2]" class="p-3"><b>Copied</b></span>
-                <json-formatter open="1" json=checkTransactionStatusServiceRequestObject></json-formatter>
+<pre>
+<code>{{checkTransactionStatusServiceRequest}}</code>
+</pre>
                 Sequence: {{checkTransactionStatusSequence}}<br />
             </div>
             <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-3.5">
                 <p>
                     Response ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 </p>
-                    <json-formatter open="1" json=checkTransactionStatusServiceResponseObject></json-formatter>
+                <pre>
+<code>{{checkTransactionStatusServiceResponse}}</code>
+</pre>
             </div>
         </div>
     </uib-tab>
@@ -789,12 +850,24 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
         </table>
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-1" heading="Request example" classes="nav-item">
-            <json-formatter open="1" json=cancelTransactionRequestExample></json-formatter>
+        <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "AEXHWNFQD9..."
+}
+</pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-            <json-formatter open="1" json=cancelTransactionRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+    "locationID": "123",
+    "signature": "AEXHWNFQD9..."
+}
 
 Sequence:
 PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=05cd4905-982b-4a36-8634-0719290e4341
@@ -891,14 +964,16 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             <br />
             <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
                 Request({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <button ng-click="copyToClipboard(copyCancelTransactionServiceRequest,3);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                <span ng-show="displayTooltip[3]" class="p-3"><b>Copied</b></span>
-                <json-formatter open="1" json=cancelTransactionServiceRequestObject></json-formatter>
+<pre>
+<code>{{cancelTransactionServiceRequest}}</code>
+</pre>
                 Sequence: {{cancelTransactionSequence}}
             </div>
             <div ng-hide="!cancelTransactionServiceResponded" class="col-md-3.5">
                 Response ({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <json-formatter open="1" json=cancelTransactionServiceResponseObject></json-formatter>
+<pre>
+<code>{{cancelTransactionServiceResponse}}</code>
+</pre>
             </div>
         </div>
     </uib-tab>

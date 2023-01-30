@@ -259,12 +259,30 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
-                <json-formatter open="1" json=generatePartnerCodeRequestExample></json-formatter>
+                <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "amount": 100,
+    "currencyID": 191,
+    "partnerTransactionID": "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+    "description": "test",
+    "locationID": "test",
+    "signature": "WUY3NyUagi..."
+}
+                </pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" class="nav-item">
                 <pre>
 Request example:
-                    <json-formatter open="1" json=generatePartnerCodeRequestExample></json-formatter>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "amount": 100,
+    "currencyID": 191,
+    "partnerTransactionID": "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+    "description": "test",
+    "locationID": "test",
+    "signature": "WUY3NyUagi..."
+}
 
 Sequence:
 Amount=100&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=ef52ca13-33b4-4564-8bca-0cbfc7c5a37d
@@ -295,7 +313,11 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="200 OK response example" class="nav-item">
-                <json-formatter open="1" json=generatePartnerCodeResponseExample></json-formatter>
+                <pre>
+{
+    "codeLink": "https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3da14cfc86-fb75-4e07-a02f-630db813e91e&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay&efr=1"
+}
+</pre>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response messages" class="nav-item">
                 <table class="table table-hover">
@@ -364,14 +386,17 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
                     <br />
                     <div ng-hide="!generateResponded" class="col-md-4">
                         Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <button ng-click="copyToClipboard(copyGenerateServiceRequest , 0);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                        <span ng-show="displayTooltip[0]" class="p-3"><b>Copied</b></span>
-                        <json-formatter open="1" json=GenerateServiceRequestObject></json-formatter>
+                        <pre>
+<code>{{GenerateServiceRequest}}</code>
+</pre>
                         Sequence: {{sequenceGenerate}}
                     </div>
                     <div ng-hide="!generateResponded" class="col-md-6">
                         Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <json-formatter open="1" json=GenerateServiceResponseObject></json-formatter>
+                        <pre>
+<code>{{GenerateServiceResponse}}</code>
+</pre>
+
                         <div>
                             <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
                         </div>
@@ -484,7 +509,16 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <json-formatter open="1" json=confirmTransactionRequestExample></json-formatter>
+                <pre>
+{
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+    "amount": 100,
+    "currencyID": 191,
+    "aircashTransactionID": "122e5e33-b5fb-4398-b138-c60582b9fa2b"
+    "signature": "Ff3oSWm20n...",
+}
+</pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Response example" classes="nav-item">
                 <p>
@@ -593,12 +627,26 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <json-formatter open="1" json=refundTransactionRequestExample></json-formatter>
+                <pre>
+{
+    "amount": 50,
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "28f0f0db-69cf-4350-8084-a0d431c2c837",
+    "refundPartnerTransactionID": "abc66734-9d5a-4f7f-891a-185e1bb3144a",
+    "signature": "CQ83DaMKix..."
+}
+</pre>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
                 <pre>
 Request example:
-                    <json-formatter open="1" json=refundTransactionRequestExample></json-formatter>
+{
+    "amount": 50,
+    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "partnerTransactionID": "28f0f0db-69cf-4350-8084-a0d431c2c837",
+    "refundPartnerTransactionID": "abc66734-9d5a-4f7f-891a-185e1bb3144a",
+    "signature": "CQ83DaMKix..."
+}
 
 Sequence:
 Amount=50&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=28f0f0db-69cf-4350-8084-a0d431c2c837&RefundPartnerTransactionID=abc66734-9d5a-4f7f-891a-185e1bb3144a
@@ -708,7 +756,12 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
-                <json-formatter open="1" json=refundTransactionErrorResponseExample></json-formatter>
+                <pre>
+{
+    "ErrorCode":3,
+    "ErrorMessage":"Requested amount is higher than remaining amount from the original transaction"
+}
+</pre>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -760,14 +813,16 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                     <br />
                     <div ng-hide="!refundResponded" class="col-md-4">
                         Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <button ng-click="copyToClipboard(copyRefundServiceRequest , 1);" class="btn btn-danger btn-xs w-100px me-5px">Copy Raw</button>
-                        <span ng-show="displayTooltip[1]" class="p-3"><b>Copied</b></span>
-                        <json-formatter open="1" json=refundServiceRequestObject></json-formatter>
+                        <pre>
+                        <code>{{RefundServiceResponse}}</code>
+</pre>
                         Sequence: {{sequenceRefund}}
                     </div>
                     <div ng-hide="!refundResponded" class="col-md-4">
                         Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <json-formatter open="1" json=refundServiceResponseObject></json-formatter>
+                        <pre>
+<code>{{RefundServiceResponse}}</code>
+</pre>
                     </div>
                 </div>
             </uib-tab>

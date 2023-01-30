@@ -66,14 +66,6 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
         amount: 100
     };
 
-    $scope.checkTicketInputParametersExample = $rootScope.JSONexamples.aircashRedeemTicket.checkTicket.inputParametersExample;
-    $scope.checkTicketOutputParametersExampleFirst = $rootScope.JSONexamples.aircashRedeemTicket.checkTicket.outputParametersExample.first;
-    $scope.checkTicketOutputParametersExampleSecond = $rootScope.JSONexamples.aircashRedeemTicket.checkTicket.outputParametersExample.second;
-
-    $scope.redeemTicketInputParametersExample = $rootScope.JSONexamples.aircashRedeemTicket.redeemTicket.inputParametersExample;
-    $scope.redeemTicketOutputParametersExampleFirst = $rootScope.JSONexamples.aircashRedeemTicket.redeemTicket.outputParametersExample.first;
-    $scope.redeemTicketOutputParametersExampleSecond = $rootScope.JSONexamples.aircashRedeemTicket.redeemTicket.outputParametersExample.second;
-
     $scope.setDefaults = function () {
         $scope.transactions = [];
         $scope.pageSize = 5;
