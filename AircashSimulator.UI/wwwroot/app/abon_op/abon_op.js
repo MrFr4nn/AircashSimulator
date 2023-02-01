@@ -15,8 +15,7 @@ app.config(function ($stateProvider) {
 abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         validateCoupon: validateCoupon,
-        confirmTransaction: confirmTransaction,
-        getUnusedCoupon: getUnusedCoupon
+        confirmTransaction: confirmTransaction
     });
     function validateCoupon(couponCode) {
         var request = $http({
@@ -40,25 +39,6 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function getUnusedCoupon(selected) {
-        switch (selected.Currency) {
-            case "EUR":
-                currency = 977;
-                break;
-            case "HRK":
-                currency = 191;
-                break;
-            }
-        var request = $http({
-            method: 'POST',
-            url: config.baseUrl +"Coupon/GetUnusedCoupon",
-            data: {
-                PurchasedCurrency: currency,
-                Value: selected.Value
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
 }
 ]);
 
@@ -78,46 +58,6 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
     }
-
-    $scope.selected = null;
-    $scope.items = [
-        {
-            "Currency": "EUR",
-            "Value": 10
-        },
-        {
-            "Currency": "EUR",
-            "Value": 50
-        },
-        {
-            "Currency": "EUR",
-            "Value": 200
-        },
-        {
-            "Currency": "EUR",
-            "Value": 500
-        },
-        {
-            "Currency": "HRK",
-            "Value": 25
-        },
-        {
-            "Currency": "HRK",
-            "Value": 50
-        },
-        {
-            "Currency": "HRK",
-            "Value": 100
-        },
-        {
-            "Currency": "HRK",
-            "Value": 200
-        },
-        {
-            "Currency": "HRK",
-            "Value": 500
-        }
-    ];
 
     $scope.validateResponded = false;
     $scope.validateBusy = false;
@@ -162,27 +102,4 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 console.log("error");
             });
     }
-
-    $scope.getUnusedCouponValidate = function (selectedValidate) {
-        abonOpService.getUnusedCoupon(selectedValidate)
-            .then(function (response) {
-                if (response) {
-                    $scope.validateCouponModel.couponCode = response.couponCode;
-                }
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.getUnusedCouponConfirm = function (selectedConfirm) {
-        abonOpService.getUnusedCoupon(selectedConfirm)
-            .then(function (response) {
-                if (response) {
-                    $scope.confirmTransactionModel.couponCode = response.couponCode;
-                }
-            }, () => {
-                console.log("error");
-            });
-    }
-
 }]);

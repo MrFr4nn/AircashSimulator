@@ -51,7 +51,7 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function savePartner(partner, roles) {
+    function savePartner(partner, roles, username) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "Partner/SavePartner",
@@ -64,7 +64,8 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
                 CountryCode: partner.countryCode,
                 Environment: parseInt(partner.environment),
                 Roles: roles,
-                UseDefaultPartner: (partner.useDefaultPartner === 'true') 
+                UseDefaultPartner: (partner.useDefaultPartner === 'true'),
+                Username: username
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -126,18 +127,17 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.pageNumber = 1;
         $scope.getPartnersDetail();
     }
-
     $scope.partner = {};
-    $scope.showPartnerModal = function (partner) {
+    $scope.showPartnerModal = function (partner, newPartner) {
+        $scope.newPartner = newPartner;
         if (partner) {
-            console.log(partner);
             partner.useDefaultPartner = String(partner.useDefaultPartner);
             partner.environment = String(partner.environment);
             angular.copy(partner, $scope.partner);
         } else {
             $scope.partner = {
-                useDefaultPartner: "false",
-                environment: "1"
+                useDefaultPartner: "true",
+                environment: "2"
             };
         }
         $scope.toggePartnerModal(true);
@@ -159,7 +159,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
             });
         }
 
-        partnerAdminService.savePartner($scope.partner, $scope.sendRoles)
+        partnerAdminService.savePartner($scope.partner, $scope.sendRoles, $scope.username)
             .then(function (resposne) {
                 $scope.SearchTable();
             }, () => {
