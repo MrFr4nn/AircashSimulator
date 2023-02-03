@@ -53,6 +53,15 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
+    function refundTransaction() {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashInAppPay/RefundTransaction",
+            data: {}
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
 }
 ]);
 

@@ -32,5 +32,9 @@ namespace AircashSimulator.Controllers
         {
             return Ok();
         }
+        public async Task<IActionResult> RefundTransaction()
+        {
+            return Ok();
+        }
     }
 }
