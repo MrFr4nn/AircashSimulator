@@ -138,7 +138,7 @@ namespace Services.Partner
 
             if (request.Username != null) 
             {
-                SaveUser(request.Username, id);
+                await SaveUser(request.Username, id);
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
@@ -158,7 +158,7 @@ namespace Services.Partner
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
-        public async void SaveUser(string username, Guid partnerId) {
+        public async Task SaveUser(string username, Guid partnerId) {
             string hash = "";
             using (SHA256 sha256Hash = SHA256.Create())
             {
