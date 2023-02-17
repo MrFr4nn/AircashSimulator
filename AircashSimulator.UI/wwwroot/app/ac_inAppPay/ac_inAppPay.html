@@ -1146,6 +1146,69 @@
                     </tr>
                 </table>
             </uib-tab>
+            <uib-tab index="refund-tab-4" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST" name="generateForm">
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputEmail1">Refund Amount</label>
+                                <input ng-model="refundTransactionModel.amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                            </div>
+                            <!--     <button ng-click="generatePartnerCode()" class="btn btn-primary w-100px me-5px" ng-disabled="generateBusy || generateForm.$invalid">Generate <i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>-->
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Recent transactions:</p>
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Transaction ID</th>
+                                            <th>Amount</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="totalLoaded == 0 && !busy">
+                                            <td colspan="12" align="center">
+                                                <i>No data</i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="transaction in transactions">
+                                            <td>{{$index + 1}}.</td>
+                                            <td>{{transaction.partnerTransactionId}}</td>
+                                            <td>{{transaction.amount | number:2}}</td>
+                                            <td style="text-align: center; vertical-align: inherit">
+                                                <button class="btn btn-danger fa fa-ban" ng-click="refundTransaction(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!refundResponded" class="col-md-4">
+                        Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+                        <code>{{RefundServiceResponse}}</code>
+</pre>
+                        Sequence: {{sequenceRefund}}
+                    </div>
+                    <div ng-hide="!refundResponded" class="col-md-4">
+                        Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{RefundServiceResponse}}</code>
+</pre>
+                    </div>
+                </div>
+            </uib-tab>
         </uib-tabset>
         
         <hr />

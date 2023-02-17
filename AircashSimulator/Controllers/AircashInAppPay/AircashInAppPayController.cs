@@ -32,9 +32,11 @@ namespace AircashSimulator.Controllers
         {
             return Ok();
         }
-        public async Task<IActionResult> RefundTransaction()
+        public async Task<IActionResult> RefundTransaction(RefundTransactionRequest refundTransactionRequest)
         {
-            return Ok();
+            refundTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
+            var response = AircashInAppPayService.RefundTransaction(refundTransactionRequest);
+            return Ok(response);
         }
     }
 }
