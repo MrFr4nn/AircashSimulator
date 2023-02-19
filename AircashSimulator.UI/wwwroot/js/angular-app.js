@@ -19,7 +19,8 @@ var app = angular.module('app', [
     'acFrameV2',
     'acPosDeposit',
     'acInAppPay',
-    'cashier'
+    'cashier',
+    'logo'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
