@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AircashCheckPlayerUser.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AircashSignature" Version="1.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
+    <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
+    <ProjectReference Include="..\Services.MatchService\Services.MatchService.csproj" />
+  </ItemGroup>
+
+</Project>

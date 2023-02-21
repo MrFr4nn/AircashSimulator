@@ -341,7 +341,7 @@
                             <td><b>Locale</b></td>
                             <td>string</td>
                             <td>
-                                Frame language
+                                Language Identifiers (RFC 3066)
                             </td>
                             <td>YES</td>
                         </tr>
@@ -498,7 +498,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                         </tr>
                     </tbody>
                 </table>
-            </uib-tab>            
+            </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <pre>
 {
@@ -510,7 +510,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
-                    <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px" >
+                    <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" ng-value="0" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="inlineRadio1">Aircash payment</label>
@@ -608,6 +608,24 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                     <td>https://frame-api.aircash.eu/api/v1/status</td>
                 </tr>
             </tbody>
+        </table>
+        <br />
+        <i>Aircash public keys:</i>
+        <table class="table table-active col-md-2">
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><b>Test</b></td>
+                <td><a href="/files/AircashFramePublicKeyTest.zip" download>Link</a></td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td><a href="/files/AircashFramePublicKeyProd.zip" download>Link</a></td>
+            </tr>
         </table>
         <br />
         <uib-tabset>
@@ -778,7 +796,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                         </tr>
                     </tbody>
                 </table>
-            </uib-tab>            
+            </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response example" classes="nav-item">
                 <pre>
 {

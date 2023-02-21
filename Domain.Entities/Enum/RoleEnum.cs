@@ -16,6 +16,8 @@ namespace Domain.Entities.Enum
         AircashRedeemTicket = 7,
         AircashFrameV2 = 8,
         AircashPayStaticCode = 9,
+        AircashPosDeposit = 10,
+        AircashInAppPay = 11,
         Admin = 100
     }
 }
