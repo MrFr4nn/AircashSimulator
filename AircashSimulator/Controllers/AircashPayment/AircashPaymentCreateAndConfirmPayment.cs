@@ -7,7 +7,7 @@ namespace AircashSimulator.Controllers.AircashPayment
     {
         public string TransactionID { get; set; }
         public decimal Amount { get; set; }
-        public List<Parameters> Parameters { get; set; 
+        public List<Parameters> Parameters { get; set; } 
         public string Signature { get; set; }
     }
 
