@@ -20,8 +20,7 @@ var app = angular.module('app', [
     'acPosDeposit',
     'acInAppPay',
     'cashier',
-    'logo'
-    'acInAppPay',
+    'logo',
     'acPayStaticCode'
 ]);
 
