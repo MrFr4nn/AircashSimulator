@@ -32,7 +32,7 @@ acPayStaticCodeModule.service("acPayStaticCodeService", ['$http', '$q', 'handleR
 }
 ]);
 
-acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter', 'acPayStaticCodeService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, acPayStaticCodeService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
+acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter', 'acPayStaticCodeService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', 'config', '$location', function ($scope, $state, $filter, acPayStaticCodeService, $http, JwtParser, $uibModal, $rootScope, $localStorage, config, $location) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AircashPayStaticCode") == -1) {
@@ -91,7 +91,7 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
     };
 
     const connection = new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:44374/Hubs/NotificationHub")
+        .withUrl(config.baseUrl.replace("/api/", "")+ "/Hubs/NotificationHub")
         .configureLogging(signalR.LogLevel.Information)
         .build();
 

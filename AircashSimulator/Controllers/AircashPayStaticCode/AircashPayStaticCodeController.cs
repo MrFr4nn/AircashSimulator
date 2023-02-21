@@ -38,10 +38,10 @@ namespace AircashSimulator.Controllers
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashConfirmTransactionRequest);
             var signature = aircashConfirmTransactionRequest.Signature;
-            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");  
-            
+            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+
             if (valid == true)
-                {
+            {
                 var transaction = new TransactionDTO
                 {
                     Amount = aircashConfirmTransactionRequest.Amount,
@@ -49,18 +49,18 @@ namespace AircashSimulator.Controllers
                     PartnerId = new Guid(aircashConfirmTransactionRequest.PartnerID),
                     AircashTransactionId = aircashConfirmTransactionRequest.AircashTransactionID,
                     PartnerTransactionId = new Guid(aircashConfirmTransactionRequest.PartnerTransactionID)
-                    };
-                    var response = await AircashPayStaticCodeService.ConfirmTransaction(transaction);
-                    if (true)
-                    {
-                    await SendHubMessage("TransactionConfirmedMessage", "QR Code Payment received, </br>amount: "+transaction.Amount+" "+transaction.ISOCurrencyId+ ", </br>time: " + DateTime.Now, 1);
-                    return Ok("Transaction confirmed successfully");
-                    }
-                }
-                else
+                };
+                var response = await AircashPayStaticCodeService.ConfirmTransaction(transaction);
+                if (true)
                 {
-                return BadRequest("Invalid signature");
+                    await SendHubMessage("TransactionConfirmedMessage", "QR Code Payment received, </br>amount: " + transaction.Amount + " " + transaction.ISOCurrencyId + ", </br>time: " + DateTime.Now, 1);
+                    return Ok("Transaction confirmed successfully");
                 }
+            }
+            else
+            {
+                return BadRequest("Invalid signature");
+            }
         }
 
         [HttpPost]
