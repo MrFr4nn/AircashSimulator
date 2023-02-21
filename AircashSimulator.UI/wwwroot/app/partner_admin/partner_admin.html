@@ -22,13 +22,13 @@
             <h4 class="panel-title" style="margin-left:3px">Partners</h4>
         </div>
 
-        <div class="panel-body">
+        <div class="panel-body p-0">
             <div class="col-sm-12">
 
                 <div class="container">
                     <div class="row" style="margin-top: 25px">
                         <div class="form-group col-xs-3 col-md-3">
-                            <button class="btn btn-primary" ng-click="showPartnerModal();">
+                            <button class="btn btn-primary" ng-click="showPartnerModal(null, true);">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add partner
                             </button>
                         </div>
@@ -47,7 +47,7 @@
                     </div>
                 </div>
 
-                <div ng-if="partners" class="container">
+                <div ng-if="partners">
                     <div class="table-responsive" style="overflow-x:visible">
                         <table class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
                             <thead>
@@ -72,7 +72,7 @@
                                     <td>{{p.countryCode}}</td>
                                     <td>{{p.environment == 1 ? "Dev" : "Staging"}}</td>
                                     <td style="cursor:pointer" ng-click="ShowPartnerRolesModal(p)"><i class="fa fa-id-card"></i></td>
-                                    <td style="cursor:pointer" ng-click="showPartnerModal(p);"><i class="fa fa-pen"></i></td>
+                                    <td style="cursor:pointer" ng-click="showPartnerModal(p, false);"><i class="fa fa-pen"></i></td>
                                     <td style="cursor:pointer" ng-click="confirmDeleteModal(p);"><i class="fa fa-trash"></i></td>
                                 </tr>
                             </tbody>
@@ -138,6 +138,12 @@
                                     <option value="1" ng-selected="partner.environment == 1">Dev</option>
                                     <option value="2" ng-selected="partner.environment == 2">Staging</option>
                                 </select>
+                            </div>
+                            <div class="mb-3" ng-if="newPartner">
+                                <div  >
+                                    <label class="form-label">User</label>
+                                    <input ng-model="$parent.username" class="form-control" type="text" ng-required="true">
+                                </div>
                             </div>
                         </div>
                     </div>
