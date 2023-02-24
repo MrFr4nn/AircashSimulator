@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services.AbonOnlinePartner;
 using AircashSimulator.Extensions;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace AircashSimulator
 {
@@ -33,6 +34,13 @@ namespace AircashSimulator
         {
             var partnerId = UserContext.GetPartnerId(User);
             var userId = UserContext.GetUserId(User);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, partnerId);
+            return Ok(response);
+        }
+        public async Task<IActionResult> ConfirmCashierTransaction(ConfirmTransactionRequest confirmTransactionRequest)
+        {
+            Guid partnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
+            Guid userId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, partnerId);
             return Ok(response);
         }
