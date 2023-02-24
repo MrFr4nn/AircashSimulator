@@ -37,6 +37,15 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> CreateCashierPayout(CreatePayoutRequest createPayoutRequest)
+        {
+            Guid partnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
+            Guid userId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.Amount, userId, partnerId);
+            return Ok(response);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
             var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId);
