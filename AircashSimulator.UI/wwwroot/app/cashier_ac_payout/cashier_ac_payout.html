@@ -1,6 +1,4 @@
-﻿<h1>Aircash Payout Page</h1>
-
-<div class="row">
+﻿<div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <div class="card">
@@ -13,13 +11,11 @@
                     <fieldset>
                         <label class="form-label">Phone number</label>
                         <div class="mb-3 input-group">
-                            <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;"
-                                    ng-options="item.countryName for item in countryCodes"
+                            <select name="country" class="form-control form-control-lg" 
+                                    ng-options="item for item in countryCodes"
                                     ng-model="selectedCountry" ng-disabled="createPayoutServiceBusy" ng-required="true">>
                             </select>
-                            <span class="input-group-addon" style="visibility: hidden"></span>
-                            <input ng-model="selectedCountry.countryCode" class="form-control form-control-lg" name="countryCode" ng-disabled="true" style="border-radius: 5px 0px 0px 5px !important;">
-                            <input ng-model="createPayoutModel.phoneNumber" class="form-control form-control-lg w-50" name="phone" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                            <input ng-model="createPayoutModel.phoneNumber" class="form-control form-control-lg w-75" name="phone" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy" ng-required="true">
                         </div>
                         <label class="form-label">Amount</label>
                         <div class="mb-3 input-group">
