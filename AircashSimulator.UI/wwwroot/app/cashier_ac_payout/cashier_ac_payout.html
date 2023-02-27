@@ -22,11 +22,11 @@
                 </div>
                 <form action="/" method="POST" name="transactionForm1">
                     <fieldset>
-                        <div class="row row-cols-1 row-cols-sm-2" style="margin-bottom:-8px !important;">
+                        <div class="row row-cols-1 row-cols-sm-2">
                             <div class="col-md-1"></div>
                             <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
                                 <label class="form-label" style="margin-bottom: 0px !important;">Phone number</label>
-                                <div class="mb-3 input-group">
+                                <div class="mb-2 input-group">
                                     <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;"
                                             ng-options="item.countryName for item in countryCodes"
                                             ng-model="selectedCountry" ng-disabled="createPayoutServiceBusy" ng-required="true">
@@ -43,7 +43,7 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
                                 <label class="form-label" style="margin-bottom: 0px !important;">Amount</label>
-                                <div class="mb-3 input-group" style="margin-bottom: 0px !important;">
+                                <div class="input-group" style="margin-bottom: 0px !important;">
                                     <input ng-model="createPayoutModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
                                     <span class="input-group-addon">€</span>
                                 </div>
