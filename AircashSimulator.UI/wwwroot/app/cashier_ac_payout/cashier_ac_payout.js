@@ -65,37 +65,9 @@ cashierAcPayoutModule.controller("cashierAcPayoutCtrl",
             }
 
             $scope.setDefaults = function () {
-                $scope.countryCodes = [
-                    { countryCode: "+43", countryName: "Austria" },
-                    { countryCode: "+32", countryName: "Belgium" },
-                    { countryCode: "+359", countryName: "Bulgaria" },
-                    { countryCode: "+385", countryName: "Croatia" },
-                    { countryCode: "+357", countryName: "Cyprus" },
-                    { countryCode: "+420", countryName: "Czech Republic" },
-                    { countryCode: "+45", countryName: "Denmark" },
-                    { countryCode: "+372", countryName: "Estonia" },
-                    { countryCode: "+358", countryName: "Finland" },
-                    { countryCode: "+33", countryName: "France" },
-                    { countryCode: "+49", countryName: "Germany" },
-                    { countryCode: "+30", countryName: "Greece" },
-                    { countryCode: "+36", countryName: "Hungary" },
-                    { countryCode: "+354", countryName: "Iceland" },
-                    { countryCode: "+353", countryName: "Ireland" },
-                    { countryCode: "+39", countryName: "Italy" },
-                    { countryCode: "+371", countryName: "Latvia" },
-                    { countryCode: "+423", countryName: "Liechtenstein" },
-                    { countryCode: "+370", countryName: "Lithuania" },
-                    { countryCode: "+352", countryName: "Luxembourg" },
-                    { countryCode: "+356", countryName: "Malta" },
-                    { countryCode: "+31", countryName: "Netherlands" },
-                    { countryCode: "+47", countryName: "Norway" },
-                    { countryCode: "+48", countryName: "Poland" },
-                    { countryCode: "+351", countryName: "Portugal" },
-                    { countryCode: "+40", countryName: "Romania" },
-                    { countryCode: "+421", countryName: "Slovakia" },
-                    { countryCode: "+386", countryName: "Slovenia" },
-                    { countryCode: "+34", countryName: "Spain" },
-                    { countryCode: "+46", countryName: "Sweden" },
+                $scope.countryCodes = ["AT (+43)" ,"BE (+32)" , "BG (+359)" , "HR (+385)" ,"CY (+357)" ,"CZ (+420)" , "DK (+45)" ,"EE (+372)" ,"FI (+358)" ,"FR (+33)" ,"DE (+49)" ,
+                    "GR (+30)" ,"HU (+36)" , "IS (+354)" ,"IE (+353)", "IT (+39)", "LV (+371)", "LI (+423)", "LT (+370)", "LU (+352)", "MT (+356)","NL (+31)","PL (+48)","PT (+351)",
+                    "RO (+40)", "SK (+421)","SI (+386)", "ES (+34)","SE (+46)"
                     
                 ];
 
