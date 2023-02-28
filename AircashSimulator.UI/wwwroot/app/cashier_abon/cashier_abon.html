@@ -1,20 +1,21 @@
-﻿<h1>abon page</h1>
-
-<div class="row">
+﻿<div class="row">
     <div class="col-md-3">
     </div>
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading bg-red text-white">
-                <h4 class="panel-title">A-bon</h4>
+                <h3 class="">A-bon</h3>
                 <div class="panel-heading-btn">
                              
                 </div>
             </div>
             <div class="panel-body">
+                <div class="text-center">
+                    <img style="height:80px;" alt="" src="/images/abon_logo_H.jpg">
+                </div>
+                <br />
                 <p>
-                    Aircash A-bon is a platform intended for users that wish to make payments to their accounts (betting sites, parking services, GSM topups etc.) via paper vouchers that can be bought at cash registers, i.e. points of sales of Aircash Sales Partners (kiosks, gas stations, etc.).
-                    From the Online Provider's perspective: the user logs in to a website or a mobile app of an Online Provider (e.g. a booking site), and chooses to deposit money via an Aircash A-bon voucher. He enters the 16-digit code from the coupon he bought, and confirms the transaction of funds to an Online Provider account. The funds are deposited to the user's online account, and the coupon gets expended and can no longer be used.
+                    Enter 16 digit coupon code or scan the QR code from the Aircash A-bon voucher, select deposit and funds will instantly be available on your account. Buy Aircash A-bon paper vouchers on more than 100.000 <a href="https://abon.cash/locations/" target="_blank">Aircash partner's' locations</a>.
                 </p>
                 <form action="/" method="POST" name="transactionForm1">
                     <fieldset>
@@ -24,12 +25,12 @@
                         </div>
                         <div class="mb-3">
                             <div class="form-check">
-                                <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" />
-                                <label class="form-check-label" for="checkbox1" style=" padding-top: 8px; padding-left:10px;"><a href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow">I accept the A-bon Terms&Conditions</a></label>
+                                <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-checked="true"/>
+                                <label class="form-check-label" for="checkbox1" style=" padding-top: 8px; padding-left:10px;"><a href="https://abon.cash/terms-conditions-en/" rel="nofollow" target="_blank">I accept the A-bon Terms&Conditions</a></label>
                             </div>
                         </div>
                         <div class="d-flex justify-content-end">
-                            <button ng-click="confirmCashierTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox || transactionForm1.$invalid">Activate abon<i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button ng-click="confirmCashierTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox || transactionForm1.$invalid">Deposit<i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
                         </div>
                     </fieldset>
                 </form>
