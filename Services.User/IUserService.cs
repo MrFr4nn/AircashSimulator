@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace Services.User
         Task SaveUser(UserDetailVM request);
 
         Task DeleteUser(UserDetailVM user);
+
+        Task<UserDTO> GetUserByIdentifier(string identifier);
     }
 }

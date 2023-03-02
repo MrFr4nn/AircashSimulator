@@ -16,8 +16,6 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
     return ({
         generateTransaction: generateTransaction,
         cancelTransaction: cancelTransaction,
-        refundTransaction: refundTransaction,
-        getTransactions: getTransactions
     });
     function generateTransaction(amount, description, locationID) {
         var request = $http({
@@ -106,49 +104,5 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             });
     }
 
-    $scope.cancelResponded = false;
-    $scope.cancelBusy = false;
-    $scope.cancelTransaction = function (transactionId) {
-        $scope.cancelBusy = true;
-        acInAppPayService.cancelTransaction(transactionId)
-            .then(function (response) {
-                if (response) {
-                    $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.CancelResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceCancel = response.sequence;
-
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.CancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.CancelServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                }
-                $scope.cancelBusy = false;
-                $scope.cancelResponded = true;
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.getTransactions = function (reset) {
-        if (reset) $scope.setDefaults();
-        acInAppPayService.getTransactions($scope.pageSize, $scope.pageNumber)
-            .then(function (response) {
-                $scope.pageNumber += 1;
-                if (response) {
-                    $scope.totalLoaded = response.length;
-                    $scope.transactions = $scope.transactions.concat(response);
-                }
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.loadMore = function (pageSize) {
-        $scope.pageSize = pageSize;
-        $scope.getTransactions();
-    };
-
     $scope.setDefaults();
-
-    $scope.getTransactions();
-
 }]);

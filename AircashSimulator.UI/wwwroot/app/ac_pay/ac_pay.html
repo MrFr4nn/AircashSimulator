@@ -7,7 +7,7 @@
 <body>
     <div style="width: 100%">
         <h1>Payment process</h1>
-        <br/>
+        <br />
         <p>
             This chapter describes the top up process using the Aircash application. The described
             process explains how the user can pay the invoice in the partner system using AircashPay.
@@ -415,30 +415,24 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
             unsuccessful confirmation.
         </p>
         <p>Partner should provide an url where Aircash will send all transaction confirmations.</p>
-        <i>Endpoints:</i>
-        <table class="table table-active col-md-6">
+        <i>Aircash public keys:</i>
+        <table class="table table-active col-md-2">
             <thead>
                 <tr>
                     <th>Environment</th>
-                    <th>Method</th>
-                    <th>URL</th>
+                    <th>Download</th>
                 </tr>
             </thead>
-                <tr>
-                    <td><b>Test</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://staging-m3.aircash.eu/api/AircashPay/ConfirmTransaction</td>
-                </tr>
-                <tr>
-                    <td><b>Production</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://m3.aircash.eu/api/AircashPay/ConfirmTransaction</td>
-                </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td><a href="/files/AircashPayPublicKeyTest.zip" download>Link</a></td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td><a href="/files/AircashPayPublicKeyProd.zip" download>Link</a></td>
+            </tr>
         </table>
+
         <br />
         <uib-tabset>
             <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
@@ -535,7 +529,7 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
             </uib-tab>
         </uib-tabset>
         <br />
-       
+
         <br />
         <h4>RefundTransaction</h4>
         <p>
@@ -760,7 +754,7 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                         </tr>
                     </tbody>
                 </table>
-            </uib-tab>       
+            </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <pre>
 {
@@ -833,7 +827,7 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                 </div>
             </uib-tab>
         </uib-tabset>
-        
+
         <hr />
         <h1>Production process</h1>
         <br />
@@ -872,45 +866,45 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                     <td>YES</td>
                 </tr>
             </tbody>
-                <tr>
-                    <td><b>ConfirmTransaction</b></td>
-                    <td>
-                        <p>Partner system process confirm transaction successfully:</p>
-                        <ul>
-                            <li>
-                                each transaction is processed in partner
-                                system as paid
-                            </li>
-                            <li>
-                                for each transaction partner system
-                                respond with successful response
-                            </li>
-                        </ul>
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td><b>CancelTransaction</b></td>
-                    <td>
-                        Partner system processes transaction cancellation
-                        successfully on both sides.
-                    </td>
-                    <td>
-                        YES, if this method is
-                        implemented
-                    </td>
-                </tr>
-                <tr>
-                    <td><b>RefundTransaction</b></td>
-                    <td>
-                        Partner system processes transaction refund
-                        successfully on both sides.
-                    </td>
-                    <td>
-                        YES, if this method is
-                        implemented
-                    </td>
-                </tr>
+            <tr>
+                <td><b>ConfirmTransaction</b></td>
+                <td>
+                    <p>Partner system process confirm transaction successfully:</p>
+                    <ul>
+                        <li>
+                            each transaction is processed in partner
+                            system as paid
+                        </li>
+                        <li>
+                            for each transaction partner system
+                            respond with successful response
+                        </li>
+                    </ul>
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>CancelTransaction</b></td>
+                <td>
+                    Partner system processes transaction cancellation
+                    successfully on both sides.
+                </td>
+                <td>
+                    YES, if this method is
+                    implemented
+                </td>
+            </tr>
+            <tr>
+                <td><b>RefundTransaction</b></td>
+                <td>
+                    Partner system processes transaction refund
+                    successfully on both sides.
+                </td>
+                <td>
+                    YES, if this method is
+                    implemented
+                </td>
+            </tr>
         </table>
     </div>
 </body>

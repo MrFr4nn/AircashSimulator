@@ -1,0 +1,81 @@
+﻿<h1>ac Pay page</h1>
+<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-red text-white">
+                <h4 class="panel-title">Aircash Pay</h4>
+                <div class="panel-heading-btn">
+
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="text-center">
+                    <img style="width:200px; height: 80px;" alt="" src="/images/aircash-red.svg">
+                </div>
+                
+                <p>
+                    Select the "Scan and pay" option inside the Aircash mobile application and scan the QR code. 
+                    Confirm the deposit and funds are instantly available on your account. Top-up your Aircash wallet easily with cash on more than 100.000 Aircash partner locations or debit/credit cards. Download the free Aircash mobile application here.
+                </p>
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>
+                        <label for="amount">Amount</label>
+                        <div class="input-group mb-3">
+                            <input ng-model="generatePartnerCodeModel.amount" class="form-control form-control-lg" type="number" ng-required="true" name="amount" min="0" step="0.01" />
+                            <div class="input-group-append">
+                                <button ng-click="generateCashierPartnerCode()" class="btn btn-lg btn-danger w-100px me-5px" ng-disabled="generateBusy || transactionForm1.$invalid">Pay<i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <div id="mobileShowPayBtn" style="display:none">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10 d-flex justify-content-center align-items-center">
+                            <a href="javascript:;" id="confirmPayBtn" target="_blank" class="btn btn-danger btn-lg">Confirm</a>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+                <div id="showQRcode" style="display:none">
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-5 d-flex justify-content-center mb-3">
+                            <div class="border rounded d-flex justify-content-md-center align-items-center" style="width:285px;height:285px;">
+                                <div id="qrcode" ></div>
+                            </div>
+                        </div>
+                        <div class="col-md-5 d-flex align-items-center mb-3">
+                            <div>
+                                <ol class="h5">
+                                    <li>Open Aircash application</li>
+                                    <li>Select "Scan and Pay"</li>
+                                    <li>Point your camera to QR code</li>
+                                    <li>Follow instructions in Aircash application</li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-10">
+                            <div class="d-flex justify-content-around">
+                                <a href="https://apps.apple.com/us/app/aircash/id1178612530" target="_blank"><img class="img-fluid w-75" src="/images/app-store-en.svg" style="max-width:185px;" /></a>
+                                <a href="https://play.google.com/store/apps/details?id=com.aircash.aircash" target="_blank"><img class="img-fluid w-75" src="/images/google-play-en.svg" style="max-width:185px;" /></a>
+                                <a href="https://appgallery.huawei.com/#/app/C103225321" target="_blank"><img class="img-fluid w-75" src="/images/app-gallery-en.svg" style="max-width:185px;" /></a>
+                            </div>
+
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
