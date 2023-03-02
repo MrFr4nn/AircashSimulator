@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
             data: {
                 pageTitle: 'Aircash payment And payout'
             },
-            url: "/aircashPaymentAndPayout",
+            url: "/aircashPaymentAndPayout",                                                                                                                            
             controller: 'aircashPaymentAndPayoutCtrl',
             templateUrl: 'app/aircash_paymentAndPayout/aircash_paymentAndPayout.html'
         });
@@ -258,3 +258,15 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     $scope.getCancelTransactions();
 
 }]);
+
+function SelectV() {
+    if ($('#selected').val() == "1") {
+        $('#V1').show();
+        $('#V2').hide();
+    }
+    else {
+        $('#V1').hide();
+        $("#V2").removeAttr('hidden');
+        $('#V2').show();
+    }
+}
