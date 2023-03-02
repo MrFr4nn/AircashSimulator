@@ -21,8 +21,7 @@ var app = angular.module('app', [
     'acInAppPay',
     'cashier',
     'logo',
-    'acPayStaticCode'
-    'cashier',
+    'acPayStaticCode',
     'ac_test_application'
 ]);
 
