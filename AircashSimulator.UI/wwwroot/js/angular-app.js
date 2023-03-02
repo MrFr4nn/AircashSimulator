@@ -22,7 +22,6 @@ var app = angular.module('app', [
     'cashier',
     'logo',
     'acPayStaticCode',
-    'cashier',
     'ac_business_site'
 ]);
 
