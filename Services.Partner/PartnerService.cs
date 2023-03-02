@@ -156,7 +156,18 @@ namespace Services.Partner
                     AircashSimulatorContext.PartnerRoles.Remove(role);
                 }
             }
+            await DeleteUser(Partner.PartnerId);
             await AircashSimulatorContext.SaveChangesAsync();
+        }
+        public async Task DeleteUser(Guid? PartnerId)
+        {
+            var findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.PartnerId == PartnerId);
+            while (findUser != null)
+            {
+                AircashSimulatorContext.Users.Remove(findUser);
+                await AircashSimulatorContext.SaveChangesAsync();
+                findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.PartnerId == PartnerId);
+            } 
         }
         public async Task SaveUser(string username, Guid partnerId) {
             string hash = "";

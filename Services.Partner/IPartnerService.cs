@@ -15,6 +15,7 @@ namespace Services.Partner
         Task SavePartner(PartnerDetailVM request);
 
         Task DeletePartner(PartnerDetailVM Partner);
+        Task DeleteUser(Guid? PartnerId);
         Task SaveUser(string username, Guid partnerId);
     }
 }
