@@ -21,6 +21,7 @@ Website: http://www.seantheme.com/color-admin/
    1.0 CONTROLLER - App
 ------------------------------- */
 app.controller('appController', ['$rootScope', '$scope', function ($rootScope, $scope) {
+ 
   $scope.$on('$includeContentLoaded', function () {
     handleSlimScroll();
   });
@@ -142,3 +143,5 @@ app.controller('pageLoaderController', function ($scope, $rootScope, $state) {
         App.initPageLoad();
     });
 });
+
+

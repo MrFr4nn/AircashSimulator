@@ -1,0 +1,48 @@
+﻿/*----- MOBILE VIEW START ------*/
+@media only screen and (max-width: 767px)
+{
+    .iconGoogleMarket {
+        margin-bottom: 20px !important;
+        max-width: 60% !important;
+    }
+
+    .iconAppleMarket {
+        margin-bottom: 20px !important;
+        max-width: 60% !important;
+    }
+
+    .iconHuaweiMarket {
+        max-width: 60% !important;
+    }
+
+    .aircashHeaderLogo {
+        max-width: 75% !important;
+    }
+}
+/*----- MOBILE VIEW END ------*/
+
+@media only screen and (min-width: 768px) {
+    .iconGoogleMarket {        
+        max-width: 70% !important;
+    }
+
+    .iconAppleMarket {
+        max-width: 70% !important;
+    }
+
+    .iconHuaweiMarket {
+        max-width: 70% !important;
+    }
+}
+
+@media only screen and (max-width: 1249px) and (min-width: 768px) {
+    .aircashHeaderLogo {
+        max-width: 80% !important;
+    }
+}
+
+@media only screen and (min-width: 1250px) {
+    .aircashHeaderLogo {
+        max-width: 65% !important;
+    }
+}
