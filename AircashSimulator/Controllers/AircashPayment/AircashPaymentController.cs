@@ -6,6 +6,9 @@ using AircashSimulator.Configuration;
 using Microsoft.Extensions.Options;
 using Services.AircashPayment;
 using System.Collections.Generic;
+using System;
+using AircashSimulator.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace AircashSimulator.Controllers
 {
@@ -15,11 +18,18 @@ namespace AircashSimulator.Controllers
     {
         private AircashConfiguration AircashConfiguration;
         private IAircashPaymentService AircashPaymentService;
-     
-        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService)
+        public readonly IHubContext<NotificationHub> _hubContext;
+
+        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService, IHubContext<NotificationHub> hubContext)
         {
             AircashConfiguration = aircashConfiguration.CurrentValue;
             AircashPaymentService = aircashPaymentService;
+            _hubContext = hubContext;
+        }
+
+        public async Task SendHubMessage(string method, string msg, int status)
+        {
+            await _hubContext.Clients.All.SendAsync(method, msg, status);
         }
 
         [HttpPost]
@@ -74,6 +84,7 @@ namespace AircashSimulator.Controllers
                 var response = await AircashPaymentService.CreateAndConfirmPayment(send); 
                 if (((AircashPaymentResponse)response).Success == true)
                 {
+                    await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>amount: " + aircashPaymentCreateAndConfirmPayment.Amount + " , </br>time: " + DateTime.Now, 1);
                     return Ok(response);
                 }
                 else
