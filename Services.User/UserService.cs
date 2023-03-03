@@ -1,7 +1,6 @@
 ﻿using DataAccess;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using Services.Partner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,23 +21,6 @@ namespace Services.User
         }
         public async Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search)
         {
-              //Expression<Func<UserEntity, bool>> predicate = x => true;
-              // if (!String.IsNullOrEmpty(Search))
-              //     predicate = predicate.AndAlso(x => x.PartnerName.Contains(Search));
-
-              //var users = await AircashSimulatorContext.Users
-              //        .Where(predicate)
-              //        .Select(x => new UserDetailVM
-              //        {
-              //            UserId = x.UserId,
-              //            UserName = x.Username,
-              //            Email = x.Email,
-              //            Partner = new PartnerVM { Id = x.PartnerId, Name = null }
-              //        })
-              //        .OrderBy(t => t.UserName)
-              //        .Skip((PageNumber - 1) * PageSize)
-              //        .Take(PageSize).ToListAsync();    //PartnerAdminV2 branch contains code for this to work
-
             var query = !String.IsNullOrEmpty(Search) ?
                      await AircashSimulatorContext.Users
                     .Where(s => s.Username.Contains(Search))
@@ -108,14 +90,14 @@ namespace Services.User
                     Username = request.UserName,
                     Email = request.Email,
                     PartnerId = request.Partner.Id,
-                PasswordHash = hash
+                    PasswordHash = hash
                 });
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
-        public async Task DeleteUser(UserDetailVM user)
+        public async Task DeleteUser(Guid? userId)
         {
-            var findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == user.UserId);
+            var findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
             AircashSimulatorContext.Users.Remove(findUser);
             await AircashSimulatorContext.SaveChangesAsync();
         }
