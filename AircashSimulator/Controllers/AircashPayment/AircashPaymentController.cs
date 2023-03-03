@@ -37,7 +37,7 @@ namespace AircashSimulator.Controllers
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashPaymentCheckPlayer);
             var signature = aircashPaymentCheckPlayer.Signature;
-            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPaymentPublicKey}");
 
             if(valid == true)
             {
@@ -67,7 +67,7 @@ namespace AircashSimulator.Controllers
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashPaymentCreateAndConfirmPayment);
             var signature = aircashPaymentCreateAndConfirmPayment.Signature;
-            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
+            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPaymentPublicKey}");
 
             if (valid == true)
             {
