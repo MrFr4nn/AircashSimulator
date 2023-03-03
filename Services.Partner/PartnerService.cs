@@ -9,6 +9,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AircashSimulator.Extensions;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace Services.Partner
 {
@@ -133,6 +135,11 @@ namespace Services.Partner
                         }
                 }
             }
+
+            if (request.Username != null) 
+            {
+                await SaveUser(request.Username, id);
+            }
             await AircashSimulatorContext.SaveChangesAsync();
         }
 
@@ -150,6 +157,31 @@ namespace Services.Partner
                 }
             }
             await AircashSimulatorContext.SaveChangesAsync();
+        }
+        public async Task SaveUser(string username, Guid partnerId) {
+            string hash = "";
+            using (SHA256 sha256Hash = SHA256.Create())
+            {
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(username));
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    builder.Append(bytes[i].ToString("x2"));
+                }
+                hash = builder.ToString();
+            }
+
+            if ((await AircashSimulatorContext.Users.Where(x => x.Username == username).ToListAsync()).Count() > 0)
+                throw new Exception("Username already taken.");
+
+            await AircashSimulatorContext.Users.AddAsync(new UserEntity
+            {
+                UserId = Guid.NewGuid(),
+                Username = username,
+                Email = username,
+                PartnerId = partnerId,
+                PasswordHash = hash
+            });
         }
 
     }

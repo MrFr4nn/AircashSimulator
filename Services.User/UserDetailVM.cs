@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Services.Partner;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +12,8 @@ namespace Services.User
         public Guid? UserId { get; set; }
         public string UserName { get; set; }
         public string Email { get; set; }
-        public Guid PartnerId { get; set; }
+        //public Guid PartnerId { get; set; }
+        public PartnerVM Partner { get; set; }
         public string  Password { get; set; }
     }
 }

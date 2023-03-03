@@ -17,6 +17,8 @@ namespace AircashSimulator.Controllers
         private IAircashPayoutService AircashPayoutService;
         private IAircashPayoutV2Service AircashPayoutV2Service;
         private UserContext UserContext;
+        private const string PartnerId = "8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF";
+        private const string UserId = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
 
         public AircashPayoutController(IAircashPayoutService aircashPayoutService, IAircashPayoutV2Service aircashPayoutV2Service, UserContext userContext)
         {
@@ -43,6 +45,15 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CreatePayout(CreatePayoutRequest createPayoutRequest)
         {
             var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.Amount, UserContext.GetUserId(User), UserContext.GetPartnerId(User));
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCashierPayout(CreatePayoutRequest createPayoutRequest)
+        {
+            var partnerId = new Guid(PartnerId);
+            var userId = new Guid(UserId);
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.Amount, userId, partnerId);
             return Ok(response);
         }
 

@@ -19,6 +19,9 @@ var app = angular.module('app', [
     'acFrameV2',
     'acPosDeposit',
     'acInAppPay',
+    'cashier',
+    'logo',
+    'acPayStaticCode',
     'aircashPayoutV2',
     'cashier'
 ]);
@@ -26,7 +29,7 @@ var app = angular.module('app', [
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
 {
     $urlRouterProvider.otherwise('/app/dashboard');
-
+    
     $stateProvider
         .state('app', {
             url: '/app',
@@ -93,8 +96,8 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
         if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');
         }
-    });
-}]);
+    }); 
+}]); 
 
 app.filter('trusted', ['$sce', function ($sce) {
     return function (url) {
