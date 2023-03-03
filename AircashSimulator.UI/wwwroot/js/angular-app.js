@@ -21,7 +21,9 @@ var app = angular.module('app', [
     'acInAppPay',
     'cashier',
     'logo',
-    'acPayStaticCode'
+    'acPayStaticCode',
+    'aircashPayoutV2',
+    'cashier'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
