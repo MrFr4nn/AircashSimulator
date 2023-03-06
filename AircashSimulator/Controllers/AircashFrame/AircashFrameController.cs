@@ -7,6 +7,7 @@ using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Entities.Enum;
 using Services.AircashFrameV2;
+using System;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -16,14 +17,15 @@ namespace AircashSimulator.Controllers.AircashFrame
     {
         private IAircashFrameService AircashFrameService;
         private IAircashFrameV2Service AircashFrameV2Service;
-        private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
+        private UserContext UserContext;        
+
         public AircashFrameController(IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             AircashFrameService = aircashFrameService;
             AircashFrameV2Service = aircashFrameV2Service;
-            UserContext = userContext;
             AircashConfiguration = aircashConfiguration.CurrentValue;
+            UserContext = userContext;
         }
 
         [HttpPost]
@@ -62,10 +64,70 @@ namespace AircashSimulator.Controllers.AircashFrame
             return Ok(response);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Notification([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> InitiateCashierFrameV2(InitiateRequestAircashFrameV2 initiateRequest)
         {
-            var response = await AircashFrameService.Notification(partnerTransactionId);
+            if (initiateRequest.AcFrameOption == 1)
+            {
+                /*---- METHOD 1 - RECOMMENDED SDK WINDOW CHECKOUT ----- */
+                string NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}" + "/NotificationCashierFrameV2";
+                string OriginUrl = $"{AircashConfiguration.AcFrameOriginUrl}";
+                string DeclineUrl = null;
+                string SuccessUrl = null;
+                string CancelUrl = null;
+
+                var initiateRequestDTO = new InititateRequestV2Dto
+                {
+                    PartnerId = new Guid("5680E089-9E86-4105-B1A2-ACD0CD77653C"),
+                    UserId = new Guid("F0BC2E22-9C2D-4217-BEEE-99CC1AA3C26D"),
+                    Amount = initiateRequest.Amount,
+                    PayType = (PayTypeEnum)0,
+                    PayMethod = (PayMethodEnum)2,
+                    NotificationUrl = NotificationUrl,
+                    OriginUrl = OriginUrl,
+                    DeclineUrl = DeclineUrl,
+                    SuccessUrl = SuccessUrl,
+                    CancelUrl = CancelUrl
+                };
+                var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO);
+                return Ok(response);
+            }
+            else if(initiateRequest.AcFrameOption == 2 || initiateRequest.AcFrameOption == 3)
+            {
+                /*---- METHOD 2 or METHOD 3 - SDK REDIRECT CHECKOUT ----- */
+                string NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}" + "/NotificationCashierFrameV2";
+                string OriginUrl = null;
+                string DeclineUrl = $"{AircashConfiguration.AcFrameOriginUrl}" + "/#!/decline";
+                string SuccessUrl = $"{AircashConfiguration.AcFrameOriginUrl}" + "/#!/success";
+                string CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}" + "/#!/decline";
+
+                var initiateRequestDTO = new InititateRequestV2Dto
+                {
+                    PartnerId = new Guid("5680E089-9E86-4105-B1A2-ACD0CD77653C"),
+                    UserId = new Guid("F0BC2E22-9C2D-4217-BEEE-99CC1AA3C26D"),
+                    Amount = initiateRequest.Amount,
+                    PayType = (PayTypeEnum)0,
+                    PayMethod = (PayMethodEnum)2,
+                    NotificationUrl = NotificationUrl,
+                    OriginUrl = OriginUrl,
+                    DeclineUrl = DeclineUrl,
+                    SuccessUrl = SuccessUrl,
+                    CancelUrl = CancelUrl
+                };
+                var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO);
+                return Ok(response);
+            }  
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        {
+            var response = await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
             if (response == 0)
             {
                 return Ok("Transaction already confirmed");
@@ -82,10 +144,10 @@ namespace AircashSimulator.Controllers.AircashFrame
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> TransactionStatus(TransactionStatusRequest transactionStatusRequest)
+        public async Task<IActionResult> TransactionStatusCashierFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
             var partnerId = UserContext.GetPartnerId(User);
-            var response = await AircashFrameService.TransactionStatus(partnerId, transactionStatusRequest.TransactionId);
+            var response = await AircashFrameV2Service.TransactionStatusCashierFrameV2(partnerId, transactionStatusRequest.TransactionId);
             return Ok(response);
         }
     }

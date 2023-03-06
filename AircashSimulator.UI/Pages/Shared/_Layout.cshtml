@@ -15,7 +15,7 @@
     <link href="~/css/site.css" rel="stylesheet" asp-append-version="true" />
     <link href="~/css/fontawesome/css/all.min.css" rel="stylesheet" />
     <link href="~/assets/plugins/gritter/css/jquery.gritter.css" rel="stylesheet" />
-    <link href="~/assets/plugins/datetimePicker/bootstrap-datepicker.css" rel="stylesheet" />
+    <link href="~/assets/plugins/datetimePicker/bootstrap-datepicker.css" rel="stylesheet" />    
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- ================== END BASE CSS STYLE ================== -->
     <!-- ================== BEGIN PAGE CSS STYLE ================== -->
@@ -66,10 +66,10 @@
     <script src="~/js/plugins/jquery.slimscroll.min.js"></script>
     <script src="~/js/plugins/moment-with-locales.js"></script>
     <script src="~/assets/plugins/gritter/js/jquery.gritter.min.js"></script>
-    <script src="~/assets/plugins/datetimePicker/bootstrap-datepicker.js"></script>
+    <script src="~/assets/plugins/datetimePicker/bootstrap-datepicker.js"></script>    
     <script src="~/js/plugins/ngStorage.min.js"></script>
     <script src="~/js/plugins/qrcode.js"></script>
-
+    <script src="https://firebasestorage.googleapis.com/v0/b/aircash-dev/o/Frame%2Fjs%2Faircashframe-sdk-web.min.js?alt=media"></script>
     <!-- ================== END BASE JS ================== -->
     <!-- ================== BEGIN PAGE LEVEL JS ================== -->
     <script src="~/js/app.js" asp-append-version="true"></script>
@@ -82,16 +82,17 @@
     <script src="~/js/plugins/jwt-decode.js" asp-append-version="true"></script>
     <script>
         (function(){
-            app.factory('config', ['$rootScope', function ($rootScope) {
+            app.factory('config', ['$rootScope', function ($rootScope) {                
                  @{
                     var dict = Configuration
                         .GetSection("translations")
                         .Get<Dictionary<string, string>>();
                     var translations = JsonSerializer.Serialize(dict);
                 }
-                $rootScope.translations = @Html.Raw(translations);
+                $rootScope.translations = @Html.Raw(translations);                
 	            var config = {
-                    baseUrl: '@Configuration.GetSection("ApiUrl").Value'
+                    baseUrl: '@Configuration.GetSection("ApiUrl").Value',
+                    originUrl: '@Configuration.GetSection("BaseUrl").Value'
 	            };
 	            return config;
             }]);
