@@ -39,6 +39,8 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
         $location.path('/forbidden');
     }
 
+    var connect = true;
+
     $scope.generatePartnerCodeModel = {
         amount: null,
         description: null,
@@ -77,11 +79,13 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
             console.log("SignalR Connected.");
         } catch (err) {
             console.log(err);
-            setTimeout(start, 10000);
+            setTimeout(start, 1000);
         }
     };
     connection.onclose(async () => {
-        await start();
+        if (connect) {
+            await start();
+        }
     });
     connection.on("TransactionConfirmedMessage", (message, status) => {
         $scope.CustomNotification(message, status);
@@ -104,4 +108,9 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
         $scope.GenerateQRCode();
     }
     $scope.GenerateQRFilledForm();
+
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        connect = false;
+        connection.stop();
+    });
 }]);

@@ -22,6 +22,7 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
         function ($scope, $state, cashierAcPaymentService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {
 
             const PARTNER_ID = "af489004-3f13-4105-b36d-7a213bbb70ac";
+            var connect = true;
 
             $scope.paymentModel = {
                 username: "",
@@ -57,11 +58,13 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                     console.log("SignalR Connected.");
                 } catch (err) {
                     console.log(err);
-                    setTimeout(start, 10000);
+                    setTimeout(start, 1000);
                 }
             };
             connection.onclose(async () => {
-                await start();
+                if (connect) {
+                    await start();
+                }
             });
             connection.on("TransactionConfirmedMessagePayment", (message) => {
                 $scope.CustomNotification(message);
@@ -70,5 +73,10 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
             start();
 
             $scope.setDefaults();
+
+            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                connect = false; 
+                connection.stop();
+            });
         }
     ]);
