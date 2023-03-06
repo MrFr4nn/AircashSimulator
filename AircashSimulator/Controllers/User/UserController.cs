@@ -27,32 +27,32 @@ namespace AircashSimulator.Controllers.User
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers(int PageNumber, int PageSize, string Search)
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-
-            var users = await UserService.GetUsers();
+            var users = await UserService.GetUsers(PageNumber, PageSize, Search);
             return Ok(users);
         }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetUserDetail(Guid userId)
-        {
-            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-
-            var user = await UserService.GetUserDetail(userId);
-            return Ok(user);
-        }
-
+    
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> SaveUser(UserDetailVM request)
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-
             await UserService.SaveUser(request);
             return Ok();
         }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteUser(UserDetailVM user)
+        {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+            await UserService.DeleteUser(user.UserId);
+            return Ok();
+        }
+
+
+
     }
 }
