@@ -42,32 +42,8 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                 console.log(link);
             };
 
-            $scope.CustomNotification = function (msg, status) {
-                var vm = this;
-                vm.name = 'TransactionInfo';
-
-                vm.setOptions = function () {
-                    toastr.options.positionClass = "toast-top-center";
-                    toastr.options.closeButton = true;
-                    toastr.options.showMethod = 'slideDown';
-                    toastr.options.hideMethod = 'slideUp';
-                    toastr.options.progressBar = true;
-                    toastr.options.timeOut = 10000;
-                };
-                vm.setOptions();
-
-                if (status == 1) {
-                    toastr.clear();
-                    toastr.success(msg);
-                }
-                else if (status == 2) {
-                    toastr.clear();
-                    toastr.error(msg);
-                }
-                else if (status == 3) {
-                    toastr.clear();
-                    toastr.error(msg);
-                }
+            $scope.CustomNotification = function (msg) {
+                $rootScope.showGritter("Payment received ", msg);
             };
 
             const connection = new signalR.HubConnectionBuilder()
@@ -87,8 +63,8 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
             connection.onclose(async () => {
                 await start();
             });
-            connection.on("TransactionConfirmedMessage", (message, status) => {
-                $scope.CustomNotification(message, status);
+            connection.on("TransactionConfirmedMessagePayment", (message) => {
+                $scope.CustomNotification(message);
             });
 
             start();
