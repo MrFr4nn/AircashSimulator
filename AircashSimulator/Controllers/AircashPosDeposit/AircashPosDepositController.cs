@@ -31,7 +31,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private const string BlockedUsername = "BLOCKED_USERNAME";
         private const string BlockedEmail = "BLOCKED_USER@gmail.com";
         private const string PartnerId = "3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20";
-        private const string PartnerIdCashier = "8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF";
+        private const string PartnerIdCashier = "0bbee966-47dd-4244-8a33-c484cb2f5a03";
         private const string UserIdCashier = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
 
         public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
@@ -56,6 +56,15 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         public async Task<IActionResult> CheckUser(CheckUserRQ checkUserRQ)
         {
             var response = await AircashPosDepositService.CheckUser(checkUserRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User), checkUserRQ.Parameters);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckCashierUser(CheckUserRQ checkUserRQ)
+        {
+            var partnerId = new Guid(PartnerIdCashier);
+            var userId = new Guid(UserIdCashier);
+            var response = await AircashPosDepositService.CheckUser(checkUserRQ.PhoneNumber, userId.ToString(), partnerId, checkUserRQ.Parameters);
             return Ok(response);
         }
 

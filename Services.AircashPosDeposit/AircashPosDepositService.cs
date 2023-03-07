@@ -85,11 +85,13 @@ namespace Services.AircashPosDeposit
 
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.AircashCreatePayoutV4Endpoint}");
 
-            var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
-            returnResponse.ServiceResponse = serviceResponse;
+            //var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
+            //returnResponse.ServiceResponse = serviceResponse;
             var responseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
+                var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
+                returnResponse.ServiceResponse = serviceResponse;
                 returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
@@ -104,6 +106,11 @@ namespace Services.AircashPosDeposit
                     ResponseDateTimeUTC = responseDateTimeUTC
                 });
                 AircashSimulatorContext.SaveChanges();
+            }
+            else
+            {
+                var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutErrorRS>(response.ResponseContent);
+                returnResponse.ServiceResponse = serviceResponse;
             }
 
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
