@@ -66,6 +66,13 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controller: 'ForbiddenCtrl',
             controllerAs: 'vm',
             params: {}
+        })
+        .state('inAppPay', {
+            url: '/inAppPay',
+            templateUrl: 'app/inAppPay/inAppPay.html',
+            controller: 'inAppPayCtrl',
+            controllerAs: 'vm',
+            params: {}
         });
 }]);
 
@@ -90,7 +97,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/cashier', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
+        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay', '/cashier', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if (restrictedPage && !$localStorage.currentUser) {
