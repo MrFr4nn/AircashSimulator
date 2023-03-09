@@ -11,18 +11,21 @@ using System.Threading.Tasks;
 using AircashSimulator.Extensions;
 using System.Text;
 using System.Security.Cryptography;
+using Services.User;
 
 namespace Services.Partner
 {
     public class PartnerService : IPartnerService
     {
         private AircashSimulatorContext AircashSimulatorContext;
+        private IUserService UserService;
         private const string DefaultPrivateKey = "-";
         private const string DefaultPrivateKeyPass = "-";
 
-        public PartnerService(AircashSimulatorContext aircashSimulatorContext)
+        public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
+            UserService = userService;
         }
 
         public async Task<List<PartnerVM>> GetPartners()
@@ -84,7 +87,6 @@ namespace Services.Partner
             return partners;
         } 
 
-
         public async Task SavePartner(PartnerDetailVM request)
         {
             Guid id;
@@ -138,7 +140,7 @@ namespace Services.Partner
 
             if (request.Username != null) 
             {
-                SaveUser(request.Username, id);
+                await SaveUser(request.Username, id);
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
@@ -156,9 +158,15 @@ namespace Services.Partner
                     AircashSimulatorContext.PartnerRoles.Remove(role);
                 }
             }
+            var findAllUsers = await AircashSimulatorContext.Users.Where(x => x.PartnerId == Partner.PartnerId).ToListAsync();
+            foreach (var user in findAllUsers)
+            {
+                await UserService.DeleteUser(user.UserId);
+            }
             await AircashSimulatorContext.SaveChangesAsync();
         }
-        public async void SaveUser(string username, Guid partnerId) {
+       
+        public async Task SaveUser(string username, Guid partnerId) {
             string hash = "";
             using (SHA256 sha256Hash = SHA256.Create())
             {
