@@ -84,10 +84,10 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                         }
                         else if ($scope.selectedAcFrameOption.value == 3) {
                             /*---- METHOD 3 - CUSTOM WINDOW CHECKOUT ----- */
-                             if (response.acFrameUrl != "" && response.acFrameUrl != null) {
+                            if (response.serviceResponse.url != "" && response.serviceResponse.url != null) {                                
                                 var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
-                                var openFrameInNewWindow = window.open(response.acFrameUrl, 'openFrameInNewWindow', windowOptions);
-                             }
+                                window.open(response.serviceResponse.url, 'openFrameInNewWindow', windowOptions);
+                            }
                         }
                         else {
                             console.log(response)

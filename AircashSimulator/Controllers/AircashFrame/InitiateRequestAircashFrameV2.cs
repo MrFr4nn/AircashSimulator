@@ -1,11 +1,13 @@
-﻿namespace AircashSimulator.Controllers.AircashFrame
+﻿using Domain.Entities.Enum;
+
+namespace AircashSimulator.Controllers.AircashFrame
 {
     public class InitiateRequestAircashFrameV2
     {
-        public int PayType { get; set; }
-        public int PayMethod { get; set; }
+        public PayTypeEnum PayType { get; set; }
+        public PayMethodEnum PayMethod { get; set; }
         public decimal Amount { get; set; }
-        public int AcFrameOption { get; set; }
+        public AcFrameIntegrationCheckoutTypeEnum AcFrameOption { get; set; }
         public string NotificationUrl { get; set; }
         public string SuccessUrl { get; set; }
         public string DeclineUrl { get; set; }
