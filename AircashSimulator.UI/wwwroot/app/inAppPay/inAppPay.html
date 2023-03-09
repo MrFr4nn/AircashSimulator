@@ -10,16 +10,25 @@
             <div class="text-center">
                 <img style="width:200px; height: 80px;" alt="" src="/images/aircash-red.svg">
             </div>
-            <form class="w-75 container">
-                <label for="amount">Amount</label>
-                <div class="input-group mb-3">
-                    <input class="form-control form-control-lg" type="number" min="0" step="0.01" />
-                    <div class="input-group-append">
-                        <button class="btn btn-lg btn-danger">Pay</button>
+            <form class="w-75 container" action="/" method="POST" name="transactionForm1">
+                <fieldset>
+                    <label for="amount">Amount</label>
+                    <div class="input-group mb-3">
+                        <input class="form-control form-control-lg" type="number" min="0" step="0.01" />
+                        <div class="input-group-append">
+                            <button class="btn btn-lg btn-danger" ng-click="generateTransaction()">Pay</button>
+                        </div>
                     </div>
-                </div>
+                </fieldset>
             </form>
-
+            <!--
+            <div class="input-group mb-3">
+                <input class="form-control form-control-lg" ng-model="generatePartnerCodeModel.amount" ng-required="true" type="number" min="0" step="0.01" />
+                <div class="input-group-append">
+                    <button class="btn btn-lg btn-danger" ng-click="generateTransaction()" ng-disabled="generateBusy || transactionForm1.$invalid">Pay<i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                </div>
+            </div>
+            -->
         </div>
     </div>
 </div>
