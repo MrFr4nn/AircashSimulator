@@ -64,10 +64,6 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
             });
     }
 
-    $scope.CustomNotification = function (msg) {
-        $rootScope.showGritter("QR Code Payment received", msg);
-    };
-
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(config.baseUrl.replace("/api/", "")+ "/Hubs/NotificationHub")
         .configureLogging(signalR.LogLevel.Information)
@@ -88,7 +84,7 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
         }
     });
     connection.on("TransactionConfirmedMessage", (message, status) => {
-        $scope.CustomNotification(message, status);
+        $rootScope.showGritter("QR Code Payment received", message);
     });
 
     start();

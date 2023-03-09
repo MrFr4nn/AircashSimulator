@@ -43,10 +43,6 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                 console.log(link);
             };
 
-            $scope.CustomNotification = function (msg) {
-                $rootScope.showGritter("Payment received ", msg);
-            };
-
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
                 .configureLogging(signalR.LogLevel.Information)
@@ -67,7 +63,7 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                 }
             });
             connection.on("TransactionConfirmedMessagePayment", (message) => {
-                $scope.CustomNotification(message);
+                $rootScope.showGritter("Payment received ", message);
             });
 
             start();
