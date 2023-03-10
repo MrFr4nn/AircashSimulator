@@ -259,6 +259,46 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
 
     $scope.getTransactions();
 
+    $scope.initiate = {
+        requestExample: {
+            partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+            partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+            partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+            amount: "100",
+            currencyId: 191,
+            payType: 0,
+            payMethod: 2,
+            notificationUrl: "https://aircash.eu",
+            successUrl: null,
+            declineUrl: null,
+            cancelUrl: null,
+            originUrl: null,
+            locale: "en-US",
+            signature: "tc5NZjj7hO..."
+        },
+        responseExample: {
+            transactionId: "e22cd71a-276e-47e1-b7af-3d3a504e0ef9",
+            url: "https://stage-frame.aircash.eu/e22cd71a-276e-47e1-b7af-3d3a504e0ef9"
+        },
+        errorResponseExample: {
+            code: 1,
+            message: "Invalid ProviderId",
+            additionalData: null
+        }
+    };
+    $scope.transactionStatus = {
+        requestExample: {
+            partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+            partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+            signature: "dUrE4gtau5..."
+        },
+        errorResponseExample: {
+            code: 1003,
+            message: "Transaction not processed",
+            additionalData: null
+        }
+    };
+
 }]);
 
 acFrameV2Module.controller('AircashFrameV2RedirectModalCtrl', function ($scope, transactionId) {
