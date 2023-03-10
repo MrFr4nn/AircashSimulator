@@ -31,3 +31,16 @@
         };
     }
 });
+app.component('jsonformatter', {
+    template: '<div class="jsonFormatter">{{$ctrl.data}}</div>',
+    bindings: {
+        data: '='
+    },
+    controller: function () {
+        $ctrl = this;
+        
+        $(document).ready(function () {
+            $('.jsonFormatter').jsonFormatter();
+        });
+    }
+});

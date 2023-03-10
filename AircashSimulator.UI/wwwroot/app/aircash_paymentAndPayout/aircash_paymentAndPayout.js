@@ -147,11 +147,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
                     $scope.checkCodeServiceRequestObject = response.serviceRequest;
                     $scope.checkCodeServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.checkCodeServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-
-                    
-                    
                 }
-                $('.jsonFormatter').jsonFormatter();
                 $scope.checkCodeServiceBusy = false;
                 $scope.checkCodeServiceResponded = true;
                
@@ -314,10 +310,4 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         "Amount": 123.45,
         "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
     };
-
-    angular.element(document).ready(function () {
-        $('.jsonFormatter').jsonFormatter();
-    });
-   
-
 }]);
