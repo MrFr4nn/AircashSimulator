@@ -111,8 +111,8 @@
             </tr>
         </table>
         <br />
-        <uib-tabset active="active">
-            <uib-tab index="request-tab-0" heading="Request" class="nav-item">
+        <uib-tabset>
+            <uib-tab index="GenerateTransaction-tab-0" heading="Request" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -154,16 +154,6 @@
                             transactions
                         </td>
                         <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td><b>Description</b></td>
-                        <td>string</td>
-                        <td>
-                            Transaction description, additional info
-                            about transaction ( e.g. payment for
-                            invoice 42)
-                        </td>
-                        <td>NO</td>
                     </tr>
                     <tr>
                         <td><b>ValidUntilUTC</b></td>
@@ -237,7 +227,7 @@
 
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-1" heading="Request example" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-1" heading="Request example" class="nav-item">
 <pre>
 {
     "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
@@ -249,7 +239,7 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" class="nav-item">
+            <uib-tab index="GenerateTransaction-tab-2" heading="Response" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Return value</th>
@@ -271,14 +261,14 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-3" heading="Response example" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-3" heading="Response example" class="nav-item">
 <pre>
 {
-"codeLink": " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "
+"url": " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
+            <uib-tab index="GenerateTransaction-tab-4" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -435,7 +425,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-5" heading="400 Error Response Example" class="nav-item">
                 <pre>
 {
     "code": 6,    
@@ -444,7 +434,7 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-5" heading="Try it out" class="nav-item" style="display:none">
+            <uib-tab index="GenerateTransaction-tab-6" heading="Try it out" class="nav-item">
                 <div class="row">
                     <div class="col-md-2">
                         <form action="/" method="POST" name="generateForm">
@@ -475,10 +465,6 @@
                         <pre>
 <code>{{GenerateServiceResponse}}</code>
 </pre>
-
-                        <div>
-                            <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
-                        </div>
                     </div>
                 </div>
             </uib-tab>
@@ -513,7 +499,7 @@
         </table>
         <br />
         <uib-tabset>
-            <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
+            <uib-tab index="ConfirmTransaction-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -588,7 +574,7 @@
 
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+            <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
                 <pre>
 {
     "amount":123.45,
@@ -600,12 +586,11 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="request-tab-2" heading="Response" classes="nav-item">
+            <uib-tab index="ConfirmTransaction-tab-2" heading="Response" classes="nav-item">
                 <p>
                     Aircash system expects an answer http answer 200 OK. In case the Aircash system gets any other response
                     the Aircash system will call this method again. The method is called 10 times in a period of 6 hours after
                     which the call is canceled and Aircash support is notified of the failed transaction confirmation.
-                </p>
                 </p>
             </uib-tab>
         </uib-tabset>
@@ -643,7 +628,7 @@
         </table>
         <br />
         <uib-tabset>
-            <uib-tab index="request-tab-0" heading="Request" classes="nav-item">
+            <uib-tab index="CheckTransactionStatus-tab-0" heading="Request" classes="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Parameter</th>
@@ -768,7 +753,7 @@
 
         </pre>
             </uib-tab>
-            <uib-tab index="request-tab-4" heading="400 Error Responses" class="nav-item">
+            <uib-tab index="CheckTransactionStatus-tab-4" heading="400 Error Responses" class="nav-item">
                 <table class="table table-hover">
                     <tr>
                         <th>Http response</th>
@@ -925,7 +910,7 @@
                     </tr>
                 </table>
             </uib-tab>
-            <uib-tab index="request-tab-10" heading="400 Error Response Example" class="nav-item">
+            <uib-tab index="CheckTransactionStatus-tab-5" heading="400 Error Response Example" class="nav-item">
                 <pre>
 {
     "code": 6,    
@@ -934,7 +919,7 @@
 }
 </pre>
             </uib-tab>
-            <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
                         <br />
@@ -992,7 +977,237 @@
             </uib-tab>
         </uib-tabset>
 
+        <br />
+        <h4>Refund</h4>
+        <p>
+            In order to refund transaction, partner can send a request towards Aircash refund endpoint
+            containing the information that will uniquely identify the original transaction that needs to be refunded,
+            along with the amount that will be added to the Aircash user’s wallet. Refund method can be called
+            multiple times as long as the sum of previous refund amounts is less or equal to the amount of the original
+            transaction.
+        </p>
+        <i>Endpoints:</i>
+        <table class="table table-active col-md-6">
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-m3.aircash.eu/api/AircashPay/RefundTransaction</td>
+            </tr>
+        </table>
+        <br />
+
+        <uib-tabset>
+            <uib-tab index="refund-tab-0" heading="Input parameters" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            PartnerID unique identifier provided by
+                            Aircash
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Transaction id (in the partner system)
+                            that needs to be refunded
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>RefundTransactionID</b></td>
+                        <td>string</td>
+                        <td>Id of the requested refund transaction</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>decimal</td>
+                        <td>Amount that needs to be refunded</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            Signature by the platform system
+                            confirming that plugin is sending request
+                            to the Aircash system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="refund-tab-1" heading="Request example" classes="nav-item">
+<pre>
+{
+    "PartnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+    "PartnerTransactionID": "67cef954-7372-4a12-9250-98a42bcf0317",
+    "RefundTransactionID": "9a90fcdc-572d-44b3-904d-1ff0629c7046",
+    "Amount": "100",
+    "Signature": "g/iZ .... KgY/6o="
+}
+</pre>
+            </uib-tab>
+            <uib-tab index="refund-tab-2" heading="HTTP 200 OK output parameters" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Return value</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                    <tr>
+                        <td><b>TransactionID</b></td>
+                        <td>string</td>
+                        <td>ID of the original Aircash transaction that is refunded</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>Transaction id (in the partner system) that is refunded</td>
+                    </tr>
+                    <tr>
+                        <td><b>RefundTransactionID</b></td>
+                        <td>string</td>
+                        <td>Id of the requested refund transaction</td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="refund-tab-3" heading="Error Responses" classes="nav-item">
+                <table class="table table-hover">
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>Invalid signature or unknown partner ID</td>
+                        <td>
+                            Check parameters, if everything is
+                            ok, contact Aircash support
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>400</b></td>
+                        <td>Error from the list of error codes</td>
+                        <td>Check the error table</td>
+                    </tr>
+                    <tr>
+                        <td><b>500</b></td>
+                        <td>Unexpected system error</td>
+                        <td>
+                            Implement retry mechanism to
+                            repeat the request
+                        </td>
+                    </tr>
+                </table>
+                <table class="table table-hover">
+                    <tr>
+                        <th>Error code</th>
+                        <th>Error message</th>
+                    </tr>
+                    <tr>
+                        <td><b>0</b></td>
+                        <td>Request not well formatted</td>
+                    </tr>
+                    <tr>
+                        <td><b>1</b></td>
+                        <td>Requested amount must be higher than 0</td>
+                    </tr>
+                    <tr>
+                        <td><b>2</b></td>
+                        <td>Transaction with PartnerTransactionID not found in the Aircash system</td>
+                    </tr>
+                    <tr>
+                        <td><b>3</b></td>
+                        <td>Requested amount is higher than remaining amount from the original transaction</td>
+                    </tr>
+                </table>
+            </uib-tab>
+            <uib-tab index="refund-tab-4" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-2">
+                        <form action="/" method="POST" name="generateForm">
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputEmail1">Refund Amount</label>
+                                <input ng-model="refundTransactionModel.amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                            </div>
+                            <!--     <button ng-click="generatePartnerCode()" class="btn btn-primary w-100px me-5px" ng-disabled="generateBusy || generateForm.$invalid">Generate <i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>-->
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p>Recent transactions:</p>
+                        <div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Transaction ID</th>
+                                            <th>Amount</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-if="totalLoaded == 0 && !busy">
+                                            <td colspan="12" align="center">
+                                                <i>No data</i>
+                                            </td>
+                                        </tr>
+                                        <tr ng-repeat="transaction in transactions">
+                                            <td>{{$index + 1}}.</td>
+                                            <td>{{transaction.partnerTransactionId}}</td>
+                                            <td>{{transaction.amount | number:2}}</td>
+                                            <td style="text-align: center; vertical-align: inherit">
+                                                <button class="btn btn-danger fa fa-ban" ng-click="refundTransaction(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                        </div>
+                    </div>
+
+                    <br />
+                    <div ng-hide="!refundResponded" class="col-md-4">
+                        Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+                        <code>{{RefundServiceResponse}}</code>
+</pre>
+                        Sequence: {{sequenceRefund}}
+                    </div>
+                    <div ng-hide="!refundResponded" class="col-md-4">
+                        Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <pre>
+<code>{{RefundServiceResponse}}</code>
+</pre>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+        
         <hr />
+
         <h1>Production process</h1>
         <br />
         <p>The production process consists of several steps that take place sequentially:</p>

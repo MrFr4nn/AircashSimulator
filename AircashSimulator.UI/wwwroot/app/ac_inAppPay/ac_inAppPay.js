@@ -16,6 +16,8 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
     return ({
         generateTransaction: generateTransaction,
         cancelTransaction: cancelTransaction,
+        refundTransaction: refundTransaction,
+        getTransactions: getTransactions,
     });
     function generateTransaction(amount, description, locationID) {
         var request = $http({
@@ -48,6 +50,18 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
             params: {
                 PageSize: pageSize,
                 PageNumber: pageNumber
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function refundTransaction(transactionId, amount) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashInAppPay/RefundTransaction",
+            data: {
+                PartnerTransactionID: transactionId,
+                Amount: amount
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -93,8 +107,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.codeLink = response.serviceResponse.codeLink;
-                    new QRCode(document.getElementById("qrcode"), $scope.codeLink);
+                    $scope.codeLink = response.serviceResponse.url;
                     $scope.getTransactions(true);
                 }
                 $scope.generateBusy = false;
@@ -104,5 +117,53 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             });
     }
 
+    $scope.refundModel = {
+        transcationId: null,
+        amount: null
+    };
+
+    $scope.refundResponded = false;
+    $scope.refundBusy = false;
+    $scope.refundTransaction = function (transactionId) {
+        $scope.refundBusy = true;
+        acInAppPayService.refundTransaction(transactionId, $scope.refundTransactionModel.amount)
+            .then(function (response) {
+                if (response) {
+                    $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.refundSequence = response.sequence;
+
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.refundBusy = false;
+                $scope.refundResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.getTransactions = function (reset) {
+        if (reset) $scope.setDefaults();
+        acInAppPayService.getTransactions($scope.pageSize, $scope.pageNumber)
+            .then(function (response) {
+                $scope.pageNumber += 1;
+                if (response) {
+                    $scope.totalLoaded = response.length;
+                    $scope.transactions = $scope.transactions.concat(response);
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.loadMore = function (pageSize) {
+        $scope.pageSize = pageSize;
+        $scope.getTransactions();
+    };
+
     $scope.setDefaults();
+
+    $scope.getTransactions();
 }]);
