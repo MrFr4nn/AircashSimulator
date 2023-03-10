@@ -15,28 +15,15 @@ app.config(function ($stateProvider) {
 cashierC2dModule.service("cashierC2dService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope',
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
-            checkCashierUser: checkCashierUser,
-            createCashierPayout: createCashierPayout
+            confirmC2dPayment: confirmC2dPayment
         });
 
-       function checkCashierUser(checkUserRequest) {
-            //console.log(config.baseUrl + "aircashPayout / CheckUserV2");
-            console.log(checkUserRequest);
+        function confirmC2dPayment(c2dPaymentRequest) {
+            console.log(c2dPaymentRequest);
             var request = $http({
                 method: 'POST',
-                url: config.baseUrl + "AircashPosDeposit/CheckCashierUser",
-                data: checkUserRequest
-            });
-            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-        }
-
-        function createCashierPayout(createPayoutRequest) {
-            //console.log(config.baseUrl + "aircashPayout / CreatePayoutV2");
-            console.log(createPayoutRequest);
-            var request = $http({
-                method: 'POST',
-                url: config.baseUrl + "AircashPosDeposit/CreateCashierPayout",
-                data: createPayoutRequest
+                url: config.baseUrl + "AircashPosDeposit/ConfirmC2dPayment",
+                data: c2dPaymentRequest
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
@@ -44,9 +31,12 @@ cashierC2dModule.service("cashierC2dService", ['$http', '$q', 'handleResponseSer
 ]);
 
 cashierC2dModule.controller("cashierC2dCtrl",
-    ['$scope', '$state', 'cashierC2dService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, $state, cashierC2dService, $filter, $http, JwtParser, $uibModal, $rootScope) {
- 
+    ['$scope', '$state', 'cashierC2dService', '$filter', '$http', 'config', 'JwtParser', '$uibModal', '$rootScope',
+        function ($scope, $state, cashierC2dService, $filter, $http, config, JwtParser, $uibModal, $rootScope) {
+
+            var connect = true;
+
+           
             $scope.createPayoutModel = {
                 amount: 100,
                 phoneNumber: $scope.phoneNumber,
@@ -59,26 +49,27 @@ cashierC2dModule.controller("cashierC2dCtrl",
 
             $scope.createPayoutServiceBusy = false;
 
-            $scope.checkCashierUser = function () {
-                console.log("CheckUser...");
-                $scope.checkUserRequest = {
+            $scope.confirmC2dPayment = function () {
+                $scope.c2dPaymentRequest = {
                     phoneNumber: $scope.selectedCountry.countryCode.substring(1) + $scope.createPayoutModel.phoneNumber,
-                    parameters: [{ key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] }]
+                    amount: $scope.createPayoutModel.amount,
+                    locationID: $scope.createPayoutModel.locationID,
+                    parametersCreatePayout: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] },
+                        { key: "LocationID", value: $scope.createPayoutModel.locationID.toString() }],
+                    parametersCheckUser: [ { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] }]
+
                 }
+
                 $scope.createPayoutServiceBusy = true;
-                cashierC2dService.checkCashierUser($scope.checkUserRequest)
+                cashierC2dService.confirmC2dPayment($scope.c2dPaymentRequest)
                     .then(function (response) {
                         console.log(response);
                         switch (response.serviceResponse.status) {
                             case 1:
-                                $rootScope.showGritter("Error", "Uknown phone number");                               
+                                $rootScope.showGritter("Error", "Uknown phone number");
                                 break;
                             case 2:
                                 $rootScope.showGritter("Error", "Personal data is not matched");
-                                break;
-                            case 3:
-                                console.log("Success");
-                                $scope.createCashierPayout();
                                 break;
                             case 4:
                                 $rootScope.showGritter("Error", "User exists but has no verified data");
@@ -87,39 +78,11 @@ cashierC2dModule.controller("cashierC2dCtrl",
                                 $rootScope.showGritter("Error", "User exists but verification is pending");
                                 break;
                             default:
-                                console.log("Unknown error");
                                 break;
                         }
                         $scope.createPayoutServiceBusy = false;
                     }, () => {
                         console.log("ERROR");
-                        $scope.createPayoutServiceBusy = false;
-                    });
-            }
-
-            $scope.createCashierPayout = function () {
-                $scope.createPayoutRequest = {
-                    phoneNumber: $scope.selectedCountry.countryCode.substring(1) + $scope.createPayoutModel.phoneNumber,
-                    amount: $scope.createPayoutModel.amount,
-                    locationID: $scope.createPayoutModel.locationID,
-                    parameters: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] }, { key: "LocationID", value: $scope.createPayoutModel.locationID.toString() }]
-                }
-                $scope.createPayoutServiceBusy = true;
-                cashierC2dService.createCashierPayout($scope.createPayoutRequest)
-                    .then(function (response) {
-                        console.log(response);
-                        if (response.serviceResponse.code) {
-                            $rootScope.showGritter("Error", response.serviceResponse.message);
-                        }
-                        else if (response.serviceResponse.code == 0) {
-                            $rootScope.showGritter("Error", response.serviceResponse.message);
-                        }
-                        else {
-                            $rootScope.showGritter("Success");
-                        }
-                        $scope.createPayoutServiceBusy = false;
-                    }, () => {
-                        console.log("error");
                         $scope.createPayoutServiceBusy = false;
                     });
             }
@@ -163,11 +126,41 @@ cashierC2dModule.controller("cashierC2dCtrl",
                 $scope.selectedCountry = $scope.countryCodes[3];
             };
 
+            $scope.CustomNotification = function (msg) {
+                $rootScope.showGritter("Payment confirmed ", msg);
+            };
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            async function start() {
+                try {
+                    await connection.start();
+                    console.log("SignalR Connected.");
+                } catch (err) {
+                    console.log(err);
+                    setTimeout(start, 1000);
+                }
+            };
+            connection.onclose(async () => {
+                if (connect) {
+                    await start();
+                }
+            });
+            connection.on("TransactionConfirmedMessage", (message) => {
+                $scope.CustomNotification(message);
+            });
+
+            start();
+
             $scope.setDefaults();
 
             $scope.setBirthDatePayout = function (date) {
                 $scope.createPayoutModel.birthDate = date;
             }
+
 
         }
 
