@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+	<ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.12" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.11" />
@@ -20,11 +20,16 @@
   <ItemGroup>
     <ProjectReference Include="..\AircashFrame\Services.AircashFrame.csproj" />
     <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
+    <ProjectReference Include="..\AircashSimulator.UI\AircashSimulator.UI.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Services.AbonOnlinePartner\Services.AbonOnlinePartner.csproj" />
     <ProjectReference Include="..\Services.AbonSalePartner\Services.AbonSalePartner.csproj" />
     <ProjectReference Include="..\Services.AircashFrameV2\Services.AircashFrameV2.csproj" />
+    <ProjectReference Include="..\Services.AircashInAppPay\Services.AircashInAppPay.csproj" />
     <ProjectReference Include="..\Services.AircashPaymentAndPayout\Services.AircashPaymentAndPayout.csproj" />
+    <ProjectReference Include="..\Services.AircashPayment\Services.AircashPayment.csproj" />
+    <ProjectReference Include="..\Services.AircashPayStaticCode\Services.AircashPayStaticCode.csproj" />
+    <ProjectReference Include="..\Services.AircashPayoutV2\Services.AircashPayoutV2.csproj" />
     <ProjectReference Include="..\Services.AircashPay\Services.AircashPay.csproj" />
     <ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
     <ProjectReference Include="..\Services.AircashPosDeposit\Services.AircashPosDeposit.csproj" />

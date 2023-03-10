@@ -1,8 +1,8 @@
 ﻿<h1>Cash to digital</h1>
 <h2>The Deposit initiated through the Merchant point of sale</h2>
 <p style="text-align:justify">
-    The Deposit process will start on the Merchant franchise location where the user will need to present QR code alongside with money/funds that the user would like to deposit to his Merchant account:
-</p>
+    The Deposit process will start on the Merchant location where the user will need to present his account data along with the personal information. 
+
 <p style="text-align:justify">
     The Merchant system will generate a Deposit request with all required information to the Aircash system.
     <ul>
@@ -36,11 +36,10 @@
     <h4>Initiating transaction on the PoS</h4>
     <ol>
         <li>
-            User selects “cash deposit” within the SW application
+            User on the PoS requests to deposit amount into his online account.
             <ol type="i">
-                <li>The customer opens his SW account and goes to deposit, enters the amount he wants to deposit, and method SW Cash</li>
                 <li>
-                    SW backend will check if the Aircash user exists in the Aircash system and whether the data is valid. To do so, Sportwetten will need to share the following information:
+                    Merchant backend will check if the Aircash user exists in the Aircash system and whether the data is valid. To do so, Aircash system will need the following information:
                     <table class="table  table-active col-md-8">
                         <tr>
                             <th>Parameter</th>
@@ -48,19 +47,19 @@
                         </tr>
                         <tr>
                             <td>First name</td>
-                            <td>personal data validation between Sportwetten and Aircash</td>
+                            <td>personal data validation between Merchant and Aircash</td>
                         </tr>
                         <tr>
                             <td>Last name</td>
-                            <td>personal data validation between Sportwetten and Aircash</td>
+                            <td>personal data validation between Merchant and Aircash</td>
                         </tr>
                         <tr>
                             <td>Birth date</td>
-                            <td>personal data validation between Sportwetten and Aircash</td>
+                            <td>personal data validation between Merchant and Aircash</td>
                         </tr>
                         <tr>
                             <td>Username</td>
-                            <td>account identifier in the deposit requests sent from Aircash to Sportwetten</td>
+                            <td>account identifier in the deposit requests sent from Aircash to Merchant</td>
                         </tr>
                         <tr>
                             <td>Phone number</td>
@@ -73,15 +72,15 @@
                 </li>
                 <li>
                     Using the account data (first name, last name, birth date) and the phone number Aircash system will validate the Aircash user and return the confirmation
-                    <ol type="i"><li>if the response is not valid (Aircash user with a provided phone number does not exist, personal data is not valid….) a proper message should be displayed to the SW user</li></ol>
+                    <ol type="i"><li>if the response is not valid (Aircash user with a provided phone number does not exist, personal data is not valid….) a proper message should be displayed to the user</li></ol>
                 </li>
                 <li>
-                    If the user exists, SW mobile application will prepare a QR code containing mandatory fields for further steps: Amount, SW User ID, First Name, Last Name, Phone Number
+                    If the user exists, and the personal data matches, merchant system can proceed with sending money to the Aircash system.
                 </li>
             </ol>
         </li>
         <li>
-            The cashier will scan the QR code and request physical money from the user
+            The cashier (sales person) requests physical money from the user
             <ol type="i">
                 <li>The cashier needs to confirm receiving the physical money</li>
                 <li>in this step, a transaction is initiated in the cashier system</li>
@@ -107,7 +106,7 @@
         </ol>
         <br />
         <h4>Accepting the payment on the Aircash application</h4>
-        <ol start="6"><li>Aircash will send the notification to the user asking for confirmation to deposit to his Sportwetten account</li></ol>
+        <ol start="6"><li>Aircash will send the notification to the user asking for confirmation to deposit to his online account</li></ol>
         <br />
         <h4>Accepting the payment on the merchant system</h4>
         <ol start="7">
@@ -131,23 +130,7 @@
         </li>
     </ol>
 </p>
-<hr />
-<h2>The Deposit initiated through Aircash Wallet</h2>
-<p>The Deposit onto Merchant's user account can also be made directly from the Aircash application:</p>
-<ul>
-    <li>User enters the Aircash application.</li>
-    <li>Within the Aircash app Home screen, the user selects the Marketplace option</li>
-    <li>In the Marketplace section, the user is able to deposit funds in one tap by selecting the Merchants logo. The user is able to fill in the deposit amount and process payments towards Merchant’s online channels (player account).</li>
-    <li>The funds are visible instantly on the player account and can be used instantly on Merchant online channels.</li>
-</ul>
-<p>If the user is making a deposit to his Sportwetten account directly from the Aircash marketplace, then the process consists of the following REST API calls</p>
-<ol>
-    <li>CheckPlayer (Aircash -> Sportwetten)</li>
-    <li>CreateAndConfirmPayment (Aircash -> Sportwetten)</li>
-</ol>
-<p>
-    The flow is the same one as in the third phase of the previous chapter (Accepting the payment on the merchant system)
-</p>
+
 <hr />
 <h2>Methods called by the partner system on Aircash system</h2>
 <p style="text-align:justify">

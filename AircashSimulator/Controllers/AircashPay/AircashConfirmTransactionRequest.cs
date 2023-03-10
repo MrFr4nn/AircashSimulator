@@ -1,6 +1,6 @@
 ﻿using AircashSignature;
 
-namespace Services.AircashPay
+namespace AircashSimulator.Controllers.AircashPay
 {
     public class AircashConfirmTransactionRequest : ISignature
     {
