@@ -69,9 +69,13 @@ app.component('jsonformatter', {
     },
     controller: function () {
         $ctrl = this;
-        
+
+        var options = {
+            collapsible: false
+        }
+
         $(document).ready(function () {
-            $('.jsonFormatter').jsonFormatter();
+            $('.jsonFormatter').jsonFormatter(options);
         });
     }
 });

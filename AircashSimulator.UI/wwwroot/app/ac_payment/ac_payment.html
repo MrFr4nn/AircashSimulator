@@ -172,26 +172,14 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "parameters": [{
-        "key": "username",
-        "value": "aircash"
-    }],
-    "signature: "HrlYnqqr...Cgs="
-}      
-</pre>
+        <jsonformatter data="aircashPayment.checkPlayer.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-{
-    "parameters": [{
-        "key": "username",
-        "value": "aircash"
-    }],
-    "signature: "HrlYnqqr...Cgs="
-} 
+</pre>
+        <jsonformatter data="aircashPayment.checkPlayer.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 Parameters=Key=username&Value=aircash
@@ -292,29 +280,10 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
         </div>
     </uib-tab>
     <uib-tab index="checkUser1-tab-4" heading="200 OK response example" classes="nav-item">
-        <pre>
-{
-    "isPlayer": true,
-    "error": null,
-    "parameters": [{
-            "key": "partnerUserID",
-            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
-            "type": "String"
-        }]
-}
-</pre>
+        <jsonformatter data="aircashPayment.checkPlayer.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-6" heading="Error response example" classes="nav-item">
-        <pre>
-{
-    "isPlayer": false,
-    "error": {
-        "errorCode": 500,
-        "errorMessage": "Unable to find user account"
-    },
-    "parameters":null
-}
-</pre>
+        <jsonformatter data="aircashPayment.checkPlayer.errorResponseExample"></jsonformatter>
     </uib-tab>
 </uib-tabset>
 
@@ -391,30 +360,14 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
         </table>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "amount": 123.45,
-    "parameters": [{
-            "key": "username",
-            "value": "aircash"
-        }],
-    "signature": "Gng+D6+3...P/4="
-}  
-</pre>
+        <jsonformatter data="aircashPayment.createAndConfirmPayment.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
 Request example:
-{
-    "transactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "amount": 123.45,
-    "parameters": [{
-            "key": "username",
-            "value": "aircash"
-        }],
-    "signature": "Gng+D6+3...P/4="
-}  
+</pre>
+        <jsonformatter data="aircashPayment.createAndConfirmPayment.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 Amount=123.45&Parameters=Key=username&Value=aircash&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
@@ -518,29 +471,10 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
         </div>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-4" heading="200 OK response example" classes="nav-item">
-        <pre>
-{
-    "success": true,
-    "partnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
-    "parameters": [{
-            "key": "partnerUserID",
-            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
-            "type": "string"
-        }]
-}
-</pre>
+        <jsonformatter data="aircashPayment.createAndConfirmPayment.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error response example" classes="nav-item">
-        <pre>
-{
-    "success ": false,
-    "error": {
-        "errorCode": 500,
-        "errorMessage": "Unable to find user account"
-    },
-    "parameters": null
-}
-</pre>
+        <jsonformatter data="aircashPayment.createAndConfirmPayment.errorResponseExample"></jsonformatter>
     </uib-tab>
 </uib-tabset>
 <h2 style="text-align:justify">Signature</h2>
