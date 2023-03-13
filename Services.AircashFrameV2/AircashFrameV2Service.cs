@@ -156,12 +156,12 @@ namespace AircashFrame
             return responseToController;
         }
 
-        public async Task<int> NotificationCashierFrameV2(string transactionId)
+        public async void NotificationCashierFrameV2(string transactionId)
         {
             var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == new Guid(transactionId)).FirstOrDefault();
             if (preparedAircashFrameTransaction.TransactionSatus == AcFramePreparedTransactionStatusEnum.Confirmed)
             {
-                return 0;
+                return;
             }
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == preparedAircashFrameTransaction.PartnerId).FirstOrDefault();
             var checkTransactionStatusResponse = await CheckTransactionStatusCashierFrameV2(partner, transactionId);
@@ -188,10 +188,8 @@ namespace AircashFrame
                     ServiceId = serviceId,
                     UserId = preparedAircashFrameTransaction.UserId
                 });
-                AircashSimulatorContext.SaveChanges();
-                return 1;
+                AircashSimulatorContext.SaveChanges();                
             }
-            else return 2;
         }
 
         public async Task<object> TransactionStatusCashierFrameV2(Guid partnerId, string transactionId)
