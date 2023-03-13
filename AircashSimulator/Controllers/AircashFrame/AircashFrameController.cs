@@ -7,6 +7,7 @@ using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using Domain.Entities.Enum;
 using Services.AircashFrameV2;
+using System;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -16,14 +17,17 @@ namespace AircashSimulator.Controllers.AircashFrame
     {
         private IAircashFrameService AircashFrameService;
         private IAircashFrameV2Service AircashFrameV2Service;
-        private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
+        private UserContext UserContext;
+        private string partnerId = "5680E089-9E86-4105-B1A2-ACD0CD77653C";
+        private string userId = "F0BC2E22-9C2D-4217-BEEE-99CC1AA3C26D";
+
         public AircashFrameController(IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             AircashFrameService = aircashFrameService;
             AircashFrameV2Service = aircashFrameV2Service;
-            UserContext = userContext;
             AircashConfiguration = aircashConfiguration.CurrentValue;
+            UserContext = userContext;
         }
 
         [HttpPost]
@@ -62,30 +66,52 @@ namespace AircashSimulator.Controllers.AircashFrame
             return Ok(response);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Notification([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        [HttpPost]
+        public async Task<IActionResult> InitiateCashierFrameV2(InitiateRequestAircashFrameV2 initiateRequest)
         {
-            var response = await AircashFrameService.Notification(partnerTransactionId);
-            if (response == 0)
+            var initiateRequestDTO = new InititateRequestV2Dto
             {
-                return Ok("Transaction already confirmed");
-            }
-            else if(response == 1)
+                PartnerId = new Guid(partnerId),
+                UserId = new Guid(userId),
+                Amount = initiateRequest.Amount,
+                PayType = initiateRequest.PayType,
+                PayMethod = initiateRequest.PayMethod
+            };
+
+            if (initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.WindowCheckout)
             {
-                return Ok("Transaction confirmed");
+                /*---- METHOD 1 - RECOMMENDED SDK WINDOW CHECKOUT ----- */
+                initiateRequestDTO.NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}/NotificationCashierFrameV2";
+                initiateRequestDTO.OriginUrl = $"{AircashConfiguration.AcFrameOriginUrl}";                                
             }
+            else if(initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.RedirectCheckout || initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.CustomCheckout)
+            {
+                /*---- METHOD 2 or METHOD 3 - SDK REDIRECT CHECKOUT ----- */
+                initiateRequestDTO.NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}/NotificationCashierFrameV2";
+                initiateRequestDTO.DeclineUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";
+                initiateRequestDTO.SuccessUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/success";
+                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";                                
+            }  
             else
             {
-                return BadRequest("Invalid signature");
+                return BadRequest();
             }
+            var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO);
+            return Ok(response);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        {
+            await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
+            return Ok();            
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> TransactionStatus(TransactionStatusRequest transactionStatusRequest)
+        public async Task<IActionResult> TransactionStatusCashierFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
             var partnerId = UserContext.GetPartnerId(User);
-            var response = await AircashFrameService.TransactionStatus(partnerId, transactionStatusRequest.TransactionId);
+            var response = await AircashFrameV2Service.TransactionStatusCashierFrameV2(partnerId, transactionStatusRequest.TransactionId);
             return Ok(response);
         }
     }
