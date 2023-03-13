@@ -204,16 +204,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
-<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
-<code>    "amount": 123.45,</code>
-<code>    "currencyIsoCode": "EUR",</code>
-<code>    "token": "65116",</code>
-<code>    "signature": "12345....abc"</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.TopUp.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
                 <table class="table table-hover">
@@ -253,13 +244,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>    
-<code>    "balance": 253.04,</code>
-<code>    "balanceCurrencyISOCode": "EUR",</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.TopUp.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -331,14 +316,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "code": 1,</code>    
-<code>    "message": "Unknown Token, the user has not linked the bracelet to the 
-                    Aircash wallet and is unable to make a transaction until he does so.",</code>
-<code>    "additionalData": null,</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.TopUp.errorResponseExample"></jsonformatter>
             </uib-tab>
 
             <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
@@ -356,18 +334,14 @@
                     </div>
 
                     <br />
-                    <div ng-hide="!generateResponded" class="col-md-4">
+                    <div ng-if="generateResponded" class="col-md-4">
                         Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceGenerate}}
                     </div>
-                    <div ng-hide="!generateResponded" class="col-md-6">
+                    <div ng-if="generateResponded" class="col-md-6">
                         Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceResponse"></jsonformatter>
                         <div>
                             <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
                         </div>
@@ -456,13 +430,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
-<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
-<code>    "signature": "12345....abc"</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.CancelTopUp.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
                 <table class="table table-hover">
@@ -485,11 +453,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>  
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.CancelTopUp.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -552,14 +516,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "code": 1,</code>    
-<code>    "message": "The transaction does not exist in the Aircash system, the
-    cashier can return the funds to the user",</code>
-<code>    "additionalData": null,</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.CancelTopUp.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -599,18 +556,14 @@
                     </div>
 
                     <br />
-                    <div ng-hide="!cancelResponded" class="col-md-4">
+                    <div ng-if="cancelResponded" class="col-md-4">
                         Request ({{CancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{CancelServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="CancelServiceRequest"></jsonformatter>
                         Sequence: {{sequenceCancel}}
                     </div>
-                    <div ng-hide="!cancelResponded" class="col-md-4">
+                    <div ng-if="cancelResponded" class="col-md-4">
                         Response ({{CancelResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{CancelServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="CancelServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>
@@ -717,16 +670,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
-<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
-<code>    "amount": 123.45,</code>
-<code>    "currencyIsoCode": "EUR",</code>
-<code>    "cashRegisterId": "651169059",</code>
-<code>    "signature": "12345....abc"</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.Purchase.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
                 <table class="table table-hover">
@@ -766,13 +710,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>    
-<code>    "balance": 253.04,</code>
-<code>    "balanceCurrencyISOCode": "EUR",</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.Purchase.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -854,14 +792,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "code": 1,</code>    
-<code>    "message": "Unknown Token, the user has not linked the bracelet to the 
-                    Aircash wallet and is unable to make a transaction until he does so.",</code>
-<code>    "additionalData": null,</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.Purchase.errorResponseExample"></jsonformatter>
             </uib-tab>
 
             <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
@@ -879,18 +810,14 @@
                     </div>
 
                     <br />
-                    <div ng-hide="!generateResponded" class="col-md-4">
+                    <div ng-if="generateResponded" class="col-md-4">
                         Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceGenerate}}
                     </div>
-                    <div ng-hide="!generateResponded" class="col-md-6">
+                    <div ng-if="generateResponded" class="col-md-6">
                         Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceResponse"></jsonformatter>
                         <div>
                             <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
                         </div>
@@ -978,13 +905,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",</code>    
-<code>    "partnerTransactionID": "9059ca5c-675a-48b5-b41a-e04ab5b981ae",</code>
-<code>    "signature": "12345....abc"</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.CancelPurchase.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="200 OK Response" class="nav-item">
                 <table class="table table-hover">
@@ -1007,11 +928,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="200 OK Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "aircashTransactionId": "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",</code>  
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.CancelPurchase.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -1074,14 +991,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="400 Error Response Example" class="nav-item">
-                <pre>
-<code>{</code>
-<code>    "code": 3,</code>    
-<code>    "message": "The transaction does not exist in the Aircash system, the cashier can return 
-                    the funds to the user.",</code>
-<code>    "additionalData": null,</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="cashless.CancelPurchase.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Try it out" class="nav-item">
                 <div class="row">
@@ -1098,18 +1008,14 @@
                     </div>
 
                     <br />
-                    <div ng-hide="!generateResponded" class="col-md-4">
+                    <div ng-if="generateResponded" class="col-md-4">
                         Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceGenerate}}
                     </div>
-                    <div ng-hide="!generateResponded" class="col-md-6">
+                    <div ng-if="generateResponded" class="col-md-6">
                         Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceResponse"></jsonformatter>
                         <div>
                             <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
                         </div>

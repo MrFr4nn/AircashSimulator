@@ -62,3 +62,21 @@ app.component('phoneNumberInput', {
     }
 
 });
+//jsonformatter does not work with ng-hide, replece ng-hide with ng-if
+app.component('jsonformatter', {
+    template: '<div class="jsonFormatter">{{$ctrl.data}}</div>',
+    bindings: {
+        data: '='
+    },
+    controller: function () {
+        $ctrl = this;
+
+        var options = {
+            collapsible: false
+        }
+
+        $(document).ready(function () {
+            $('.jsonFormatter').jsonFormatter(options);
+        });
+    }
+});

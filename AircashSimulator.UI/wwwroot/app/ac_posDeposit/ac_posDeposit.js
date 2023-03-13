@@ -178,4 +178,174 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
     $scope.setPersonalDataDatePartnerUser = function (date) {
         $scope.matchPersonalDataModel.birthDatePartnerUser = date;
     }
+
+    $scope.aircashPoSDeposit = {
+        checkUser: {
+            inputParametersExample: {
+                PartnerID: "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
+                PhoneNumber: "385981234567",
+                PartnerUserID: "12345",
+                Parameters: [
+                    {
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    }
+                ],
+                Signature: "ldzZxe....I8="
+            },
+            outputParametersExample: {
+                first: {
+                    status: 1
+                },
+                second: {
+                    status: 2
+                },
+                third: {
+                    status: 3
+                }
+            }
+        },
+        createPayout: {
+            requestExample: {
+                PartnerID: "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
+                PhoneNumber: "385981234567",
+                PartnerUserID: "12345",
+                Parameters: [
+                    {
+                        Key: "emai",
+                        Value: "user@example.net"
+                    },
+                    {
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    }],
+                Amount: 123.45,
+                CurrencyID: 978,
+                PartnerTransactionID: "123..abc..123",
+                Signature: "CX9v6V....Bw="
+            },
+            responseExample: {
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+            },
+        },
+        checkPlayer: {
+            inputParametersExample: {
+                emailAsIdentifier: {
+                    Parameters: [{
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    },
+                    {
+                        Key: "email",
+                        Value: "user@example.net"
+                    }],
+                    Signature: "c6RDz....Pc="
+                },
+                usernameAsIdentifier: {
+                    Parameters: [{
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    },
+                    {
+                        Key: "username",
+                        Value: "aircash"
+                    }],
+                    Signature: "123...abc"
+                }
+            },
+            outputParametersExample: {
+                depositPossible: {
+                    IsPlayer: true,
+                    Error: null,
+                    Parameters: [
+                        {
+                            Key: "PartnerUserID",
+                            Value: "12345",
+                            Type: "String"
+                        }
+                    ]
+                },
+                depositNotPossible: {
+                    IsPlayer: false,
+                    Error:
+                    {
+                        ErrorCode: 500,
+                        ErrorMessage: "Unable to find user account",
+                    },
+                    Parameters: null
+                }
+            }
+        },
+        createAndConfirmPayment: {
+            inputParametersExample: {
+                TransactionID: "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
+                Amount: 123.45,
+                Parameters: [
+                    {
+                        Key: "email",
+                        Value: "user@example.net"
+                    },
+                    {
+                        Key: "currencyID",
+                        Value: "978"
+                    }
+                ],
+                Signature: "Gng+D6.../4="
+            },
+            outputParametersExample: {
+                successfulTransaction: {
+                    Success: true,
+                    PartnerTransactionID: "ABC...123",
+                    Parameters: [
+                        {
+                            Key: "PartnerUserID",
+                            Value: "12345",
+                            Type: "String"
+                        }
+                    ]
+                },
+                transationWithError: {
+                    Success: false,
+                    Error: {
+                        ErrorCode: 500,
+                        ErrorMessage: "Unable to find user account"
+                    },
+                    Parameters: null
+                }
+
+            }
+        }
+    };
 }]);

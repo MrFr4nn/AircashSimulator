@@ -155,52 +155,14 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}      
-        </pre>
+        <jsonformatter data="aircashC2DPayout.checkUser.inputParametersExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}
+</pre>
+            <jsonformatter data="aircashC2DPayout.checkUser.inputParametersExample"></jsonformatter>
+<pre>
 
     
 Sequence:
@@ -241,27 +203,15 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
     </uib-tab>
     <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
         <pre>
-<code>
-{
-    "status": 1
-}
+    <jsonformatter data="aircashC2DPayout.checkUser.outputParametersExample.first"></jsonformatter>
     or
-{
-    "status": 2
-}
+    <jsonformatter data="aircashC2DPayout.checkUser.outputParametersExample.second"></jsonformatter>
     or
-{
-    "status": 3
-}
+    <jsonformatter data="aircashC2DPayout.checkUser.outputParametersExample.third"></jsonformatter>
     or
-{
-    "status": 4
-}
+    <jsonformatter data="aircashC2DPayout.checkUser.outputParametersExample.forth"></jsonformatter>
     or
-{
-    "status": 5
-}
-</code>
+    <jsonformatter data="aircashC2DPayout.checkUser.outputParametersExample.fifth"></jsonformatter>
         </pre>
     </uib-tab>
     <uib-tab index="checkUser1-tab-5" heading="Error message" classes="nav-item">
@@ -314,20 +264,12 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkUserRequest"></jsonformatter>
                 Sequence: {{checkUserSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkUserResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -467,73 +409,14 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-1" heading="Request parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },
-        {
-            "Key":"LocationID",
-            "Value":"123"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
-
-        </pre>
+        <jsonformatter data="aircashC2DPayout.createPayout.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },
-        {
-            "Key":"LocationID",
-            "Value":"123"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
+</pre>
+            <jsonformatter data="aircashC2DPayout.createPayout.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 Amount=100&CurrencyId=EUR&Parameters=Key=email&Value=user@example.net,Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=PayerBirthDate&Value=1990-01-01,Key=LocationID&Value=123&PartnerID=1b8a6445-d23c-4a3a-acc0-f05abcebb081&PartnerTransactionID=4b4cc84f-445d-4e61-82e4-0a1db3f6b88c&PartnerUserID=12345&PhoneNumber=385981234567
@@ -564,11 +447,7 @@ PZVGM4QwYw1QhcOUXF8JW5H2JMYVRgxqaXh5NL6Fn3AA9/+9km/7xS5lXSW65AGVxbx8do0M5GHxJ9d7
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-4" heading="Response parameters example" classes="nav-item">
-        <pre>
-{
-    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc"
-}
-    </pre>
+        <jsonformatter data="aircashC2DPayout.createPayout.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-5" heading="Error message" classes="nav-item">
         <div class="row">
@@ -649,19 +528,11 @@ PZVGM4QwYw1QhcOUXF8JW5H2JMYVRgxqaXh5NL6Fn3AA9/+9km/7xS5lXSW65AGVxbx8do0M5GHxJ9d7
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-                <code>
-{{createPayoutRequest}}
-    </code>
-</pre>
+                <jsonformatter data="createPayoutRequest"></jsonformatter>
             </div>
             <div class="col-md-3" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{createPayoutResponse}}
-</code>
-</pre>
+                <jsonformatter data="createPayoutResponse"></jsonformatter>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-0.5"></div>
@@ -747,30 +618,20 @@ PZVGM4QwYw1QhcOUXF8JW5H2JMYVRgxqaXh5NL6Fn3AA9/+9km/7xS5lXSW65AGVxbx8do0M5GHxJ9d7
         </table>
     </uib-tab>
     <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "QDyIrReELi..."
-}
-</pre>
+        <jsonformatter data="aircashC2DPayout.checkCode.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "QDyIrReELi..."
-}
-
+</pre>
+            <jsonformatter data="aircashC2DPayout.checkCode.requestExample"></jsonformatter>
+<pre>
 Sequence:
 BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
 
 Signature:
-QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloBMJiFZc9eMrSqmlAP0XxHMmn6OHp+pr9G9jFZZ0bM6AxA1BduGYmIDPl9rGMhNXXUU6RQbWvmDD6N3Digcwf2Vr7qHzNow6rDCXpWCXJXQCXJvF86HTaF5pF/kS/R13PtIl7zn3lcvSTgWguy8DM0zwkumSzrclpo98xv/YIn3irgTiLYDD8Dz2Bh1gIOeEF+XN7OvyPGC/3JQf/P6D10Y4GNaFXHjAoCrPPBD91a8kbdYiirqjMOxiBsE4SpK7GsGsp9258TfggAhFYXF7i/B4beuNilZXzMvWY28iy28b5J/mSfEDSfMRF3EWIK5mkgoN634fjkboRB1UNW69FsZmHr3gpN807uP+o9zGrVEi0yFLua7qnbBWLfQfwvnQMHFebBUGcXqNIIjQ1ksqs17Hxxosr3GrxqHXx8EkJysp679wdAs7AmY2Z/HbhbPO1JufCluMeqYrVz3ue3F6Kru5Nw+tLuZCuJJ7YsEgHKC5QhCao40CKbceAj3BFFlq5rP6nHg8wkfFq14oSsnAZK8/W109x8GN1z9fhxzhbZKfVL7v+IigmOPGcBaAsf9Bmpo8uEAP2HcdzecWQ0xWUw/M2N4tc=</pre>
+QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloBMJiFZc9eMrSqmlAP0XxHMmn6OHp+pr9G9jFZZ0bM6AxA1BduGYmIDPl9rGMhNXXUU6RQbWvmDD6N3Digcwf2Vr7qHzNow6rDCXpWCXJXQCXJvF86HTaF5pF/kS/R13PtIl7zn3lcvSTgWguy8DM0zwkumSzrclpo98xv/YIn3irgTiLYDD8Dz2Bh1gIOeEF+XN7OvyPGC/3JQf/P6D10Y4GNaFXHjAoCrPPBD91a8kbdYiirqjMOxiBsE4SpK7GsGsp9258TfggAhFYXF7i/B4beuNilZXzMvWY28iy28b5J/mSfEDSfMRF3EWIK5mkgoN634fjkboRB1UNW69FsZmHr3gpN807uP+o9zGrVEi0yFLua7qnbBWLfQfwvnQMHFebBUGcXqNIIjQ1ksqs17Hxxosr3GrxqHXx8EkJysp679wdAs7AmY2Z/HbhbPO1JufCluMeqYrVz3ue3F6Kru5Nw+tLuZCuJJ7YsEgHKC5QhCao40CKbceAj3BFFlq5rP6nHg8wkfFq14oSsnAZK8/W109x8GN1z9fhxzhbZKfVL7v+IigmOPGcBaAsf9Bmpo8uEAP2HcdzecWQ0xWUw/M2N4tc=
+</pre>
     </uib-tab>
     <uib-tab index="CheckCode-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
@@ -800,12 +661,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
         </table>
     </uib-tab>
     <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
-        <pre>
-{
-    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "Amount": 2,000.00
-}
-</pre>
+        <jsonformatter data="aircashC2DPayout.checkCode.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
@@ -865,20 +721,12 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             </div>
             <div class="col-md-4" ng-if="checkCodeServiceResponse">
                 Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
                 Sequence: {{checkCodeSequence}}<br />
             </div>
             <div class="col-md-4" ng-if="checkCodeServiceResponse">
                 Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -968,27 +816,14 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
         </table>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
-    "locationID": "123",
-    "signature": "Iz+gMcrdNA..."
-}
-</pre>
+        <jsonformatter data="aircashC2DPayout.confirmTransaction.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
-    "locationID": "123",
-    "signature": "Iz+gMcrdNA..."
-}
-
+</pre>
+            <jsonformatter data="aircashC2DPayout.confirmTransaction.requestExample"></jsonformatter>
+<pre>
 Sequence:
 BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=11888f0c-7923-42db-8513-5c1f32cc83e0
 
@@ -1032,13 +867,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
         </table>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-4" heading="Response example" classes="nav-item">
-        <pre>
-{
-    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "Amount": 2,000.00,
-    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-}
-</pre>
+        <jsonformatter data="aircashC2DPayout.confirmTransaction.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
@@ -1104,20 +933,12 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
             </div>
             <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
                 Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{confirmTransactionServiceRequest}}
-</code>
-</pre>
+                <jsonformatter data="confirmTransactionServiceRequest"></jsonformatter>
                 Sequence: {{confirmTransactionSequence}}<br />
             </div>
             <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
                 Response ({{confirmTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{confirmTransactionServiceResponse}}
-</code>
-</pre>
+                <jsonformatter data="confirmTransactionServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -1204,25 +1025,14 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
-    "aircashTransactionID": null,
-    "signature": "BBjas91N8B..."
-}      
-        </pre>
+        <jsonformatter data="aircashC2DPayout.checkTransactionStatus.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
-    "aircashTransactionID": null,
-    "signature": "BBjas91N8B..."
-}
-
+</pre>
+            <jsonformatter data="aircashC2DPayout.checkTransactionStatus.requestExample"></jsonformatter>
+<pre>
 Sequence:
 AircashTransactionID=&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=45c38393-274b-4761-902e-23db30736563
 
@@ -1262,12 +1072,7 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-4" heading="200 OK Response example" classes="nav-item">
-        <pre>
-{
-    "status": 2,
-    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc "
-}
-        </pre>
+        <jsonformatter data="aircashC2DPayout.checkTransactionStatus.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Error response messages" classes="nav-item">
         <table class="table table-hover">
@@ -1316,11 +1121,7 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-6" heading="Error response example" classes="nav-item">
-        <pre>
-{
-    "message": "An error has occurred."
-}
-        </pre>
+        <jsonformatter data="aircashC2DPayout.checkTransactionStatus.errorResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-7" heading="Try it out" classes="nav-item" style="display: none;">
         <div class="row">
@@ -1361,20 +1162,12 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkTransactionStatusServiceResponse">
                 Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTransactionStatusRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkTransactionStatusRequest"></jsonformatter>
                 Sequence: {{checkTransactionStatusSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkTransactionStatusServiceResponse">
                 Response ({{checkTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTransactionStatusResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkTransactionStatusResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>

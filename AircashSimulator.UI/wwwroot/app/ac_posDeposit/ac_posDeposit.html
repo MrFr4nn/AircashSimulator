@@ -234,53 +234,14 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}      
-        </pre>
+        <jsonformatter data="aircashPoSDeposit.checkUser.inputParametersExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}
-
+</pre>
+            <jsonformatter data="aircashPoSDeposit.checkUser.inputParametersExample"></jsonformatter>
+<pre>
     
 Sequence:
 Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=496fbe8e-ca5a-42df-8999-cdde0c14ae3a&PartnerUserID=12345&PhoneNumber=385981234567
@@ -318,21 +279,17 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
         </div>
     </uib-tab>
     <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
-        <pre>
-<code>
-{
-    "status": 1
-}
+        
+            <jsonformatter data="aircashPoSDeposit.checkUser.outputParametersExample.first"></jsonformatter>
+<pre>
     or
-{
-    "status": 2
-}
+</pre>
+            <jsonformatter data="aircashPoSDeposit.checkUser.outputParametersExample.second"></jsonformatter>
+<pre>
     or
-{
-    "status": 3
-}
-</code>
-        </pre>
+</pre>
+            <jsonformatter data="aircashPoSDeposit.checkUser.outputParametersExample.third"></jsonformatter>
+        
     </uib-tab>
     <uib-tab index="checkUser1-tab-5" heading="Error message" classes="nav-item">
         <table class="table table-hover">
@@ -384,20 +341,12 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkUserRequest"></jsonformatter>
                 Sequence: {{checkUserSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkUserResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -520,65 +469,14 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-1" heading="Request parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
-
-        </pre>
+        <jsonformatter data="aircashPoSDeposit.createPayout.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
+</pre>
+            <jsonformatter data="aircashPoSDeposit.createPayout.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 Amount=123.45&CurrencyID=978&Parameters=Key=email&Value=user@example.net&Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=1b8a6445-d23c-4a3a-acc0-f05abcebb081&PartnerTransactionID=123..abc..123&PartnerUserID=12345&PhoneNumber=385981234567
@@ -609,11 +507,7 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-4" heading="Response parameters example" classes="nav-item">
-        <pre>
-{
-    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc"
-}
-    </pre>
+        <jsonformatter data="aircashPoSDeposit.createPayout.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-5" heading="Error message" classes="nav-item">
         <div class="row">
@@ -690,19 +584,11 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-     <code>
-{{createPayoutRequest}}
-    </code>
-</pre>
+                <jsonformatter data="createPayoutRequest"></jsonformatter>
             </div>
             <div class="col-md-3" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{createPayoutResponse}}
-</code>
-</pre>
+                <jsonformatter data="createPayoutResponse"></jsonformatter>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-0.5"></div>
@@ -773,77 +659,20 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
         <div class="row">
             <div class="col-md-6">
                 <h5>Email as identifier</h5>
-                <pre>
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }],
-  "Signature": "c6RDz....Pc="
-}      
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.inputParametersExample.emailAsIdentifier"></jsonformatter>
             </div>
             <div class="col-md-6">
                 <h5>Username as identifier</h5>
-                <pre>
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "username",
-            "Value": "aircash"
-        }],
-  "Signature": "123...abc"
-}      
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.inputParametersExample.usernameAsIdentifier"></jsonformatter>
             </div>
         </div>
     </uib-tab>
     <uib-tab index="CheckPlayer-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }],
-  "Signature": "c6RDz....Pc="
-}
-
+</pre>
+        <jsonformatter data="aircashPoSDeposit.checkPlayer.inputParametersExample.emailAsIdentifier"></jsonformatter>
+<pre>
     
 Sequence:
 Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=email&Value=user@example.net<br />
@@ -935,33 +764,11 @@ c6RDzVTWgWwmdOloPtzT0fO9G5xYUkUfNGlyubACYpCyTYNhJeiKK0ieapy9ATV/lYRQ5M3Ek21gegF6
         <div class="row">
             <div class="col-md-6">
                 <h5>Player found, deposit possible</h5>
-                <pre>
-{
-    "IsPlayer": true,
-    "Error": null,
-    "Parameters": [
-    {
-        "Key": "PartnerUserID",
-        "Value": "12345",
-        "Type": "String"
-    }
-  ]
-}
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.outputParametersExample.depositPossible"></jsonformatter>
             </div>
             <div class="col-md-6">
                 <h5>Deposit not possible</h5>
-                <pre>
-{
-    "IsPlayer": False,
-    "Error": 
-    {
-        "ErrorCode": 500,
-        "ErrorMessage": "Unable to find user account",
-    }
-    "Parameters": null
-}
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.outputParametersExample.depositNotPossible"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -1039,43 +846,14 @@ c6RDzVTWgWwmdOloPtzT0fO9G5xYUkUfNGlyubACYpCyTYNhJeiKK0ieapy9ATV/lYRQ5M3Ek21gegF6
         </table>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment-tab-1" heading="Input parameters example" classes="nav-item">
-        <pre>
-{
-    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "Amount": 123.45,
-    "Parameters": [
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        },
-        {
-            "Key": "currencyID",
-            "Value": "978"        
-        }
-    ],
-    "Signature": "Gng+D6.../4="
-}      
-        </pre>
+        <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.inputParametersExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "Amount": 123.45,
-    "Parameters": [
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        },
-        {
-            "Key": "currencyID",
-            "Value": "978"        
-        }
-    ],
-    "Signature": "Gng+D6.../4="
-}
-
+</pre>
+        <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.inputParametersExample"></jsonformatter>
+<pre>
 
 Sequence:
 Amount=123.45&Parameters=Key=username&Value=aircash&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
@@ -1158,37 +936,11 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
         <div class="row">
             <div class="col-md-6">
                 <h5>Successful transaction</h5>
-                <pre>
-<code>
-{
-    "Success": true,
-    "PartnerTransactionID": "ABC...123",
-    "Parameters": [
-        {
-            "Key": "PartnerUserID",
-            "Value": "12345",
-            "Type": "String"
-        }
-    ]
-}
-</code>
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.outputParametersExample.successfulTransaction"></jsonformatter>
             </div>
             <div class="col-md-6">
                 <h5>Transation with error</h5>
-                <pre>
-                <code>
-                        {
-                        "Success ": false,
-                        "Error": {
-                        "ErrorCode": 500,
-                        "ErrorMessage": "Unable to find user account"
-                        },
-                        "Parameters": null
-                        }
-
-                    </code>
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.outputParametersExample.transationWithError"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -1242,12 +994,8 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             </div>
             <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
                 Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="matchPersonalDataResponse"></jsonformatter>
                 <br />
-                <pre>
-<code>
-{{matchPersonalDataResponse}}
-</code>
-                </pre>
             </div>
         </div>
     </uib-tab>
