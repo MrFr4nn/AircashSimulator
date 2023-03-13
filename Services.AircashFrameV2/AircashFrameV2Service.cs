@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Services.AircashFrameV2;
+using System.Runtime.CompilerServices;
 
 namespace AircashFrame
 {
@@ -156,7 +157,7 @@ namespace AircashFrame
             return responseToController;
         }
 
-        public async void NotificationCashierFrameV2(string transactionId)
+        public async Task NotificationCashierFrameV2(string transactionId)
         {
             var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == new Guid(transactionId)).FirstOrDefault();
             if (preparedAircashFrameTransaction.TransactionSatus == AcFramePreparedTransactionStatusEnum.Confirmed)

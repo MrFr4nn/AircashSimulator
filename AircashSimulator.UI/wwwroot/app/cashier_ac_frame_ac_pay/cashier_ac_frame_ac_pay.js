@@ -21,12 +21,14 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
             onCancel: onCancel
         });
 
-        function initiateAcFrame(amount, acFrameOption) {
+        function initiateAcFrame(amount, payType, payMethod, acFrameOption) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
                 data: {                    
                     amount: amount,
+                    payType: payType,
+                    payMethod: payMethod,
                     acFrameOption: acFrameOption                                      
                 }
             });
@@ -57,7 +59,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
             $scope.createCashierAcFrameAcPayServiceBusy = false;            
             $scope.initiateAcFrame = function () {
                 $scope.createCashierAcFrameAcPayServiceBusy = true;
-                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.selectedAcFrameOption.value)
+                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, 0, 2, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    
                         console.log(response);
                         $rootScope.showGritter("Success");

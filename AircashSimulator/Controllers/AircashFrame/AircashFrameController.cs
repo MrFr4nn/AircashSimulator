@@ -74,8 +74,8 @@ namespace AircashSimulator.Controllers.AircashFrame
                 PartnerId = new Guid(partnerId),
                 UserId = new Guid(userId),
                 Amount = initiateRequest.Amount,
-                PayType = PayTypeEnum.Payment,
-                PayMethod = PayMethodEnum.AcPay
+                PayType = initiateRequest.PayType,
+                PayMethod = initiateRequest.PayMethod
             };
 
             if (initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.WindowCheckout)
@@ -103,7 +103,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         [HttpGet]
         public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
         {
-            var response = await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
+            await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
             return Ok();            
         }
 
