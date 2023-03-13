@@ -102,4 +102,54 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 console.log("error");
             });
     }
+
+    $scope.aBonDeposit = {
+        validateCoupon: {
+            requestExample: {
+                couponCode: "5460446045144493",
+                providerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                signature: "BPz2mGu8UG..."
+            },
+            responseExample: {
+                couponValue: 50.0,
+                isValid: true,
+                ISOCurrency: "HRK",
+                providerTransactionId: "",
+                salePartnerId: "31dce332-1d55-4459-b166-d8d33a78226c",
+                isoCountryCode: null,
+                originalISOCurrency: "HRK",
+                originalCouponValue: 50.0
+            },
+            errorResponseExample: {
+                code: 1,
+                message: "Invalid ProviderId",
+                additionalData: null
+            }
+        },
+        confirmTransaction: {
+            requestExample: {
+                couponCode: "5460446045144493",
+                providerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                providerTransactionId: "d711c31b-9e20-48dd-a749-91778627b569",
+                userId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                signature: "CVrMFUqDzg..."
+            },
+            responseExample: {
+                couponValue: 50.0,
+                ISOCurrency: "HRK",
+                providerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+            },
+            errorResponseExample: {
+                code: 4,
+                message: "Coupon Already Used",
+                additionalData: {
+                    couponValue: 50.0,
+                    ISOCurrency: "HRK",
+                    providerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+                }
+            }
+        }
+    };
+
+
 }]);

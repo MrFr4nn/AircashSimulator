@@ -228,16 +228,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="GenerateTransaction-tab-1" heading="Request example" class="nav-item">
-<pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "amount":123.45,
-    "currencyID": 191,
-    "partnerTransactionID": "92597e93-6050-4478-85d4-1956dea450ff",
-    "description": "Invoice 52",
-    "signature": "12345....abc"
-}
-</pre>
+                <jsonformatter data="inAppPay.generateTransaction.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="GenerateTransaction-tab-2" heading="Response" class="nav-item">
                 <table class="table table-hover">
@@ -262,11 +253,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="GenerateTransaction-tab-3" heading="Response example" class="nav-item">
-<pre>
-{
-"url": " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "
-}
-</pre>
+                <jsonformatter data="inAppPay.generateTransaction.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="GenerateTransaction-tab-4" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -426,13 +413,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="GenerateTransaction-tab-5" heading="400 Error Response Example" class="nav-item">
-                <pre>
-{
-    "code": 6,    
-    "message": "Transaction exist in Aircash system but authorization time has expired",
-    "additionalData": null,
-}
-</pre>
+                <jsonformatter data="inAppPay.generateTransaction.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="GenerateTransaction-tab-6" heading="Try it out" class="nav-item">
                 <div class="row">
@@ -453,18 +434,14 @@
                     </div>
 
                     <br />
-                    <div ng-hide="!generateResponded" class="col-md-4">
+                    <div ng-if="generateResponded" class="col-md-4">
                         Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceGenerate}}
                     </div>
-                    <div ng-hide="!generateResponded" class="col-md-6">
+                    <div ng-if="generateResponded" class="col-md-6">
                         Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{GenerateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="GenerateServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>
@@ -575,16 +552,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "amount":123.45,
-    "currencyID": 191,
-    "aircashTransactionID": "Aircash transaction id,"
-    "partnerTransactionID": "92597e93-6050-4478-85d4-1956dea450ff",
-    "user": user 232,
-    "signature": "12345....abc"
-}
-</pre>
+                <jsonformatter data="inAppPay.confirmTransaction.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="ConfirmTransaction-tab-2" heading="Response" classes="nav-item">
                 <p>
@@ -668,13 +636,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "92597e93-6050-4478-85d4-1956dea450ff",
-    "signature": "12345....abc"
-}
-</pre>
+                <jsonformatter data="inAppPay.checkTransactionStatus.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-2" heading="Response" classes="nav-item">
                 <table class="table table-hover">
@@ -739,19 +701,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-3" heading="Response example" classes="nav-item">
-                <pre>
-
-                <pre>
-{
-    "amount":123.45,
-    "currencyID": 191,
-    "aircashTransactionID": "92597e93-6050-4478-85d4-1956dea450ff",
-    "user": "user 232",
-    "signature": "12345....abc"
-}
-</pre>
-
-        </pre>
+                <jsonformatter data="inAppPay.checkTransactionStatus.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-4" heading="400 Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -911,13 +861,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-5" heading="400 Error Response Example" class="nav-item">
-                <pre>
-{
-    "code": 6,    
-    "message": "Transaction exist in Aircash system but authorization time has expired",
-    "additionalData": null,
-}
-</pre>
+                <jsonformatter data="inAppPay.checkTransactionStatus.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="CheckTransactionStatus-tab-6" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -958,20 +902,12 @@
                     <div class="col-md-0.5"></div>
                     <div class="col-md-4" ng-if="checkTransactionStatusServiceResponse">
                         Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTransactionStatusRequest}}
-</code>
-</pre>
+                        <jsonformatter data="checkTransactionStatusRequest"></jsonformatter>
                         Sequence: {{checkTransactionStatusSequence}}<br />
                     </div>
                     <div class="col-md-3" ng-if="checkTransactionStatusServiceResponse">
                         Response ({{checkTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTransactionStatusResponse}}
-</code>
-</pre>
+                        <jsonformatter data="checkTransactionStatusResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>
@@ -1055,15 +991,7 @@
                 </table>
             </uib-tab>
             <uib-tab index="refund-tab-1" heading="Request example" classes="nav-item">
-<pre>
-{
-    "PartnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "PartnerTransactionID": "67cef954-7372-4a12-9250-98a42bcf0317",
-    "RefundTransactionID": "9a90fcdc-572d-44b3-904d-1ff0629c7046",
-    "Amount": "100",
-    "Signature": "g/iZ .... KgY/6o="
-}
-</pre>
+                <jsonformatter data="inAppPay.refund.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="refund-tab-2" heading="HTTP 200 OK output parameters" classes="nav-item">
                 <table class="table table-hover">
@@ -1189,18 +1117,14 @@
                     </div>
 
                     <br />
-                    <div ng-hide="!refundResponded" class="col-md-4">
+                    <div ng-if="refundResponded" class="col-md-4">
                         Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-                        <code>{{RefundServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="refundServiceRequest"></jsonformatter>
                         Sequence: {{sequenceRefund}}
                     </div>
-                    <div ng-hide="!refundResponded" class="col-md-4">
+                    <div ng-if="refundResponded" class="col-md-4">
                         Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{RefundServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="refundServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>
