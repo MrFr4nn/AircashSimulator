@@ -5,7 +5,7 @@ using System.Text;
 namespace AircashSimulator.Configuration
 {
     public class AircashConfiguration
-    {
+    {        
         public string RefundTransactionEndpoint { get; set; }
         public string M3StagingBaseUrl { get; set; }
         public string M3DevBaseUrl { get; set; }
@@ -38,6 +38,9 @@ namespace AircashSimulator.Configuration
         public string AircashCheckUserV4Endpoint { get; set; }
         public string AircashCreatePayoutV4Endpoint { get; set;  }
         public string MatchCompareIdentity { get; set;  }
+        public string AcFrameOriginUrl { get; set; }
+        public string AcFrameApiUrl { get; set; }
+
         public string AircashPayGenerateTransaction { get; set; }
     }
 }
