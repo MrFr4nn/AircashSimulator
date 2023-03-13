@@ -1,4 +1,5 @@
-﻿using AircashSimulator.Extensions;
+﻿using AircashSimulator.Controllers.AircashPayment;
+using AircashSimulator.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Services.AircashPaymentAndPayout;
@@ -15,6 +16,9 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
     {
         private IAircashPaymentAndPayoutService AircashPaymentAndPayoutService;
         private UserContext UserContext;
+
+        private const string PARTNER_ID = "8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF";
+        private const string USER_ID = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
         public AircashPaymentAndPayoutController(IAircashPaymentAndPayoutService aircashPaymentAndPayoutService, UserContext userContext)
         {
             AircashPaymentAndPayoutService = aircashPaymentAndPayoutService;
@@ -37,6 +41,22 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
             var partnerId = UserContext.GetPartnerId(User);
             var userId = UserContext.GetUserId(User);
             var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, partnerId, userId);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CashierCheckCode(CheckCodeRequest checkCodeRequest)
+        {
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, new Guid(PARTNER_ID));
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
+        {
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, new Guid(PARTNER_ID), new Guid(USER_ID));
             return Ok(response);
         }
 
