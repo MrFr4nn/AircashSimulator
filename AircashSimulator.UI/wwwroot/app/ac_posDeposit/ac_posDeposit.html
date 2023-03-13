@@ -1,8 +1,8 @@
 ﻿<h1>Cash to digital</h1>
 <h2>The Deposit initiated through the Merchant point of sale</h2>
 <p style="text-align:justify">
-    The Deposit process will start on the Merchant franchise location where the user will need to present QR code alongside with money/funds that the user would like to deposit to his Merchant account:
-</p>
+    The Deposit process will start on the Merchant location where the user will need to present his account data along with the personal information. 
+
 <p style="text-align:justify">
     The Merchant system will generate a Deposit request with all required information to the Aircash system.
     <ul>
@@ -15,6 +15,10 @@
         </li>
     </ul>
 </p>
+<b>To download diagram flow click here:</b>
+<a href="../../images/c2d.drawio.svg" download rel="noopener noreferrer">
+    <button class="btn"><i class="fa fa-download"></i> Diagram flow</button>
+</a>
 <p style="text-align:justify">
     If the transaction is initiated on the PoS, the following API requests need to be implemented
     <ol>
@@ -36,11 +40,10 @@
     <h4>Initiating transaction on the PoS</h4>
     <ol>
         <li>
-            User selects “cash deposit” within the SW application
+            User on the PoS requests to deposit amount into his online account.
             <ol type="i">
-                <li>The customer opens his SW account and goes to deposit, enters the amount he wants to deposit, and method SW Cash</li>
                 <li>
-                    SW backend will check if the Aircash user exists in the Aircash system and whether the data is valid. To do so, Sportwetten will need to share the following information:
+                    Merchant backend will check if the Aircash user exists in the Aircash system and whether the data is valid. To do so, Aircash system will need the following information:
                     <table class="table  table-active col-md-8">
                         <tr>
                             <th>Parameter</th>
@@ -48,19 +51,19 @@
                         </tr>
                         <tr>
                             <td>First name</td>
-                            <td>personal data validation between Sportwetten and Aircash</td>
+                            <td>personal data validation between Merchant and Aircash</td>
                         </tr>
                         <tr>
                             <td>Last name</td>
-                            <td>personal data validation between Sportwetten and Aircash</td>
+                            <td>personal data validation between Merchant and Aircash</td>
                         </tr>
                         <tr>
                             <td>Birth date</td>
-                            <td>personal data validation between Sportwetten and Aircash</td>
+                            <td>personal data validation between Merchant and Aircash</td>
                         </tr>
                         <tr>
                             <td>Username</td>
-                            <td>account identifier in the deposit requests sent from Aircash to Sportwetten</td>
+                            <td>account identifier in the deposit requests sent from Aircash to Merchant</td>
                         </tr>
                         <tr>
                             <td>Phone number</td>
@@ -73,15 +76,15 @@
                 </li>
                 <li>
                     Using the account data (first name, last name, birth date) and the phone number Aircash system will validate the Aircash user and return the confirmation
-                    <ol type="i"><li>if the response is not valid (Aircash user with a provided phone number does not exist, personal data is not valid….) a proper message should be displayed to the SW user</li></ol>
+                    <ol type="i"><li>if the response is not valid (Aircash user with a provided phone number does not exist, personal data is not valid….) a proper message should be displayed to the user</li></ol>
                 </li>
                 <li>
-                    If the user exists, SW mobile application will prepare a QR code containing mandatory fields for further steps: Amount, SW User ID, First Name, Last Name, Phone Number
+                    If the user exists, and the personal data matches, merchant system can proceed with sending money to the Aircash system.
                 </li>
             </ol>
         </li>
         <li>
-            The cashier will scan the QR code and request physical money from the user
+            The cashier (sales person) requests physical money from the user
             <ol type="i">
                 <li>The cashier needs to confirm receiving the physical money</li>
                 <li>in this step, a transaction is initiated in the cashier system</li>
@@ -107,7 +110,7 @@
         </ol>
         <br />
         <h4>Accepting the payment on the Aircash application</h4>
-        <ol start="6"><li>Aircash will send the notification to the user asking for confirmation to deposit to his Sportwetten account</li></ol>
+        <ol start="6"><li>Aircash will send the notification to the user asking for confirmation to deposit to his online account</li></ol>
         <br />
         <h4>Accepting the payment on the merchant system</h4>
         <ol start="7">
@@ -131,23 +134,7 @@
         </li>
     </ol>
 </p>
-<hr />
-<h2>The Deposit initiated through Aircash Wallet</h2>
-<p>The Deposit onto Merchant's user account can also be made directly from the Aircash application:</p>
-<ul>
-    <li>User enters the Aircash application.</li>
-    <li>Within the Aircash app Home screen, the user selects the Marketplace option</li>
-    <li>In the Marketplace section, the user is able to deposit funds in one tap by selecting the Merchants logo. The user is able to fill in the deposit amount and process payments towards Merchant’s online channels (player account).</li>
-    <li>The funds are visible instantly on the player account and can be used instantly on Merchant online channels.</li>
-</ul>
-<p>If the user is making a deposit to his Sportwetten account directly from the Aircash marketplace, then the process consists of the following REST API calls</p>
-<ol>
-    <li>CheckPlayer (Aircash -> Sportwetten)</li>
-    <li>CreateAndConfirmPayment (Aircash -> Sportwetten)</li>
-</ol>
-<p>
-    The flow is the same one as in the third phase of the previous chapter (Accepting the payment on the merchant system)
-</p>
+
 <hr />
 <h2>Methods called by the partner system on Aircash system</h2>
 <p style="text-align:justify">
@@ -247,53 +234,14 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}      
-        </pre>
+        <jsonformatter data="aircashPoSDeposit.checkUser.inputParametersExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }
-    ],
-    "Signature": "ldzZxe....I8="
-}
-
+</pre>
+            <jsonformatter data="aircashPoSDeposit.checkUser.inputParametersExample"></jsonformatter>
+<pre>
     
 Sequence:
 Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=496fbe8e-ca5a-42df-8999-cdde0c14ae3a&PartnerUserID=12345&PhoneNumber=385981234567
@@ -331,21 +279,17 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
         </div>
     </uib-tab>
     <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
-        <pre>
-<code>
-{
-    "status": 1
-}
+        
+            <jsonformatter data="aircashPoSDeposit.checkUser.outputParametersExample.first"></jsonformatter>
+<pre>
     or
-{
-    "status": 2
-}
+</pre>
+            <jsonformatter data="aircashPoSDeposit.checkUser.outputParametersExample.second"></jsonformatter>
+<pre>
     or
-{
-    "status": 3
-}
-</code>
-        </pre>
+</pre>
+            <jsonformatter data="aircashPoSDeposit.checkUser.outputParametersExample.third"></jsonformatter>
+        
     </uib-tab>
     <uib-tab index="checkUser1-tab-5" heading="Error message" classes="nav-item">
         <table class="table table-hover">
@@ -397,20 +341,12 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkUserRequest"></jsonformatter>
                 Sequence: {{checkUserSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkUserServiceResponse && !checkUserServiceBusy">
                 Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkUserResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -533,65 +469,14 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-1" heading="Request parameters example" classes="nav-item">
-        <pre>
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
-
-        </pre>
+        <jsonformatter data="aircashPoSDeposit.createPayout.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "PartnerID": "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-    "PhoneNumber": "385981234567",
-    "PartnerUserID": "12345",
-    "Parameters":[
-        {
-            "Key":"emai",
-            "Value":"user@example.net"
-        },
-        {
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        }],
-    "Amount": 123.45,
-    "CurrencyID": 978,
-    "PartnerTransactionID": "123..abc..123",
-    "Signature": "CX9v6V....Bw="
-}
+</pre>
+            <jsonformatter data="aircashPoSDeposit.createPayout.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 Amount=123.45&CurrencyID=978&Parameters=Key=email&Value=user@example.net&Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=1b8a6445-d23c-4a3a-acc0-f05abcebb081&PartnerTransactionID=123..abc..123&PartnerUserID=12345&PhoneNumber=385981234567
@@ -622,11 +507,7 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-4" heading="Response parameters example" classes="nav-item">
-        <pre>
-{
-    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc"
-}
-    </pre>
+        <jsonformatter data="aircashPoSDeposit.createPayout.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-5" heading="Error message" classes="nav-item">
         <div class="row">
@@ -703,19 +584,11 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-     <code>
-{{createPayoutRequest}}
-    </code>
-</pre>
+                <jsonformatter data="createPayoutRequest"></jsonformatter>
             </div>
             <div class="col-md-3" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy">
                 Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{createPayoutResponse}}
-</code>
-</pre>
+                <jsonformatter data="createPayoutResponse"></jsonformatter>
             </div>
             <div class="col-md-4"></div>
             <div class="col-md-0.5"></div>
@@ -786,77 +659,20 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
         <div class="row">
             <div class="col-md-6">
                 <h5>Email as identifier</h5>
-                <pre>
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }],
-  "Signature": "c6RDz....Pc="
-}      
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.inputParametersExample.emailAsIdentifier"></jsonformatter>
             </div>
             <div class="col-md-6">
                 <h5>Username as identifier</h5>
-                <pre>
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "username",
-            "Value": "aircash"
-        }],
-  "Signature": "123...abc"
-}      
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.inputParametersExample.usernameAsIdentifier"></jsonformatter>
             </div>
         </div>
     </uib-tab>
     <uib-tab index="CheckPlayer-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-  "Parameters": [{
-            "Key":"PayerFirstName",
-            "Value":"John"
-        },
-        {
-            "Key":"PayerLastName",
-            "Value":"Doe"
-        },
-        {
-            "Key":"PayerBirthDate",
-            "Value":"1990-01-01"
-        },    
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        }],
-  "Signature": "c6RDz....Pc="
-}
-
+</pre>
+        <jsonformatter data="aircashPoSDeposit.checkPlayer.inputParametersExample.emailAsIdentifier"></jsonformatter>
+<pre>
     
 Sequence:
 Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=email&Value=user@example.net<br />
@@ -948,33 +764,11 @@ c6RDzVTWgWwmdOloPtzT0fO9G5xYUkUfNGlyubACYpCyTYNhJeiKK0ieapy9ATV/lYRQ5M3Ek21gegF6
         <div class="row">
             <div class="col-md-6">
                 <h5>Player found, deposit possible</h5>
-                <pre>
-{
-    "IsPlayer": true,
-    "Error": null,
-    "Parameters": [
-    {
-        "Key": "PartnerUserID",
-        "Value": "12345",
-        "Type": "String"
-    }
-  ]
-}
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.outputParametersExample.depositPossible"></jsonformatter>
             </div>
             <div class="col-md-6">
                 <h5>Deposit not possible</h5>
-                <pre>
-{
-    "IsPlayer": False,
-    "Error": 
-    {
-        "ErrorCode": 500,
-        "ErrorMessage": "Unable to find user account",
-    }
-    "Parameters": null
-}
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.checkPlayer.outputParametersExample.depositNotPossible"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -1052,43 +846,14 @@ c6RDzVTWgWwmdOloPtzT0fO9G5xYUkUfNGlyubACYpCyTYNhJeiKK0ieapy9ATV/lYRQ5M3Ek21gegF6
         </table>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment-tab-1" heading="Input parameters example" classes="nav-item">
-        <pre>
-{
-    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "Amount": 123.45,
-    "Parameters": [
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        },
-        {
-            "Key": "currencyID",
-            "Value": "978"        
-        }
-    ],
-    "Signature": "Gng+D6.../4="
-}      
-        </pre>
+        <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.inputParametersExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "TransactionID": "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-    "Amount": 123.45,
-    "Parameters": [
-        {
-            "Key": "email",
-            "Value": "user@example.net"
-        },
-        {
-            "Key": "currencyID",
-            "Value": "978"        
-        }
-    ],
-    "Signature": "Gng+D6.../4="
-}
-
+</pre>
+        <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.inputParametersExample"></jsonformatter>
+<pre>
 
 Sequence:
 Amount=123.45&Parameters=Key=username&Value=aircash&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
@@ -1171,37 +936,11 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
         <div class="row">
             <div class="col-md-6">
                 <h5>Successful transaction</h5>
-                <pre>
-<code>
-{
-    "Success": true,
-    "PartnerTransactionID": "ABC...123",
-    "Parameters": [
-        {
-            "Key": "PartnerUserID",
-            "Value": "12345",
-            "Type": "String"
-        }
-    ]
-}
-</code>
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.outputParametersExample.successfulTransaction"></jsonformatter>
             </div>
             <div class="col-md-6">
                 <h5>Transation with error</h5>
-                <pre>
-                <code>
-                        {
-                        "Success ": false,
-                        "Error": {
-                        "ErrorCode": 500,
-                        "ErrorMessage": "Unable to find user account"
-                        },
-                        "Parameters": null
-                        }
-
-                    </code>
-        </pre>
+                <jsonformatter data="aircashPoSDeposit.createAndConfirmPayment.outputParametersExample.transationWithError"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -1255,12 +994,8 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             </div>
             <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
                 Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="matchPersonalDataResponse"></jsonformatter>
                 <br />
-                <pre>
-<code>
-{{matchPersonalDataResponse}}
-</code>
-                </pre>
             </div>
         </div>
     </uib-tab>

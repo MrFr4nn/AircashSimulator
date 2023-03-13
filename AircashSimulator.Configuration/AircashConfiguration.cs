@@ -41,5 +41,6 @@ namespace AircashSimulator.Configuration
         public string AcFrameOriginUrl { get; set; }
         public string AcFrameApiUrl { get; set; }
 
+        public string AircashPayGenerateTransaction { get; set; }
     }
 }
