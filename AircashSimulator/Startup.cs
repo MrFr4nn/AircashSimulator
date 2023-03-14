@@ -33,6 +33,8 @@ using Services.MatchService;
 using AircashSimulator.Hubs;
 using Services.AircashPayStaticCode;
 using Services.AircashPayment;
+using Services.AircashPayoutV2;
+using Services.AircashInAppPay;
 
 namespace AircashSimulator
 {
@@ -93,6 +95,7 @@ namespace AircashSimulator
             services.AddTransient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<IAuthenticationService, AuthenticationService>();
             services.AddTransient<IAircashPayoutService, AircashPayoutService>();
+            services.AddTransient<IAircashPayoutV2Service, AircashPayoutV2Service>();
             services.AddTransient<IAircashPaymentAndPayoutService, AircashPaymentAndPayoutService>();
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<IAircashPayStaticCodeService, AircashPayStaticCodeService>(); 
@@ -103,6 +106,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashFrameV2Service, AircashFrameV2Service>();
             services.AddTransient<IMatchService, MatchService>();
             services.AddTransient<IAircashPaymentService, AircashPaymentService>();
+            services.AddTransient<IAircashInAppPayService, AircashInAppPayService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();

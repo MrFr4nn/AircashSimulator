@@ -8,6 +8,7 @@
     <ProjectReference Include="..\AircashSimulator.Extensions\AircashSimulator.Extensions.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj" />
+    <ProjectReference Include="..\Services.User\Services.User.csproj" />
   </ItemGroup>
 
 </Project>

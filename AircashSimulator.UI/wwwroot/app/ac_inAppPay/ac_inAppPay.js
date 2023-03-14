@@ -16,6 +16,8 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
     return ({
         generateTransaction: generateTransaction,
         cancelTransaction: cancelTransaction,
+        refundTransaction: refundTransaction,
+        getTransactions: getTransactions,
     });
     function generateTransaction(amount, description, locationID) {
         var request = $http({
@@ -48,6 +50,18 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
             params: {
                 PageSize: pageSize,
                 PageNumber: pageNumber
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function refundTransaction(transactionId, amount) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashInAppPay/RefundTransaction",
+            data: {
+                PartnerTransactionID: transactionId,
+                Amount: amount
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -93,8 +107,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.codeLink = response.serviceResponse.codeLink;
-                    new QRCode(document.getElementById("qrcode"), $scope.codeLink);
+                    $scope.codeLink = response.serviceResponse.url;
                     $scope.getTransactions(true);
                 }
                 $scope.generateBusy = false;
@@ -104,5 +117,113 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             });
     }
 
+    $scope.refundModel = {
+        transcationId: null,
+        amount: null
+    };
+
+    $scope.refundResponded = false;
+    $scope.refundBusy = false;
+    $scope.refundTransaction = function (transactionId) {
+        $scope.refundBusy = true;
+        acInAppPayService.refundTransaction(transactionId, $scope.refundTransactionModel.amount)
+            .then(function (response) {
+                if (response) {
+                    $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.refundSequence = response.sequence;
+
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.refundBusy = false;
+                $scope.refundResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.getTransactions = function (reset) {
+        if (reset) $scope.setDefaults();
+        acInAppPayService.getTransactions($scope.pageSize, $scope.pageNumber)
+            .then(function (response) {
+                $scope.pageNumber += 1;
+                if (response) {
+                    $scope.totalLoaded = response.length;
+                    $scope.transactions = $scope.transactions.concat(response);
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.loadMore = function (pageSize) {
+        $scope.pageSize = pageSize;
+        $scope.getTransactions();
+    };
+
     $scope.setDefaults();
+
+    $scope.getTransactions();
+
+    $scope.inAppPay = {
+        generateTransaction: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                amount: 123.45,
+                currencyID: 191,
+                partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
+                description: "Invoice 52",
+                signature: "12345....abc"
+            },
+            responseExample: {
+                url: " https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3d369564fc-053a-4787-b000-3a28c6607281&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay "
+            },
+            errorResponseExample: {
+                code: 6,
+                message: "Transaction exist in Aircash system but authorization time has expired",
+                additionalData: null,
+            }
+        },
+        confirmTransaction: {
+            requestExample: {
+                amount: 123.45,
+                currencyID: 191,
+                aircashTransactionID: "Aircash transaction id,",
+                partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
+                user: "user 232",
+                signature: "12345....abc"
+            }
+        },
+        checkTransactionStatus: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
+                signature: "12345....abc"
+            },
+            responseExample: {
+                amount: 123.45,
+                currencyID: 191,
+                aircashTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
+                user: "user 232",
+                signature: "12345....abc"
+            },
+            errorResponseExample: {
+                code: 6,
+                message: "Transaction exist in Aircash system but authorization time has expired",
+                additionalData: null,
+            }
+        },
+        refund: {
+            requestExample: {
+                PartnerID: "8f62c8f0- 7155 - 4c0e- 8ebe - cd9357cfd1bf",
+                PartnerTransactionID: "67cef954-7372-4a12-9250-98a42bcf0317",
+                RefundTransactionID: "9a90fcdc-572d-44b3-904d-1ff0629c7046",
+                Amount: "100",
+                Signature: "g/iZ .... KgY/6o="
+            }
+        }
+    };
+
 }]);

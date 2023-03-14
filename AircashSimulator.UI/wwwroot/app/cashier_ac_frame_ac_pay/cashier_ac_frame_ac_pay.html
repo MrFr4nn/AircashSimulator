@@ -1,0 +1,67 @@
+﻿<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #F62727;">
+                <div class="col-md-6" style="float:left;">
+                    <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - AcPay</h2>
+                </div>
+                <div class="col-md-6" style="float:right;">
+                    <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 text-center">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <img src="/images/aircash_logo.png" class="aircashHeaderLogo">
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12">
+                        <h6>Select the Scan and Pay option inside the Aircash mobile application and scan or tap on the QR code. Confirm the deposit and funds are instantly available on your account. Top-up your Aircash wallet easily with cash on more than 100.000 Aircash partner locations or debit/credit cards. Download the free Aircash mobile application <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner">here.</a></h6>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>                        
+                        <div class="row row-cols-1 row-cols-sm-2">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                                <label class="form-label" style="margin-bottom: 0px !important;">Amount</label>
+                                <div class="input-group" style="margin-bottom: 0px !important;">
+                                    <input ng-model="createCashierAcFrameAcPayModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
+                                    <span class="input-group-addon">€</span>
+                                </div>
+                                <label class="form-label" for="amount">Enter amount between 1.00 and 1.000.00 €</label>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center" style="margin-top: 10px;">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 d-flex align-items-center justify-content-center">
+                                <button ng-click="initiateAcFrame()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createCashierAcFrameAcPayServiceBusy || transactionForm1.$invalid">Deposit<i ng-if="createCashierAcFrameAcPayServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
+                            <div class="iconGoogleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/google-play-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconAppleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-store-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconHuaweiMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-gallery-en.svg" style="max-width: 70%"></a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>

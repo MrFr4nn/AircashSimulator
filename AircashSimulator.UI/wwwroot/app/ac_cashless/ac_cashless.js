@@ -150,4 +150,81 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
 
     $scope.getTransactions();
 
+    $scope.cashless = {
+        TopUp
+    };
+
+    $scope.cashless = {
+        TopUp: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
+                amount: 123.45,
+                currencyIsoCode: "EUR",
+                token: "65116",
+                signature: "12345....abc"
+            },
+            responseExample: {
+                aircashTransactionId: "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",
+                balance: 253.04,
+                balanceCurrencyISOCode: "EUR",
+            },
+            errorResponseExample: {
+                code: 1,
+                message: "Unknown Token, the user has not linked the bracelet to the Aircash wallet and is unable to make a transaction until he does so.",
+                additionalData: null,
+            }
+        },
+        CancelTopUp: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
+                signature: "12345....abc"
+            },
+            responseExample: {
+                aircashTransactionId: "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da", 
+            },
+            errorResponseExample: {
+                code: 1,
+                message: "The transaction does not exist in the Aircash system, thecashier can return the funds to the user",
+                additionalData: null,
+            }
+        },
+        Purchase: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
+                amount: 123.45,
+                currencyIsoCode: "EUR",
+                cashRegisterId: "651169059",
+                signature: "12345....abc"
+            },
+            responseExample: {
+                aircashTransactionId: "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",
+                balance: 253.04,
+                balanceCurrencyISOCode: "EUR",
+            },
+            errorResponseExample: {
+                code: 1,
+                message: "Unknown Token, the user has not linked the bracelet to the Aircash wallet and is unable to make a transaction until he does so.",
+                additionalData: null,
+            }
+        },
+        CancelPurchase: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "9059ca5c-675a-48b5-b41a-e04ab5b981ae",
+                signature: "12345....abc"
+            },
+            responseExample: {
+                aircashTransactionId: "kf62c8d0-713f-4cvr-8dfe-sd934vcfd1da",  
+            },
+            errorResponseExample: {
+                code: 3,
+                message: "The transaction does not exist in the Aircash system, the cashier can return the funds to the user.",
+                additionalData: null,
+            }
+        }
+    }
+
 }]);

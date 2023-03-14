@@ -21,7 +21,9 @@ var app = angular.module('app', [
     'acInAppPay',
     'cashier',
     'logo',
-    'acPayStaticCode'
+    'acPayStaticCode',
+    'aircashPayoutV2',
+    'cashier'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -89,7 +91,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         var publicPages = ['/login', '/success', '/decline', '/forbidden', '/cashier', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
-            '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital'];
+            '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu', '/cashier/aircashFrameAcPay'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');

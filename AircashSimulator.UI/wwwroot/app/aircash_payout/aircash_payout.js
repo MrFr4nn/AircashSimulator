@@ -185,4 +185,55 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.aircashPayout = {
+        checkUser: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerUserID: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                phoneNumber: 385995712738,
+                signature: "VA514erV6V..."
+            },
+            responseExample: {
+                status: 3
+            },
+            errorResponseExample: {
+                message: "An error has occurred."
+            }
+        },
+        createPayout: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "45c38393-274b-4761-902e-23db30736563",
+                amount: 100,
+                phoneNumber: "385995712738",
+                partnerUserID: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                currencyID: 191,
+                signature: "Hm38lRCyOP..."
+            },
+            responseExample: {
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc "
+            },
+            errorResponseExample: {
+                code: 4002,
+                message: "PartnerTransactionID already exists"
+            }
+        },
+        checkTransactionStatus: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "45c38393-274b-4761-902e-23db30736563",
+                aircashTransactionID: null,
+                signature: "BBjas91N8B..."
+            },
+            responseExample: {
+                status: 2,
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc "
+            },
+            errorResponseExample: {
+                message: "An error has occurred."
+            }
+        }
+    };
+
 }]);
