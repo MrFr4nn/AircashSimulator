@@ -10,6 +10,7 @@ namespace Domain.Entities.Enum
         M2 = 2,
         M3 = 3,
         Frame = 4,
-        FrameV2 = 5
+        FrameV2 = 5,
+        SalesV2 = 6
     }
 }

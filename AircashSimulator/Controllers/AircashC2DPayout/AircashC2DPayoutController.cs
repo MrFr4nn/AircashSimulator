@@ -47,9 +47,17 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckCode(string barCode)
+        public async Task<IActionResult> CheckCode(CheckCodeDTO checkCodeDTO)
         {
-            return Ok();
+            var response = await AircashPayoutV2Service.CheckCode(new Guid(PARTNER_ID), checkCodeDTO.Barcode);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRQ confirmTransactionRQ)
+        {
+            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, new Guid(PARTNER_ID), new Guid(USER_ID));
+            return Ok(response);
         }
 
         [HttpPost]

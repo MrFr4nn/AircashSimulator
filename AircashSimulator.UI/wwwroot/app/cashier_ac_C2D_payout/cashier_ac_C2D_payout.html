@@ -46,13 +46,15 @@
                                                         <label class="form-label">Email</label>
                                                         <input ng-model="createPayoutModel.email" class="form-control form-control-lg" type="email" placeholder="Enter email" ng-disabled="createPayoutServiceBusy" ng-required="true">
                                                     </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">First name</label>
-                                                        <input ng-model="createPayoutModel.firstName" class="form-control form-control-lg" type="text" placeholder="Enter first name" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Last name</label>
-                                                        <input ng-model="createPayoutModel.lastName" class="form-control form-control-lg" type="text" placeholder="Enter last name" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    <div class="input-group mb-3">
+                                                        <div class="col-6 pl-0 pr-2">
+                                                            <label class="form-label">First Name</label>
+                                                            <input ng-model="createPayoutModel.firstName" class="form-control form-control-lg" type="text" placeholder="Enter First Name" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                                                        </div>
+                                                        <div class="col-6 pl-2 pr-0">
+                                                            <label class="form-label">Last Name</label>
+                                                            <input ng-model="createPayoutModel.lastName" class="form-control form-control-lg" type="text" placeholder="Enter Last Name" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                                                        </div>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label class="form-label">Birth date</label>
@@ -103,8 +105,33 @@
                                     <label class="form-label">BarCode</label>
                                     <input ng-model="barcodeConfirm" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
                                 </div>
+                                <div class="input-group mb-3">
+                                    <div class="col-6 pl-0 pr-2">
+                                        <label class="form-label">First Name</label>
+                                        <input ng-model="confirmModel.firstName" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
+                                    </div>
+                                    <div class="col-6 pl-2 pr-0">
+                                        <label class="form-label">Last Name</label>
+                                        <input ng-model="confirmModel.lastName" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
+                                    </div>
+                                </div>
+                                <label class="form-label">Amount</label>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">{{transactionType}}</div>
+                                    </div>
+                                    <input ng-model="confirmModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" name="amount" ng-disabled="createPayoutServiceBusy" ng-readonly="true" ng-required="true">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">€</div>
+                                    </div>
+
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Birthday</label>
+                                    <input ng-model="confirmModel.dateOfBirth" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
+                                </div>
                                 <div class="d-flex justify-content-end">
-                                    <button ng-click="confirmTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || confirmTransactionForm.$invalid">Confirm Transaction <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                    <button ng-click="confirmTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || confirmTransactionForm.$invalid">Confirm {{transactionType}} <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
                                 </div>
                             </fieldset>
                         </form>
