@@ -311,15 +311,13 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
     };
 
-function SelectV() {
-    if ($('#selected').val() == "1") {
-        $('#V1').show();
-        $('#V2').hide();
+    $scope.checkCodeResponseExampleV2 = {
+        "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+        "Amount": 2000.00,
+        "CurrencyId": 978,
+        "FirstName": "John",
+        "LastName": "Doe",
+        "DateOfBirth": "1990-01-01"
     }
-    else {
-        $('#V1').hide();
-        $("#V2").removeAttr('hidden');
-        $('#V2').show();
-    }
-    }
+
 }]);

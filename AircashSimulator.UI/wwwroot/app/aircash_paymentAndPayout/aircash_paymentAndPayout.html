@@ -84,7 +84,7 @@
 <div class="row">
     <h4 class="col-1">CheckCode</h4>
     <div class="dropdown col-1">
-        <select class="form-control"  onchange="SelectV()" onload="SelectV()" id="selected">
+        <select class="form-control" ng-model="selected" ng-init="selected = '1'">
             <option value="1" selected>V1</option>
             <option value="2">V2</option>
         </select>
@@ -94,7 +94,7 @@
 <p class="mt-2">
     Method used by the partner system to check whether there’s an active transaction in the Aircash system for a given barcode. All codes that start with AC1 or AC2 and have 16 or more digits are considered Aircash codes. <br />
 </p>
-<div id="V1">
+<div ng-if="selected == 1">
     <table class="table  table-active col-md-6">
         <thead>
             <tr>
@@ -163,14 +163,7 @@
             </table>
         </uib-tab>
         <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
-            <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "QDyIrReELi..."
-}
-</pre>
+            <jsonformatter data="checkCodeRequestExample"></jsonformatter>
         </uib-tab>
         <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
             <pre>
@@ -212,12 +205,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             </table>
         </uib-tab>
         <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
-            <pre>
-{
-    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "Amount": 2,000.00
-}
-</pre>
+            <jsonformatter data="checkCodeResponseExample"></jsonformatter>
         </uib-tab>
         <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
             <table class="table table-hover">
@@ -277,27 +265,19 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                 </div>
                 <div class="col-md-4" ng-if="checkCodeServiceResponse">
                     Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceRequest}}
-</code>
-</pre>
+                    <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
                     Sequence: {{checkCodeSequence}}<br />
                 </div>
                 <div class="col-md-4" ng-if="checkCodeServiceResponse">
                     Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceResponse}}
-</code>
-</pre>
+                    <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
                 </div>
             </div>
         </uib-tab>
     </uib-tabset>
 </div>
 
-<div id="V2" hidden>
+<div ng-if="selected == 2">
     <table class="table  table-active col-md-6">
         <thead>
             <tr>
@@ -366,28 +346,16 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             </table>
         </uib-tab>
         <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
-            <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "QDyIrReELi..."
-}
-</pre>
+            <jsonformatter data="checkCodeRequestExample"></jsonformatter>
         </uib-tab>
         <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
-            <pre>
+<pre>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "QDyIrReELi..."
-}
-
+</pre> 
+            <jsonformatter data="checkCodeRequestExample"></jsonformatter>
+<pre>
 Sequence:
-BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
-
+BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-
 Signature:
 QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloBMJiFZc9eMrSqmlAP0XxHMmn6OHp+pr9G9jFZZ0bM6AxA1BduGYmIDPl9rGMhNXXUU6RQbWvmDD6N3Digcwf2Vr7qHzNow6rDCXpWCXJXQCXJvF86HTaF5pF/kS/R13PtIl7zn3lcvSTgWguy8DM0zwkumSzrclpo98xv/YIn3irgTiLYDD8Dz2Bh1gIOeEF+XN7OvyPGC/3JQf/P6D10Y4GNaFXHjAoCrPPBD91a8kbdYiirqjMOxiBsE4SpK7GsGsp9258TfggAhFYXF7i/B4beuNilZXzMvWY28iy28b5J/mSfEDSfMRF3EWIK5mkgoN634fjkboRB1UNW69FsZmHr3gpN807uP+o9zGrVEi0yFLua7qnbBWLfQfwvnQMHFebBUGcXqNIIjQ1ksqs17Hxxosr3GrxqHXx8EkJysp679wdAs7AmY2Z/HbhbPO1JufCluMeqYrVz3ue3F6Kru5Nw+tLuZCuJJ7YsEgHKC5QhCao40CKbceAj3BFFlq5rP6nHg8wkfFq14oSsnAZK8/W109x8GN1z9fhxzhbZKfVL7v+IigmOPGcBaAsf9Bmpo8uEAP2HcdzecWQ0xWUw/M2N4tc=</pre>
         </uib-tab>
@@ -452,16 +420,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
 </table>
         </uib-tab>
         <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
-            <pre>
-{
-    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "Amount": 2,000.00,
-    "CurrencyId": 978,
-    "FirstName": "John",
-    "LastName": "Doe",
-    "DateOfBirth": "1990-01-01"
-}
-</pre>
+            <jsonformatter data="checkCodeResponseExampleV2"></jsonformatter>
         </uib-tab>
         <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
             <table class="table table-hover">
@@ -521,20 +480,12 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                 </div>
                 <div class="col-md-4" ng-if="checkCodeServiceResponse">
                     Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceRequest}}
-</code>
-</pre>
+                    <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
                     Sequence: {{checkCodeSequence}}<br />
                 </div>
                 <div class="col-md-4" ng-if="checkCodeServiceResponse">
                     Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceResponse}}
-</code>
-</pre>
+                    <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
                 </div>
             </div>
         </uib-tab>
