@@ -26,13 +26,14 @@ namespace Services.AbonSalePartner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private AbonConfiguration AbonConfiguration;
 
-        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AbonConfiguration> abonConfiguration)
+        private readonly string CancelCouponEndpoint = "CashRegister/CancelCoupon";
+        private readonly string CreateCouponEndpoint = "CashRegister/CreateCoupon";
+
+        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
-            AbonConfiguration = abonConfiguration.CurrentValue;
         }
 
         public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId)
@@ -58,7 +59,7 @@ namespace Services.AbonSalePartner
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             createCouponRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(createCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{AbonConfiguration.CreateCouponEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(createCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}" + CreateCouponEndpoint);
             if(response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<CreateCouponResponse>(response.ResponseContent);
@@ -125,7 +126,7 @@ namespace Services.AbonSalePartner
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             cancelCouponRequest.Signature = signature;
-            var response=await HttpRequestService.SendRequestAircash(cancelCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{AbonConfiguration.CancelCouponEndpoint}");
+            var response=await HttpRequestService.SendRequestAircash(cancelCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}" + CancelCouponEndpoint);
             var responseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {   
