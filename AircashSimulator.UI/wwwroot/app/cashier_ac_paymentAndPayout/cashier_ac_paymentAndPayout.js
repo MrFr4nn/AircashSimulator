@@ -78,9 +78,9 @@ cashierAcPaymentAndPayoutModule.controller("cashieracPaymentAndPayoutCtrl",
                                 $rootScope.showGritter("Success");
                                 $scope.codeValid = true;
                                 if ($scope.checkCodeServiceResponseObject.amount > 0) {
-                                    $scope.transactionType = "Withdrawal";
-                                } else {
                                     $scope.transactionType = "Deposit";
+                                } else {
+                                    $scope.transactionType = "Withdrawal";
                                     $scope.checkCodeServiceResponseObject.amount = Math.abs($scope.checkCodeServiceResponseObject.amount);
                                 }
                                 console.log($scope.checkCodeServiceResponseObject);
