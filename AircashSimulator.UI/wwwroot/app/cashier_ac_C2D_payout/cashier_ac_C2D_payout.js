@@ -132,9 +132,9 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
 
                                 if ($scope.confirmModel.amount < 0) {
                                     $scope.confirmModel.amount = Math.abs($scope.confirmModel.amount);
-                                    $scope.transactionType = "Deposit";
-                                } else {
                                     $scope.transactionType = "Withdrawal";
+                                } else {
+                                    $scope.transactionType = "Deposit";
                                 }
                             } else {
                                 $rootScope.showGritter("Invalid Barcode", "");
