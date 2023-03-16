@@ -75,12 +75,12 @@ cashierAcPaymentAndPayoutModule.controller("cashieracPaymentAndPayoutCtrl",
                                 $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.errorMessage);
                                 $scope.codeValid = false;
                             } else {
-                                $rootScope.showGritter("BarCode valid ", "BarCode: " + $scope.checkCodeServiceResponseObject.barCode + "<br /> Amount: " + $scope.checkCodeServiceResponseObject.amount + " €");
+                                $rootScope.showGritter("Success");
                                 $scope.codeValid = true;
                                 if ($scope.checkCodeServiceResponseObject.amount > 0) {
-                                    $scope.transactionType = "Deposit";
-                                } else {
                                     $scope.transactionType = "Withdrawal";
+                                } else {
+                                    $scope.transactionType = "Deposit";
                                     $scope.checkCodeServiceResponseObject.amount = Math.abs($scope.checkCodeServiceResponseObject.amount);
                                 }
                                 console.log($scope.checkCodeServiceResponseObject);
@@ -110,7 +110,7 @@ cashierAcPaymentAndPayoutModule.controller("cashieracPaymentAndPayoutCtrl",
                             if ($scope.confirmTransactionServiceResponse.errorCode) {
                                 $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.errorMessage);
                             } else {
-                                $rootScope.showGritter("Transaction confirmed ", "BarCode: " + $scope.checkCodeServiceResponseObject.barCode + "<br /> Amount: " + $scope.checkCodeServiceResponseObject.amount + " €");
+                                $rootScope.showGritter("Success");
                                 $scope.codeValid = false;
                             }
                         }
