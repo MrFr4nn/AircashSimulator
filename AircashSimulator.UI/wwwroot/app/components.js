@@ -33,12 +33,12 @@
 });
 app.component('phoneNumberInput', {
     template: `<div class="mb-2 input-group">
-                    <select ng-change="$ctrl.onInputChanged()" name="country" class= "form-control form-control-lg" style="border-radius: 5px !important;"
+                    <select ng-change="$ctrl.onInputChanged()" name="country" class= "form-control form-control-lg p-0 text-center" style="border-radius: 5px !important;"
                             ng-options="item.country for item in $ctrl.countries"
                             ng-model="$ctrl.selectedCountry"  ng-required="true" >
                     </select >
                     <span class="input-group-addon" style="visibility: hidden"></span>
-                    <input ng-model="$ctrl.selectedCountry.code" class="form-control form-control-lg" name="countryCode" ng-disabled="true" style="border-radius: 5px 0px 0px 5px !important;">
+                    <input ng-model="$ctrl.selectedCountry.code" class="form-control form-control-lg p-0 text-center" name="countryCode" ng-disabled="true" style="border-radius: 5px 0px 0px 5px !important;">
                     <input ng-change="$ctrl.onInputChanged()" ng-model="$ctrl.phonenumber" class="form-control form-control-lg w-50" name="phone" type="number" placeholder="Enter phone number"  ng-required="true">
                 </div>`,
     bindings: {
