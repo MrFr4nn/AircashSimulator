@@ -263,7 +263,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
                 PartnerUserID: "12345",
                 Parameters: [
                     {
-                        Key: "emai",
+                        Key: "email",
                         Value: "user@example.net"
                     },
                     {
@@ -300,7 +300,11 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             },
             responseExample: {
                 BarCode: "05cd4905-982b-4a36-8634-0719290e4341",
-                Amount: 2000.00
+                Amount: 2000.00,
+                CurrencyId: 978,
+                FirstName: "John",
+                LastName: "Doe",
+                DateOfBirth: "1990-01-01"
             }
         },
         confirmTransaction: {

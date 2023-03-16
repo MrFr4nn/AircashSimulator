@@ -220,7 +220,7 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
                 PartnerUserID: "12345",
                 Parameters: [
                     {
-                        Key: "emai",
+                        Key: "email",
                         Value: "user@example.net"
                     },
                     {
