@@ -93,9 +93,9 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
                             $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
                             console.log($scope.createPayoutModel.birthDate);
                             if ($scope.createPayoutResponseObject.aircashTransactionID) {
-                                $rootScope.showGritter("Payout created", "Amount: " + $scope.createPayoutRequestObject.amount + "<br />Phone number: " + $scope.createPayoutRequestObject.phoneNumber);
+                                $rootScope.showGritter("Success");
                             } else {
-                                $rootScope.showGritter("Payout failed", "Check the entered data");
+                                $rootScope.showGritter("Error", "Check the entered data");
                             } 
                         }
                         $scope.createPayoutServiceBusy = false;
@@ -132,12 +132,12 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
 
                                 if ($scope.confirmModel.amount < 0) {
                                     $scope.confirmModel.amount = Math.abs($scope.confirmModel.amount);
-                                    $scope.transactionType = "Withdrawal";
-                                } else {
                                     $scope.transactionType = "Deposit";
+                                } else {
+                                    $scope.transactionType = "Withdrawal";
                                 }
                             } else {
-                                $rootScope.showGritter("Invalid BarCode", "");
+                                $rootScope.showGritter("Invalid Barcode", "");
                                 $scope.checkCodeResponded = false;
                             }
                         }
@@ -166,7 +166,7 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
                             if ($scope.confirmTransactionServiceResponseObject.errorCode) {
                                 $rootScope.showGritter("Error", $scope.confirmTransactionServiceResponseObject.errorMessage);
                             } else {
-                                $rootScope.showGritter("Transaction confirmed ", "BarCode: " + $scope.confirmTransactionServiceResponseObject.barCode + "<br /> Amount: " + $scope.confirmTransactionServiceResponseObject.amount + " €");
+                                $rootScope.showGritter("Success");
                                 $scope.checkCodeResponded = false;
                             }
                         }

@@ -9,24 +9,27 @@
             </div>
             <div class="panel-body">
                 <br />
-                <div class="text-center">
+                <div class="text-center mb-5 mt-3">
                     <img style="height:50px;" alt="" src="/images/aircash-red.svg">
                 </div>
                 <br />
                 <div class="card mb-3">
                     <div class="card-header">
-                        <h5 class="mb-0">Step 1</h5>
+                        <h5 class="mb-0">Create Payout</h5>
                     </div>
                     <div class="card-body">
+                        <h6 class="mb-3 mt-2">Enter the withdrawal amount and your personal data. Confirm the withdrawal and funds will instantly be available on your Aircash wallet. Download the free Aircash mobile application <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner">here.</a></h6>
                         <form action="/" method="POST" name="payoutForm">
                             <fieldset>
-
-                                <label class="form-label">Amount</label>
-                                <div class="input-group mb-3">
-                                    <input ng-model="createPayoutModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" name="amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                                    <div class="input-group-append">
-                                        <div class="input-group-text">€</div>
+                                <div class=" mb-3">
+                                    <label class="form-label">Amount</label>
+                                    <div class="input-group">
+                                        <input ng-model="createPayoutModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" name="amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                        <div class="input-group-append">
+                                            <div class="input-group-text">€</div>
+                                        </div>
                                     </div>
+                                    <label class="form-label" for="amount">Enter amount between 1.00 and 1.000.00 €</label>
                                 </div>
                                 <div class="mb-3">
                                     <div id="accordion">
@@ -67,7 +70,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <button ng-click="createPayout()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || payoutForm.$invalid">Create payout <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                    <button ng-click="createPayout()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || payoutForm.$invalid">Confirm withdrawal <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
                                 </div>
 
                             </fieldset>
@@ -76,15 +79,16 @@
                 </div>
                 <div class="card mb-3">
                     <div class="card-header">
-                        <h5 class="mb-0">Step 2</h5>
+                        <h5 class="mb-0">Check Barcode</h5>
                     </div>
                     <div class="card-body">
+                        <h6 class="mb-3 mt-2">Enter Barcode then check if Barcode is valid. If it is valid Confirm transaction will be avaliable.</h6>
                         <form action="/" method="POST" name="checkCodeForm">
                             <fieldset>
 
                                 <div class="mb-3">
-                                    <label class="form-label">BarCode</label>
-                                    <input ng-model="barcode" class="form-control form-control-lg" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                    <label class="form-label">Barcode</label>
+                                    <input ng-model="barcode" class="form-control form-control-lg" type="text" placeholder="Enter Barcode" ng-disabled="checkCodeServiceBusy" ng-required="true">
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button ng-click="checkCode()" class="btn btn-danger w-100px me-5px" ng-disabled="checkCodeServiceBusy || checkCodeForm.$invalid">Check Barcode <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
@@ -96,13 +100,14 @@
                 </div>
                 <div class="card mb-3" ng-if="checkCodeResponded">
                     <div class="card-header">
-                        <h5 class="mb-0">Step 3</h5>
+                        <h5 class="mb-0">Confirm transaction</h5>
                     </div>
                     <div class="card-body">
+                        <h6 class="mb-3 mt-2">Check information if everything is correct then confirm deposit.</h6>
                         <form action="/" method="POST" name="confirmTransactionForm">
                             <fieldset>
                                 <div class="mb-3">
-                                    <label class="form-label">BarCode</label>
+                                    <label class="form-label">Barcode</label>
                                     <input ng-model="barcodeConfirm" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
                                 </div>
                                 <div class="input-group mb-3">
