@@ -6,6 +6,7 @@
     'cashier_acPayment',
     'cashier_acPayout',
     'cashier_acRedeemTicket',
+    'cashier_acC2DPayout',
     'cashier_c2d'
 ]);
 

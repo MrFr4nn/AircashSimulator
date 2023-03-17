@@ -68,6 +68,8 @@ namespace Services.HttpRequest
                     return AircashConfiguration.AircashFrameTestUrl;
                 case EndpointEnum.FrameV2:
                     return AircashConfiguration.AircashFrameBaseUrl;
+                case EndpointEnum.SalesV2:
+                    return AircashConfiguration.AircashSalesBaseUrl;
                 default:
                     return string.Empty;
             }

@@ -22,21 +22,17 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
         checkTransactionStatus: checkTransactionStatus
     });
     function checkUser(checkUserRequest) {
-        console.log(config.baseUrl + "aircashPayout / CheckUserV2");
-        console.log(checkUserRequest);
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CheckUserV2",
+            url: config.baseUrl + "aircashC2DPayout/CheckUser",
             data: checkUserRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function createPayout(createPayoutRequest) {
-        console.log(config.baseUrl + "aircashPayout / CreatePayoutV2");
-        console.log(createPayoutRequest);
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CreatePayoutV2",
+            url: config.baseUrl + "aircashC2DPayout/CreatePayout",
             data: createPayoutRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -44,7 +40,7 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
     function checkTransactionStatus(partnerTransactionId) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CheckTransactionStatus",
+            url: config.baseUrl + "aircashC2DPayout/CheckTransactionStatus",
             data: {
                 PartnerTransactionId: partnerTransactionId
             }
