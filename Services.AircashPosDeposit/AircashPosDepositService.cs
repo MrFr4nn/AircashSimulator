@@ -1,9 +1,7 @@
 ﻿using AircashSignature;
-using AircashSimulator.Configuration;
 using DataAccess;
 using Domain.Entities;
 using Domain.Entities.Enum;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Services.HttpRequest;
 using System;
@@ -27,13 +25,14 @@ namespace Services.AircashPosDeposit
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private AircashConfiguration AircashConfiguration;
 
-        public AircashPosDepositService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        private readonly string AircashCheckUserV4Endpoint = "PartnerV4/CheckUser";
+        private readonly string AircashCreatePayoutV4Endpoint = "PartnerV4/CreatePayout";
+
+        public AircashPosDepositService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
-            AircashConfiguration = aircashConfiguration.CurrentValue;
         }
 
         public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<AdditionalParameter> parameters)
@@ -54,7 +53,7 @@ namespace Services.AircashPosDeposit
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.AircashCheckUserV4Endpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashCheckUserV4Endpoint}");
 
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserRS>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
@@ -83,7 +82,7 @@ namespace Services.AircashPosDeposit
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.AircashCreatePayoutV4Endpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashCreatePayoutV4Endpoint}");
 
             //var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
             //returnResponse.ServiceResponse = serviceResponse;

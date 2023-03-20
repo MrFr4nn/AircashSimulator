@@ -39,7 +39,7 @@ namespace Services.AbonOnlinePartner
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             abonValidateCouponRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}" + ValidateCouponEndpoint);
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}");
             DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -88,7 +88,7 @@ namespace Services.AbonOnlinePartner
                     ResponseDateTimeUTC = DateTime.UtcNow               
                 };
             }
-            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}" + ConfirmTransactionEndpoint);
+            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{ConfirmTransactionEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
