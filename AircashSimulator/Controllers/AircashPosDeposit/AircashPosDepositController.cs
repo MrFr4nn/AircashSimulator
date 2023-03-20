@@ -13,6 +13,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AircashSimulator.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using AircashSimulator.Controllers.AircashPayout;
+using System.Text.Json;
 
 namespace AircashSimulator.Controllers.AircashPosDeposit
 {
@@ -31,8 +35,12 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private const string BlockedUsername = "BLOCKED_USERNAME";
         private const string BlockedEmail = "BLOCKED_USER@gmail.com";
         private const string PartnerId = "3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20";
+        private const string PartnerIdCashier = "0bbee966-47dd-4244-8a33-c484cb2f5a03";
+        private const string UserIdCashier = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
+        public readonly IHubContext<NotificationHub> _hubContext;
+        
 
-        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext)
+        public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext, IHubContext<NotificationHub> hubContext)
         {
             AircashPosDepositService = aircashPosDepositService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
@@ -40,6 +48,12 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             UserContext = userContext;
             UserService = userService;
             AircashSimulatorContext = aircashSimulatorContext;
+            _hubContext = hubContext;
+        }
+
+        public async Task SendHubMessage(string method, string msg, int status)
+        {
+            await _hubContext.Clients.All.SendAsync(method, msg, status);
         }
 
         [HttpPost]
@@ -51,11 +65,32 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         }
 
         [HttpPost]
+        public async Task<IActionResult> ConfirmC2dPayment(C2dPaymentRQ c2dPaymentRQ)
+        {
+            var partnerId = new Guid(PartnerIdCashier);
+            var userId = new Guid(UserIdCashier);
+            var responseCheckUser = await AircashPosDepositService.CheckUser(c2dPaymentRQ.PhoneNumber, userId.ToString(), partnerId, c2dPaymentRQ.ParametersCheckUser);
+            var serviceResponseObj = ((Services.AircashPosDeposit.Response)responseCheckUser).ServiceResponse;
+            var jsonString = JsonSerializer.Serialize(serviceResponseObj);
+            if (jsonString == "{\"Status\":3}")
+            {
+                var responseCreatePayout = await AircashPosDepositService.CreatePayout(partnerId, c2dPaymentRQ.Amount, c2dPaymentRQ.PhoneNumber, userId.ToString(), c2dPaymentRQ.ParametersCreatePayout);
+                await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>amount: " + c2dPaymentRQ.Amount + " , </br>time: " + DateTime.Now, 1);
+                return Ok(responseCreatePayout);
+            }
+            else
+            {
+                return Ok(responseCheckUser);
+            } 
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CheckUser(CheckUserRQ checkUserRQ)
         {
             var response = await AircashPosDepositService.CheckUser(checkUserRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User), checkUserRQ.Parameters);
             return Ok(response);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreatePayout(CreatePayoutRQ createPayoutRQ)
@@ -63,6 +98,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             var response = await AircashPosDepositService.CreatePayout(UserContext.GetPartnerId(User), createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), createPayoutRQ.Parameters);
             return Ok(response);
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CheckPlayer(CheckPlayerRQ checkPlayerRq)
@@ -243,6 +279,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             AircashSimulatorContext.Transactions.Add(transactionEntity);
             await AircashSimulatorContext.SaveChangesAsync();
 
+            await SendHubMessage("TransactionConfirmedMessage", "Payment confirmed, </br>amount: " + aircashPosDepositCreateAndConfirmPayment.Amount + " , </br>time: " + DateTime.Now, 1);
             return Ok(new AircashCreateAndConfirmResponseSuccess
             {
                 Success = true,
