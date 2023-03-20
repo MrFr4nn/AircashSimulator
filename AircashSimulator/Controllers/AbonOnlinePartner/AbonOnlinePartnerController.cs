@@ -13,8 +13,7 @@ namespace AircashSimulator
     {
         private IAbonOnlinePartnerService AbonOnlinePartnerService;
         private UserContext UserContext;
-        //private readonly Guid PartnerId = new Guid("e9fb671b-154e-4918-9788-84b6758fb082");
-        private readonly Guid PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
+        private readonly Guid PartnerId = new Guid("e9fb671b-154e-4918-9788-84b6758fb082");
         private readonly Guid UserId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
         public AbonOnlinePartnerController(IAbonOnlinePartnerService abonOnlinePartnerService, UserContext userContext)
         {

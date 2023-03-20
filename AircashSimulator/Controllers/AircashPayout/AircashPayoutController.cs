@@ -13,8 +13,7 @@ namespace AircashSimulator.Controllers
     {
         private IAircashPayoutService AircashPayoutService;
         private UserContext UserContext;
-        //private readonly Guid PartnerId = new Guid("0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6");
-        private readonly Guid PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
+        private readonly Guid PartnerId = new Guid("0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6");
         private readonly Guid UserId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
 
         public AircashPayoutController(IAircashPayoutService aircashPayoutService, UserContext userContext)
