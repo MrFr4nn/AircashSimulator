@@ -12,6 +12,7 @@ namespace AircashSimulator.Configuration
         public string M2StagingBaseUrl { get; set; }
         public string M2DevBaseUrl { get; set; }
         public string AircashAbomBaseUrl { get; set; }
+        public string AircashSalesBaseUrl { get; set; }
         public string GeneratePartnerCodeEndpoint { get; set; }
         public string CheckTransactionStatusEndpoint { get; set; }
         public string CancelTransactionEndpoint { get; set; }
@@ -36,10 +37,10 @@ namespace AircashSimulator.Configuration
         public string AircashFrameBaseUrl { get; set; }
         public string AircashCheckUserV4Endpoint { get; set; }
         public string AircashCreatePayoutV4Endpoint { get; set;  }
-        public string MatchCompareIdentity { get; set;  }
+        public string MatchCompareIdentity { get; set; }
+        public string SalesPartnerV2CheckCode { get; set; }
         public string AcFrameOriginUrl { get; set; }
         public string AcFrameApiUrl { get; set; }
-
         public string AircashPayGenerateTransaction { get; set; }
     }
 }
