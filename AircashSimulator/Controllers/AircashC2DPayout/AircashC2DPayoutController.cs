@@ -2,9 +2,6 @@
 using AircashSimulator.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Services.AircashPayoutV2;
-using Services.User;
-using System.Collections.Generic;
-using System.Linq;
 using System;
 using System.Threading.Tasks;
 
@@ -16,14 +13,12 @@ namespace AircashSimulator.Controllers
     {
         private IAircashPayoutV2Service AircashPayoutV2Service;
         private UserContext UserContext;
-        private IUserService UserService;
         //private readonly Guid PartnerId = new Guid("386bf082-d1b5-42e1-9852-8077b7f704c6");
         private readonly Guid PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
         private readonly Guid UserId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
-        public AircashC2DPayoutController(IAircashPayoutV2Service aircashPayoutV2Service, UserContext userContext, IUserService userService) {
+        public AircashC2DPayoutController(IAircashPayoutV2Service aircashPayoutV2Service, UserContext userContext) {
             AircashPayoutV2Service = aircashPayoutV2Service;
             UserContext = userContext;
-            UserService = userService;
         }
 
         [HttpPost]
