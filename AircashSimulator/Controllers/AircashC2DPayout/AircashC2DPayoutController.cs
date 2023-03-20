@@ -2,9 +2,6 @@
 using AircashSimulator.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Services.AircashPayoutV2;
-using Services.User;
-using System.Collections.Generic;
-using System.Linq;
 using System;
 using System.Threading.Tasks;
 
@@ -16,13 +13,11 @@ namespace AircashSimulator.Controllers
     {
         private IAircashPayoutV2Service AircashPayoutV2Service;
         private UserContext UserContext;
-        private IUserService UserService;
-        private const string PARTNER_ID = "8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF";
-        private const string USER_ID = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
-        public AircashC2DPayoutController(IAircashPayoutV2Service aircashPayoutV2Service, UserContext userContext, IUserService userService) {
+        private readonly Guid PartnerId = new Guid("386bf082-d1b5-42e1-9852-8077b7f704c6");
+        private readonly Guid UserId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
+        public AircashC2DPayoutController(IAircashPayoutV2Service aircashPayoutV2Service, UserContext userContext) {
             AircashPayoutV2Service = aircashPayoutV2Service;
             UserContext = userContext;
-            UserService = userService;
         }
 
         [HttpPost]
@@ -42,21 +37,21 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CashierCreatePayout(CreatePayoutRQ createPayoutRQ)
         {
-            var response = await AircashPayoutV2Service.CreatePayout(new Guid(PARTNER_ID), createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, USER_ID, createPayoutRQ.Parameters);
+            var response = await AircashPayoutV2Service.CreatePayout(PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserId.ToString(), createPayoutRQ.Parameters);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CheckCode(CheckCodeDTO checkCodeDTO)
         {
-            var response = await AircashPayoutV2Service.CheckCode(new Guid(PARTNER_ID), checkCodeDTO.Barcode);
+            var response = await AircashPayoutV2Service.CheckCode(PartnerId, checkCodeDTO.Barcode);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRQ confirmTransactionRQ)
         {
-            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, new Guid(PARTNER_ID), new Guid(USER_ID));
+            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, PartnerId, UserId);
             return Ok(response);
         }
 

@@ -104,6 +104,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
 
     $scope.checkUser = function () {
         $scope.checkUserServiceBusy = true;
+        $scope.checkUserServiceResponse = false;
         aircashPayoutService.checkUser($scope.checkUserModel.phoneNumber)
             .then(function (response) {
 
@@ -124,6 +125,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
 
     $scope.createPayout = function () {
         $scope.createPayoutServiceBusy = true;
+        $scope.createPayoutServiceResponse = false;
         aircashPayoutService.createPayout($scope.createPayoutModel.phoneNumber, $scope.createPayoutModel.amount)
             .then(function (response) {
 
@@ -145,6 +147,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
 
     $scope.checkTransactionStatus = function (transactionId) {
         $scope.checkTransactionStatusServiceBusy = true;
+        $scope.checkTransactionStatusServiceResponse = false;
         aircashPayoutService.checkTransactionStatus(transactionId)
             .then(function (response) {
 

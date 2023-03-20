@@ -19,8 +19,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         private IAircashFrameV2Service AircashFrameV2Service;
         private AircashConfiguration AircashConfiguration;
         private UserContext UserContext;
-        private string partnerId = "5680E089-9E86-4105-B1A2-ACD0CD77653C";
-        private string userId = "F0BC2E22-9C2D-4217-BEEE-99CC1AA3C26D";
+        private readonly Guid partnerId = new Guid("5680E089-9E86-4105-B1A2-ACD0CD77653C");
+        private readonly Guid userId = new Guid("F0BC2E22-9C2D-4217-BEEE-99CC1AA3C26D");
 
         public AircashFrameController(IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
@@ -71,8 +71,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             var initiateRequestDTO = new InititateRequestV2Dto
             {
-                PartnerId = new Guid(partnerId),
-                UserId = new Guid(userId),
+                PartnerId = partnerId,
+                UserId = userId,
                 Amount = initiateRequest.Amount,
                 PayType = initiateRequest.PayType,
                 PayMethod = initiateRequest.PayMethod

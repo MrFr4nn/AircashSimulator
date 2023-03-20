@@ -1,39 +1,45 @@
 ﻿<div class="row">
     <div class="col-md-3">
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6 col-12">
         <div class="panel panel-default">
             <div class="panel-heading bg-red text-white">
-                <h3 class="">A-bon</h3>
+                <h3 class="">Abon</h3>
                 <div class="panel-heading-btn">
-                             
+
                 </div>
             </div>
             <div class="panel-body">
-                <div class="text-center">
-                    <img style="height:80px;" alt="" src="/images/abon_logo_H.jpg">
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12">
+                        <div class="text-center my-3">
+                            <img style="height:80px;" alt="" src="/images/abon_logo_H.jpg">
+                        </div>
+                        <br />
+                        <h6>
+                            Enter 16 digit coupon code or scan the QR code from the Aircash Abon voucher, select deposit and funds will instantly be available on your account. Buy Aircash Abon paper vouchers on more than 100.000 <a href="https://abon.cash/locations/" target="_blank">Aircash partner's' locations</a>.
+                        </h6>
+                        <form action="/" method="POST" name="transactionForm1">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">ACTIVATION CODE</label>
+                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control form-control-lg" type="text" placeholder="Enter 16-digit activation code" ng-required="true" />
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-check">
+                                        <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-init="confirmCheckBox = true" />
+                                        <label class="form-check-label" for="checkbox1" style=" padding-top: 8px; padding-left:10px;"><a href="https://abon.cash/terms-conditions-en/" rel="nofollow" target="_blank">I accept the Abon Terms&Conditions</a></label>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button ng-click="confirmCashierTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox || transactionForm1.$invalid">Deposit<i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-1"></div>
                 </div>
-                <br />
-                <p>
-                    Enter 16 digit coupon code or scan the QR code from the Aircash A-bon voucher, select deposit and funds will instantly be available on your account. Buy Aircash A-bon paper vouchers on more than 100.000 <a href="https://abon.cash/locations/" target="_blank">Aircash partner's' locations</a>.
-                </p>
-                <form action="/" method="POST" name="transactionForm1">
-                    <fieldset>
-                        <div class="mb-3">                            
-                                <label class="form-label">ACTIVATION CODE</label>                              
-                                <input ng-model="confirmTransactionModel.couponCode" class="form-control form-control-lg w-50" type="text" placeholder="Enter 16-digit activation code" ng-required="true" />                 
-                        </div>
-                        <div class="mb-3">
-                            <div class="form-check">
-                                <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-checked="true"/>
-                                <label class="form-check-label" for="checkbox1" style=" padding-top: 8px; padding-left:10px;"><a href="https://abon.cash/terms-conditions-en/" rel="nofollow" target="_blank">I accept the A-bon Terms&Conditions</a></label>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button ng-click="confirmCashierTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmBusy || !confirmCheckBox || transactionForm1.$invalid">Deposit<i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
-                        </div>
-                    </fieldset>
-                </form>
             </div>
         </div>
     </div>
