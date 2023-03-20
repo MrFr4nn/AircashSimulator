@@ -19,8 +19,9 @@ namespace AircashSimulator.Controllers
         private IAircashPayService AircashPayService;
         private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
-        private const string PartnerIdCashier = "8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF";
-        private const string UserIdCashier = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
+        //private readonly Guid PartnerId = new Guid("0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6");
+        private readonly Guid PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
+        private readonly Guid UserId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
         public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             AircashPayService = aircashPayService;
