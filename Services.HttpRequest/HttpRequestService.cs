@@ -57,7 +57,7 @@ namespace Services.HttpRequest
             switch (endpoint)
             {
                 case EndpointEnum.Abon:
-                    return AircashConfiguration.AircashAbomBaseUrl;
+                    return AircashConfiguration.AircashAbonBaseUrl;
                 case EndpointEnum.M2:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.M2StagingBaseUrl : AircashConfiguration.M2DevBaseUrl;
                 case EndpointEnum.M3:
