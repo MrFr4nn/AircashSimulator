@@ -114,8 +114,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             {
                 return BadRequest();
             }
-            var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO);
-            await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: </br>time: " + DateTime.Now, 1);
+            var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO);            
             return Ok(response);
         }
 
