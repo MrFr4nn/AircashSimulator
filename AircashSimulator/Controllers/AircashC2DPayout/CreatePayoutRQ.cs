@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Services.AircashPayoutV2;
 
-namespace AircashSimulator.Controllers.AircashPayout
+namespace AircashSimulator.Controllers.AircashC2DPayout
 {
-    public class CreatePayoutRQV2
+    public class CreatePayoutRQ
     {
         public decimal Amount { get; set; }
         public string PhoneNumber { get; set; }

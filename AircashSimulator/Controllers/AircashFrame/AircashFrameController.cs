@@ -81,8 +81,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             var initiateRequestDTO = new InititateRequestV2Dto
             {
-                PartnerId = new Guid(partnerId),
-                UserId = new Guid(userId),
+                PartnerId = partnerId,
+                UserId = userId,
                 Amount = initiateRequest.Amount,
                 PayType = initiateRequest.PayType,
                 PayMethod = initiateRequest.PayMethod

@@ -658,6 +658,39 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                     </td>
                     <td>YES</td>
                 </tr>
+                <tr>
+                    <td><b>CurrencyID</b></td>
+                    <td>Integer</td>
+                    <td>
+                        Currency ISO code
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>FirstName</b></td>
+                    <td>String</td>
+                    <td>
+                        Aircash user first name
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>LastName</b></td>
+                    <td>String</td>
+                    <td>
+                        Aircash user last name
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>DateOfBirth</b></td>
+                    <td>DateTime</td>
+                    <td>
+                        Aircash user date of birth
+                    </td>
+                    <td>YES</td>
+                </tr>
+
         </table>
     </uib-tab>
     <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
@@ -1172,104 +1205,3 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
         </div>
     </uib-tab>
 </uib-tabset>
-
-
-
-<hr />
-
-
-
-<h1>Production process</h1>
-<p>
-    The production process consists of several steps:
-    <ol>
-        <li>All acceptance criteria are checked and are performing in line with expectations</li>
-        <li>
-            Aircash support will add partner in Aircash production system and allow access to Aircash production system from the partner IP addresses
-        </li>
-        <li>
-            The partner will test connection to production and allow payments for individual users (if possible) in order to test integration in “silent” production
-        </li>
-        <li>
-            After the first 3 steps are in line with expectations, the partner will enable service for all user
-        </li>
-    </ol>
-</p>
-
-<h2>Acceptance criteria</h2>
-<p>
-    To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
-</p>
-
-<table class="table table-active">
-    <thead>
-        <tr>
-            <th>Scenario</th>
-            <th>Test description</th>
-            <th>Mandatory</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><b>CheckUser</b></td>
-            <td>
-                The Check User user method returns a successful check and allows the user to make a payment
-            </td>
-            <td>
-                YES, in case partner use this method
-            </td>
-        </tr>
-        <tr>
-            <td><b>CheckUser - error</b></td>
-            <td>
-                An appropriate message is printed to the user
-            </td>
-            <td>
-                YES, in case partner use this method
-            </td>
-        </tr>
-        <tr>
-            <td><b>CreatePayout</b></td>
-            <td>
-                The partner system should take funds from the user. The user should receive funds in Aircash application.
-            </td>
-            <td>
-                YES
-            </td>
-        </tr>
-        <tr>
-            <td><b>CreatePayout - user doesn't exist with requested data</b></td>
-            <td>
-                An appropriate message is printed to the user
-            </td>
-            <td>
-                YES
-            </td>
-        </tr>
-        <tr>
-            <td><b>CreatePayout - disable a user to exceed max transaction amount</b></td>
-            <td>
-                There is no need to call the method but only to disable user to make a call with a smaller or larger amount of the transaction
-            </td>
-            <td>
-                YES
-        </tr>
-        <tr>
-            <td><b>CheckTransactionStatus</b></td>
-            <td>
-                Check transaction status
-            </td>
-            <td>
-                YES, in case partner use this method
-            </td>
-        </tr>
-    </tbody>
-</table>
-<hr />
-
-<h1>Conclusion</h1>
-<p>
-    This chapter describes the technical aspect Aircash payout process where the partner can transfer funds from the partner system to Aircash system.<br />
-    For any questions, please contact: <a href="mailto:info@aircash.eu">info@aircash.eu</a>
-</p>
-
