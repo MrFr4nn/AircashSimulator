@@ -104,7 +104,12 @@ namespace Services.Partner
 
                 var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
                 foreach (var role in roles)
-                    AircashSimulatorContext.PartnerRoles.Remove(role);
+                {
+                    if (role.PartnerRole != RoleEnum.Admin)
+                    {
+                        AircashSimulatorContext.PartnerRoles.Remove(role);
+                    }
+                }
 
                 AircashSimulatorContext.Partners.Update(partner);
             }
