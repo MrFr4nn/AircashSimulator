@@ -331,6 +331,18 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             errorResponseExample: {
                 message: "An error has occurred."
             }
+        },
+        checkTransactionStatusSales: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "05cd4905-982b-4a36-8634-0719290e4341",
+                signature: "ueIZMgee7G..."
+            },
+            responseExample: {
+                LocationID: "123",
+                Amount: 123.45,
+                AircashTransactionID: "da7109b8-1e9b-4521-b669-2438be129ade"
+            },
         }
     };
 
