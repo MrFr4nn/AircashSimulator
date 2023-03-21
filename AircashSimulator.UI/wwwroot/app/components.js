@@ -80,3 +80,82 @@ app.component('jsonformatter', {
         });
     }
 });
+app.component('countryPicker', {
+    template: `<select ng-change="$ctrl.onChangedVal()" name="country" class= "form-control p-0 text-center" style="border-radius: 5px !important;"
+                            ng-options="country.countryCode+'('+country.countryName+')' for country in $ctrl.countries"
+                            ng-model="$ctrl.output"  ng-required="true" >
+                    </select >`,
+    bindings: {
+        output: '=',
+        defaultCountry: '<'
+    },
+    controller: function () {
+        $ctrl = this;
+
+        this.$onChanges = function (changes) {
+            if (changes.defaultCountry.currentValue) {
+                this.output = this.countries.find(x => x.countryCode == changes.defaultCountry.currentValue);
+                this.defaultCountry = "";
+            }
+        };
+
+        this.$onInit = function () {
+            this.countries = [
+                { countryCode: "AT", countryName: "Austria" }, { countryCode: "BE", countryName: "Belgium" }, { countryCode: "BG", countryName: "Bulgaria" },
+                { countryCode: "HR", countryName: "Croatia" }, { countryCode: "CY", countryName: "Cyprus" }, { countryCode: "CZ", countryName: "Czech Republic" },
+                { countryCode: "DK", countryName: "Denmark" }, { countryCode: "EE", countryName: "Estonia" }, { countryCode: "FI", countryName: "Finland" },
+                { countryCode: "FR", countryName: "France" }, { countryCode: "DE", countryName: "Germany" }, { countryCode: "GR", countryName: "Greece" },
+                { countryCode: "HU", countryName: "Hungary" }, { countryCode: "IS", countryName: "Iceland" }, { countryCode: "IE", countryName: "Ireland" },
+                { countryCode: "IT", countryName: "Italy" }, { countryCode: "LV", countryName: "Latvia" }, { countryCode: "LI", countryName: "Liechtenstein" },
+                { countryCode: "LT", countryName: "Lithuania" }, { countryCode: "LU", countryName: "Luxembourg" }, { countryCode: "MT", countryName: "Malta" },
+                { countryCode: "NL", countryName: "Netherlands" }, { countryCode: "PL", countryName: "Poland" }, { countryCode: "SE", countryName: "Sweden" },
+                { countryCode: "PT", countryName: "Portugal" }, { countryCode: "RO", countryName: "Romania" }, { countryCode: "SK", countryName: "Slovakia" },
+                { countryCode: "SI", countryName: "Slovenia" }, { countryCode: "ES", countryName: "Spain" }, { countryCode: "UA", countryName: "Ukraine" },
+                { countryCode: "BA", countryName: "Bosnia and Herzegovina" }, { countryCode: "RS", countryName: "Serbia" }
+            ];
+
+            this.output = this.countries[3];
+
+            this.onChangedVal = function () {
+                this.defaultCountry = "";
+            };
+        }
+
+    }
+});
+app.component('currencyidPicker', {
+    template: `<select ng-change="$ctrl.onChangedVal()" name="country" class= "form-control p-0 text-center" style="border-radius: 5px !important;"
+                            ng-options="currency.name+'('+currency.code+')' for currency in $ctrl.currencies"
+                            ng-model="$ctrl.output"  ng-required="true" >
+                    </select >`,
+    bindings: {
+        output: '=',
+        defaultCurrency: '<'
+    },
+    controller: function () {
+        $ctrl = this;
+
+        this.$onChanges = function (changes) {
+            if (changes.defaultCurrency.currentValue) {
+                this.output = this.currencies.find(x => x.code == changes.defaultCurrency.currentValue);
+                this.defaultCurrency = 0;
+            }
+        };
+
+        this.$onInit = function () {
+            this.currencies = [
+                { name: "HRK", code: 191 },
+                { name: "EUR", code: 978 },
+                { name: "BAM", code: 977 },
+                { name: "RON", code: 946 }
+            ];
+
+            this.output = this.currencies[1];
+
+            this.onChangedVal = function () {
+                this.defaultCurrency = 0;
+            };
+        }
+
+    }
+});

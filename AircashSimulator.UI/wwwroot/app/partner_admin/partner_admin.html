@@ -108,14 +108,14 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Currency ID</label>
-                                <input ng-model="partnerPay.currencyId" class="form-control" type="number" step="1" ng-required="true">
+                                <currencyid-picker output="currencyPay" default-currency="setCurrency"></currencyid-picker>
                             </div>
                         </div>  
                         <div class="col-md-2"></div>
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label class="form-label">Country Code</label>
-                                <input ng-model="partnerPay.countryCode" class="form-control" type="text" style="text-transform: uppercase;" ng-required="true">
+                                <country-picker output="countryCodePayPicker" default-country="defaultCountry"></country-picker>
                             </div>
                             <div>
                                 <label class="form-label">User</label>
@@ -169,11 +169,11 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Currency ID</label>
-                                <input ng-model="partner.currencyId" class="form-control" type="number" step="1" ng-required="true">
+                                <currencyid-picker output="currencyNew" default-currency="setCurrency"></currencyid-picker>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Country Code</label>
-                                <input ng-model="partner.countryCode" class="form-control" style="text-transform: uppercase;" type="text" ng-required="true">
+                                <country-picker output="countryPickerCode" default-country="defaultCountry"></country-picker>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Environment</label>
