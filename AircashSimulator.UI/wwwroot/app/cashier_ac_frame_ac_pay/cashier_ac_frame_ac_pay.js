@@ -143,8 +143,12 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                     console.log($scope.frameWindow);
                     toastr.clear();
                     toastr.success(msg);
+                    openFrameInNewWindow.close();
                     if (!$scope.frameWindow.closed) {
                         $scope.frameWindow.close();
+                    }
+                    if (!openFrameInNewWindow.closed) {
+                        openFrameInNewWindow.close();
                     }
                 }
                 else if (status == 2)
