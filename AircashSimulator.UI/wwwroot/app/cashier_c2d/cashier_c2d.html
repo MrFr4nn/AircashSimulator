@@ -4,83 +4,76 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading bg-red text-white">
-                <h4 class="panel-title">C2D Flow</h4>
+                <h3>C2D Flow</h3>
                 <div class="panel-heading-btn">
 
                 </div>
             </div>
             <div class="panel-body">
-                <div class="text-center">
-                    <img style="width:200px; height: 80px;" alt="" src="/images/aircash-red.svg">
-                </div>
-                <p>
-                    The withdrawal process can be made directly to the Aircash wallet from the Merchant's online channels by selecting
-                    Aircash as a payout option.
-                </p>
-                <form action="/" method="POST" name="transactionForm1">
-                    <fieldset>
-                        <label class="form-label">Amount</label>
-                        <div class="input-group mb-3">
-                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" name="amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                            <div class="input-group-append">
-                                <div class="input-group-text">€</div>
-                            </div>
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-lg-10 col-md-12">
+                        <br />
+                        <div class="text-center mb-4 mt-3">
+                            <img style="height: 50px;" alt="" src="/images/aircash-red.svg">
                         </div>
-                        <div class="mb-3">
-                            <div id="accordion">
-                                <div class="card">
-                                    <div class="card-header" id="headingOne">
-                                        <h5 class="mb-0">
-                                            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                                                User Personal Data
-                                            </button>
-                                        </h5>
+                        <br />
+                        <h6>
+                            The withdrawal process can be made directly to the Aircash wallet from the Merchant's online channels by selecting
+                            Aircash as a payout option.
+                        </h6>
+                        <form action="/" method="POST" name="transactionForm1">
+                            <fieldset>
+                                <label class="form-label">Amount</label>
+                                <div class="input-group mb-3">
+                                    <input ng-model="createPayoutModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" name="amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">€</div>
                                     </div>
-                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
-                                        <div class="card-body">
-                                            <label class="form-label">Phone number</label>
-                                            <div class="form-row">
-                                                <div class="col-md-3">
+                                </div>
+                                <div class="mb-3">
+                                    <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                        User Personal Data
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <label class="form-label">Phone number</label>
+                                                    <phone-number-input output="createPayoutModel.phoneNumber"></phone-number-input>
                                                     <div class="mb-3">
-                                                        <select name="country" class="form-control" style="border-radius: 5px !important;"
-                                                                ng-options="item.countryName for item in countryCodes"
-                                                                ng-model="selectedCountry" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                                                        </select>
+                                                        <label class="form-label">Email</label>
+                                                        <input ng-model="createPayoutModel.email" class="form-control form-control-lg" type="email" placeholder="Enter email" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">First name</label>
+                                                        <input ng-model="createPayoutModel.firstName" class="form-control form-control-lg" type="text" placeholder="Enter first name" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Last name</label>
+                                                        <input ng-model="createPayoutModel.lastName" class="form-control form-control-lg" type="text" placeholder="Enter last name" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Birth date</label>
+                                                        <date-picker date="createPayoutModel.birthDate" isOptional="false" out="setBirthDatePayout"></date-picker>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-9">
-                                                    <div class="input-group mb-3">
-                                                        <input ng-model="selectedCountry.countryCode" class="form-control" type="text" name="countryCode" ng-disabled="true">
-                                                        <input ng-model="createPayoutModel.phoneNumber" class="form-control w-50" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Email</label>
-                                                <input ng-model="createPayoutModel.email" class="form-control" type="email" placeholder="Enter email" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">First name</label>
-                                                <input ng-model="createPayoutModel.firstName" class="form-control" type="text" placeholder="Enter first name" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Last name</label>
-                                                <input ng-model="createPayoutModel.lastName" class="form-control" type="text" placeholder="Enter last name" ng-disabled="createPayoutServiceBusy" ng-required="true">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label class="form-label">Birth date</label>
-                                                <date-picker date="createPayoutModel.birthDate" isOptional="false" out="setBirthDatePayout"></date-picker>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end">
-                            <button ng-click="confirmC2dPayment()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </div>
-                    </fieldset>
-                </form>
+                                <div class="d-flex justify-content-end">
+                                    <button ng-click="confirmC2dPayment()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
             </div>
         </div>
     </div>

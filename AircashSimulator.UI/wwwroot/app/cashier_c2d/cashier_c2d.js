@@ -51,7 +51,7 @@ cashierC2dModule.controller("cashierC2dCtrl",
 
             $scope.confirmC2dPayment = function () {
                 $scope.c2dPaymentRequest = {
-                    phoneNumber: $scope.selectedCountry.countryCode.substring(1) + $scope.createPayoutModel.phoneNumber,
+                    phoneNumber: $scope.createPayoutModel.phoneNumber,
                     amount: $scope.createPayoutModel.amount,
                     locationID: $scope.createPayoutModel.locationID,
                     parametersCreatePayout: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] },
@@ -88,46 +88,7 @@ cashierC2dModule.controller("cashierC2dCtrl",
             }
 
             $scope.setDefaults = function () {
-                $scope.countryCodes = [
-                    { countryCode: "+43", countryName: "Austria" },
-                    { countryCode: "+32", countryName: "Belgium" },
-                    { countryCode: "+359", countryName: "Bulgaria" },
-                    { countryCode: "+385", countryName: "Croatia" },
-                    { countryCode: "+357", countryName: "Cyprus" },
-                    { countryCode: "+420", countryName: "Czech Republic" },
-                    { countryCode: "+45", countryName: "Denmark" },
-                    { countryCode: "+372", countryName: "Estonia" },
-                    { countryCode: "+358", countryName: "Finland" },
-                    { countryCode: "+33", countryName: "France" },
-                    { countryCode: "+49", countryName: "Germany" },
-                    { countryCode: "+30", countryName: "Greece" },
-                    { countryCode: "+36", countryName: "Hungary" },
-                    { countryCode: "+354", countryName: "Iceland" },
-                    { countryCode: "+353", countryName: "Ireland" },
-                    { countryCode: "+39", countryName: "Italy" },
-                    { countryCode: "+371", countryName: "Latvia" },
-                    { countryCode: "+423", countryName: "Liechtenstein" },
-                    { countryCode: "+370", countryName: "Lithuania" },
-                    { countryCode: "+352", countryName: "Luxembourg" },
-                    { countryCode: "+356", countryName: "Malta" },
-                    { countryCode: "+31", countryName: "Netherlands" },
-                    { countryCode: "+47", countryName: "Norway" },
-                    { countryCode: "+48", countryName: "Poland" },
-                    { countryCode: "+351", countryName: "Portugal" },
-                    { countryCode: "+40", countryName: "Romania" },
-                    { countryCode: "+421", countryName: "Slovakia" },
-                    { countryCode: "+386", countryName: "Slovenia" },
-                    { countryCode: "+34", countryName: "Spain" },
-                    { countryCode: "+46", countryName: "Sweden" },
-
-                ];
-
                 $scope.busy = false;
-                $scope.selectedCountry = $scope.countryCodes[3];
-            };
-
-            $scope.CustomNotification = function (msg) {
-                $rootScope.showGritter("Payment confirmed ", msg);
             };
 
             const connection = new signalR.HubConnectionBuilder()
@@ -150,7 +111,7 @@ cashierC2dModule.controller("cashierC2dCtrl",
                 }
             });
             connection.on("TransactionConfirmedMessage", (message) => {
-                $scope.CustomNotification(message);
+                $rootScope.showGritter("Payment confirmed ", message);
             });
 
             start();
@@ -160,9 +121,5 @@ cashierC2dModule.controller("cashierC2dCtrl",
             $scope.setBirthDatePayout = function (date) {
                 $scope.createPayoutModel.birthDate = date;
             }
-
-
         }
-
-
     ]);

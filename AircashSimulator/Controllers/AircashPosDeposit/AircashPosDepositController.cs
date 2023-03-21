@@ -34,11 +34,11 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         private const decimal MaxAmout = 1000;
         private const string BlockedUsername = "BLOCKED_USERNAME";
         private const string BlockedEmail = "BLOCKED_USER@gmail.com";
-        private const string PartnerId = "3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20";
-        private const string PartnerIdCashier = "0bbee966-47dd-4244-8a33-c484cb2f5a03";
-        private const string UserIdCashier = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
         public readonly IHubContext<NotificationHub> _hubContext;
-        
+
+        private readonly Guid PartnerId = new Guid("3fb0c0a6-2bc0-4c9c-b1a9-fc5f8e7c4b20");
+        private readonly Guid PartnerIdCashier = new Guid("0bbee966-47dd-4244-8a33-c484cb2f5a03");
+        private readonly Guid UserIdCashier = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
 
         public AircashPosDepositController(IOptionsMonitor<AircashConfiguration> aircashConfiguration, AircashSimulatorContext aircashSimulatorContext, IUserService userService, IMatchService matchService, IAircashPosDepositService aircashPosDepositService, UserContext userContext, IHubContext<NotificationHub> hubContext)
         {
@@ -67,14 +67,12 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         [HttpPost]
         public async Task<IActionResult> ConfirmC2dPayment(C2dPaymentRQ c2dPaymentRQ)
         {
-            var partnerId = new Guid(PartnerIdCashier);
-            var userId = new Guid(UserIdCashier);
-            var responseCheckUser = await AircashPosDepositService.CheckUser(c2dPaymentRQ.PhoneNumber, userId.ToString(), partnerId, c2dPaymentRQ.ParametersCheckUser);
+            var responseCheckUser = await AircashPosDepositService.CheckUser(c2dPaymentRQ.PhoneNumber, UserIdCashier.ToString(), PartnerIdCashier, c2dPaymentRQ.ParametersCheckUser);
             var serviceResponseObj = ((Services.AircashPosDeposit.Response)responseCheckUser).ServiceResponse;
             var jsonString = JsonSerializer.Serialize(serviceResponseObj);
             if (jsonString == "{\"Status\":3}")
             {
-                var responseCreatePayout = await AircashPosDepositService.CreatePayout(partnerId, c2dPaymentRQ.Amount, c2dPaymentRQ.PhoneNumber, userId.ToString(), c2dPaymentRQ.ParametersCreatePayout);
+                var responseCreatePayout = await AircashPosDepositService.CreatePayout(PartnerIdCashier, c2dPaymentRQ.Amount, c2dPaymentRQ.PhoneNumber, UserIdCashier.ToString(), c2dPaymentRQ.ParametersCreatePayout);
                 await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>amount: " + c2dPaymentRQ.Amount + " , </br>time: " + DateTime.Now, 1);
                 return Ok(responseCreatePayout);
             }
@@ -268,7 +266,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             {
                 Amount = aircashPosDepositCreateAndConfirmPayment.Amount,
                 TransactionId = Guid.NewGuid(),
-                PartnerId = new Guid(PartnerId),
+                PartnerId = PartnerId,
                 UserId = user.UserId,
                 AircashTransactionId = aircashPosDepositCreateAndConfirmPayment.TransactionID,
                 ISOCurrencyId = (CurrencyEnum)Convert.ToInt32(aircashPosDepositCreateAndConfirmPayment.Parameters.Where(v => v.Key == "currencyID").Select(v => v.Value).FirstOrDefault()),
