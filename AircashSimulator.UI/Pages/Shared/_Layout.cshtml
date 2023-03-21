@@ -100,7 +100,8 @@
                 $rootScope.translations = @Html.Raw(translations);                
 	            var config = {
                     baseUrl: '@Configuration.GetSection("ApiUrl").Value',
-                    originUrl: '@Configuration.GetSection("BaseUrl").Value'
+                    originUrl: '@Configuration.GetSection("BaseUrl").Value',
+                    acFrameOriginUrl: '@Configuration.GetSection("AcFrameOriginUrl").Value',
 	            };
 	            return config;
             }]);
