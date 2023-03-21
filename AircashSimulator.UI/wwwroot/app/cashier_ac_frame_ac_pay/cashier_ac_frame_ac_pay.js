@@ -139,16 +139,11 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                 vm.setOptions();
 
                 if (status == 1)
-                {
-                    console.log($scope.frameWindow);
+                {                   
                     toastr.clear();
                     toastr.success(msg);
-                    openFrameInNewWindow.close();
-                    if (!$scope.frameWindow.closed) {
+                    if ($scope.frameWindow.closed == false) {
                         $scope.frameWindow.close();
-                    }
-                    if (!openFrameInNewWindow.closed) {
-                        openFrameInNewWindow.close();
                     }
                 }
                 else if (status == 2)
