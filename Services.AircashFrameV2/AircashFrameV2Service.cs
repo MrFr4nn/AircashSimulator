@@ -134,7 +134,7 @@ namespace AircashFrame
                 DeclineUrl = initiateRequestDTO.DeclineUrl,
                 OriginUrl = initiateRequestDTO.OriginUrl,
                 CancelUrl = initiateRequestDTO.CancelUrl,
-                Locale = "en-US"
+                Locale = "hr-HR"
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
@@ -159,15 +159,15 @@ namespace AircashFrame
             return responseToController;
         }
 
-        public async Task NotificationCashierFrameV2(string transactionId)
+        public async Task NotificationCashierFrameV2(Guid transactionId)
         {
-            var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == new Guid(transactionId)).FirstOrDefault();
+            var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == transactionId).FirstOrDefault();
             if (preparedAircashFrameTransaction.TransactionSatus == AcFramePreparedTransactionStatusEnum.Confirmed)
             {
                 return;
             }
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == preparedAircashFrameTransaction.PartnerId).FirstOrDefault();
-            var checkTransactionStatusResponse = await CheckTransactionStatusCashierFrameV2(partner, transactionId);
+            var checkTransactionStatusResponse = await CheckTransactionStatusCashierFrameV2(partner, transactionId.ToString());
             var responseDateTime = DateTime.UtcNow;
             if (checkTransactionStatusResponse.Status == AcFrameTransactionStatusEnum.Success)
             {
