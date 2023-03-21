@@ -172,6 +172,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     }
 
     $scope.toggePartnerPayModal = function (flag) {
+        $scope.defaultCountry = "HR";
+        $scope.setCurrency = 978;
         $("#PartnerPayModal").modal(flag ? 'show' : 'hide');
     }
 
@@ -279,6 +281,17 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
             }
         }
     }
+
+    $("#PartnerPayModal").on("hidden.bs.modal", function () {
+        $scope.SearchTable();
+        $scope.defaultCountry = "";
+        $scope.setCurrency = 0;
+    });
+    $("#PartnerModal").on("hidden.bs.modal", function () {
+        $scope.SearchTable();
+        $scope.defaultCountry = "";
+        $scope.setCurrency = 0;
+    });
 
     $scope.getPartnersDetail();
     $scope.getRoles();
