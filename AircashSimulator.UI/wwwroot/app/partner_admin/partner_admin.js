@@ -18,6 +18,7 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         getRoles: getRoles,
         getEnvironment: getEnvironment,
         savePartner: savePartner,
+        savePartnerPay: savePartnerPay,
         deletePartner: deletePartner
     });
 
@@ -66,6 +67,19 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
                 Roles: roles,
                 UseDefaultPartner: (partner.useDefaultPartner === 'true'),
                 Username: username
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function savePartnerPay(partner) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "Partner/SavePartnerPay",
+            data: {
+                PartnerName: partner.partnerName,
+                CurrencyId: partner.currencyId,
+                CountryCode: partner.countryCode,
+                Username: partner.username
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -123,6 +137,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     };
 
     $scope.SearchTable = function () {
+        $scope.partnerPay = {};
         $scope.partners = [];
         $scope.pageNumber = 1;
         $scope.getPartnersDetail();
@@ -148,7 +163,12 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $("#PartnerModal").modal(flag ? 'show' : 'hide');
     }
 
+    $scope.toggePartnerPayModal = function (flag) {
+        $("#PartnerPayModal").modal(flag ? 'show' : 'hide');
+    }
+
     $scope.savePartner = function () {
+        $scope.partner.countryCode = $scope.partner.countryCode.toUpperCase();
         $scope.sendRoles = [];
         $scope.filteredRoles = $filter('filter')($scope.roles, { selected: true });
 
@@ -166,6 +186,18 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 console.log("Error, could not save partner!");
             });
         $scope.toggePartnerModal();
+    }
+
+    $scope.partnerPay = {};
+    $scope.savePartnerPay = function () {
+        $scope.partnerPay.countryCode = $scope.partnerPay.countryCode.toUpperCase();
+        partnerAdminService.savePartnerPay($scope.partnerPay)
+            .then(function (resposne) {
+                $scope.SearchTable();
+            }, () => {
+                console.log("Error, could not save partner!");
+            });
+        $scope.toggePartnerPayModal();
     }
 
     $scope.getRoles = function () {

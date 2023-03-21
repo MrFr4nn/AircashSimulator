@@ -27,12 +27,14 @@
 
                 <div class="container">
                     <div class="row" style="margin-top: 25px">
-                        <div class="form-group col-xs-3 col-md-3">
+                        <div class="form-group col-xs-3 col-md-6">
                             <button class="btn btn-primary" ng-click="showPartnerModal(null, true);">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add partner
                             </button>
+                            <button class="btn btn-primary ml-3" ng-click="toggePartnerPayModal(true);">
+                                <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add Aircash Pay partner
+                            </button>
                         </div>
-                        <div class="col-sm-1"></div>
                         <div class="form-group col-xs-3 col-md-3">
                             <input type="search"
                                    placeholder="Search partners"
@@ -90,6 +92,47 @@
 </body>
 </html>
 
+<div class="modal fade" id="PartnerPayModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Aircash Pay Partner</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <form action="/" method="POST" name="addPartnerPayForm">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label class="form-label">Partner Name</label>
+                                <input ng-model="partnerPay.partnerName" class="form-control" type="text" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Currency ID</label>
+                                <input ng-model="partnerPay.currencyId" class="form-control" type="number" step="1" ng-required="true">
+                            </div>
+                        </div>  
+                        <div class="col-md-2"></div>
+                        <div class="col-md-5">
+                            <div class="mb-3">
+                                <label class="form-label">Country Code</label>
+                                <input ng-model="partnerPay.countryCode" class="form-control" type="text" style="text-transform: uppercase;" ng-required="true">
+                            </div>
+                            <div>
+                                <label class="form-label">User</label>
+                                <input ng-model="partnerPay.username" class="form-control" type="text" ng-required="true">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-disabled="addPartnerPayForm.$invalid" ng-click="savePartnerPay()">Save</button>
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="PartnerModal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -130,7 +173,7 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Country Code</label>
-                                <input ng-model="partner.countryCode" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partner.countryCode" class="form-control" style="text-transform: uppercase;" type="text" ng-required="true">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Environment</label>
