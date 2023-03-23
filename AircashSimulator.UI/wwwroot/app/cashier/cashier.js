@@ -36,7 +36,7 @@ cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location', '$
             { language: "en", },
             { language: "hr"  }
         ];
-
+        
         if (window.localStorage.getItem('selectedLanguage') != null) {
             angular.forEach($scope.languages, function (item, index) {
                 if (item.language == window.localStorage.getItem('selectedLanguage')) {

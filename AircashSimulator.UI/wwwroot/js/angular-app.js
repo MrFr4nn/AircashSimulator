@@ -86,6 +86,9 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
     $rootScope.setting = setting;
 
     var locale = localStorage.getItem('selectedLanguage');
+    if (!locale) {
+        locale = "en";
+    }
     $http({
         method: 'GET',
         url: config.baseUrl + "Translations/GetTranslations",
