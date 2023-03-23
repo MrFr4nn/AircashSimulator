@@ -63,6 +63,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.validateBusy = false;
     $scope.validateCoupon = function () {
         $scope.validateBusy = true;
+        $scope.validateResponded = false;
         abonOpService.validateCoupon($scope.validateCouponModel.couponCode)
             .then(function (response) {
                 if (response) {
@@ -85,6 +86,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.confirmBusy = false;
     $scope.confirmTransaction = function () {
         $scope.confirmBusy = true;
+        $scope.confirmResponded = false;
         abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode)
             .then(function (response) {
                 if (response) {

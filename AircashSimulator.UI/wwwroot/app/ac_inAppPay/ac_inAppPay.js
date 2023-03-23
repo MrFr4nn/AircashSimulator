@@ -98,6 +98,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     $scope.generateBusy = false;
     $scope.generateTransaction = function () {
         $scope.generateBusy = true;
+        $scope.generateResponded = false;
         acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID)
             .then(function (response) {
                 if (response) {
@@ -126,6 +127,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     $scope.refundBusy = false;
     $scope.refundTransaction = function (transactionId) {
         $scope.refundBusy = true;
+        $scope.refundResponded = false;
         acInAppPayService.refundTransaction(transactionId, $scope.refundTransactionModel.amount)
             .then(function (response) {
                 if (response) {

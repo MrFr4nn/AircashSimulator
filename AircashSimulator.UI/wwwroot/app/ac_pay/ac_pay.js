@@ -107,6 +107,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.generatePartnerCode = function () {
         $("#qrcode").empty();
         $scope.generateBusy = true;
+        $scope.generateResponded = false;
         acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
             .then(function (response) {
                 if (response) {
@@ -131,6 +132,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.cancelBusy = false;
     $scope.cancelTransaction = function (transactionId) {
         $scope.cancelBusy = true;
+        $scope.cancelResponded = false;
         acPayService.cancelTransaction(transactionId)
             .then(function (response) {
                 if (response) {
@@ -152,6 +154,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.refundResponded = false;
     $scope.refundTransaction = function (transactionId) {
         $scope.refundBusy = true;
+        $scope.refundResponded = false;
         acPayService.refundTransaction($scope.refundTransactionModel.amount, transactionId)
             .then(function (response) {
                 if (response) {

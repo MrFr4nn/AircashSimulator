@@ -89,6 +89,7 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
 
     $scope.checkTicket = function () {
         $scope.checkTicketServiceBusy = true;
+        $scope.checkTicketServiceResponse = false;
         aircashRedeemTicketService.checkTicket($scope.checkTicketModel.phoneNumber)
             .then(function (response) {
 
@@ -109,6 +110,7 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
 
     $scope.createRedeemTicket = function () {
         $scope.createRedeemTicketServiceBusy = true;
+        $scope.createRedeemTicketServiceResponse = false;
         aircashRedeemTicketService.createRedeemTicket($scope.createRedeemTicketModel.phoneNumber, $scope.createRedeemTicketModel.amount)
             .then(function (response) {
 
