@@ -48,22 +48,22 @@
                             </button>
                         </div>
                         <div class="col mb-3 d-flex justify-content-center">
-                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, 'Pay');">
+                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, [2]);">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add ac Pay partner
                             </button>
                         </div>
                         <div class="col mb-3 d-flex justify-content-center">
-                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, 'Gaming');">
+                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, [6,5,3,8]);">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add ac Gaming Merchant
                             </button>
                         </div>
                         <div class="col mb-3 d-flex justify-content-center">
-                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, 'AbonDistributor');">
+                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, [4]);">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add ac Abon distributor
                             </button>
                         </div>
                         <div class="col mb-3 d-flex justify-content-center">
-                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, 'Sales');">
+                            <button class="btn btn-primary btn-block" ng-click="toggePartnerNewModal(true, [4, 0]);">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add ac Sales partner
                             </button>
                         </div>
@@ -113,19 +113,19 @@
 </body>
 </html>
 
-<div class="modal fade" id="partnerSalesModal">
+<div class="modal fade" id="partnerV2Modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Aircash Pay Partner</h4>
             </div>
             <div class="modal-body" align="center">
-                <form action="/" method="POST" name="addpartnerSalesForm">
+                <form action="/" method="POST" name="addpartnerV2Form">
                     <div class="row">
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label class="form-label">Partner Name</label>
-                                <input ng-model="partnerSales.partnerName" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partnerV2.partnerName" class="form-control" type="text" ng-required="true">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Currency ID</label>
@@ -140,14 +140,14 @@
                             </div>
                             <div>
                                 <label class="form-label">User</label>
-                                <input ng-model="partnerSales.username" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partnerV2.username" class="form-control" type="text" ng-required="true">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-disabled="addpartnerSalesForm.$invalid" ng-click="savePartnerSales()">Save</button>
+                <button class="btn btn-primary" ng-disabled="addpartnerV2Form.$invalid" ng-click="savePartnerV2()">Save</button>
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
             </div>
         </div>

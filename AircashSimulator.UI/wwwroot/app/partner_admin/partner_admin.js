@@ -18,7 +18,7 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         getRoles: getRoles,
         getEnvironment: getEnvironment,
         savePartner: savePartner,
-        savePartnerSales: savePartnerSales,
+        savePartnerV2: savePartnerV2,
         deletePartner: deletePartner
     });
 
@@ -71,16 +71,16 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function savePartnerSales(partner, roleId) {
+    function savePartnerV2(partner, roleIds) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "Partner/SavePartnerSales",
+            url: config.baseUrl + "Partner/savePartnerV2",
             data: {
                 PartnerName: partner.partnerName,
                 CurrencyId: partner.currencyId,
                 CountryCode: partner.countryCode,
                 Username: partner.username,
-                RoleId: roleId
+                Roles: roleIds
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -105,8 +105,6 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     if ($scope.partnerRoles.indexOf("Admin") == -1) {
         $location.path('/forbidden');
     }
-
-    var sNewRoleId = "";
 
     $scope.partners = [];
     $scope.pageSize = 10;
@@ -140,13 +138,12 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     };
 
     $scope.SearchTable = function () {
-        $scope.partnerSales = {};
+        $scope.partnerV2 = {};
         $scope.partners = [];
         $scope.pageNumber = 1;
         $scope.getPartnersDetail();
         $scope.defaultCountry = "HR";
         $scope.setCurrency = 978;
-        sNewRoleId = "";
     }
     $scope.partner = {};
     $scope.showPartnerModal = function (partner, newPartner) {
@@ -175,11 +172,23 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $("#PartnerModal").modal(flag ? 'show' : 'hide');
     }
 
-    $scope.toggePartnerNewModal = function (flag, snewRoleId) {
+    $scope.toggePartnerNewModal = function (flag, sNewRoleId) {
         $scope.defaultCountry = "HR";
         $scope.setCurrency = 978;
-        sNewRoleId = snewRoleId;
-        $("#partnerSalesModal").modal(flag ? 'show' : 'hide');
+        if (flag) {
+            $scope.sendRolesV2 = [];
+            $scope.roles.forEach(function (role) {
+                if (sNewRoleId.find(x => x == role.roleId)) {
+                    $scope.sendRolesV2.push({
+                        RoleId: role.roleId,
+                        RoleName: role.roleName
+                    });
+                }
+
+            });
+        }
+        
+        $("#partnerV2Modal").modal(flag ? 'show' : 'hide');
     }
 
     $scope.savePartner = function () {
@@ -205,11 +214,11 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.toggePartnerModal();
     }
 
-    $scope.partnerSales = {};
-    $scope.savePartnerSales = function () {
-        $scope.partnerSales.countryCode = $scope.countryCodePayPicker.countryCode;
-        $scope.partnerSales.currencyId = $scope.currencyPay.code;
-        partnerAdminService.savePartnerSales($scope.partnerSales, sNewRoleId)
+    $scope.partnerV2 = {};
+    $scope.savePartnerV2 = function () {
+        $scope.partnerV2.countryCode = $scope.countryCodePayPicker.countryCode;
+        $scope.partnerV2.currencyId = $scope.currencyPay.code;
+        partnerAdminService.savePartnerV2($scope.partnerV2, $scope.sendRolesV2)
             .then(function (resposne) {
                 $scope.SearchTable();
                 $scope.defaultCountry = "";
@@ -288,7 +297,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         }
     }
 
-    $("#partnerSalesModal").on("hidden.bs.modal", function () {
+    $("#partnerV2Modal").on("hidden.bs.modal", function () {
         $scope.SearchTable();
         $scope.defaultCountry = "";
         $scope.setCurrency = 0;

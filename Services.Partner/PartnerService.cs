@@ -23,11 +23,6 @@ namespace Services.Partner
         private const string DefaultPrivateKey = "-";
         private const string DefaultPrivateKeyPass = "-";
 
-        private readonly RoleEnum AircashPayPartner = RoleEnum.AircashPay;
-        private readonly List<RoleEnum> AiracashGamingMerchant = new List<RoleEnum> { RoleEnum.AircashPayment, RoleEnum.AbonDeposit, RoleEnum.AbonGenerate, RoleEnum.AircashFrameV2 };
-        private readonly RoleEnum AircashAbonDistributor = RoleEnum.AbonGenerate;
-        private readonly List<RoleEnum> AircashSalesPartner = new List<RoleEnum> { RoleEnum.AbonGenerate, RoleEnum.SalePartner };
-
         public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
@@ -49,47 +44,6 @@ namespace Services.Partner
         {
             var roles = Enum.GetValues(typeof(RoleEnum)).Cast<RoleEnum>().ToList().Select(x => new Role { RoleId = x, RoleName = x.ToString() }).ToList();
             roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
-            return roles;
-        }
-
-        public List<Role> GetRolesNewPartner(string roleId)
-        {
-            var roles = new List<Role>();
-            var allRoles = Enum.GetValues(typeof(RoleEnum)).Cast<RoleEnum>().ToList().Select(x => new Role { RoleId = x, RoleName = x.ToString() }).ToList();
-            allRoles.Remove(allRoles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
-            switch (roleId)
-            {
-                case "Pay":
-                    {
-                        roles.Add(allRoles.Where(x=> x.RoleId == AircashPayPartner).FirstOrDefault());
-                        break;
-                    }
-                case "Gaming":
-                    {
-                        foreach (var id in AiracashGamingMerchant) {
-                            roles.Add(allRoles.Where(x => x.RoleId == id).FirstOrDefault());
-                        }
-                        break;
-                    }
-                case "AbonDistributor":
-                    {
-                        roles.Add(allRoles.Where(x => x.RoleId == AircashAbonDistributor).FirstOrDefault());
-                        break;
-                    }
-                case "Sales":
-                    {
-                        foreach (var id in AircashSalesPartner)
-                        {
-                            roles.Add(allRoles.Where(x => x.RoleId == id).FirstOrDefault());
-                        }
-                        break;
-                    }
-                default:
-                    {
-                        break;
-                    }
-            }
-
             return roles;
         }
 

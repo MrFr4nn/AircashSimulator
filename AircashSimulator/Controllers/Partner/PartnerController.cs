@@ -74,19 +74,10 @@ namespace AircashSimulator.Controllers.Partner
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SavePartnerSales(SavePartnerDTO savePartnerDTO)
+        public async Task<IActionResult> SavePartnerV2(PartnerDetailVM request)
         {
-            var Roles = PartnerService.GetRolesNewPartner(savePartnerDTO.RoleId);
-            var request = new PartnerDetailVM
-            {
-                PartnerName = savePartnerDTO.PartnerName,
-                CurrencyId = savePartnerDTO.CurrencyId,
-                CountryCode = savePartnerDTO.CountryCode,
-                Username = savePartnerDTO.Username,
-                Environment = Environment,
-                UseDefaultPartner = UseDefaultPartner,
-                Roles = Roles
-            };
+            request.Environment = Environment;
+            request.UseDefaultPartner = UseDefaultPartner;
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
             await PartnerService.SavePartner(request);
             return Ok("Ok");
