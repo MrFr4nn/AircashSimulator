@@ -10,6 +10,7 @@ namespace Services.Partner
     {
         Task<List<PartnerVM>> GetPartners();
         List<Role> GetRoles();
+        List<Role> GetRolesNewPartner(string roleId);
         Task<List<PartnerDetailVM>> GetPartnersDetail(int pageSize,int pageNumber, string search);
         Task SavePartner(PartnerDetailVM request);
         Task DeletePartner(PartnerDetailVM Partner);
