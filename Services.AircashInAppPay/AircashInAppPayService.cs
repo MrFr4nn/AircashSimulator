@@ -1,15 +1,11 @@
 ﻿using System;
 using AircashSignature;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using Domain.Entities.Enum;
 using System.Threading.Tasks;
-using AircashSimulator.Configuration;
 using DataAccess;
 using Services.HttpRequest;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Domain.Entities;
 
@@ -27,13 +23,14 @@ namespace Services.AircashInAppPay
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private AircashConfiguration AircashConfiguration;
         private const string GenerateTransactionURL = "https://localhost:44317/#!/success";
-        public AircashInAppPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration) 
+
+        private readonly string AircashPayGenerateTransactionEndpoint = "AircashPay/GenerateTransaction";
+        private readonly string RefundTransactionEndpoint = "AircashPay/RefundTransaction";
+        public AircashInAppPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService) 
         {
             AircashSimulatorContext= aircashSimulatorContext;
             HttpRequestService= httpRequestService;
-            AircashConfiguration= aircashConfiguration.CurrentValue;
         }
         public async Task<object> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest) 
         {
@@ -57,7 +54,7 @@ namespace Services.AircashInAppPay
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{AircashConfiguration.AircashPayGenerateTransaction}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{AircashPayGenerateTransactionEndpoint}");
 
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<GenerateTransactionApiResponse>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
@@ -84,7 +81,7 @@ namespace Services.AircashInAppPay
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{AircashConfiguration.RefundTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{RefundTransactionEndpoint}");
 
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<RefundTrancsactionApiRS>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;

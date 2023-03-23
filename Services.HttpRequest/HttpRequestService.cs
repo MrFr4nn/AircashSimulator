@@ -12,13 +12,11 @@ namespace Services.HttpRequest
     public class HttpRequestService : IHttpRequestService
     {
         private AircashConfiguration AircashConfiguration;
-        private AbonConfiguration AbonConfiguration;
         private readonly HttpClient HttpClient;
-        public HttpRequestService(HttpClient httpClient, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IOptionsMonitor<AbonConfiguration> abonConfiguration)
+        public HttpRequestService(HttpClient httpClient, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
         {
             HttpClient = httpClient;
             AircashConfiguration = aircashConfiguration.CurrentValue;
-            AbonConfiguration = abonConfiguration.CurrentValue;
         }
 
         public async Task<HttpResponse> SendRequestAircash(object toSend, HttpMethod method, string uri)
@@ -59,7 +57,7 @@ namespace Services.HttpRequest
             switch (endpoint)
             {
                 case EndpointEnum.Abon:
-                    return AbonConfiguration.BaseUrl;
+                    return AircashConfiguration.AircashAbonBaseUrl;
                 case EndpointEnum.M2:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.M2StagingBaseUrl : AircashConfiguration.M2DevBaseUrl;
                 case EndpointEnum.M3:
@@ -68,6 +66,8 @@ namespace Services.HttpRequest
                     return AircashConfiguration.AircashFrameTestUrl;
                 case EndpointEnum.FrameV2:
                     return AircashConfiguration.AircashFrameBaseUrl;
+                case EndpointEnum.SalesV2:
+                    return AircashConfiguration.AircashSalesBaseUrl;
                 default:
                     return string.Empty;
             }

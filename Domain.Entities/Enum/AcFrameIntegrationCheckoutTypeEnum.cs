@@ -8,6 +8,7 @@ namespace Domain.Entities.Enum
     {
         WindowCheckout = 1,
         RedirectCheckout = 2,
-        CustomCheckout = 3
+        CustomWindowCheckout = 3,
+        CustomRedirectCheckout = 4,
     }
 }
