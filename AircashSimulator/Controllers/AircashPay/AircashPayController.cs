@@ -108,7 +108,6 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> GenerateCashierPartnerCode(GeneratePartnerCodeRequest generatePartnerCodeRequest)
         {
             var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
