@@ -23,15 +23,6 @@ namespace AircashSimulator.Controllers.Partner
 
         private readonly EnvironmentEnum Environment = EnvironmentEnum.Staging;
         private readonly bool UseDefaultPartner = true;
-        private readonly List<Role> Roles = new List<Role> 
-                         { 
-                             new Role() 
-                             {
-                                 RoleId = RoleEnum.AircashFrameV2,
-                                 RoleName = RoleEnum.AircashFrameV2.ToString()
-                             } 
-                         };
-
 
         public PartnerController(IPartnerService partnerService, UserContext userContext, IAuthenticationService authenticationService)
         {
@@ -83,11 +74,10 @@ namespace AircashSimulator.Controllers.Partner
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SavePartnerPay(PartnerDetailVM request)
+        public async Task<IActionResult> SavePartnerV2(PartnerDetailVM request)
         {
             request.Environment = Environment;
             request.UseDefaultPartner = UseDefaultPartner;
-            request.Roles = Roles;
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
             await PartnerService.SavePartner(request);
             return Ok("Ok");

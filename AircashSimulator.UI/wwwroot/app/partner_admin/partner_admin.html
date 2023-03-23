@@ -26,32 +26,53 @@
             <div class="col-sm-12">
 
                 <div class="container">
-                    <div class="row" style="margin-top: 25px">
-                        <div class="form-group col-xs-3 col-md-6">
-                            <button class="btn btn-primary" ng-click="showPartnerModal(null, true);">
-                                <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add partner
-                            </button>
-                            <button class="btn btn-primary ml-3" ng-click="toggePartnerPayModal(true);">
-                                <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>Add Aircash Pay partner
-                            </button>
+                    <div class="row col-12 mb-3 mt-5 d-flex justify-content-between">
+                            <div class="mb-3">
+                                <button class="btn btn-primary" ng-click="showPartnerModal(null, true);">
+                                    <i class="fas fa-plus-square" aria-hidden="true" style="margin-right:3px;"></i>AC Partner
+                                </button>
+                            </div>
+                            <div class=" mb-3">
+                                <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [2]);">
+                                    <i class="fas fa-plus-square" aria-hidden="true" style="margin-right:3px;"></i> AC Pay Partner
+                                </button>
+                            </div>
+                            <div class=" mb-3">
+                                <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [6,5,3,8]);">
+                                    <i class="fas fa-plus-square" aria-hidden="true" style="margin-right:3px;"></i> AC Gaming Merchant
+                                </button>
+                            </div>
+                            <div class=" mb-3">
+                                <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [4]);">
+                                    <i class="fas fa-plus-square" aria-hidden="true" style="margin-right:3px;"></i> Abon Distributor
+                                </button>
+                            </div>
+                            <div class=" mb-3">
+                                <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [4, 0]);">
+                                    <i class="fas fa-plus-square" aria-hidden="true" style="margin-right:3px;"></i> AC Sales Partner
+                                </button>
                         </div>
-                        <div class="form-group col-xs-3 col-md-3">
-                            <input type="search"
-                                   placeholder="Search partners"
-                                   class="form-control"
-                                   ng-model="searchedPartner"
-                                   ng-model-options="{debounce: 600}"
-                                   ng-change="SearchTable();" />
-                        </div>
-                        <div class="col-sm-1">
-                            <button ng-disabled="!searchedPartner" type="button" class="btn btn-primary" ng-click="setDefaults();">Clear</button>
+                        <div class="row">
+                            <div class="col-md-2"></div>
+                            <div class="form-group">
+                                <input type="search"
+                                       placeholder="Search partners"
+                                       class="form-control"
+                                       ng-model="searchedPartner"
+                                       ng-model-options="{debounce: 600}"
+                                       ng-change="SearchTable();" />
+                            </div>
+                            <div class="col-1">
+                                <button ng-disabled="!searchedPartner" type="button" class="btn btn-primary" ng-click="setDefaults();">Clear</button>
+                            </div>
+                            <div class="col-md-2"></div>
                         </div>
                     </div>
                 </div>
 
                 <div ng-if="partners">
-                    <div class="table-responsive" style="overflow-x:visible">
-                        <table class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
+                    <div class="table-responsive" style="overflow-x:scroll">
+                        <table id="table" class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
                             <thead>
                                 <tr>
                                     <th>Partner name</th>
@@ -92,19 +113,19 @@
 </body>
 </html>
 
-<div class="modal fade" id="PartnerPayModal">
+<div class="modal fade" id="partnerV2Modal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Aircash Pay Partner</h4>
             </div>
             <div class="modal-body" align="center">
-                <form action="/" method="POST" name="addPartnerPayForm">
+                <form action="/" method="POST" name="addpartnerV2Form">
                     <div class="row">
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label class="form-label">Partner Name</label>
-                                <input ng-model="partnerPay.partnerName" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partnerV2.partnerName" class="form-control" type="text" ng-required="true">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Currency ID</label>
@@ -119,14 +140,14 @@
                             </div>
                             <div>
                                 <label class="form-label">User</label>
-                                <input ng-model="partnerPay.username" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partnerV2.username" class="form-control" type="text" ng-required="true">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" ng-disabled="addPartnerPayForm.$invalid" ng-click="savePartnerPay()">Save</button>
+                <button class="btn btn-primary" ng-disabled="addpartnerV2Form.$invalid" ng-click="savePartnerV2()">Save</button>
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
             </div>
         </div>

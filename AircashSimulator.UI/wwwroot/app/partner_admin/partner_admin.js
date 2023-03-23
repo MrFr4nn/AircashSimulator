@@ -18,7 +18,7 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         getRoles: getRoles,
         getEnvironment: getEnvironment,
         savePartner: savePartner,
-        savePartnerPay: savePartnerPay,
+        savePartnerV2: savePartnerV2,
         deletePartner: deletePartner
     });
 
@@ -71,15 +71,16 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function savePartnerPay(partner) {
+    function savePartnerV2(partner, roleIds) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "Partner/SavePartnerPay",
+            url: config.baseUrl + "Partner/savePartnerV2",
             data: {
                 PartnerName: partner.partnerName,
                 CurrencyId: partner.currencyId,
                 CountryCode: partner.countryCode,
-                Username: partner.username
+                Username: partner.username,
+                Roles: roleIds
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -137,7 +138,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     };
 
     $scope.SearchTable = function () {
-        $scope.partnerPay = {};
+        $scope.partnerV2 = {};
         $scope.partners = [];
         $scope.pageNumber = 1;
         $scope.getPartnersDetail();
@@ -171,10 +172,23 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $("#PartnerModal").modal(flag ? 'show' : 'hide');
     }
 
-    $scope.toggePartnerPayModal = function (flag) {
+    $scope.toggePartnerNewModal = function (flag, sNewRoleId) {
         $scope.defaultCountry = "HR";
         $scope.setCurrency = 978;
-        $("#PartnerPayModal").modal(flag ? 'show' : 'hide');
+        if (flag) {
+            $scope.sendRolesV2 = [];
+            $scope.roles.forEach(function (role) {
+                if (sNewRoleId.find(x => x == role.roleId)) {
+                    $scope.sendRolesV2.push({
+                        RoleId: role.roleId,
+                        RoleName: role.roleName
+                    });
+                }
+
+            });
+        }
+        
+        $("#partnerV2Modal").modal(flag ? 'show' : 'hide');
     }
 
     $scope.savePartner = function () {
@@ -200,11 +214,11 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.toggePartnerModal();
     }
 
-    $scope.partnerPay = {};
-    $scope.savePartnerPay = function () {
-        $scope.partnerPay.countryCode = $scope.countryCodePayPicker.countryCode;
-        $scope.partnerPay.currencyId = $scope.currencyPay.code;
-        partnerAdminService.savePartnerPay($scope.partnerPay)
+    $scope.partnerV2 = {};
+    $scope.savePartnerV2 = function () {
+        $scope.partnerV2.countryCode = $scope.countryCodePayPicker.countryCode;
+        $scope.partnerV2.currencyId = $scope.currencyPay.code;
+        partnerAdminService.savePartnerV2($scope.partnerV2, $scope.sendRolesV2)
             .then(function (resposne) {
                 $scope.SearchTable();
                 $scope.defaultCountry = "";
@@ -212,7 +226,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
             }, () => {
                 console.log("Error, could not save partner!");
             });
-        $scope.toggePartnerPayModal();
+        $scope.toggePartnerNewModal();
+        $scope.setDefaults();
     }
 
     $scope.getRoles = function () {
@@ -282,7 +297,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         }
     }
 
-    $("#PartnerPayModal").on("hidden.bs.modal", function () {
+    $("#partnerV2Modal").on("hidden.bs.modal", function () {
         $scope.SearchTable();
         $scope.defaultCountry = "";
         $scope.setCurrency = 0;

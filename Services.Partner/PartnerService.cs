@@ -19,6 +19,7 @@ namespace Services.Partner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IUserService UserService;
+
         private const string DefaultPrivateKey = "-";
         private const string DefaultPrivateKeyPass = "-";
 
@@ -45,7 +46,7 @@ namespace Services.Partner
             roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
             return roles;
         }
-  
+
         public async Task<List<PartnerDetailVM>> GetPartnersDetail(int pageSize, int pageNumber, string search)
         {
             Expression<Func<PartnerEntity, bool>> predicate = x => true;
