@@ -10,31 +10,47 @@
                 </div>
             </div>
             <div class="panel-body">
-                <br />
-                <div class="text-center">
-                    <img style="height:50px;" alt="" src="/images/aircash-red.svg">
-                </div>
-                <br />
-                <p>
-                    Select the partner's icon within the Aircash Marketplace. Enter your username as well as the deposit amount and confirm the deposit after which the funds will instantly be available on your account. Top-up your Aircash wallet easily with cash on more than 100.000 Aircash partner's locations or debit/credit cards. Download the free Aircash mobile application here.
-                </p>
-                <form action="/" method="POST">
-                    <fieldset>
-                        <label class="form-label">Amount</label>
-                        <div class="mb-3 input-group">
-                            <input class="form-control form-control-lg" type="text" placeholder="Enter amount">
-                            <span class="input-group-addon">€</span>
-                            <label class="form-label col-form-label col-md-5" for="amount">Enter amount between 1.00 and 1.000.00 €</label>
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-lg-10 col-md-12">
+                        <br />
+                        <div class="text-center mb-4 mt-3">
+                            <img style="height:50px;" alt="" src="/images/aircash-red.svg">
                         </div>
+                        <br />
+                        <h6>
+                            Select the partner's icon within the Aircash Marketplace. Enter your username as well as the deposit amount and confirm the deposit after which the funds will instantly be available on your account. Top-up your Aircash wallet easily with cash on more than 100.000 Aircash partner's locations or debit/credit cards. Download the free Aircash mobile application here.
+                        </h6>
+                        <form action="/" method="POST" name="paymentForm">
+                            <fieldset>
+                                <label class="form-label">Phone number</label>
+                                <phone-number-input output="paymentModel.phoneNumber"></phone-number-input>
+                                <label class="form-label">Username</label>
+                                <input class="form-control form-control-lg" ng-model="paymentModel.username" type="text" placeholder="Enter username" required />
+                                <label class="form-label">Amount</label>
+                                <div class="mb-3 input-group">
+                                    <input class="form-control form-control-lg" ng-model="paymentModel.amount" type="number" placeholder="Enter amount" min="0" step="0.01" required />
+                                    <span class="input-group-addon">€</span>
+                                    <label class="form-label col-form-label col-md-5" for="amount">Enter amount between 1.00 and 1.000.00 €</label>
+                                </div>
+                            </fieldset>
+                        </form>
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-danger w-100px me-5px">Deposit</button>
+                            <button class="btn btn-danger w-100px me-5px" ng-click="Deposit()" ng-disabled="paymentServiceBusy|| paymentForm.$invalid">Deposit <i ng-if="paymentServiceBusy" class="fa fa-cog fa-spin"> </i></button>
                         </div>
-                    </fieldset>
-                </form>
-                <div class="d-flex justify-content-around mt-5">
-                    <a href="https://apps.apple.com/us/app/aircash/id1178612530" target="_blank"><img class="img-fluid w-75" src="/images/app-store-en.svg" style="max-width:185px;" /></a>
-                    <a href="https://play.google.com/store/apps/details?id=com.aircash.aircash" target="_blank"><img class="img-fluid w-75" src="/images/google-play-en.svg" style="max-width:185px;" /></a>
-                    <a href="https://appgallery.huawei.com/#/app/C103225321" target="_blank"><img class="img-fluid w-75" src="/images/app-gallery-en.svg" style="max-width:185px;" /></a>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
+                            <div class="iconGoogleMarket col-md-4 col-sm-12 p-0 align-items-center justify-content-center">
+                                <a target="_blank" href="https://play.google.com/store/apps/details?id=com.aircash.aircash"><img src="../../app/cashier/img/google-play-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconAppleMarket col-md-4 col-sm-12 p-0 align-items-center justify-content-center">
+                                <a target="_blank" href="https://apps.apple.com/us/app/aircash/id1178612530"><img src="../../app/cashier/img/app-store-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconHuaweiMarket col-md-4 col-sm-12 p-0 align-items-center justify-content-center">
+                                <a target="_blank" href="https://appgallery.huawei.com/#/app/C103225321"><img src="../../app/cashier/img/app-gallery-en.svg" style="max-width: 70%"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
                 </div>
             </div>
         </div>

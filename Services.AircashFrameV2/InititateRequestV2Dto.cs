@@ -14,6 +14,7 @@ namespace Services.AircashFrameV2
         public decimal Amount { get; set; }
         public PayTypeEnum PayType { get; set; }
         public PayMethodEnum PayMethod { get; set; }
+        public string NotificationUrl { get; set; }
         public string SuccessUrl { get; set; }
         public string DeclineUrl { get; set; }
         public string OriginUrl { get; set; }

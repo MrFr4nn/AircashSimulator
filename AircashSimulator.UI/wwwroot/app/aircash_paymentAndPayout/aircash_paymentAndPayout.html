@@ -19,7 +19,7 @@
         <li>
             Aircash system – system that the sales partner system has to integrate with to make the payment and payout process run smoothly
         </li>
-    </ul>       
+    </ul>
 </p>
 
 <p>
@@ -37,40 +37,41 @@
         <li>
             Aircash system responds with the amount, and whether it’s a payment or payout transaction
             <ol type="a">
-                <li>If it’s a payment
-                <ol type="i">
-                    <li>
-                        The cashier asks for the money from the user
-                    </li>
-                    <li>
-                        The cashier receives the money from the user. The cashier should always receive the money before taking the next step and confirming the transaction.
-                    </li>
-                    <li>The cashier confirms the transaction</li>
-                    <li>
-                        The sales partner system calls the Aircash system to confirm the transaction (ConfirmTransaction)
-                        <ul>
-                            Potential error recovery (CheckTransactionStatus)
-                        </ul>
-                    </li>
-                </ol>
+                <li>
+                    If it’s a payment
+                    <ol type="i">
+                        <li>
+                            The cashier asks for the money from the user
+                        </li>
+                        <li>
+                            The cashier receives the money from the user. The cashier should always receive the money before taking the next step and confirming the transaction.
+                        </li>
+                        <li>The cashier confirms the transaction</li>
+                        <li>
+                            The sales partner system calls the Aircash system to confirm the transaction (ConfirmTransaction)
+                            <ul>
+                                Potential error recovery (CheckTransactionStatus)
+                            </ul>
+                        </li>
+                    </ol>
                 </li>
                 <li>
-                If it’s a payout
-                <ol type="i">
-                    <li>
-                        The cashier confirms the payout transaction
-                    </li>               
-                    <li>
-                        The sales partner system calls the Aircash system to confirm the transaction (ConfirmTransaction)
-                        <ul>
-                            Potential error recovery (CheckTransactionStatus)
-                        </ul>
-                    </li>
-                    <li>
-                        The cashier hands the user his money
-                    </li>
-                </ol>
-                </li> 
+                    If it’s a payout
+                    <ol type="i">
+                        <li>
+                            The cashier confirms the payout transaction
+                        </li>
+                        <li>
+                            The sales partner system calls the Aircash system to confirm the transaction (ConfirmTransaction)
+                            <ul>
+                                Potential error recovery (CheckTransactionStatus)
+                            </ul>
+                        </li>
+                        <li>
+                            The cashier hands the user his money
+                        </li>
+                    </ol>
+                </li>
             </ol>
     </ol>
 </p>
@@ -153,24 +154,18 @@
         </table>
     </uib-tab>
     <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "QDyIrReELi..."
-}
-</pre>
+        <jsonformatter data="checkCodeRequestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
+
+Sequence template (values in red {value} need to be replaced with the values from the request)
+<b style="font-size:12px;">
+    BarCode=<i class="text-danger">{barCode}</i>&LocationID=<i class="text-danger">{locationID}</i>&PartnerID=<i class="text-danger">{partnerID}</i>
+</b>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "QDyIrReELi..."
-}
+</pre> <jsonformatter data="checkCodeRequestExample"></jsonformatter>
+<pre>
 
 Sequence:
 BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
@@ -206,12 +201,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
         </table>
     </uib-tab>
     <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
-        <pre>
-{
-    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "Amount": 2,000.00
-}
-</pre>
+        <jsonformatter data="checkCodeResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
@@ -269,22 +259,14 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                     </fieldset>
                 </form>
             </div>
-            <div class="col-md-4" ng-if="checkCodeServiceResponse">
+            <div class="col-md-4" ng-if="checkCodeServiceResponded">
                 Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
                 Sequence: {{checkCodeSequence}}<br />
             </div>
-            <div class="col-md-4" ng-if="checkCodeServiceResponse">
+            <div class="col-md-4" ng-if="checkCodeServiceResponded">
                 Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkCodeServiceResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -374,26 +356,18 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
         </table>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
-    "locationID": "123",
-    "signature": "Iz+gMcrdNA..."
-}
-</pre>
+        <jsonformatter data="confirmTransactionRequestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
+Sequence template (values in red {value} need to be replaced with the values from the request)
+<b style="font-size:12px;">
+    BarCode=<i class="text-danger">{barCode}</i>&LocationID=<i class="text-danger">{locationID}</i>&PartnerID=<i class="text-danger">{partnerID}</i>&PartnerTransactionID=<i class="text-danger">{partnerTransactionID}</i>
+</b>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
-    "locationID": "123",
-    "signature": "Iz+gMcrdNA..."
-}
+</pre>
+        <jsonformatter data="confirmTransactionRequestExample"></jsonformatter>
+<pre>
 
 Sequence:
 BarCode=05cd4905-982b-4a36-8634-0719290e4341&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=11888f0c-7923-42db-8513-5c1f32cc83e0
@@ -438,13 +412,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
         </table>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-4" heading="Response example" classes="nav-item">
-        <pre>
-{
-    "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
-    "Amount": 2,000.00,
-    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-}
-</pre>
+        <jsonformatter data="confirmTransactionResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
@@ -508,29 +476,20 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     </fieldset>
                 </form>
             </div>
-            <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
+            <div class="col-md-4" ng-if="confirmTransactionServiceResponded">
                 Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{confirmTransactionServiceRequest}}
-</code>
-</pre>
+                <jsonformatter data="confirmTransactionServiceRequest"></jsonformatter>
                 Sequence: {{confirmTransactionSequence}}<br />
             </div>
-            <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
+            <div class="col-md-4" ng-if="confirmTransactionServiceResponded">
                 Response ({{confirmTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{confirmTransactionServiceResponse}}
-</code>
-</pre>
+                <jsonformatter data="confirmTransactionServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
 </uib-tabset>
 
 <h4>CheckTransactionStatus</h4>
-
 <p>
     Method used by the sales partner to check the status of the transaction in the Aircash system.
     Aircash recommends that the partner use this method in case of when the partner receives
@@ -603,29 +562,25 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
-    "signature": "ueIZMgee7G..."
-}
-</pre>
+        <jsonformatter data="checkTransactionStatusRequestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
+Sequence template (values in red {value} need to be replaced with the values from the request)
+<b style="font-size:12px;">
+    PartnerID=<i class="text-danger">{partnerID}</i>&PartnerTransactionID=<i class="text-danger">{partnerTransactionID}</i>
+</b>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
-    "signature": "ueIZMgee7G..."
-}
+</pre>
+        <jsonformatter data="checkTransactionStatusRequestExample"></jsonformatter>
+<pre>
 
 Sequence:
 PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=05cd4905-982b-4a36-8634-0719290e4341
 
 Signature:
 ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2yVXyNA/XhVHGAwaIr2bnaKpLVlz6K17c0FjuJUiDIxsO/R3wRQ+xpiG5pWTwKAV3m0NO8GBaqm1mavUCzflcuPhJmO/CAKVnhYCtvWaE/ZVjItzwHi0oF+y5vRhplno2l5q8r8mabPTIpL27WLe3/Rk7etcPz/FRngyGzhu0LDd0zuy7YctBHJKCaGKaBEyiUcIXdfqqnYIEoDs0h0Ec0IW5BuTJDCbRuwmmu6vkvXN/lEKwEA5S6qAd0/sw54u+fIuF8wSbxEFvRnLrAnQTEzMSP36ra/0COMJPPDZMTBUG4vwsfjjVbuqy2P6sddwILylIbgihnU6tspmMbUN4/5YavhbsXHbidpH1Pwtaoucu6CNf0WR6UBXZ13I0GHYGOQ3R15LbO9XyfaHai1mX7Wuh5S0455+gBYFe1iYwZp6x7HYGZMtZj7T4OhVjbtSmt8SdBaK/cSnfes+U1Qq26z9YlIiAaa0q+LWixOS2QN3e02qXkk0CtKwPNaq/DcL4XQmlccR/QZYVnNP7gBS/IBP+XvNLW2QjQTnmvU8v3IIYSwPwgCXluWxPVK9WGf5mtL+f4lbldpk1BOlz2itDcRoq+m4=</pre>
-</uib-tab>
+    </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
             <thead>
@@ -664,13 +619,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-4" heading="Response example" classes="nav-item">
-<pre>
-{
-    "LocationID": "123",
-    "Amount": 2,000.00,
-    "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-}
-</pre>
+        <jsonformatter data="checkTransactionStatusResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Error responses" classes="nav-item">
         <table class="table table-hover">
@@ -753,20 +702,16 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
             </div>
             <div class="col-md-0.5"></div>
             <br />
-            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-4">
+            <div ng-if="checkTransactionStatusServiceResponded" class="col-md-4">
                 Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{checkTransactionStatusServiceRequest}}</code>
-</pre>
+                <jsonformatter data="checkTransactionStatusServiceRequest"></jsonformatter>
                 Sequence: {{checkTransactionStatusSequence}}<br />
             </div>
-            <div ng-hide="!checkTransactionStatusServiceResponded" class="col-md-3.5">
+            <div ng-if="checkTransactionStatusServiceResponded" class="col-md-3">
                 <p>
                     Response ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 </p>
-                <pre>
-<code>{{checkTransactionStatusServiceResponse}}</code>
-</pre>
+                <jsonformatter data="checkTransactionStatusServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -850,32 +795,25 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
         </table>
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "AEXHWNFQD9..."
-}
-</pre>
+        <jsonformatter data="cancelTransactionRequestExample"></jsonformatter>
     </uib-tab>
-    <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+    <uib-tab index="CancelTransaction-tab-2" heading="Signature" classes="nav-item">
         <pre>
+Sequence template (values in red {value} need to be replaced with the values from the request)
+<b style="font-size:12px;">
+    PartnerID=<i class="text-danger">{partnerID}</i>&PartnerTransactionID=<i class="text-danger">{partnerTransactionID}</i>
+</b>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
-    "locationID": "123",
-    "signature": "AEXHWNFQD9..."
-}
-
+</pre>
+        <jsonformatter data="cancelTransactionRequestExample"></jsonformatter>
+<pre>
 Sequence:
 PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=05cd4905-982b-4a36-8634-0719290e4341
 
 Signature:
 AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL435r/v1qKUz0yxiJ0pqXDJud9ofY2AmfFWFvpxZRUsImcyi/jY8Ah1+/8ODbQeISJz701V7ScOBGd47JySpIq4KlPed/06qhCQmfsg8Y/ESpgik9w2PhclupCaMZ/fVXOEwcMC75i3J3mhpD6XnTGwRbte0KOVfx1Ge8QitWpVYVb6+rGEkxxZM+dhGB6nEwfYH9rVD4JTKLbB/HCL5P5SpUcNuRa0DuXzj9rG/KN/dbeipWqotoSaqQxJw2bX5xOFa8qu3Wo6ifkL5Qp/sb52sI5bx22EYV1E+P4IEF+7IBdHFCJK/ekhaPIL1m797H61fvhaz7ewNGKQxnvMmAo3SHQ0wdqnLWfqu0AAvx+MoZWXpvCNmD46DPhZEcxBcH4srXKDOPfqVF34qmhF1jjaOryzpcs8Qh6wtZikmHWmxv1HLzsjDYLsT34HNK5WQTvpnqfOKVjZTTyUQh/8jlV9oWxfpUxOVKFsdRVKhAcOJLsRFEEDVlWBC9SO/MauKRotWQZkHe26WTAPxquffgCSkzClzcwGEGmpH5wBB2CfGM2VvH+Y8jt6lgHiWkEQaCIodPylt372Z7oDtvRZdLBNERS8og=
 </pre>
-</uib-tab>
+    </uib-tab>
     <uib-tab index="CancelTransaction-tab-3" heading="Response parameters" classes="nav-item">
         Empty response
     </uib-tab>
@@ -962,18 +900,14 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </div>
             <div class="col-md-0.5"></div>
             <br />
-            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-4">
+            <div ng-if="cancelTransactionServiceResponded" class="col-md-4">
                 Request({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{cancelTransactionServiceRequest}}</code>
-</pre>
+                <jsonformatter data="cancelTransactionServiceRequest"></jsonformatter>
                 Sequence: {{cancelTransactionSequence}}
             </div>
-            <div ng-hide="!cancelTransactionServiceResponded" class="col-md-3.5">
+            <div ng-if="cancelTransactionServiceResponded" class="col-md-3">
                 Response ({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{cancelTransactionServiceResponse}}</code>
-</pre>
+                <jsonformatter data="cancelTransactionServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>

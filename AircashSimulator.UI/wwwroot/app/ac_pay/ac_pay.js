@@ -107,6 +107,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.generatePartnerCode = function () {
         $("#qrcode").empty();
         $scope.generateBusy = true;
+        $scope.generateResponded = false;
         acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
             .then(function (response) {
                 if (response) {
@@ -131,6 +132,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.cancelBusy = false;
     $scope.cancelTransaction = function (transactionId) {
         $scope.cancelBusy = true;
+        $scope.cancelResponded = false;
         acPayService.cancelTransaction(transactionId)
             .then(function (response) {
                 if (response) {
@@ -152,6 +154,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.refundResponded = false;
     $scope.refundTransaction = function (transactionId) {
         $scope.refundBusy = true;
+        $scope.refundResponded = false;
         acPayService.refundTransaction($scope.refundTransactionModel.amount, transactionId)
             .then(function (response) {
                 if (response) {
@@ -192,4 +195,45 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.aircashPay = {
+        generatePartnerCode: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                amount: 100,
+                currencyID: 191,
+                partnerTransactionID: "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+                description: "test",
+                locationID: "test",
+                signature: "WUY3NyUagi..."
+            },
+            responseExample: {
+                codeLink: "https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3da14cfc86-fb75-4e07-a02f-630db813e91e&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay&efr=1"
+            }
+        },
+        confirmTransaction: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
+                amount: 100,
+                currencyID: 191,
+                aircashTransactionID: "122e5e33-b5fb-4398-b138-c60582b9fa2b",
+                signature: "Ff3oSWm20n...",
+            }
+        },
+        refundTransaction: {
+            requestExample: {
+                amount: 50,
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "28f0f0db-69cf-4350-8084-a0d431c2c837",
+                refundPartnerTransactionID: "abc66734-9d5a-4f7f-891a-185e1bb3144a",
+                signature: "CQ83DaMKix..."
+            },
+            errorResponseExample: {
+                ErrorCode: 3,
+                ErrorMessage: "Requested amount is higher than remaining amount from the original transaction"
+            }
+        }
+    };
+
 }]);

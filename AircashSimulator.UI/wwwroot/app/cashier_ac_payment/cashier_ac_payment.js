@@ -18,8 +18,81 @@ cashierAcPaymentModule.service("cashierAcPaymentService", ['$http', '$q', 'handl
 ]);
 
 cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
-    ['$scope', '$state', 'cashierAcPaymentService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, $state, cashierAcPaymentService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-            console.log("ctrl works");
+    ['$scope', '$state', 'cashierAcPaymentService', '$filter', '$http', 'JwtParser', '$uibModal', 'config', '$rootScope',
+        function ($scope, $state, cashierAcPaymentService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {
+
+            const PARTNER_ID = "af489004-3f13-4105-b36d-7a213bbb70ac";
+
+            $scope.paymentModel = {
+                username: "",
+                phoneNumber: "",
+                amount: 0,
+            };
+
+            $scope.setDefaults = function () {
+                $scope.paymentModel.amount = 0;
+                $scope.paymentModel.username = "";
+                $scope.paymentModel.phoneNumber = "";
+                $scope.deepLinkServiceBusy = false;
+            };
+
+            $scope.Deposit = function ($event) {
+                var link = "https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D" + PARTNER_ID + "%26username%3D" + $scope.paymentModel.username + "%26amount%3D" + $scope.paymentModel.amount + "%26phoneNumber%3D" + $scope.paymentModel.phoneNumber + "&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D" + PARTNER_ID + "%26username%3D" + $scope.paymentModel.username + "%26amount%3D" + $scope.paymentModel.amount + "%26phoneNumber%3D" + $scope.paymentModel.phoneNumber + "&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D" + PARTNER_ID + "%26username%3D" + $scope.paymentModel.username + "%26amount%3D" + $scope.paymentModel.amount + "%26phoneNumber%3D" + $scope.paymentModel.phoneNumber + "&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix"
+                window.open(link, "_blank");
+                console.log(link);
+            };
+
+            $scope.CustomNotification = function (msg, status) {
+                var vm = this;
+                vm.name = 'TransactionInfo';
+
+                vm.setOptions = function () {
+                    toastr.options.positionClass = "toast-top-center";
+                    toastr.options.closeButton = true;
+                    toastr.options.showMethod = 'slideDown';
+                    toastr.options.hideMethod = 'slideUp';
+                    toastr.options.progressBar = true;
+                    toastr.options.timeOut = 10000;
+                };
+                vm.setOptions();
+
+                if (status == 1) {
+                    toastr.clear();
+                    toastr.success(msg);
+                }
+                else if (status == 2) {
+                    toastr.clear();
+                    toastr.error(msg);
+                }
+                else if (status == 3) {
+                    toastr.clear();
+                    toastr.error(msg);
+                }
+            };
+
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
+                .configureLogging(signalR.LogLevel.Information)
+                .build();
+
+            async function start() {
+                try {
+                    await connection.start();
+                    console.log("SignalR Connected.");
+                } catch (err) {
+                    console.log(err);
+                    setTimeout(start, 10000);
+                }
+            };
+            connection.onclose(async () => {
+                await start();
+            });
+            connection.on("TransactionConfirmedMessage", (message, status) => {
+                $scope.CustomNotification(message, status);
+            });
+
+            start();
+
+            $scope.setDefaults();
         }
     ]);
