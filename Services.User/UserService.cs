@@ -1,4 +1,5 @@
-﻿using DataAccess;
+﻿using AircashSimulator;
+using DataAccess;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -72,7 +73,7 @@ namespace Services.User
             {
                 var user = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == request.UserId);
                 if ((await AircashSimulatorContext.Users.Where(x => x.Username == request.UserName && x.UserId != request.UserId).ToListAsync()).Count() > 0)
-                    throw new Exception("Username already taken.");
+                    throw new SimulatorException(1, "Username already taken.");
 
                 user.Email = request.Email;
                 user.PartnerId = request.Partner.Id;
@@ -82,7 +83,7 @@ namespace Services.User
             else
             {
                 if ((await AircashSimulatorContext.Users.Where(x => x.Username == request.UserName).ToListAsync()).Count() > 0)
-                    throw new Exception("Username already taken.");
+                    throw new SimulatorException(1, "Username already taken.");
 
                 await AircashSimulatorContext.Users.AddAsync(new UserEntity
                 {

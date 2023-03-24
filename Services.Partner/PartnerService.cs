@@ -12,6 +12,7 @@ using AircashSimulator.Extensions;
 using System.Text;
 using System.Security.Cryptography;
 using Services.User;
+using AircashSimulator;
 
 namespace Services.Partner
 {
@@ -186,7 +187,7 @@ namespace Services.Partner
             }
 
             if ((await AircashSimulatorContext.Users.Where(x => x.Username == username).ToListAsync()).Count() > 0)
-                throw new Exception("Username already taken.");
+                throw new SimulatorException(1, "Username already taken.");
 
             await AircashSimulatorContext.Users.AddAsync(new UserEntity
             {
