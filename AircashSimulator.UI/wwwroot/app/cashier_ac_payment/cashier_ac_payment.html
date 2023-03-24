@@ -18,25 +18,25 @@
                             <img style="height:50px;" alt="" src="/images/aircash-red.svg">
                         </div>
                         <br />
-                        <h6>
-                            Select the partner's icon within the Aircash Marketplace. Enter your username as well as the deposit amount and confirm the deposit after which the funds will instantly be available on your account. Top-up your Aircash wallet easily with cash on more than 100.000 Aircash partner's locations or debit/credit cards. Download the free Aircash mobile application here.
+                        <h6 ng-bind-html="translationsCashier.ac_payment_cashier_description">
+                            {{translationsCashier.ac_payment_cashier_description}}
                         </h6>
                         <form action="/" method="POST" name="paymentForm">
                             <fieldset>
-                                <label class="form-label">Phone number</label>
+                                <label class="form-label">{{translationsCashier.cashier_phone_number_input_label}}</label>
                                 <phone-number-input output="paymentModel.phoneNumber"></phone-number-input>
-                                <label class="form-label">Username</label>
-                                <input class="form-control form-control-lg" ng-model="paymentModel.username" type="text" placeholder="Enter username" required />
-                                <label class="form-label">Amount</label>
+                                <label class="form-label">{{translationsCashier.ac_payment_cashier_username_input_label}}</label>
+                                <input class="form-control form-control-lg" ng-model="paymentModel.username" type="text" placeholder="{{translationsCashier.ac_payment_cashier_username_placeholder}}" required />
+                                <label class="form-label">{{translationsCashier.cashier_amount_input_label}}</label>
                                 <div class="mb-3 input-group">
-                                    <input class="form-control form-control-lg" ng-model="paymentModel.amount" type="number" placeholder="Enter amount" min="0" step="0.01" required />
+                                    <input class="form-control form-control-lg" ng-model="paymentModel.amount" type="number" placeholder="{{translationsCashier.cashier_amount_placeholder}}" min="0" step="0.01" required />
                                     <span class="input-group-addon">€</span>
-                                    <label class="form-label col-form-label col-md-5" for="amount">Enter amount between 1.00 and 1.000.00 €</label>
+                                    <label class="form-label col-form-label col-md-5" for="amount">{{translationsCashier.cashier_amount_input_note}}</label>
                                 </div>
                             </fieldset>
                         </form>
                         <div class="d-flex justify-content-end">
-                            <button class="btn btn-danger w-100px me-5px" ng-click="Deposit()" ng-disabled="paymentServiceBusy|| paymentForm.$invalid">Deposit <i ng-if="paymentServiceBusy" class="fa fa-cog fa-spin"> </i></button>
+                            <button class="btn btn-danger w-100px me-5px" ng-click="Deposit()" ng-disabled="paymentServiceBusy|| paymentForm.$invalid">{{translationsCashier.ac_payment_cashier_deposit_button}}<i ng-if="paymentServiceBusy" class="fa fa-cog fa-spin"> </i></button>
                         </div>
                         <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
                             <div class="iconGoogleMarket col-md-4 col-sm-12 p-0 align-items-center justify-content-center">
