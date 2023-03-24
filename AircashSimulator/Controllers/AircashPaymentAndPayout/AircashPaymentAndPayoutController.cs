@@ -45,7 +45,6 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> CashierCheckCode(CheckCodeRequest checkCodeRequest)
         {
             var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, new Guid(PARTNER_ID));
@@ -53,7 +52,6 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
             var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, new Guid(PARTNER_ID), new Guid(USER_ID));
