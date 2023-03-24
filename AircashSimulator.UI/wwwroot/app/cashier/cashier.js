@@ -6,6 +6,7 @@
     'cashier_acPayment',
     'cashier_acPayout',
     'cashier_acRedeemTicket',
+    'cashier_acC2DPayout',
     'cashier_acPaymentAndPayout',
     'cashier_c2d'
 ]);
@@ -29,8 +30,7 @@ cashierModule.service("cashierService", ['$http', '$q', 'handleResponseService',
 
 
 cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location',
-    function ($scope, $rootScope,$location) {
-        $location.path('/cashier/menu');
-        }
+    function ($scope, $rootScope, $location) {
 
+    }
 ]);

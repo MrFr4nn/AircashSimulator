@@ -115,6 +115,7 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.initiateBusy = false;
     $scope.initiate = function () {
         $scope.initiateBusy = true;
+        $scope.initiateResponded = false;
         acFrameService.initiate($scope.initiateModel.payType, $scope.initiateModel.payMethod, $scope.initiateModel.amount, $scope.initiateModel.currency)
             .then(function (response) {
                 if (response) {
@@ -138,6 +139,7 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.statusBusy = false;
     $scope.transactionStatus = function (transactionId) {
         $scope.statusBusy = true;
+        $scope.statusResponded = false;
         acFrameService.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {

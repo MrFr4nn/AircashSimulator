@@ -22,21 +22,17 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
         checkTransactionStatus: checkTransactionStatus
     });
     function checkUser(checkUserRequest) {
-        console.log(config.baseUrl + "aircashPayout / CheckUserV2");
-        console.log(checkUserRequest);
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CheckUserV2",
+            url: config.baseUrl + "aircashC2DPayout/CheckUser",
             data: checkUserRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function createPayout(createPayoutRequest) {
-        console.log(config.baseUrl + "aircashPayout / CreatePayoutV2");
-        console.log(createPayoutRequest);
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CreatePayoutV2",
+            url: config.baseUrl + "aircashC2DPayout/CreatePayout",
             data: createPayoutRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -44,7 +40,7 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
     function checkTransactionStatus(partnerTransactionId) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CheckTransactionStatus",
+            url: config.baseUrl + "aircashC2DPayout/CheckTransactionStatus",
             data: {
                 PartnerTransactionId: partnerTransactionId
             }
@@ -263,7 +259,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
                 PartnerUserID: "12345",
                 Parameters: [
                     {
-                        Key: "emai",
+                        Key: "email",
                         Value: "user@example.net"
                     },
                     {
@@ -300,7 +296,11 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             },
             responseExample: {
                 BarCode: "05cd4905-982b-4a36-8634-0719290e4341",
-                Amount: 2000.00
+                Amount: 2000.00,
+                CurrencyId: 978,
+                FirstName: "John",
+                LastName: "Doe",
+                DateOfBirth: "1990-01-01"
             }
         },
         confirmTransaction: {
@@ -331,6 +331,18 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             errorResponseExample: {
                 message: "An error has occurred."
             }
+        },
+        checkTransactionStatusSales: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "05cd4905-982b-4a36-8634-0719290e4341",
+                signature: "ueIZMgee7G..."
+            },
+            responseExample: {
+                LocationID: "123",
+                Amount: 123.45,
+                AircashTransactionID: "da7109b8-1e9b-4521-b669-2438be129ade"
+            },
         }
     };
 

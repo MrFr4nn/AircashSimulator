@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Services.AircashFrameV2;
-using System.Runtime.CompilerServices;
 
 namespace AircashFrame
 {
@@ -22,6 +21,9 @@ namespace AircashFrame
         private IHttpRequestService HttpRequestService;
         private AircashConfiguration AircashConfiguration;
         private ILogger<AircashFrameV2Service> Logger;
+
+        private readonly string TransactionStatusEndpoint = "status";
+        private readonly string InitiateEndpoint = "initiate";
 
         public AircashFrameV2Service(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashFrameV2Service> logger)
         {
@@ -73,7 +75,7 @@ namespace AircashFrame
             Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashInitiateRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"https://stage-frame-api.aircash.eu/api/v2/initiate");
+            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{AircashConfiguration.AircashFrameBaseUrl}{InitiateEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);
@@ -132,12 +134,12 @@ namespace AircashFrame
                 DeclineUrl = initiateRequestDTO.DeclineUrl,
                 OriginUrl = initiateRequestDTO.OriginUrl,
                 CancelUrl = initiateRequestDTO.CancelUrl,
-                Locale = "en-US"
+                Locale = "hr-HR"
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashInitiateRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{AircashConfiguration.AircashFrameBaseUrl}" + "initiate");
+            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{AircashConfiguration.AircashFrameBaseUrl}{InitiateEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);
@@ -157,15 +159,15 @@ namespace AircashFrame
             return responseToController;
         }
 
-        public async Task NotificationCashierFrameV2(string transactionId)
+        public async Task NotificationCashierFrameV2(Guid transactionId)
         {
-            var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == new Guid(transactionId)).FirstOrDefault();
+            var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == transactionId).FirstOrDefault();
             if (preparedAircashFrameTransaction.TransactionSatus == AcFramePreparedTransactionStatusEnum.Confirmed)
             {
                 return;
             }
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == preparedAircashFrameTransaction.PartnerId).FirstOrDefault();
-            var checkTransactionStatusResponse = await CheckTransactionStatusCashierFrameV2(partner, transactionId);
+            var checkTransactionStatusResponse = await CheckTransactionStatusCashierFrameV2(partner, transactionId.ToString());
             var responseDateTime = DateTime.UtcNow;
             if (checkTransactionStatusResponse.Status == AcFrameTransactionStatusEnum.Success)
             {
@@ -214,7 +216,7 @@ namespace AircashFrame
             var aircashTransactionStatusResponse = new AircashTransactionStatusResponseV2();
             if (AircashSignatureService.VerifySignature(dataToSign, aircashTransactionStatusRequest.Signature, $"{AircashConfiguration.AcFramePublicKey}"))
             {
-                var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{AircashConfiguration.TransactionStatusEndpoint}");             
+                var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{TransactionStatusEndpoint}");             
                 aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2>(response.ResponseContent);
                 return aircashTransactionStatusResponse;
             }

@@ -90,6 +90,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
 
     $scope.createCoupon = function () {
         $scope.createServiceBusy = true;
+        $scope.createServiceResponse = false;
         abonSpService.createCoupon($scope.createCouponModel.value, $scope.createCouponModel.pointOfSaleId)
             .then(function (response) {
                 
@@ -113,6 +114,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
 
     $scope.cancelCoupon = function () {
         $scope.cancelServiceBusy = true;
+        $scope.cancelServiceResponse = false;
         abonSpService.cancelCoupon($scope.cancelCouponModel.cancelSerialNumber, $scope.cancelCouponModel.cancelPointOfSaleId)
             .then(function (response) {
                 if (response) {
