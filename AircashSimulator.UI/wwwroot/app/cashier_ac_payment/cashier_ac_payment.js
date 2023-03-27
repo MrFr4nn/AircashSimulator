@@ -22,6 +22,7 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
         function ($scope, $state, cashierAcPaymentService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {
 
             const PARTNER_ID = "af489004-3f13-4105-b36d-7a213bbb70ac";
+            var connect = true;
 
             $scope.paymentModel = {
                 username: "",
@@ -42,34 +43,6 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                 console.log(link);
             };
 
-            $scope.CustomNotification = function (msg, status) {
-                var vm = this;
-                vm.name = 'TransactionInfo';
-
-                vm.setOptions = function () {
-                    toastr.options.positionClass = "toast-top-center";
-                    toastr.options.closeButton = true;
-                    toastr.options.showMethod = 'slideDown';
-                    toastr.options.hideMethod = 'slideUp';
-                    toastr.options.progressBar = true;
-                    toastr.options.timeOut = 10000;
-                };
-                vm.setOptions();
-
-                if (status == 1) {
-                    toastr.clear();
-                    toastr.success(msg);
-                }
-                else if (status == 2) {
-                    toastr.clear();
-                    toastr.error(msg);
-                }
-                else if (status == 3) {
-                    toastr.clear();
-                    toastr.error(msg);
-                }
-            };
-
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
                 .configureLogging(signalR.LogLevel.Information)
@@ -81,18 +54,25 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                     console.log("SignalR Connected.");
                 } catch (err) {
                     console.log(err);
-                    setTimeout(start, 10000);
+                    setTimeout(start, 1000);
                 }
             };
             connection.onclose(async () => {
-                await start();
+                if (connect) {
+                    await start();
+                }
             });
-            connection.on("TransactionConfirmedMessage", (message, status) => {
-                $scope.CustomNotification(message, status);
+            connection.on("TransactionConfirmedMessagePayment", (message) => {
+                $rootScope.showGritter("Payment received ", message);
             });
 
             start();
 
             $scope.setDefaults();
+
+            $rootScope.$on('$locationChangeStart', function (event, next, current) {
+                connect = false; 
+                connection.stop();
+            });
         }
     ]);
