@@ -23,6 +23,7 @@ var app = angular.module('app', [
     'logo',
     'acPayStaticCode',
     'aircashPayoutV2',
+    'ac_business_site',
     'cashier'
 ]);
 
