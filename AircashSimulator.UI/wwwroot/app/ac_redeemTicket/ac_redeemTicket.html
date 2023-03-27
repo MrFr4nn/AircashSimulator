@@ -151,36 +151,14 @@
                 </table>
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
-                <pre>
-{
-    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
-    "parameters": [{
-        "key": "TicketID",
-        "value: "123456789"
-    },
-    {
-        "key": "PIN",
-        "value": "1234"
-    }],
-    "signature": "i6lNUCLl3...."
-}      
-</pre>
+                <jsonformatter data="aircashRedeemTicket.checkTicket.inputParametersExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
-                <pre>
+<pre>
 Request example:
-{
-    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
-    "parameters": [{
-        "key": "TicketID",
-        "value: "123456789"
-    },
-    {
-        "key": "PIN",
-        "value": "1234"
-    }],
-    "signature": "i6lNUCLl3...."
-}
+</pre>
+                    <jsonformatter data="aircashRedeemTicket.checkTicket.inputParametersExample"></jsonformatter>
+<pre>
 
 Sequence:
 AircashTransactionID=11112406-f672-4c27-a415-e26eb3ecd111&Parameters=Key=TicketID&Value=123456789,Key=PIN&Value=1234
@@ -236,19 +214,11 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 </div>
             </uib-tab>
             <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
-                <pre>
-{
-	"status": 1
-}
-
+                <jsonformatter data="aircashRedeemTicket.checkTicket.outputParametersExample.first"></jsonformatter>
+<pre>
 	   or
-
-{
-	"status": 5,
-	"amount": 123.45
-	"currencyISOCode": "EUR"
-}
 </pre>
+                <jsonformatter data="aircashRedeemTicket.checkTicket.outputParametersExample.second"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">
@@ -385,36 +355,14 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 </table>
             </uib-tab>
             <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Input parameters example" classes="nav-item">
-                <pre>
-{
-    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
-    "parameters": [{
-        "key": "TicketID",
-        "value: "123456789"
-    },
-    {
-        "key": "PIN",
-        "value": "1234"
-    }],
-    "signature": "i6lNUCLl3...."
-}      
-</pre>
+                <jsonformatter data="aircashRedeemTicket.redeemTicket.inputParametersExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
-                <pre>
+<pre>
 Request example:
-{
-    "aircashTransactionID": "11112406-f672-4c27-a415-e26eb3ecd111"
-    "parameters": [{
-        "key": "TicketID",
-        "value: "123456789"
-    },
-    {
-        "key": "PIN",
-        "value": "1234"
-    }],
-    "signature": "i6lNUCLl3...."
-}
+</pre>
+                    <jsonformatter data="aircashRedeemTicket.redeemTicket.inputParametersExample"></jsonformatter>
+<pre>
 
 Sequence:
 AircashTransactionID=11112406-f672-4c27-a415-e26eb3ecd111&Parameters=Key=TicketID&Value=123456789,Key=PIN&Value=1234
@@ -478,20 +426,11 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 </div>
             </uib-tab>
             <uib-tab index="checkUser1-tab-4" heading="Output parameters example" classes="nav-item">
-                <pre>
-{
-	"status": 1
-}
-
+                <jsonformatter data="aircashRedeemTicket.redeemTicket.outputParametersExample.first"></jsonformatter>
+<pre>
 	or
-
-{
-	"status": 5,
-	"amount": 123.45
-	"currencyISOCode": "EUR",
-	"partnerTransactionID": "ABC…123"
-}
 </pre>
+                <jsonformatter data="aircashRedeemTicket.redeemTicket.outputParametersExample.second"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
                 <table class="table table-hover">

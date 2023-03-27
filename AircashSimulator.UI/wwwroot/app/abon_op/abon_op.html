@@ -149,23 +149,14 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "signature": "BPz2mGu8UG..."
-}
-</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
-                <pre>
+<pre>
 Request example:
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "signature": "BPz2mGu8UG..."
-}
-
+</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.requestExample"></jsonformatter>
+<pre>
 Sequence:
 CouponCode=5460446045144493&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
 
@@ -246,18 +237,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
-                <pre>
-{
-   "couponValue": 50.0,
-   "isValid": true,
-   "ISOCurrency": "HRK"
-   "providerTransactionId": "",
-   "salePartnerId": "31dce332-1d55-4459-b166-d8d33a78226c",
-   "isoCountryCode": null,
-   "originalISOCurrency": "HRK",
-   "originalCouponValue": 50.0
-}
-</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
                 <table class="table table-hover">
@@ -312,13 +292,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                 </table>
             </uib-tab>            
             <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-                <pre>
-{
-   "code": 1,
-   "message": "Invalid ProviderId",
-   "additionalData": null
-}
-</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -334,18 +308,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                         </form>
                     </div>
                     <br />
-                    <div ng-hide="!validateResponded" class="col-md-4">
+                    <div ng-if="validateResponded" class="col-md-4">
                         Request ({{ValidateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ValidateServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="ValidateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceValidate}}
                     </div>
-                    <div ng-hide="!validateResponded" class="col-md-4">
+                    <div ng-if="validateResponded" class="col-md-4">
                         Response ({{ValidateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ValidateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="ValidateServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>
@@ -439,27 +409,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "providerTransactionId": "d711c31b-9e20-48dd-a749-91778627b569",
-    "userId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "signature": "CVrMFUqDzg..."
-}
-</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
-                <pre>
+<pre>
 Request example:
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "providerTransactionId": "d711c31b-9e20-48dd-a749-91778627b569",
-    "userId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "signature": "CVrMFUqDzg..."
-}
-
+</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.requestExample"></jsonformatter>
+<pre>
 Sequence:
 CouponCode=5460446045144493&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=d711c31b-9e20-48dd-a749-91778627b569&UserId=574f32a7-4ecb-48b2-9723-ac660b9c835d
 
@@ -503,13 +460,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
-                <pre>
-{
-   "couponValue": 50.0,
-   "ISOCurrency": "HRK"
-   "providerTransactionId": "33352406-f672-4c27-a415-e26eb3ecd691",
-}
-</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
                 <table class="table table-hover">
@@ -570,17 +521,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-                <pre>
-{
-   "code": 4,
-   "message": "Coupon Already Used",
-   "additionalData": {
-           "couponValue": 50.0,
-           "ISOCurrency": "HRK",
-           "providerTransactionId": "33352406-f672-4c27-a415-e26eb3ecd691",
-   }
-}
-</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -596,18 +537,14 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                         </form>
                     </div>
                     <br />
-                    <div ng-hide="!confirmResponded" class="col-md-5">
+                    <div ng-if="confirmResponded" class="col-md-5">
                         Request ({{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ConfirmServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="ConfirmServiceRequest"></jsonformatter>
                         Sequence: {{sequenceConfirm}}
                     </div>
-                    <div ng-hide="!confirmResponded" class="col-md-3">
+                    <div ng-if="confirmResponded" class="col-md-3">
                         Response ({{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ConfirmServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="ConfirmServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>

@@ -357,44 +357,14 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766",
-    "amount": "100",
-    "currencyId": 191,
-    "payType": 0,
-    "payMethod": 2,
-    "notificationUrl": "https://aircash.eu",
-    "successUrl": null,
-    "declineUrl": null,
-    "cancelUrl": null,
-    "originUrl": null,
-    "locale": "en-US",
-    "signature": "tc5NZjj7hO..."
-}
-</pre>
+                <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
                 <pre>
 Request example:
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766",
-    "amount": "100",
-    "currencyId": 191,
-    "payType": 0,
-    "payMethod": 2,
-    "notificationUrl": "https://aircash.eu",
-    "successUrl": null,
-    "declineUrl": null,
-    "cancelUrl": null,
-    "originUrl": null,
-    "locale": "en-US",
-    "signature": "tc5NZjj7hO..."
-}
+</pre>
+                <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 Amount=100&CancelUrl=&CurrencyId=191&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=
@@ -431,12 +401,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="200 OK response example" classes="nav-item">
-                <pre>
-{
-    "transactionId": "e22cd71a-276e-47e1-b7af-3d3a504e0ef9",
-    "url": "https://stage-frame.aircash.eu/e22cd71a-276e-47e1-b7af-3d3a504e0ef9"
-}
-</pre>
+                <jsonformatter data="aircashFrameV2.initiate.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
                 <table class="table table-hover">
@@ -500,13 +465,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
-                <pre>
-{
-    "code": 1,
-    "message": "Invalid ProviderId",
-    "additionalData": null 
-}
-</pre>
+                <jsonformatter data="aircashFrameV2.initiate.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
@@ -538,19 +497,14 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                         </form>
                     </div>
                     <br />
-                    <div ng-hide="!initiateResponded" class="col-md-4">
+                    <div ng-if="initiateResponded" class="col-md-4">
                         Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{InitiateServiceRequest}}</code>
-</pre>
-
+                        <jsonformatter data="InitiateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceInitiate}}
                     </div>
                     <div ng-hide="!initiateResponded" class="col-md-5">
                         Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre style="height: 25%">
-<code>{{InitiateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="InitiateServiceResponse"></jsonformatter>
                         <a href="" ng-click="showFrame()">Open Aircash Frame</a>
                     </div>
                 </div>
@@ -664,22 +618,14 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766",
-    "signature": "dUrE4gtau5..."
-}
-</pre>
+                <jsonformatter data="aircashFrameV2.transactionStatus.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
                 <pre>
 Request example:
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionId": "1a74bb41-36fe-4493-9ccf-30879b994766",
-    "signature": "dUrE4gtau5..."
-}
+</pre>
+                <jsonformatter data="aircashFrameV2.transactionStatus.requestExample"></jsonformatter>
+<pre>
 
 Sequence: 
 PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766
@@ -798,13 +744,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response example" classes="nav-item">
-                <pre>
-{
-    "code": 1003,
-    "message": "Transaction not processed",
-    "additionalData": null
-}
-</pre>
+                <jsonformatter data="aircashFrameV2.transactionStatus.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
                 <div class="row">
@@ -842,18 +782,14 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                         </div>
                     </div>
                     <br />
-                    <div ng-hide="!statusResponded" class="col-md-4">
+                    <div ng-if="statusResponded" class="col-md-4">
                         Request ({{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{StatusServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="StatusServiceRequest"></jsonformatter>
                         Sequence: {{sequenceStatus}}
                     </div>
-                    <div ng-hide="!statusResponded" class="col-md-4">
+                    <div ng-if="statusResponded" class="col-md-4">
                         Request ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{StatusServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="StatusServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>

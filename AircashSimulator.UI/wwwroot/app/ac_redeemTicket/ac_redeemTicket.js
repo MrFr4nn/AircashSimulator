@@ -89,6 +89,7 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
 
     $scope.checkTicket = function () {
         $scope.checkTicketServiceBusy = true;
+        $scope.checkTicketServiceResponse = false;
         aircashRedeemTicketService.checkTicket($scope.checkTicketModel.phoneNumber)
             .then(function (response) {
 
@@ -109,6 +110,7 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
 
     $scope.createRedeemTicket = function () {
         $scope.createRedeemTicketServiceBusy = true;
+        $scope.createRedeemTicketServiceResponse = false;
         aircashRedeemTicketService.createRedeemTicket($scope.createRedeemTicketModel.phoneNumber, $scope.createRedeemTicketModel.amount)
             .then(function (response) {
 
@@ -150,4 +152,57 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.aircashRedeemTicket = {
+        checkTicket: {
+            inputParametersExample: {
+                aircashTransactionID: "11112406-f672-4c27-a415-e26eb3ecd111",
+                parameters: [{
+                    key: "TicketID",
+                    value: "123456789"
+                },
+                {
+                    key: "PIN",
+                    value: "1234"
+                }],
+                signature: "i6lNUCLl3...."
+            },
+            outputParametersExample: {
+                first: {
+                    status: 1
+                },
+                second: {
+                    status: 5,
+                    amount: 123.45,
+                    currencyISOCode: "EUR"
+                }
+            }
+        },
+        redeemTicket: {
+            inputParametersExample: {
+                aircashTransactionID: "11112406-f672-4c27-a415-e26eb3ecd111",
+                parameters: [{
+                    key: "TicketID",
+                    value: "123456789"
+                },
+                {
+                    key: "PIN",
+                    value: "1234"
+                }],
+                signature: "i6lNUCLl3...."
+            },
+            outputParametersExample: {
+                first: {
+                    status: 1
+                },
+                second: {
+                    status: 5,
+                    amount: 123.45,
+                    currencyISOCode: "EUR",
+                    partnerTransactionID: "ABC…123"
+                }
+            }
+        }
+    };
+
 }]);

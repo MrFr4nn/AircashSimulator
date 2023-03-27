@@ -19,6 +19,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\images\ac_business_site_1.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Update="wwwroot\images\abonExample.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

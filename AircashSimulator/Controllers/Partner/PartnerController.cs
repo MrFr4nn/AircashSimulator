@@ -7,6 +7,8 @@ using AircashSimulator.Extensions;
 using DataAccess;
 using System.Linq;
 using Services.Authentication;
+using Domain.Entities.Enum;
+using System.Collections.Generic;
 
 namespace AircashSimulator.Controllers.Partner
 {
@@ -18,6 +20,9 @@ namespace AircashSimulator.Controllers.Partner
         private readonly IPartnerService PartnerService;
         private readonly IAuthenticationService AuthenticationService;
         private readonly UserContext UserContext;
+
+        private readonly EnvironmentEnum Environment = EnvironmentEnum.Staging;
+        private readonly bool UseDefaultPartner = true;
 
         public PartnerController(IPartnerService partnerService, UserContext userContext, IAuthenticationService authenticationService)
         {
@@ -51,7 +56,6 @@ namespace AircashSimulator.Controllers.Partner
         [Authorize]
         public async Task<IActionResult> GetPartnersDetail(int pageSize, int pageNumber, string search)
         {
-           
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
 
             var partners = await PartnerService.GetPartnersDetail(pageSize, pageNumber, search);
@@ -68,6 +72,19 @@ namespace AircashSimulator.Controllers.Partner
             return Ok("Ok");
         }
 
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> SavePartnerV2(PartnerDetailVM request)
+        {
+            request.Environment = Environment;
+            request.UseDefaultPartner = UseDefaultPartner;
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+            await PartnerService.SavePartner(request);
+            return Ok("Ok");
+        }
+
+        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> DeletePartner(PartnerDetailVM Partner)
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
