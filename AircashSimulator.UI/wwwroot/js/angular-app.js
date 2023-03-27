@@ -24,6 +24,7 @@ var app = angular.module('app', [
     'acPayStaticCode',
     'aircashPayoutV2',
     'ac_business_site',
+    'ac_test_application',
     'cashier'
 ]);
 
