@@ -35,7 +35,7 @@ namespace Services.Authentication
             var user = await AircashSimulatorContext.Users.Where(u => u.Username == username).SingleOrDefaultAsync();
 
             if (user is null)
-                throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidUsername, "User not found");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidUsername, "invalid username");
 
             string passwordHash = "";
             using (SHA256 sha256Hash = SHA256.Create())
