@@ -140,6 +140,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
     $scope.initiateBusy = false;
     $scope.initiateRedirectCheckout = function () {
         $scope.initiateBusy = true;
+        $scope.initiateResponded = false;
         acFrameV2Service.initiateRedirectCheckout(
             $scope.initiateModel.payType,
             $scope.initiateModel.payMethod,
@@ -214,6 +215,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
     $scope.statusBusy = false;
     $scope.transactionStatus = function (transactionId) {
         $scope.statusBusy = true;
+        $scope.statusResponded = false;
         acFrameV2Service.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {

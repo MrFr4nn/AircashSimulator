@@ -697,12 +697,12 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     </fieldset>
                 </form>
             </div>
-            <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
+            <div class="col-md-4" ng-if="confirmTransactionServiceResponded">
                 Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="confirmTransactionServiceRequest"></jsonformatter>
                 Sequence: {{confirmTransactionSequence}}<br />
             </div>
-            <div class="col-md-4" ng-if="confirmTransactionServiceResponse">
+            <div class="col-md-4" ng-if="confirmTransactionServiceResponded">
                 Response ({{confirmTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="confirmTransactionServiceResponse"></jsonformatter>
             </div>
@@ -711,7 +711,6 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
 </uib-tabset>
 
 <h4>CheckTransactionStatus</h4>
-
 <p>
     Method used by the sales partner to check the status of the transaction in the Aircash system.
     Aircash recommends that the partner use this method in case of when the partner receives

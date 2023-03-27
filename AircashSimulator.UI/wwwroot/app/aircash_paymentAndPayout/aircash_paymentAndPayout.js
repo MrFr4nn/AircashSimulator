@@ -134,6 +134,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     $scope.transactionAmountFactor = 0;
 
     $scope.checkCode = function () {
+        $scope.checkCodeServiceResponded = false;
         $scope.checkCodeServiceBusy = true;
         aircashPaymentAndPayoutService.checkCode($scope.checkCodeModel.barCode, $scope.checkCodeModel.locationID)
             .then(function (response) {
@@ -158,6 +159,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.confirmTransaction = function () {
         $scope.confirmTransactionServiceBusy = true;
+        $scope.confirmTransactionServiceResponded = false;
         aircashPaymentAndPayoutService.confirmTransaction($scope.confirmTransactionModel.barCode, $scope.confirmTransactionModel.locationID)
             .then(function (response) {
 
@@ -180,6 +182,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.checkTransactionStatus = function (transactionId) {
         $scope.checkTransactionStatusServiceBusy = true;
+        $scope.checkTransactionStatusServiceResponded = false;
         aircashPaymentAndPayoutService.checkTransactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
@@ -199,6 +202,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.cancelTransaction = function (transactionId, pointOFSaleId) {
         $scope.cancelTransactionServiceBusy = true;
+        $scope.cancelTransactionServiceResponded = false;
         aircashPaymentAndPayoutService.cancelTransaction(transactionId, pointOFSaleId)
             .then(function (response) {
                 if (response) {
