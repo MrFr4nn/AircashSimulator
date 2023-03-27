@@ -1,4 +1,5 @@
 ﻿using AircashSignature;
+using AircashSimulator;
 using AircashSimulator.Configuration;
 using DataAccess;
 using Domain.Entities;
@@ -112,7 +113,7 @@ namespace Services.AbonSalePartner
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
             if (coupon == null)
-                throw new Exception("Coupon not found");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.CouponNotFound, "Coupon not found");
             
             var cancelCouponRequest = new CancelCouponRequest()
             {
