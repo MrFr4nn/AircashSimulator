@@ -23,6 +23,7 @@ var app = angular.module('app', [
     'logo',
     'acPayStaticCode',
     'aircashPayoutV2',
+    'ac_business_site',
     'cashier'
 ]);
 
@@ -81,9 +82,25 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('interceptorService');
 });
 
-app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage', function ($rootScope, $state, setting, $http, $location, $localStorage) {
+app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$localStorage', function ($rootScope, $state, setting, $http, config, $location, $localStorage) {
     $rootScope.$state = $state;
     $rootScope.setting = setting;
+
+    var locale = localStorage.getItem('selectedLanguage');
+    if (!locale) {
+        locale = "en";
+    }
+    $http({
+        method: 'GET',
+        url: config.baseUrl + "Translations/GetTranslations",
+        params: { locale: locale }
+    }).then(function (response) {
+        //console.log(response);
+        var responseObj = JSON.parse(response.data.responseContent);
+        $rootScope.translationsCashier = responseObj;
+    },() => {
+       console.log("error");
+    });  
 
     if ($localStorage.currentUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
@@ -92,7 +109,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
         var publicPages = ['/login', '/success', '/decline', '/forbidden', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu',
-            '/cashier/aircashFrameAcPay', '/cashier/PayoutC2D'];
+            '/cashier/aircashFrameAcPay', '/cashier/PayoutC2D', '/cashier/SalesPartner'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if ($location.path().indexOf('cashier') > -1 && restrictedPage) {
             $location.path('/cashier/menu');

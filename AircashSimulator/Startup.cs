@@ -39,6 +39,7 @@ using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using System.Buffers.Text;
 using Newtonsoft.Json;
+using Services.Translations;
 
 namespace AircashSimulator
 {
@@ -104,6 +105,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<IAircashPayStaticCodeService, AircashPayStaticCodeService>(); 
             services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<ITranslationsService, TranslationsService>();
             services.AddTransient<IPartnerService, PartnerService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAircashFrameService, AircashFrameService>();
