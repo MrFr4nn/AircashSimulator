@@ -12,6 +12,7 @@ using AircashSimulator.Extensions;
 using System.Text;
 using System.Security.Cryptography;
 using Services.User;
+using AircashSimulator;
 
 namespace Services.Partner
 {
@@ -19,6 +20,7 @@ namespace Services.Partner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IUserService UserService;
+
         private const string DefaultPrivateKey = "-";
         private const string DefaultPrivateKeyPass = "-";
 
@@ -45,7 +47,7 @@ namespace Services.Partner
             roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
             return roles;
         }
-  
+
         public async Task<List<PartnerDetailVM>> GetPartnersDetail(int pageSize, int pageNumber, string search)
         {
             Expression<Func<PartnerEntity, bool>> predicate = x => true;
@@ -104,7 +106,12 @@ namespace Services.Partner
 
                 var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
                 foreach (var role in roles)
-                    AircashSimulatorContext.PartnerRoles.Remove(role);
+                {
+                    if (role.PartnerRole != RoleEnum.Admin)
+                    {
+                        AircashSimulatorContext.PartnerRoles.Remove(role);
+                    }
+                }
 
                 AircashSimulatorContext.Partners.Update(partner);
             }
@@ -180,7 +187,7 @@ namespace Services.Partner
             }
 
             if ((await AircashSimulatorContext.Users.Where(x => x.Username == username).ToListAsync()).Count() > 0)
-                throw new Exception("Username already taken.");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.UsernameNotFound, "Username already taken.");
 
             await AircashSimulatorContext.Users.AddAsync(new UserEntity
             {

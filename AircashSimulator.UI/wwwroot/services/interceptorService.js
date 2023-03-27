@@ -11,9 +11,7 @@ app.factory('interceptorService', ['$q', '$injector', '$location', '$rootScope',
 
             $rootScope.showGritter(
                 $rootScope.translations.gritter_error_title,
-                (rejection.data) ?
-                    getErrorMsg(rejection.data.detail, $rootScope.translations) :
-                    $rootScope.translations.generic_error_text);
+                rejection.data.Message);
             return $q.reject(rejection);
         }
     };

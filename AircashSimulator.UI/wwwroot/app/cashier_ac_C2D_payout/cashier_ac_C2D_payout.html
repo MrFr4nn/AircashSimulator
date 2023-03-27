@@ -1,0 +1,155 @@
+﻿<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-red text-white">
+                <h3>Aircash C2D Payout</h3>
+                <div class="panel-heading-btn"></div>
+            </div>
+            <div class="panel-body">
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-lg-10 col-md-12">
+                        <br />
+                        <div class="text-center mb-4 mt-3">
+                            <img style="height:50px;" alt="" src="/images/aircash-red.svg">
+                        </div>
+                        <br />
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5 class="mb-0">Withdrawal</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 ng-bind-html="translationsCashier.c2dpayout_cashier_withdrawal_description" class="mb-3 mt-2">{{translationsCashier.c2dpayout_cashier_withdrawal_description}}</h6>
+                                <form action="/" method="POST" name="payoutForm">
+                                    <fieldset>
+                                        <div class=" mb-3">
+                                            <label class="form-label">{{translationsCashier.cashier_amount_input_label}}</label>
+                                            <div class="input-group">
+                                                <input ng-model="createPayoutModel.amount" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_amount_placeholder}}" name="amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                <div class="input-group-append">
+                                                    <div class="input-group-text">€</div>
+                                                </div>
+                                            </div>
+                                            <label class="form-label" for="amount">{{translationsCashier.cashier_amount_input_note}}</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div id="accordion">
+                                                <div class="card">
+                                                    <div class="card-header" id="headingOne">
+                                                        <h5 class="mb-0">
+                                                            <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                                {{translationsCashier.c2dflow_cashier_personal_data_label}}
+                                                            </button>
+                                                        </h5>
+                                                    </div>
+                                                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                        <div class="card-body">
+                                                            <label class="form-label">{{translationsCashier.cashier_phone_number_input_label}}</label>
+                                                            <phone-number-input output="createPayoutModel.phoneNumber"></phone-number-input>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">{{translationsCashier.cashier_email_input_label}}</label>
+                                                                <input ng-model="createPayoutModel.email" class="form-control form-control-lg" type="email" placeholder="{{translationsCashier.cashier_email_placeholder}}" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <div class="col-6 pl-0 pr-2">
+                                                                    <label class="form-label">{{translationsCashier.cashier_first_name_input_label}}</label>
+                                                                    <input ng-model="createPayoutModel.firstName" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_first_name_placeholder}}" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                                                                </div>
+                                                                <div class="col-6 pl-2 pr-0">
+                                                                    <label class="form-label">{{translationsCashier.cashier_last_name_input_label}}</label>
+                                                                    <input ng-model="createPayoutModel.lastName" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_last_name_placeholder}}" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label class="form-label">{{translationsCashier.cashier_birth_date_input_label}}</label>
+                                                                <date-picker date="createPayoutModel.birthDate" isOptional="false" out="setBirthDatePayout"></date-picker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-flex justify-content-end">
+                                            <button ng-click="createPayout()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || payoutForm.$invalid">{{translationsCashier.c2dpayout_cashier_withdrawal_button}}<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                        </div>
+
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5 class="mb-0">Check Barcode</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="mb-3 mt-2">{{translationsCashier.c2dpayout_cashier_barcode_description}}</h6>
+                                <form action="/" method="POST" name="checkCodeForm">
+                                    <fieldset>
+
+                                        <div class="mb-3">
+                                            <label class="form-label">{{translationsCashier.c2dpayout_cashier_barcode_input_label}}</label>
+                                            <input ng-model="barcode" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.c2dpayout_cashier_barcode_placeholder}}" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button ng-click="checkCode()" class="btn btn-danger w-100px me-5px" ng-disabled="checkCodeServiceBusy || checkCodeForm.$invalid">{{translationsCashier.c2dpayout_cashier_barcode_button}}<i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                        </div>
+
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card mb-3" ng-if="checkCodeResponded">
+                            <div class="card-header">
+                                <h5 class="mb-0">Confirm transaction</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6 class="mb-3 mt-2">{{translationsCashier.c2dpayout_cashier_confirm_transaction_description}}</h6>
+                                <form action="/" method="POST" name="confirmTransactionForm">
+                                    <fieldset>
+                                        <div class="mb-3">
+                                            <label class="form-label">{{translationsCashier.c2dpayout_cashier_barcode_input_label}}</label>
+                                            <input ng-model="barcodeConfirm" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
+                                        </div>
+                                        <div class="input-group mb-3">
+                                            <div class="col-6 pl-0 pr-2">
+                                                <label class="form-label">{{translationsCashier.cashier_first_name_input_label}}</label>
+                                                <input ng-model="confirmModel.firstName" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
+                                            </div>
+                                            <div class="col-6 pl-2 pr-0">
+                                                <label class="form-label">{{translationsCashier.cashier_last_name_input_label}}</label>
+                                                <input ng-model="confirmModel.lastName" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
+                                            </div>
+                                        </div>
+                                        <label class="form-label">{{translationsCashier.cashier_amount_input_label}}</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <div class="input-group-text">{{transactionType}}</div>
+                                            </div>
+                                            <input ng-model="confirmModel.amount" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_amount_placeholder}}" name="amount" ng-disabled="createPayoutServiceBusy" ng-readonly="true" ng-required="true">
+                                            <div class="input-group-append">
+                                                <div class="input-group-text">€</div>
+                                            </div>
+
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">{{translationsCashier.cashier_birth_date_input_label}}</label>
+                                            <input ng-model="confirmModel.dateOfBirth" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button ng-click="confirmTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || confirmTransactionForm.$invalid">Confirm {{transactionType}} <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -9,19 +9,19 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    <a href="https://abon.cash/">Aircash A-bon</a> is a platform intended for users that wish to make payments to their accounts (betting sites, parking services, GSM topups etc.) via paper vouchers that can be bought at cash registers, i.e. points of sales of Aircash Sales Partners (kiosks, gas stations, etc.). 
+                    <a href="https://abon.cash/">Aircash Abon</a> is a platform intended for users that wish to make payments to their accounts (betting sites, parking services, GSM topups etc.) via paper vouchers that can be bought at cash registers, i.e. points of sales of Aircash Sales Partners (kiosks, gas stations, etc.). 
                 </p>
                 <p>
                     From the Online Provider's perspective: the user logs in to a website or
                     a mobile app of an Online Provider (e.g. a booking site), and chooses to
-                    deposit money via an Aircash A-bon voucher. He enters the 16-digit
+                    deposit money via an Aircash Abon voucher. He enters the 16-digit
                     code from the coupon he bought, and confirms the transaction of
                     funds to an Online Provider account. The funds are deposited to the
                     user's online account, and the coupon gets expended and can no
                     longer be used.
                 </p>
                 <p>
-                    An example of an Aircash a-bon is shown <a href="" ng-click="showCoupon()">here</a>.
+                    An example of an Aircash Abon is shown <a href="" ng-click="showCoupon()">here</a>.
                 </p>
             </div>
         </div>
@@ -30,13 +30,13 @@
         <br />
         <h4>Security and authentication</h4>
         <p>
-            Aircash A-bon system exposes a REST API.
+            Aircash Abon system exposes a REST API.
         </p>
         <p>
             The API is accessed via HTTPS protocol (secured by a TLS certificate).
         </p>
         <p>
-            Each request towards Aircash A-bon API has to be digitally signed. This ensures non-repudiation of every request, as well as authentication.
+            Each request towards Aircash Abon API has to be digitally signed. This ensures non-repudiation of every request, as well as authentication.
         </p>
         <p>
             Certificate used for signing are generated as described in the <a href="https://dev-simulator.aircash.eu/#!/app/signature">Signature</a> chapter. 
@@ -46,27 +46,27 @@
         </p>
         <p>
             The partners are provided with an integration environment (staging) where it is possible to test all of the
-            methods for integration. Integration details of the A-bon services are described in
+            methods for integration. Integration details of the Abon services are described in
             detail in the following chapters.
         </p>
 
         <br />
-        <h4>Checkbox – I accept A-bon Terms & Conditions</h4>
+        <h4>Checkbox – I accept Abon Terms & Conditions</h4>
         <p>
-            In order for the users to use A-bon services on the Online Provider's website, they have to accept the
+            In order for the users to use Abon services on the Online Provider's website, they have to accept the
             terms and conditions beforehand.
         </p>
         <p>
-            Every Online Provider is obliged to add a checkbox for the A-bon terms and conditions, which is by
+            Every Online Provider is obliged to add a checkbox for the Abon terms and conditions, which is by
             default always checked.
         </p>
         <p>
-            The checkbox has to contain a link to A-bon Terms and Conditions:
+            The checkbox has to contain a link to Abon Terms and Conditions:
         </p>
         <div class="note note-gray-400 col-md-8">
             <div class="note-content">
                 <code>
-                    &lta href="https://abon.cash/terms-conditions-en/" rel="nofollow"&gtI accept the A-bon Terms&Conditions&lt/a&gt
+                    &lta href="https://abon.cash/terms-conditions-en/" rel="nofollow"&gtI accept the Abon Terms&Conditions&lt/a&gt
                 </code>
             </div>
         </div>
@@ -149,23 +149,14 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "signature": "BPz2mGu8UG..."
-}
-</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
-                <pre>
+<pre>
 Request example:
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "signature": "BPz2mGu8UG..."
-}
-
+</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.requestExample"></jsonformatter>
+<pre>
 Sequence:
 CouponCode=5460446045144493&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
 
@@ -246,18 +237,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
-                <pre>
-{
-   "couponValue": 50.0,
-   "isValid": true,
-   "ISOCurrency": "HRK"
-   "providerTransactionId": "",
-   "salePartnerId": "31dce332-1d55-4459-b166-d8d33a78226c",
-   "isoCountryCode": null,
-   "originalISOCurrency": "HRK",
-   "originalCouponValue": 50.0
-}
-</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
                 <table class="table table-hover">
@@ -312,13 +292,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                 </table>
             </uib-tab>            
             <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-                <pre>
-{
-   "code": 1,
-   "message": "Invalid ProviderId",
-   "additionalData": null
-}
-</pre>
+                <jsonformatter data="aBonDeposit.validateCoupon.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -334,18 +308,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                         </form>
                     </div>
                     <br />
-                    <div ng-hide="!validateResponded" class="col-md-4">
+                    <div ng-if="validateResponded" class="col-md-4">
                         Request ({{ValidateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ValidateServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="ValidateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceValidate}}
                     </div>
-                    <div ng-hide="!validateResponded" class="col-md-4">
+                    <div ng-if="validateResponded" class="col-md-4">
                         Response ({{ValidateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ValidateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="ValidateServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>
@@ -439,27 +409,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "providerTransactionId": "d711c31b-9e20-48dd-a749-91778627b569",
-    "userId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "signature": "CVrMFUqDzg..."
-}
-</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
-                <pre>
+<pre>
 Request example:
-{
-    "couponCode": "5460446045144493",
-    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "providerTransactionId": "d711c31b-9e20-48dd-a749-91778627b569",
-    "userId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "signature": "CVrMFUqDzg..."
-}
-
+</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.requestExample"></jsonformatter>
+<pre>
 Sequence:
 CouponCode=5460446045144493&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=d711c31b-9e20-48dd-a749-91778627b569&UserId=574f32a7-4ecb-48b2-9723-ac660b9c835d
 
@@ -503,13 +460,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
-                <pre>
-{
-   "couponValue": 50.0,
-   "ISOCurrency": "HRK"
-   "providerTransactionId": "33352406-f672-4c27-a415-e26eb3ecd691",
-}
-</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
                 <table class="table table-hover">
@@ -570,17 +521,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-                <pre>
-{
-   "code": 4,
-   "message": "Coupon Already Used",
-   "additionalData": {
-           "couponValue": 50.0,
-           "ISOCurrency": "HRK",
-           "providerTransactionId": "33352406-f672-4c27-a415-e26eb3ecd691",
-   }
-}
-</pre>
+                <jsonformatter data="aBonDeposit.confirmTransaction.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -596,18 +537,14 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                         </form>
                     </div>
                     <br />
-                    <div ng-hide="!confirmResponded" class="col-md-5">
+                    <div ng-if="confirmResponded" class="col-md-5">
                         Request ({{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ConfirmServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="ConfirmServiceRequest"></jsonformatter>
                         Sequence: {{sequenceConfirm}}
                     </div>
-                    <div ng-hide="!confirmResponded" class="col-md-3">
+                    <div ng-if="confirmResponded" class="col-md-3">
                         Response ({{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{ConfirmServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="ConfirmServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>
@@ -645,7 +582,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                     </li>
                     <li>
                         If the coupon is valid (IsValid == true) and ProviderTransactionId is empty - the transaction was
-                        not processed on the A-bon side, and you should call ConfirmTransaction again
+                        not processed on the Abon side, and you should call ConfirmTransaction again
                     </li>
                 </ol>
                 <br />
@@ -660,10 +597,10 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">A-bon example</h4>
+                    <h4 class="modal-title">Abon example</h4>
                 </div>
                 <div class="modal-body" align="center">
-                    <img src="../../images/abon.png" alt="A-bon">
+                    <img src="../../images/abon.png" alt="Abon">
                 </div>
                 <div class="modal-footer">
                     <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>

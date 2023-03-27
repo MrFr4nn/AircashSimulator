@@ -1,6 +1,4 @@
-﻿using AircashSimulator.Configuration;
-using DataAccess;
-using Microsoft.Extensions.Options;
+﻿using DataAccess;
 using Services.HttpRequest;
 using System;
 using System.Linq;
@@ -25,13 +23,15 @@ namespace Services.AircashPayout
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private AircashConfiguration AircashConfiguration;
 
-        public AircashPayoutService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        private readonly string CheckUserEndpoint = "PartnerV3/CheckUser";
+        private readonly string CreatePayoutEndpoint = "PartnerV3/CreatePayout";
+        private readonly string CheckTransactionStatusEndpoint = "PartnerV2/CheckTransactionStatus";
+
+        public AircashPayoutService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
-            AircashConfiguration = aircashConfiguration.CurrentValue;
         }
 
         public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId)
@@ -52,7 +52,7 @@ namespace Services.AircashPayout
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             checkUserRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.CheckUserEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{CheckUserEndpoint}");
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -88,7 +88,7 @@ namespace Services.AircashPayout
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             createPayoutRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.CreatePayoutEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{CreatePayoutEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<AircashCreatePayoutResponse>(response.ResponseContent);
@@ -133,7 +133,7 @@ namespace Services.AircashPayout
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             checkTransactionStatusRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.CheckTransactionStatusEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{CheckTransactionStatusEndpoint}");
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {

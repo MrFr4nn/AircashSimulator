@@ -25,6 +25,7 @@
     <ProjectReference Include="..\Services.AbonOnlinePartner\Services.AbonOnlinePartner.csproj" />
     <ProjectReference Include="..\Services.AbonSalePartner\Services.AbonSalePartner.csproj" />
     <ProjectReference Include="..\Services.AircashFrameV2\Services.AircashFrameV2.csproj" />
+    <ProjectReference Include="..\Services.AircashInAppPay\Services.AircashInAppPay.csproj" />
     <ProjectReference Include="..\Services.AircashPaymentAndPayout\Services.AircashPaymentAndPayout.csproj" />
     <ProjectReference Include="..\Services.AircashPayment\Services.AircashPayment.csproj" />
     <ProjectReference Include="..\Services.AircashPayStaticCode\Services.AircashPayStaticCode.csproj" />
@@ -38,6 +39,7 @@
     <ProjectReference Include="..\Services.PartnerAbonDenominations\Services.PartnerAbonDenominations.csproj" />
     <ProjectReference Include="..\Services.Partner\Services.Partner.csproj" />
     <ProjectReference Include="..\Services.Transaction\Services.Transactions.csproj" />
+    <ProjectReference Include="..\Services.Translations\Services.Translations.csproj" />
     <ProjectReference Include="..\Services.User\Services.User.csproj" />
     <ProjectReference Include="..\Services.MatchService\Services.MatchService.csproj" />
   </ItemGroup>
