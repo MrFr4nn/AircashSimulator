@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
             data: {
                 pageTitle: 'Aircash payment And payout'
             },
-            url: "/aircashPaymentAndPayout",
+            url: "/aircashPaymentAndPayout",                                                                                                                            
             controller: 'aircashPaymentAndPayoutCtrl',
             templateUrl: 'app/aircash_paymentAndPayout/aircash_paymentAndPayout.html'
         });
@@ -314,4 +314,14 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         "Amount": 123.45,
         "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
     };
+
+    $scope.checkCodeResponseExampleV2 = {
+        "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+        "Amount": 2000.00,
+        "CurrencyId": 978,
+        "FirstName": "John",
+        "LastName": "Doe",
+        "DateOfBirth": "1990-01-01"
+    }
+
 }]);
