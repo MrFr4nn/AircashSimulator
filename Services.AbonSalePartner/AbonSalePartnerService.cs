@@ -113,7 +113,7 @@ namespace Services.AbonSalePartner
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
             if (coupon == null)
-                throw new SimulatorException(1, "Coupon not found");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.CouponNotFound, "Coupon not found");
             
             var cancelCouponRequest = new CancelCouponRequest()
             {

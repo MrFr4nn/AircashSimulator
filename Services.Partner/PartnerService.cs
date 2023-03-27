@@ -187,7 +187,7 @@ namespace Services.Partner
             }
 
             if ((await AircashSimulatorContext.Users.Where(x => x.Username == username).ToListAsync()).Count() > 0)
-                throw new SimulatorException(1, "Username already taken.");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.UsernameNotFound, "Username already taken.");
 
             await AircashSimulatorContext.Users.AddAsync(new UserEntity
             {
