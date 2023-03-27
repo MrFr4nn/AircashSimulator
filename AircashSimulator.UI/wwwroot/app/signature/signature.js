@@ -43,5 +43,18 @@ signatureModule.controller("SignatureCtrl",
                 }]
             }, null, 4);
             $scope.sequenceAircash = "Amount=123.45&Parameters=Key=userName&Value=Aircash,Key=phoneNumber&Value=385981234567&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a"
+
+            $scope.signature = {
+                generatingPartnersSignatureExample: {
+                    partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    amount: 123.45,
+                    currencyID: 191,
+                    partnerTransactionID: "7f087237-b81a-48af-8dce-bc048fede397",
+                    description: "test",
+                    locationID: "test",
+                    signature: "bURAs89l0O..."
+                }
+            };
+
         }
     ]);

@@ -1,13 +1,7 @@
-﻿
-using AircashSimulator.Configuration;
-using DataAccess;
-using Domain.Entities.Enum;
-using Microsoft.Extensions.Options;
+﻿using Domain.Entities.Enum;
 using Newtonsoft.Json;
 using Services.HttpRequest;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -23,19 +17,17 @@ namespace Services.MatchService
     }
     public class MatchService : IMatchService
     {
-        private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private AircashConfiguration AircashConfiguration;
 
-        public MatchService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        private readonly string MatchCompareIdentity = "Match/CompareIdentity";
+
+        public MatchService(IHttpRequestService httpRequestService)
         {
-            AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
-            AircashConfiguration = aircashConfiguration.CurrentValue;
         }
         public async Task<Response> CompareIdentity(AircashMatchPersonalData aircashMatchPersonalData) {
             var returnResponse = new Response();
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == aircashMatchPersonalData.PartnerID).FirstOrDefault();
+            //var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == aircashMatchPersonalData.PartnerID).FirstOrDefault();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
             var request = new AircashMatchPersonalDataRQ()
             {
@@ -44,7 +36,7 @@ namespace Services.MatchService
                 PartnerUser = aircashMatchPersonalData.PartnerUser,
             };
             returnResponse.ServiceRequest = request;
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashConfiguration.MatchCompareIdentity}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri( EnvironmentEnum.Staging, EndpointEnum.M2)}{MatchCompareIdentity}");
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashMatchPersonalDataRS>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
 

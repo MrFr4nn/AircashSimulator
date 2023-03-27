@@ -11,18 +11,22 @@ using System.Threading.Tasks;
 using AircashSimulator.Extensions;
 using System.Text;
 using System.Security.Cryptography;
+using Services.User;
 
 namespace Services.Partner
 {
     public class PartnerService : IPartnerService
     {
         private AircashSimulatorContext AircashSimulatorContext;
+        private IUserService UserService;
+
         private const string DefaultPrivateKey = "-";
         private const string DefaultPrivateKeyPass = "-";
 
-        public PartnerService(AircashSimulatorContext aircashSimulatorContext)
+        public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
+            UserService = userService;
         }
 
         public async Task<List<PartnerVM>> GetPartners()
@@ -42,7 +46,7 @@ namespace Services.Partner
             roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
             return roles;
         }
-  
+
         public async Task<List<PartnerDetailVM>> GetPartnersDetail(int pageSize, int pageNumber, string search)
         {
             Expression<Func<PartnerEntity, bool>> predicate = x => true;
@@ -84,7 +88,6 @@ namespace Services.Partner
             return partners;
         } 
 
-
         public async Task SavePartner(PartnerDetailVM request)
         {
             Guid id;
@@ -102,7 +105,12 @@ namespace Services.Partner
 
                 var roles = await AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == request.PartnerId).ToListAsync();
                 foreach (var role in roles)
-                    AircashSimulatorContext.PartnerRoles.Remove(role);
+                {
+                    if (role.PartnerRole != RoleEnum.Admin)
+                    {
+                        AircashSimulatorContext.PartnerRoles.Remove(role);
+                    }
+                }
 
                 AircashSimulatorContext.Partners.Update(partner);
             }
@@ -156,8 +164,14 @@ namespace Services.Partner
                     AircashSimulatorContext.PartnerRoles.Remove(role);
                 }
             }
+            var findAllUsers = await AircashSimulatorContext.Users.Where(x => x.PartnerId == Partner.PartnerId).ToListAsync();
+            foreach (var user in findAllUsers)
+            {
+                await UserService.DeleteUser(user.UserId);
+            }
             await AircashSimulatorContext.SaveChangesAsync();
         }
+       
         public async Task SaveUser(string username, Guid partnerId) {
             string hash = "";
             using (SHA256 sha256Hash = SHA256.Create())

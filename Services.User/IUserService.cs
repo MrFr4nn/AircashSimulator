@@ -9,9 +9,11 @@ namespace Services.User
 {
     public interface IUserService
     {
-        Task<List<UserVM>> GetUsers();
-        Task<UserDetailVM> GetUserDetail(Guid userId);
+       
+        Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search);
         Task SaveUser(UserDetailVM request);
+
+        Task DeleteUser(Guid? userId);
 
         Task<UserDTO> GetUserByIdentifier(string identifier);
     }
