@@ -23,7 +23,9 @@ var app = angular.module('app', [
     'logo',
     'acPayStaticCode',
     'aircashPayoutV2',
-    'cashier'
+    'cashier',
+    'forbidden',
+    'inAppPay'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -60,20 +62,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controllerAs: 'vm',
             params: {}
         })
-        .state('forbidden', {
-            url: '/forbidden',
-            templateUrl: 'app/forbidden/forbidden.html',
-            controller: 'ForbiddenCtrl',
-            controllerAs: 'vm',
-            params: {}
-        })
-        .state('inAppPay', {
-            url: '/inAppPay',
-            templateUrl: 'app/inAppPay/inAppPay.html',
-            controller: 'inAppPayCtrl',
-            controllerAs: 'vm',
-            params: {}
-        });
 }]);
 
 app.service("handleResponseService", ['$q', function ($q) {
