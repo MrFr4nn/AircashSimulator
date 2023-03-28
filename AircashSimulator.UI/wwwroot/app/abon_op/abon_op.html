@@ -9,19 +9,19 @@
         <div class="row">
             <div class="col-md-12">
                 <p>
-                    <a href="https://abon.cash/">Aircash A-bon</a> is a platform intended for users that wish to make payments to their accounts (betting sites, parking services, GSM topups etc.) via paper vouchers that can be bought at cash registers, i.e. points of sales of Aircash Sales Partners (kiosks, gas stations, etc.). 
+                    <a href="https://abon.cash/">Aircash Abon</a> is a platform intended for users that wish to make payments to their accounts (betting sites, parking services, GSM topups etc.) via paper vouchers that can be bought at cash registers, i.e. points of sales of Aircash Sales Partners (kiosks, gas stations, etc.). 
                 </p>
                 <p>
                     From the Online Provider's perspective: the user logs in to a website or
                     a mobile app of an Online Provider (e.g. a booking site), and chooses to
-                    deposit money via an Aircash A-bon voucher. He enters the 16-digit
+                    deposit money via an Aircash Abon voucher. He enters the 16-digit
                     code from the coupon he bought, and confirms the transaction of
                     funds to an Online Provider account. The funds are deposited to the
                     user's online account, and the coupon gets expended and can no
                     longer be used.
                 </p>
                 <p>
-                    An example of an Aircash a-bon is shown <a href="" ng-click="showCoupon()">here</a>.
+                    An example of an Aircash Abon is shown <a href="" ng-click="showCoupon()">here</a>.
                 </p>
             </div>
         </div>
@@ -30,13 +30,13 @@
         <br />
         <h4>Security and authentication</h4>
         <p>
-            Aircash A-bon system exposes a REST API.
+            Aircash Abon system exposes a REST API.
         </p>
         <p>
             The API is accessed via HTTPS protocol (secured by a TLS certificate).
         </p>
         <p>
-            Each request towards Aircash A-bon API has to be digitally signed. This ensures non-repudiation of every request, as well as authentication.
+            Each request towards Aircash Abon API has to be digitally signed. This ensures non-repudiation of every request, as well as authentication.
         </p>
         <p>
             Certificate used for signing are generated as described in the <a href="https://dev-simulator.aircash.eu/#!/app/signature">Signature</a> chapter. 
@@ -46,27 +46,27 @@
         </p>
         <p>
             The partners are provided with an integration environment (staging) where it is possible to test all of the
-            methods for integration. Integration details of the A-bon services are described in
+            methods for integration. Integration details of the Abon services are described in
             detail in the following chapters.
         </p>
 
         <br />
-        <h4>Checkbox – I accept A-bon Terms & Conditions</h4>
+        <h4>Checkbox – I accept Abon Terms & Conditions</h4>
         <p>
-            In order for the users to use A-bon services on the Online Provider's website, they have to accept the
+            In order for the users to use Abon services on the Online Provider's website, they have to accept the
             terms and conditions beforehand.
         </p>
         <p>
-            Every Online Provider is obliged to add a checkbox for the A-bon terms and conditions, which is by
+            Every Online Provider is obliged to add a checkbox for the Abon terms and conditions, which is by
             default always checked.
         </p>
         <p>
-            The checkbox has to contain a link to A-bon Terms and Conditions:
+            The checkbox has to contain a link to Abon Terms and Conditions:
         </p>
         <div class="note note-gray-400 col-md-8">
             <div class="note-content">
                 <code>
-                    &lta href="https://abon.cash/terms-conditions-en/" rel="nofollow"&gtI accept the A-bon Terms&Conditions&lt/a&gt
+                    &lta href="https://abon.cash/terms-conditions-en/" rel="nofollow"&gtI accept the Abon Terms&Conditions&lt/a&gt
                 </code>
             </div>
         </div>
@@ -582,7 +582,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                     </li>
                     <li>
                         If the coupon is valid (IsValid == true) and ProviderTransactionId is empty - the transaction was
-                        not processed on the A-bon side, and you should call ConfirmTransaction again
+                        not processed on the Abon side, and you should call ConfirmTransaction again
                     </li>
                 </ol>
                 <br />
@@ -597,10 +597,10 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">A-bon example</h4>
+                    <h4 class="modal-title">Abon example</h4>
                 </div>
                 <div class="modal-body" align="center">
-                    <img src="../../images/abon.png" alt="A-bon">
+                    <img src="../../images/abon.png" alt="Abon">
                 </div>
                 <div class="modal-footer">
                     <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>

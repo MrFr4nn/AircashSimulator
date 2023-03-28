@@ -24,11 +24,36 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
             <li class="nav-header">{{translations.menu_label}}</li>
-            <li ui-sref-active="active">
+            <li ui-sref-active="active">  
                 <a ui-sref="app.dashboard">
-                    <i class="fa fa-list"></i>
-                    <span>{{translations.dashboard_label}}</span>
+                    <span ng-click="submenu=!submenu"><i class="fa fa-list"></i>{{translations.dashboard_label}} <i class="fas fa-caret-down ml-auto" ng-if="!submenu"></i><i class="fas fa-caret-up ml-auto" ng-if="submenu"></i></span>
                 </a>
+                <ul class="nav ml-3" ng-if="submenu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.logo">
+                            <i class="fa fa-solid fa-image"></i>
+                            <span>{{translations.logo_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.ac_business_site">
+                            <i class="fa fa-file"></i>
+                            <span>{{translations.ac_business_site_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.ac_test_application">
+                            <i class="fa fa-mobile"></i>
+                            <span>{{translations.ac_test_application_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.signature">
+                            <i class="fa fa-pencil-alt"></i>
+                            <span>{{translations.signature_label}}</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.aircashPaymentAndPayout" ng-if="partnerRoles.indexOf('SalePartner') != -1">
@@ -110,18 +135,6 @@
                     <span>{{translations.ac_in_app_pay}}</span>
                 </a>
             </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.signature">
-                    <i class="fa fa-pencil-alt"></i>
-                    <span>{{translations.signature_label}}</span>
-                </a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.logo">
-                    <i class="fa fa-solid fa-image"></i>
-                    <span>{{translations.logo_label}}</span>
-                </a>
-            </li>
             <li>
                 <hr />
             </li>
@@ -137,7 +150,7 @@
                     <span>{{translations.user_admin_label}}</span>
                 </a>
             </li>
-                    <!-- begin sidebar minify button -->
+            <!-- begin sidebar minify button -->
             <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->
         </ul>

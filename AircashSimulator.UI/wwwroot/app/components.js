@@ -39,7 +39,7 @@ app.component('phoneNumberInput', {
                     </select >
                     <span class="input-group-addon" style="visibility: hidden"></span>
                     <input ng-model="$ctrl.selectedCountry.code" class="form-control form-control-lg p-0 text-center" name="countryCode" ng-disabled="true" style="border-radius: 5px 0px 0px 5px !important;">
-                    <input ng-change="$ctrl.onInputChanged()" ng-model="$ctrl.phonenumber" class="form-control form-control-lg w-50" name="phone" type="number" placeholder="Enter phone number"  ng-required="true">
+                    <input ng-change="$ctrl.onInputChanged()" ng-model="$ctrl.phonenumber" class="form-control form-control-lg w-50" name="phone" type="number" placeholder="{{translationsCashier.cashier_phone_number_input_label}}"  ng-required="true">
                 </div>`,
     bindings: {
         output: "=",

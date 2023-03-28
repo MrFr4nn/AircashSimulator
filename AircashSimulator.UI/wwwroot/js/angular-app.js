@@ -23,6 +23,8 @@ var app = angular.module('app', [
     'logo',
     'acPayStaticCode',
     'aircashPayoutV2',
+    'ac_business_site',
+    'ac_test_application',
     'cashier'
 ]);
 
@@ -81,9 +83,25 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('interceptorService');
 });
 
-app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage', function ($rootScope, $state, setting, $http, $location, $localStorage) {
+app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$localStorage', function ($rootScope, $state, setting, $http, config, $location, $localStorage) {
     $rootScope.$state = $state;
     $rootScope.setting = setting;
+
+    var locale = localStorage.getItem('selectedLanguage');
+    if (!locale) {
+        locale = "en";
+    }
+    $http({
+        method: 'GET',
+        url: config.baseUrl + "Translations/GetTranslations",
+        params: { locale: locale }
+    }).then(function (response) {
+        //console.log(response);
+        var responseObj = JSON.parse(response.data.responseContent);
+        $rootScope.translationsCashier = responseObj;
+    },() => {
+       console.log("error");
+    });  
 
     if ($localStorage.currentUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
