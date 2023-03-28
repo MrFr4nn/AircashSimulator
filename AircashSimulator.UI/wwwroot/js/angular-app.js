@@ -25,7 +25,8 @@ var app = angular.module('app', [
     'aircashPayoutV2',
     'ac_business_site',
     'ac_test_application',
-    'cashier'
+    'forbidden',
+    'inAppPay'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -62,13 +63,6 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
             controllerAs: 'vm',
             params: {}
         })
-        .state('forbidden', {
-            url: '/forbidden',
-            templateUrl: 'app/forbidden/forbidden.html',
-            controller: 'ForbiddenCtrl',
-            controllerAs: 'vm',
-            params: {}
-        });
 }]);
 
 app.service("handleResponseService", ['$q', function ($q) {
@@ -108,7 +102,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
+        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu',
             '/cashier/aircashFrameAcPay', '/cashier/PayoutC2D', '/cashier/SalesPartner'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
