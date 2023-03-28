@@ -19,6 +19,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\app\cashier_ac_frame_abon\cashier_ac_frame_abon.html">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Update="wwwroot\app\cashier_ac_frame_abon\cashier_ac_frame_abon.js">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="wwwroot\images\abonExample.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

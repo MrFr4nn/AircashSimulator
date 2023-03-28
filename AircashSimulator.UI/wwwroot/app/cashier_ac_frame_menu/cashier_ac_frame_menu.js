@@ -1,5 +1,6 @@
 ﻿var cashierAcFrameModule = angular.module('cashier_acFrameMenu', [
-    'cashier_acFrameAcPay'
+    'cashier_acFrameAcPay',
+    'cashier_acFrameAbon'
 ]);
 
 app.config(function ($stateProvider) {
