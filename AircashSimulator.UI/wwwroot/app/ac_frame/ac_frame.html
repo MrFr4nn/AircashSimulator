@@ -11,152 +11,143 @@
 
         <uib-tabset>
             <uib-tab index="checkUser1-tab-0" heading="Aircash pay" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Aircash pay</h2>
-                        <p>
-                            This chapter describes the top up process using the Aircash application. The described
-                            process explains how the user can transfer funds from the Aircash system to the partner's system.
-                        </p>
-                        <p>
-                            The process consists of the following steps:
-                        </p>
-                        <ol>
-                            <li>
-                                The user selects Aircash as the deposit option and enters the amount he wants to deposit.
-                            </li>
-                            <li>
-                                Partner’s system initiates the payment with the amount, currency, transaction id and other
-                                mandatory parameters.
-                            </li>
-                            <li>
-                                Aircash system responds with a URL to which user needs to be redirected.
-                            </li>
-                            <li>
-                                A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
-                                popped-up authorization screen)
-                            </li>
-                            <li>
-                                Aircash system notifies partner’s system by sending notification to designated URL
-                            </li>
-                            <li>
-                                Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
-                                the user’s account
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../../app/ac_frame/img/frame_acPay.svg" />
-                    </div>
-                </div>
+                <h2>Aircash pay</h2>
+                <p>
+                    This chapter describes the top up process using the Aircash application. The described
+                    process explains how the user can transfer funds from the Aircash system to the partner's system.
+                </p>
+                <p>
+                    The process consists of the following steps:
+                </p>
+                <ol>
+                    <li>
+                        The user selects Aircash as the deposit option and enters the amount he wants to deposit.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payment with the amount, currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
+                        popped-up authorization screen)
+                    </li>
+                    <li>
+                        Aircash system notifies partner’s system by sending notification to designated URL
+                    </li>
+                    <li>
+                        Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
+                        the user’s account
+                    </li>
+                </ol>
+                <b>To download diagram flow for Aircash pay click here:</b>
+                <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">
+                    <button class="btn"><i class="fa fa-download"></i> Aircash Pay Diagram flow</button>
+                </a>
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Abon" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Aircash Abon deposit</h2>
-                        <p>
-                            Aircash Abon is a deposit method intended for users that wish to make
-                            payments to their Online Provider accounts (betting sites, parking
-                            services, GSM topups etc.) via paper coupons that can be bought at
-                            cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas
-                            stations, etc.).
-                        </p>
-                        <p>
+                <h2>Aircash Abon deposit</h2>
+                <p>
+                    Aircash Abon is a deposit method intended for users that wish to make
+                    payments to their Online Provider accounts (betting sites, parking
+                    services, GSM topups etc.) via paper coupons that can be bought at
+                    cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas
+                    stations, etc.).
+                </p>
+                <p>
 
-                            The process consists of the following steps:
-                        </p>
+                    The process consists of the following steps:
+                </p>
 
-                        <ol>
-                            <li>
-                                The user selects Abon as the deposit option.
-                            </li>
-                            <li>
-                                Partner’s system initiates the payment with the currency, transaction id and other
-                                mandatory parameters.
-                            </li>
-                            <li>
-                                Aircash system responds with a URL to which user needs to be redirected.
-                            </li>
-                            <li>
-                                Aircash frame is opened and user enters the 16-digit code from the coupon he bought
-                                and confirms the transaction of funds to an Online Provider account.
-                            </li>
-                            <li>
-                                Aircash system notifies partner’s system by sending notification to designated URL
-                            </li>
-                            <li>
-                                Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
-                                the user’s account
-                            </li>
-                            <li>
-                                The funds are deposited to the user's online account, and the coupon gets expended and can no
-                                longer be used.
-                            </li>
-                        </ol>
+                <ol>
+                    <li>
+                        The user selects Abon as the deposit option.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payment with the currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        Aircash frame is opened and user enters the 16-digit code from the coupon he bought
+                        and confirms the transaction of funds to an Online Provider account.
+                    </li>
+                    <li>
+                        Aircash system notifies partner’s system by sending notification to designated URL
+                    </li>
+                    <li>
+                        Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
+                        the user’s account
+                    </li>
+                    <li>
+                        The funds are deposited to the user's online account, and the coupon gets expended and can no
+                        longer be used.
+                    </li>
+                </ol>
 
-                        <br />
-                        <h4>Checkbox – I accept Abon Terms & Conditions</h4>
-                        <p>
-                            In order for the users to use Abon services on the Online Provider's website, they have to accept the
-                            terms and conditions beforehand.
-                        </p>
-                        <p>
-                            Every Online Provider is obliged to add a checkbox for the Abon terms and conditions, which is by
-                            default always checked.
-                        </p>
-                        <p>
-                            The checkbox has to contain a link to Abon Terms and Conditions:
-                        </p>
-                        <div class="note note-gray-400 col-md-8">
-                            <div class="note-content">
-                                <code>
-                                    &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the Abon Terms&Conditions&lt/a&gt
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../../app/ac_frame/img/frame_abon.svg" />
+                <br />
+                <h4>Checkbox – I accept Abon Terms & Conditions</h4>
+                <p>
+                    In order for the users to use Abon services on the Online Provider's website, they have to accept the
+                    terms and conditions beforehand.
+                </p>
+                <p>
+                    Every Online Provider is obliged to add a checkbox for the Abon terms and conditions, which is by
+                    default always checked.
+                </p>
+                <p>
+                    The checkbox has to contain a link to Abon Terms and Conditions:
+                </p>
+                <div class="note note-gray-400 col-md-8">
+                    <div class="note-content">
+                        <code>
+                            &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the Abon Terms&Conditions&lt/a&gt
+                        </code>
                     </div>
                 </div>
+                <b>To download diagram flow for Abon click here:</b>
+                <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">
+                    <button class="btn"><i class="fa fa-download"></i> Abon Diagram flow</button>
+                </a>
             </uib-tab>
             <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Aircash Payout</h2>
-                        <p style="text-align:justify">
-                            This chapter describes the withdrawal process. The described process explains how the user can transfer assets from the Partner's system to the Aircash system.<br />
-                        </p>
-                        <p>
-                            The process consists of the following steps:
-                        </p>
-                        <ol>
-                            <li>
-                                The user selects Aircash as the payout option and enters the amount he wants to withdraw.
-                            </li>
-                            <li>
-                                Partner’s system initiates the payout with the amount, currency, transaction id and other
-                                mandatory parameters.
-                            </li>
-                            <li>
-                                Aircash system responds with a URL to which user needs to be redirected.
-                            </li>
-                            <li>
-                                A user enters mobile phone number to which he wants to make payout
-                            </li>
-                            <li>
-                                Aircash system notifies partner’s system by sending notification to designated URL
-                            </li>
-                            <li>
-                                Aircash panel redirects the user back to the success URL and Aircash’s system makes a top up to
-                                the user’s account
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../../app/ac_frame/img/frame_withdrawal.svg" />
-                    </div>
-                </div>
+                <h2>Aircash Payout</h2>
+                <p style="text-align:justify">
+                    This chapter describes the withdrawal process. The described process explains how the user can transfer assets from the Partner's system to the Aircash system.<br />
+                </p>
+                <p>
+                    The process consists of the following steps:
+                </p>
+                <ol>
+                    <li>
+                        The user selects Aircash as the payout option and enters the amount he wants to withdraw.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payout with the amount, currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        A user enters mobile phone number to which he wants to make payout
+                    </li>
+                    <li>
+                        Aircash system notifies partner’s system by sending notification to designated URL
+                    </li>
+                    <li>
+                        Aircash panel redirects the user back to the success URL and Aircash’s system makes a top up to
+                        the user’s account
+                    </li>
+                </ol>
+                <b>To download diagram flow for Withdrawal click here:</b>
+                <a href="../../app/ac_frame/img/frame_withdrawal.svg" download rel="noopener noreferrer">
+                    <button class="btn"><i class="fa fa-download"></i> Withdrawal Diagram flow</button>
+                </a>
             </uib-tab>
         </uib-tabset>
         <hr />
@@ -489,7 +480,7 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                             <input class="form-check-input" type="radio" ng-value="2" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">Aircash withdrawal</label>
                         </div>
-                        <form action="/" method="POST" name="initiateForm">
+                        <form action="/" method="POST" class="mt-2" name="initiateForm">
                             <fieldset>
                                 <div class="mb-3" ng-hide="initiateModelSelected == 1">
                                     <label class="form-label" for="exampleInputEmail1">Amount</label>

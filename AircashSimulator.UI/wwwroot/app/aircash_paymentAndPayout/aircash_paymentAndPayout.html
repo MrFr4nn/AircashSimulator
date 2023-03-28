@@ -82,12 +82,14 @@
 </p>
 
 <div class="row">
-    <h4 class="col-1">CheckCode</h4>
-    <div class="dropdown col-1">
+    <h4 class="col-auto">CheckCode</h4>
+    <div class="dropdown col-auto">
         <select class="form-control" ng-model="selected" ng-init="selected = '1'">
             <option value="1" selected>V1</option>
             <option value="2">V2</option>
         </select>
+    </div>
+    <div class="col">
     </div>
 </div>
 
@@ -95,7 +97,7 @@
     Method used by the partner system to check whether there’s an active transaction in the Aircash system for a given barcode. All codes that start with AC1 or AC2 and have 16 or more digits are considered Aircash codes. <br />
 </p>
 <div ng-if="selected == 1">
-    <table class="table  table-active col-md-6">
+    <div class="table-responsive"><table class="table  table-active col-md-6">
         <thead>
             <tr>
                 <th>Environment</th>
@@ -119,11 +121,11 @@
                 <td>https://api.aircash.eu/api/SalesPartner/CheckCode</td>
             </tr>
         </tbody>
-    </table>
+    </table></div>
 
     <uib-tabset>
         <uib-tab index="CheckCode-tab-0" heading="Request parameters" classes="nav-item">
-            <table class="table table-hover">
+            <div class="table-responsive"><table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Parameter</th>
@@ -160,7 +162,7 @@
                         <td>YES</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
             <jsonformatter data="checkCodeRequestExample"></jsonformatter>
@@ -178,7 +180,7 @@ Signature:
 QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloBMJiFZc9eMrSqmlAP0XxHMmn6OHp+pr9G9jFZZ0bM6AxA1BduGYmIDPl9rGMhNXXUU6RQbWvmDD6N3Digcwf2Vr7qHzNow6rDCXpWCXJXQCXJvF86HTaF5pF/kS/R13PtIl7zn3lcvSTgWguy8DM0zwkumSzrclpo98xv/YIn3irgTiLYDD8Dz2Bh1gIOeEF+XN7OvyPGC/3JQf/P6D10Y4GNaFXHjAoCrPPBD91a8kbdYiirqjMOxiBsE4SpK7GsGsp9258TfggAhFYXF7i/B4beuNilZXzMvWY28iy28b5J/mSfEDSfMRF3EWIK5mkgoN634fjkboRB1UNW69FsZmHr3gpN807uP+o9zGrVEi0yFLua7qnbBWLfQfwvnQMHFebBUGcXqNIIjQ1ksqs17Hxxosr3GrxqHXx8EkJysp679wdAs7AmY2Z/HbhbPO1JufCluMeqYrVz3ue3F6Kru5Nw+tLuZCuJJ7YsEgHKC5QhCao40CKbceAj3BFFlq5rP6nHg8wkfFq14oSsnAZK8/W109x8GN1z9fhxzhbZKfVL7v+IigmOPGcBaAsf9Bmpo8uEAP2HcdzecWQ0xWUw/M2N4tc=</pre>
         </uib-tab>
         <uib-tab index="CheckCode-tab-3" heading="Response parameters" classes="nav-item">
-            <table class="table table-hover">
+            <div class="table-responsive"><table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Parameter</th>
@@ -202,13 +204,13 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                         </td>
                         <td>YES</td>
                     </tr>
-            </table>
+            </table></div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
             <jsonformatter data="checkCodeResponseExample"></jsonformatter>
         </uib-tab>
         <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
-            <table class="table table-hover">
+            <div class="table-responsive"><table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Http response</th>
@@ -244,7 +246,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                             Try again until the system recovers.
                         </td>
                     </tr>
-            </table>
+            </table></div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-6" heading="Try it out" classes="nav-item">
             <div class="row">
@@ -278,7 +280,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
 </div>
 
 <div ng-if="selected == 2">
-    <table class="table  table-active col-md-6">
+    <div class="table-responsive"><table class="table  table-active col-md-6">
         <thead>
             <tr>
                 <th>Environment </th>
@@ -302,11 +304,11 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                 <td></td>
             </tr>
         </tbody>
-    </table>
+    </table></div>
 
     <uib-tabset>
         <uib-tab index="CheckCode-tab-0" heading="Request parameters" classes="nav-item">
-            <table class="table table-hover">
+            <div class="table-responsive"><table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Parameter</th>
@@ -343,7 +345,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                         <td>YES</td>
                     </tr>
                 </tbody>
-            </table>
+            </table></div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
             <jsonformatter data="checkCodeRequestExample"></jsonformatter>
@@ -360,7 +362,7 @@ Signature:
 QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloBMJiFZc9eMrSqmlAP0XxHMmn6OHp+pr9G9jFZZ0bM6AxA1BduGYmIDPl9rGMhNXXUU6RQbWvmDD6N3Digcwf2Vr7qHzNow6rDCXpWCXJXQCXJvF86HTaF5pF/kS/R13PtIl7zn3lcvSTgWguy8DM0zwkumSzrclpo98xv/YIn3irgTiLYDD8Dz2Bh1gIOeEF+XN7OvyPGC/3JQf/P6D10Y4GNaFXHjAoCrPPBD91a8kbdYiirqjMOxiBsE4SpK7GsGsp9258TfggAhFYXF7i/B4beuNilZXzMvWY28iy28b5J/mSfEDSfMRF3EWIK5mkgoN634fjkboRB1UNW69FsZmHr3gpN807uP+o9zGrVEi0yFLua7qnbBWLfQfwvnQMHFebBUGcXqNIIjQ1ksqs17Hxxosr3GrxqHXx8EkJysp679wdAs7AmY2Z/HbhbPO1JufCluMeqYrVz3ue3F6Kru5Nw+tLuZCuJJ7YsEgHKC5QhCao40CKbceAj3BFFlq5rP6nHg8wkfFq14oSsnAZK8/W109x8GN1z9fhxzhbZKfVL7v+IigmOPGcBaAsf9Bmpo8uEAP2HcdzecWQ0xWUw/M2N4tc=</pre>
         </uib-tab>
         <uib-tab index="CheckCode-tab-3" heading="Response parameters" classes="nav-item">
-            <table class="table table-hover">
+            <div class="table-responsive"><table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Parameter</th>
@@ -417,13 +419,13 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                         <td>YES</td>
                     </tr>
 
-</table>
+</table></div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
             <jsonformatter data="checkCodeResponseExampleV2"></jsonformatter>
         </uib-tab>
         <uib-tab index="CheckCode-tab-5" heading="Error responses" classes="nav-item">
-            <table class="table table-hover">
+            <div class="table-responsive"><table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Http response</th>
@@ -459,7 +461,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                             Try again until the system recovers.
                         </td>
                     </tr>
-            </table>
+            </table></div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-6" heading="Try it out" classes="nav-item">
             <div class="row">
@@ -499,7 +501,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
     Method used by the partner system to confirm the transaction in Aircash system. Aircash suggests setting the timeout to this call to a minimum of 30 seconds, in order to avoid unnecessary timeout errors.<br />
 </p>
 
-<table class="table  table-active col-md-6">
+<div class="table-responsive"><table class="table  table-active col-md-6">
     <thead>
         <tr>
             <th>Environment</th>
@@ -523,11 +525,11 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
             <td>https://api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
         </tr>
     </tbody>
-</table>
+</table></div>
 
 <uib-tabset>
     <uib-tab index="ConfirmTransaction-tab-0" heading="Request parameters" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Parameter</th>
@@ -574,7 +576,7 @@ QDyIrReELij2SvuZFrhpSsrDsDpHhD3XEm/x64cNy2fwiIiOHcIVl7uVf6A4sbPPi/pVj2hw26sTAloB
                     <td>YES</td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
         <jsonformatter data="confirmTransactionRequestExample"></jsonformatter>
@@ -598,7 +600,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
 </pre>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-3" heading="Response parameters" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Parameter</th>
@@ -630,13 +632,13 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     </td>
                     <td>YES</td>
                 </tr>
-        </table>
+        </table></div>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-4" heading="Response example" classes="nav-item">
         <jsonformatter data="confirmTransactionResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-5" heading="Error responses" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Http response</th>
@@ -672,7 +674,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                         Try again until the system recovers.
                     </td>
                 </tr>
-        </table>
+        </table></div>
         <p>
             Corner cases<br />
             In case of Aircash system not returning a response to a ConfirmTransaction call, or
@@ -719,7 +721,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
     messages could be the result of communication issues between two systems.
 </p>
 
-<table class="table  table-active col-md-6">
+<div class="table-responsive"><table class="table  table-active col-md-6">
     <thead>
         <tr>
             <th>Environment</th>
@@ -743,11 +745,11 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
             <td>https://api.aircash.eu/api/SalesPartner/CheckTransactionStatus</td>
         </tr>
     </tbody>
-</table>
+</table></div>
 
 <uib-tabset>
     <uib-tab index="CheckTransactionStatus-tab-0" heading="Request parameters" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Parameter</th>
@@ -780,7 +782,7 @@ Iz+gMcrdNAsTMeRleQ9fcqrX61V6VZMt7GWeZ0VS3rxV6NL9WduPHV44mVMKKxqhaYwLhqXYVIERoUVI
                     <td>YES</td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
         <jsonformatter data="checkTransactionStatusRequestExample"></jsonformatter>
@@ -803,7 +805,7 @@ Signature:
 ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2yVXyNA/XhVHGAwaIr2bnaKpLVlz6K17c0FjuJUiDIxsO/R3wRQ+xpiG5pWTwKAV3m0NO8GBaqm1mavUCzflcuPhJmO/CAKVnhYCtvWaE/ZVjItzwHi0oF+y5vRhplno2l5q8r8mabPTIpL27WLe3/Rk7etcPz/FRngyGzhu0LDd0zuy7YctBHJKCaGKaBEyiUcIXdfqqnYIEoDs0h0Ec0IW5BuTJDCbRuwmmu6vkvXN/lEKwEA5S6qAd0/sw54u+fIuF8wSbxEFvRnLrAnQTEzMSP36ra/0COMJPPDZMTBUG4vwsfjjVbuqy2P6sddwILylIbgihnU6tspmMbUN4/5YavhbsXHbidpH1Pwtaoucu6CNf0WR6UBXZ13I0GHYGOQ3R15LbO9XyfaHai1mX7Wuh5S0455+gBYFe1iYwZp6x7HYGZMtZj7T4OhVjbtSmt8SdBaK/cSnfes+U1Qq26z9YlIiAaa0q+LWixOS2QN3e02qXkk0CtKwPNaq/DcL4XQmlccR/QZYVnNP7gBS/IBP+XvNLW2QjQTnmvU8v3IIYSwPwgCXluWxPVK9WGf5mtL+f4lbldpk1BOlz2itDcRoq+m4=</pre>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-3" heading="Response parameters" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Parameter</th>
@@ -837,13 +839,13 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     </td>
                     <td>YES</td>
                 </tr>
-        </table>
+        </table></div>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-4" heading="Response example" classes="nav-item">
         <jsonformatter data="checkTransactionStatusResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Error responses" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Http response</th>
@@ -879,7 +881,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                         Try again until the system recovers.
                     </td>
                 </tr>
-        </table>
+        </table></div>
         <p>
             Corner cases<br />
             In case of Aircash system not returning a response to a ConfirmTransaction call, or responding with an error 500, the sales partner system should check the transaction status in Aircash system by calling the CheckTransactionStatus method.
@@ -892,7 +894,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                 <p>Recent transactions:</p>
                 <div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-condensed">
+                        <div class="table-responsive"><table class="table table-bordered table-striped table-condensed">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -916,7 +918,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table></div>
                     </div>
                     <load-more total-loaded="checkTotalLoaded" out="checkLoadMore"></load-more>
                 </div>
@@ -944,7 +946,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
     This method is called on the cash register in case casher needs to cancel payment (cashier's mistake, unpaid purchase, etc...) This method is intended for on-premise cancellation and can be called in a limited time interval after issuing the coupon (e.g. 5 minutes).<br />
 </p>
 
-<table class="table  table-active col-md-6">
+<div class="table-responsive"><table class="table  table-active col-md-6">
     <thead>
         <tr>
             <th>Environment</th>
@@ -968,11 +970,11 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
             <td>https://api.aircash.eu/api/SalesPartner/CancelTransaction</td>
         </tr>
     </tbody>
-</table>
+</table></div>
 
 <uib-tabset>
     <uib-tab index="CancelTransaction-tab-0" heading="Request parameters" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Parameter</b></th>
@@ -1013,7 +1015,7 @@ ueIZMgee7GLaVSLvQiB4EVLDAbjx1kXf36MiPwuRDhUntmW5AS+aR7TdB7Zl2d34lDCFvJXMZaA/Yg/2
                     <td>YES</td>
                 </tr>
             </tbody>
-        </table>
+        </table></div>
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-1" heading="Request example" classes="nav-item">
         <jsonformatter data="cancelTransactionRequestExample"></jsonformatter>
@@ -1039,7 +1041,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
         Empty response
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-4" heading="Error responses" classes="nav-item">
-        <table class="table table-hover">
+        <div class="table-responsive"><table class="table table-hover">
             <thead>
                 <tr>
                     <th>Http response</th>
@@ -1075,7 +1077,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
                         Try again until the system recovers.
                     </td>
                 </tr>
-        </table>
+        </table></div>
         <p>
             Corner cases<br />
             In case of Aircash system not returning a response to a ConfirmTransaction call, or responding with an error 500, the sales partner system should check the transaction status in Aircash system by calling the CheckTransactionStatus method.
@@ -1088,7 +1090,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
                 <p>Recent transactions:</p>
                 <div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-condensed">
+                        <div class="table-responsive"><table class="table table-bordered table-striped table-condensed">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -1114,7 +1116,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table></div>
                     </div>
                     <load-more total-loaded="cancelTotalLoaded" out="cancelLoadMore"></load-more>
                 </div>
@@ -1140,7 +1142,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
     This chapter describes all of the error codes that can occur when the sales partner system receives a HTTP response 400. When responding with a 400 error, Aircash will add additional info describing the error.
 </p>
 
-<table class="table table-active col-md-6">
+<div class="table-responsive"><table class="table table-active col-md-6">
     <thead>
         <tr>
             <th>Parameter</th>
@@ -1170,9 +1172,9 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
             </td>
             <td>YES</td>
         </tr>
-</table>
+</table></div>
 
-<table class="table table-active">
+<div class="table-responsive"><table class="table table-active">
     <thead>
         <tr>
             <th>Error code</th>
@@ -1271,7 +1273,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
                 You have a predefined timespan that you can cancel the transaction in.
             </td>
         </tr>
-</table>
+</table></div>
 <hr />
 <h1>Production release process</h1>
 
@@ -1296,7 +1298,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
     To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
 </p>
 
-<table class="table table-active">
+<div class="table-responsive"><table class="table table-active">
     <thead>
         <tr>
             <th>Scenario</th>
@@ -1387,7 +1389,7 @@ AEXHWNFQD9btBMJJIRu6NYLhe9RKkz3ZqTEmq0tCc3Xl9DbI9vvabK7GTjwqiyg0YyGiGrOf3kgH3uL4
                 YES (if used)
             </td>
         </tr>
-</table>
+</table></div>
 <hr />
 <h1>Conclusion</h1>
 <p>

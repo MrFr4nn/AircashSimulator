@@ -109,7 +109,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><b>PartnerId</b></td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
@@ -316,7 +316,7 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
             </thead>
             <tbody>
                 <tr>
-                    <td><b>PartnerId</b></td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
@@ -431,26 +431,39 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
                         <tr>
                             <td><b>400</b></td>
                             <td>An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
-                            <td>
-                                <b>4000</b><br />
-                                <b>4002</b><br />
-                                <b>4003</b><br />
-                                <b>4004</b><br />
-                                <b>4005</b><br />
-                            </td>
-                            <td>
-                                Unknown phone number<br />
-                                PartnerTransactionID already exists<br />
-                                Amount too small<br />
-                                Amount too big<br />
-                                User reached transaction limit or user is blocked<br />
-                            </td>
-                            <td>
-                                -<br />
-                                -<br />
-                                -<br />
-                                -<br />
-                                -<br />
+                            <td colspan="2">
+                                <table>
+                                    <tr>
+                                        <td>4000</td>
+                                        <td>Unknown phone number</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4002</td>
+                                        <td>PartnerTransactionID already exists</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4003</td>
+                                        <td>Amount too small</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4004</td>
+                                        <td>Amount too big</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4005</td>
+                                        <td>User reached transaction limit or user is blocked</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4006</td>
+                                        <td>Currencies do not match</td>
+                                        <td>-</td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
                                 Contact Aircash support
@@ -559,7 +572,7 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
             </thead>
             <tbody>
                 <tr>
-                    <td><b>PartnerId</b></td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
