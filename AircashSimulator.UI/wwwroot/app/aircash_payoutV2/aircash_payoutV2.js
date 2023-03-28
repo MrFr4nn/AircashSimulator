@@ -22,21 +22,17 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
         checkTransactionStatus: checkTransactionStatus
     });
     function checkUser(checkUserRequest) {
-        console.log(config.baseUrl + "aircashPayout / CheckUserV2");
-        console.log(checkUserRequest);
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CheckUserV2",
+            url: config.baseUrl + "aircashC2DPayout/CheckUser",
             data: checkUserRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
     function createPayout(createPayoutRequest) {
-        console.log(config.baseUrl + "aircashPayout / CreatePayoutV2");
-        console.log(createPayoutRequest);
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CreatePayoutV2",
+            url: config.baseUrl + "aircashC2DPayout/CreatePayout",
             data: createPayoutRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -44,7 +40,7 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
     function checkTransactionStatus(partnerTransactionId) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "aircashPayout/CheckTransactionStatus",
+            url: config.baseUrl + "aircashC2DPayout/CheckTransactionStatus",
             data: {
                 PartnerTransactionId: partnerTransactionId
             }
@@ -75,13 +71,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
         $location.path('/forbidden');
     }
 
-    
-    
-    
-
-
     $scope.checkUserModel = {
-
         phoneNumber: $scope.decodedToken.userPhoneNumber,
         firstName: $scope.decodedToken.userFirstName,
         lastName: $scope.decodedToken.userLastName,
@@ -221,4 +211,139 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
     $scope.setBirthDatePayout = function (date) {
         $scope.createPayoutModel.birthDate = date;
     }
+
+    $scope.aircashC2DPayout = {
+        checkUser: {
+            inputParametersExample: {
+                PartnerID: "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
+                PhoneNumber: "385981234567",
+                PartnerUserID: "12345",
+                Parameters: [
+                    {
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    }
+                ],
+                Signature: "ldzZxe....I8="
+            },
+            outputParametersExample: {
+                first: {
+                    status: 1
+                },
+                second: {
+                    status: 2
+                },
+                third: {
+                    status: 3
+                },
+                forth: {
+                    status: 4
+                },
+                fifth: {
+                    status: 5
+                }
+            }
+        },
+        createPayout: {
+            requestExample: {
+                PartnerID: "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
+                PhoneNumber: "385981234567",
+                PartnerUserID: "12345",
+                Parameters: [
+                    {
+                        Key: "email",
+                        Value: "user@example.net"
+                    },
+                    {
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    },
+                    {
+                        Key: "LocationID",
+                        Value: "123"
+                    }],
+                Amount: 123.45,
+                CurrencyID: 978,
+                PartnerTransactionID: "123..abc..123",
+                Signature: "CX9v6V....Bw="
+            },
+            responseExample: {
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+            },
+        },
+        checkCode: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                barCode: "05cd4905-982b-4a36-8634-0719290e4341",
+                locationID: "123",
+                signature: "QDyIrReELi..."
+            },
+            responseExample: {
+                BarCode: "05cd4905-982b-4a36-8634-0719290e4341",
+                Amount: 2000.00,
+                CurrencyId: 978,
+                FirstName: "John",
+                LastName: "Doe",
+                DateOfBirth: "1990-01-01"
+            }
+        },
+        confirmTransaction: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                barCode: "05cd4905-982b-4a36-8634-0719290e4341",
+                partnerTransactionID: "11888f0c-7923-42db-8513-5c1f32cc83e0",
+                locationID: "123",
+                signature: "Iz+gMcrdNA..."
+            },
+            responseExample: {
+                BarCode: "05cd4905-982b-4a36-8634-0719290e4341",
+                Amount: 2000.00,
+                AircashTransactionID: "da7109b8-1e9b-4521-b669-2438be129ade"
+            }
+        },
+        checkTransactionStatus: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "45c38393-274b-4761-902e-23db30736563",
+                aircashTransactionID: null,
+                signature: "BBjas91N8B..."
+            },
+            responseExample: {
+                status: 2,
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+            },
+            errorResponseExample: {
+                message: "An error has occurred."
+            }
+        },
+        checkTransactionStatusSales: {
+            requestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "05cd4905-982b-4a36-8634-0719290e4341",
+                signature: "ueIZMgee7G..."
+            },
+            responseExample: {
+                LocationID: "123",
+                Amount: 123.45,
+                AircashTransactionID: "da7109b8-1e9b-4521-b669-2438be129ade"
+            },
+        }
+    };
+
 }]);

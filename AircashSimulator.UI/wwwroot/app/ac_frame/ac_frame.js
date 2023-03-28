@@ -115,6 +115,7 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.initiateBusy = false;
     $scope.initiate = function () {
         $scope.initiateBusy = true;
+        $scope.initiateResponded = false;
         acFrameService.initiate($scope.initiateModel.payType, $scope.initiateModel.payMethod, $scope.initiateModel.amount, $scope.initiateModel.currency)
             .then(function (response) {
                 if (response) {
@@ -138,6 +139,7 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.statusBusy = false;
     $scope.transactionStatus = function (transactionId) {
         $scope.statusBusy = true;
+        $scope.statusResponded = false;
         acFrameService.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
@@ -180,5 +182,44 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.aircashFrame = {
+        initiate: {
+            requestExample: {
+                partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                partnerTransactionId: "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
+                amount: "10",
+                currencyId: 191,
+                payType: 0,
+                payMethod: 2,
+                notificationUrl: "https://aircash.eu",
+                successUrl: "https://localhost:44317/#!/success",
+                declineUrl: "https://localhost:44317/#!/decline",
+                locale: "en-US",
+                signature: "CsXX21BpQg..."
+            },
+            responseExample: {
+                url: "https://aircash.eu?Id=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac"
+            },
+            errorResponseExample: {
+                code: 1,
+                message: "Invalid ProviderId",
+                additionalData: null
+            },
+        },
+        transactionStatus: {
+            requestExample: {
+                partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionId: "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
+                signature: "dUrE4gtau5..."
+            },
+            errorResponseExample: {
+                code: 1003,
+                message: "Transaction not processed",
+                additionalData: null
+            }
+        }
+    };
 
 }]);

@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
             data: {
                 pageTitle: 'Aircash payment And payout'
             },
-            url: "/aircashPaymentAndPayout",
+            url: "/aircashPaymentAndPayout",                                                                                                                            
             controller: 'aircashPaymentAndPayoutCtrl',
             templateUrl: 'app/aircash_paymentAndPayout/aircash_paymentAndPayout.html'
         });
@@ -134,6 +134,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     $scope.transactionAmountFactor = 0;
 
     $scope.checkCode = function () {
+        $scope.checkCodeServiceResponded = false;
         $scope.checkCodeServiceBusy = true;
         aircashPaymentAndPayoutService.checkCode($scope.checkCodeModel.barCode, $scope.checkCodeModel.locationID)
             .then(function (response) {
@@ -143,11 +144,14 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
                     $scope.checkCodeResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkCodeSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkCodeServiceResponseObject = response.serviceResponse;
+                    $scope.checkCodeServiceRequestObject = response.serviceRequest;
                     $scope.checkCodeServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.checkCodeServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                 }
                 $scope.checkCodeServiceBusy = false;
                 $scope.checkCodeServiceResponded = true;
+               
             }, () => {
                 console.log("error");
             });
@@ -155,6 +159,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.confirmTransaction = function () {
         $scope.confirmTransactionServiceBusy = true;
+        $scope.confirmTransactionServiceResponded = false;
         aircashPaymentAndPayoutService.confirmTransaction($scope.confirmTransactionModel.barCode, $scope.confirmTransactionModel.locationID)
             .then(function (response) {
 
@@ -177,6 +182,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.checkTransactionStatus = function (transactionId) {
         $scope.checkTransactionStatusServiceBusy = true;
+        $scope.checkTransactionStatusServiceResponded = false;
         aircashPaymentAndPayoutService.checkTransactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
@@ -196,6 +202,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.cancelTransaction = function (transactionId, pointOFSaleId) {
         $scope.cancelTransactionServiceBusy = true;
+        $scope.cancelTransactionServiceResponded = false;
         aircashPaymentAndPayoutService.cancelTransaction(transactionId, pointOFSaleId)
             .then(function (response) {
                 if (response) {
@@ -256,5 +263,65 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     $scope.getCheckTransactions();
 
     $scope.getCancelTransactions();
+
+    $scope.checkCodeRequestExample = {
+        partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+        barCode: "05cd4905-982b-4a36-8634-0719290e4341",
+        locationID: "123",
+        signature: "QDyIrReELi..."
+    };
+
+    $scope.checkCodeResponseExample = {
+        BarCode: "05cd4905-982b-4a36-8634-0719290e4341",
+        Amount: 123.45
+    };
+
+    $scope.confirmTransactionRequestExample = {
+        "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+        "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
+        "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
+        "locationID": "123",
+        "signature": "Iz+gMcrdNA..."
+    };
+
+    $scope.confirmTransactionResponseExample = {
+        "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+        "Amount": 123.45,
+        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+    };
+
+    $scope.checkTransactionStatusRequestExample = {
+        "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+        "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+        "signature": "ueIZMgee7G..."
+    };
+
+    $scope.checkTransactionStatusResponseExample = {
+        "LocationID": "123",
+        "Amount": 123.45,
+        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+    };
+
+    $scope.cancelTransactionRequestExample = {
+        "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+        "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
+        "locationID": "123",
+        "signature": "AEXHWNFQD9..."
+    };
+
+    $scope.cancelTransactionResponseExample = {
+        "LocationID": "123",
+        "Amount": 123.45,
+        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
+    };
+
+    $scope.checkCodeResponseExampleV2 = {
+        "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
+        "Amount": 2000.00,
+        "CurrencyId": 978,
+        "FirstName": "John",
+        "LastName": "Doe",
+        "DateOfBirth": "1990-01-01"
+    }
 
 }]);

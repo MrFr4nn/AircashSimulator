@@ -84,7 +84,7 @@ namespace AircashSimulator.Controllers
                 var response = await AircashPaymentService.CreateAndConfirmPayment(send); 
                 if (((AircashPaymentResponse)response).Success == true)
                 {
-                    await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>amount: " + aircashPaymentCreateAndConfirmPayment.Amount + " , </br>time: " + DateTime.Now, 1);
+                    await SendHubMessage("TransactionConfirmedMessagePayment", "Deposited: " + aircashPaymentCreateAndConfirmPayment.Amount + "€, time: " + DateTime.Now, 1);
                     return Ok(response);
                 }
                 else

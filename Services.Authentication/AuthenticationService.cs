@@ -1,4 +1,5 @@
 ﻿using AircashSimulator.Configuration;
+using AircashSimulator;
 using DataAccess;
 using Domain.Entities;
 using Domain.Entities.Enum;
@@ -34,7 +35,7 @@ namespace Services.Authentication
             var user = await AircashSimulatorContext.Users.Where(u => u.Username == username).SingleOrDefaultAsync();
 
             if (user is null)
-                throw new Exception("User not found");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidUsername, "invalid username");
 
             string passwordHash = "";
             using (SHA256 sha256Hash = SHA256.Create())
@@ -48,7 +49,7 @@ namespace Services.Authentication
                 passwordHash = builder.ToString();
             }
             if (user.PasswordHash != passwordHash)
-                throw new Exception("Invalid password");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidPassword, "Invalid password");
 
             var partner = await AircashSimulatorContext.Partners.Where(p => p.PartnerId == user.PartnerId).SingleOrDefaultAsync();
             var partnerRoleEntityList = await AircashSimulatorContext.PartnerRoles.Where(r => r.PartnerId == partner.PartnerId).ToListAsync();

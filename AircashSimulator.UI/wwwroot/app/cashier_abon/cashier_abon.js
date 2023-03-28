@@ -39,7 +39,6 @@ cashierAbonModule.controller("cashierAbonCtrl",
                 $scope.confirmBusy = true;
                 cashierAbonService.confirmCashierTransaction($scope.confirmTransactionModel.couponCode)
                     .then(function (response) {
-                        console.log(response);
                         if (response.serviceResponse.code) {
                             $rootScope.showGritter("Error", response.serviceResponse.message);
                         }

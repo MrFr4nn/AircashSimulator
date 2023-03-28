@@ -1,0 +1,88 @@
+﻿<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-red text-white">
+                <h3 class="">Sales Prtner</h3>
+                <div class="panel-heading-btn">
+                </div>
+            </div>
+            <div class="panel-body ">
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-lg-10 col-md-12">
+                        <br />
+                        <div class="text-center mb-5 mt-3">
+                            <img style="height:50px;" alt="" src="/images/aircash-red.svg">
+                        </div>
+                        <br />
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h5 class="mb-0">Check Barcode</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6>
+                                    Enter BarCode and LocationID. Check if BarCode is valid, then you will be able to confirm tranasction.
+                                </h6>
+                                <form action="/" method="POST" name="transactionForm">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="mb-3 col-6 pl-0 pr-2">
+                                                <label class="form-label">BarCode</label>
+                                                <input ng-model="codeModel.barCode" class="form-control form-control-lg" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                            </div>
+                                            <div class="mb-3 col-6 pl-2 pr-0">
+                                                <label class="form-label">LocationID</label>
+                                                <input ng-model="codeModel.locationID" class="form-control form-control-lg" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button ng-click="checkCode()" class="btn btn-danger w-100px me-5px" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check Code <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card mb-3" ng-if="codeValid">
+                            <div class="card-header">
+                                <h5 class="mb-0">Confirm transaction</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6>
+                                    Confirm transaction, after you confirm transaction found will be available on your account(Deposit) or taken from your account(Withdrawal).
+                                </h6>
+                                <form action="/" method="POST" name="confirmTransactionForm">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="mb-3 col-6 pl-0 pr-2">
+                                                <label class="form-label">BarCode</label>
+                                                <input ng-model="checkCodeServiceResponseObject.barCode" class="form-control form-control-lg" ng-readonly="true" type="text" placeholder="" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                            </div>
+                                            <div class="mb-3 col-6 pl-2 pr-0">
+                                                <label class="form-label">Amount</label>
+                                                <div class="input-group">
+                                                    <input ng-model="checkCodeServiceResponseObject.amount" ng-readonly="true" class="form-control form-control-lg" type="text" placeholder="Enter amount" name="amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    <div class="input-group-append">
+                                                        <div class="input-group-text">€</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-end">
+                                            <button ng-click="confirmTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || confirmTransactionForm.$invalid">Confirm {{transactionType}}<i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+

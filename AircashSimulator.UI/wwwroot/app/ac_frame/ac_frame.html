@@ -11,152 +11,143 @@
 
         <uib-tabset>
             <uib-tab index="checkUser1-tab-0" heading="Aircash pay" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Aircash pay</h2>
-                        <p>
-                            This chapter describes the top up process using the Aircash application. The described
-                            process explains how the user can transfer funds from the Aircash system to the partner's system.
-                        </p>
-                        <p>
-                            The process consists of the following steps:
-                        </p>
-                        <ol>
-                            <li>
-                                The user selects Aircash as the deposit option and enters the amount he wants to deposit.
-                            </li>
-                            <li>
-                                Partner’s system initiates the payment with the amount, currency, transaction id and other
-                                mandatory parameters.
-                            </li>
-                            <li>
-                                Aircash system responds with a URL to which user needs to be redirected.
-                            </li>
-                            <li>
-                                A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
-                                popped-up authorization screen)
-                            </li>
-                            <li>
-                                Aircash system notifies partner’s system by sending notification to designated URL
-                            </li>
-                            <li>
-                                Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
-                                the user’s account
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../../app/ac_frame/img/frame_acPay.svg" />
-                    </div>
-                </div>
+                <h2>Aircash pay</h2>
+                <p>
+                    This chapter describes the top up process using the Aircash application. The described
+                    process explains how the user can transfer funds from the Aircash system to the partner's system.
+                </p>
+                <p>
+                    The process consists of the following steps:
+                </p>
+                <ol>
+                    <li>
+                        The user selects Aircash as the deposit option and enters the amount he wants to deposit.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payment with the amount, currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
+                        popped-up authorization screen)
+                    </li>
+                    <li>
+                        Aircash system notifies partner’s system by sending notification to designated URL
+                    </li>
+                    <li>
+                        Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
+                        the user’s account
+                    </li>
+                </ol>
+                <b>To download diagram flow for Aircash pay click here:</b>
+                <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">
+                    <button class="btn"><i class="fa fa-download"></i> Aircash Pay Diagram flow</button>
+                </a>
             </uib-tab>
-            <uib-tab index="checkUser1-tab-1" heading="A-bon" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Aircash A-bon deposit</h2>
-                        <p>
-                            Aircash A-bon is a deposit method intended for users that wish to make
-                            payments to their Online Provider accounts (betting sites, parking
-                            services, GSM topups etc.) via paper coupons that can be bought at
-                            cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas
-                            stations, etc.).
-                        </p>
-                        <p>
+            <uib-tab index="checkUser1-tab-1" heading="Abon" classes="nav-item">
+                <h2>Aircash Abon deposit</h2>
+                <p>
+                    Aircash Abon is a deposit method intended for users that wish to make
+                    payments to their Online Provider accounts (betting sites, parking
+                    services, GSM topups etc.) via paper coupons that can be bought at
+                    cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas
+                    stations, etc.).
+                </p>
+                <p>
 
-                            The process consists of the following steps:
-                        </p>
+                    The process consists of the following steps:
+                </p>
 
-                        <ol>
-                            <li>
-                                The user selects A-bon as the deposit option.
-                            </li>
-                            <li>
-                                Partner’s system initiates the payment with the currency, transaction id and other
-                                mandatory parameters.
-                            </li>
-                            <li>
-                                Aircash system responds with a URL to which user needs to be redirected.
-                            </li>
-                            <li>
-                                Aircash frame is opened and user enters the 16-digit code from the coupon he bought
-                                and confirms the transaction of funds to an Online Provider account.
-                            </li>
-                            <li>
-                                Aircash system notifies partner’s system by sending notification to designated URL
-                            </li>
-                            <li>
-                                Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
-                                the user’s account
-                            </li>
-                            <li>
-                                The funds are deposited to the user's online account, and the coupon gets expended and can no
-                                longer be used.
-                            </li>
-                        </ol>
+                <ol>
+                    <li>
+                        The user selects Abon as the deposit option.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payment with the currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        Aircash frame is opened and user enters the 16-digit code from the coupon he bought
+                        and confirms the transaction of funds to an Online Provider account.
+                    </li>
+                    <li>
+                        Aircash system notifies partner’s system by sending notification to designated URL
+                    </li>
+                    <li>
+                        Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
+                        the user’s account
+                    </li>
+                    <li>
+                        The funds are deposited to the user's online account, and the coupon gets expended and can no
+                        longer be used.
+                    </li>
+                </ol>
 
-                        <br />
-                        <h4>Checkbox – I accept A-bon Terms & Conditions</h4>
-                        <p>
-                            In order for the users to use A-bon services on the Online Provider's website, they have to accept the
-                            terms and conditions beforehand.
-                        </p>
-                        <p>
-                            Every Online Provider is obliged to add a checkbox for the A-bon terms and conditions, which is by
-                            default always checked.
-                        </p>
-                        <p>
-                            The checkbox has to contain a link to A-bon Terms and Conditions:
-                        </p>
-                        <div class="note note-gray-400 col-md-8">
-                            <div class="note-content">
-                                <code>
-                                    &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the A-bon Terms&Conditions&lt/a&gt
-                                </code>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../../app/ac_frame/img/frame_abon.svg" />
+                <br />
+                <h4>Checkbox – I accept Abon Terms & Conditions</h4>
+                <p>
+                    In order for the users to use Abon services on the Online Provider's website, they have to accept the
+                    terms and conditions beforehand.
+                </p>
+                <p>
+                    Every Online Provider is obliged to add a checkbox for the Abon terms and conditions, which is by
+                    default always checked.
+                </p>
+                <p>
+                    The checkbox has to contain a link to Abon Terms and Conditions:
+                </p>
+                <div class="note note-gray-400 col-md-8">
+                    <div class="note-content">
+                        <code>
+                            &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the Abon Terms&Conditions&lt/a&gt
+                        </code>
                     </div>
                 </div>
+                <b>To download diagram flow for Abon click here:</b>
+                <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">
+                    <button class="btn"><i class="fa fa-download"></i> Abon Diagram flow</button>
+                </a>
             </uib-tab>
             <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item">
-                <div class="row">
-                    <div class="col-md-6">
-                        <h2>Aircash Payout</h2>
-                        <p style="text-align:justify">
-                            This chapter describes the withdrawal process. The described process explains how the user can transfer assets from the Partner's system to the Aircash system.<br />
-                        </p>
-                        <p>
-                            The process consists of the following steps:
-                        </p>
-                        <ol>
-                            <li>
-                                The user selects Aircash as the payout option and enters the amount he wants to withdraw.
-                            </li>
-                            <li>
-                                Partner’s system initiates the payout with the amount, currency, transaction id and other
-                                mandatory parameters.
-                            </li>
-                            <li>
-                                Aircash system responds with a URL to which user needs to be redirected.
-                            </li>
-                            <li>
-                                A user enters mobile phone number to which he wants to make payout
-                            </li>
-                            <li>
-                                Aircash system notifies partner’s system by sending notification to designated URL
-                            </li>
-                            <li>
-                                Aircash panel redirects the user back to the success URL and Aircash’s system makes a top up to
-                                the user’s account
-                            </li>
-                        </ol>
-                    </div>
-                    <div class="col-md-6">
-                        <img src="../../app/ac_frame/img/frame_withdrawal.svg" />
-                    </div>
-                </div>
+                <h2>Aircash Payout</h2>
+                <p style="text-align:justify">
+                    This chapter describes the withdrawal process. The described process explains how the user can transfer assets from the Partner's system to the Aircash system.<br />
+                </p>
+                <p>
+                    The process consists of the following steps:
+                </p>
+                <ol>
+                    <li>
+                        The user selects Aircash as the payout option and enters the amount he wants to withdraw.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payout with the amount, currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        A user enters mobile phone number to which he wants to make payout
+                    </li>
+                    <li>
+                        Aircash system notifies partner’s system by sending notification to designated URL
+                    </li>
+                    <li>
+                        Aircash panel redirects the user back to the success URL and Aircash’s system makes a top up to
+                        the user’s account
+                    </li>
+                </ol>
+                <b>To download diagram flow for Withdrawal click here:</b>
+                <a href="../../app/ac_frame/img/frame_withdrawal.svg" download rel="noopener noreferrer">
+                    <button class="btn"><i class="fa fa-download"></i> Withdrawal Diagram flow</button>
+                </a>
             </uib-tab>
         </uib-tabset>
         <hr />
@@ -274,7 +265,7 @@
                             <td>
                                 Transaction amount
                             </td>
-                            <td>YES, in case of A-bon method there is no entry</td>
+                            <td>YES, in case of Abon method there is no entry</td>
                         </tr>
                         <tr>
                             <td><b>CurrencyId</b></td>
@@ -296,7 +287,7 @@
                             <td><b>PayMethod</b></td>
                             <td>int</td>
                             <td>
-                                Pay method identifier ( 0 - A-bon; 2 - Aircash Pay; 10 - Aircash Payout )
+                                Pay method identifier ( 0 - Abon; 2 - Aircash Pay; 10 - Aircash Payout )
                             </td>
                             <td>YES</td>
                         </tr>
@@ -344,41 +335,14 @@
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
-    "amount": "10",
-    "currencyId": 191,
-    "payType": 0,
-    "payMethod": 2,
-    "notificationUrl": "https://aircash.eu",
-    "successUrl": "https://localhost:44317/#!/success",
-    "declineUrl": "https://localhost:44317/#!/decline",
-    "locale": "en-US",
-    "signature": "CsXX21BpQg..."
-}
-</pre>
+                <jsonformatter data="aircashFrame.initiate.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
                 <pre>
 Request example:
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserId": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
-    "amount": "10",
-    "currencyId": 191,
-    "payType": 0,
-    "payMethod": 2,
-    "notificationUrl": "https://aircash.eu",
-    "successUrl": "https://localhost:44317/#!/success",
-    "declineUrl": "https://localhost:44317/#!/decline",
-    "locale": "en-US",
-    "signature": "CsXX21BpQg..."
-}
-
+</pre>
+                <jsonformatter data="aircashFrame.initiate.requestExample"></jsonformatter>
+<pre>
 Sequence: 
 Amount=10&CurrencyId=191&DeclineUrl=https://localhost:44317/#!/decline&Locale=en-US&NotificationUrl=https://aircash.eu&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=https://localhost:44317/#!/success
 
@@ -407,11 +371,7 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Response example" classes="nav-item">
-<pre>
-<code>{</code>
-<code>    "url": "https://aircash.eu?Id=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac"</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="aircashFrame.initiate.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error responses" classes="nav-item">
                 <table class="table table-hover">
@@ -435,7 +395,7 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                         <tr>
                             <td><b>401</b></td>
                             <td>
-                                In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
+                                In case the provider sends an unknown provider ID or invalid signature Abon system will return this response
                             </td>
                             <td>
                                 Verify that ProviderId and Signature are correct in your request.
@@ -503,13 +463,7 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-                <pre>
-<code>{</code>
-<code>    "code": 1,</code>
-<code>    "message": "Invalid ProviderId",</code>
-<code>    "additionalData": null</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="aircashFrame.initiate.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -520,13 +474,13 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" ng-value="1" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
-                            <label class="form-check-label" for="customRadio2">A-bon deposit</label>
+                            <label class="form-check-label" for="customRadio2">Abon deposit</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" ng-value="2" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
                             <label class="form-check-label" for="customRadio2">Aircash withdrawal</label>
                         </div>
-                        <form action="/" method="POST" name="initiateForm">
+                        <form action="/" method="POST" class="mt-2" name="initiateForm">
                             <fieldset>
                                 <div class="mb-3" ng-hide="initiateModelSelected == 1">
                                     <label class="form-label" for="exampleInputEmail1">Amount</label>
@@ -541,19 +495,14 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                         </form>
                     </div>
                     <br />
-                    <div ng-hide="!initiateResponded" class="col-md-4">
+                    <div ng-if="initiateResponded" class="col-md-4">
                         Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>{{InitiateServiceRequest}}</code>
-</pre>
-
+                        <jsonformatter data="InitiateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceInitiate}}
                     </div>
-                    <div ng-hide="!initiateResponded" class="col-md-5">
+                    <div ng-if="initiateResponded" class="col-md-5">
                         Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre style="height: 25%">
-<code>{{InitiateServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="InitiateServiceResponse"></jsonformatter>
                         <a href="" ng-click="showFrame()">Open Aircash Frame</a>
                     </div>
                 </div>
@@ -649,23 +598,14 @@ CsXX21BpQgcE7jbZHr5xthM9lVkG42hpjQNu4QPA4fJT7OAfAMJ80rDbl63Cq5/2W4hpAHui3sFgoUZc
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <pre>
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
-    "signature": "dUrE4gtau5..."
-}
-</pre>
+                <jsonformatter data="aircashFrame.transactionStatus.requestExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
                 <pre>
 Request example:
-{
-    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionId": "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
-    "signature": "dUrE4gtau5..."
-}
-
+</pre>
+                <jsonformatter data="aircashFrame.transactionStatus.requestExample"></jsonformatter>
+<pre>
 Sequence: 
 PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac
 
@@ -742,7 +682,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                         <tr>
                             <td><b>401</b></td>
                             <td>
-                                In case the provider sends an unknown provider ID or invalid signature a-bon system will return this response
+                                In case the provider sends an unknown provider ID or invalid signature Abon system will return this response
                             </td>
                             <td>
                                 Verify that ProviderId and Signature are correct in your request.
@@ -810,13 +750,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </table>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
-                <pre>
-<code>{</code>
-<code>    "code": 1003,</code>
-<code>    "message": "Transaction not processed",</code>
-<code>    "additionalData": null</code>
-<code>}</code>
-</pre>
+                <jsonformatter data="aircashFrame.transactionStatus.errorResponseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -854,18 +788,14 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                         </div>
                     </div>
                     <br />
-                    <div ng-hide="!statusResponded" class="col-md-4">
+                    <div ng-if="statusResponded" class="col-md-4">
                         Request ({{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{StatusServiceRequest}}</code>
-</pre>
+                        <jsonformatter data="StatusServiceRequest"></jsonformatter>
                         Sequence: {{sequenceStatus}}
                     </div>
-                    <div ng-hide="!statusResponded" class="col-md-4">
+                    <div ng-if="statusResponded" class="col-md-4">
                         Response ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <pre>
-<code>{{StatusServiceResponse}}</code>
-</pre>
+                        <jsonformatter data="StatusServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>

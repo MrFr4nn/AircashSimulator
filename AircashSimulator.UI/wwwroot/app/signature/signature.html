@@ -12,7 +12,7 @@
         command:
     </p>
     <div class="note note-gray-400 col-md-6">
-        <div class="note-content">
+        <div class="note-content col">
             <code>openssl req -x509 -sha256 -newkey rsa:4096 -keyout PrivateKey.pem -out PublicKey.pem</code>
         </div>
     </div>
@@ -53,7 +53,7 @@
         the keys (running the first openSSL command).
     </p>
     <div class="note note-gray-400 col-md-6">
-        <div class="note-content">
+        <div class="note-content col">
             <code>openssl pkcs12 -export -out PrivateKeyPfxFile.pfx -inkey PrivateKey.pem -in PublicKey.pem</code>
         </div>
     </div>
@@ -109,23 +109,13 @@
         <li>All parameter names are capitalized</li>
     </ul>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Example:</b></h5>
-            <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "amount": 123.45,
-    "currencyID": 191,
-    "partnerTransactionID": "7f087237-b81a-48af-8dce-bc048fede397",
-    "description": "test",
-    "locationID": "test",
-    "signature": "bURAs89l0O..."
-}
-</pre>
+            <jsonformatter data="signature.generatingPartnersSignatureExample"></jsonformatter>
         </div>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Sequence:</b></h5>
             <pre>
 Amount=123.45&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=7f087237-b81a-48af-8dce-bc048fede397
@@ -138,7 +128,7 @@ Amount=123.45&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0
         </p>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>OpenSSL commands for generating signature:</b></h5>
             <pre>
 pkcs12 -in AircashTestPrivateKey.pfx -nocerts -out ac_private.key
@@ -227,6 +217,24 @@ def sign(dataToSign)
     return Base64.encode64(@signature).gsub(&quot;\n&quot;, &quot;&quot;)
 end</pre>
         </uib-tab>
+        <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
+            <pre style="background-color: white">
+function generate_signature($sequence)
+	{
+		if(!file_exists($this->privateKeyPath)) 
+		{
+			throw new Exception("File not found");
+		}
+		$pkcs12 = file_get_contents($this->privateKeyPath);
+		openssl_pkcs12_read($pkcs12, $certs, $this->privateKeyPass);
+		$privateKey = $certs['pkey'];		
+		$binary_signature = "";
+		openssl_sign(utf8_encode($sequence), $binarySignature, $privateKey, OPENSSL_ALGO_SHA256);
+		$signature = base64_encode($binarySignature);
+
+		return $signature;
+	}</pre>
+        </uib-tab>
     </uib-tabset>
     <br />
     <hr />
@@ -271,19 +279,22 @@ end</pre>
         <li>All parameter names are capitalized</li>
     </ul>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Example:</b></h5>
-            <pre><code>{{exampleAircash}}</code></pre>
+            <jsonformatter data="exampleAircash"></jsonformatter>
         </div>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Sequence:</b></h5>
-            {{sequenceAircash}}
+            <pre>
+{{sequenceAircash}}
+
+</pre>
         </div>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>OpenSSL command for verifying previously generated signature:</b></h5>
             <pre>
 x509 -in AircashTestPublicKey.pem -pubkey -noout -out AircashTestPublicKeyOpenSSL.pem
@@ -295,7 +306,6 @@ dgst -sha256 -verify AircashTestPublicKeyOpenSSL.pem -signature signature.txt.sh
     <h4>Code examples:</h4>
     <uib-tabset>
         <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
-            <div style="width: 800px">
                 <pre style="background-color: white">
 /// &lt;summary&gt;
 /// &lt;summary&gt;
@@ -319,7 +329,6 @@ using (var sha256 = new SHA256Managed())
         return rsaAlg.VerifyData(dataToVerifyBytes, sha256, signatureBytes);
     }
 }</pre>
-            </div>
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
             <pre style="background-color: white">
@@ -370,6 +379,19 @@ def verify_sign(public_key_loc, signature, data):
     if signer.verify(digest, b64decode(signature)):
         return True
     return False</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
+            <pre style="background-color: white">
+function verify_signature($sequence, $signature)
+	{
+		$pub_key = openssl_get_publickey (file_get_contents($this->publicKeyPath));
+		
+		if(!file_exists($this->publicKeyPath)) 
+		{
+			throw new Exception("File not found");
+		}		
+		return  openssl_verify($sequence, base64_decode($signature), $pub_key, OPENSSL_ALGO_SHA256);
+	}</pre>
         </uib-tab>
     </uib-tabset>
 </body>

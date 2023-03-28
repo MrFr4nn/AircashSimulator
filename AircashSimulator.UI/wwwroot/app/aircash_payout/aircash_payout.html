@@ -109,7 +109,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><b>PartnerId</b></td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
@@ -142,24 +142,14 @@
         </table>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "phoneNumber": 385995712738,
-    "signature": "VA514erV6V..."
-}      
-        </pre>
+        <jsonformatter data="aircashPayout.checkUser.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "phoneNumber": 385995712738,
-    "signature": "VA514erV6V..."
-}  
+</pre>
+            <jsonformatter data="aircashPayout.checkUser.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerUserID=574f32a7-4ecb-48b2-9723-ac660b9c835d&PhoneNumber=385995712738
@@ -194,11 +184,7 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
         </div>
     </uib-tab>
     <uib-tab index="checkUser1-tab-4" heading="200 OK Response example" classes="nav-item">
-        <pre>
-{
-    "status": 3
-}
-        </pre>
+        <jsonformatter data="aircashPayout.checkUser.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-5" heading="Error response messages" classes="nav-item">
         <table class="table table-hover">
@@ -245,11 +231,7 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-6" heading="Error response example" classes="nav-item">
-        <pre>
-{
-    "message": "An error has occurred."
-}
-        </pre>
+        <jsonformatter data="aircashPayout.checkUser.errorResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="checkUser1-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -267,20 +249,12 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkUserServiceResponse">
                 Request ({{checkUserRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkUserRequest"></jsonformatter>
                 Sequence: {{checkUserSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkUserServiceResponse">
                 Response ({{checkUserResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkUserResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkUserResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -342,7 +316,7 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
             </thead>
             <tbody>
                 <tr>
-                    <td><b>PartnerId</b></td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
@@ -399,31 +373,15 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
-    "amount": 100,
-    "phoneNumber": "385995712738",
-    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "currencyID": 191,
-    "signature": "Hm38lRCyOP..."
-}
-        </pre>
+        <jsonformatter data="aircashPayout.createPayout.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
-    "amount": 100,
-    "phoneNumber": "385995712738",
-    "partnerUserID": "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-    "currencyID": 191,
-    "signature": "Hm38lRCyOP..."
-}
-       
+</pre>
+            <jsonformatter data="aircashPayout.createPayout.requestExample"></jsonformatter>
+<pre>
+        
 Sequence:
 Amount=100&CurrencyID=191&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=45c38393-274b-4761-902e-23db30736563&PartnerUserID=574f32a7-4ecb-48b2-9723-ac660b9c835d&PhoneNumber=385995712738
 
@@ -453,11 +411,7 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
         </table>
     </uib-tab>
     <uib-tab index="createPayout1-tab-4" heading="200 OK Response example" classes="nav-item">
-        <pre>
-{
-    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc "
-}
-        </pre>
+        <jsonformatter data="aircashPayout.createPayout.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-5" heading="Error response messages" classes="nav-item">
         <div class="row">
@@ -477,26 +431,39 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
                         <tr>
                             <td><b>400</b></td>
                             <td>An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
-                            <td>
-                                <b>4000</b><br />
-                                <b>4002</b><br />
-                                <b>4003</b><br />
-                                <b>4004</b><br />
-                                <b>4005</b><br />
-                            </td>
-                            <td>
-                                Unknown phone number<br />
-                                PartnerTransactionID already exists<br />
-                                Amount too small<br />
-                                Amount too big<br />
-                                User reached transaction limit or user is blocked<br />
-                            </td>
-                            <td>
-                                -<br />
-                                -<br />
-                                -<br />
-                                -<br />
-                                -<br />
+                            <td colspan="3">
+                                <table>
+                                    <tr>
+                                        <td>4000</td>
+                                        <td>Unknown phone number</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4002</td>
+                                        <td>PartnerTransactionID already exists</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4003</td>
+                                        <td>Amount too small</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4004</td>
+                                        <td>Amount too big</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4005</td>
+                                        <td>User reached transaction limit or user is blocked</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4006</td>
+                                        <td>Currencies do not match</td>
+                                        <td>-</td>
+                                    </tr>
+                                </table>
                             </td>
                             <td>
                                 Contact Aircash support
@@ -528,12 +495,7 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
         </div>
     </uib-tab>
     <uib-tab index="createPayout1-tab-6" heading="Error response example" classes="nav-item">
-        <pre>
-{
-    "code": 4002,
-    "message": "PartnerTransactionID already exists"
-}
-        </pre>
+        <jsonformatter data="aircashPayout.createPayout.errorResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -555,20 +517,12 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="createPayoutServiceResponse">
                 Request ({{createPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{createPayoutRequest}}
-</code>
-</pre>
+                <jsonformatter data="createPayoutRequest"></jsonformatter>
                 Sequence: {{createPayoutSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="createPayoutServiceResponse">
                 Response ({{createPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{createPayoutResponse}}
-</code>
-</pre>
+                <jsonformatter data="createPayoutResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
@@ -618,7 +572,7 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
             </thead>
             <tbody>
                 <tr>
-                    <td><b>PartnerId</b></td>
+                    <td><b>PartnerID</b></td>
                     <td>String</td>
                     <td>Partner identifier</td>
                     <td>YES</td>
@@ -655,31 +609,21 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-1" heading="Request example" classes="nav-item">
-        <pre>
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
-    "aircashTransactionID": null,
-    "signature": "BBjas91N8B..."
-}      
-        </pre>
+        <jsonformatter data="aircashPayout.checkTransactionStatus.requestExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="createPayout1-tab-2" heading="Signature" classes="nav-item">
-        <pre>
+<pre>
 Request example:
-{
-    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-    "partnerTransactionID": "45c38393-274b-4761-902e-23db30736563",
-    "aircashTransactionID": null,
-    "signature": "BBjas91N8B..."
-}
+</pre>
+        <jsonformatter data="aircashPayout.checkTransactionStatus.requestExample"></jsonformatter>
+<pre>
 
 Sequence:
 AircashTransactionID=&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=45c38393-274b-4761-902e-23db30736563
 
 Signature:
 BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIHJAicIKVM4WK59hnNk+HCQ9X/xzeDyDK8DD7s9Md1AKiKY6AMNIig+X5vygtnAxVkda4Zyvh9gspJXOzap6RppervGNbzGXhynWpiybHzmkUnhCt0oeq3kONgZdkwwr8GjDhp7vRPGW4Hp12akGb7XQ1m+dqzsESzO2rtuQPHz0yoYrr75ckQguLAuh983uez1LcMQ75Pl/R6liPjuAddtELBtsjZikYf1Yy5wMpc01VCWgKd1vsbZ6AQsUybdbqURJlTYguS/g8rAxlB+x0HZ9eopoePhuEX117VI1KHIPeob3hraGMF2hHCih5wzCiEpS7Otye7gh41bgAjh6QfqNnIlXsnwZJwJMJcAmmHvW7aWH1JJ4G3WVyLGuF1GRkcWY30yuDW0L3GbBe1gJN0obuanlZTuI5VoWpyzS7VWbz7vvj/yZgYdZWBhvml5rccbEiZzJ+7hHcGK4DzTP94kbRyh+TSnLi/k69GSYX2lFFHwPYXJ2gpbUmhBpeP/PJD8oZ+yu3xWBsYah8Hol5yeFBErqkP/fNAQHXy5zu+dp6KXic4yl9TJSZ8eR5SOMRaVbtcuIokorHUVF8Q4FXKrmr5dKU=
-    </pre>
+</pre>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-3" heading="Response parameters" classes="nav-item">
         <table class="table table-hover">
@@ -713,12 +657,7 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-4" heading="200 OK Response example" classes="nav-item">
-        <pre>
-{
-    "status": 2,
-    "aircashTransactionID": "760aed25-b409-450b-937d-ba4f0ffa33cc "
-}
-        </pre>
+        <jsonformatter data="aircashPayout.checkTransactionStatus.responseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-5" heading="Error response messages" classes="nav-item">
         <table class="table table-hover">
@@ -767,11 +706,7 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
         </table>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-6" heading="Error response example" classes="nav-item">
-        <pre>
-{
-    "message": "An error has occurred."
-}
-        </pre>
+        <jsonformatter data="aircashPayout.checkTransactionStatus.errorResponseExample"></jsonformatter>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -812,20 +747,12 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
             <div class="col-md-0.5"></div>
             <div class="col-md-4" ng-if="checkTransactionStatusServiceResponse">
                 Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTransactionStatusRequest}}
-</code>
-</pre>
+                <jsonformatter data="checkTransactionStatusRequest"></jsonformatter>
                 Sequence: {{checkTransactionStatusSequence}}<br />
             </div>
             <div class="col-md-3" ng-if="checkTransactionStatusServiceResponse">
                 Response ({{checkTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-<pre>
-<code>
-{{checkTransactionStatusResponse}}
-</code>
-</pre>
+                <jsonformatter data="checkTransactionStatusResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>

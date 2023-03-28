@@ -1,1 +1,80 @@
-﻿<h1>Aircash C2D Page</h1>
+﻿
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-red text-white">
+                <h3>C2D Flow</h3>
+                <div class="panel-heading-btn">
+
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-lg-10 col-md-12">
+                        <br />
+                        <div class="text-center mb-4 mt-3">
+                            <img style="height: 50px;" alt="" src="/images/aircash-red.svg">
+                        </div>
+                        <br />
+                        <h6 ng-bind-html="translationsCashier.c2dflow_cashier_description">
+                            {{translationsCashier.c2dflow_cashier_description}}
+                        </h6>
+                        <form action="/" method="POST" name="transactionForm1">
+                            <fieldset>
+                                <label class="form-label">{{translationsCashier.cashier_amount_input_label}}</label>
+                                <div class="input-group mb-3">
+                                    <input ng-model="createPayoutModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" name="amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                    <div class="input-group-append">
+                                        <div class="input-group-text">€</div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div id="accordion">
+                                        <div class="card">
+                                            <div class="card-header" id="headingOne">
+                                                <h5 class="mb-0">
+                                                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                                        {{translationsCashier.c2dflow_cashier_personal_data_label}}
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                                <div class="card-body">
+                                                    <label class="form-label">{{translationsCashier.cashier_phone_number_input_label}}</label>
+                                                    <phone-number-input output="createPayoutModel.phoneNumber"></phone-number-input>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{translationsCashier.cashier_email_input_label}}</label>
+                                                        <input ng-model="createPayoutModel.email" class="form-control form-control-lg" type="email" placeholder="{{translationsCashier.cashier_email_placeholder}}" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{translationsCashier.cashier_first_name_input_label}}</label>
+                                                        <input ng-model="createPayoutModel.firstName" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_first_name_placeholder}}" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{translationsCashier.cashier_last_name_input_label}}</label>
+                                                        <input ng-model="createPayoutModel.lastName" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_last_name_placeholder}}" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                                                    </div>
+                                                    <div class="mb-3">
+                                                        <label class="form-label">{{translationsCashier.cashier_birth_date_input_label}}</label>
+                                                        <date-picker date="createPayoutModel.birthDate" isOptional="false" out="setBirthDatePayout"></date-picker>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button ng-click="confirmC2dPayment()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">{{translationsCashier.c2dflow_cashier_button}}<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
