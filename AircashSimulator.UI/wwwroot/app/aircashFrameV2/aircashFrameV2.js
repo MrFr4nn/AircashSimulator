@@ -295,6 +295,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
                 partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
                 signature: "dUrE4gtau5..."
             },
+            responseExample: {
+                aircashTransactionId: "b74854c8-db9d-48d7-985a-59f587637a75",
+                status: 2,
+                currencyId: 978,
+                amount: 1.78,
+                signature: "jBMpdollER..."
+            },
             errorResponseExample: {
                 code: 1003,
                 message: "Transaction not processed",
