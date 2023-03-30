@@ -26,6 +26,8 @@ var app = angular.module('app', [
     'ac_business_site',
     'ac_test_application',
     'forbidden',
+    'success',
+    'decline',
     'inAppPay'
 ]);
 
@@ -49,20 +51,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 username: ""
             }
         })
-        .state('success', {
-            url: '/success',
-            templateUrl: 'app/result/success.html',
-            controller: 'SuccessCtrl',
-            controllerAs: 'vm',
-            params: {}
-        })
-        .state('decline', {
-            url: '/decline',
-            templateUrl: 'app/result/decline.html',
-            controller: 'DeclineCtrl',
-            controllerAs: 'vm',
-            params: {}
-        })
+
 }]);
 
 app.service("handleResponseService", ['$q', function ($q) {
