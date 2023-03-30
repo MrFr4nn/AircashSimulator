@@ -27,13 +27,13 @@
 
                 <div class="container">
                     <div class="row" style="margin-top: 25px">
-                        <div class="form-group col-xs-3 col-md-3">
+                        <div class="col-8 col-sm-4 col-md-3 form-group">
                             <button class="btn btn-primary" ng-click="addEditUserModal();">
                                 <i class="fa fa-user" aria-hidden="true" style="margin-right:3px;"></i>New user
                             </button>
                         </div>
                         <div class="col-sm-1"></div>
-                        <div class="form-group col-xs-3 col-md-3">
+                        <div class="form-group col-8 col-sm-6 col-lg-3">
                             <input type="search"
                                    placeholder="Search users"
                                    class="form-control"
@@ -41,14 +41,14 @@
                                    ng-model-options="{debounce: 600}"
                                    ng-change="SearchTable();" />
                         </div>
-                        <div class="col-sm-1">
+                        <div class="col-1">
                             <button ng-disabled="!searchUser" type="button" class="btn btn-primary" ng-click="setDefaults();">Clear</button>
                         </div>
                     </div>
                 </div>
 
-                <div ng-if="users" class="container">
-                    <div class="table-responsive" style="overflow-x:visible">
+                <div ng-if="users">
+                    <div class="table-responsive">
                         <table class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
                             <thead>
                                 <tr>

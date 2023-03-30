@@ -65,7 +65,7 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
     $scope.checkUser = function () {
         $scope.checkUserRequest = {
             phoneNumber: $scope.checkUserModel.phoneNumber,
-            parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toISOString().split('T')[0] }]
+            parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toLocaleDateString('en-CA') }]
         }
         $scope.checkUserServiceBusy = true;
         acPosDepositService.checkUser($scope.checkUserRequest)
@@ -101,7 +101,7 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
         $scope.createPayoutRequest = {
             phoneNumber: $scope.createPayoutModel.phoneNumber,
             amount: $scope.createPayoutModel.amount,
-            parameters: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutModel.birthDate.toISOString().split('T')[0] }]
+            parameters: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutModel.birthDate.toLocaleDateString('en-CA') }]
         }
         $scope.createPayoutServiceBusy = true;
         acPosDepositService.createPayout($scope.createPayoutRequest)
@@ -138,12 +138,12 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
             aircashUser: {
                 firstName: $scope.matchPersonalDataModel.firstNameAircashUser,
                 lastName: $scope.matchPersonalDataModel.lastNameAircashUser,
-                birthDate: $scope.matchPersonalDataModel.birthDateAircashUser.toISOString().split('T')[0],
+                birthDate: $scope.matchPersonalDataModel.birthDateAircashUser.toLocaleDateString('en-CA'),
             },
             partnerUser: {
                 firstName: $scope.matchPersonalDataModel.firstNamePartnerUser,
                 lastName: $scope.matchPersonalDataModel.lastNamePartnerUser,
-                birthDate: $scope.matchPersonalDataModel.birthDatePartnerUser.toISOString().split('T')[0],
+                birthDate: $scope.matchPersonalDataModel.birthDatePartnerUser.toLocaleDateString('en-CA'),
             },
         }
         $scope.matchPersonalDataServiceBusy = true;
