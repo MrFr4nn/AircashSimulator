@@ -1,0 +1,27 @@
+﻿<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading bg-red text-white">
+            <h4 class="panel-title">In App Pay</h4>
+            <div class="panel-heading-btn">
+
+            </div>
+        </div>
+        <div class="panel-body">
+            <div class="text-center">
+                <img style="width:200px; height: 80px;" alt="" src="/images/aircash-red.svg">
+            </div>
+            <form class="w-75 container" action="/" method="POST" name="generateForm">
+                <fieldset>
+                    <label for="amount">Amount</label>
+                    <div class="input-group mb-3">
+                        <input class="form-control form-control-lg" ng-model="generateTransactionModel.amount" ng-required="true" type="number" min="0" step="0.01" />
+                        <div class="input-group-append">
+                            <button class="btn btn-lg btn-danger" ng-click="generateTransaction()" ng-disabled="generateBusy || generateForm.$invalid">Pay<i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
