@@ -15,6 +15,7 @@ namespace AircashSimulator
     {
         private IAbonSalePartnerService AbonSalePartnerService;
         private UserContext UserContext;
+        private readonly Guid PartnerIdCashier = new Guid("9be565cb-762a-403b-bb77-420ffdf46c61");
         public AbonSalePartnerController(IAbonSalePartnerService abonSalePartnerService, UserContext userContext)
         {
             AbonSalePartnerService = abonSalePartnerService;
@@ -29,6 +30,16 @@ namespace AircashSimulator
             var response=await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, partnerId);
             return Ok(response);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCashierCoupon(CreateCashierCouponRequest createCouponRequest)
+        {
+            //var partnerId = UserContext.GetPartnerId(User);
+            Guid partnerId = new Guid(createCouponRequest.PartnerId);
+            var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, partnerId);
+            return Ok(response);
+        }
+
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CancelCoupon(CancelCouponRequest cancelCouponRequest)
