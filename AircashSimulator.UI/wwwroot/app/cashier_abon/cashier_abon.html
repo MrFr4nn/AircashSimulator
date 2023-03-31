@@ -24,7 +24,7 @@
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label">{{translationsCashier.abon_cashier_deposit_input_label}}</label>
-                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control form-control-lg w-50" type="text" placeholder="{{translationsCashier.abon_cashier_deposit_input_placeholder}}" ng-required="true" />
+                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control form-control-lg w-50" type="text" ng-keyup="addHyphen($event)" placeholder="{{translationsCashier.abon_cashier_deposit_input_placeholder}}" ng-required="true" />
                                 </div>
                                 <div class="mb-3">
                                     <div class="form-check">
