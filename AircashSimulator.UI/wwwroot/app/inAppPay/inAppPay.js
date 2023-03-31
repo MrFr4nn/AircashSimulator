@@ -15,7 +15,6 @@ app.config(function ($stateProvider) {
 inAppPayModule.service("inAppPayService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         generateTransaction: generateTransaction,
-        getTransactions: getTransactions,
     });
     function generateTransaction(amount, description, locationID) {
         var request = $http({
@@ -30,18 +29,6 @@ inAppPayModule.service("inAppPayService", ['$http', '$q', 'handleResponseService
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         
     }
-
-    function getTransactions(pageSize, pageNumber) {
-        var request = $http({
-            method: 'GET',
-            url: config.baseUrl + "Transaction/GetAircashPayPreparedTransactions",
-            params: {
-                PageSize: pageSize,
-                PageNumber: pageNumber
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
 }
 ]);
 
@@ -52,10 +39,6 @@ inAppPayModule.controller("InAppPayCtrl", ['$scope', '$state', '$filter', 'inApp
     };
 
     $scope.setDefaults = function () {
-        $scope.transactions = [];
-        $scope.pageSize = 5;
-        $scope.pageNumber = 1;
-        $scope.totalLoaded = 0;
         $scope.busy = false;
     };
 
@@ -64,9 +47,6 @@ inAppPayModule.controller("InAppPayCtrl", ['$scope', '$state', '$filter', 'inApp
         $scope.generateBusy = true;
         inAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID)
             .then(function (response) {
-                if (response) {
-                    $scope.getTransactions(true);
-                }
                 $scope.generateBusy = false;
                 window.open(response.serviceResponse.url, '_blank');
             }, () => {
@@ -74,28 +54,7 @@ inAppPayModule.controller("InAppPayCtrl", ['$scope', '$state', '$filter', 'inApp
             });
     }
 
-    $scope.getTransactions = function (reset) {
-        if (reset) $scope.setDefaults();
-        inAppPayService.getTransactions($scope.pageSize, $scope.pageNumber)
-            .then(function (response) {
-                $scope.pageNumber += 1;
-                if (response) {
-                    $scope.totalLoaded = response.length;
-                    $scope.transactions = $scope.transactions.concat(response);
-                }
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.loadMore = function (pageSize) {
-        $scope.pageSize = pageSize;
-        $scope.getTransactions();
-    };
-
     $scope.setDefaults();
-
-    $scope.getTransactions();
 
     
 }]);
