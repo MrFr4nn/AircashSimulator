@@ -24,7 +24,7 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
             <li class="nav-header">{{translations.menu_label}}</li>
-            <li ui-sref-active="active">  
+            <li ui-sref-active="active">
                 <a ui-sref="app.dashboard">
                     <span ng-click="submenu=!submenu"><i class="fa fa-list"></i>{{translations.dashboard_label}} <i class="fas fa-caret-down ml-auto" ng-if="!submenu"></i><i class="fas fa-caret-up ml-auto" ng-if="submenu"></i></span>
                 </a>
@@ -133,6 +133,12 @@
                 <a ui-sref="app.acInAppPay" ng-if="partnerRoles.indexOf('AircashInAppPay') != -1">
                     <i class="fa fa-gamepad" aria-hidden="true"></i>
                     <span>{{translations.ac_in_app_pay}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.aircash_ATM" ng-if="partnerRoles.indexOf('AircashATM') != -1">
+                    <i class="fa fa-mobile-alt"></i>
+                    <span>ATM integration</span>
                 </a>
             </li>
             <li>
