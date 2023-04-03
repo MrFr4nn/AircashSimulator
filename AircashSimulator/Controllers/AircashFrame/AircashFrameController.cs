@@ -132,6 +132,6 @@ namespace AircashSimulator.Controllers.AircashFrame
             var partnerId = UserContext.GetPartnerId(User);
             var response = await AircashFrameV2Service.TransactionStatusCashierFrameV2(partnerId, transactionStatusRequest.TransactionId);
             return Ok(response);
-        }
+        }        
     }
 }

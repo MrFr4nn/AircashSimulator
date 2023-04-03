@@ -1,0 +1,65 @@
+﻿<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #F62727;">
+                <div class="col-md-6" style="float:left;">
+                    <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - AcPay</h2>
+                </div>
+                <div class="col-md-6" style="float:right;">
+                    <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 text-center">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <img src="/images/aircash_logo.png" class="aircashHeaderLogo">
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12">
+                        <h6>Enter a 16-digit coupon code or scan the QR code from the Aircash A-bon voucher, select "Start transfer" and funds will instantly be available on your account. Buy Aircash A-bon paper vouchers at any Aircash partner’s locations: <a target="_blank" href="https://abon.cash/locations/">Abon locations</a></h6>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>                        
+                        <div class="row row-cols-1 row-cols-sm-2">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                                <div class="form-check">
+                                    <input ng-checked="true" ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-init="confirmCheckBox=true" ng-change="checkStatusBtnInitiateAcFrame(confirmCheckBox)" />
+                                    <label class="form-check-label" for="checkbox1" style=" padding-top: 4px; padding-left:10px; font-size:15px;"><a href="https://abon.cash/terms-conditions-en/" rel="nofollow" target="_blank">I accept the Abon Terms&Conditions</a></label>
+                                </div>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center" style="margin-top: 10px;">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 d-flex align-items-center justify-content-center" id="dvBtnInitiateFrame">
+                                <button ng-disabled="!(confirmCheckBox) || createCashierAcFrameAbonServiceBusy || transactionForm1.$invalid" ng-model="btnInitiateAcFrame" ng-click="initiateAcFrameAbon()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;">Deposit<i ng-if="createCashierAcFrameAbonServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
+                            <div class="iconGoogleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/google-play-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconAppleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-store-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconHuaweiMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-gallery-en.svg" style="max-width: 70%"></a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
