@@ -20,31 +20,41 @@ namespace AircashSimulator.Controllers
             UserContext = userContext;
         }
 
+        [HttpPost]
         public async Task<IActionResult> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest) 
         {
             generateTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
             var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest);
             return Ok(response);
         }
+        [HttpPost]
         public async Task<IActionResult> CancelTransaction(CancelTransactionRequest cancelTransactionRequest)
         {
             return Ok();
         }
+        [HttpPost]
         public async Task<IActionResult> getTransactions(GetTransactionsRequest getTransactionsRequest)
         {
             return Ok();
         }
+        [HttpPost]
         public async Task<IActionResult> RefundTransaction(RefundTransactionRequest refundTransactionRequest)
         {
             refundTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
             var response = AircashInAppPayService.RefundTransaction(refundTransactionRequest);
             return Ok(response);
         }
+        [HttpPost]
         public async Task<IActionResult> CashierGenerateTransaction(GenerateTransactionRequest generateTransactionRequest)
         {
             generateTransactionRequest.PartnerID = CashierPartnerId;
             var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest);
             return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
+        {
+            return Ok();
         }
     }
 }
