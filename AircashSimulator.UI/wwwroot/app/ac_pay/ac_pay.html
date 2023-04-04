@@ -898,7 +898,7 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                 <li class="mb-2">
                     First you need to decode the URL encoded string to receive base64 string:
                     <br />
-                    bThRSHh5WTV1THNXd2VjZExZMWNvWUxieCtiK1c1OXdCdVU3c3VNVi93dEE1QlluelZpSm9JZms0RThuMGx4Z21ROW5lSm8xZFVHc2N5d2p6T3BWK0RGTHFUWVFiK250YlhjQlhBRjdGM2F2Y1BLbWVkSmVHbVdtSDFUbWErVlZRMk9keDN4dHgxYTFxaWVuc3RrbjYySVl4VGRHRlBqZkZYS2R6dm1Wb25PaXVnNG9qdGZ2UlZXd2hyS0JIRTF3Wjc4UFZsSkpOVHB0cTFBc2J3VG13TzhHaDFxZ0Ewb2Y0VlhLUk1iNUxTK1drMU4wS2MwMXVsQWtTVngyNWVybXJkQ0FrU1YvV3A5M1BkVTdvTkxhOXpxQ3pZU3ZuOW9jZFhEUFFxQkw4eHVsRGdHZzdDTkduM0JNUGJ2VmIzMDZwa1hocE5iQ3dZb2trL0RzZFprUDhMQ21nb2xHQlJMcCtZSkVQdEhYSURVPQ=         
+                    bThRSHh5WTV1THNXd2VjZExZMWNvWUxieCtiK1c1OXdCdVU3c3VNVi93dEE1QlluelZpSm9JZms0RThuMGx4Z21ROW5lSm8xZFVHc2N5d2p6T3BWK0RGTHFUWVFiK250YlhjQlhBRjdGM2F2Y1BLbWVkSmVHbVdtSDFUbWErVlZRMk9keDN4dHgxYTFxaWVuc3RrbjYySVl4VGRHRlBqZkZYS2R6dm1Wb25PaXVnNG9qdGZ2UlZXd2hyS0JIRTF3Wjc4UFZsSkpOVHB0cTFBc2J3VG13TzhHaDFxZ0Ewb2Y0VlhLUk1iNUxTK1drMU4wS2MwMXVsQWtTVngyNWVybXJkQ0FrU1YvV3A5M1BkVTdvTkxhOXpxQ3pZU3ZuOW9jZFhEUFFxQkw4eHVsRGdHZzdDTkduM0JNUGJ2VmIzMDZwa1hocE5iQ3dZb2trL0RzZFprUDhMQ21nb2xHQlJMcCtZSkVQdEhYSURVPQ=
                 </li>
                 <li class="mb-2">
                     Then it needs to be decrypted with AES symmetric key (we are using 128-bit key SXFPCHYKONI6S89U).
@@ -923,6 +923,54 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                 </li>
             </ul>
         </p>
+    </div>
+
+    <hr />
+
+    <h1>FAQ</h1>
+
+    <br />
+
+    <div class="table-responsive">
+        <table class="table table-active">
+            <tr>
+                <td rowspan="2">1.</td>
+                <td>
+                    <b>Q:&nbsp; Is it possible to pay/make online deposits on sites that use multiple currencies?</b><br />
+                </td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes it is. From a technical perspective, for each currency there needs to be a unique PartnerId parameter within the requests.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">2.</td>
+                <td><b>Q:&nbsp; At what time is the payment visible?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; It is processed instantly.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">3.</td>
+                <td><b>Q:&nbsp; What happens if the user does not have installed the Aircash app and wants to make the payment?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; After completing the purchase flow, if the user does not have Aircash app, he will be redirected to one of the stores to download the app.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.</td>
+                <td><b>Q:&nbsp; Is it possible to make partial refunds?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes it is possible. Refund method can be called multiple times as long as the sum of previous refund amounts is less or equal to the amount of the original transaction.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">5.</td>
+                <td><b>Q:&nbsp; Is the QR code going to be visible within the mobile browser for making the payments/deposits?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; No. Mobile version has to implement a button that will have within it url that is behind the QR code and which is sent from us.</td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
