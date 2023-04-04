@@ -23,7 +23,7 @@ namespace Services.AircashInAppPay
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private const string GenerateTransactionURL = "https://localhost:44317/#!/success";
+        private const string GenerateTransactionURL = "https://dev-simulator.aircash.eu/#!/success";
 
         private readonly string AircashPayGenerateTransactionEndpoint = "AircashPay/GenerateTransaction";
         private readonly string RefundTransactionEndpoint = "AircashPay/RefundTransaction";
