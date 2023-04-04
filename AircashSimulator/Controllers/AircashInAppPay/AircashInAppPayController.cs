@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Services.AircashInAppPay;
 using AircashSimulator.Extensions;
+using System;
 
 namespace AircashSimulator.Controllers
 {
@@ -12,6 +13,7 @@ namespace AircashSimulator.Controllers
     {
         private IAircashInAppPayService AircashInAppPayService;
         private UserContext UserContext;
+        private Guid CashierPartnerId = new Guid("d47af4a2-fdc4-44f5-a1d6-79ddca59f5dc");
         public AircashInAppPayController(IAircashInAppPayService aircashInAppPayService, UserContext userContext) 
         {
             AircashInAppPayService = aircashInAppPayService;
@@ -36,6 +38,12 @@ namespace AircashSimulator.Controllers
         {
             refundTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
             var response = AircashInAppPayService.RefundTransaction(refundTransactionRequest);
+            return Ok(response);
+        }
+        public async Task<IActionResult> CashierGenerateTransaction(GenerateTransactionRequest generateTransactionRequest)
+        {
+            generateTransactionRequest.PartnerID = CashierPartnerId;
+            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest);
             return Ok(response);
         }
     }

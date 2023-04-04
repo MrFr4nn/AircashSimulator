@@ -19,7 +19,7 @@ inAppPayModule.service("inAppPayService", ['$http', '$q', 'handleResponseService
     function generateTransaction(amount, description, locationID) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashInAppPay/GenerateTransaction",
+            url: config.baseUrl + "AircashInAppPay/CashierGenerateTransaction",
             data: {
                 Amount: amount,
                 Description: description,
