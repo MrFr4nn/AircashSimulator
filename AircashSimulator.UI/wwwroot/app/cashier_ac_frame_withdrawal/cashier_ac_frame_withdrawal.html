@@ -1,0 +1,69 @@
+﻿<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #F62727;">
+                <div class="col-md-6" style="float:left;">
+                    <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - Withdrawal</h2>
+                </div>
+                <div class="col-md-6" style="float:right;">
+                    <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameWithdrawalServiceBusy" ng-required="true">
+                    </select>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 text-center">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <img src="/images/aircash_logo.png" class="aircashHeaderLogo">
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12">
+                        <h6>
+                            Enter the withdrawal amount and your phone number. Confirm the withdrawal and funds will instantly be available on your Aircash wallet. Download the free Aircash mobile application here.
+                        </h6>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>                        
+                        <div class="row row-cols-1 row-cols-sm-2">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                                <label class="form-label" style="margin-bottom: 0px !important;">{{translationsCashier.cashier_amount_input_label}}</label>
+                                <div class="input-group" style="margin-bottom: 0px !important;">
+                                    <input ng-model="createCashierAcFrameWithdrawalModel.amount" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_amount_placeholder}}" ng-disabled="createCashierAcFrameWithdrawalServiceBusy" ng-required="true">
+                                    <span class="input-group-addon">€</span>
+                                </div>
+                                <label class="form-label" for="amount">{{translationsCashier.cashier_amount_input_note}}</label>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center" style="margin-top: 10px;">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 d-flex align-items-center justify-content-center" id="dvBtnInitiateFrame">
+                                <button ng-click="initiateAcFrameWithdrawal()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createCashierAcFrameWithdrawalServiceBusy || transactionForm1.$invalid">Withdrawal<i ng-if="createCashierAcFrameWithdrawalServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
+                            <div class="iconGoogleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/google-play-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconAppleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-store-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconHuaweiMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-gallery-en.svg" style="max-width: 70%"></a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
