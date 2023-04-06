@@ -140,6 +140,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     $scope.SearchTable = function () {
         $scope.partnerV2 = {};
         $scope.partners = [];
+        $scope.username = null;
         $scope.pageNumber = 1;
         $scope.getPartnersDetail();
         $scope.defaultCountry = "HR";
@@ -172,22 +173,11 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $("#PartnerModal").modal(flag ? 'show' : 'hide');
     }
 
-    $scope.toggePartnerNewModal = function (flag, sNewRoleId) {
+    $scope.toggePartnerNewModal = function (flag, newRoleId) {
         $scope.defaultCountry = "HR";
         $scope.setCurrency = 978;
-        if (flag) {
-            $scope.sendRolesV2 = [];
-            $scope.roles.forEach(function (role) {
-                if (sNewRoleId.find(x => x == role.roleId)) {
-                    $scope.sendRolesV2.push({
-                        RoleId: role.roleId,
-                        RoleName: role.roleName
-                    });
-                }
 
-            });
-        }
-        
+        $scope.sendRolesV2 = newRoleId;      
         $("#partnerV2Modal").modal(flag ? 'show' : 'hide');
     }
 
@@ -196,10 +186,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.filteredRoles = $filter('filter')($scope.roles, { selected: true });
 
         for (var i = 0; i < $scope.filteredRoles.length; i++) {
-            $scope.sendRoles.push({
-                RoleId: $scope.filteredRoles[i].roleId,
-                RoleName: $scope.filteredRoles[i].roleName
-            });
+            $scope.sendRoles.push($scope.filteredRoles[i].roleId);
         }
         $scope.partner.countryCode = $scope.countryPickerCode.countryCode;
         $scope.partner.currencyId = $scope.currencyNew.code;

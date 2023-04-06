@@ -89,7 +89,7 @@ namespace Services.Partner
             return partners;
         } 
 
-        public async Task SavePartner(PartnerDetailVM request)
+        public async Task SavePartner(SavePartnerVM request)
         {
             Guid id;
             if (request.PartnerId != null)
@@ -139,7 +139,7 @@ namespace Services.Partner
                             await AircashSimulatorContext.PartnerRoles.AddAsync(new PartnerRoleEntity
                             {
                                 PartnerId = id,
-                                PartnerRole = role.RoleId
+                                PartnerRole = role
                             });
                         }
                 }
