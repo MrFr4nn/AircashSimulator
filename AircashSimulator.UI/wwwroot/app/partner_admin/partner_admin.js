@@ -145,7 +145,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.pageNumber = 1;
         $scope.getPartnersDetail();
         $scope.defaultCountry = "HR";
-        $scope.setCurrency = 978;
+        $scope.setCurrency = 978; 
     }
     $scope.partner = {};
     $scope.showPartnerModal = function (partner, newPartner) {
