@@ -463,7 +463,7 @@
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <jsonformatter data="aircashFrameV2.initiate.errorResponseExample"></jsonformatter>
             </uib-tab>
-            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
                         <div class="form-check form-check-inline">
@@ -498,10 +498,9 @@
                         <jsonformatter data="InitiateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceInitiate}}
                     </div>
-                    <div ng-hide="!initiateResponded" class="col-md-5">
+                    <div ng-if="initiateResponded" class="col-md-5">
                         Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <jsonformatter data="InitiateServiceResponse"></jsonformatter>
-                        <a href="" ng-click="showFrame()">Open Aircash Frame</a>
                     </div>
                 </div>
             </uib-tab>
