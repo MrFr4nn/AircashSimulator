@@ -213,11 +213,12 @@
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-lg-10">
                         <table class="table table-bordered table-hover table-condensed table-striped">
                             <tbody>
                                 <tr ng-repeat="r in roles">
                                     <td>{{r.roleName}}</td>
+                                    <td>{{getDescription(r.roleName)}}</td>
                                     <td>
                                         <input type="checkbox"
                                                name="selectedRoles[]"

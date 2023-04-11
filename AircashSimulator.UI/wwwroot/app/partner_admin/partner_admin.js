@@ -96,6 +96,7 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
 }
 ]);
 
@@ -283,6 +284,40 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
             }
         }
     }
+
+    $scope.getDescription = function (roleName) {
+        switch (roleName) {
+            case "SalePartner":
+                return "TopUp and Payout via barcode on physical location";
+            case "AircashFrame":
+                return "Frame version 1, obsolete. Use AircashFrameV2 instead";
+            case "AircashPay":
+                return "Direct Aircash Pay integration";
+            case "AircashPayout":
+                return "Withdrawals from Online partners";
+            case "AbonGenerate":
+                return "Abon distribution documentation";
+            case "AbonDeposit":
+                return "Documentation for online/merchant";
+            case "AircashPayment":
+                return "Aircash marketplace deposit";
+            case "AircashRedeemTicket":
+                return "Payouts of winning tickets to Aircash app";
+            case "AircashFrameV2":
+                return "Current version of Frame, contains Aircash Pay, Abon deposit and Witdhrawals";
+            case "AircashPayStaticCode":
+                return "Aircash Pay for static QR codes";
+            case "AircashPosDeposit":
+                return "Cash to Digital documentation for deposits";
+            case "AircashInAppPay":
+                return "AircashPay payments via AircashMarketplace";
+            case "AircashPayoutV2":
+                return "C2D witdhrawals";
+            default:
+                break;
+
+        }
+    };
 
     $("#partnerV2Modal").on("hidden.bs.modal", function () {
         $scope.SearchTable();
