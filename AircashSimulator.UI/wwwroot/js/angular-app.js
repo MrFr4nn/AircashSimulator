@@ -28,6 +28,7 @@ var app = angular.module('app', [
     'forbidden',
     'success',
     'decline',
+    'jira',
     'inAppPay'
 ]);
 
