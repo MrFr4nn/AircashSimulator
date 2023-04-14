@@ -109,11 +109,14 @@ app.controller('rightSidebarController', function ($scope, $rootScope, $state) {
 /* -------------------------------
    4.0 CONTROLLER - Header
 ------------------------------- */
-app.controller('headerController', function ($scope, $rootScope, $state, JwtParser) {
+app.controller('headerController', ['$scope', '$rootScope', '$state', 'JwtParser', '$localStorage', function ($scope, $rootScope, $state, JwtParser,$localStorage) {
   angular.element(document).ready(function () {
       $scope.username = JwtParser.getProperty("unique_name");
+      
   });
-});
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+}]);
 
 
 /* -------------------------------
