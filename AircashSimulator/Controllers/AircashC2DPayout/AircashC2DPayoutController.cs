@@ -30,28 +30,28 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePayout(CreatePayoutRQ createPayoutRQ)
         {
-            var response = await AircashPayoutV2Service.CreatePayout(UserContext.GetPartnerId(User), createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), createPayoutRQ.Parameters);
+            var response = await AircashPayoutV2Service.CreatePayout(UserContext.GetPartnerId(User), createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), createPayoutRQ.Parameters, createPayoutRQ.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierCreatePayout(CreatePayoutRQ createPayoutRQ)
         {
-            var response = await AircashPayoutV2Service.CreatePayout(PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserId.ToString(), createPayoutRQ.Parameters);
+            var response = await AircashPayoutV2Service.CreatePayout(PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserId.ToString(), createPayoutRQ.Parameters, createPayoutRQ.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CheckCode(CheckCodeDTO checkCodeDTO)
         {
-            var response = await AircashPayoutV2Service.CheckCode(PartnerId, checkCodeDTO.Barcode);
+            var response = await AircashPayoutV2Service.CheckCode(PartnerId, checkCodeDTO.Barcode, checkCodeDTO.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRQ confirmTransactionRQ)
         {
-            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, PartnerId, UserId);
+            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, PartnerId, UserId, confirmTransactionRQ.Environment);
             return Ok(response);
         }
 

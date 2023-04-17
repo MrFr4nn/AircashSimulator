@@ -67,7 +67,7 @@ namespace Services.HttpRequest
                 case EndpointEnum.FrameV2:
                     return AircashConfiguration.AircashFrameBaseUrl;
                 case EndpointEnum.SalesV2:
-                    return AircashConfiguration.AircashSalesBaseUrl;
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashSalesBaseUrl: AircashConfiguration.AircashSalesDevBaseUrl;
                 default:
                     return string.Empty;
             }
