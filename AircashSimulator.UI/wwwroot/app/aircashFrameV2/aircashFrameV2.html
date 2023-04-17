@@ -8,13 +8,25 @@
     <div style="width: 100%">
         <h1>Frame V2 API</h1>
         <hr />
+        <p>
+            Aircash Frame integration enables multiple Aircash services using a single endpoint. Connect your cashier directly to the Aircash Frame API to process:
+            <ol>
+                <li>Payments via Aircash application</li>
+                <li>Deposits via Abon voucher</li>
+                <li>Withdrawals to Aircash application</li>
+            </ol>
+        </p>
         <uib-tabset>
             <uib-tab index="checkUser1-tab-0" heading="Aircash pay" classes="nav-item">
                 <h2>Aircash Pay</h2>
                 <p>
-                    This chapter describes the top up process using the Aircash application. The described
-                    process explains how the user can transfer funds from the Aircash system to the partner's system.
+                    This chapter describes the payment process using the Aircash application. Once the transaction is initiated on the merchant cashier, the user will will need to confirm/authorize the transaction using the Aircash application:
+                    <ol type="a">
+                        <li>Desktop device - user can choose to confirm the transaction by scanning the QR code with or by confirming the 3DS notification</li>
+                        <li>Mobile device - Aircash app with confirmation popup will be opened via deeplink (in case the deeplink is not supported, 3DS push notification will be sent)</li>
+                    </ol>
                 </p>
+
                 <p>
                     The process consists of the following steps:
                 </p>
@@ -23,36 +35,29 @@
                         The user selects Aircash as the deposit option and enters the amount he wants to deposit.
                     </li>
                     <li>
-                        Partner’s system initiates the payment with the amount, currency, transaction id and other
-                        mandatory parameters.
+                        Merchant’s system initiates the payment.
                     </li>
                     <li>
-                        Aircash system responds with a URL to which user needs to be redirected
+                        Aircash system responds with a URL to which user needs to be redirected.
                     </li>
                     <li>
                         A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
-                        popped-up authorization screen)
+                        popped-up authorization screen).
                     </li>
                     <li>
-                        Aircash system notifies partner’s system by sending notification to designated URL
+                        Aircash system notifies merchant’s system by sending notification to designated URL.
                     </li>
                     <li>
-                        The user is redirected back to the cashier
+                        Confirmation message is displayed to the user and the redirection back to cashier happens.
                     </li>
                 </ol>
-                <b>To download diagram flow for Aircash pay click here:</b>
-                <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">
-                    <button class="btn"><i class="fa fa-download"></i> Aircash Pay Diagram flow</button>
-                </a>
+                <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAcPay" target="_blank">cashier simulator</a></p>
+                
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Abon" classes="nav-item">
                 <h2>Aircash Abon deposit</h2>
                 <p>
-                    Aircash Abon is a deposit method intended for users that wish to make
-                    payments to their Online Provider accounts (betting sites, parking
-                    services, GSM topups etc.) via paper coupons that can be bought at
-                    cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas
-                    stations, etc.).
+                    Aircash Abon deposit is a topup payment method via paper voucher. User needs to enter 16-digit code of the voucher and funds are instantly visible on the user account.
                 </p>
                 <p>
                     The process consists of the following steps:
@@ -63,53 +68,23 @@
                         The user selects Abon as the deposit option.
                     </li>
                     <li>
-                        Partner’s system initiates the payment with the currency, transaction id and other
-                        mandatory parameters.
+                        Merchant’s system initiates the payment.
                     </li>
                     <li>
                         Aircash system responds with a URL to which user needs to be redirected.
                     </li>
                     <li>
-                        Aircash frame is opened and user enters the 16-digit code from the coupon he bought
-                        and confirms the transaction of funds to an Online Provider account.
+                        User enters the 16-digit code from the voucher and confirms the transaction.
                     </li>
                     <li>
-                        Aircash system notifies partner’s system by sending notification to designated URL
+                        Aircash system notifies merchant’s system by sending notification to designated URL
                     </li>
                     <li>
-                        Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
-                        the user’s account
-                    </li>
-                    <li>
-                        The funds are deposited to the user's online account, and the coupon gets expended and can no
-                        longer be used.
+                        Confirmation message is displayed to the user and the redirection back to cashier happens.
                     </li>
                 </ol>
-
-                <br />
-                <h4>Checkbox – I accept Abon Terms & Conditions</h4>
-                <p>
-                    In order for the users to use Abon services on the Online Provider's website, they have to accept the
-                    terms and conditions beforehand.
-                </p>
-                <p>
-                    Every Online Provider is obliged to add a checkbox for the Abon terms and conditions, which is by
-                    default always checked.
-                </p>
-                <p>
-                    The checkbox has to contain a link to Abon Terms and Conditions:
-                </p>
-                <div class="note note-gray-400 col-md-8">
-                    <div class="note-content">
-                        <code>
-                            &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the Abon Terms&Conditions&lt/a&gt
-                        </code>
-                    </div>
-                </div>
-                <b>To download diagram flow for Abon click here:</b>
-                <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">
-                    <button class="btn"><i class="fa fa-download"></i> Abon Diagram flow</button>
-                </a>
+                <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAbon" target="_blank">cashier simulator</a></p>
+               
             </uib-tab>
             <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item">
                 <h2>Aircash Payout</h2>
