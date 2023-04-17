@@ -23,7 +23,9 @@ namespace Services.AircashInAppPay
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-        private const string GenerateTransactionURL = "https://localhost:44317/#!/success";
+        private const string GenerateTransactionSuccessURL = "https://dev-simulator.aircash.eu/#!/success";
+        private const string GenerateTransactionConfirmURL = "https://dev-simulator-api.aircash.eu/api/AircashInAppPay/ConfirmTransaction";
+        private const string GenerateTransactionDeclineURL = "https://dev-simulator.aircash.eu/#!/decline";
 
         private readonly string AircashPayGenerateTransactionEndpoint = "AircashPay/GenerateTransaction";
         private readonly string RefundTransactionEndpoint = "AircashPay/RefundTransaction";
@@ -44,9 +46,9 @@ namespace Services.AircashInAppPay
                 CurrencyID = partner.CurrencyId,
                 PartnerTransactionID = Guid.NewGuid().ToString(),
                 Description = generateTransactionRequest.Description,
-                SuccessURL = GenerateTransactionURL,
-                ConfirmURL = GenerateTransactionURL,
-                DeclineURL = GenerateTransactionURL,
+                SuccessURL = GenerateTransactionSuccessURL,
+                ConfirmURL = GenerateTransactionConfirmURL,
+                DeclineURL = GenerateTransactionDeclineURL,
                 ValidUntilUTC = DateTime.UtcNow.AddMinutes(5)
             };
             returnResponse.ServiceRequest = request;

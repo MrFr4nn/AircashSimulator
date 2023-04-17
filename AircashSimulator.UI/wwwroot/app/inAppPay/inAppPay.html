@@ -1,0 +1,17 @@
+﻿<div class="container">
+    <div class="text-center">
+        <img style="width:160px; height: 55px;" alt="" src="/images/aircash-red.svg">
+    </div>
+    <form class="w-75 container mt-5" action="/" method="POST" name="generateForm">
+        <fieldset>
+            <label for="amount">Amount</label>
+            <div class="input-group">
+                <input class="form-control form-control-lg" ng-model="generateTransactionModel.amount" ng-required="true" type="number" min="0" step="0.01" />
+                <div class="input-group-append">
+                    <button class="btn btn-lg btn-danger" ng-click="generateTransaction()" ng-disabled="generateBusy || generateForm.$invalid">Pay<i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+

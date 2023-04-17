@@ -89,87 +89,91 @@
     identifier to enter.
 </p>
 
-<table class="table  table-active col-md-6">
-    <thead>
-        <tr>
-            <th>Environment</th>
-            <th>Method</th>
-            <th>URL</th>
-            <th>IP addresse to whitelist</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><b>Test</b></td>
-            <td>
-                POST
-            </td>
-            <td>URL defined by partner</td>
-            <td>
-                212.83.162.238
-            </td>
-            <td>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Production</b></td>
-            <td>
-                POST
-            </td>
-            <td>URL defined by partner</td>
-            <td>
-                212.129.36.132
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="table-responsive">
+    <table class="table  table-active col-md-6">
+        <thead>
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+                <th>IP addresse to whitelist</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>URL defined by partner</td>
+                <td>
+                    212.83.162.238
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>URL defined by partner</td>
+                <td>
+                    212.129.36.132
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 
 <uib-tabset>
     <uib-tab index="checkUser1-tab-0" heading="Request parameters" classes="nav-item">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th colspan="2">Parameter</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Mandatory</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="2"><b>Parameters</b></td>
-                    <td>List &lt;Object&gt;</td>
-                    <td>List of parameters</td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="1"></td>
-                    <td colspan="1"><b>Key</b></td>
-                    <td>String</td>
-                    <td>
-                        The name of the parameter to be sent
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="1"></td>
-                    <td colspan="1"><b>Value</b></td>
-                    <td>String</td>
-                    <td>
-                        The value of the parameter to be sent
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><b>Signature</b></td>
-                    <td>String</td>
-                    <td>
-                        Signature by Aircash system confirming that Aircash is sending request to the partner system
-                    </td>
-                    <td>YES</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2">Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2"><b>Parameters</b></td>
+                        <td>List &lt;Object&gt;</td>
+                        <td>List of parameters</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"></td>
+                        <td colspan="1"><b>Key</b></td>
+                        <td>String</td>
+                        <td>
+                            The name of the parameter to be sent
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"></td>
+                        <td colspan="1"><b>Value</b></td>
+                        <td>String</td>
+                        <td>
+                            The value of the parameter to be sent
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Signature</b></td>
+                        <td>String</td>
+                        <td>
+                            Signature by Aircash system confirming that Aircash is sending request to the partner system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </uib-tab>
     <uib-tab index="checkUser1-tab-1" heading="Request example" classes="nav-item">
         <jsonformatter data="aircashPayment.checkPlayer.requestExample"></jsonformatter>
@@ -191,91 +195,93 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
     <uib-tab index="checkUser1-tab-3" heading="Response parameters" classes="nav-item">
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th colspan="3">Return value</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="3"><b>IsPlayer</b></td>
-                            <td>Bool</td>
-                            <td>
-                                True if there is an account with the above data
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Error</b></td>
-                            <td></td>
-                            <td>
-                                In case of returning an error (IsPlayer = false), return
-                                the corresponding error to get the user the correct
-                                error
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>ErrorCode</b></td>
-                            <td>Int</td>
-                            <td>
-                                Error codes and error messages are sent to user
-                                support for mapping to be printed in the mobile
-                                application.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>ErrorMessage</b></td>
-                            <td>String</td>
-                            <td>
-                                Error description.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Parameters</td>
-                            <td>List &lt;Object&gt;</td>
-                            <td>
-                                This parameter can be ignored if the user does not
-                                need to show additional information in the mobile
-                                app. In addition to the parameters, some values may
-                                be reversed by which the Aircash system defines
-                                different rules for this transaction, such as minimum
-                                transaction amount or maximum transaction
-                                amount. The parameters are agreed in cooperation
-                                with Aircash support.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>Key</b></td>
-                            <td>String</td>
-                            <td>Parameter name</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>Type</b></td>
-                            <td>String</td>
-                            <td>
-                                Parameter type: String, Date, Decimal, DateTime,
-                                Boolean
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>Value</b></td>
-                            <td>String</td>
-                            <td>Parameter value</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="3">Return value</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3"><b>IsPlayer</b></td>
+                                <td>Bool</td>
+                                <td>
+                                    True if there is an account with the above data
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Error</b></td>
+                                <td></td>
+                                <td>
+                                    In case of returning an error (IsPlayer = false), return
+                                    the corresponding error to get the user the correct
+                                    error
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>ErrorCode</b></td>
+                                <td>Int</td>
+                                <td>
+                                    Error codes and error messages are sent to user
+                                    support for mapping to be printed in the mobile
+                                    application.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>ErrorMessage</b></td>
+                                <td>String</td>
+                                <td>
+                                    Error description.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Parameters</td>
+                                <td>List &lt;Object&gt;</td>
+                                <td>
+                                    This parameter can be ignored if the user does not
+                                    need to show additional information in the mobile
+                                    app. In addition to the parameters, some values may
+                                    be reversed by which the Aircash system defines
+                                    different rules for this transaction, such as minimum
+                                    transaction amount or maximum transaction
+                                    amount. The parameters are agreed in cooperation
+                                    with Aircash support.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>Key</b></td>
+                                <td>String</td>
+                                <td>Parameter name</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>Type</b></td>
+                                <td>String</td>
+                                <td>
+                                    Parameter type: String, Date, Decimal, DateTime,
+                                    Boolean
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>Value</b></td>
+                                <td>String</td>
+                                <td>Parameter value</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </uib-tab>
@@ -298,66 +304,68 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
 </p>
 <uib-tabset>
     <uib-tab index="CreateAndConfirmPayment1-tab-0" heading="Request parameters" " classes="nav-item">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th colspan="2">Parameter</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Mandatory</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="2"><b>TransactionID</b></td>
-                    <td>String</td>
-                    <td>Id of transactions in the Aircash system</td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><b>Amount</b></td>
-                    <td>Decimal</td>
-                    <td>Transaction Amount</td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><b>Parameters</b></td>
-                    <td>List&lt;Object&gt;</td>
-                    <td>
-                        A list of parameters that uniquely define
-                        a user's account for a supplement of
-                        funds
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="1"></td>
-                    <td colspan="1"><b>Key</b></td>
-                    <td>String</td>
-                    <td>
-                        The name of the parameter to be sent
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="1"></td>
-                    <td colspan="1"><b>Value</b></td>
-                    <td>String</td>
-                    <td>
-                        The value of the parameter to be sent
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td colspan="2"><b>Signature</b></td>
-                    <td>String</td>
-                    <td>
-                        Signature by Aircash system confirming that Aircash is sending request to the partner system
-                    </td>
-                    <td>YES</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th colspan="2">Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="2"><b>TransactionID</b></td>
+                        <td>String</td>
+                        <td>Id of transactions in the Aircash system</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Amount</b></td>
+                        <td>Decimal</td>
+                        <td>Transaction Amount</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Parameters</b></td>
+                        <td>List&lt;Object&gt;</td>
+                        <td>
+                            A list of parameters that uniquely define
+                            a user's account for a supplement of
+                            funds
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"></td>
+                        <td colspan="1"><b>Key</b></td>
+                        <td>String</td>
+                        <td>
+                            The name of the parameter to be sent
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="1"></td>
+                        <td colspan="1"><b>Value</b></td>
+                        <td>String</td>
+                        <td>
+                            The value of the parameter to be sent
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><b>Signature</b></td>
+                        <td>String</td>
+                        <td>
+                            Signature by Aircash system confirming that Aircash is sending request to the partner system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Request example" classes="nav-item">
         <jsonformatter data="aircashPayment.createAndConfirmPayment.requestExample"></jsonformatter>
@@ -379,94 +387,96 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     <uib-tab index="CreateAndConfirmPayment1-tab-3" heading="Response parameters" classes="nav-item">
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th colspan="3">Return value</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="3"><b>Success</b></td>
-                            <td>Bool</td>
-                            <td>
-                                True if payment is successful, otherwise false
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>PartnerTransactionID</b></td>
-                            <td>String</td>
-                            <td>
-                                Transaction ID in partner system, must be unique.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Error</b></td>
-                            <td>Object</td>
-                            <td>
-                                In case of error, return the corresponding error so
-                                that the user can see what went wrong
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>ErrorCode</b></td>
-                            <td>Int</td>
-                            <td>
-                                Possible error codes and error messages mappings
-                                should be sent to user support, so they can be
-                                displayed in the mobile application.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>ErrorMessage</b></td>
-                            <td>String</td>
-                            <td>
-                                Error description.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="3"><b>Parameters</b></td>
-                            <td>List &lt;Object&gt;</td>
-                            <td>
-                                The List of objects of type ParameterRS. In the event
-                                that some additional parameters have to be shown
-                                to the user, they can be returned in this object. The
-                                parameters are agreed in cooperation with Aircash
-                                support.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>Key</b></td>
-                            <td>String</td>
-                            <td>Parameter name</td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>Type</b></td>
-                            <td>String</td>
-                            <td>
-                                Parameter type: String, Date, Decimal, DateTime,
-                                Boolean
-                            </td>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td><b>Value</b></td>
-                            <td>String</td>
-                            <td>Parameter value</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="3">Return value</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3"><b>Success</b></td>
+                                <td>Bool</td>
+                                <td>
+                                    True if payment is successful, otherwise false
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>PartnerTransactionID</b></td>
+                                <td>String</td>
+                                <td>
+                                    Transaction ID in partner system, must be unique.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Error</b></td>
+                                <td>Object</td>
+                                <td>
+                                    In case of error, return the corresponding error so
+                                    that the user can see what went wrong
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>ErrorCode</b></td>
+                                <td>Int</td>
+                                <td>
+                                    Possible error codes and error messages mappings
+                                    should be sent to user support, so they can be
+                                    displayed in the mobile application.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>ErrorMessage</b></td>
+                                <td>String</td>
+                                <td>
+                                    Error description.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><b>Parameters</b></td>
+                                <td>List &lt;Object&gt;</td>
+                                <td>
+                                    The List of objects of type ParameterRS. In the event
+                                    that some additional parameters have to be shown
+                                    to the user, they can be returned in this object. The
+                                    parameters are agreed in cooperation with Aircash
+                                    support.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>Key</b></td>
+                                <td>String</td>
+                                <td>Parameter name</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>Type</b></td>
+                                <td>String</td>
+                                <td>
+                                    Parameter type: String, Date, Decimal, DateTime,
+                                    Boolean
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td><b>Value</b></td>
+                                <td>String</td>
+                                <td>Parameter value</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </uib-tab>
@@ -479,22 +489,64 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
 </uib-tabset>
 <h2 style="text-align:justify">Signature</h2>
 <i>Aircash public keys:</i>
-<table class="table table-active col-md-2">
-    <thead>
+<div class="table-responsive">
+    <table class="table table-active col-md-2">
+        <thead>
+            <tr>
+                <th>Environment</th>
+                <th>Download</th>
+            </tr>
+        </thead>
         <tr>
-            <th>Environment</th>
-            <th>Download</th>
+            <td><b>Test</b></td>
+            <td><a href="/files/AircashPaymentPublicKeyTest.zip" download>Link</a></td>
         </tr>
-    </thead>
-    <tr>
-        <td><b>Test</b></td>
-        <td><a href="/files/AircashPaymentPublicKeyTest.zip" download>Link</a></td>
-    </tr>
-    <tr>
-        <td><b>Production</b></td>
-        <td><a href="/files/AircashPaymentPublicKeyProd.zip" download>Link</a></td>
-    </tr>
-</table>
+        <tr>
+            <td><b>Production</b></td>
+            <td><a href="/files/AircashPaymentPublicKeyProd.zip" download>Link</a></td>
+        </tr>
+    </table>
+</div>
+
+<h2 style="text-align:justify">Erorr code examples</h2>
+<div class="table-responsive">
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>Error code</th>
+                <th>Error message</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>account_not_activated</td>
+                <td>Your account is not activated as you have not confirmed your email. Please first confirm your email.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>account_shutdown_info</td>
+                <td>Your account is suspended. Please contact support if you have any inquiries.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>customer_payment_deposit_limit</td>
+                <td>The deposit was not accepted because you have reached your limits of deposits.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>account_not_found</td>
+                <td>Account not found.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>payment_already_confirmed_in_partner_system_error_code</td>
+                <td>Payment Already Confirmed In Partner System Error Code.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <hr />
 
 <h1 style="text-align:justify">Deep link</h1>
@@ -554,14 +606,24 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     payment integration.
 </p>
 <p>
-    Integration example for partner that enables payment via Aircash application and account
-    identifier used in partner system is user personal ID (Croatian OIB - unique user identifier).
-</p>
-<p>
-    Link example:
+    <div class="row align-items-center ml-1">
+        Link example(
+        <select class="form-control form-control-sm col-xs-2 col-xl-1" ng-model="showUsername" ng-init="showUsername = false">
+            <option ng-value="false">Email</option>
+            <option ng-value="true">Username</option>
+        </select>):
+    </div>
     <br />
-    <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
-</p> 
+    <div class="overflow-auto" ng-if="showUsername">
+        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
+        <br />
+    </div>
+    <div class="overflow-auto" ng-if="!showUsername">
+        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
+        <br />
+    </div>
+
+</p>
 <p>
     In this case partner needs to replace 4 parameters values (marked in red):
     <ul>
@@ -569,8 +631,11 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             {partnerID} - replace with partnerID with partner identifier in Aircash system. Aircash will
             send you this information once Aircash opens account for partner in Aircash system.
         </li>
-        <li>
+        <li ng-if="showUsername">
             {username} - replace with user's username
+        </li>
+        <li ng-if="!showUsername">
+            {email} - replace with user's email
         </li>
         <li>
             {amount} - amount that user inputed in partner system. Amount must be whole number
@@ -587,8 +652,10 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
 <p>
     Result link should look like this:
     <br />
-    <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
-    
+    <div class="overflow-auto">
+        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
+        <br />
+    </div>
 </p>
 <p>
     Links in this document will not work (first link doesn’t have the partner identificator, and
@@ -626,90 +693,92 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
 <p>
     To release the service in the production, you need to make several tests to see if the integration is
     well-made and ready for production
-    <table class="table table-active">
-        <thead>
-            <tr>
-                <th>Scenario</th>
-                <th>Test description</th>
-                <th>Mandatory</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td><b>Successful player verification</b></td>
-                <td>
-                    The check player method returns true only to users
-                    that are able to receive money via Aircash
-                    application.
-                </td>
-                <td>YES</td>
-            </tr>
-            <tr>
-                <td><b>Unsuccessful player verification</b></td>
-                <td>
-                    The partner system returns appropriate error code
-                    in case when user is not able to receive money via
-                    Aircash application.
-                </td>
-                <td>YES</td>
-            </tr>
-            <tr>
-                <td><b>Successful verification with additional parameters</b></td>
-                <td>
-                    The method returns additional parameters with
-                    agreed names and parameter types.
-                </td>
-                <td>
-                    YES, if additional
-                    parameters are agreed
-                    for this method
-                </td>
-            </tr>
-            <tr>
-                <td><b>Payment confirmation</b></td>
-                <td>
-                    The partner system insert transaction in the partner
-                    system. The partner system returns valid response
-                    to Aircash system with unique transaction identifier.
-                </td>
-                <td>YES</td>
-            </tr>
-            <tr>
-                <td><b>Payment confirmation with the same TransactionID</b></td>
-                <td>
-                    The partner system reject transaction with error
-                    code that is associated with not unique
-                    transactionID
-                </td>
-                <td>YES</td>
-            </tr>
-            <tr>
-                <td><b>Payment confirmation with additional parameters </b></td>
-                <td>
-                    The method returns additional parameters with
-                    agreed names and parameter types in case of a new
-                    transaction and in the case of transactions with the
-                    same transaction ID
-                </td>
-                <td>
-                    YES, if additional
-                    parameters are agreed
-                    for this method
-                </td>
-            </tr>
-            <tr>
-                <td><b>Deep link test</b></td>
-                <td>
-                    Check if generated link is well formatted and it all
-                    parameters are inputted correctly
-                </td>
-                <td>
-                    YES, if partner uses
-                    deep link option
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-active">
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Test description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Successful player verification</b></td>
+                    <td>
+                        The check player method returns true only to users
+                        that are able to receive money via Aircash
+                        application.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>Unsuccessful player verification</b></td>
+                    <td>
+                        The partner system returns appropriate error code
+                        in case when user is not able to receive money via
+                        Aircash application.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>Successful verification with additional parameters</b></td>
+                    <td>
+                        The method returns additional parameters with
+                        agreed names and parameter types.
+                    </td>
+                    <td>
+                        YES, if additional
+                        parameters are agreed
+                        for this method
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Payment confirmation</b></td>
+                    <td>
+                        The partner system insert transaction in the partner
+                        system. The partner system returns valid response
+                        to Aircash system with unique transaction identifier.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>Payment confirmation with the same TransactionID</b></td>
+                    <td>
+                        The partner system reject transaction with error
+                        code that is associated with not unique
+                        transactionID
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td><b>Payment confirmation with additional parameters </b></td>
+                    <td>
+                        The method returns additional parameters with
+                        agreed names and parameter types in case of a new
+                        transaction and in the case of transactions with the
+                        same transaction ID
+                    </td>
+                    <td>
+                        YES, if additional
+                        parameters are agreed
+                        for this method
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Deep link test</b></td>
+                    <td>
+                        Check if generated link is well formatted and it all
+                        parameters are inputted correctly
+                    </td>
+                    <td>
+                        YES, if partner uses
+                        deep link option
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </p>
 <hr />
 <h1 style="text-align:justify">Conclusion</h1>
@@ -722,3 +791,56 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     <br />
     <a href="mailto: info@aircash.eu">info@aircash.eu</a>
 </p>
+
+<hr />
+
+<h1>FAQ</h1>
+
+<br />
+
+<div class="table-responsive">
+    <table class="table table-active">
+        <tr>
+            <td rowspan="2">1.</td>
+            <td>
+                <b>Q:&nbsp;How to initiate a transaction in the sandbox environment?</b><br />
+            </td>
+        </tr>
+        <tr>
+            <td><b>A:</b>&nbsp; Aircash integration team will share the Aircash test app using which you can make a deposit</td>
+        </tr>
+        <tr>
+            <td rowspan="2">2.</td>
+            <td><b>Q:&nbsp; What are the min and max transaction amounts?</b></td>
+        </tr>
+        <tr>
+            <td><b>A:</b>&nbsp; Min 1,00 EUR, Max 1.000,00 EUR</td>
+        </tr>
+        <tr>
+            <td rowspan="2">3.</td>
+            <td><b>Q:&nbsp; Does the user need to enter every time identifier (username, email) when making deposits?</b></td>
+        </tr>
+        <tr>
+            <td><b>A:</b>&nbsp; After the first successful deposit, the identifier will be saved on the Aircash marketplace and prefilled for each next deposit.</td>
+        </tr>
+        <tr>
+            <td rowspan="2">4.</td>
+            <td><b>Q:&nbsp;  Can the user use more than one identifier?</b></td>
+        </tr>
+        <tr>
+            <td><b>A:</b>&nbsp; Yes, he can. Aircash can allow the user to choose which identifier to enter.</td>
+        </tr>
+        <tr>
+            <td rowspan="2">5.</td>
+            <td><b>Q:&nbsp; How does the deposit via deep link work?</b></td>
+        </tr>
+        <tr>
+            <td>
+                <b>A:</b>&nbsp; After the user confirms the deposit on the online cashier, he will receive the deposit
+                push notification and by confirming it, he will be redirected to the partner's marketplace window within the
+                Aircash app. In case of the mobile browser, after confirming the transaction, the Aircahs app will open automatically
+                (without push notification)
+            </td>
+        </tr>
+    </table>
+</div>

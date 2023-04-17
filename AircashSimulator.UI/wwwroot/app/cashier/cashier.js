@@ -31,7 +31,6 @@ cashierModule.service("cashierService", ['$http', '$q', 'handleResponseService',
 
 cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location', '$localStorage',
     function ($scope, $rootScope, $location, $localStorage) {
-        $location.path('/cashier/menu');
 
         $scope.languages = [
             { language: "en", },

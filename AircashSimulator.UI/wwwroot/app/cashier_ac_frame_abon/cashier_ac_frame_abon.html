@@ -22,9 +22,7 @@
                 <div class="row row-cols-1 row-cols-sm-2">
                     <div class="col-md-1"></div>
                     <div class="col-md-10 col-sm-12">
-                        <h6 ng-bind-html="translationsCashier.ac_pay_cashier_description">
-                            {{translationsCashier.ac_pay_cashier_description}}
-                        </h6>
+                        <h6>Enter a 16-digit coupon code or scan the QR code from the Aircash A-bon voucher, select "Start transfer" and funds will instantly be available on your account. Buy Aircash A-bon paper vouchers at any Aircash partner’s locations: <a target="_blank" href="https://abon.cash/locations/">Abon locations</a></h6>
                     </div>
                     <div class="col-md-1"></div>
                 </div>
@@ -33,19 +31,17 @@
                         <div class="row row-cols-1 row-cols-sm-2">
                             <div class="col-md-1"></div>
                             <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
-                                <label class="form-label" style="margin-bottom: 0px !important;">{{translationsCashier.cashier_amount_input_label}}</label>
-                                <div class="input-group" style="margin-bottom: 0px !important;">
-                                    <input ng-model="createCashierAcFrameAcPayModel.amount" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_amount_placeholder}}" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
-                                    <span class="input-group-addon">€</span>
+                                <div class="form-check">
+                                    <input ng-checked="true" ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-init="confirmCheckBox=true" ng-change="checkStatusBtnInitiateAcFrame(confirmCheckBox)" />
+                                    <label class="form-check-label" for="checkbox1" style=" padding-top: 4px; padding-left:10px; font-size:15px;"><a href="https://abon.cash/terms-conditions-en/" rel="nofollow" target="_blank">I accept the Abon Terms&Conditions</a></label>
                                 </div>
-                                <label class="form-label" for="amount">{{translationsCashier.cashier_amount_input_note}}</label>
                             </div>
                             <div class="col-md-1"></div>
                         </div>
                         <div class="row row-cols-1 row-cols-sm-2 text-center" style="margin-top: 10px;">
                             <div class="col-md-1"></div>
                             <div class="col-md-10 col-sm-12 d-flex align-items-center justify-content-center" id="dvBtnInitiateFrame">
-                                <button ng-click="initiateAcFrame()" type="button" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createCashierAcFrameAcPayServiceBusy || transactionForm1.$invalid">{{translationsCashier.ac_payment_cashier_deposit_button}}<i ng-if="createCashierAcFrameAcPayServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-disabled="!(confirmCheckBox) || createCashierAcFrameAbonServiceBusy || transactionForm1.$invalid" ng-model="btnInitiateAcFrame" ng-click="initiateAcFrameAbon()" type="button" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;">Deposit<i ng-if="createCashierAcFrameAbonServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </div>
                             <div class="col-md-1"></div>
                         </div>

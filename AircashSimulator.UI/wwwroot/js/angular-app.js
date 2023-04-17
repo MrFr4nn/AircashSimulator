@@ -26,7 +26,11 @@ var app = angular.module('app', [
     'aircashPayoutV2',
     'ac_business_site',
     'ac_test_application',
-    'cashier'
+    'forbidden',
+    'success',
+    'decline',
+    'jira',
+    'inAppPay'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -49,27 +53,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 username: ""
             }
         })
-        .state('success', {
-            url: '/success',
-            templateUrl: 'app/result/success.html',
-            controller: 'SuccessCtrl',
-            controllerAs: 'vm',
-            params: {}
-        })
-        .state('decline', {
-            url: '/decline',
-            templateUrl: 'app/result/decline.html',
-            controller: 'DeclineCtrl',
-            controllerAs: 'vm',
-            params: {}
-        })
-        .state('forbidden', {
-            url: '/forbidden',
-            templateUrl: 'app/forbidden/forbidden.html',
-            controller: 'ForbiddenCtrl',
-            controllerAs: 'vm',
-            params: {}
-        });
+
 }]);
 
 app.service("handleResponseService", ['$q', function ($q) {
@@ -109,9 +93,9 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
+        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu',
-            '/cashier/aircashFrameAcPay', '/cashier/PayoutC2D', '/cashier/SalesPartner'];
+            '/cashier/aircashFrameAcPay', '/cashier/aircashFrameAbon', '/cashier/aircashFrameWithdrawal', '/cashier/PayoutC2D', '/cashier/SalesPartner'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if ($location.path().indexOf('cashier') > -1 && restrictedPage) {
             $location.path('/cashier/menu');
