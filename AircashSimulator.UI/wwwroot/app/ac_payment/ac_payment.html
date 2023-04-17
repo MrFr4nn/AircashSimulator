@@ -507,6 +507,46 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
         </tr>
     </table>
 </div>
+
+<h2 style="text-align:justify">Erorr code examples</h2>
+<div class="table-responsive">
+    <table class="table table-active">
+        <thead>
+            <tr>
+                <th>Error code</th>
+                <th>Error message</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>account_not_activated</td>
+                <td>Your account is not activated as you have not confirmed your email. Please first confirm your email.</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>account_shutdown_info</td>
+                <td>Your account is suspended. Please contact support if you have any inquiries.</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>customer_payment_deposit_limit</td>
+                <td>The deposit was not accepted because you have reached your limits of deposits.</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>account_not_found</td>
+                <td>Account not found.</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>payment_already_confirmed_in_partner_system_error_code</td>
+                <td>Payment Already Confirmed In Partner System Error Code.</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
 <hr />
 
 <h1 style="text-align:justify">Deep link</h1>
@@ -566,17 +606,24 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     payment integration.
 </p>
 <p>
-    Integration example for partner that enables payment via Aircash application and account
-    identifier used in partner system is user personal ID (Croatian OIB - unique user identifier).
-</p>
-<p>
-    Link example:
+    <div class="row align-items-center ml-1">
+        Link example(
+        <select class="form-control form-control-sm col-xs-2 col-xl-1" ng-model="showUsername" ng-init="showUsername = false">
+            <option ng-value="false">Email</option>
+            <option ng-value="true">Username</option>
+        </select>):
+    </div>
     <br />
-    <div class="overflow-auto">
+    <div class="overflow-auto" ng-if="showUsername">
         <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
         <br />
     </div>
-</p> 
+    <div class="overflow-auto" ng-if="!showUsername">
+        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
+        <br />
+    </div>
+
+</p>
 <p>
     In this case partner needs to replace 4 parameters values (marked in red):
     <ul>
@@ -584,8 +631,11 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             {partnerID} - replace with partnerID with partner identifier in Aircash system. Aircash will
             send you this information once Aircash opens account for partner in Aircash system.
         </li>
-        <li>
+        <li ng-if="showUsername">
             {username} - replace with user's username
+        </li>
+        <li ng-if="!showUsername">
+            {email} - replace with user's email
         </li>
         <li>
             {amount} - amount that user inputed in partner system. Amount must be whole number
@@ -603,7 +653,7 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     Result link should look like this:
     <br />
     <div class="overflow-auto">
-        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>  
+        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
         <br />
     </div>
 </p>
