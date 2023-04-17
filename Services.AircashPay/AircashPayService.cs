@@ -65,7 +65,10 @@ namespace Services.AircashPay
             Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashGeneratePartnerCodeRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
+
+            var environmentRQ = generatePartnerCodeDTO.Environment > 0 ? generatePartnerCodeDTO.Environment : partner.Environment;
+
+            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environmentRQ, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);

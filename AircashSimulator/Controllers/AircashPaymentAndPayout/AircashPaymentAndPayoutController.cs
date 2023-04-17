@@ -30,7 +30,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         public async Task<IActionResult> CheckCode(CheckCodeRequest checkCodeRequest)
         {
             var partnerId = UserContext.GetPartnerId(User);
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, partnerId);
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, partnerId, checkCodeRequest.Environment);
             return Ok(response);
         }
 
@@ -40,21 +40,21 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         {
             var partnerId = UserContext.GetPartnerId(User);
             var userId = UserContext.GetUserId(User);
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, partnerId, userId);
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, partnerId, userId, confirmTransactionRequest.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierCheckCode(CheckCodeRequest checkCodeRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, new Guid(PARTNER_ID));
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, new Guid(PARTNER_ID), checkCodeRequest.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, new Guid(PARTNER_ID), new Guid(USER_ID));
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, new Guid(PARTNER_ID), new Guid(USER_ID), confirmTransactionRequest.Environment);
             return Ok(response);
         }
 

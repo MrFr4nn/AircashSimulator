@@ -1,5 +1,6 @@
 ﻿using AircashSimulator.Controllers.AircashPayout;
 using AircashSimulator.Extensions;
+using Domain.Entities.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Services.AircashPayout;
 using System;
@@ -32,14 +33,14 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePayout(CreatePayoutRequest createPayoutRequest)
         {
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.Amount, UserContext.GetUserId(User), UserContext.GetPartnerId(User));
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.Amount, UserContext.GetUserId(User), UserContext.GetPartnerId(User), createPayoutRequest.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCashierPayout(CreatePayoutRequest createPayoutRequest)
         {
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.Amount, UserId, PartnerId);
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.Amount, UserId, PartnerId, createPayoutRequest.Environment );
             return Ok(response);
         }
 
