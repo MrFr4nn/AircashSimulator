@@ -646,7 +646,10 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             to make payment via desktop PC, Aircash system will find user by phoneNubmer and send him notification with transaction template. Once user open notification on this mobile device
             Aircash application will start and prefill all parameters of the transaction; user will need to
             authorize transaction and partner will receive payment confirmation request
-        </li>form-group
+        </li>
+        <li>
+            {partnerName} - replace with partner's name
+        </li>
     </ul>
 </p>
 <p>
@@ -655,23 +658,23 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     <div class="row row-cols-md-4 row-cols-lg-6 row-cols-2">
         <div class="col form-group mr-2">
             <label>PartnerId:</label>
-            <input class="form-control form-control-sm" ng-model="partnerId" />
+            <input class="form-control form-control-sm" ng-model="partnerId" ng-init="partnerId = '8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF'" />
         </div>
         <div class="col form-group mr-2">
             <label>{{identificator.charAt(0).toUpperCase() + identificator.slice(1)}}:</label>
-            <input class="form-control form-control-sm" ng-model="username" />
+            <input class="form-control form-control-sm" ng-model="username" ng-init="username = 'test'" />
         </div>
         <div class="col form-group mr-2">
             <label>Amount:</label>
-            <input class="form-control form-control-sm" ng-model="amount" />
+            <input class="form-control form-control-sm" ng-model="amount" ng-init="amount = '100'" />
         </div>
         <div class="col form-group mr-2">
             <label>Phonenumber:</label>
-            <input class="form-control form-control-sm" ng-model="phoneNumber" />
+            <input class="form-control form-control-sm" ng-model="phoneNumber" ng-init="phoneNumber = '385981234567'" />
         </div>
         <div class="col form-group mr-2">
             <label>Partner Name:</label>
-            <input class="form-control form-control-sm" ng-model="partnerName" />
+            <input class="form-control form-control-sm" ng-model="partnerName" ng-init="partnerName = 'everymatrix'" />
         </div>
 
     </div>
