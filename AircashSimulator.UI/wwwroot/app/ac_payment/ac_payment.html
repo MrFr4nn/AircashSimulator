@@ -606,23 +606,26 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
     payment integration.
 </p>
 <p>
-    <div class="row align-items-center ml-1">
-        Link example(
-        <select class="form-control form-control-sm col-xs-2 col-xl-1" ng-model="showUsername" ng-init="showUsername = false">
-            <option ng-value="false">Email</option>
-            <option ng-value="true">Username</option>
-        </select>):
+    Link example
+    <div class="row ml-1">
+        <select class="form-control form-control-sm col-md-2 col-3" ng-model="isProduction" ng-init="isProduction = false">
+            <option ng-value="true">Production</option>
+            <option ng-value="false">Test</option>
+        </select>
+        <select class="form-control form-control-sm col-md-2 col-3 ml-2" ng-model="identificator" ng-init="identificator = 'username'">
+            <option ng-value="'email'">Email</option>
+            <option ng-value="'username'">Username</option>
+        </select>
     </div>
     <br />
-    <div class="overflow-auto" ng-if="showUsername">
-        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26username%3D<b class="text-danger">{username}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
+    <div class="overflow-auto" ng-if="!isProduction">
+        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=<b class="text-danger">{partnerName}</b>_topup&utm_medium=deeplink&utm_source=<b class="text-danger">{partnerName}</b></a>
         <br />
     </div>
-    <div class="overflow-auto" ng-if="!showUsername">
-        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26email%3D<b class="text-danger">{email}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
+    <div class="overflow-auto" ng-if="isProduction">
+        <a href="">https://aircash.page.link/?link=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash&afl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash&ifl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=<b class="text-danger">{partnerName}</b>_topup&utm_medium=deeplink&utm_source=<b class="text-danger">{partnerName}</b></a>
         <br />
     </div>
-
 </p>
 <p>
     In this case partner needs to replace 4 parameters values (marked in red):
@@ -631,11 +634,8 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             {partnerID} - replace with partnerID with partner identifier in Aircash system. Aircash will
             send you this information once Aircash opens account for partner in Aircash system.
         </li>
-        <li ng-if="showUsername">
-            {username} - replace with user's username
-        </li>
-        <li ng-if="!showUsername">
-            {email} - replace with user's email
+        <li>
+            {<span>{{identificator}}</span>} - replace with user's {{identificator}}
         </li>
         <li>
             {amount} - amount that user inputed in partner system. Amount must be whole number
@@ -646,15 +646,44 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             to make payment via desktop PC, Aircash system will find user by phoneNubmer and send him notification with transaction template. Once user open notification on this mobile device
             Aircash application will start and prefill all parameters of the transaction; user will need to
             authorize transaction and partner will receive payment confirmation request
-        </li>
+        </li>form-group
     </ul>
 </p>
 <p>
     Result link should look like this:
     <br />
-    <div class="overflow-auto">
-        <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF%26username%3Dtest%26amount%3D100%26phoneNumber%3D385981234567&utm_campaign=everymatrix_topup&utm_medium=deeplink&utm_source=everymatrix</a>
+    <div class="row row-cols-md-4 row-cols-lg-6 row-cols-2">
+        <div class="col form-group mr-2">
+            <label>PartnerId:</label>
+            <input class="form-control form-control-sm" ng-model="partnerId" />
+        </div>
+        <div class="col form-group mr-2">
+            <label>Username/Email:</label>
+            <input class="form-control form-control-sm" ng-model="username" />
+        </div>
+        <div class="col form-group mr-2">
+            <label>Amount:</label>
+            <input class="form-control form-control-sm" ng-model="amount" />
+        </div>
+        <div class="col form-group mr-2">
+            <label>Phonenumber:</label>
+            <input class="form-control form-control-sm" ng-model="phoneNumber" />
+        </div>
+        <div class="col form-group mr-2">
+            <label>Partner Name:</label>
+            <input class="form-control form-control-sm" ng-model="partnerName" />
+        </div>
+
+    </div>
+    <div class="overflow-auto" ng-if="!isProduction">
+        <a href="" id="testLink">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&utm_campaign={{partnerName}}_topup&utm_medium=deeplink&utm_source={{partnerName}}</a>
         <br />
+        <button class="btn btn-sm btn-white mt-2" ng-click="copyToClipboard(isProduction)">Copy</button>
+    </div>
+    <div class="overflow-auto" ng-if="isProduction">
+        <a href="" id="prodLink">https://aircash.page.link/?link=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&apn=com.aircash.aircash&afl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&isi=1178612530&ibi=com.aircash.aircash&ifl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&utm_campaign={{partnerName}}_topup&utm_medium=deeplink&utm_source={{partnerName}}</a>
+        <br />
+        <button class="btn btn-sm btn-white mt-2" ng-click="copyToClipboard(isProduction)">Copy</button>
     </div>
 </p>
 <p>

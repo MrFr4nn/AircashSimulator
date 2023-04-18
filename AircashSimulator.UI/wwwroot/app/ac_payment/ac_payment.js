@@ -21,6 +21,15 @@ acPaymentModule.controller("acPaymentCtrl",
     ['$scope', '$state', 'acPaymentService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, acPaymentService, $filter, $http, JwtParser, $uibModal, $rootScope) {
 
+            $scope.copyToClipboard = function(isProduction){
+                if (isProduction) {
+                    navigator.clipboard.writeText($('#prodLink').text());
+                    return;
+                }
+                navigator.clipboard.writeText($('#testLink').text());
+            }
+
+
             $scope.aircashPayment = {
                 checkPlayer: {
                     requestExample: {
