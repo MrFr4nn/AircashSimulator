@@ -1,24 +1,24 @@
-﻿var cashierAcFrameModule = angular.module('cashier_acFrameAcPay', []);
+﻿var cashierAcFrameModule = angular.module('cashier_acFrameWithdrawal', []);
 
 app.config(function ($stateProvider) {
     $stateProvider
-        .state('cashier.cashier_acFrameAcPay', {
+        .state('cashier.cashier_acFrameWithdrawal', {
             data: {
-                pageTitle: 'Aircash Frame - AcPay'
+                pageTitle: 'Aircash Frame - Withdrawal'
             },
-            url: "/aircashFrameAcPay",
-            controller: 'cashierAcFrameAcPayCtrl',
-            templateUrl: 'app/cashier_ac_frame_ac_pay/cashier_ac_frame_ac_pay.html'
+            url: "/aircashFrameWithdrawal",
+            controller: 'cashierAcFrameWithdrawalCtrl',
+            templateUrl: 'app/cashier_ac_frame_withdrawal/cashier_ac_frame_withdrawal.html'
         });    
 });
 
-cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope',
+cashierAcFrameModule.service("cashierAcFrameWithdrawalService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope',
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
-            initiateAcFrame: initiateAcFrame
+            initiateAcFrameWithdrawal: initiateAcFrameWithdrawal
         });
 
-        function initiateAcFrame(amount, payType, payMethod, acFrameOption) {
+        function initiateAcFrameWithdrawal(amount, payType, payMethod, acFrameOption) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
@@ -29,25 +29,26 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
                     acFrameOption: acFrameOption                                      
                 }
             });
-            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));            
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }        
     }
 ]);
 
-cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
-    ['$scope', '$state', 'cashierAcFrameAcPayService', '$filter', '$http', 'JwtParser', '$uibModal', 'config', '$rootScope',
-        function ($scope, $state, cashierAcFrameAcPayService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {    
-            $scope.createCashierAcFrameAcPayModel = {                
+cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
+    ['$scope', '$state', 'cashierAcFrameWithdrawalService', '$filter', '$http', 'JwtParser', '$uibModal', 'config', '$rootScope',
+        function ($scope, $state, cashierAcFrameWithdrawalService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {    
+            $scope.createCashierAcFrameWithdrawalModel = {                
                 amount: 100,
             };
 
-            $scope.createCashierAcFrameAcPayServiceBusy = false;  
+            $scope.createCashierAcFrameWithdrawalServiceBusy = false;  
             $scope.frameWindow = null;
             $scope.frameTab = null;
             
-            $scope.initiateAcFrame = function () {                
-                $scope.createCashierAcFrameAcPayServiceBusy = true;                
-                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, 0, 2, $scope.selectedAcFrameOption.value)
+            $scope.initiateAcFrameWithdrawal = function () {                
+                $scope.createCashierAcFrameWithdrawalServiceBusy = true;  
+                console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
+                cashierAcFrameWithdrawalService.initiateAcFrameWithdrawal($scope.createCashierAcFrameWithdrawalModel.amount, 1, 10, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    
                         console.log(response);                        
                         
@@ -62,7 +63,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                                 debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console
                                 environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production
                             });
-                            $scope.createCashierAcFrameAcPayServiceBusy = false;
+                            $scope.createCashierAcFrameWithdrawalServiceBusy = false;
                         }
                         else if ($scope.selectedAcFrameOption.value == 2) {
                             /*---- METHOD 2 - SDK REDIRECT CHECKOUT ----- */
@@ -71,12 +72,12 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                                 debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console
                                 environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production
                             });
-                            $scope.createCashierAcFrameAcPayServiceBusy = false;
+                            $scope.createCashierAcFrameWithdrawalServiceBusy = false;
                         }
                         else if ($scope.selectedAcFrameOption.value == 3) {
                             /*---- METHOD 3 - CUSTOM WINDOW CHECKOUT ----- */
                             if (response.serviceResponse.url != "" && response.serviceResponse.url != null) {    
-                                $scope.createCashierAcFrameAcPayServiceBusy = false;                                
+                                $scope.createCashierAcFrameWithdrawalServiceBusy = false;                                
                                 setTimeout(function () {
                                     var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
                                     $scope.frameWindow = window.open(response.serviceResponse.url, 'openFrameInNewWindow', windowOptions);
@@ -89,7 +90,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                         else if ($scope.selectedAcFrameOption.value == 4) {
                             /*---- METHOD 4 - CUSTOM REDIRECT CHECKOUT ----- */
                             if (response.serviceResponse.url != "" && response.serviceResponse.url != null) {
-                                $scope.createCashierAcFrameAcPayServiceBusy = false;
+                                $scope.createCashierAcFrameWithdrawalServiceBusy = false;
                                 setTimeout(function () {
                                     var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
                                     $scope.frameTab = window.location.assign(response.serviceResponse.url, 'openFrameInNewWindow', windowOptions); 
@@ -101,7 +102,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                         }
                     }, () => {
                         console.log("error");
-                        $scope.createCashierAcFrameAcPayServiceBusy = false;
+                        $scope.createCashierAcFrameWithdrawalServiceBusy = false;
                     });
             }           
 
