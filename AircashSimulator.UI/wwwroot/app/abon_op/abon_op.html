@@ -303,7 +303,116 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                 </div>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-                <jsonformatter data="aBonDeposit.validateCoupon.errorResponseExample"></jsonformatter>
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="ValidateTransactionError-tab-1" heading="1" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.ValidateTransaction.error1.request"></jsonformatter>
+
+                                Sequence:
+                                CouponCode=5078671448576226&ProviderId=8db69a48-7d61-48e7-9be8-3160549c7f17
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.ValidateTransaction.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 1">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 1">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="validateSimulateError(1)" ng-disabled="errorValidateServiceBusy">Request <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="ValidateTransactionError-tab-2" heading="2" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 2)">
+                                Request
+                                <jsonformatter data="errorExamples.ValidateTransaction.error2.request"></jsonformatter>
+
+                                Sequence:
+                                CouponCode=&ProviderId=00000000-0000-0000-0000-000000000000
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 2)">
+                                Response
+                                <jsonformatter data="errorExamples.ValidateTransaction.error2.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 2">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 2">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="validateSimulateError(2)" ng-disabled="errorValidateServiceBusy">Request <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="ValidateTransactionError-tab-3" heading="3" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.ValidateTransaction.error3.request"></jsonformatter>
+
+                                Sequence:
+                                CouponCode=0000000000000000&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.ValidateTransaction.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 3">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 3">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="validateSimulateError(3)" ng-disabled="errorValidateServiceBusy">Request <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="ValidateTransactionError-tab-4" heading="4" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 4)">
+                                Request
+                                <jsonformatter data="errorExamples.ValidateTransaction.error4.request"></jsonformatter>
+
+                                Sequence:
+
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 4)">
+                                Response
+                                <jsonformatter data="errorExamples.ValidateTransaction.error4.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 4">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 4">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="validateSimulateError(4)" ng-disabled="errorValidateServiceBusy">Request <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                </uib-tabset>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -542,7 +651,143 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                 </div>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-                <jsonformatter data="aBonDeposit.confirmTransaction.errorResponseExample"></jsonformatter>
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="ConfirmTransactionError-tab-1" heading="1" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error1.request"></jsonformatter>
+
+                                Sequence:
+                                CouponCode=6377944739582437&ProviderId=8db69a48-7d61-48e7-9be8-3160549c7f17&ProviderTransactionId=6bcd471c-3fdc-4a55-b3f1-ea719ccab739&UserId=a3876902-b3e4-4557-aace-a57a506e38ca
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentErrorCode == 1">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorConfirmResponded && currentErrorCode == 1">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1)" ng-disabled="errorConfirmServiceBusy">Request <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="ConfirmTransactionError-tab-2" heading="2" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentErrorCode == 2)">
+                                Request
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error2.request"></jsonformatter>
+
+                                Sequence:
+                                CouponCode=&ProviderId=00000000-0000-0000-0000-000000000000&ProviderTransactionId=00000000-0000-0000-0000-000000000000&UserId=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentErrorCode == 2)">
+                                Response
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error2.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentErrorCode == 2">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorConfirmResponded && currentErrorCode == 2">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Request <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="ConfirmTransactionError-tab-3" heading="3" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
+
+                                Sequence:
+                                CouponCode=0000000000000000&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=efb4a25a-6e04-41b5-a2eb-47c0e83d5f60&UserId=a3876902-b3e4-4557-aace-a57a506e38ca
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentErrorCode == 3">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorConfirmResponded && currentErrorCode == 3">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Request <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="ConfirmTransactionError-tab-4" heading="4" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentErrorCode == 4)">
+                                Request
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error4.request"></jsonformatter>
+
+                                Sequence:
+                                Sequence: CouponCode=5557573568498952&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=7c6acb4d-d65d-4927-9115-b507035387b8&UserId=a3876902-b3e4-4557-aace-a57a506e38ca
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentErrorCode == 4)">
+                                Response
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error4.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentErrorCode == 4">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorConfirmResponded && currentErrorCode == 4">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Request <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="ConfirmTransactionError-tab-5" heading="5" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentErrorCode == 5)">
+                                Request
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error5.request"></jsonformatter>
+
+                                Sequence:
+
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentErrorCode == 5)">
+                                Response
+                                <jsonformatter data="errorExamples.ConfirmTransaction.error5.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentErrorCode == 5">
+                                Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorRequest"></jsonformatter>
+
+                                Sequence: {{errorSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorConfirmResponded && currentErrorCode == 5">
+                                Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(5)" ng-disabled="errorConfirmServiceBusy">Request <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                </uib-tabset>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
