@@ -25,6 +25,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         public readonly IHubContext<NotificationHub> _hubContext;
         private Guid partnerId = new Guid("5680E089-9E86-4105-B1A2-ACD0CD77653C");
         private Guid userId = new Guid("F0BC2E22-9C2D-4217-BEEE-99CC1AA3C26D");
+        private Guid partnerIdInitiateV2 = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
+        private Guid userIdInitiateV2 = new Guid("4149BA7D-E4F7-4C77-8393-D03E6691C03B");
 
         public AircashFrameController(IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext)
         {
@@ -62,8 +64,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             var initiateRequestDTO = new InititateRequestV2Dto
             {
-                PartnerId = UserContext.GetPartnerId(User),
-                UserId = UserContext.GetUserId(User),
+                PartnerId = partnerIdInitiateV2,
+                UserId = userIdInitiateV2,
                 Amount = initiateRequest.Amount,
                 PayType = (PayTypeEnum)initiateRequest.PayType,
                 PayMethod = (PayMethodEnum)initiateRequest.PayMethod,
