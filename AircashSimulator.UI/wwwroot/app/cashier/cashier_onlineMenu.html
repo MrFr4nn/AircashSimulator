@@ -1,6 +1,6 @@
 ﻿<div class="container" style="padding-left: 100px !important; padding-right: 100px !important; ">
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-xs-1 ">
-        <div class="col mb-2 d-flex">
+        <div ng-if="partnerRoles.indexOf('AbonDeposit') != -1" class="col mb-2 d-flex">
             <a class="text-dark text-decoration-none d-flex col-12 p-0 " ui-sref="cashier.cashier_abon">
                 <div class="card d-flex col-12 p-0">
                     <img src="../../app/cashier/img/icon_AC_Abon.png"  style="width:auto;height:auto">
@@ -14,7 +14,7 @@
                 </div>
             </a>
         </div>
-        <div class="col mb-2 d-flex">
+        <div ng-if="partnerRoles.indexOf('AircashPosDeposit') != -1"  class="col mb-2 d-flex">
             <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_c2d">
                 <div class="card d-flex col-12 p-0">
                     <img src="../../app/cashier/img/icon_AC_C2Dflow.png" />
@@ -28,7 +28,7 @@
                 </div>
             </a>
         </div>
-        <div class="col mb-2 d-flex">
+        <div ng-if="partnerRoles.indexOf('AircashPayout') != -1" class="col mb-2 d-flex">
             <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acPayout">
                 <div class="card d-flex col-12 p-0">
                     <img src="../../app/cashier/img/icon_AC_withdrawal.png" />
@@ -42,7 +42,7 @@
                 </div>
             </a>
         </div>
-        <div class="col mb-2 d-flex">
+        <div ng-if="partnerRoles.indexOf('AircashPay') != -1" class="col mb-2 d-flex">
             <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acPay">
                 <div class="card d-flex col-12 p-0">
                     <img src="../../app/cashier/img/icon_AC_pay.png" />
@@ -56,7 +56,7 @@
                 </div>
             </a>
         </div>
-        <div class="col mb-2  d-flex">
+        <div ng-if="partnerRoles.indexOf('AircashPayment') != -1" class="col mb-2  d-flex">
             <a class="text-dark text-decoration-none  d-flex col-12 p-0" ui-sref="cashier.cashier_acPayment">
                 <div class="card d-flex col-12 p-0">
                     <img src="../../app/cashier/img/icon_AC_payment.png" />
@@ -70,7 +70,7 @@
                 </div>
             </a>
         </div>
-        <div class="col mb-2 d-flex">
+        <div ng-if="partnerRoles.indexOf('AircashFrameV2') != -1" class="col mb-2 d-flex">
             <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acFrameMenu">
                 <div class="card d-flex col-12 p-0">
                     <img src="../../app/cashier/img/icon_AC_Frame.png" />
@@ -84,7 +84,7 @@
                 </div>
             </a>
         </div>
-        <div class="col mb-2 d-flex">
+        <div ng-if="partnerRoles.indexOf('AircashPayoutV2') != -1" class="col mb-2 d-flex">
             <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acC2DPayout">
                 <div class="card d-flex col-12 p-0">
                     <img src="../../app/cashier/img/icon_AC_C2DPayout.png" />

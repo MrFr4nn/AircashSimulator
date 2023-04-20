@@ -18,7 +18,12 @@ onlineMenuModule.service("onlineMenuService", ['$http', '$q', 'handleResponseSer
 ]);
 
 onlineMenuModule.controller("onlineMenuCtrl",
-    ['$scope', '$state', 'onlineMenuService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, $state, onlineMenuService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-        }
-    ]);
+    ['$scope', '$state', 'onlineMenuService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage',
+        function ($scope, $state, onlineMenuService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+            angular.element(document).ready(function () {
+                $scope.username = JwtParser.getProperty("unique_name");
+
+            });
+            $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+            $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+        }]);

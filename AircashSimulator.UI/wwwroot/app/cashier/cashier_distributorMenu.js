@@ -18,7 +18,12 @@ distributorMenuModule.service("distributorMenuService", ['$http', '$q', 'handleR
 ]);
 
 distributorMenuModule.controller("distributorMenuCtrl",
-    ['$scope', '$state', 'distributorMenuService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, $state, distributorMenuService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-        }
-    ]);
+    ['$scope', '$state', 'distributorMenuService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage',
+        function ($scope, $state, onlineMenuService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+            angular.element(document).ready(function () {
+                $scope.username = JwtParser.getProperty("unique_name");
+
+            });
+            $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+            $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+        }]);
