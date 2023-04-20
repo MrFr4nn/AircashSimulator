@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AircashSignature;
+using Microsoft.AspNetCore.Mvc;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,16 @@ namespace AircashSimulator.Controllers.Signature
         [HttpPost]
         public async Task<IActionResult> ValidatePublicKey(ValidatePublicKeyDTO validatePublicKeyDTO) 
         {
-            byte[] key = Encoding.ASCII.GetBytes(validatePublicKeyDTO.publicKey);
-            X509Certificate2 cert = new X509Certificate2(key);
-            return Ok("Public key valid");
+            try
+            {
+                var bytePublicKey = Encoding.UTF8.GetBytes(validatePublicKeyDTO.publicKey);
+                var certificate = new X509Certificate2(bytePublicKey);
+                return Ok("Public key valid");
+            }
+            catch
+            {
+                return Ok("Public key invalid");
+            }
         }
     }
 }
