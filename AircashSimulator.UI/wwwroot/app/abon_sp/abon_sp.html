@@ -313,7 +313,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                     <div class="col-md-4" ng-if="createServiceResponse">
                         Response ({{responseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <jsonformatter data="serviceResponse"></jsonformatter>
-                        <center><button href="" ng-click="showContent()" class="btn btn-primary w-100px me-5px">Preview</button></center>
+                        <center><button href="" ng-if="showPerview" ng-click="showContent()" class="btn btn-primary w-100px me-5px">Preview</button></center>
                     </div>
                 </div>
             </uib-tab>

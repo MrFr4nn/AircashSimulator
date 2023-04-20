@@ -121,7 +121,7 @@
                         Partner system needs to check the status within the Aircash system by sending status request. If Aircash system responds with pending status, partner system can reserve the funds.
                     </li>
                     <li>
-                        Once the reserved funds are ready to be confirmed (either mannualy, either automatically), partner system need to send finaal Confirmation request to Aircash system.
+                        Once the reserved funds are ready to be confirmed (either mannualy, either automatically), partner system need to send final Confirmation request to Aircash system.
                     </li>
                     <li>
                         Upon recieving the confirmation request, Aircash system will top up the Aircash account.
@@ -438,7 +438,7 @@
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <jsonformatter data="aircashFrameV2.initiate.errorResponseExample"></jsonformatter>
             </uib-tab>
-            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
                         <div class="form-check form-check-inline">
@@ -473,10 +473,9 @@
                         <jsonformatter data="InitiateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceInitiate}}
                     </div>
-                    <div ng-hide="!initiateResponded" class="col-md-5">
+                    <div ng-if="initiateResponded" class="col-md-5">
                         Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <jsonformatter data="InitiateServiceResponse"></jsonformatter>
-                        <a href="" ng-click="showFrame()">Open Aircash Frame</a>
                     </div>
                 </div>
             </uib-tab>

@@ -17,7 +17,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         private IAircashPaymentAndPayoutService AircashPaymentAndPayoutService;
         private UserContext UserContext;
 
-        private const string PARTNER_ID = "8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF";
+        private const string PARTNER_ID = "e747a837-85d9-4287-a412-ffbb5d1b0ad8";
         private const string USER_ID = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
         public AircashPaymentAndPayoutController(IAircashPaymentAndPayoutService aircashPaymentAndPayoutService, UserContext userContext)
         {

@@ -32,7 +32,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
                 SuccessUrl: successUrl,
                 DeclineUrl: declineUrl,
                 CancelUrl: cancelUrl,
-                OriginUrl: originUrl
+                OriginUrl: "https://domain.com"
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -160,14 +160,14 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
                     $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
 
                     //$scope.getRedirectModal(response.serviceResponse.transactionId);
-                    new AircashFrame.WindowCheckout({
+                    /*new AircashFrame.WindowCheckout({
                         transactionId: response.serviceResponse.transactionId,
                         onSuccess: $scope.onSuccess,
                         onDecline: $scope.onDecline,
                         onCancel: $scope.onCancel,
                         originUrl: "https://localhost:44317/",
                         debug: true
-                    });
+                    });*/
 
                     $scope.getTransactions(true);
                 }
