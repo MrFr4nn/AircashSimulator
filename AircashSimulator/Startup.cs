@@ -41,6 +41,7 @@ using System.Buffers.Text;
 using Newtonsoft.Json;
 using Services.Translations;
 using Service.Settings;
+using CrossCutting;
 
 namespace AircashSimulator
 {
@@ -97,6 +98,7 @@ namespace AircashSimulator
             services.AddMemoryCache();
             services.AddHttpClient<IHttpRequestService, HttpRequestService>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IHelperService, HelperService>();
             services.AddTransient<IAbonSalePartnerService, AbonSalePartnerService>();
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();

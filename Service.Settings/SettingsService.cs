@@ -20,8 +20,11 @@ namespace Service.Settings
         const decimal defualtTransactionMatchAutoRefundAmountInEur = 67;
 
         public string AircashSimulatorPrivateKeyPath { get { return GetSetting("AircashSimulatorPrivateKeyPath", string.Empty, throwExceptionIfMissing: true); } }
+        public string PrivateKeyForInvalidSignature { get { return GetSetting("PrivateKeyForInvalidSignature", string.Empty, throwExceptionIfMissing: true); } }
         public string AircashSimulatorPrivateKeyPass { get { return GetSetting("AircashSimulatorPrivateKeyPass", string.Empty, throwExceptionIfMissing: true); } }
-        public Guid AbonOnlinePartnerCashierPartnerId { get { return GetSetting("AbonOnlinePartnerCashierPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public string UsedCuponCodeForSimulatingError { get { return GetSetting("UsedCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
+        public string ValidCuponCodeForSimulatingError { get { return GetSetting("ValidCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
+        public Guid AbonOnlinePartnerPartnerId { get { return GetSetting("AbonOnlinePartnerPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)
         {

@@ -69,7 +69,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashInAppPay", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Translations", "Services.Translations\Services.Translations.csproj", "{EAC98CB9-574F-4B19-8D7E-96695E6E1EA6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Service.Settings", "Service.Settings\Service.Settings.csproj", "{ADABCD96-9AE8-496C-8B1B-92AE558D7F87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service.Settings", "Service.Settings\Service.Settings.csproj", "{ADABCD96-9AE8-496C-8B1B-92AE558D7F87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossCutting", "CrossCutting\CrossCutting.csproj", "{7B433633-59FF-48EF-AF10-F22E87BC992D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -189,6 +191,10 @@ Global
 		{ADABCD96-9AE8-496C-8B1B-92AE558D7F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADABCD96-9AE8-496C-8B1B-92AE558D7F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADABCD96-9AE8-496C-8B1B-92AE558D7F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B433633-59FF-48EF-AF10-F22E87BC992D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B433633-59FF-48EF-AF10-F22E87BC992D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B433633-59FF-48EF-AF10-F22E87BC992D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B433633-59FF-48EF-AF10-F22E87BC992D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +226,7 @@ Global
 		{C9827416-8CEF-4D73-9337-1BC824CF47DB} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{EAC98CB9-574F-4B19-8D7E-96695E6E1EA6} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{ADABCD96-9AE8-496C-8B1B-92AE558D7F87} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
+		{7B433633-59FF-48EF-AF10-F22E87BC992D} = {D195A165-103A-462E-AF6F-F19A8CB37F95}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7CF481FF-2B5A-4460-9F34-6A4EAED13029}

@@ -204,9 +204,9 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             error3: {
                 request: {
-                    "couponCode": "0000000000000000",
-                    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "signature": "KR5hiHwACW..."
+                    "couponCode": "OA0VBJW04GLKG3T1",
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "signature": "U9pLUKY7Sf..."
                 },
                 response: {
                     "code": 3,
@@ -250,11 +250,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             error3: {
                 request: {
-                    "couponCode": "0000000000000000",
-                    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "providerTransactionId": "efb4a25a-6e04-41b5-a2eb-47c0e83d5f60",
+                    "couponCode": "0RUKPZZNPML8LUZW",
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "providerTransactionId": "1ecaffd3-8513-4ba9-b6da-6f2272453571",
                     "userId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "signature": "a3nEjfehBs..."
+                    "signature": "hebGu2ILAN..."
                 },
                 response: {
                     "code": 3,
