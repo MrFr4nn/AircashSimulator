@@ -40,6 +40,7 @@ using Microsoft.AspNetCore.Http;
 using System.Buffers.Text;
 using Newtonsoft.Json;
 using Services.Translations;
+using Service.Settings;
 
 namespace AircashSimulator
 {
@@ -93,8 +94,9 @@ namespace AircashSimulator
                    ClockSkew = TimeSpan.Zero
                };
            });
-
+            services.AddMemoryCache();
             services.AddHttpClient<IHttpRequestService, HttpRequestService>();
+            services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IAbonSalePartnerService, AbonSalePartnerService>();
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
