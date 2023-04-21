@@ -180,9 +180,9 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         ValidateTransaction: {
             error1: {
                 request: {
-                    "couponCode": "5078671448576226",
-                    "providerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
-                    "signature": "McbLduO7CA..."
+                    "couponCode": "6377944739582437",
+                    "providerId": "5d2f43e4-c9b6-4a46-b08e-28037d027e0c",
+                    "signature": "LhnJdwM0V5..."
                 },
                 response: {
                     "code": 1,
@@ -192,9 +192,9 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             error2: {
                 request: {
-                    "couponCode": "5078671448576226",
-                    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "signature": "RXwGW/EUTq..."
+                    "couponCode": "6377944739582437",
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "signature": "PZjSOXZS/c..."
                 },
                 response: {
                     "code": 2,
@@ -204,9 +204,9 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             error3: {
                 request: {
-                    "couponCode": "OA0VBJW04GLKG3T1",
+                    "couponCode": "OQ4VTTXHO15QD621",
                     "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
-                    "signature": "U9pLUKY7Sf..."
+                    "signature": "aociUqcF48..."
                 },
                 response: {
                     "code": 3,
@@ -217,16 +217,28 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             error4: {
                 request: {},
                 response: {}
+            },
+            error7: {
+                request: {
+                    "couponCode": "1437861149152627",
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "signature": "HYoeiGKvpB..."
+                },
+                response: {
+                    "code": 7,
+                    "message": "Coupon Country Not Allowed",
+                    "additionalData": null
+                }
             }
         },
         ConfirmTransaction: {
             error1: {
                 request: {
                     "couponCode": "6377944739582437",
-                    "providerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
-                    "providerTransactionId": "6bcd471c-3fdc-4a55-b3f1-ea719ccab739",
-                    "userId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "signature": "dxCr+RT4wh..."
+                    "providerId": "7562aad0-aa14-4095-b73e-48170d4191cf",
+                    "providerTransactionId": "13569d0e-8dfe-48a4-bd51-2d46b8968252",
+                    "userId": "32789507-dac4-4a90-aaa2-98398bfc501a",
+                    "signature": "Lo3AV/4d3s..."
                 },
                 response: {
                     "code": 1,
@@ -237,10 +249,10 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             error2: {
                 request: {
                     "couponCode": "6377944739582437",
-                    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "providerTransactionId": "8bb80a3d-3b78-42b0-8bbc-e821fc1135b0",
-                    "userId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "signature": "oFE8LyHQHp..."
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "providerTransactionId": "9c75b26b-b600-4f02-93de-45f4b6fff057",
+                    "userId": "940a81aa-5696-4c1b-bbb0-80698ccf092e",
+                    "signature": "MbtBc0O1OM..."
                 },
                 response: {
                     "code": 2,
@@ -250,11 +262,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             error3: {
                 request: {
-                    "couponCode": "0RUKPZZNPML8LUZW",
+                    "couponCode": "S4S152QJK6E83HC1",
                     "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
-                    "providerTransactionId": "1ecaffd3-8513-4ba9-b6da-6f2272453571",
-                    "userId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "signature": "hebGu2ILAN..."
+                    "providerTransactionId": "3c4c8d91-c8dd-43ae-835b-aca46eaa2a36",
+                    "userId": "b8970b7a-22c6-4ba2-b866-bec9b8a2437f",
+                    "signature": "IVdIC3iKNp..."
                 },
                 response: {
                     "code": 3,
@@ -264,11 +276,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             error4: {
                 request: {
-                    "couponCode": "5557573568498952",
-                    "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "providerTransactionId": "7c6acb4d-d65d-4927-9115-b507035387b8",
-                    "userId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "signature": "jpeUoazH+L..."
+                    "couponCode": "2981361437471469",
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "providerTransactionId": "ce44cff1-41f5-4610-be3d-5054293be353",
+                    "userId": "750ce21e-7ce4-4ead-9e5b-5961e684e4c9",
+                    "signature": "W5kU1chS2J..."
                 },
                 response: {
                     "code": 4,
@@ -283,6 +295,20 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             error5: {
                 request: {},
                 response: {}
+            },
+            error7: {
+                request: {
+                    "couponCode": "1437861149152627",
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "providerTransactionId": "b6b215e6-379b-4b1f-8bad-0831be6489d3",
+                    "userId": "32d2c793-a059-4743-89a4-7cefc00e4411",
+                    "signature": "GE5/ex9iPk..."
+                },
+                response: {
+                    "code": 7,
+                    "message": "Coupon Country Not Allowed",
+                    "additionalData": null
+                }
             }
         }
     }

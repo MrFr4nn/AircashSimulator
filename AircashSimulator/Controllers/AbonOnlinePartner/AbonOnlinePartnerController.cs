@@ -72,11 +72,11 @@ namespace AircashSimulator
                     couponCode = HelperService.RandomString(16);
                     break;
                 }
-                //case AbonValidateCouponErrorCodeEnum.CouponCountryNotAllowed:
-                //{
-                //    couponCode = HelperService.RandomString(16);
-                //    break;
-                //}
+                case AbonValidateCouponErrorCodeEnum.CouponCountryNotAllowed:
+                {
+                    couponCode = SettingsService.SixteenDigitCodeBA;
+                    break;
+                }
                 //case AbonValidateCouponErrorCodeEnum.ConversionModuleError:
                 //    {
                 //        //CouponCodeSimulateError = "0000000000000000";
@@ -118,11 +118,11 @@ namespace AircashSimulator
                     couponCode = SettingsService.UsedCuponCodeForSimulatingError;
                     break;
                 }
-                //case AbonConfirmTransactionErrorCodeEnum.CouponCountryNotAllowed:
-                //{
-                //    couponCode = HelperService.RandomString(16);
-                //    break;
-                //}
+                case AbonConfirmTransactionErrorCodeEnum.CouponCountryNotAllowed:
+                {
+                    couponCode = SettingsService.SixteenDigitCodeBA;
+                    break;
+                }
                 //case ConfirmTransactionErrorCodeEnum.ConversionModuleError:
                 //    {
                 //        //PartnerIDSimulateError = new Guid("8db69a48-7d61-48e7-9be8-3160549c7f17");
