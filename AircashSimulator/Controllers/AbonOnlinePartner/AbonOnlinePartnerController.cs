@@ -45,13 +45,19 @@ namespace AircashSimulator
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
             var partnerId = UserContext.GetPartnerId(User);
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            PrivateKeyPassSimulateError = partner.PrivateKeyPass;
+            PrivateKeySimulateError = partner.PrivateKey;
             var userId = UserContext.GetUserId(User);
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, partnerId);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, partnerId, PrivateKeySimulateError, PrivateKeyPassSimulateError);
             return Ok(response);
         }
         public async Task<IActionResult> ConfirmCashierTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, UserId, PartnerId);
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == PartnerId).FirstOrDefault();
+            PrivateKeyPassSimulateError = partner.PrivateKeyPass;
+            PrivateKeySimulateError = partner.PrivateKey;
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, UserId, PartnerId, PrivateKeySimulateError, PrivateKeyPassSimulateError);
             return Ok(response);
         }
 
@@ -96,6 +102,9 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> ConfirmTransactionSimulateError([FromBody] int errorCode)
         {
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == PartnerIDSimulateError).FirstOrDefault();
+            PrivateKeyPassSimulateError = partner.PrivateKeyPass;
+            PrivateKeySimulateError = partner.PrivateKey;
             switch (errorCode)
             {
                 case 1:
@@ -105,6 +114,8 @@ namespace AircashSimulator
                     }
                 case 2:
                     {
+                        PrivateKeySimulateError = @"C:\Users\Korisnik\Desktop\Key\PrivateKeyPfxFile.pfx";
+                        PrivateKeyPassSimulateError = @"Aircash123";
                         break;
                     }
                 case 3:
@@ -126,7 +137,7 @@ namespace AircashSimulator
                     return BadRequest();
             }
             var userId = UserContext.GetUserId(User);
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(CouponCodeSimulateError, userId, PartnerIDSimulateError);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(CouponCodeSimulateError, userId, PartnerIDSimulateError, PrivateKeySimulateError, PrivateKeyPassSimulateError);
             return Ok(response);
         }
     }

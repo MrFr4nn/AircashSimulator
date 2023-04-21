@@ -59,7 +59,7 @@ namespace Services.AbonOnlinePartner
             return frontResponse;
         }
 
-        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId)
+        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
             var coupon = AircashSimulatorContext.Coupons.Where(x => x.CouponCode == couponCode).FirstOrDefault();
@@ -73,7 +73,7 @@ namespace Services.AbonOnlinePartner
                 UserId = userId.ToString()
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
             abonConfirmTransactionRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
             if (coupon == null)
