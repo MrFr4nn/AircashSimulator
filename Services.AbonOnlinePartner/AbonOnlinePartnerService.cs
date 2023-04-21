@@ -26,9 +26,10 @@ namespace Services.AbonOnlinePartner
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
         }
-        public async Task<object> ValidateCoupon(string couponCode, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
+        public async Task<object> ValidateCoupon(string couponCode, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
         {
-            var validateCouponResponse = new object();            
+            var validateCouponResponse = new object();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
             var abonValidateCouponRequest = new AbonValidateCouponRequest
             {
                 CouponCode = couponCode,
@@ -38,7 +39,7 @@ namespace Services.AbonOnlinePartner
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
             abonValidateCouponRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}");
             DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {

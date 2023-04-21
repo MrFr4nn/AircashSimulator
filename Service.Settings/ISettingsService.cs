@@ -12,5 +12,6 @@ namespace Service.Settings
         Dictionary<string, string> GetSettings();
         string AircashSimulatorPrivateKeyPath { get; }
         string AircashSimulatorPrivateKeyPass { get; }
+        Guid AbonOnlinePartnerCashierPartnerId { get; }
     }
 }

@@ -21,6 +21,7 @@ namespace Service.Settings
 
         public string AircashSimulatorPrivateKeyPath { get { return GetSetting("AircashSimulatorPrivateKeyPath", string.Empty, throwExceptionIfMissing: true); } }
         public string AircashSimulatorPrivateKeyPass { get { return GetSetting("AircashSimulatorPrivateKeyPass", string.Empty, throwExceptionIfMissing: true); } }
+        public Guid AbonOnlinePartnerCashierPartnerId { get { return GetSetting("AbonOnlinePartnerCashierPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)
         {
