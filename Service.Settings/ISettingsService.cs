@@ -15,6 +15,6 @@ namespace Service.Settings
         string AircashSimulatorPrivateKeyPass { get; }
         string UsedCuponCodeForSimulatingError { get; }
         string ValidCuponCodeForSimulatingError { get; }
-        Guid AbonOnlinePartnerPartnerId { get; }
+        Guid AbonOnlinePartnerId { get; }
     }
 }

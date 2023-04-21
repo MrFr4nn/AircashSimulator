@@ -9,6 +9,7 @@ namespace Domain.Entities.Enum
         InvalidProviderId = 1,
         InvalidSignature = 2,
         InvalidCouponeCode = 3,
-        ConversionModuleError = 4
+        ConversionModuleError = 4,
+        CouponCountryNotAllowed = 7
     }
 }
