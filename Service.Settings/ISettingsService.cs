@@ -11,6 +11,11 @@ namespace Service.Settings
         Task RefreshSettings();
         Dictionary<string, string> GetSettings();
         string AircashSimulatorPrivateKeyPath { get; }
+        string PrivateKeyForInvalidSignature { get; }
         string AircashSimulatorPrivateKeyPass { get; }
+        string UsedCuponCodeForSimulatingError { get; }
+        string ValidCuponCodeForSimulatingError { get; }
+        string SixteenDigitCodeBA { get; }
+        Guid AbonOnlinePartnerId { get; }
     }
 }
