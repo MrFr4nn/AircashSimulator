@@ -17,7 +17,8 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         checkUser: checkUser,
         createPayout: createPayout,
         getTransactions: getTransactions,
-        checkTransactionStatus: checkTransactionStatus
+        checkTransactionStatus: checkTransactionStatus,
+        simulatePayoutError: simulatePayoutError,
     });
     function checkUser(phoneNumber) {
         var request = $http({
@@ -59,6 +60,15 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
                 PageNumber: pageNumber,
                 Services: services
             }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function simulatePayoutError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/CreatePayoutSimulateError",
+            data: errorCode
+
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -180,6 +190,30 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             });
     }
 
+    $scope.currentPayoutErrorCode = 0;
+    $scope.errorPayoutResponded = false;
+    $scope.errorPayoutServiceBusy = false;
+    $scope.simulatePayoutError = (errCode) => {
+        $scope.errorPayoutResponded = false;
+        $scope.errorPayoutServiceBusy = true;
+        aircashPayoutService.simulatePayoutError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorPayoutSequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentErrorCode = errCode;
+                $scope.errorPayoutResponded = true;
+                $scope.errorPayoutServiceBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
         $scope.getTransactions(false);
@@ -188,6 +222,101 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.errorExamples = {
+        createPayout: {
+            error4000: {
+                request: {
+                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerTransactionID": "4bc4aab4-37c3-40c3-b19b-6507fb3da580",
+                    "amount": 10,
+                    "phoneNumber": "385000000000",
+                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "currencyID": 978,
+                    "signature": "mTVjHrpe7c..."
+                },
+                response: {
+                    "code": 4000,
+                    "message": "Unknown phone number"
+                }
+            },
+            error4002: {
+                request: {
+                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerTransactionID": "C456EEE8-CCAA-4C10-B6E9-7F8C9CA3D2D8",
+                    "amount": 10,
+                    "phoneNumber": "385993072021",
+                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "currencyID": 978,
+                    "signature": "bANPcwy+s5..."
+                },
+                response: {
+                    "code": 4002,
+                    "message": "PartnerTransactionID already exists"
+                }
+            },
+            error4003: {
+                request: {
+                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerTransactionID": "bcfa6e25-baf8-4c17-8b84-fb834b399984",
+                    "amount": 0.5,
+                    "phoneNumber": "385993072021",
+                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "currencyID": 978,
+                    "signature": "q9Z1x6wq+9..."
+                },
+                response: {
+                    "code": 4003,
+                    "message": "Amount too small"
+                }
+            },
+            error4004: {
+                request: {
+                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerTransactionID": "74a1d93b-5aa0-45e9-ac32-720f3ae3068c",
+                    "amount": 1100,
+                    "phoneNumber": "385993072021",
+                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "currencyID": 978,
+                    "signature": "SS3FUqblyI..."
+                },
+                response: {
+                    "code": 4004,
+                    "message": "Amount too big"
+                }
+            },
+            error4005: {
+                request: {
+                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerTransactionID": "a3235360-4f90-4fd2-8804-19d9a053ab53",
+                    "amount": 999999999999,
+                    "phoneNumber": "385993072021",
+                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "currencyID": 978,
+                    "signature": "AAHa2oKDK2..."
+                },
+                response: {
+                    "code": 4005,
+                    "message": "User reached transaction limit or user is blocked"
+                }
+            },
+            error4006: {
+                request: {
+                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerTransactionID": "96c6148f-5851-45a4-aa69-24b5d92408fa",
+                    "amount": 10,
+                    "phoneNumber": "385993072021",
+                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "currencyID": 191,
+                    "signature": "HERkeMRK+r..."
+                },
+                response: {
+                    "code": 4006,
+                    "message": "Currencies do not match"
+                }
+            }
+        }
+    }
 
     $scope.aircashPayout = {
         checkUser: {
