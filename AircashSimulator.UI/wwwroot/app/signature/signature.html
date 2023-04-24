@@ -306,7 +306,7 @@ dgst -sha256 -verify AircashTestPublicKeyOpenSSL.pem -signature signature.txt.sh
     <h4>Code examples:</h4>
     <uib-tabset>
         <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
-                <pre style="background-color: white">
+            <pre style="background-color: white">
 /// &lt;summary&gt;
 /// &lt;summary&gt;
 /// Method that verify signature for requests received from Aircash service.
@@ -394,5 +394,28 @@ function verify_signature($sequence, $signature)
 	}</pre>
         </uib-tab>
     </uib-tabset>
+
+    <br />
+    <hr />
+    <h1>Validate public key</h1>
+
+    <p>
+        You can validate public key through openSSL and running the following command:
+    </p>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content col">
+            <code>openssl x509 -in PublicKey.pem -text -noout</code>
+        </div>
+    </div>
+    <p>
+        Or you can paste your public key here and validate it.
+    </p>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content col">
+            <label>Public key:</label>
+            <textarea class="form-control mb-3" rows="20" ng-model="publicKey"></textarea>
+            <button ng-click="validatePublicKey()" class="btn btn-primary w-100px me-5px" ng-disabled="ValidatePublicKeyServiceBusy">Validate public key <i ng-if="ValidatePublicKeyServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        </div>
+    </div>
 </body>
 </html>
