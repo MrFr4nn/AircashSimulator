@@ -69,7 +69,7 @@ namespace AircashSimulator
                 }
                 case AbonValidateCouponErrorCodeEnum.InvalidCouponeCode:
                 {
-                    couponCode = HelperService.RandomString(16);
+                    couponCode = HelperService.RandomNumber(16);
                     break;
                 }
                 case AbonValidateCouponErrorCodeEnum.CouponCountryNotAllowed:
@@ -111,7 +111,7 @@ namespace AircashSimulator
                 }
                 case AbonConfirmTransactionErrorCodeEnum.InvalidCouponeCode:
                 {
-                    couponCode = HelperService.RandomString(16);
+                    couponCode = HelperService.RandomNumber(16);
                     break;
                 }
                 case AbonConfirmTransactionErrorCodeEnum.CouponAleradyUsed:

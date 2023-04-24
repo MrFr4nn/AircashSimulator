@@ -25,8 +25,12 @@ namespace Service.Settings
         public string UsedCuponCodeForSimulatingError { get { return GetSetting("UsedCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
         public string ValidCuponCodeForSimulatingError { get { return GetSetting("ValidCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
         public string SixteenDigitCodeBA { get { return GetSetting("SixteenDigitCodeBA", string.Empty, throwExceptionIfMissing: true); } }
+        public decimal DefaultAmount { get { return GetSetting("DefaultAmount", decimal.MinusOne, throwExceptionIfMissing: true); } }
+        public decimal AmountTooSmall { get { return GetSetting("AmountTooSmall", decimal.MinusOne, throwExceptionIfMissing: true); } }
+        public decimal AmountTooBig { get { return GetSetting("AmountTooBig", decimal.MinusOne, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashPayoutPartnerId { get { return GetSetting("AircashPayoutPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid PartnerTransactionIdAlreadyExists { get { return GetSetting("PartnerTransactionIdAlreadyExists", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)

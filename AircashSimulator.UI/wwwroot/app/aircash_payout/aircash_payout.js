@@ -206,7 +206,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     $scope.errorPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.errorPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
                 }
-                $scope.currentErrorCode = errCode;
+                $scope.currentPayoutErrorCode = errCode;
                 $scope.errorPayoutResponded = true;
                 $scope.errorPayoutServiceBusy = false;
             }, () => {

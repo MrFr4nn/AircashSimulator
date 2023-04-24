@@ -66,23 +66,22 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = checkUserResponse;
             return returnResponse;
         }
-        public async Task<object> CreatePayout(string phoneNumber, decimal amount, Guid partnerUserId, Guid partnerId)
+        public async Task<object> CreatePayout(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId)
         {
             
             Response returnResponse = new Response();
             var createPayoutResponse = new object();
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
-            var transactionId = Guid.NewGuid();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var createPayoutRequest = new AircashCreatePayoutRequest()
             {
                 PartnerID = partnerId.ToString(),
-                PartnerTransactionID=transactionId.ToString(),
+                PartnerTransactionID= partnerTransactionId.ToString(),
                 Amount=amount,
                 PhoneNumber = phoneNumber,
                 PartnerUserID = partnerUserId.ToString(),
-                CurrencyID=partner.CurrencyId
+                CurrencyID= (int)currency
             };
             returnResponse.ServiceRequest = createPayoutRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
@@ -98,10 +97,10 @@ namespace Services.AircashPayout
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = amount,
-                    ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                    ISOCurrencyId = currency,
                     PartnerId = partnerId,
                     AircashTransactionId = successResponse.AircashTransactionId,
-                    TransactionId = transactionId,
+                    TransactionId = partnerTransactionId,
                     ServiceId = ServiceEnum.AircashPayout,
                     UserId = partnerUserId,
                     RequestDateTimeUTC = requestDateTimeUTC,

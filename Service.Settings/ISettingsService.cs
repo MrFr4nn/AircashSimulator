@@ -16,8 +16,12 @@ namespace Service.Settings
         string UsedCuponCodeForSimulatingError { get; }
         string ValidCuponCodeForSimulatingError { get; }
         string SixteenDigitCodeBA { get; }
+        decimal DefaultAmount { get; }
+        decimal AmountTooSmall { get; }
+        decimal AmountTooBig { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AircashPayoutPartnerId { get; }
+        Guid PartnerTransactionIdAlreadyExists { get; }
         Guid BlockedUserId { get; }
     }
 }
