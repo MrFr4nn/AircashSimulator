@@ -51,7 +51,6 @@
 .tabs-left > .nav-tabs {
     float: left;
     display: block;
-    text-align: center;
     background-color: #dee2e6;
     width: 15%;
 }
