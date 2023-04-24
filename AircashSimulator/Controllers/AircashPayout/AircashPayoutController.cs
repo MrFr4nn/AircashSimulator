@@ -60,7 +60,7 @@ namespace AircashSimulator.Controllers
         {
             var phoneNumber = SettingsService.TestPhoneNumber;
             var partnerTransactionID = Guid.NewGuid();
-            var amount = SettingsService.DefaultAmount;
+            var amount = SettingsService.PayoutDefaultAmount;
             var currency = CurrencyEnum.EUR;
 
             switch (errorCode)
@@ -77,12 +77,12 @@ namespace AircashSimulator.Controllers
                     }
                 case AcPayoutCreatePayoutErrorCodeEnum.AmountTooSmall:
                     {
-                        amount = SettingsService.AmountTooSmall;
+                        amount = SettingsService.PayoutAmountTooSmall;
                         break;
                     }
                 case AcPayoutCreatePayoutErrorCodeEnum.AmountTooBig:
                     {
-                        amount = SettingsService.AmountTooBig;
+                        amount = SettingsService.PayoutAmountTooBig;
                         break;
                     }
                 case AcPayoutCreatePayoutErrorCodeEnum.UserReachedTransactionLimitOrUserIsBlocked:

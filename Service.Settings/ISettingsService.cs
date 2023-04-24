@@ -18,9 +18,9 @@ namespace Service.Settings
         string SixteenDigitCodeBA { get; }
         string TestPhoneNumber { get; }
         string BlockedPhoneNumber { get; }
-        decimal DefaultAmount { get; }
-        decimal AmountTooSmall { get; }
-        decimal AmountTooBig { get; }
+        decimal PayoutDefaultAmount { get; }
+        decimal PayoutAmountTooSmall { get; }
+        decimal PayoutAmountTooBig { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AircashPayoutPartnerId { get; }
         Guid PartnerTransactionIdAlreadyExists { get; }
