@@ -82,6 +82,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         $location.path('/forbidden');
     }
 
+    $scope.copyToClipboard = function (data) {
+        navigator.clipboard.writeText(data);
+    }
+
     $scope.checkUserModel = {
         phoneNumber: '38512345678'
     };
@@ -202,6 +206,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     $scope.errorPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.errorPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.errorPayoutSequence = response.sequence;
+                    $scope.errorPayoutRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.errorPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.errorPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
@@ -227,13 +232,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         createPayout: {
             error4000: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "4bc4aab4-37c3-40c3-b19b-6507fb3da580",
-                    "amount": 10,
-                    "phoneNumber": "385000000000",
-                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerID": "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+                    "partnerTransactionID": "b14643f4-1458-44a2-aa98-45c9bc3578f9",
+                    "amount": 25,
+                    "phoneNumber": "524838804872",
+                    "partnerUserID": "7b50c438-0260-4364-b5ee-2ba1036e2485",
                     "currencyID": 978,
-                    "signature": "mTVjHrpe7c..."
+                    "signature": "mdu9UmM80A..."
                 },
                 response: {
                     "code": 4000,
@@ -242,13 +247,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             },
             error4002: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "C456EEE8-CCAA-4C10-B6E9-7F8C9CA3D2D8",
-                    "amount": 10,
-                    "phoneNumber": "385993072021",
-                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerID": "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+                    "partnerTransactionID": "c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8",
+                    "amount": 25,
+                    "phoneNumber": "385992500001",
+                    "partnerUserID": "44aa69e2-a732-4d9c-b016-70b0b9fee532",
                     "currencyID": 978,
-                    "signature": "bANPcwy+s5..."
+                    "signature": "krrCSLivxM..."
                 },
                 response: {
                     "code": 4002,
@@ -287,13 +292,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             },
             error4005: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "a3235360-4f90-4fd2-8804-19d9a053ab53",
-                    "amount": 999999999999,
-                    "phoneNumber": "385993072021",
-                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerID": "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+                    "partnerTransactionID": "e73dd1e2-c3fe-4942-9d81-510bc63cf2e5",
+                    "amount": 25,
+                    "phoneNumber": "385992500002",
+                    "partnerUserID": "6d091d23-c1d0-4637-b26a-186c1237fa0d",
                     "currencyID": 978,
-                    "signature": "AAHa2oKDK2..."
+                    "signature": "TEJfUGtSFY..."
                 },
                 response: {
                     "code": 4005,
@@ -302,13 +307,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             },
             error4006: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "96c6148f-5851-45a4-aa69-24b5d92408fa",
-                    "amount": 10,
-                    "phoneNumber": "385993072021",
-                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerID": "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+                    "partnerTransactionID": "5c7242ab-05cf-4188-9f0c-f00971c38c12",
+                    "amount": 25,
+                    "phoneNumber": "385992500001",
+                    "partnerUserID": "f8a95979-d6ab-4583-9bbd-a43d0ccb7e66",
                     "currencyID": 191,
-                    "signature": "HERkeMRK+r..."
+                    "signature": "e+4hug1AGI..."
                 },
                 response: {
                     "code": 4006,

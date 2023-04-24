@@ -16,6 +16,8 @@ namespace Service.Settings
         string UsedCuponCodeForSimulatingError { get; }
         string ValidCuponCodeForSimulatingError { get; }
         string SixteenDigitCodeBA { get; }
+        string TestPhoneNumber { get; }
+        string BlockedPhoneNumber { get; }
         decimal DefaultAmount { get; }
         decimal AmountTooSmall { get; }
         decimal AmountTooBig { get; }

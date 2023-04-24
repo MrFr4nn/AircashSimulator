@@ -25,6 +25,8 @@ namespace Service.Settings
         public string UsedCuponCodeForSimulatingError { get { return GetSetting("UsedCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
         public string ValidCuponCodeForSimulatingError { get { return GetSetting("ValidCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
         public string SixteenDigitCodeBA { get { return GetSetting("SixteenDigitCodeBA", string.Empty, throwExceptionIfMissing: true); } }
+        public string TestPhoneNumber { get { return GetSetting("TestPhoneNumber", string.Empty, throwExceptionIfMissing: true); } }
+        public string BlockedPhoneNumber { get { return GetSetting("BlockedPhoneNumber", string.Empty, throwExceptionIfMissing: true); } }
         public decimal DefaultAmount { get { return GetSetting("DefaultAmount", decimal.MinusOne, throwExceptionIfMissing: true); } }
         public decimal AmountTooSmall { get { return GetSetting("AmountTooSmall", decimal.MinusOne, throwExceptionIfMissing: true); } }
         public decimal AmountTooBig { get { return GetSetting("AmountTooBig", decimal.MinusOne, throwExceptionIfMissing: true); } }

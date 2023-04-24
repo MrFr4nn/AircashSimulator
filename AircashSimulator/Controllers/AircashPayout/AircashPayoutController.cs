@@ -58,7 +58,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePayoutSimulateError([FromBody] AcPayoutCreatePayoutErrorCodeEnum errorCode)
         {
-            var phoneNumber = "385993072021";
+            var phoneNumber = SettingsService.TestPhoneNumber;
             var partnerTransactionID = Guid.NewGuid();
             var amount = SettingsService.DefaultAmount;
             var currency = CurrencyEnum.EUR;
@@ -87,7 +87,7 @@ namespace AircashSimulator.Controllers
                     }
                 case AcPayoutCreatePayoutErrorCodeEnum.UserReachedTransactionLimitOrUserIsBlocked:
                     {
-                        amount = 999999999999;
+                        phoneNumber = SettingsService.BlockedPhoneNumber;
                         break;
                     }
                 case AcPayoutCreatePayoutErrorCodeEnum.CurrenciesDoNotMatch:
