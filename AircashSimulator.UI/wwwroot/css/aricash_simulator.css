@@ -53,11 +53,11 @@
     display: block;
     text-align: center;
     background-color: #dee2e6;
-    width: 10%;
+    width: 15%;
 }
 
 .tabs-left > .tab-content {
-    width: 90%;
+    width: 85%;
     display: block;
     margin-bottom: 0 !important;
     border: 2px solid #dee2e6 !important;

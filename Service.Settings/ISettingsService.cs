@@ -17,5 +17,6 @@ namespace Service.Settings
         string ValidCuponCodeForSimulatingError { get; }
         string SixteenDigitCodeBA { get; }
         Guid AbonOnlinePartnerId { get; }
+        Guid BlockedUserId { get; }
     }
 }

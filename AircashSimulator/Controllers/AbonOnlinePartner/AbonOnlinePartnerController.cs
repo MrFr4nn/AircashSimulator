@@ -52,9 +52,9 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> ValidateCouponSimulateError([FromBody] AbonValidateCouponErrorCodeEnum errorCode)
         {
-            string privateKeyPath = SettingsService.AircashSimulatorPrivateKeyPath;
-            Guid partnerId = SettingsService.AbonOnlinePartnerId;
-            string couponCode = SettingsService.ValidCuponCodeForSimulatingError;
+            var privateKeyPath = SettingsService.AircashSimulatorPrivateKeyPath;
+            var partnerId = SettingsService.AbonOnlinePartnerId;
+            var couponCode = SettingsService.ValidCuponCodeForSimulatingError;
             switch (errorCode)
             {
                 case AbonValidateCouponErrorCodeEnum.InvalidProviderId:
@@ -93,9 +93,10 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> ConfirmTransactionSimulateError([FromBody] AbonConfirmTransactionErrorCodeEnum errorCode)
         {
-            string privateKeyPath = SettingsService.AircashSimulatorPrivateKeyPath;
-            Guid partnerId = SettingsService.AbonOnlinePartnerId;
-            string couponCode = SettingsService.ValidCuponCodeForSimulatingError;
+            var privateKeyPath = SettingsService.AircashSimulatorPrivateKeyPath;
+            var partnerId = SettingsService.AbonOnlinePartnerId;
+            var couponCode = SettingsService.ValidCuponCodeForSimulatingError;
+            var userId = Guid.NewGuid();
             switch (errorCode)
             {
                 case AbonConfirmTransactionErrorCodeEnum.InvalidProviderId:
@@ -123,6 +124,11 @@ namespace AircashSimulator
                     couponCode = SettingsService.SixteenDigitCodeBA;
                     break;
                 }
+                case AbonConfirmTransactionErrorCodeEnum.LimitExceeded:
+                {
+                    userId = SettingsService.BlockedUserId;
+                    break;
+                }
                 //case ConfirmTransactionErrorCodeEnum.ConversionModuleError:
                 //    {
                 //        //PartnerIDSimulateError = new Guid("8db69a48-7d61-48e7-9be8-3160549c7f17");
@@ -131,7 +137,7 @@ namespace AircashSimulator
                 default:
                     return Ok();
             }
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(couponCode, Guid.NewGuid(), partnerId, privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(couponCode, userId, partnerId, privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
         }
     }

@@ -11,6 +11,7 @@ namespace Domain.Entities.Enum
         InvalidCouponeCode = 3,
         CouponAleradyUsed = 4,
         ConversionModuleError = 5,
-        CouponCountryNotAllowed = 7
+        CouponCountryNotAllowed = 7,
+        LimitExceeded = 9,
     }
 }

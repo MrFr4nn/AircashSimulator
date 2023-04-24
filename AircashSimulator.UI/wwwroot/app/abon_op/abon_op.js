@@ -70,6 +70,10 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         $location.path('/forbidden');
     }
 
+    $scope.copyToClipboard = function (data) {
+        navigator.clipboard.writeText(data);
+    }
+
     $scope.validateCouponModel = {
         couponCode: ""
     };
@@ -152,7 +156,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             });
     }
 
-    $scope.currentErrorCode = 0;
+    $scope.currentConfirmErrorCode = 0;
     $scope.errorConfirmResponded = false;
     $scope.errorConfirmServiceBusy = false;
     $scope.confirmSimulateError = (errCode) => {
@@ -161,14 +165,14 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         abonOpService.confirmSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorSequence = response.sequence;
+                    $scope.errorConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorConfirmSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
                 }
-                $scope.currentErrorCode = errCode;
+                $scope.currentConfirmErrorCode = errCode;
                 $scope.errorConfirmResponded = true;
                 $scope.errorConfirmServiceBusy = false;
             }, () => {
@@ -307,6 +311,20 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 response: {
                     "code": 7,
                     "message": "Coupon Country Not Allowed",
+                    "additionalData": null
+                }
+            },
+            error9: {
+                request: {
+                    "couponCode": "6377944739582437",
+                    "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                    "providerTransactionId": "228d8b14-675a-4ca8-afb9-8a995ed4c591",
+                    "userId": "1a2b8324-e8d4-496d-a119-b571583668c7",
+                    "signature": "dmNEmxcf/4..."
+                },
+                response: {
+                    "code": 9,
+                    "message": "Limit exceeded",
                     "additionalData": null
                 }
             }
