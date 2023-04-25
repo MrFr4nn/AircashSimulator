@@ -16,7 +16,9 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
     return ({
         createCoupon: createCoupon,
         cancelCoupon: cancelCoupon,
-        getDenominations: getDenominations
+        getDenominations: getDenominations,
+        createSimulateError: createSimulateError,
+        cancelSimulateError: cancelSimulateError,
     });
     function createCoupon(value, pointOfSaleId) {
         var request = $http({
@@ -32,7 +34,7 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
     function cancelCoupon(serialNumber, cancelPointOfSaleId) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl +"AbonSalePartner/CancelCoupon",
+            url: config.baseUrl + "AbonSalePartner/CancelCoupon",
             data: {
                 SerialNumber: serialNumber,
                 PointOfSaleId: cancelPointOfSaleId
@@ -46,6 +48,24 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
             url: config.baseUrl + "Denominations/GetDenominations",
             params: {
             }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function createSimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonSalePartner/CreateCouponSimulateError",
+            data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function cancelSimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonSalePartner/CancelCouponSimulateError",
+            data: errorCode
+
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -148,9 +168,265 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             });
     }
 
+    $scope.currentCreateErrorCode = 0;
+    $scope.errorCreateResponded = false;
+    $scope.errorCreateServiceBusy = false;
+    $scope.createSimulateError = (errCode) => {
+        $scope.errorCreateResponded = false;
+        $scope.errorCreateServiceBusy = true;
+        abonSpService.createSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorSequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentCreateErrorCode = errCode;
+                $scope.errorCreateResponded = true;
+                $scope.errorCreateServiceBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.currentErrorCode = 0;
+    $scope.errorCancelResponded = false;
+    $scope.errorCancelServiceBusy = false;
+    $scope.cancelSimulateError = (errCode) => {
+        $scope.errorCancelResponded = false;
+        $scope.errorCancelServiceBusy = true;
+        abonSpService.cancelSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorSequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentErrorCode = errCode;
+                $scope.errorCancelResponded = true;
+                $scope.errorCancelServiceBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
     $scope.setDefaults();
 
     $scope.getDenominations();
+
+    $scope.errorExamples = {
+        CreateTransaction: {
+            error4001: {
+                request: {
+                    "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+                    "value": 25,
+                    "pointOfSaleId": "test",
+                    "isoCurrencySymbol": "EUR",
+                    "partnerTransactionId": "e3bd6e90-cbb8-4118-a784-af3a93424a94",
+                    "contentType": null,
+                    "contentWidth": null,
+                    "signature": "FNP0WFwbAX..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid PartnerId",
+                    "additionalData": null
+                }
+            },
+            error4002: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "value": 25,
+                    "pointOfSaleId": "test",
+                    "isoCurrencySymbol": "EUR",
+                    "partnerTransactionId": "c0bda895-4407-4410-a2d5-22fbc340724d",
+                    "contentType": null,
+                    "contentWidth": null,
+                    "signature": "d9cGnF7qap..."
+                },
+                response: {
+                    "code": 2,
+                    "message": "Invalid Signature",
+                    "additionalData": null
+                }
+            },
+            error4003: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "value": 11,
+                    "pointOfSaleId": "test",
+                    "isoCurrencySymbol": "EUR",
+                    "partnerTransactionId": "62a6fdf7-967c-4152-9c79-8f144350b15b",
+                    "contentType": null,
+                    "contentWidth": null,
+                    "signature": "q6j6quhN9m..."
+                },
+                response: {
+                    "code": 3,
+                    "message": "Invalid CouponValue",
+                    "additionalData": null
+                }
+            },
+            error4005: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "value": 25,
+                    "pointOfSaleId": "test",
+                    "isoCurrencySymbol": "EUr",
+                    "partnerTransactionId": "7770968f-22ab-42f0-8346-91e7ce6b12c5",
+                    "contentType": null,
+                    "contentWidth": null,
+                    "signature": "HU+L+0XKVc..."
+                },
+                response: {
+                    "code": 5,
+                    "message": "Invalid CurrencySymbol",
+                    "additionalData": null
+                }
+            },
+            error4006: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "value": 25,
+                    "pointOfSaleId": "test",
+                    "isoCurrencySymbol": "EUR",
+                    "partnerTransactionId": "84ba908f-cef9-4713-9396-edad8f8c2c12",
+                    "contentType": null,
+                    "contentWidth": null,
+                    "signature": "RCrcUGLLK6..."
+                },
+                response: {
+                    "code": 6,
+                    "message": "Coupon exists for the given PartnerTransactionId",
+                    "additionalData": {
+                        "serialNumber": "2453730818247605",
+                        "value": 25,
+                        "isoCurrencySymbol": "EUR",
+                        "partnerTransactionId": "84ba908f-cef9-4713-9396-edad8f8c2c12"
+                    }
+                }
+            },
+            error4008: {
+                request: {},
+                response: {}
+            }
+        },
+        CancelTransaction: {
+            error4001: {
+                request: {
+                    "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+                    "serialNumber": "5349550488532699",
+                    "partnerTransactionId": "3b591880-bf40-43d9-88ea-7818240f3863",
+                    "pointOfSaleId": "test",
+                    "signature": "Iu+5eBeBL4..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid PartnerId",
+                    "additionalData": null
+                }
+            },
+            error4002: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "serialNumber": "0207037936248882",
+                    "partnerTransactionId": "84a74609-5b35-4ed7-9543-971b90bf06fd",
+                    "pointOfSaleId": "test",
+                    "signature": "HoGojxnhyA..."
+                },
+                response: {
+                    "code": 2,
+                    "message": "Invalid Signature",
+                    "additionalData": null
+                }
+            },
+            error4003: {
+                request: {},
+                response: {}
+            },
+            error4004: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "serialNumber": "0000000000000000",
+                    "partnerTransactionId": "e2c643cf-e7c4-47ed-b989-39f76d54c218",
+                    "pointOfSaleId": "test",
+                    "signature": "FKVDmReIqu..."
+                },
+                response: {
+                    "code": 4,
+                    "message": "Invalid coupon serial number or partner transaction id",
+                    "additionalData": null
+                }
+            },
+            error4005: {
+                request: {},
+                response: {}
+            },
+            error4006: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "serialNumber": "0565130009558536",
+                    "partnerTransactionId": "8bea4288-12c0-4fef-9149-f0a3cd5f807d",
+                    "pointOfSaleId": "error",
+                    "signature": "S7SjZWukip..."
+                },
+                response: {
+                    "code": 6,
+                    "message": "PointOfSaleIds do not match",
+                    "additionalData": null
+                }
+            },
+            error4007: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "serialNumber": "0207037936248882",
+                    "partnerTransactionId": "319b700b-1700-458a-8c2d-cc2be039537a",
+                    "pointOfSaleId": "test",
+                    "signature": "Sx+4XQOCSw..."
+                },
+                response: {
+                    "code": 7,
+                    "message": "Coupon has been already cancelled",
+                    "additionalData": null
+                }
+            },
+            error4008: {
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "serialNumber": "8111271745690701",
+                    "partnerTransactionId": "641795f3-1f0f-4e92-a988-3a5720f3c199",
+                    "pointOfSaleId": "test",
+                    "signature": "q3JdF2qmKl..."
+                },
+                response: {
+                    "code": 8,
+                    "message": "Coupon has been already used",
+                    "additionalData": null
+                }
+            },
+            error4009: {
+                request: {},
+                response: {}
+            },
+            error40010: {
+                request: {},
+                response: {}
+            },
+            error40011: {
+                request: {},
+                response: {}
+            }
+
+        },
+
+    }
+
 
     $scope.aBonGenerate = {
         couponCreation: {
