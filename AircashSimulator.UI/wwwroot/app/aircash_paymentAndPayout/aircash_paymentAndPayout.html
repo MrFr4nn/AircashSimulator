@@ -173,7 +173,7 @@
         <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
             <pre>
 Request example:
-</pre> 
+</pre>
             <jsonformatter data="SalesPartner.CheckCode.RequestExample"></jsonformatter>
             <pre>
 
@@ -183,7 +183,7 @@ BarCode=AC23436263654000&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357
 Signature:
 IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nDjF00KTq9HxNPLkOjwwbtmStepU4NHeJ7xBNl8r6xbO/vqYvPsPCLmmZ0Ceg+eMuYbSWez7TAuOIvfhOxrk6kCRT2ztlFeUD1RRRj/vHUlNPpewtd+U08xaKIQyXoFEtZsbyc7Ovtf57UqXy7WCqM0ST2sIR+uh6ndY0+/g1PPt+TaS30tLkTjK8YIpytGZ2dxH2aZwYF1mbTN0lQJjnMRty8q0ITGFjL1mxM1w7AZGjaXDAghQEXTa4yDMFBWlAqJ+NqlvHSC+dkRXNYWscRuKQVH57SJtZYMmYzSqGloMUK8rWUoOaHF34csKdDKuMTM9OBajcE4ZQ7fAasfRIY0Yy0DcHnv3QieLBjzLNes47ZSff4PZnAZWGM262ZlmjzILSZU30PSg+Imj8p51S41++ac3Wh8KpEC9fpuYvZJPjp4zNjrJqXj6BNW2uSVsHxNpSXw4JNyXu/DhCvthSQ5njlZFOaZg6cduz9xPEbNh1x1YtyQA5YwlI1yJVC81tT4+rk6tu/iz15JqKbGAyoGF7ls/plOVJZVUASFV9soW59BZhzK3E3JxJk60a269l1HiMMunqW2bt1gS1UIQDjlbLTWJo=
 
-</pre>       
+</pre>
         </uib-tab>
         <uib-tab index="CheckCode-tab-3" heading="Response parameters" classes="nav-item">
             <div class="table-responsive">
@@ -224,6 +224,8 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                         <tr>
                             <th>Http response</th>
                             <th>Description</th>
+                            <th>Error Code</th>
+                            <th>Message</th>
                             <th>Solution</th>
                         </tr>
                     </thead>
@@ -233,24 +235,34 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                             <td>
                                 The partner is sending an unknown partner ID, or the signature is not valid.
                             </td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>
                                 Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
                             </td>
                         </tr>
                         <tr>
-                            <td><b>400</b></td>
-                            <td>
-                                A list of errors that can occur can be found at the end of this chapter in Error codes
+                            <td rowspan="2"><b>400</b></td>
+                            <td rowspan="2">
+                                An invalid request was made. The response will contain an error code and message
                             </td>
+                            <td><b>1</b></td>
+                            <td>Invalid bar code</td>
                             <td>
-                                Depends on the error as described in Error codes chapter.
+                                The barcode that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
                             </td>
+                        </tr>
+                        <tr>
+                            <td><b>2</b></td>
+                            <td>Bar code already used</td>
                         </tr>
                         <tr>
                             <td><b>500</b></td>
                             <td>
                                 Unexpected system error
                             </td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>
                                 Try again until the system recovers.
                             </td>
@@ -259,7 +271,92 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
             </div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-6" heading="Error response example" classes="nav-item">
-            <jsonformatter data="SalesPartner.CheckCode.ErrorResponseExample"></jsonformatter>
+            <uib-tabset class="row tabs-left">
+                <uib-tab index="CheckCodeTransactionError-tab-1" heading="1 - Invalid bar code" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error1.request"></jsonformatter>
+
+                            Sequence:
+                            BarCode=AC00000000000000&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error1.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                            Sequence: {{errorCheckSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(1)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">Copy Request</button>
+                </uib-tab>
+                <uib-tab index="CheckCodeTransactionError-tab-2" heading="2 - Bar code already used" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error2.request"></jsonformatter>
+                            con
+                            Sequence:
+                            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error2.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                            Sequence: {{errorCheckSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(2)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">Copy Request</button>
+                </uib-tab>
+                <uib-tab index="CheckCodeTransactionError-tab-3" heading="3 - Transaction limit" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
+                            con
+                            Sequence:
+                            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                            Sequence: {{errorCheckSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <!--<button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(3)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                    <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">Copy Request</button>-->
+                </uib-tab>
+            </uib-tabset>
         </uib-tab>
         <uib-tab index="CheckCode-tab-7" heading="Try it out" classes="nav-item">
             <div class="row">
@@ -278,12 +375,12 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                         </fieldset>
                     </form>
                 </div>
-                <div class="col-md-4" ng-if="checkCodeServiceResponse">
+                <div class="col-md-4" ng-if="checkCodeServiceResponded">
                     Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
                     Sequence: {{checkCodeSequence}}<br />
                 </div>
-                <div class="col-md-4" ng-if="checkCodeServiceResponse">
+                <div class="col-md-4" ng-if="checkCodeServiceResponded">
                     Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
                 </div>
@@ -454,6 +551,8 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                         <tr>
                             <th>Http response</th>
                             <th>Description</th>
+                            <th>Error Code</th>
+                            <th>Message</th>
                             <th>Solution</th>
                         </tr>
                     </thead>
@@ -463,6 +562,8 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                             <td>
                                 The partner is sending an unknown partner ID, or the signature is not valid.
                             </td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>
                                 Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
                             </td>
@@ -470,10 +571,12 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                         <tr>
                             <td><b>400</b></td>
                             <td>
-                                A list of errors that can occur can be found at the end of this chapter in Error codes
+                                An invalid request was made. The response will contain an error code and message
                             </td>
+                            <td><b>1</b></td>
+                            <td>Invalid bar code</td>
                             <td>
-                                Depends on the error as described in Error codes chapter.
+                                The barcode that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
                             </td>
                         </tr>
                         <tr>
@@ -481,6 +584,8 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                             <td>
                                 Unexpected system error
                             </td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>
                                 Try again until the system recovers.
                             </td>
@@ -489,7 +594,91 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
             </div>
         </uib-tab>
         <uib-tab index="CheckCode-tab-6" heading="Error response example" classes="nav-item">
-            <jsonformatter data="SalesPartner.CheckCode.ErrorResponseExample"></jsonformatter>
+            <uib-tabset class="row tabs-left">
+                <uib-tab index="CheckCodeTransactionError-tab-1" heading="1 - Invalid bar code" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error1.request"></jsonformatter>
+
+                            Sequence:
+                            BarCode=AC00000000000000&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error1.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                            Sequence: {{errorCheckSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(1)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">Copy Request</button>
+                </uib-tab>
+                <uib-tab index="CheckCodeTransactionError-tab-2" heading="2 - Bar code already used" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error2.request"></jsonformatter>
+                            con
+                            Sequence:
+                            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error2.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                            Sequence: {{errorCheckSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(2)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">Copy Request</button>
+                </uib-tab>
+                <uib-tab index="CheckCodeTransactionError-tab-3" heading="3 - Transaction limit" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
+                            con
+                            Sequence:
+                            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                            Sequence: {{errorCheckSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <!--<button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(3)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                    <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">Copy Request</button>-->
+                </uib-tab>
         </uib-tab>
         <uib-tab index="CheckCode-tab-7" heading="Try it out" classes="nav-item">
             <div class="row">
@@ -508,12 +697,12 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                         </fieldset>
                     </form>
                 </div>
-                <div class="col-md-4" ng-if="checkCodeServiceResponse">
+                <div class="col-md-4" ng-if="checkCodeServiceResponded">
                     Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
                     Sequence: {{checkCodeSequence}}<br />
                 </div>
-                <div class="col-md-4" ng-if="checkCodeServiceResponse">
+                <div class="col-md-4" ng-if="checkCodeServiceResponded">
                     Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
                 </div>
@@ -681,6 +870,8 @@ OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y
                     <tr>
                         <th>Http response</th>
                         <th>Description</th>
+                        <th>Error Code</th>
+                        <th>Message</th>
                         <th>Solution</th>
                     </tr>
                 </thead>
@@ -690,17 +881,42 @@ OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y
                         <td>
                             The partner is sending an unknown partner ID, or the signature is not valid.
                         </td>
+                        <td>-</td>
+                        <td>-</td>
                         <td>
                             Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
                         </td>
                     </tr>
                     <tr>
-                        <td><b>400</b></td>
-                        <td>
-                            A list of errors that can occur can be found at the end of this chapter in Error codes
+                        <td rowspan="4"><b>400</b></td>
+                        <td rowspan="4">
+                            An invalid request was made. The response will contain an error code and message
                         </td>
+                        <td><b>2</b></td>
+                        <td>Bar code already used</td>
                         <td>
-                            Depends on the error as described in Error codes chapter.
+                            The barcode was already used.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>3</b></td>
+                        <td>Transaction limit</td>
+                        <td>
+                            The user has reached one or more Aircash system limits, and the transaction was refused. The exact reason of the refusal will be visible to the user in the Aircash app. In case of withdrawal if there are not enough funds on the wallet, this error will appear and the bar code will be used.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>4</b></td>
+                        <td>PartnerTransactionID is not unique</td>
+                        <td>
+                            Partner transaction ID is not unique for this sales partner. Aircash suggests using Guid for PartnerTransactionIDs to avoid this.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>6</b></td>
+                        <td>Unable to confirm transaction without calling check bar code first</td>
+                        <td>
+                            First you have to call check code in order to confirm the transaction
                         </td>
                     </tr>
                     <tr>
@@ -708,6 +924,8 @@ OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y
                         <td>
                             Unexpected system error
                         </td>
+                        <td>-</td>
+                        <td>-</td>
                         <td>
                             Try again until the system recovers.
                         </td>
@@ -722,7 +940,120 @@ OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y
         </p>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-6" heading="Error response example" classes="nav-item">
-        <jsonformatter data="SalesPartner.ConfirmTransaction.ErrorResponseExample"></jsonformatter>
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="ConfirmTransactionError-tab-1" heading="2 - Bar code already used" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 2)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error2.request"></jsonformatter>
+                        con
+                        Sequence:
+                        BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 2)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error2.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-2" heading="3 - Transaction limit" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
+
+                        Sequence:
+
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <!--<button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-3" heading="4 - Partner Transaction ID is not unique" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 4)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error4.request"></jsonformatter>
+
+                        Sequence:
+                        BarCode=AC23556664963151&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=bc9219ca-6851-4cd2-a652-8d079d6d754e
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 4)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error4.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-4" heading="6 - Unable to confirm transaction without calling check bar code first" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 6)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error6.request"></jsonformatter>
+
+                        Sequence:
+                        BarCode=AC19637316401565&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=7aed09af-2bc2-406d-8536-af11a3fdb06e
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 6)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error6.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(6)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
     </uib-tab>
     <uib-tab index="ConfirmTransaction-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -901,6 +1232,8 @@ pzuh1G6yfUythTRV0CeENIWjJLcJVWTL49NyOYiA9fwZQTDKlmJ930h0KJt3FnfZhBNOCdJ2C8Royrph
                     <tr>
                         <th>Http response</th>
                         <th>Description</th>
+                        <th>Error Code</th>
+                        <th>Message</th>
                         <th>Solution</th>
                     </tr>
                 </thead>
@@ -910,6 +1243,8 @@ pzuh1G6yfUythTRV0CeENIWjJLcJVWTL49NyOYiA9fwZQTDKlmJ930h0KJt3FnfZhBNOCdJ2C8Royrph
                         <td>
                             The partner is sending an unknown partner ID, or the signature is not valid.
                         </td>
+                        <td>-</td>
+                        <td>-</td>
                         <td>
                             Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
                         </td>
@@ -917,10 +1252,12 @@ pzuh1G6yfUythTRV0CeENIWjJLcJVWTL49NyOYiA9fwZQTDKlmJ930h0KJt3FnfZhBNOCdJ2C8Royrph
                     <tr>
                         <td><b>400</b></td>
                         <td>
-                            A list of errors that can occur can be found at the end of this chapter in Error codes
+                            An invalid request was made. The response will contain an error code and message
                         </td>
+                        <td><b>5</b></td>
+                        <td>Transaction doesn’t exist in Aircash system</td>
                         <td>
-                            Depends on the error as described in Error codes chapter.
+                            The transaction with the given PartnerTransactionID doesn’t exist in the Aircash system. Sales partner can cancel the transaction in their system and repeat the confirmation process.
                         </td>
                     </tr>
                     <tr>
@@ -928,6 +1265,8 @@ pzuh1G6yfUythTRV0CeENIWjJLcJVWTL49NyOYiA9fwZQTDKlmJ930h0KJt3FnfZhBNOCdJ2C8Royrph
                         <td>
                             Unexpected system error
                         </td>
+                        <td>-</td>
+                        <td>-</td>
                         <td>
                             Try again until the system recovers.
                         </td>
@@ -940,7 +1279,36 @@ pzuh1G6yfUythTRV0CeENIWjJLcJVWTL49NyOYiA9fwZQTDKlmJ930h0KJt3FnfZhBNOCdJ2C8Royrph
         </p>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-6" heading="Error response example" classes="nav-item">
-        <jsonformatter data="SalesPartner.CheckTransactionStatus.ErrorResponseExample"></jsonformatter>
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="CheckTransaction-tab-1" heading="5- Transaction doesn’t exist in Aircash system" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!errorCheckTransactionResponded ">
+                        Request
+                        <jsonformatter data="errorExamples.CheckTransaction.error5.request"></jsonformatter>
+
+                        Sequence:
+                        PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=00000000-0000-0000-0000-000000000000
+                    </div>
+                    <div class="col-sm-6" ng-if="!errorCheckTransactionResponded ">
+                        Response
+                        <jsonformatter data="errorExamples.CheckTransaction.error5.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorCheckTransactionResponded">
+                        Request ({{errorCheckTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCheckTransactionRequest"></jsonformatter>
+
+                        Sequence: {{errorCheckTransactionSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorCheckTransactionResponded">
+                        Response ({{errorCheckTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCheckTransactionResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="checkTransactionStatusSimulateError()" ng-disabled="errorCheckTransactionServiceBusy">Simulate <i ng-if="errorCheckTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckTransactionRequestCopy)" ng-if="errorCheckTransactionResponded">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
     </uib-tab>
     <uib-tab index="CheckTransactionStatus-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
@@ -1109,6 +1477,8 @@ caaKshrXnbLKujZI9XNo3arbHSVbx7zDQGMEnXQ7BBYMhBEgYNaM6xshqRZtpqT0qNI0pJmts+60m5vi
                     <tr>
                         <th>Http response</th>
                         <th>Description</th>
+                        <th>Error Code</th>
+                        <th>Message</th>
                         <th>Solution</th>
                     </tr>
                 </thead>
@@ -1118,17 +1488,42 @@ caaKshrXnbLKujZI9XNo3arbHSVbx7zDQGMEnXQ7BBYMhBEgYNaM6xshqRZtpqT0qNI0pJmts+60m5vi
                         <td>
                             The partner is sending an unknown partner ID, or the signature is not valid.
                         </td>
+                        <td>-</td>
+                        <td>-</td>
                         <td>
                             Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
                         </td>
                     </tr>
                     <tr>
-                        <td><b>400</b></td>
-                        <td>
-                            A list of errors that can occur can be found at the end of this chapter in Error codes
+                        <td rowspan="4"><b>400</b></td>
+                        <td rowspan="4">
+                            An invalid request was made. The response will contain an error code and message
                         </td>
+                        <td><b>7</b></td>
+                        <td>Unable to cancel payout</td>
                         <td>
-                            Depends on the error as described in Error codes chapter.
+                            You can’t cancel a payout, only payment
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>8</b></td>
+                        <td>Transaction already canceled</td>
+                        <td>
+                            You can’t cancel a transaction that was already canceled.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>9</b></td>
+                        <td>Transaction in wrong status</td>
+                        <td>
+                            The transaction is in wrong status and can’t be canceled
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>10</b></td>
+                        <td>Cancellation period expired</td>
+                        <td>
+                            You have a predefined timespan that you can cancel the transaction in.
                         </td>
                     </tr>
                     <tr>
@@ -1136,6 +1531,8 @@ caaKshrXnbLKujZI9XNo3arbHSVbx7zDQGMEnXQ7BBYMhBEgYNaM6xshqRZtpqT0qNI0pJmts+60m5vi
                         <td>
                             Unexpected system error
                         </td>
+                        <td>-</td>
+                        <td>-</td>
                         <td>
                             Try again until the system recovers.
                         </td>
@@ -1148,7 +1545,121 @@ caaKshrXnbLKujZI9XNo3arbHSVbx7zDQGMEnXQ7BBYMhBEgYNaM6xshqRZtpqT0qNI0pJmts+60m5vi
         </p>
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-5" heading="Error response messages" classes="nav-item">
-        <jsonformatter data="SalesPartner.CancelTransaction.ErrorResponseExample"></jsonformatter>
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="CancelTransactionError-tab-1" heading="7 - Unable to cancel payout" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 7)">
+                        Request
+                        <jsonformatter data="errorExamples.CancelTransaction.error7.request"></jsonformatter>
+
+                        Sequence:
+                        LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=743a646f-8c64-4c10-bb67-d2d871c2c606
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 7)">
+                        Response
+                        <jsonformatter data="errorExamples.CancelTransaction.error7.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 7">
+                        Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellRequest"></jsonformatter>
+
+                        Sequence: {{errorCancellSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 7">
+                        Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(7)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 7">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="CancelTransactionError-tab-2" heading="8 - Transaction already canceled" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 8)">
+                        Request
+                        <jsonformatter data="errorExamples.CancelTransaction.error8.request"></jsonformatter>
+
+                        Sequence:
+                        LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=cd8b75ba-f4d3-4f76-9cac-e3554294ec95
+
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 8)">
+                        Response
+                        <jsonformatter data="errorExamples.CancelTransaction.error8.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 8">
+                        Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellRequest"></jsonformatter>
+
+                        Sequence: {{errorCancellSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 8">
+                        Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(8)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 8">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="CancelTransactionError-tab-3" heading="9 - Transaction in wrong status" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 9)">
+                        Request
+                        <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
+
+                        Sequence:
+                        BarCode=AC23556664963151&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=bc9219ca-6851-4cd2-a652-8d079d6d754e
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 9)">
+                        Response
+                        <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">
+                        Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellRequest"></jsonformatter>
+
+                        Sequence: {{errorCancellSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">
+                        Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(9)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="CancelTransactionError-tab-4" heading="10 - Cancellation period expired" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 10)">
+                        Request
+                        <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
+
+                        Sequence:
+                        BarCode=AC19637316401565&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=7aed09af-2bc2-406d-8536-af11a3fdb06e
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 10)">
+                        Response
+                        <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">
+                        Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellRequest"></jsonformatter>
+
+                        Sequence: {{errorCancellSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">
+                        Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
     </uib-tab>
     <uib-tab index="CancelTransaction-tab-6" heading="Try it out" classes="nav-item">
         <div class="row">

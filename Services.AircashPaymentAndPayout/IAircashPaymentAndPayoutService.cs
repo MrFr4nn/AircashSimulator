@@ -9,7 +9,7 @@ namespace Services.AircashPaymentAndPayout
     public interface IAircashPaymentAndPayoutService
     {
         Task<object> CheckCode(string barCode, string locationID, Guid partnerId);
-        Task<object> ConfirmTransaction(string barCode, string locationID, Guid partnerId, Guid userId);
+        Task<object> ConfirmTransaction(string barCode, string locationID, Guid partnerId, Guid userId, Guid partnerTransactionID);
         Task<object> CheckTransactionStatus(string partnerTransactionID, Guid partnerId);
         Task<object> CancelTransaction(string partnerTransactionID, string locationID, Guid partnerId, Guid userId);
     }

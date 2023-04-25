@@ -25,8 +25,17 @@ namespace Service.Settings
         public string UsedCuponCodeForSimulatingError { get { return GetSetting("UsedCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
         public string ValidCuponCodeForSimulatingError { get { return GetSetting("ValidCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
         public string SixteenDigitCodeBA { get { return GetSetting("SixteenDigitCodeBA", string.Empty, throwExceptionIfMissing: true); } }
+        public string SalesPartnerLocation { get { return GetSetting("SalesPartnerLocation", string.Empty, throwExceptionIfMissing: true); } }
+        public string ValidBarcode { get { return GetSetting("ValidBarcode", string.Empty, throwExceptionIfMissing: true); } }
+        public string UsedBarcode { get { return GetSetting("UsedBarcode", string.Empty, throwExceptionIfMissing: true); } }
+        public string BarcodeOverLimit { get { return GetSetting("BarcodeOverLimit", string.Empty, throwExceptionIfMissing: true); } }
+        public string NotCheckedBarcode { get { return GetSetting("NotCheckedBarcode", string.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid SalesPartnerId { get { return GetSetting("SalesPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid PartnerTransactionIdAlreadyExists { get { return GetSetting("PartnerTransactionIdAlreadyExists", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid UnableToCancelPayoutTransactionId { get { return GetSetting("UnableToCancelPayoutTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid TransactionAlreadyCanceledId { get { return GetSetting("TransactionAlreadyCanceledId", Guid.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)
         {
