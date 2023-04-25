@@ -405,25 +405,44 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         CheckCode: {
             error1: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "barCode": "AC00000000000000",
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC95890684887483",
                     "locationID": "123",
-                    "signature": "koWID7FMYL..."
+                    "signature": "bEJ4wjEcax..."
                 },
                 response: {
                     "errorCode": 1,
                     "errorMessage": "Invalid bar code "
-                }
+                },
+                error2: {
+                    request: {
+                        "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                        "barCode": "AC15694794016276",
+                        "locationID": "123",
+                        "signature": "ShZjKjbLsZ..."
+                    },
+                    response: {
+                        "errorCode": 2,
+                        "errorMessage": "Bar code already used "
+                    }
+                },
+                error3: {
+                    request: {
+                    },
+                    response: {
+
+                    }
+                },
             }
         },
         ConfirmTransaction: {
             error2: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "barCode": "AC26821108681329",
-                    "partnerTransactionID": "71a469a5-42f7-4075-97cf-58ae8260e3b4",
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC15694794016276",
+                    "partnerTransactionID": "d8b5649c-3001-4c12-bc45-f024d67585c6",
                     "locationID": "123",
-                    "signature": "rze1O3eevh..."
+                    "signature": "Nwo+VIViBN..."
                 },
                 response: {
                     "errorCode": 2,
@@ -439,11 +458,11 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
             },
             error4: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "barCode": "AC23556664963151",
-                    "partnerTransactionID": "bc9219ca-6851-4cd2-a652-8d079d6d754e",
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC16758848507711",
+                    "partnerTransactionID": "c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8",
                     "locationID": "123",
-                    "signature": "E8VxV+G9LU..."
+                    "signature": "EiCU4uxtTE..."
                 },
                 response: {
                     "errorCode": 4,
@@ -452,11 +471,11 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
             },
             error6: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "barCode": "AC19637316401565",
-                    "partnerTransactionID": "7aed09af-2bc2-406d-8536-af11a3fdb06e",
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC16004150724597",
+                    "partnerTransactionID": "b9258777-26bd-4863-a9fd-4046e7e4df71",
                     "locationID": "123",
-                    "signature": "kx/HwKvbZQ..."
+                    "signature": "PktsXrq/lp..."
                 },
                 response: {
                     "errorCode": 6,
@@ -467,9 +486,9 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         CheckTransaction: {
             error5: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "00000000-0000-0000-0000-000000000000",
-                    "signature": "EMnvxNquG8..."
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "partnerTransactionID": "6fec1de6-c1c5-483d-9bfc-1b689c6d22ef",
+                    "signature": "SQY/a8b7Fr..."
                 },
                 response: {
                     "errorCode": 5,
@@ -480,10 +499,10 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         CancelTransaction: {
             error7: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "743a646f-8c64-4c10-bb67-d2d871c2c606",
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "partnerTransactionID": "289812f6-4f7b-4b43-b2df-77e6a803d946",
                     "locationID": "123",
-                    "signature": "t9l6Bvx86o..."
+                    "signature": "AMR8FuR0Ms..."
                 },
                 response: {
                     "errorCode": 7,
@@ -492,10 +511,10 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
             },
             error8: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "cd8b75ba-f4d3-4f76-9cac-e3554294ec95",
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "partnerTransactionID": "a2853f63-2eeb-44a5-9440-8848f93f15da",
                     "locationID": "123",
-                    "signature": "jJ0y+Ot0u3..."
+                    "signature": "LMkB2B10Oa..."
                 },
                 response: {
                     "errorCode": 8,
