@@ -421,31 +421,32 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                         <button class="btn btn-primary mt-2" ng-click="createSimulateError(6)" ng-disabled="errorCreateServiceBusy">Request <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </uib-tab>
                     <uib-tab index="CreateTransactionError-tab-6" heading="8 - Daily limit exceeded" classes="nav-item">
-                        <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
-                                Request
-                                <jsonformatter data="errorExamples.CreateTransaction.error8.request"></jsonformatter>
+                        Simulation not available.
+                        <!--<div class="row col-12">
+        <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
+            Request
+            <jsonformatter data="errorExamples.CreateTransaction.error8.request"></jsonformatter>
 
-                                Sequence:
+            Sequence:
 
-                            </div>
-                            <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
-                                Response
-                                <jsonformatter data="errorExamples.CreateTransaction.error8.response"></jsonformatter>
-                            </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
-                                Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <jsonformatter data="errorCreateRequest"></jsonformatter>
+        </div>
+        <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
+            Response
+            <jsonformatter data="errorExamples.CreateTransaction.error8.response"></jsonformatter>
+        </div>
+        <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
+            Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="errorCreateRequest"></jsonformatter>
 
-                                Sequence: {{errorCreateSequence}}<br />
+            Sequence: {{errorCreateSequence}}<br />
 
-                            </div>
-                            <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
-                                Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <jsonformatter data="errorCreateResponse"></jsonformatter>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary mt-2" ng-click="createSimulateError(8)" ng-disabled="errorCreateServiceBusy">Request <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        </div>
+        <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
+            Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="errorCreateResponse"></jsonformatter>
+        </div>
+    </div>
+    <button class="btn btn-primary mt-2" ng-click="createSimulateError(8)" ng-disabled="errorCreateServiceBusy">Request <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
                     </uib-tab>
                 </uib-tabset>
             </uib-tab>
@@ -967,31 +968,32 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                         <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Request <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-11" heading="11 - Request failed" classes="nav-item">
-                        <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 11)">
-                                Request
-                                <jsonformatter data="errorExamples.CancelTransaction.error11.request"></jsonformatter>
+                        Simulation not available.
+                        <!--<div class="row col-12">
+        <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 11)">
+            Request
+            <jsonformatter data="errorExamples.CancelTransaction.error11.request"></jsonformatter>
 
-                                Sequence:
-                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=62a6fdf7-967c-4152-9c79-8f144350b15b&PointOfSaleId=test&Value=11
-                            </div>
-                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 11)">
-                                Response
-                                <jsonformatter data="errorExamples.CancelTransaction.error11.response"></jsonformatter>
-                            </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 11">
-                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+            Sequence:
+            ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=62a6fdf7-967c-4152-9c79-8f144350b15b&PointOfSaleId=test&Value=11
+        </div>
+        <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 11)">
+            Response
+            <jsonformatter data="errorExamples.CancelTransaction.error11.response"></jsonformatter>
+        </div>
+        <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 11">
+            Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="errorCancelRequest"></jsonformatter>
 
-                                Sequence: {{errorCancelSequence}}<br />
+            Sequence: {{errorCancelSequence}}<br />
 
-                            </div>
-                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 11">
-                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <jsonformatter data="errorCancelResponse"></jsonformatter>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(11)" ng-disabled="errorCancelServiceBusy">Request <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        </div>
+        <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 11">
+            Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="errorCancelResponse"></jsonformatter>
+        </div>
+    </div>
+    <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(11)" ng-disabled="errorCancelServiceBusy">Request <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
                     </uib-tab>
                 </uib-tabset>
             </uib-tab>
