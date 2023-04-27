@@ -90,7 +90,7 @@ namespace AircashSimulator
                 }
                 case AbonCreateCouponErrorCodeEnum.CouponExistsForTheGivenPartnerTransactionId:
                 {
-                    partnerTransactionId = new Guid("84ba908f-cef9-4713-9396-edad8f8c2c12");
+                    partnerTransactionId = SettingsService.CouponExistsForTheGivenPartnerTransactionId;
                     break;
                 }
                 //case AbonCreateCouponErrorCodeEnum.DailyLimitExceeded:

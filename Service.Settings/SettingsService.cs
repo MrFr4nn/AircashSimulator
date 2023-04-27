@@ -33,6 +33,7 @@ namespace Service.Settings
         public decimal AbonInvalidValue { get { return GetSetting("AbonInvalidValue", decimal.Zero, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonGeneratePartnerId { get { return GetSetting("AbonGeneratePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid CouponExistsForTheGivenPartnerTransactionId { get { return GetSetting("CouponExistsForTheGivenPartnerTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)

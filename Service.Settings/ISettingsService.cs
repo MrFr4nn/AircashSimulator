@@ -24,6 +24,7 @@ namespace Service.Settings
         decimal AbonInvalidValue { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
+        Guid CouponExistsForTheGivenPartnerTransactionId { get; }
         Guid BlockedUserId { get; }
     }
 }
