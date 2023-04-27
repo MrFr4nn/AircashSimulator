@@ -8,7 +8,6 @@ namespace Domain.Entities.Enum
     {
         InvalidPartnerId = 1,
         InvalidSignature = 2,
-        InvalidPointOfSaleId = 3,
         InvalidCouponSerialNumberOrPartnerTransactionId = 4,
         PartnerIdsDoNotMatch = 5,
         PointOfSalesIdsDoNotMatch = 6,
@@ -16,6 +15,5 @@ namespace Domain.Entities.Enum
         CouponHasBeenAlreadyUsed = 8,
         CouponHasAlreadyExpired = 9,
         CouponCannotBeCancelledTimeoutExpired = 10,
-        RequestFailed = 11,
     }
 }

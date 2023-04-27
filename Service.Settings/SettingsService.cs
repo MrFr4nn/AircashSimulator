@@ -29,9 +29,14 @@ namespace Service.Settings
         public string PointOfSaleId { get { return GetSetting("PointOfSaleId", string.Empty, throwExceptionIfMissing: true); } }
         public string AbonInvalidCurrencySymbol { get { return GetSetting("AbonInvalidCurrencySymbol", string.Empty, throwExceptionIfMissing: true); } }
         public string AbonPointOfSalesIdsDoNotMatch { get { return GetSetting("AbonPointOfSalesIdsDoNotMatch", string.Empty, throwExceptionIfMissing: true); } }
+        public string AbonUnusedCouponSerialNumber { get { return GetSetting("AbonUnusedCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
+        public string AbonAlradyUsedCouponSerialNumber { get { return GetSetting("AbonAlradyUsedCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
+        public string AbonCanceledCouponSerialNumber { get { return GetSetting("AbonCanceledCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
         public decimal AbonDefaultValue { get { return GetSetting("AbonDefaultValue", decimal.Zero, throwExceptionIfMissing: true); } }
         public decimal AbonInvalidValue { get { return GetSetting("AbonInvalidValue", decimal.Zero, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AbonGenerateBlockedPartnerId { get { return GetSetting("AbonGenerateBlockedPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AbonGeneratePartnerIdsDoNotMatch { get { return GetSetting("AbonGeneratePartnerIdsDoNotMatch", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonGeneratePartnerId { get { return GetSetting("AbonGeneratePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid CouponExistsForTheGivenPartnerTransactionId { get { return GetSetting("CouponExistsForTheGivenPartnerTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }

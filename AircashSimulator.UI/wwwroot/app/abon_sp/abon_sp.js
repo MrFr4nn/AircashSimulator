@@ -80,7 +80,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
     }
 
     $scope.createCouponModel = {
-        value : 100,
+        value : 50,
         pointOfSaleId : 'test'
     };
 
@@ -225,14 +225,14 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
         CreateTransaction: {
             error1: {
                 request: {
-                    "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+                    "partnerId": "f3e66373-11a9-4847-8611-53a7ee12cbfb",
                     "value": 25,
                     "pointOfSaleId": "test",
                     "isoCurrencySymbol": "EUR",
-                    "partnerTransactionId": "e3bd6e90-cbb8-4118-a784-af3a93424a94",
+                    "partnerTransactionId": "ad065e76-2047-4633-93e7-85660a09e2f2",
                     "contentType": null,
                     "contentWidth": null,
-                    "signature": "FNP0WFwbAX..."
+                    "signature": "D9pwlT9cKs..."
                 },
                 response: {
                     "code": 1,
@@ -242,14 +242,14 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             },
             error2: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
                     "value": 25,
                     "pointOfSaleId": "test",
                     "isoCurrencySymbol": "EUR",
-                    "partnerTransactionId": "c0bda895-4407-4410-a2d5-22fbc340724d",
+                    "partnerTransactionId": "09054b3c-1862-43af-b6a6-3fb65f80b170",
                     "contentType": null,
                     "contentWidth": null,
-                    "signature": "d9cGnF7qap..."
+                    "signature": "m8wKpF8MRL..."
                 },
                 response: {
                     "code": 2,
@@ -259,14 +259,14 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             },
             error3: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
                     "value": 11,
                     "pointOfSaleId": "test",
                     "isoCurrencySymbol": "EUR",
-                    "partnerTransactionId": "62a6fdf7-967c-4152-9c79-8f144350b15b",
+                    "partnerTransactionId": "894b1f8a-755c-4b74-a96f-044a39e49079",
                     "contentType": null,
                     "contentWidth": null,
-                    "signature": "q6j6quhN9m..."
+                    "signature": "jM/M6gVl+i..."
                 },
                 response: {
                     "code": 3,
@@ -276,14 +276,14 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             },
             error5: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
                     "value": 25,
                     "pointOfSaleId": "test",
                     "isoCurrencySymbol": "EUr",
-                    "partnerTransactionId": "7770968f-22ab-42f0-8346-91e7ce6b12c5",
+                    "partnerTransactionId": "36b1a803-8a0e-476f-ab6e-61f28236a9b6",
                     "contentType": null,
                     "contentWidth": null,
-                    "signature": "HU+L+0XKVc..."
+                    "signature": "WNyv7BrcfG..."
                 },
                 response: {
                     "code": 5,
@@ -314,18 +314,31 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                 }
             },
             error8: {
-                request: {},
-                response: {}
+                request: {
+                    "partnerId": "ef104874-0bc4-459d-945a-fb461e8eae28",
+                    "value": 25,
+                    "pointOfSaleId": "test",
+                    "isoCurrencySymbol": "EUR",
+                    "partnerTransactionId": "381f7f80-8a04-4be7-bf60-28a940d8772c",
+                    "contentType": null,
+                    "contentWidth": null,
+                    "signature": "KAvRKfwCeV..."
+                },
+                response: {
+                    "code": 8,
+                    "message": "Limit exceeded",
+                    "additionalData": null
+                }
             }
         },
         CancelTransaction: {
             error1: {
                 request: {
-                    "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
-                    "serialNumber": "5349550488532699",
-                    "partnerTransactionId": "3b591880-bf40-43d9-88ea-7818240f3863",
+                    "partnerId": "0b7ecd90-800a-4aa0-8cae-f3630b441608",
+                    "serialNumber": "3521314447254926",
+                    "partnerTransactionId": null,
                     "pointOfSaleId": "test",
-                    "signature": "Iu+5eBeBL4..."
+                    "signature": "Q37XjSbUcP..."
                 },
                 response: {
                     "code": 1,
@@ -335,11 +348,11 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             },
             error2: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "serialNumber": "0207037936248882",
-                    "partnerTransactionId": "84a74609-5b35-4ed7-9543-971b90bf06fd",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "serialNumber": "3521314447254926",
+                    "partnerTransactionId": null,
                     "pointOfSaleId": "test",
-                    "signature": "HoGojxnhyA..."
+                    "signature": "H9UQYqen55..."
                 },
                 response: {
                     "code": 2,
@@ -347,17 +360,13 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error3: {
-                request: {},
-                response: {}
-            },
             error4: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "serialNumber": "0000000000000000",
-                    "partnerTransactionId": "e2c643cf-e7c4-47ed-b989-39f76d54c218",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "serialNumber": "0513316595342864",
+                    "partnerTransactionId": null,
                     "pointOfSaleId": "test",
-                    "signature": "FKVDmReIqu..."
+                    "signature": "WRXR0bbbxG..."
                 },
                 response: {
                     "code": 4,
@@ -366,16 +375,26 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                 }
             },
             error5: {
-                request: {},
-                response: {}
+                request: {
+                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                    "serialNumber": "3521314447254926",
+                    "partnerTransactionId": null,
+                    "pointOfSaleId": "test",
+                    "signature": "b+qkNiQugX..."
+                },
+                response: {
+                    "code": 5,
+                    "message": "PartnerIds do not match",
+                    "additionalData": null
+                }
             },
             error6: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "serialNumber": "0565130009558536",
-                    "partnerTransactionId": "8bea4288-12c0-4fef-9149-f0a3cd5f807d",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "serialNumber": "3521314447254926",
+                    "partnerTransactionId": null,
                     "pointOfSaleId": "error",
-                    "signature": "S7SjZWukip..."
+                    "signature": "JLCbn/1AIz..."
                 },
                 response: {
                     "code": 6,
@@ -385,11 +404,11 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             },
             error7: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "serialNumber": "0207037936248882",
-                    "partnerTransactionId": "319b700b-1700-458a-8c2d-cc2be039537a",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "serialNumber": "3448230981812314",
+                    "partnerTransactionId": null,
                     "pointOfSaleId": "test",
-                    "signature": "Sx+4XQOCSw..."
+                    "signature": "MzL4jkd+9m..."
                 },
                 response: {
                     "code": 7,
@@ -399,11 +418,11 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
             },
             error8: {
                 request: {
-                    "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "serialNumber": "8111271745690701",
-                    "partnerTransactionId": "641795f3-1f0f-4e92-a988-3a5720f3c199",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "serialNumber": "3844898791528058",
+                    "partnerTransactionId": null,
                     "pointOfSaleId": "test",
-                    "signature": "q3JdF2qmKl..."
+                    "signature": "Qn1RHluAc9..."
                 },
                 response: {
                     "code": 8,

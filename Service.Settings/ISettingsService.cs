@@ -20,10 +20,15 @@ namespace Service.Settings
         string PointOfSaleId { get; }
         string AbonInvalidCurrencySymbol { get; }
         string AbonPointOfSalesIdsDoNotMatch { get; }
+        string AbonUnusedCouponSerialNumber { get; }
+        string AbonAlradyUsedCouponSerialNumber { get; }
+        string AbonCanceledCouponSerialNumber { get; }
         decimal AbonDefaultValue { get; }
         decimal AbonInvalidValue { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
+        Guid AbonGenerateBlockedPartnerId { get; }
+        Guid AbonGeneratePartnerIdsDoNotMatch { get; }
         Guid CouponExistsForTheGivenPartnerTransactionId { get; }
         Guid BlockedUserId { get; }
     }
