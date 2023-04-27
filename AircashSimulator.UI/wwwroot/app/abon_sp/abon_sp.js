@@ -431,8 +431,18 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                 }
             },
             error9: {
-                request: {},
-                response: {}
+                request: {
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "serialNumber": "0573140441237604",
+                    "partnerTransactionId": null,
+                    "pointOfSaleId": "test",
+                    "signature": "rE7kmJGW9V..."
+                },
+                response: {
+                    "code": 9,
+                    "message": "Coupon has already expired",
+                    "additionalData": null
+                }
             },
             error10: {
                 request: {},

@@ -875,60 +875,58 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                         <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(8)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-9" heading="9 - Coupon has already expired" classes="nav-item">
-                        Simulation not available.
-                        <!--<div class="row col-12">
-        <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 9)">
-            Request
-            <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 9)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
 
-            Sequence:
-            ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=62a6fdf7-967c-4152-9c79-8f144350b15b&PointOfSaleId=test&Value=11
-        </div>
-        <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 9)">
-            Response
-            <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
-        </div>
-        <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 9">
-            Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancelRequest"></jsonformatter>
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=0573140441237604
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 9)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 9">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
 
-            Sequence: {{errorCancelSequence}}<br />
+                                Sequence: {{errorCancelSequence}}<br />
 
-        </div>
-        <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 9">
-            Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancelResponse"></jsonformatter>
-        </div>
-    </div>
-    <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(9)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 9">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(9)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-10" heading="10 - Coupon cannot be cancelled (timeout expired)" classes="nav-item">
-                        Simulation not available.
-                        <!--<div class="row col-12">
-        <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
-            Request
-            <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
 
-            Sequence:
-            ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=62a6fdf7-967c-4152-9c79-8f144350b15b&PointOfSaleId=test&Value=11
-        </div>
-        <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
-            Response
-            <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
-        </div>
-        <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 10">
-            Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancelRequest"></jsonformatter>
+                                Sequence:
+                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=62a6fdf7-967c-4152-9c79-8f144350b15b&PointOfSaleId=test&Value=11
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 10">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
 
-            Sequence: {{errorCancelSequence}}<br />
+                                Sequence: {{errorCancelSequence}}<br />
 
-        </div>
-        <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 10">
-            Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancelResponse"></jsonformatter>
-        </div>
-    </div>
-    <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 10">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </uib-tab>
                 </uib-tabset>
             </uib-tab>

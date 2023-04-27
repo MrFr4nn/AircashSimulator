@@ -146,16 +146,16 @@ namespace AircashSimulator
                     serialNumber = SettingsService.AbonAlradyUsedCouponSerialNumber;
                     break;
                 }
-                //case AbonCancelCouponErrorCodeEnum.CouponHasAlreadyExpired:
-                //    {
-
-                //        return BadRequest();
-                //    }
-                //case AbonCancelCouponErrorCodeEnum.CouponCannotBeCancelledTimeoutExpired:
-                //{
-                //    serialNumber = "0565130009558536";
-                //    break;
-                //}
+                case AbonCancelCouponErrorCodeEnum.CouponHasAlreadyExpired:
+                {
+                    serialNumber = SettingsService.AbonExpiredCouponSerialNumber;
+                    break;
+                }
+                case AbonCancelCouponErrorCodeEnum.CouponCannotBeCancelledTimeoutExpired:
+                {
+                    serialNumber = SettingsService.AbonTimedOutCouponSerialNumber;
+                    break;
+                }
                 default:
                     return BadRequest();
             }

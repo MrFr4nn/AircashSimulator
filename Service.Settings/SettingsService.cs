@@ -32,6 +32,8 @@ namespace Service.Settings
         public string AbonUnusedCouponSerialNumber { get { return GetSetting("AbonUnusedCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
         public string AbonAlradyUsedCouponSerialNumber { get { return GetSetting("AbonAlradyUsedCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
         public string AbonCanceledCouponSerialNumber { get { return GetSetting("AbonCanceledCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
+        public string AbonExpiredCouponSerialNumber { get { return GetSetting("AbonExpiredCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
+        public string AbonTimedOutCouponSerialNumber { get { return GetSetting("AbonTimedOutCouponSerialNumber", string.Empty, throwExceptionIfMissing: true); } }
         public decimal AbonDefaultValue { get { return GetSetting("AbonDefaultValue", decimal.Zero, throwExceptionIfMissing: true); } }
         public decimal AbonInvalidValue { get { return GetSetting("AbonInvalidValue", decimal.Zero, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }

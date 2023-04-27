@@ -23,6 +23,8 @@ namespace Service.Settings
         string AbonUnusedCouponSerialNumber { get; }
         string AbonAlradyUsedCouponSerialNumber { get; }
         string AbonCanceledCouponSerialNumber { get; }
+        string AbonExpiredCouponSerialNumber { get; }
+        string AbonTimedOutCouponSerialNumber { get; }
         decimal AbonDefaultValue { get; }
         decimal AbonInvalidValue { get; }
         Guid AbonOnlinePartnerId { get; }
