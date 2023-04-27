@@ -8,6 +8,6 @@ namespace CrossCutting
 {
     public interface IHelperService
     {
-        string RandomString(int length);
+        string RandomNumber(int length);
     }
 }

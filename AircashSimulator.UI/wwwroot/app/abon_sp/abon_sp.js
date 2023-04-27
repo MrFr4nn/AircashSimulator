@@ -177,12 +177,13 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
         abonSpService.createSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorSequence = response.sequence;
+                    $scope.errorCreateRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorCreateResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorCreateSequence = response.sequence;
+                    $scope.errorCreateRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCreateResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorCreateRequest = JSON.stringify(response.serviceRequest, null, 4);
                 }
                 $scope.currentCreateErrorCode = errCode;
                 $scope.errorCreateResponded = true;
@@ -201,12 +202,12 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
         abonSpService.cancelSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorSequence = response.sequence;
+                    $scope.errorCancelRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorCancelResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorCancelSequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCancelResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorCancelRequest = JSON.stringify(response.serviceRequest, null, 4);
                 }
                 $scope.currentErrorCode = errCode;
                 $scope.errorCancelResponded = true;
@@ -222,7 +223,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
 
     $scope.errorExamples = {
         CreateTransaction: {
-            error4001: {
+            error1: {
                 request: {
                     "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
                     "value": 25,
@@ -239,7 +240,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4002: {
+            error2: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "value": 25,
@@ -256,7 +257,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4003: {
+            error3: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "value": 11,
@@ -273,7 +274,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4005: {
+            error5: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "value": 25,
@@ -290,7 +291,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4006: {
+            error6: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "value": 25,
@@ -312,13 +313,13 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     }
                 }
             },
-            error4008: {
+            error8: {
                 request: {},
                 response: {}
             }
         },
         CancelTransaction: {
-            error4001: {
+            error1: {
                 request: {
                     "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
                     "serialNumber": "5349550488532699",
@@ -332,7 +333,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4002: {
+            error2: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "serialNumber": "0207037936248882",
@@ -346,11 +347,11 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4003: {
+            error3: {
                 request: {},
                 response: {}
             },
-            error4004: {
+            error4: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "serialNumber": "0000000000000000",
@@ -364,11 +365,11 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4005: {
+            error5: {
                 request: {},
                 response: {}
             },
-            error4006: {
+            error6: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "serialNumber": "0565130009558536",
@@ -382,7 +383,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4007: {
+            error7: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "serialNumber": "0207037936248882",
@@ -396,7 +397,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4008: {
+            error8: {
                 request: {
                     "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     "serialNumber": "8111271745690701",
@@ -410,15 +411,15 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     "additionalData": null
                 }
             },
-            error4009: {
+            error9: {
                 request: {},
                 response: {}
             },
-            error40010: {
+            error10: {
                 request: {},
                 response: {}
             },
-            error40011: {
+            error11: {
                 request: {},
                 response: {}
             }
