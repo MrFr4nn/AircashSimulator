@@ -28,6 +28,7 @@ namespace Service.Settings
         public string PointOfSaleIdCashier { get { return GetSetting("PointOfSaleIdCashier", string.Empty, throwExceptionIfMissing: true); } }
         public string PointOfSaleId { get { return GetSetting("PointOfSaleId", string.Empty, throwExceptionIfMissing: true); } }
         public string AbonInvalidCurrencySymbol { get { return GetSetting("AbonInvalidCurrencySymbol", string.Empty, throwExceptionIfMissing: true); } }
+        public string AbonPointOfSalesIdsDoNotMatch { get { return GetSetting("AbonPointOfSalesIdsDoNotMatch", string.Empty, throwExceptionIfMissing: true); } }
         public decimal AbonDefaultValue { get { return GetSetting("AbonDefaultValue", decimal.Zero, throwExceptionIfMissing: true); } }
         public decimal AbonInvalidValue { get { return GetSetting("AbonInvalidValue", decimal.Zero, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }

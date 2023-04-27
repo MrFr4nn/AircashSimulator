@@ -94,14 +94,12 @@ namespace Services.AbonSalePartner
             Response returnResponse = new Response();
             var cancelCouponResponse = new object();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
-            var transaction = AircashSimulatorContext.Transactions.Where(x => x.AircashTransactionId == serialNumber).FirstOrDefault();
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
             var cancelCouponRequest = new CancelCouponRequest()
             {
                 PartnerId = partnerId.ToString(),
                 SerialNumber = serialNumber,
-                PartnerTransactionId = transaction.TransactionId.ToString(),
                 PointOfSaleId = pointOfSaleId,
             };
             returnResponse.ServiceRequest = cancelCouponRequest;
@@ -113,20 +111,25 @@ namespace Services.AbonSalePartner
             var responseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                var transaction = AircashSimulatorContext.Transactions.Where(x => x.AircashTransactionId == serialNumber).FirstOrDefault();
+
+                if (transaction != null)
                 {
-                    Amount = transaction.Amount,
-                    ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,                       
-                    PartnerId = partnerId,
-                    AircashTransactionId = $"CTX-{serialNumber}",
-                    TransactionId = transaction.TransactionId,
-                    ServiceId = ServiceEnum.AbonCancelled,
-                    UserId = Guid.NewGuid(),
-                    PointOfSaleId = pointOfSaleId,
-                    RequestDateTimeUTC = requestDateTimeUTC,
-                    ResponseDateTimeUTC = responseDateTimeUTC
-                });
-                AircashSimulatorContext.SaveChanges();
+                    AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                    {
+                        Amount = transaction.Amount,
+                        ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                        PartnerId = partnerId,
+                        AircashTransactionId = $"CTX-{serialNumber}",
+                        TransactionId = Guid.Empty,
+                        ServiceId = ServiceEnum.AbonCancelled,
+                        UserId = Guid.NewGuid(),
+                        PointOfSaleId = pointOfSaleId,
+                        RequestDateTimeUTC = requestDateTimeUTC,
+                        ResponseDateTimeUTC = responseDateTimeUTC
+                    });
+                    AircashSimulatorContext.SaveChanges();
+                }
                 cancelCouponResponse = "HTTP 200 OK";
             }
             else

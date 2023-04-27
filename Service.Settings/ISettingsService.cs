@@ -19,6 +19,7 @@ namespace Service.Settings
         string PointOfSaleIdCashier { get; }
         string PointOfSaleId { get; }
         string AbonInvalidCurrencySymbol { get; }
+        string AbonPointOfSalesIdsDoNotMatch { get; }
         decimal AbonDefaultValue { get; }
         decimal AbonInvalidValue { get; }
         Guid AbonOnlinePartnerId { get; }

@@ -145,7 +145,7 @@ namespace AircashSimulator
                 }
                 case AbonCancelCouponErrorCodeEnum.PointOfSalesIdsDoNotMatch:
                 {
-                    pointOfSaleId = "error";
+                    pointOfSaleId = SettingsService.AbonPointOfSalesIdsDoNotMatch;
                     break;
                 }
                 case AbonCancelCouponErrorCodeEnum.CouponHasBeenAlreadyCanceled:
