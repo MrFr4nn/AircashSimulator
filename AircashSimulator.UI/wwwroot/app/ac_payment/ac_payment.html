@@ -204,18 +204,6 @@
                 <hr />
                 <div class="row ml-2">
                     <div class="col-lg-3 form-check align-self-center mt-2">
-                        <input class="form-check-input" type="checkbox" ng-change="requestChanged()" ng-model="checkboxModel.merchant">
-                        <label class="form-check-label">
-                            MerchantId
-                        </label>
-                    </div>
-                    <div class="col-lg-9 mt-2">
-                        <input ng-model="generateSignatureModel.merchantId" ng-if="checkboxModel.merchant" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateSignatureBusy" ng-required="true">
-                    </div>
-                </div>
-                <hr />
-                <div class="row ml-2">
-                    <div class="col-lg-3 form-check align-self-center mt-2">
                         <input class="form-check-input" type="checkbox" ng-change="requestChanged()" ng-model="checkboxModel.countryCode">
                         <label class="form-check-label">
                             CountryCode
@@ -223,6 +211,18 @@
                     </div>
                     <div class="col-lg-9 align-self-center">
                         <input ng-model="generateSignatureModel.countryCode" ng-if="checkboxModel.countryCode" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="generateSignatureBusy" ng-required="true">
+                    </div>
+                </div>
+                <hr />
+                <div class="row ml-2">
+                    <div class="col-lg-3 form-check align-self-center mt-2">
+                        <input class="form-check-input" type="checkbox" ng-change="requestChanged()" ng-model="checkboxModel.merchant">
+                        <label class="form-check-label">
+                            MerchantId
+                        </label>
+                    </div>
+                    <div class="col-lg-9 mt-2">
+                        <input ng-model="generateSignatureModel.merchantId" ng-if="checkboxModel.merchant" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
