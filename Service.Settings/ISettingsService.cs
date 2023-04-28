@@ -16,6 +16,8 @@ namespace Service.Settings
         string UsedCuponCodeForSimulatingError { get; }
         string ValidCuponCodeForSimulatingError { get; }
         string SixteenDigitCodeBA { get; }
+        string TestAircashPaymentPath { get; }
+        string TestAircashPaymentPass { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid BlockedUserId { get; }
     }
