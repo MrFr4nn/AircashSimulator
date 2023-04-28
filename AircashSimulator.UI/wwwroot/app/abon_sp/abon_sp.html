@@ -687,7 +687,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                 <uib-tabset class="row tabs-left">
                     <uib-tab index="CancelTransactionError-tab-1" heading="1 - Invalid PartnerId" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 1)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 1)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error1.request"></jsonformatter>
 
@@ -698,7 +698,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error1.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 1">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 1">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -714,7 +714,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 2)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 2)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error2.request"></jsonformatter>
 
@@ -725,7 +725,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error2.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 2">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 2">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -741,7 +741,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-4" heading="4 - Invalid coupon serial number or partner transaction id" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 4)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 4)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error4.request"></jsonformatter>
 
@@ -752,7 +752,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error4.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 4">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 4">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -768,7 +768,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-5" heading="5 - PartnerIds do not match" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 5)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 5)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error5.request"></jsonformatter>
 
@@ -779,7 +779,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error5.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 5">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 5">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -795,7 +795,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-6" heading="6 - Point of sales Ids do not match" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 6)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 6)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error6.request"></jsonformatter>
 
@@ -806,7 +806,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error6.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 6">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 6">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -822,7 +822,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-7" heading="7 - Coupon has been already canceled" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 7)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 7)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error7.request"></jsonformatter>
 
@@ -833,7 +833,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error7.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 7">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 7">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -849,7 +849,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-8" heading="8 - Coupon has been already used" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 8)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 8)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error8.request"></jsonformatter>
 
@@ -860,7 +860,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error8.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 8">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 8">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -876,7 +876,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-9" heading="9 - Coupon has already expired" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 9)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 9)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
 
@@ -887,7 +887,7 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 9">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 9">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 
@@ -903,18 +903,18 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                     </uib-tab>
                     <uib-tab index="CancelTransactionError-tab-10" heading="10 - Coupon cannot be cancelled (timeout expired)" classes="nav-item">
                         <div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 10)">
                                 Request
                                 <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
 
                                 Sequence:
-                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=62a6fdf7-967c-4152-9c79-8f144350b15b&PointOfSaleId=test&Value=11
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=5036566273639964
                             </div>
                             <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
                                 Response
                                 <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
                             </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && currentErrorCode == 10">
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 10">
                                 Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                 <jsonformatter data="errorCancelRequest"></jsonformatter>
 

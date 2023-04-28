@@ -445,14 +445,19 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                 }
             },
             error10: {
-                request: {},
-                response: {}
+                request: {
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "serialNumber": "5036566273639964",
+                    "partnerTransactionId": null,
+                    "pointOfSaleId": "test",
+                    "signature": "keAMXi5GCd..."
+                },
+                response: {
+                    "code": 10,
+                    "message": "Coupon cannot be cancelled",
+                    "additionalData": null
+                }
             },
-            error11: {
-                request: {},
-                response: {}
-            }
-
         },
 
     }
