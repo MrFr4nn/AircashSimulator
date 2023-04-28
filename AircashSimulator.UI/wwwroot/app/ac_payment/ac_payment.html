@@ -180,75 +180,75 @@
             <div class="col-6">
                 <div class="row">
                     <div class="col-lg-3 mt-2 ">
-                        <select class="form-control" id="select" ng-change="requestChanged()" ng-model="usernameEmailSelected">
+                        <select class="form-control" id="select" ng-change="requestCheckPlayerChanged()" ng-model="checkPlayerUsernameEmailSelected">
                             <option value="email">Email</option>
                             <option value="username">Username</option>
                         </select>
                     </div>
                     <div class="col-lg-9 mt-2">
-                        <input ng-model="generateSignatureModel.identificator" ng-keyup="requestChanged()" class="form-control" type="text" placeholder="Enter {{usernameEmailSelected}}" ng-disabled="generateSignatureBusy" ng-required="true">
+                        <input ng-model="checkPlayerGenerateSignatureModel.identificator" ng-keyup="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter {{checkPlayerUsernameEmailSelected}}" ng-disabled="generateSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
                 <div class="row ml-2">
                     <div class="col-lg-3 form-check align-self-center mt-2">
-                        <input class="form-check-input" type="checkbox" ng-change="requestChanged()" ng-model="checkboxModel.currency">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.currency">
                         <label class="form-check-label">
                             CurrencyId
                         </label>
                     </div>
                     <div class="col-lg-9 mt-2">
-                        <input ng-model="generateSignatureModel.currency" ng-if="checkboxModel.currency" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateSignatureBusy" ng-required="true">
+                        <input ng-model="checkPlayerGenerateSignatureModel.currency" ng-if="checkboxCheckPlayerModel.currency" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
                 <div class="row ml-2">
                     <div class="col-lg-3 form-check align-self-center mt-2">
-                        <input class="form-check-input" type="checkbox" ng-change="requestChanged()" ng-model="checkboxModel.countryCode">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.countryCode">
                         <label class="form-check-label">
                             CountryCode
                         </label>
                     </div>
                     <div class="col-lg-9 align-self-center">
-                        <input ng-model="generateSignatureModel.countryCode" ng-if="checkboxModel.countryCode" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="generateSignatureBusy" ng-required="true">
+                        <input ng-model="checkPlayerGenerateSignatureModel.countryCode" ng-if="checkboxCheckPlayerModel.countryCode" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="generateSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
                 <div class="row ml-2">
                     <div class="col-lg-3 form-check align-self-center mt-2">
-                        <input class="form-check-input" type="checkbox" ng-change="requestChanged()" ng-model="checkboxModel.merchant">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.merchant">
                         <label class="form-check-label">
                             MerchantId
                         </label>
                     </div>
                     <div class="col-lg-9 mt-2">
-                        <input ng-model="generateSignatureModel.merchantId" ng-if="checkboxModel.merchant" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateSignatureBusy" ng-required="true">
+                        <input ng-model="checkPlayerGenerateSignatureModel.merchantId" ng-init="checkPlayerGenerateSignatureModel.merchantId = ''" ng-if="checkboxCheckPlayerModel.merchant" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
                 <div class="row ml-2">
                     <div class="col-lg-3 form-check mt-2">
-                        <input class="form-check-input" type="checkbox" ng-change="requestChanged()" ng-model="checkboxModel.match">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.match">
                         <label class="form-check-label">
                             Match personal data
                         </label>
                     </div>
-                    <div ng-if="checkboxModel.match" class="col-lg-9 align-self-center mt-2">
+                    <div ng-if="checkboxCheckPlayerModel.match" class="col-lg-9 align-self-center mt-2">
                         <div>
-                            <input ng-model="generateSignatureModel.firstname" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateSignatureBusy" ng-required="true">
+                            <input ng-model="checkPlayerGenerateSignatureModel.firstname" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateSignatureBusy" ng-required="true">
                         </div>
                         <div class="mt-2">
-                            <input ng-model="generateSignatureModel.lastname" ng-change="requestChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateSignatureBusy" ng-required="true">
+                            <input ng-model="checkPlayerGenerateSignatureModel.lastname" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateSignatureBusy" ng-required="true">
                         </div>
                         <div class="mt-2">
-                            <date-picker date="generateSignatureModel.birthDate" isOptional="false" out="setDate"></date-picker>
+                            <date-picker date="checkPlayerGenerateSignatureModel.birthDate" isOptional="false" out="setDate"></date-picker>
                         </div>
                     </div>
                 </div>
                 <hr />
             </div>
             <div class="col-6">
-                <div ng-if="changed && !generateSignatureResponded">
+                <div ng-if="checkPlayerChanged && !generateSignatureResponded">
                     <jsonformatter data="aircashPayment.checkPlayer.requestExample"></jsonformatter>
                 </div>
                 <div ng-if="generateSignatureResponded">
@@ -451,7 +451,91 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
         </div>
     </uib-tab>
     <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Request example" classes="nav-item">
-        <jsonformatter data="aircashPayment.createAndConfirmPayment.requestExample"></jsonformatter>
+        <div class="form-group row mx-2">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-lg-3 mt-2 ">
+                        <select class="form-control" id="select" ng-change="requestCheckPlayerChanged()" ng-model="checkPlayerUsernameEmailSelected">
+                            <option value="email">Email</option>
+                            <option value="username">Username</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-9 mt-2">
+                        <input ng-model="checkPlayerGenerateSignatureModel.identificator" ng-keyup="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter {{checkPlayerUsernameEmailSelected}}" ng-disabled="generateSignatureBusy" ng-required="true">
+                    </div>
+                </div>
+                <hr />
+                <div class="row ml-2">
+                    <div class="col-lg-3 form-check align-self-center mt-2">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.currency">
+                        <label class="form-check-label">
+                            CurrencyId
+                        </label>
+                    </div>
+                    <div class="col-lg-9 mt-2">
+                        <input ng-model="checkPlayerGenerateSignatureModel.currency" ng-if="checkboxCheckPlayerModel.currency" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateSignatureBusy" ng-required="true">
+                    </div>
+                </div>
+                <hr />
+                <div class="row ml-2">
+                    <div class="col-lg-3 form-check align-self-center mt-2">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.countryCode">
+                        <label class="form-check-label">
+                            CountryCode
+                        </label>
+                    </div>
+                    <div class="col-lg-9 align-self-center">
+                        <input ng-model="checkPlayerGenerateSignatureModel.countryCode" ng-if="checkboxCheckPlayerModel.countryCode" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="generateSignatureBusy" ng-required="true">
+                    </div>
+                </div>
+                <hr />
+                <div class="row ml-2">
+                    <div class="col-lg-3 form-check align-self-center mt-2">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.merchant">
+                        <label class="form-check-label">
+                            MerchantId
+                        </label>
+                    </div>
+                    <div class="col-lg-9 mt-2">
+                        <input ng-model="checkPlayerGenerateSignatureModel.merchantId" ng-if="checkboxCheckPlayerModel.merchant" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateSignatureBusy" ng-required="true">
+                    </div>
+                </div>
+                <hr />
+                <div class="row ml-2">
+                    <div class="col-lg-3 form-check mt-2">
+                        <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.match">
+                        <label class="form-check-label">
+                            Match personal data
+                        </label>
+                    </div>
+                    <div ng-if="checkboxCheckPlayerModel.match" class="col-lg-9 align-self-center mt-2">
+                        <div>
+                            <input ng-model="checkPlayerGenerateSignatureModel.firstname" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateSignatureBusy" ng-required="true">
+                        </div>
+                        <div class="mt-2">
+                            <input ng-model="checkPlayerGenerateSignatureModel.lastname" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateSignatureBusy" ng-required="true">
+                        </div>
+                        <div class="mt-2">
+                            <date-picker date="checkPlayerGenerateSignatureModel.birthDate" isOptional="false" out="setDate"></date-picker>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            </div>
+            <div class="col-6">
+                <div ng-if="checkPlayerChanged && !generateSignatureResponded">
+                    <jsonformatter data="aircashPayment.createAndConfirmPayment.requestExample"></jsonformatter>
+                </div>
+                <div ng-if="generateSignatureResponded">
+                    <jsonformatter data="generateSignatureResponse"></jsonformatter>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+            <button class="btn btn-white ml-2 mt-2" ng-if="generateSignatureResponded" ng-click="copy(generateSignatureResponse)">Copy</button>
+            <button ng-click="generateSignature()" class="btn btn-primary w-100px me-5px mt-2 ml-2" ng-disabled="generateSignatureBusy">Generate signature<i ng-if="generateSignatureBusy" class="fa fa-cog fa-spin"></i></button>
+        </div>
+        
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
