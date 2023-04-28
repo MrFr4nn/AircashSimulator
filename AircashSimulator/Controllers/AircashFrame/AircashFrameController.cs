@@ -75,8 +75,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 CancelUrl = initiateRequest.CancelUrl
             };
             var response = await AircashFrameV2Service.Initiate(initiateRequestDTO);
-            //return Ok(response);
-            return BadRequest();
+            return Ok(response);            
         }
 
         [HttpPost]
@@ -126,7 +125,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             await AircashFrameV2Service.NotificationCashierFrameV2(new Guid(partnerTransactionId));
             await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);
-            return Ok();            
+            //return Ok();            
+            return BadRequest();
         }
 
         [HttpPost]
