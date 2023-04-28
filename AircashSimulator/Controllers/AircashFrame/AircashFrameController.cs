@@ -125,8 +125,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             await AircashFrameV2Service.NotificationCashierFrameV2(new Guid(partnerTransactionId));
             await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);
-            //return Ok();            
-            return BadRequest();
+            return Ok();            
         }
 
         [HttpPost]
