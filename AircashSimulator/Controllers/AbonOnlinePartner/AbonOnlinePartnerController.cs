@@ -7,6 +7,7 @@ using System;
 using Service.Settings;
 using Domain.Entities.Enum;
 using CrossCutting;
+using Newtonsoft.Json;
 
 namespace AircashSimulator
 {
@@ -33,7 +34,12 @@ namespace AircashSimulator
             var response = await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
         }
-
+        public async Task<IActionResult> GetCurlValidateCoupon(ValidateCouponRequest validateCouponRequest)
+        {
+            var response = AbonOnlinePartnerService.GetValidateCouponRequest(validateCouponRequest.CouponCode, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+           var  curl = "curl -X POST -H \"Content-Type: application/json\"  -d " + JsonConvert.SerializeObject(JsonConvert.SerializeObject(response))+" " + AbonOnlinePartnerService.GetValidateCouponEndpoint();       
+           return Ok(curl);
+        }
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
@@ -41,6 +47,14 @@ namespace AircashSimulator
             var userId = UserContext.GetUserId(User);
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
+        }
+        public async Task<IActionResult> GetCurlConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
+        {
+           
+            var userId = UserContext.GetUserId(User);
+            var response = AbonOnlinePartnerService.GetConfirmTransactionRequest(confirmTransactionRequest.CouponCode, userId, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var curl = "curl -X POST -H \"Content-Type: application/json\"  -d " + JsonConvert.SerializeObject(JsonConvert.SerializeObject(response)) + " " + AbonOnlinePartnerService.GetConfirmTransactionEndpoint();
+            return Ok(curl);
         }
         public async Task<IActionResult> ConfirmCashierTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
