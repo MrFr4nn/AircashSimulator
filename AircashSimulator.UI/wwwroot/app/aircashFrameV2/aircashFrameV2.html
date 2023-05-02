@@ -729,40 +729,18 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <jsonformatter data="aircashFrameV2.transactionStatus.errorResponseExample"></jsonformatter>
             </uib-tab>
-            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
-                        <p>Recent transactions:</p>
-                        <div>
-                            <div class="table-responsive">
-                                <table class="table  table-bordered table-striped table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Transaction ID</th>
-                                            <th>Amount</th>
-                                            <th>Check status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-if="totalLoaded == 0 && !busy">
-                                            <td colspan="12" align="center">
-                                                <i>No data</i>
-                                            </td>
-                                        </tr>
-                                        <tr ng-repeat="transaction in transactions">
-                                            <td>{{$index + 1}}.</td>
-                                            <td>{{transaction.partnerTransactionId}}</td>
-                                            <td>{{transaction.amount | number:2}}</td>
-                                            <td style="text-align: center; vertical-align: inherit">
-                                                <button class="btn btn-primary fa fa-check" ng-click="transactionStatus(transaction.partnerTransactionId)"><i class="fa fa-remove"></i></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
-                        </div>
+                        <form action="/" method="POST" name="statusForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Transaction ID</label>
+                                    <input ng-model="transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                </div>
+                                <button class="btn btn-primary" ng-click="transactionStatus(transactionId)">Check status</button>
+                            </fieldset>
+                        </form>
                     </div>
                     <br />
                     <div ng-if="statusResponded" class="col-md-4">
@@ -771,7 +749,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                         Sequence: {{sequenceStatus}}
                     </div>
                     <div ng-if="statusResponded" class="col-md-4">
-                        Request ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        Response ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <jsonformatter data="StatusServiceResponse"></jsonformatter>
                     </div>
                 </div>
