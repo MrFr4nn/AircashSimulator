@@ -229,7 +229,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     $scope.generateCreateAndConfirmSignature = function () {
         $scope.generateCreateAndConfirmSignatureBusy = true;
         $scope.generateCreateAndConfirmSignatureResponded = false;
-        acPaymentService.generateCreateAndConfirmSignature($scope.createAndConfirmParameters, 123.45)
+        acPaymentService.generateCreateAndConfirmSignature($scope.createAndConfirmParameters, $scope.createAndConfirmGenerateSignatureModel.amount || 123.45)
             .then(function (response) {
                 if (response) {
                     $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response, null, 4);
