@@ -1223,6 +1223,86 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
             <tr>
                 <td><b>A:</b>&nbsp; Yes, we provide you reconciliation files for download. We can upload files on our FTP through FTPs or we can put them to your SFTP server.  </td>
             </tr>
+            <tr>
+                <td rowspan="2">8.</td>
+                <td><b>Q:&nbsp; When are you calling our NotificationURL which we define as parameter in "Initiate" method and what happens if the payment notification cannot be delivered?  </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp;
+                    We are calling your NotificationURL when the transaction is processed (when a user scans the QR code and clicks in Aircash mobile app "Pay" or when the user clicks on
+                    "x" in Aircash Frame). NotificationURL is defined by your side when you are calling out the method "Initiate" to display Aircash Frame. After the transaction is processed (successful
+                    transaction, declined transaction, or canceled transaction) we are calling one time your NotificationURL. After the first call of your NotificationURL, if we receive a different response
+                    than OK(200) we will call your NotificationURL two more times.
+                    <br />
+                    The main task of NotificationURL is to notify your system that the transaction is completed. It is your job to check what is the status of the transaction by sending the requests to our
+                    "status" method. If, for any reason, you haven't received the notification (network issue i.e.) you still need to ensure to check the status of the transaction on our end.
+                    <br />
+                    For example, if we agree to have a transaction timeframe of 5 minutes (within which the user needs to confirm the payment), and you haven't received the notification, your system will
+                    need to check the transaction status without being notified. These are corner cases but still may occur.
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">9.</td>
+                <td><b>Q:&nbsp; What is "partnerUserId" parameter from "Initiate" method and what is it used for?   </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; partnerUserId - this value should be a unique client identifier. It can be any type of value (int, string….). We are using it for the limits calculation, and some features
+                    (like saving the phone number for future payments) which are based on the value of partnerUserId . Still, the importance of having this value depends on the type of the merchant. For example,
+                    e-commerce merchants are low-risk categorized so we could have here some random value, UUID for example (which is not fixed). If you have that info we should use it for its real purpose, otherwise,
+                    send us some random value (only because it is required).
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">10.</td>
+                <td><b>Q:&nbsp; What is "locale" parameter from "Initiate" method and what is it used for?   </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; locale is used to define display language of the Aircash Frame and preselect dropdown with country phone code. For example, if you want display language to be english and country
+                    phone code to be Croatia you must send locale parameter as "en-HR".
+                    <p>Examples in table below:</p>
+                    <div class="table-responsive">
+                        <table class="table table-active">
+                            <thead>
+                                <tr>
+                                    <th>Locale</th>
+                                    <th>Display Language</th>
+                                    <th>Country Phone Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>"en-US</td>
+                                    <td>English</td>
+                                    <td>United States of America</td>
+                                </tr>
+                                <tr>
+                                    <td>"en-HR"</td>
+                                    <td>English</td>
+                                    <td>Croatia</td>
+                                </tr>
+                                <tr>
+                                    <td>"en-GB"</td>
+                                    <td>English</td>
+                                    <td>Great Britain</td>
+                                </tr>
+                                <tr>
+                                    <td>"en-RO"</td>
+                                    <td>English</td>
+                                    <td>Romania</td>
+                                </tr>
+                                <tr>
+                                    <td>"hr-HR"</td>
+                                    <td>Croatian</td>
+                                    <td>Croatia</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
         </table>
     </div>
 
