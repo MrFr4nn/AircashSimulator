@@ -102,11 +102,20 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
-        public async Task<AircashPaymentCheckPlayer> GenerateSignature(AircashPaymentCheckPlayer aircashPaymentCheckPlayer) {
+        public async Task<AircashPaymentCheckPlayer> GenerateCheckPlayerSignature(AircashPaymentCheckPlayer aircashPaymentCheckPlayer) {
 
             var sequence = AircashSignatureService.ConvertObjectToString(aircashPaymentCheckPlayer);
             aircashPaymentCheckPlayer.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
             return aircashPaymentCheckPlayer;
+        }
+
+        [HttpPost]
+        public async Task<AircashPaymentCreateAndConfirmPayment> GenerateCreateAndConfirmSignature(AircashPaymentCreateAndConfirmPayment aircashPaymentCreateAndConfirmPayment)
+        {
+            aircashPaymentCreateAndConfirmPayment.TransactionID = Guid.NewGuid().ToString();
+            var sequence = AircashSignatureService.ConvertObjectToString(aircashPaymentCreateAndConfirmPayment);
+            aircashPaymentCreateAndConfirmPayment.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
+            return aircashPaymentCreateAndConfirmPayment;
         }
     }
 }
