@@ -103,7 +103,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             },
             birthDate: {
                 key: "BirthDate",
-                value: generateSignatureModel.birthDate
+                value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
             },
             merchantId: {
                 key: "merchantId",
@@ -136,7 +136,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     $scope.createAndConfirmParameters = [];
     $scope.createAndConfirmParameters.push($scope.requestExample.username);
 
-    var typingTimer;
+    var typingTimerCheckPlayer;
 
     $scope.requestCheckPlayerChanged = function () {
         $scope.checkPlayerUsernameEmailSelected = $('#select').val();
@@ -174,14 +174,14 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             signature: "HrlYnqqr...Cgs = "
         }
 
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
+        clearTimeout(typingTimerCheckPlayer);
+        typingTimerCheckPlayer = setTimeout(() => {
             $scope.generateCheckPlayerSignature();
         }, 1000);
     }
 
+    var typingTimerCreateAndConfirm;
     $scope.requestCreateAndConfirmChanged = function () {
-        console.log($('#select2').val());
         $scope.createAndConfirmUsernameEmailSelected = $('#select2').val();
 
         setRequestExamples($scope.createAndConfirmGenerateSignatureModel);
@@ -218,8 +218,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             signature: "Gng+D6+3...P/4="
         }
 
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
+        clearTimeout(typingTimerCreateAndConfirm);
+        typingTimerCreateAndConfirm = setTimeout(() => {
             $scope.generateCreateAndConfirmSignature();
         }, 1000);
         
@@ -248,7 +248,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     $scope.generateCreateAndConfirmSignature = function () {
         $scope.generateCreateAndConfirmSignatureBusy = true;
         $scope.generateCreateAndConfirmSignatureResponded = false;
-        acPaymentService.generateCreateAndConfirmSignature($scope.createAndConfirmParameters, $scope.createAndConfirmGenerateSignatureModel.amount || 123.45)
+        acPaymentService.generateCreateAndConfirmSignature($scope.createAndConfirmParameters, $scope.createAndConfirmGenerateSignatureModel.amount)
             .then(function (response) {
                 if (response) {
                     $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response, null, 4);
@@ -324,9 +324,10 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         }
     };
 
-
-    $scope.requestCreateAndConfirmChanged();
+    
     $scope.requestCheckPlayerChanged();
+    $scope.requestCreateAndConfirmChanged();
+    
 
 }
 ]);
