@@ -56,49 +56,58 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         navigator.clipboard.writeText(data);
     }
 
-    $scope.checkPlayerGenerateSignatureModel = {}
-    $scope.createAndConfirmGenerateSignatureModel = {}
-    function setRequestExamples(generateSignatureModel) {
-        var username = generateSignatureModel.identificator || "aircash";
-        var email =generateSignatureModel.identificator || "user@example.net";
-        var currencyId =generateSignatureModel.currency || "978";
-        var countryCode = generateSignatureModel.countryCode || "HR";
-        var firstname = generateSignatureModel.firstname || "John";
-        var lastname = generateSignatureModel.lastname || "Doe";
-        var birthday = generateSignatureModel.birthDate || "1990-01-01";
-        var merchantId =generateSignatureModel.merchantId || "100";
+    $scope.checkPlayerGenerateSignatureModel = {
+        identificator: "aircash",
+        currency: "978",
+        countryCode: "HR",
+        merchantId: "100",
+        firstname: "John",
+        lastname: "Doe",
+        birthDate: new Date('1990-01-01'),
+    }
+    $scope.createAndConfirmGenerateSignatureModel = {
+        identificator: "aircash",
+        currency: "978",
+        countryCode: "HR",
+        merchantId: "100",
+        firstname: "John",
+        lastname: "Doe",
+        birthDate: new Date('1990-01-01'),
+        amount:  123.45
+    }
+    function setRequestExamples(generateSignatureModel) {;
         $scope.requestExample = {
             username: {
                 key: "username",
-                value: username
+                value: generateSignatureModel.identificator
             },
             email: {
                 key: "email",
-                value: email
+                value: generateSignatureModel.identificator
             },
             currency: {
                 key: "currencyID",
-                value: currencyId
+                value: generateSignatureModel.currency
             },
             countryCode: {
                 key: "countryCode",
-                value: countryCode
+                value: generateSignatureModel.countryCode
             },
             firstName: {
                 key: "FirstName",
-                value: firstname
+                value: generateSignatureModel.firstname
             },
             lastName: {
                 key: "LastName",
-                value: lastname
+                value: generateSignatureModel.lastname
             },
             birthDate: {
                 key: "BirthDate",
-                value: birthday
+                value: generateSignatureModel.birthDate
             },
             merchantId: {
                 key: "merchantId",
-                Value: merchantId
+                Value: generateSignatureModel.merchantId
             }
         }
     }
@@ -121,34 +130,34 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
 
     $scope.checkPlayerUsernameEmailSelected = "username";
     $scope.checkPlayerParameters = [];
-    if ($scope.checkPlayerUsernameEmailSelected == "email") {
-        $scope.checkPlayerParameters.push($scope.requestExample.email);
-    } else {
-        $scope.checkPlayerParameters.push($scope.requestExample.username);
-    }
+    $scope.checkPlayerParameters.push($scope.requestExample.username);
 
     $scope.createAndConfirmUsernameEmailSelected = "username";
     $scope.createAndConfirmParameters = [];
-    if ($scope.createAndConfirmUsernameEmailSelected == "email") {
-        $scope.createAndConfirmParameters.push($scope.requestExample.email);
-    } else {
-        $scope.createAndConfirmParameters.push($scope.requestExample.username);
-    }
+    $scope.createAndConfirmParameters.push($scope.requestExample.username);
 
-    $scope.checkPlayerChanged = true;
+    var typingTimer;
+
     $scope.requestCheckPlayerChanged = function () {
         $scope.checkPlayerUsernameEmailSelected = $('#select').val();
-        $scope.generateCheckPlayerSignatureResponded = false;
-        $scope.checkPlayerChanged = false;
 
         setRequestExamples($scope.checkPlayerGenerateSignatureModel);
 
         $scope.checkPlayerParameters = [];
         if ($scope.checkPlayerUsernameEmailSelected == "email") {
+            if ($scope.checkPlayerGenerateSignatureModel.identificator == "aircash") {
+                $scope.checkPlayerGenerateSignatureModel.identificator = "user@example.net";
+                setRequestExamples($scope.checkPlayerGenerateSignatureModel);
+            }
             $scope.checkPlayerParameters.push($scope.requestExample.email);
         } else {
+            if ($scope.checkPlayerGenerateSignatureModel.identificator == "user@example.net") {
+                $scope.checkPlayerGenerateSignatureModel.identificator = "aircash";
+                setRequestExamples($scope.checkPlayerGenerateSignatureModel);
+            }
             $scope.checkPlayerParameters.push($scope.requestExample.username);
         }
+
 
         if ($scope.checkboxCheckPlayerModel.currency) $scope.checkPlayerParameters.push($scope.requestExample.currency);
         if ($scope.checkboxCheckPlayerModel.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
@@ -165,23 +174,30 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             signature: "HrlYnqqr...Cgs = "
         }
 
-        $timeout(function () {
-            $scope.checkPlayerChanged = true;
-        }, 500);
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            $scope.generateCheckPlayerSignature();
+        }, 1000);
     }
 
-    $scope.createAndConfirmChanged = true;
     $scope.requestCreateAndConfirmChanged = function () {
+        console.log($('#select2').val());
         $scope.createAndConfirmUsernameEmailSelected = $('#select2').val();
-        $scope.generateCreateAndConfirmSignatureResponded = false;
-        $scope.createAndConfirmChanged = false;
 
         setRequestExamples($scope.createAndConfirmGenerateSignatureModel);
 
         $scope.createAndConfirmParameters = [];
         if ($scope.createAndConfirmUsernameEmailSelected == "email") {
+            if ($scope.createAndConfirmGenerateSignatureModel.identificator == "aircash") {
+                $scope.createAndConfirmGenerateSignatureModel.identificator = "user@example.net";
+                setRequestExamples($scope.createAndConfirmGenerateSignatureModel);
+            }
             $scope.createAndConfirmParameters.push($scope.requestExample.email);
         } else {
+            if ($scope.createAndConfirmGenerateSignatureModel.identificator == "user@example.net") {
+                $scope.createAndConfirmGenerateSignatureModel.identificator = "aircash";
+                setRequestExamples($scope.createAndConfirmGenerateSignatureModel);
+            }
             $scope.createAndConfirmParameters.push($scope.requestExample.username);
         }
 
@@ -201,9 +217,12 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             parameters: $scope.createAndConfirmParameters,
             signature: "Gng+D6+3...P/4="
         }
-        $timeout(function () {
-            $scope.createAndConfirmChanged = true;
-        }, 500);
+
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            $scope.generateCreateAndConfirmSignature();
+        }, 1000);
+        
     }
 
     $scope.generateCheckPlayerSignatureBusy = false;
@@ -304,6 +323,10 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             }
         }
     };
+
+
+    $scope.requestCreateAndConfirmChanged();
+    $scope.requestCheckPlayerChanged();
 
 }
 ]);
