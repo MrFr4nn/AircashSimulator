@@ -52,7 +52,7 @@
                     </li>
                 </ol>
                 <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAcPay" target="_blank">cashier simulator</a></p>
-                
+
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Abon" classes="nav-item">
                 <h2>Aircash Abon deposit</h2>
@@ -84,7 +84,7 @@
                     </li>
                 </ol>
                 <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAbon" target="_blank">cashier simulator</a></p>
-               
+
             </uib-tab>
             <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item">
                 <h2>Aircash Payout</h2>
@@ -339,7 +339,20 @@
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
             </uib-tab>
-            
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+</pre>
+                <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
+<pre>
+
+Sequence:
+Amount=100&CancelUrl=&CurrencyId=191&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=
+
+Signaure:
+tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJPS5SsKaCyPNRxQudthErgwzNCNPM1BD7Wwrf2obrmTzNNgRbC1sfU0HXjP7lTRS8HblzNGjksiUG0wED/QJBmZiQyTUAaO60tg1f4BpeFPAwqsOA/URKB8A72MAzIrsm6w3LOIWzAtiXBwzqkKQ2ChBMsDUx+ba8R2JdU6N1X//65KcXEAHUGOIFberWNDVIcHbZHXDNVFVlFjXtl2VR0VxASioSyh7ZrLl+pyd6BkuK0ee9z6IibAZk0xIfW6TIC4VuHxnwKLmnjxZcXesQjiz+E3xg8V00g1QX23//973WFDMFDfAqOX/1kqlTcPY+Ih8wgTeVVfLXpE7nveTn7vBMLiJE2ONxYNdp2v+ba79ro5ifAkUHcXtEaPLJxpw3d+kvO7J/uDkyc6Re2GotY1Q1leY/qp0qAPjmFvDE5wOnLJp3yDkQv34i8P591xFcLf297jaoAGrn4d2fjGszPC14TxP8VqNdhE0HO8qP3IZWVw6+QnoYMCZy+GkH8uV8Wp7P+eZWGoinJTR4nodU7H8vuWfjiJzhfSKUfYAEotxfcsNKanClrmCrvY4iRlp/BqnR/PETmqVR7bJafKNhyZ6rtb00=
+</pre>
+            </uib-tab>
             <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
                 <div class="table-responsive">
                     <table class="table  table-hover">
@@ -878,7 +891,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                                 Unique transaction id in the Aircash system
                             </td>
                         </tr>
-                       
+
                     </tbody>
                 </table>
             </div>
@@ -955,7 +968,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </div>
             </div>
         </uib-tab>
-        
+
     </uib-tabset>
     </div>
 
@@ -1114,6 +1127,83 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
         Now, the client will be fully redirected to the Aircash Frame and after finishing the transaction it
         will be returned (redirected) to one of the URLs defined by the partner's system on transaction initiation.
     </p>
+
+    <hr />
+    <h5>Custom implementation for redirect checkout</h5>
+
+    <p>
+        This is your custom implementation of Aircash Frame integration. You can display Aircash Frame on any possible way that seems the best for your
+        requirements. For example, you can open new web browser’s window (blank or with your origin URL or any other URL) and use custom redirect to 
+        Aircash Frame URL which you will receive in the Initiate method response body. In this case you have complete control over window where is Aircash
+        Frame displayed, you can implement your scripts to handle window open, window close and window redirect to your success URL.
+    </p>
+
+    <hr />
+
+    <h1>FAQ</h1>
+
+    <br />
+
+    <div class="table-responsive">
+        <table class="table table-active">
+            <tr>
+                <td rowspan="2">1.</td>
+                <td>
+                    <b>Q:&nbsp; Is user redirected to Aircash Frame Abon and is asked to enter the 16-digit code (or scan it)?</b><br />
+                </td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes, user is redirected to Aircash Frame and in the Aircash Frame user is asked to enter 16-digit Abon code. </td>
+            </tr>
+            <tr>
+                <td rowspan="2">2.</td>
+                <td><b>Q:&nbsp; Where does customer’s journey starts with Aircash Frame AcPay? </b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Customer journey starts at the merchant's website (desktop or mobile) or native app. After customer clicks on button for example "Pay with Aircash" the Aircash Frame will pop up. Aircash Frame can be initiate either from merchant's website or native mobile app, that depends on merchant platform.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">3.</td>
+                <td><b>Q:&nbsp; Where will be customer redirected after successful Aircash Frame AcPay payment?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; After the successful payment customer will be redirected to successURL (from the initiate request) which informs that the transaction is successfully processed.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.</td>
+                <td><b>Q:&nbsp; How can we show Aircash Frame?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; You can use custom implementation to show/display Aircash Frame or you can use our Aircash Frame SDK (more about SDK examples you can find on: Aircash Simulator). </td>
+            </tr>
+            <tr>
+                <td rowspan="2">5.</td>
+                <td><b>Q:&nbsp; Are there chargebacks possible?</b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; Aircash marketplace deposit -> chargeback is possible but manually<br />
+                    &emsp;&nbsp; Aircash Frame Aircash Pay -> chargeback is possible but manually<br />
+                    &emsp;&nbsp; Aircash Frame Abon -> chargeback is not possible<br />
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">6.</td>
+                <td><b>Q:&nbsp; Are there returns for the withdrawals possible? (reversal of the withdrawals/payouts) </b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes, returns for the withdrawals are possible manually. Customer must contact merchant and we can made returns manually if customer still has money in Aircash Wallet </td>
+            </tr>
+            <tr>
+                <td rowspan="2">7.</td>
+                <td><b>Q:&nbsp; Are you provided reconciliation files for download, either manual download or by putting them to our SFTP server or download from your SFTP server?   </b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes, we provide you reconciliation files for download. We can upload files on our FTP through FTPs or we can put them to your SFTP server.  </td>
+            </tr>
+        </table>
+    </div>
+
 
     <!-- #modal-dialog -->
     <div class="modal fade" id="frameModal">
