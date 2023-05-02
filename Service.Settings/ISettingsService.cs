@@ -18,5 +18,6 @@ namespace Service.Settings
         string SixteenDigitCodeBA { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid BlockedUserId { get; }
+        Guid AircashFramePartnerId { get; }
     }
 }

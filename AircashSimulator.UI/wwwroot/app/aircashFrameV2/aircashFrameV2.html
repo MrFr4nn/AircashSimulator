@@ -706,7 +706,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                                 <td>-</td>
                             </tr>
                             <tr>
-                                <td><b>1003</b></td>
+                                <td><b>1002</b></td>
                                 <td>Transaction does not exist</td>
                                 <td>-</td>
                             </tr>
@@ -751,7 +751,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                                     <label class="form-label" for="exampleInputEmail1">Transaction ID</label>
                                     <input ng-model="transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
                                 </div>
-                                <button class="btn btn-primary" ng-click="transactionStatus(transactionId)">Check status</button>
+                                <button class="btn btn-primary" ng-click="transactionStatus(transactionId)" ng-disabled="statusBusy || statusForm.$invalid">Check status<i ng-if="statusBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>

@@ -209,8 +209,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         });
     };
 
-    
-
+ 
     $scope.statusResponded = false;
     $scope.statusBusy = false;
     $scope.transactionStatus = function (transactionId) {
@@ -219,6 +218,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         acFrameV2Service.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
+                    console.log(response);
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceStatus = response.sequence;
