@@ -26,18 +26,50 @@
             <li class="nav-header">{{translations.menu_label}}</li>
             <li ui-sref-active="active">
                 <a ui-sref="app.dashboard">
-                    <i class="fa fa-list"></i>
-                    <span>{{translations.dashboard_label}}</span>
+                    <span ng-click="submenu=!submenu"><i class="fa fa-list"></i>{{translations.dashboard_label}} <i class="fas fa-caret-down ml-auto" ng-if="!submenu"></i><i class="fas fa-caret-up ml-auto" ng-if="submenu"></i></span>
                 </a>
+                <ul class="nav ml-3" ng-if="submenu">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.jira">
+                            <i class="fas fa-bolt"></i>
+                            <span>{{translations.jira_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.logo">
+                            <i class="fa fa-solid fa-image"></i>
+                            <span>{{translations.logo_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.ac_business_site">
+                            <i class="fa fa-file"></i>
+                            <span>{{translations.ac_business_site_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.ac_test_application">
+                            <i class="fa fa-mobile"></i>
+                            <span>{{translations.ac_test_application_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.matchPersonalData">
+                            <i class="fa fa-people-arrows"></i>
+                            <span>{{translations.match_personal_data_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.signature">
+                            <i class="fa fa-pencil-alt"></i>
+                            <span>{{translations.signature_label}}</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
+            <li class="nav-header" ng-if="partnerRoles.indexOf('AircashFrameV2')!= -1 || partnerRoles.indexOf('AircashPayment') != -1||partnerRoles.indexOf('AircashPayout') != -1 || partnerRoles.indexOf('AbonDeposit') != -1 || partnerRoles.indexOf('AircashPosDeposit') != -1 || partnerRoles.indexOf('AircashPayoutV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1 || partnerRoles.indexOf('AircashPayStaticCode') != -1">{{translations.online_label}}</li>
             <li ui-sref-active="active">
-                <a ui-sref="app.aircashPaymentAndPayout" ng-if="partnerRoles.indexOf('SalePartner') != -1">
-                    <i class="fa fa-barcode"></i>
-                    <span>{{translations.aircash_paymentAndPayout_label}}</span>
-                </a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.acFrame" ng-if="partnerRoles.indexOf('AircashFrame') != -1">
+                <a ui-sref="app.acFrame" ng-if="false">
                     <i class="fa fa-desktop"></i>
                     <span>{{translations.ac_frame_label}}</span>
                 </a>
@@ -46,20 +78,7 @@
             <li ui-sref-active="active">
                 <a ui-sref="app.aircashFrameV2" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1">
                     <i class="fa fa-desktop"></i>
-                    <span>{{translations.ac_frame_label}}</span>
-                </a>
-            </li>
-
-            <li ui-sref-active="active">
-                <a ui-sref="app.acPay" ng-if="partnerRoles.indexOf('AircashPay') != -1">
-                    <i class="fa fa-qrcode" aria-hidden="true"></i>
-                    <span>{{translations.ac_pay_label}}</span>
-                </a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.acPayStaticCode" ng-if="partnerRoles.indexOf('AircashPayStaticCode') != -1">
-                    <i class="fa fa-qrcode" aria-hidden="true"></i>
-                    <span>{{translations.ac_pay_static_code_label}}</span>
+                    <span>{{translations.ac_frameV2_label}}</span>
                 </a>
             </li>
             <li ui-sref-active="active">
@@ -69,15 +88,15 @@
                 </a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="app.acRedeemTicket" ng-if="partnerRoles.indexOf('AircashRedeemTicket') != -1">
-                    <i class="fa fa-pager" aria-hidden="true"></i>
-                    <span>{{translations.ac_redeemTicket_label}}</span>
-                </a>
-            </li>
-            <li ui-sref-active="active">
                 <a ui-sref="app.aircashPayout" ng-if="partnerRoles.indexOf('AircashPayout') != -1">
                     <i class="fa fa-mobile"></i>
                     <span>{{translations.aircash_payout_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.abonOp" ng-if="partnerRoles.indexOf('AbonDeposit') != -1">
+                    <i class="fa fa-gamepad" aria-hidden="true"></i>
+                    <span>{{translations.abon_op_label}}</span>
                 </a>
             </li>
             <li ui-sref-active="active">
@@ -93,15 +112,9 @@
                 </a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="app.abonSp" ng-if="partnerRoles.indexOf('AbonGenerate') != -1">
-                    <i class="fa fa-file-invoice"></i>
-                    <span>{{translations.abon_sp_label}}</span>
-                </a>
-            </li>
-            <li ui-sref-active="active">
-                <a ui-sref="app.abonOp" ng-if="partnerRoles.indexOf('AbonDeposit') != -1">
-                    <i class="fa fa-gamepad" aria-hidden="true"></i>
-                    <span>{{translations.abon_op_label}}</span>
+                <a ui-sref="app.acPay" ng-if="partnerRoles.indexOf('AircashPay') != -1">
+                    <i class="fa fa-qrcode" aria-hidden="true"></i>
+                    <span>{{translations.ac_pay_label}}</span>
                 </a>
             </li>
             <li ui-sref-active="active">
@@ -111,15 +124,28 @@
                 </a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="app.signature">
-                    <i class="fa fa-pencil-alt"></i>
-                    <span>{{translations.signature_label}}</span>
+                <a ui-sref="app.acPayStaticCode" ng-if="partnerRoles.indexOf('AircashPayStaticCode') != -1">
+                    <i class="fa fa-qrcode" aria-hidden="true"></i>
+                    <span>{{translations.ac_pay_static_code_label}}</span>
                 </a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="app.logo">
-                    <i class="fa fa-solid fa-image"></i>
-                    <span>{{translations.logo_label}}</span>
+                <a ui-sref="app.acRedeemTicket" ng-if="false">
+                    <i class="fa fa-pager" aria-hidden="true"></i>
+                    <span>{{translations.ac_redeemTicket_label}}</span>
+                </a>
+            </li>
+            <li class="nav-header" ng-if="partnerRoles.indexOf('SalePartner') != -1 || partnerRoles.indexOf('AbonGenerate') != -1">{{translations.distributor_label}}</li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.aircashPaymentAndPayout" ng-if="partnerRoles.indexOf('SalePartner') != -1">
+                    <i class="fa fa-barcode"></i>
+                    <span>{{translations.aircash_paymentAndPayout_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.abonSp" ng-if="partnerRoles.indexOf('AbonGenerate') != -1">
+                    <i class="fa fa-file-invoice"></i>
+                    <span>{{translations.abon_sp_label}}</span>
                 </a>
             </li>
             <li>
@@ -137,7 +163,7 @@
                     <span>{{translations.user_admin_label}}</span>
                 </a>
             </li>
-                    <!-- begin sidebar minify button -->
+            <!-- begin sidebar minify button -->
             <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
             <!-- end sidebar minify button -->
         </ul>

@@ -35,6 +35,13 @@ using Services.AircashPayStaticCode;
 using Services.AircashPayment;
 using Services.AircashPayoutV2;
 using Services.AircashInAppPay;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.Buffers.Text;
+using Newtonsoft.Json;
+using Services.Translations;
+using Service.Settings;
+using CrossCutting;
 
 namespace AircashSimulator
 {
@@ -88,8 +95,10 @@ namespace AircashSimulator
                    ClockSkew = TimeSpan.Zero
                };
            });
-
+            services.AddMemoryCache();
             services.AddHttpClient<IHttpRequestService, HttpRequestService>();
+            services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IHelperService, HelperService>();
             services.AddTransient<IAbonSalePartnerService, AbonSalePartnerService>();
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
@@ -100,6 +109,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashPayService, AircashPayService>();
             services.AddTransient<IAircashPayStaticCodeService, AircashPayStaticCodeService>(); 
             services.AddTransient<ITransactionService, TransactionService>();
+            services.AddTransient<ITranslationsService, TranslationsService>();
             services.AddTransient<IPartnerService, PartnerService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAircashFrameService, AircashFrameService>();
@@ -127,7 +137,32 @@ namespace AircashSimulator
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseExceptionHandler("/api/Error");
+            app.UseExceptionHandler(errorApp =>
+            {
+                errorApp.Run(async context =>
+                {
+                    context.Response.StatusCode = 400; 
+                    context.Response.ContentType = "application/json";
+
+
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+                    if (error != null)
+                    {
+                        var ex = (SimulatorException)error.Error;
+
+                        if (ex.Code > 0)
+                        {
+                            await context.Response.WriteAsync(JsonConvert.SerializeObject(
+                                new
+                                {
+                                    Code = ex.Code,
+                                    Message = ex.Message
+                                })
+                            , Encoding.UTF8);
+                        }
+                    }
+                });
+            });
 
             app.UseSerilogRequestLogging();
 

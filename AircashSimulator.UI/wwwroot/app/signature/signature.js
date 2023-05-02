@@ -14,12 +14,40 @@ app.config(function ($stateProvider) {
 
 signatureModule.service("signatureService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope',
     function ($http, $q, handleResponseService, config, $rootScope) {
+        return ({
+            validatePublicKey: validatePublicKey
+        });
+        function validatePublicKey(publicKey) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "Signature/ValidatePublicKey",
+                data: {
+                    publicKey: publicKey
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
     }
 ]);
 
 signatureModule.controller("SignatureCtrl",
     ['$scope', '$state', 'signatureService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, signatureService, $filter, $http, JwtParser, $uibModal, $rootScope) {
+
+            $scope.ValidatePublicKeyServiceBusy = false;
+            $scope.validatePublicKey = function () {
+                $scope.ValidatePublicKeyServiceBusy = true;
+                signatureService.validatePublicKey($scope.publicKey)
+                    .then(function (response) {
+                        $rootScope.showGritter(response);
+                        $scope.ValidatePublicKeyServiceBusy = false;
+                    })
+                    .catch(function (error) {
+                        $scope.ValidatePublicKeyServiceBusy = false;
+                    });
+            }
+
+
             $scope.examplePartner = JSON.stringify({
                 "partnerID": "3de97a57-e9c7-42a8-aed0-ee864bf6d042",
                 "phoneNumber": "385981234567",

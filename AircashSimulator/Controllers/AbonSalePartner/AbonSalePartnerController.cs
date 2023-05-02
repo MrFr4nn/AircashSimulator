@@ -15,11 +15,22 @@ namespace AircashSimulator
     {
         private IAbonSalePartnerService AbonSalePartnerService;
         private UserContext UserContext;
+
+        private readonly Guid PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
+        private readonly string PointOfSaleId = "CashierGenerated";
+        private readonly decimal AbonValue = 25;
         private readonly Guid PartnerIdCashier = new Guid("9be565cb-762a-403b-bb77-420ffdf46c61");
         public AbonSalePartnerController(IAbonSalePartnerService abonSalePartnerService, UserContext userContext)
         {
             AbonSalePartnerService = abonSalePartnerService;
             UserContext = userContext;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CashierCreateCouponOnlinePartner()
+        {
+            var response = await AbonSalePartnerService.CreateCoupon(AbonValue, PointOfSaleId, PartnerId);
+            return Ok(response);
         }
 
         [HttpPost]

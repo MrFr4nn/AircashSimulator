@@ -60,95 +60,99 @@
         <p>
             The method used by the Aircash system to validate the ticket.
         </p>
-        <table class="table table-active col-md-6">
-            <thead>
-            <tr>
-                <th>Environment</th>
-                <th>Method</th>
-                <th>URL</th>
-                <th>IP addresses to whitelist</th>
-            </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <b>Test</b>
-                    </td>
-                    <td>
-                        POST
-                    </td>
-                    <td>URL defined by partner</td>
-                    <td>
-                        212.83.162.239 & 212.83.162.238
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Production</b>
-                    </td>
-                    <td>
-                        POST
-                    </td>
-                    <td>URL defined by partner</td>
-                    <td>
-                        212.129.44.205 & 212.129.36.132
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                        <th>IP addresses to whitelist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b>Test</b>
+                        </td>
+                        <td>
+                            POST
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.83.162.239 & 212.83.162.238
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Production</b>
+                        </td>
+                        <td>
+                            POST
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.129.44.205 & 212.129.36.132
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <br />
         <uib-tabset>
             <uib-tab index="checkUser1-tab-0" heading="Input parameters" classes="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th colspan="2">Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Mandatory</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2">Parameters</td>
-                            <td width="100">List &lt;Object&gt;</td>
-                            <td>
-                                List of parameters according to the partner's system that the user must enter in order to
-                                successfully payout the winning ticket. Aircash will define the name of the parameters in
-                                agreement with the partner. The number of parameters depends on the partner's system and is
-                                not limited by Aircash
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1"></td>
-                            <td colspan="1">Key</td>
-                            <td>String</td>
-                            <td>
-                                The name of the parameter to be sent
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1"></td>
-                            <td colspan="1">Value</td>
-                            <td>String</td>
-                            <td>
-                                The value of the parameter to be sent
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Signature </td>
-                            <td>String</td>
-                            <td>
-                                Signature by Aircash's system confirming that Aircash is sending request to the partner's system
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2">Parameters</td>
+                                <td width="100">List &lt;Object&gt;</td>
+                                <td>
+                                    List of parameters according to the partner's system that the user must enter in order to
+                                    successfully payout the winning ticket. Aircash will define the name of the parameters in
+                                    agreement with the partner. The number of parameters depends on the partner's system and is
+                                    not limited by Aircash
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td colspan="1">Key</td>
+                                <td>String</td>
+                                <td>
+                                    The name of the parameter to be sent
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td colspan="1">Value</td>
+                                <td>String</td>
+                                <td>
+                                    The value of the parameter to be sent
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Signature </td>
+                                <td>String</td>
+                                <td>
+                                    Signature by Aircash's system confirming that Aircash is sending request to the partner's system
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Input parameters example" classes="nav-item">
                 <jsonformatter data="aircashRedeemTicket.checkTicket.inputParametersExample"></jsonformatter>
@@ -157,7 +161,7 @@
 <pre>
 Request example:
 </pre>
-                    <jsonformatter data="aircashRedeemTicket.checkTicket.inputParametersExample"></jsonformatter>
+                <jsonformatter data="aircashRedeemTicket.checkTicket.inputParametersExample"></jsonformatter>
 <pre>
 
 Sequence:
@@ -170,46 +174,48 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Return value</th>
-                                    <th>Type</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="3">Status</td>
-                                    <td>Int</td>
-                                    <td>
-                                        1 - non-existent ticket,
-                                        <br />
-                                        2 - pending,
-                                        <br />
-                                        3 - non-winning ticket,
-                                        <br />
-                                        4 - ticket already paid out,
-                                        <br />
-                                        5 - winning ticket - be sure to return the amount and currency parameters
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">Amount</td>
-                                    <td>Decimal?</td>
-                                    <td>
-                                        Amount of the ticket if the status is winning.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">CurrencyISOCode</td>
-                                    <td>String?</td>
-                                    <td>
-                                        Winning ticket ISO currency code (HRK, EUR, CZK)
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Return value</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3">Status</td>
+                                        <td>Int</td>
+                                        <td>
+                                            1 - non-existent ticket,
+                                            <br />
+                                            2 - pending,
+                                            <br />
+                                            3 - non-winning ticket,
+                                            <br />
+                                            4 - ticket already paid out,
+                                            <br />
+                                            5 - winning ticket - be sure to return the amount and currency parameters
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Amount</td>
+                                        <td>Decimal?</td>
+                                        <td>
+                                            Amount of the ticket if the status is winning.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">CurrencyISOCode</td>
+                                        <td>String?</td>
+                                        <td>
+                                            Winning ticket ISO currency code (HRK, EUR, CZK)
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </uib-tab>
@@ -221,28 +227,30 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 <jsonformatter data="aircashRedeemTicket.checkTicket.outputParametersExample.second"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Http response</th>
-                            <th>Description</th>
-                            <th>Solution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <b>401</b>
-                            </td>
-                            <td>
-                                In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
-                            </td>
-                            <td>
-                                Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>401</b>
+                                </td>
+                                <td>
+                                    In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
+                                </td>
+                                <td>
+                                    Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
         </uib-tabset>
 
@@ -258,101 +266,105 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
         <p style="text-align: justify">
             The Aircash system will not invoke this method if the CheckTicket method not returns response with winning status.
         </p>
-        <table class="table table-active col-md-6">
-            <thead>
-                <tr>
-                    <th>Environment</th>
-                    <th>Method</th>
-                    <th>URL</th>
-                    <th>IP addresses to whitelist</th>
-                </tr>
-            </thead>
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                        <th>IP addresses to whitelist</th>
+                    </tr>
+                </thead>
                 <tbody>
-                <tr>
-                    <td>
-                        <b>Test</b>
-                    </td>
-                    <td>
-                        POST
-                    </td>
-                    <td>URL defined by partner</td>
-                    <td>
-                        212.83.162.239 & 212.83.162.238
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>Production</b>
-                    </td>
-                    <td>
-                        POST
-                    </td>
-                    <td>URL defined by partner</td>
-                    <td>
-                        212.129.44.205 & 212.129.36.132
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    <tr>
+                        <td>
+                            <b>Test</b>
+                        </td>
+                        <td>
+                            POST
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.83.162.239 & 212.83.162.238
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>Production</b>
+                        </td>
+                        <td>
+                            POST
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.129.44.205 & 212.129.36.132
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <uib-tabset active="active">
             <uib-tab index="CreateAndConfirmPayment1-tab-0" heading="Input parameters" classes="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Mandatory</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td colspan="2">AircashTransactionID</td>
-                            <td>String</td>
-                            <td>Id of transactions in the Aircash system</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Parameters</td>
-                            <td>List&lt;Object&gt;</td>
-                            <td>
-                                List of parameters according to the partner system that the user must enter
-                                in order to successfully make a ticket payout. Aircash will define the name
-                                of the parameters in agreement with the partner, the number of parameters
-                                depends on the partner's system and is not limited by Aircash
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1"></td>
-                            <td colspan="1">Key</td>
-                            <td>String</td>
-                            <td>
-                                The name of the parameter to be sent
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td colspan="1"></td>
-                            <td colspan="1">Value</td>
-                            <td>String</td>
-                            <td>
-                                The value of the parameter to be sent
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">Signature </td>
-                            <td>String</td>
-                            <td>
-                                Signature by Aircash system confirming that Aircash is sending request to
-                                the partner system
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2">AircashTransactionID</td>
+                                <td>String</td>
+                                <td>Id of transactions in the Aircash system</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Parameters</td>
+                                <td>List&lt;Object&gt;</td>
+                                <td>
+                                    List of parameters according to the partner system that the user must enter
+                                    in order to successfully make a ticket payout. Aircash will define the name
+                                    of the parameters in agreement with the partner, the number of parameters
+                                    depends on the partner's system and is not limited by Aircash
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td colspan="1">Key</td>
+                                <td>String</td>
+                                <td>
+                                    The name of the parameter to be sent
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1"></td>
+                                <td colspan="1">Value</td>
+                                <td>String</td>
+                                <td>
+                                    The value of the parameter to be sent
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Signature </td>
+                                <td>String</td>
+                                <td>
+                                    Signature by Aircash system confirming that Aircash is sending request to
+                                    the partner system
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Input parameters example" classes="nav-item">
                 <jsonformatter data="aircashRedeemTicket.redeemTicket.inputParametersExample"></jsonformatter>
@@ -361,7 +373,7 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
 <pre>
 Request example:
 </pre>
-                    <jsonformatter data="aircashRedeemTicket.redeemTicket.inputParametersExample"></jsonformatter>
+                <jsonformatter data="aircashRedeemTicket.redeemTicket.inputParametersExample"></jsonformatter>
 <pre>
 
 Sequence:
@@ -374,54 +386,56 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             <uib-tab index="checkUser1-tab-3" heading="Output parameters" classes="nav-item">
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th colspan="3">Return value</th>
-                                    <th>Type</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td colspan="3">Status</td>
-                                    <td>Int</td>
-                                    <td>
-                                        1 - non-existent ticket,
-                                        <br />
-                                        2 - ticket in progress,
-                                        <br />
-                                        3 - ticket not obtained,
-                                        <br />
-                                        4 - ticket already paid,
-                                        <br />
-                                        5 - winning ticket - be sure to return the amount and currency parameters
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">Amount</td>
-                                    <td>Decimal?</td>
-                                    <td>
-                                        Amount of the ticket if the status is winning.
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">CurrencyISOCode</td>
-                                    <td>String?</td>
-                                    <td>
-                                        Winning ticket ISO currency code (HRK, EUR, CZK)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3">PartnerTransactionID</td>
-                                    <td>String?</td>
-                                    <td>
-                                        Transaction ID in the partner system if it is a winning slip.
-                                        The transaction ID must be unique for each transaction
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="3">Return value</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="3">Status</td>
+                                        <td>Int</td>
+                                        <td>
+                                            1 - non-existent ticket,
+                                            <br />
+                                            2 - ticket in progress,
+                                            <br />
+                                            3 - ticket not obtained,
+                                            <br />
+                                            4 - ticket already paid,
+                                            <br />
+                                            5 - winning ticket - be sure to return the amount and currency parameters
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">Amount</td>
+                                        <td>Decimal?</td>
+                                        <td>
+                                            Amount of the ticket if the status is winning.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">CurrencyISOCode</td>
+                                        <td>String?</td>
+                                        <td>
+                                            Winning ticket ISO currency code (HRK, EUR, CZK)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">PartnerTransactionID</td>
+                                        <td>String?</td>
+                                        <td>
+                                            Transaction ID in the partner system if it is a winning slip.
+                                            The transaction ID must be unique for each transaction
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </uib-tab>
@@ -433,28 +447,30 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
                 <jsonformatter data="aircashRedeemTicket.redeemTicket.outputParametersExample.second"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error Responses" class="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Http response</th>
-                            <th>Description</th>
-                            <th>Solution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>
-                                <b>401</b>
-                            </td>
-                            <td>
-                                In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
-                            </td>
-                            <td>
-                                Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <b>401</b>
+                                </td>
+                                <td>
+                                    In case the partner sends an unknown PartnerID or the Signature does not correspond to the sent parameters
+                                </td>
+                                <td>
+                                    Check the parameters sent to the Aircash system. If all of the above parameters are good, contact Aircash support
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
         </uib-tabset>
 
@@ -478,49 +494,51 @@ i6lNUCLl3lbiuXlVUI0FuTBdZ0v6qIhyawjnr51KctUf3PQ2Fb3qrFJl8r0VaH07uOko6HiQ8yRZ2xil
             To release the service in the production, you need to make several tests to see if the integration is
             well-made and ready for production
         </p>
-        <table class="table table-active">
-            <thead>
-                <tr>
-                    <th>Scenario</th>
-                    <th>Test description</th>
-                    <th>Mandatory</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <b>CheckTicket</b>
-                    </td>
-                    <td>
-                        Check all statuses of the CheckTicket method and validate whether information is successfully
-                        returned for each ticket type
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>RedeemTicket</b>
-                    </td>
-                    <td>
-                        Successful payout of the winning ticket. Re-create the CheckTicket method for a successful
-                        payout to test that the partner's system marks the ticket as a payouted
-                    </td>
-                    <td>YES</td>
-                </tr>
-                <tr>
-                    <td>
-                        <b>RedeemTicket - idempotence</b>
-                    </td>
-                    <td>
-                        Simulate an Aircash-side error when entering a successful payout - and re-call of the Aircash
-                        system of this method with the same parameters to test system recovery
-                    </td>
-                    <td>
-                        YES
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-active">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Test description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <b>CheckTicket</b>
+                        </td>
+                        <td>
+                            Check all statuses of the CheckTicket method and validate whether information is successfully
+                            returned for each ticket type
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>RedeemTicket</b>
+                        </td>
+                        <td>
+                            Successful payout of the winning ticket. Re-create the CheckTicket method for a successful
+                            payout to test that the partner's system marks the ticket as a payouted
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>RedeemTicket - idempotence</b>
+                        </td>
+                        <td>
+                            Simulate an Aircash-side error when entering a successful payout - and re-call of the Aircash
+                            system of this method with the same parameters to test system recovery
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </body>
 </html>

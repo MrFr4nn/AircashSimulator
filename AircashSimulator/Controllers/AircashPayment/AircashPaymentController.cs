@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System;
 using AircashSimulator.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Service.Settings;
 
 namespace AircashSimulator.Controllers
 {
@@ -16,15 +17,17 @@ namespace AircashSimulator.Controllers
     [ApiController]
     public class AircashPaymentController : Controller
     {
+        private ISettingsService SettingsService;
         private AircashConfiguration AircashConfiguration;
         private IAircashPaymentService AircashPaymentService;
         public readonly IHubContext<NotificationHub> _hubContext;
 
-        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService, IHubContext<NotificationHub> hubContext)
+        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService, IHubContext<NotificationHub> hubContext, ISettingsService settingsService)
         {
             AircashConfiguration = aircashConfiguration.CurrentValue;
             AircashPaymentService = aircashPaymentService;
             _hubContext = hubContext;
+            SettingsService = settingsService;
         }
 
         public async Task SendHubMessage(string method, string msg, int status)
@@ -84,7 +87,7 @@ namespace AircashSimulator.Controllers
                 var response = await AircashPaymentService.CreateAndConfirmPayment(send); 
                 if (((AircashPaymentResponse)response).Success == true)
                 {
-                    await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>amount: " + aircashPaymentCreateAndConfirmPayment.Amount + " , </br>time: " + DateTime.Now, 1);
+                    await SendHubMessage("TransactionConfirmedMessagePayment", "Deposited: " + aircashPaymentCreateAndConfirmPayment.Amount + "€, time: " + DateTime.Now, 1);
                     return Ok(response);
                 }
                 else
@@ -96,6 +99,23 @@ namespace AircashSimulator.Controllers
             {
                 return BadRequest("Invalid signature");
             }
+        }
+
+        [HttpPost]
+        public async Task<AircashPaymentCheckPlayer> GenerateCheckPlayerSignature(AircashPaymentCheckPlayer aircashPaymentCheckPlayer) {
+
+            var sequence = AircashSignatureService.ConvertObjectToString(aircashPaymentCheckPlayer);
+            aircashPaymentCheckPlayer.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
+            return aircashPaymentCheckPlayer;
+        }
+
+        [HttpPost]
+        public async Task<AircashPaymentCreateAndConfirmPayment> GenerateCreateAndConfirmSignature(AircashPaymentCreateAndConfirmPayment aircashPaymentCreateAndConfirmPayment)
+        {
+            aircashPaymentCreateAndConfirmPayment.TransactionID = Guid.NewGuid().ToString();
+            var sequence = AircashSignatureService.ConvertObjectToString(aircashPaymentCreateAndConfirmPayment);
+            aircashPaymentCreateAndConfirmPayment.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
+            return aircashPaymentCreateAndConfirmPayment;
         }
     }
 }

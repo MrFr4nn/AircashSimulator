@@ -6,7 +6,7 @@ app.config(function ($stateProvider) {
             data: {
                 pageTitle: 'Aircash payment And payout'
             },
-            url: "/aircashPaymentAndPayout",
+            url: "/aircashPaymentAndPayout",                                                                                                                            
             controller: 'aircashPaymentAndPayoutCtrl',
             templateUrl: 'app/aircash_paymentAndPayout/aircash_paymentAndPayout.html'
         });
@@ -264,54 +264,78 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.getCancelTransactions();
 
-    $scope.checkCodeRequestExample = {
-        partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-        barCode: "05cd4905-982b-4a36-8634-0719290e4341",
-        locationID: "123",
-        signature: "QDyIrReELi..."
-    };
 
-    $scope.checkCodeResponseExample = {
-        BarCode: "05cd4905-982b-4a36-8634-0719290e4341",
-        Amount: 123.45
-    };
+    $scope.SalesPartner = {
+        CheckCode: {
+            RequestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                barCode: "AC23436263654000",
+                locationID: "123",
+                signature: "IAo...WJo="
+            },
+            ResponseExample: {
+                barCode: "AC23436263654000",
+                amount: -100.00
+            },
+            ErrorResponseExample: {
+                errorCode: 1,
+                errorMessage: "Invalid bar code "
+            },
+            ResponseExampleV2: {
+                barCode: "AC23436263654000",
+                amount: -100.00,
+                currencyId: 978,
+                firstName: "John",
+                lastName: "Doe",
+                dateOfBirth: "1990-01-01"
+            }
+        },
+        ConfirmTransaction: {
+            RequestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                barCode: "AC23436263654000",
+                partnerTransactionID: "c88dcc81-8b43-4808-8ac5-da498bf08439",
+                locationID: "123",
+                signature: "OFD...DfI = "
+            },
+            ResponseExample: {
+                barCode: "AC23436263654000",
+                amount: -100,
+                aircashTransactionID: "cd9484bb-e0ce-4186-ad3e-5243721bf280"
+            },
+            ErrorResponseExample: {
+                errorCode: 4,
+                errorMessage: "PartnerTransactionID is not unique"
+            }
+        },
+        CheckTransactionStatus: {
+            RequestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "c88dcc81-8b43-4808-8ac5-da498bf08439",
+                signature: "pzu...Xhg="
+            },
+            ResponseExample: {
+                amount: 100,
+                aircashTransactionID: "cd9484bb-e0ce-4186-ad3e-5243721bf280",
+                locationID: "123"
+            },
+            ErrorResponseExample: {
+                errorCode: 5,
+                errorMessage: "Transaction doesn't exist in partner system"
+            }
+        },
+        CancelTransaction: {
+            RequestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerTransactionID: "c88dcc81-8b43-4808-8ac5-da498bf08439",
+                locationID: "123",
+                signature: "caa...hVI="
+            },
+            ErrorResponseExample: {
+                errorCode: 7,
+                errorMessage: "Unable to cancel payout"
+            }
+        }
 
-    $scope.confirmTransactionRequestExample = {
-        "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-        "barCode": "05cd4905-982b-4a36-8634-0719290e4341",
-        "partnerTransactionID": "11888f0c-7923-42db-8513-5c1f32cc83e0",
-        "locationID": "123",
-        "signature": "Iz+gMcrdNA..."
-    };
-
-    $scope.confirmTransactionResponseExample = {
-        "BarCode": "05cd4905-982b-4a36-8634-0719290e4341",
-        "Amount": 123.45,
-        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-    };
-
-    $scope.checkTransactionStatusRequestExample = {
-        "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-        "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
-        "signature": "ueIZMgee7G..."
-    };
-
-    $scope.checkTransactionStatusResponseExample = {
-        "LocationID": "123",
-        "Amount": 123.45,
-        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-    };
-
-    $scope.cancelTransactionRequestExample = {
-        "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-        "partnerTransactionID": "05cd4905-982b-4a36-8634-0719290e4341",
-        "locationID": "123",
-        "signature": "AEXHWNFQD9..."
-    };
-
-    $scope.cancelTransactionResponseExample = {
-        "LocationID": "123",
-        "Amount": 123.45,
-        "AircashTransactionID": "da7109b8-1e9b-4521-b669-2438be129ade"
-    };
+    }
 }]);

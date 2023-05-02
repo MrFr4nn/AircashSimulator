@@ -46,3 +46,19 @@
         max-width: 65% !important;
     }
 }
+
+
+.tabs-left > .nav-tabs {
+    float: left;
+    display: block;
+    background-color: #dee2e6;
+    width: 15%;
+}
+
+.tabs-left > .tab-content {
+    width: 85%;
+    display: block;
+    margin-bottom: 0 !important;
+    border: 2px solid #dee2e6 !important;
+    border-radius: 0px !important;
+}

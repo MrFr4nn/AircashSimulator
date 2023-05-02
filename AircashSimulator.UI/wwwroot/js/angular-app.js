@@ -23,7 +23,14 @@ var app = angular.module('app', [
     'logo',
     'acPayStaticCode',
     'aircashPayoutV2',
-    'cashier'
+    'ac_business_site',
+    'ac_test_application',
+    'forbidden',
+    'success',
+    'decline',
+    'jira', 
+    'matchPersonalData',
+    'inAppPay'
 ]);
 
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
@@ -46,27 +53,7 @@ app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $u
                 username: ""
             }
         })
-        .state('success', {
-            url: '/success',
-            templateUrl: 'app/result/success.html',
-            controller: 'SuccessCtrl',
-            controllerAs: 'vm',
-            params: {}
-        })
-        .state('decline', {
-            url: '/decline',
-            templateUrl: 'app/result/decline.html',
-            controller: 'DeclineCtrl',
-            controllerAs: 'vm',
-            params: {}
-        })
-        .state('forbidden', {
-            url: '/forbidden',
-            templateUrl: 'app/forbidden/forbidden.html',
-            controller: 'ForbiddenCtrl',
-            controllerAs: 'vm',
-            params: {}
-        });
+
 }]);
 
 app.service("handleResponseService", ['$q', function ($q) {
@@ -81,18 +68,34 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('interceptorService');
 });
 
-app.run(['$rootScope', '$state', 'setting', '$http', '$location', '$localStorage', function ($rootScope, $state, setting, $http, $location, $localStorage) {
+app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$localStorage', function ($rootScope, $state, setting, $http, config, $location, $localStorage) {
     $rootScope.$state = $state;
     $rootScope.setting = setting;
+
+    var locale = localStorage.getItem('selectedLanguage');
+    if (!locale) {
+        locale = "en";
+    }
+    $http({
+        method: 'GET',
+        url: config.baseUrl + "Translations/GetTranslations",
+        params: { locale: locale }
+    }).then(function (response) {
+        //console.log(response);
+        var responseObj = JSON.parse(response.data.responseContent);
+        $rootScope.translationsCashier = responseObj;
+    },() => {
+       console.log("error");
+    });  
 
     if ($localStorage.currentUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
+        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu',
-            '/cashier/aircashFrameAcPay', '/cashier/PayoutC2D', '/cashier/SalesPartner', '/cashier/abon_sp'];
+            '/cashier/aircashFrameAcPay', '/cashier/aircashFrameAbon', '/cashier/aircashFrameWithdrawal', '/cashier/PayoutC2D', '/cashier/SalesPartner', '/cashier/abon_sp'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if ($location.path().indexOf('cashier') > -1 && restrictedPage) {
             $location.path('/cashier/menu');

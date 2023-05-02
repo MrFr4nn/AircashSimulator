@@ -12,7 +12,7 @@
         command:
     </p>
     <div class="note note-gray-400 col-md-6">
-        <div class="note-content">
+        <div class="note-content col">
             <code>openssl req -x509 -sha256 -newkey rsa:4096 -keyout PrivateKey.pem -out PublicKey.pem</code>
         </div>
     </div>
@@ -53,7 +53,7 @@
         the keys (running the first openSSL command).
     </p>
     <div class="note note-gray-400 col-md-6">
-        <div class="note-content">
+        <div class="note-content col">
             <code>openssl pkcs12 -export -out PrivateKeyPfxFile.pfx -inkey PrivateKey.pem -in PublicKey.pem</code>
         </div>
     </div>
@@ -109,13 +109,13 @@
         <li>All parameter names are capitalized</li>
     </ul>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Example:</b></h5>
             <jsonformatter data="signature.generatingPartnersSignatureExample"></jsonformatter>
         </div>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Sequence:</b></h5>
             <pre>
 Amount=123.45&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=7f087237-b81a-48af-8dce-bc048fede397
@@ -128,7 +128,7 @@ Amount=123.45&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0
         </p>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>OpenSSL commands for generating signature:</b></h5>
             <pre>
 pkcs12 -in AircashTestPrivateKey.pfx -nocerts -out ac_private.key
@@ -179,20 +179,7 @@ public  static String signData(String privateCertFilePath, String privateCertPas
 	return new String(Base64.encodeBase64(sign.sign()), &quot;UTF-8&quot;);
 }
 
-public  static String signDataAbon(String privateCertFilePath, String privateCertPass, String dataToSgin, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
-	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
-	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
-	keyStore.load(instream, privateCertPass.toCharArray());
-	Enumeration&lt;String&gt;  aliases = keyStore.aliases();
-	String alias = (String) aliases.nextElement();
-	
-	PrivateKey privateKey = (PrivateKey)keyStore.getKey(alias, privateCertPass.toCharArray());
-	
-	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
-	sign.initSign(privateKey);
-	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
-	return new String(Base64.encodeBase64(sign.sign()), &quot;ASCII&quot;);
-}</pre>
+</pre>
         </uib-tab>
         <uib-tab index="request-tab-2" heading="Ruby" classes="nav-item">
             <pre style="background-color: white">
@@ -216,6 +203,24 @@ def sign(dataToSign)
     @signature = @keypair.sign(@digest, dataToSign + @publicKeyXml)
     return Base64.encode64(@signature).gsub(&quot;\n&quot;, &quot;&quot;)
 end</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
+            <pre style="background-color: white">
+function generate_signature($sequence)
+	{
+		if(!file_exists($this->privateKeyPath)) 
+		{
+			throw new Exception("File not found");
+		}
+		$pkcs12 = file_get_contents($this->privateKeyPath);
+		openssl_pkcs12_read($pkcs12, $certs, $this->privateKeyPass);
+		$privateKey = $certs['pkey'];		
+		$binary_signature = "";
+		openssl_sign(utf8_encode($sequence), $binarySignature, $privateKey, OPENSSL_ALGO_SHA256);
+		$signature = base64_encode($binarySignature);
+
+		return $signature;
+	}</pre>
         </uib-tab>
     </uib-tabset>
     <br />
@@ -261,19 +266,22 @@ end</pre>
         <li>All parameter names are capitalized</li>
     </ul>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Example:</b></h5>
             <jsonformatter data="exampleAircash"></jsonformatter>
         </div>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>Sequence:</b></h5>
-            {{sequenceAircash}}
+            <pre>
+{{sequenceAircash}}
+
+</pre>
         </div>
     </div>
     <div class="note note-gray-400">
-        <div class="note-content">
+        <div class="note-content col">
             <h5><b>OpenSSL command for verifying previously generated signature:</b></h5>
             <pre>
 x509 -in AircashTestPublicKey.pem -pubkey -noout -out AircashTestPublicKeyOpenSSL.pem
@@ -285,8 +293,7 @@ dgst -sha256 -verify AircashTestPublicKeyOpenSSL.pem -signature signature.txt.sh
     <h4>Code examples:</h4>
     <uib-tabset>
         <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
-            <div style="width: 800px">
-                <pre style="background-color: white">
+            <pre style="background-color: white">
 /// &lt;summary&gt;
 /// &lt;summary&gt;
 /// Method that verify signature for requests received from Aircash service.
@@ -309,7 +316,6 @@ using (var sha256 = new SHA256Managed())
         return rsaAlg.VerifyData(dataToVerifyBytes, sha256, signatureBytes);
     }
 }</pre>
-            </div>
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
             <pre style="background-color: white">
@@ -325,17 +331,7 @@ public  static boolean verifySignature(String publicCertFilePath, String dataToS
 	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;UTF-8&quot;)));
 }
 
-public  static boolean verifySignatureAbon(String publicCertFilePath, String dataToSgin, String signature, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
-	FileInputStream stream = new FileInputStream(publicCertFilePath);
-	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
-	java.security.cert.Certificate certificate = certificateFactory.generateCertificate(stream);
-	PublicKey publicKey = certificate.getPublicKey();
-				
-	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
-	sign.initVerify(publicKey);
-	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
-	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;ASCII&quot;)));
-}</pre>
+</pre>
         </uib-tab>
         <uib-tab index="request-tab-2" heading="Python" classes="nav-item">
             <pre style="background-color: white">
@@ -361,6 +357,42 @@ def verify_sign(public_key_loc, signature, data):
         return True
     return False</pre>
         </uib-tab>
+        <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
+            <pre style="background-color: white">
+function verify_signature($sequence, $signature)
+	{
+		$pub_key = openssl_get_publickey (file_get_contents($this->publicKeyPath));
+		
+		if(!file_exists($this->publicKeyPath)) 
+		{
+			throw new Exception("File not found");
+		}		
+		return  openssl_verify($sequence, base64_decode($signature), $pub_key, OPENSSL_ALGO_SHA256);
+	}</pre>
+        </uib-tab>
     </uib-tabset>
+
+    <br />
+    <hr />
+    <h1>Validate public key</h1>
+
+    <p>
+        You can validate public key through openSSL and running the following command:
+    </p>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content col">
+            <code>openssl x509 -in PublicKey.pem -text -noout</code>
+        </div>
+    </div>
+    <p>
+        Or you can paste your public key here and validate it.
+    </p>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content col">
+            <label>Public key:</label>
+            <textarea class="form-control mb-3" rows="20" ng-model="publicKey"></textarea>
+            <button ng-click="validatePublicKey()" class="btn btn-primary w-100px me-5px" ng-disabled="ValidatePublicKeyServiceBusy">Validate public key <i ng-if="ValidatePublicKeyServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        </div>
+    </div>
 </body>
 </html>

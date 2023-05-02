@@ -39,6 +39,8 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
         $location.path('/forbidden');
     }
 
+    var connect = true;
+
     $scope.generatePartnerCodeModel = {
         amount: null,
         description: null,
@@ -62,34 +64,6 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
             });
     }
 
-    $scope.CustomNotification = function (msg, status) {
-        var vm = this;
-        vm.name = 'TransactionInfo';
-
-        vm.setOptions = function () {
-            toastr.options.positionClass = "toast-top-center";
-            toastr.options.closeButton = true;
-            toastr.options.showMethod = 'slideDown';
-            toastr.options.hideMethod = 'slideUp';
-            toastr.options.progressBar = true;
-            toastr.options.timeOut = 10000;
-        };
-        vm.setOptions();
-
-        if (status == 1) {
-            toastr.clear();
-            toastr.success(msg);
-        }
-        else if (status == 2) {
-            toastr.clear();
-            toastr.error(msg);
-        }
-        else if (status == 3) {
-            toastr.clear();
-            toastr.error(msg);
-        }
-    };
-
     const connection = new signalR.HubConnectionBuilder()
         .withUrl(config.baseUrl.replace("/api/", "")+ "/Hubs/NotificationHub")
         .configureLogging(signalR.LogLevel.Information)
@@ -101,22 +75,16 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
             console.log("SignalR Connected.");
         } catch (err) {
             console.log(err);
-            setTimeout(start, 10000);
+            setTimeout(start, 1000);
         }
     };
     connection.onclose(async () => {
-        await start();
+        if (connect) {
+            await start();
+        }
     });
     connection.on("TransactionConfirmedMessage", (message, status) => {
-        $scope.CustomNotification(message, status);
-    });
-
-    connection.on("TransactionFailedMessage", (message, status) => {
-        $scope.CustomNotification(message, status);
-    });
-
-    connection.on("InvalidSignatureMessage", (message, status) => {
-        $scope.CustomNotification(message, status);
+        $rootScope.showGritter("QR Code Payment received", message);
     });
 
     start();
@@ -149,4 +117,9 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
             }
         }
     };
+
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        connect = false;
+        connection.stop();
+    });
 }]);

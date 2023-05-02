@@ -18,18 +18,20 @@
                         </div>
                         <br />
                         <br />
-                        <h6>Enter the withdrawal amount and your phone number. Confirm the withdrawal and funds will instantly be available on your Aircash wallet. Download the free Aircash mobile application <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner">here.</a></h6>
+                        <h6 ng-bind-html="translationsCashier.ac_payout_cashier_description">
+                            {{translationsCashier.ac_payout_cashier_description}}
+                        </h6>
                         <form action="/" method="POST" name="transactionForm1">
                             <fieldset>
-                                <label class="form-label" style="margin-bottom: 0px !important;">Phone number</label>
+                                <label class="form-label" style="margin-bottom: 0px !important;">{{translationsCashier.cashier_phone_number_input_label}}</label>
                                 <phone-number-input output="createPayoutModel.phoneNumber"></phone-number-input>
-                                <label class="form-label" style="margin-bottom: 0px !important;">Amount</label>
+                                <label class="form-label" style="margin-bottom: 0px !important;">{{translationsCashier.cashier_amount_input_label}}</label>
                                 <div class="input-group" style="margin-bottom: 0px !important;">
                                     <input ng-model="createPayoutModel.amount" class="form-control form-control-lg" type="text" placeholder="Enter amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
                                     <span class="input-group-addon">€</span>
                                 </div>
-                                <label class="form-label" for="amount">Enter amount between 1.00 and 1.000.00 €</label>
-                                <button ng-click="createCashierPayout()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">Confirm withdrawal<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <label class="form-label" for="amount">{{translationsCashier.cashier_amount_input_note}}</label>
+                                <button ng-click="createCashierPayout()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">{{translationsCashier.ac_payout_cashier_withdrawal_button}}<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                         <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">

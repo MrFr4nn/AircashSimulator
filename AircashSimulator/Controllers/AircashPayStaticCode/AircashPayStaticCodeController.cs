@@ -53,7 +53,7 @@ namespace AircashSimulator.Controllers
                 var response = await AircashPayStaticCodeService.ConfirmTransaction(transaction);
                 if (true)
                 {
-                    await SendHubMessage("TransactionConfirmedMessage", "QR Code Payment received, </br>amount: " + transaction.Amount + " " + transaction.ISOCurrencyId + ", </br>time: " + DateTime.Now, 1);
+                    await SendHubMessage("TransactionConfirmedMessage", "Amount: " + transaction.Amount + " " + transaction.ISOCurrencyId + ", time: " + DateTime.Now, 1);
                     return Ok("Transaction confirmed successfully");
                 }
             }

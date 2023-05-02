@@ -12,6 +12,7 @@ using AircashSimulator.Extensions;
 using System.Text;
 using System.Security.Cryptography;
 using Services.User;
+using AircashSimulator;
 
 namespace Services.Partner
 {
@@ -88,7 +89,7 @@ namespace Services.Partner
             return partners;
         } 
 
-        public async Task SavePartner(PartnerDetailVM request)
+        public async Task SavePartner(SavePartnerVM request)
         {
             Guid id;
             if (request.PartnerId != null)
@@ -138,7 +139,7 @@ namespace Services.Partner
                             await AircashSimulatorContext.PartnerRoles.AddAsync(new PartnerRoleEntity
                             {
                                 PartnerId = id,
-                                PartnerRole = role.RoleId
+                                PartnerRole = role
                             });
                         }
                 }
@@ -186,7 +187,7 @@ namespace Services.Partner
             }
 
             if ((await AircashSimulatorContext.Users.Where(x => x.Username == username).ToListAsync()).Count() > 0)
-                throw new Exception("Username already taken.");
+                throw new SimulatorException(SimulatorExceptionErrorEnum.UsernameNotFound, "Username already taken.");
 
             await AircashSimulatorContext.Users.AddAsync(new UserEntity
             {

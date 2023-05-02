@@ -131,132 +131,136 @@
             that the partner system should display to users as QR code to simplify the payment process.
         </p>
         <i>Endpoints:</i>
-        <table class="table table-active col-md-6">
-            <thead>
-                <tr>
-                    <th>Environment</th>
-                    <th>Method</th>
-                    <th>URL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>Test</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://staging-m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
-                </tr>
-                <tr>
-                    <td><b>Production</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://staging-m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <br />
         <uib-tabset active="active">
             <uib-tab index="request-tab-0" heading="Request parameters" class="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Mandatory</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>PartnerID</b></td>
-                            <td>string</td>
-                            <td>
-                                Unique partner identifier (per currency) provided by Aircash
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Amount</b></td>
-                            <td>decimal</td>
-                            <td>
-                                Transaction amount
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>CurrencyID</b></td>
-                            <td>int</td>
-                            <td>
-                                Currency ID (e.g. 978)
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>PartnerTransactionID</b></td>
-                            <td>string</td>
-                            <td>
-                                Unique transaction identificator in
-                                partner system. Based on this
-                                parameter, partner will confirm
-                                transactions
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Description</b></td>
-                            <td>string</td>
-                            <td>
-                                Transaction description, additional info
-                                about transaction (e.g. payment for
-                                invoice 42)
-                            </td>
-                            <td>NO</td>
-                        </tr>
-                        <tr>
-                            <td><b>ValidForPeriod</b></td>
-                            <td>int?</td>
-                            <td>
-                                Optional code validity period in
-                                seconds. Aircash system will not allow
-                                users to confirm transactions after this
-                                period of time. Note that this period is
-                                from the moment the Aircash system
-                                processes a request not from the
-                                moment the partner system generates
-                            </td>
-                            <td>NO</td>
-                        </tr>
-                        <tr>
-                            <td><b>LocationID</b></td>
-                            <td>string</td>
-                            <td>
-                                Partner should define location id for
-                                each store as this parameter is very
-                                useful in the support process.
-                                In case partner has only one location or
-                                in case partner has only online store
-                                this parameter is optional
-                            </td>
-                            <td>
-                                NO, but highly
-                                recommended
-                                to send
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Signature</b></td>
-                            <td>string</td>
-                            <td>
-                                Signature
-                            </td>
-                            <td>
-                                YES
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Unique partner identifier (per currency) provided by Aircash
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>decimal</td>
+                                <td>
+                                    Transaction amount
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>CurrencyID</b></td>
+                                <td>int</td>
+                                <td>
+                                    Currency ID (e.g. 978)
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>PartnerTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Unique transaction identificator in
+                                    partner system. Based on this
+                                    parameter, partner will confirm
+                                    transactions
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Description</b></td>
+                                <td>string</td>
+                                <td>
+                                    Transaction description, additional info
+                                    about transaction (e.g. payment for
+                                    invoice 42)
+                                </td>
+                                <td>NO</td>
+                            </tr>
+                            <tr>
+                                <td><b>ValidForPeriod</b></td>
+                                <td>int?</td>
+                                <td>
+                                    Optional code validity period in
+                                    seconds. Aircash system will not allow
+                                    users to confirm transactions after this
+                                    period of time. Note that this period is
+                                    from the moment the Aircash system
+                                    processes a request not from the
+                                    moment the partner system generates
+                                </td>
+                                <td>NO</td>
+                            </tr>
+                            <tr>
+                                <td><b>LocationID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Partner should define location id for
+                                    each store as this parameter is very
+                                    useful in the support process.
+                                    In case partner has only one location or
+                                    in case partner has only online store
+                                    this parameter is optional
+                                </td>
+                                <td>
+                                    NO, but highly
+                                    recommended
+                                    to send
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Signature</b></td>
+                                <td>string</td>
+                                <td>
+                                    Signature
+                                </td>
+                                <td>
+                                    YES
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
                 <jsonformatter data="aircashPay.generatePartnerCode.requestExample"></jsonformatter>
@@ -276,70 +280,74 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
                 </pre>
             </uib-tab>
             <uib-tab index="request-tab-3" heading="Response parameters" class="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>CodeLink</b></td>
-                            <td>string</td>
-                            <td>
-                                Link that partner system should display as QR code
-                                towards the end user.
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>CodeLink</b></td>
+                                <td>string</td>
+                                <td>
+                                    Link that partner system should display as QR code
+                                    towards the end user.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="200 OK response example" class="nav-item">
                 <jsonformatter data="aircashPay.generatePartnerCode.responseExample"></jsonformatter>
             </uib-tab>
             <uib-tab index="request-tab-5" heading="Error response messages" class="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Http response</th>
-                            <th>Description</th>
-                            <th>Error Code</th>
-                            <th>Message</th>
-                            <th>Aditional data</th>
-                            <th>Solution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>400</b></td>
-                            <td>An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
-                            <td>
-                                <b>1</b><br />
-                            </td>
-                            <td>
-                                Partner transaction ID is not unique.<br />
-                            </td>
-                            <td>
-                                -<br />
-                            </td>
-                            <td>
-                                Contact Aircash support
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>401</b></td>
-                            <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>
-                                Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Error Code</th>
+                                <th>Message</th>
+                                <th>Aditional data</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>400</b></td>
+                                <td>An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                <td>
+                                    <b>1</b><br />
+                                </td>
+                                <td>
+                                    Partner transaction ID is not unique.<br />
+                                </td>
+                                <td>
+                                    -<br />
+                                </td>
+                                <td>
+                                    Contact Aircash support
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>401</b></td>
+                                <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Try it out" class="nav-item">
                 <div class="row">
@@ -391,97 +399,101 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
         </p>
         <p>Partner should provide an url where Aircash will send all transaction confirmations.</p>
         <i>Aircash public keys:</i>
-        <table class="table table-active col-md-2">
-            <thead>
+        <div class="table-responsive">
+            <table class="table table-active col-md-2">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Download</th>
+                    </tr>
+                </thead>
                 <tr>
-                    <th>Environment</th>
-                    <th>Download</th>
+                    <td><b>Test</b></td>
+                    <td><a href="/files/AircashPayPublicKeyTest.zip" download>Link</a></td>
                 </tr>
-            </thead>
-            <tr>
-                <td><b>Test</b></td>
-                <td><a href="/files/AircashPayPublicKeyTest.zip" download>Link</a></td>
-            </tr>
-            <tr>
-                <td><b>Production</b></td>
-                <td><a href="/files/AircashPayPublicKeyProd.zip" download>Link</a></td>
-            </tr>
-        </table>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td><a href="/files/AircashPayPublicKeyProd.zip" download>Link</a></td>
+                </tr>
+            </table>
+        </div>
 
         <br />
         <uib-tabset>
             <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Mandatory</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>PartnerID</b></td>
-                            <td>string</td>
-                            <td>
-                                Unique partner identifier (per currency) provided by Aircash
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>PartnerTransactionID</b></td>
-                            <td>string</td>
-                            <td>
-                                ID that partner sends in the
-                                GeneratePartnerCode method.
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Amount</b></td>
-                            <td>decimal</td>
-                            <td>
-                                Transaction Amount - user will not be
-                                able to change amount so this will always
-                                be same as in GeneratePartnerCode
-                                method
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>CurrencyID</b></td>
-                            <td>int</td>
-                            <td>
-                                Currency ID (e.g. 978) - user will not
-                                be able to change currency so this will
-                                always be same as in
-                                GeneratePartnerCode method
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>AircashTransactionID</b></td>
-                            <td>string</td>
-                            <td>
-                                Transaction ID in aircash system
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Signature</b></td>
-                            <td>string</td>
-                            <td>
-                                Signature by Aircash system confirming
-                                that Aircash is sending request to the
-                                partner system
-                            </td>
-                            <td>
-                                YES
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Unique partner identifier (per currency) provided by Aircash
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>PartnerTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    ID that partner sends in the
+                                    GeneratePartnerCode method.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>decimal</td>
+                                <td>
+                                    Transaction Amount - user will not be
+                                    able to change amount so this will always
+                                    be same as in GeneratePartnerCode
+                                    method
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>CurrencyID</b></td>
+                                <td>int</td>
+                                <td>
+                                    Currency ID (e.g. 978) - user will not
+                                    be able to change currency so this will
+                                    always be same as in
+                                    GeneratePartnerCode method
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>AircashTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Transaction ID in aircash system
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Signature</b></td>
+                                <td>string</td>
+                                <td>
+                                    Signature by Aircash system confirming
+                                    that Aircash is sending request to the
+                                    partner system
+                                </td>
+                                <td>
+                                    YES
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <jsonformatter data="aircashPay.confirmTransaction.requestExample"></jsonformatter>
@@ -508,89 +520,93 @@ WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3
             equal to the amount of the original transaction.
         </p>
         <i>Endpoints:</i>
-        <table class="table table-active col-md-6">
-            <thead>
-                <tr>
-                    <th>Environment</th>
-                    <th>Method</th>
-                    <th>URL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>Test</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://staging-m3.aircash.eu/api/AircashPay/RefundTransaction</td>
-                </tr>
-                <tr>
-                    <td><b>Production</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://m3.aircash.eu/api/AircashPay/RefundTransaction</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://staging-m3.aircash.eu/api/AircashPay/RefundTransaction</td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://m3.aircash.eu/api/AircashPay/RefundTransaction</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <br />
         <uib-tabset>
             <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Mandatory</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>PartnerID</b></td>
-                            <td>string</td>
-                            <td>
-                                Unique partner identifier (per currency) provided by Aircash
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>PartnerTransactionID</b></td>
-                            <td>string</td>
-                            <td>
-                                Transaction ID (in the partner system) that needs to be refunded
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>RefundPartnerTransactionID</b></td>
-                            <td>string</td>
-                            <td>
-                                ID of the requested refund transaction
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Amount</b></td>
-                            <td>decimal</td>
-                            <td>
-                                Amount that needs to be refunded
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Signature</b></td>
-                            <td>string</td>
-                            <td>
-                                Signature by the platform system confirming that plugin is
-                                sending request to the Aircash system
-                            </td>
-                            <td>
-                                YES
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Unique partner identifier (per currency) provided by Aircash
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>PartnerTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Transaction ID (in the partner system) that needs to be refunded
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>RefundPartnerTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    ID of the requested refund transaction
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>decimal</td>
+                                <td>
+                                    Amount that needs to be refunded
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Signature</b></td>
+                                <td>string</td>
+                                <td>
+                                    Signature by the platform system confirming that plugin is
+                                    sending request to the Aircash system
+                                </td>
+                                <td>
+                                    YES
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <jsonformatter data="aircashPay.refundTransaction.requestExample"></jsonformatter>
@@ -609,105 +625,109 @@ Signature:
 CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUNV6VaclQ2pDj+ONQOatj5QkZXlxEVyxxwmDYGB+HMJJXta9bPwRWW4CpCgzJykoEMr/g71EYqAUc/H8XqSi2IWeRNmF77mLxbvIEwGpRnidlnNoJM042NxNF0KBJILjv17JT/GMHTSUWT98CNlupYE+PDW6F9s1A1RaOMhwrMaqDlpqOkAWcxNCP1BeUNNzyxJFBsrD1MfFlM23p7MzktCQ1eNpM+DWeB6wlu8s2wMzUtsY1ia7PYS/vUpHFmCBJnvRannCC2KmBKXnL/hmCPJjiUVTVQSjuQdfNPRAiT+E6LLpPoV/LTxTEB+kwhc89qIqE6NvcecWAtyYP1OqKmFKlgapoCwjk6kVpDk9ynmtwb9SY788cICaGbXuPEDV81DudLuXlbIpDKJLPlRa0fnCBqi7FZrbXQbg9DRHfEcyc78x6hvZrITDGYE/rx0uKHeaVCXYYcbraj4T7xKohQsezw55pv8FNJB8JE167WFY8pSX4yduTT2TpDINa2wahMC/Y0Z9RXjBtfQfdZbgEZN63+fNsYyxrzHONmvDgnG1rcEgjKe+yMcTxxa973PxFju4wpNfYxw5x/BdVUkEIt+XkQE6Y=</pre>
             </uib-tab>
             <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>TransactionID</b></td>
-                            <td>
-                                string
-                            </td>
-                            <td>
-                                ID of the original Aircash transaction that is refunded
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>ParnerTransactionID</b></td>
-                            <td>
-                                string
-                            </td>
-                            <td>
-                                Transaction ID (in the partner system) that is refunded
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>RefundPartnerTransactionId</b></td>
-                            <td>
-                                string
-                            </td>
-                            <td>
-                                ID of the requested refund transaction
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>TransactionID</b></td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    ID of the original Aircash transaction that is refunded
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>ParnerTransactionID</b></td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    Transaction ID (in the partner system) that is refunded
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>RefundPartnerTransactionId</b></td>
+                                <td>
+                                    string
+                                </td>
+                                <td>
+                                    ID of the requested refund transaction
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-4" heading="Error responses" classes="nav-item">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Http response</th>
-                            <th>Description</th>
-                            <th>Error Code</th>
-                            <th>Message</th>
-                            <th>Aditional data</th>
-                            <th>Solution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>400</b></td>
-                            <td>An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
-                            <td>
-                                <b>0</b><br />
-                                <b>1</b><br />
-                                <b>2</b><br />
-                                <b>3</b><br />
-                            </td>
-                            <td>
-                                Request not well formatted.<br />
-                                Requested amount must be higher than 0<br />
-                                Transaction with PartnerTransactionID not found in the Aircash system<br />
-                                Requested amount is higher than remaining amount from the original transaction<br />
-                            </td>
-                            <td>
-                                -<br />
-                                -<br />
-                                -<br />
-                                -<br />
-                            </td>
-                            <td>
-                                Contact Aircash support
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>401</b></td>
-                            <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>
-                                Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>500</b></td>
-                            <td>An unknown error occured</td>
-                            <td>-</td>
-                            <td>Unknown error has occurred</td>
-                            <td>-</td>
-                            <td>
-                                Contact Aircash support
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Error Code</th>
+                                <th>Message</th>
+                                <th>Aditional data</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="4"><b>400</b></td>
+                                <td rowspan="4">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                <td><b>0</b></td>
+                                <td>Request not well formatted.</td>
+                                <td>-</td>
+                                <td rowspan="4">
+                                    Contact Aircash support
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>1</b></td>
+                                <td>Requested amount must be higher than 0</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><b>2</b></td>
+                                <td>Transaction with PartnerTransactionID not found in the Aircash system</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><b>3</b></td>
+                                <td>Requested amount is higher than remaining amount from the original transaction</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td><b>401</b></td>
+                                <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>500</b></td>
+                                <td>An unknown error occured</td>
+                                <td>-</td>
+                                <td>Unknown error has occurred</td>
+                                <td>-</td>
+                                <td>
+                                    Contact Aircash support
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <jsonformatter data="aircashPay.refundTransaction.errorResponseExample"></jsonformatter>
@@ -755,6 +775,7 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
                                     </tbody>
                                 </table>
                             </div>
+
                             <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
                         </div>
                     </div>
@@ -793,62 +814,161 @@ CQ83DaMKixqxb0IqkQsciHKVg9paxghkHduVn72OjW4t/CwSCXKv3r9o5Nmwb+uK8KN4r/f+9raUlEUN
             To release the service in the production, you need to make several tests to see if the integration is
             well-made and ready for production
         </p>
-        <table class="table table-active">
-            <thead>
+        <div class="table-responsive">
+            <table class="table table-active">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Test description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>GeneratePartnerCode</b></td>
+                        <td>
+                            Partner system generates code with a unique
+                            transaction id every time.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
                 <tr>
-                    <th>Scenario</th>
-                    <th>Test description</th>
-                    <th>Mandatory</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>GeneratePartnerCode</b></td>
+                    <td><b>ConfirmTransaction</b></td>
                     <td>
-                        Partner system generates code with a unique
-                        transaction id every time.
+                        <p>Partner system process confirm transaction successfully:</p>
+                        <ul>
+                            <li>
+                                each transaction is processed in partner
+                                system as paid
+                            </li>
+                            <li>
+                                for each transaction partner system
+                                respond with successful response
+                            </li>
+                        </ul>
                     </td>
                     <td>YES</td>
                 </tr>
-            </tbody>
+                <tr>
+                    <td><b>CancelTransaction</b></td>
+                    <td>
+                        Partner system processes transaction cancellation
+                        successfully on both sides.
+                    </td>
+                    <td>
+                        YES, if this method is
+                        implemented
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>RefundTransaction</b></td>
+                    <td>
+                        Partner system processes transaction refund
+                        successfully on both sides.
+                    </td>
+                    <td>
+                        YES, if this method is
+                        implemented
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <hr />
+    <h1>Encryption and decryption</h1>
+    <br />
+    <div class="overflow-auto">
+        <p>
+            The URL we are opening looks like:
+            <br />
+            <a href="">https://example.com?platform=aircash&encrypted=<b class="text-danger">{encrypted}</b></a>
+        </p>
+        <p>
+            where <b class="text-danger">{encrypted}</b> is replaced with URL encoded string, for example:
+            <br />
+            <a href="">https://example.com?platform=aircash&encrypted=m8QHxyY5uLsWwecdLY1coYLbx%2bb%2bW59wBuU7suMV%2fwtA5BYnzViJoIfk4E8n0lxgmQ9neJo1dUGscywjzOpV%2bDFLqTYQb%2bntbXcBXAF7F3avcPKmedJeGmWmH1Tma%2bVVQ2Odx3xtx1a1qienstkn62IYxTdGFPjfFXKdzvmVonOiug4ojtfvRVWwhrKBHE1wZ78PVlJJNTptq1AsbwTmwO8Gh1qgA0of4VXKRMb5LS%2bWk1N0Kc01ulAkSVx25ermrdCAkSV%2fWp93PdU7oNLa9zqCzYSvn9ocdXDPQqBL8xulDgGg7CNGn3BMPbvVb306pkXhpNbCwYokk%2fDsdZkP8LCmgolGBRLp%2bYJEPtHXIDU%3d</a>
+
+        </p>
+        <p>
+
+            <b>Instructions for decryption:</b>
+            <ul>
+                <li class="mb-2">
+                    First you need to decode the URL encoded string to receive base64 string:
+                    <br />
+                    bThRSHh5WTV1THNXd2VjZExZMWNvWUxieCtiK1c1OXdCdVU3c3VNVi93dEE1QlluelZpSm9JZms0RThuMGx4Z21ROW5lSm8xZFVHc2N5d2p6T3BWK0RGTHFUWVFiK250YlhjQlhBRjdGM2F2Y1BLbWVkSmVHbVdtSDFUbWErVlZRMk9keDN4dHgxYTFxaWVuc3RrbjYySVl4VGRHRlBqZkZYS2R6dm1Wb25PaXVnNG9qdGZ2UlZXd2hyS0JIRTF3Wjc4UFZsSkpOVHB0cTFBc2J3VG13TzhHaDFxZ0Ewb2Y0VlhLUk1iNUxTK1drMU4wS2MwMXVsQWtTVngyNWVybXJkQ0FrU1YvV3A5M1BkVTdvTkxhOXpxQ3pZU3ZuOW9jZFhEUFFxQkw4eHVsRGdHZzdDTkduM0JNUGJ2VmIzMDZwa1hocE5iQ3dZb2trL0RzZFprUDhMQ21nb2xHQlJMcCtZSkVQdEhYSURVPQ=
+                </li>
+                <li class="mb-2">
+                    Then it needs to be decrypted with AES symmetric key (we are using 128-bit key SXFPCHYKONI6S89U).
+                </li>
+                <li>
+                    After decryption the result is in JSON format:
+<pre>
+{
+    "partnerId": "469234fe-e988-4425-8752-e336112931bf",
+    "userId": "4b33b042-7adb-4277-af09-ab0afbae5f9e",
+    "email": "john.doe@gmail.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phoneNumber": "385989097929",
+    "country": "HR",
+    "postalCode": "-",
+    "city": "-",
+    "address": "-",
+    "language": "en"
+}
+</pre>
+                </li>
+            </ul>
+        </p>
+    </div>
+
+    <hr />
+
+    <h1>FAQ</h1>
+
+    <br />
+
+    <div class="table-responsive">
+        <table class="table table-active">
             <tr>
-                <td><b>ConfirmTransaction</b></td>
+                <td rowspan="2">1.</td>
                 <td>
-                    <p>Partner system process confirm transaction successfully:</p>
-                    <ul>
-                        <li>
-                            each transaction is processed in partner
-                            system as paid
-                        </li>
-                        <li>
-                            for each transaction partner system
-                            respond with successful response
-                        </li>
-                    </ul>
+                    <b>Q:&nbsp; Is it possible to pay/make online deposits on sites that use multiple currencies?</b><br />
                 </td>
-                <td>YES</td>
             </tr>
             <tr>
-                <td><b>CancelTransaction</b></td>
-                <td>
-                    Partner system processes transaction cancellation
-                    successfully on both sides.
-                </td>
-                <td>
-                    YES, if this method is
-                    implemented
-                </td>
+                <td><b>A:</b>&nbsp; Yes it is. From a technical perspective, for each currency there needs to be a unique PartnerId parameter within the requests.</td>
             </tr>
             <tr>
-                <td><b>RefundTransaction</b></td>
-                <td>
-                    Partner system processes transaction refund
-                    successfully on both sides.
-                </td>
-                <td>
-                    YES, if this method is
-                    implemented
-                </td>
+                <td rowspan="2">2.</td>
+                <td><b>Q:&nbsp; At what time is the payment visible?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; It is processed instantly.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">3.</td>
+                <td><b>Q:&nbsp; What happens if the user does not have installed the Aircash app and wants to make the payment?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; After completing the purchase flow, if the user does not have Aircash app, he will be redirected to one of the stores to download the app.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.</td>
+                <td><b>Q:&nbsp; Is it possible to make partial refunds?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes it is possible. Refund method can be called multiple times as long as the sum of previous refund amounts is less or equal to the amount of the original transaction.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">5.</td>
+                <td><b>Q:&nbsp; Is the QR code going to be visible within the mobile browser for making the payments/deposits?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; No. Mobile version has to implement a button that will have within it url that is behind the QR code and which is sent from us.</td>
             </tr>
         </table>
     </div>

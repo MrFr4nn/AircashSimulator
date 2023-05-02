@@ -29,7 +29,7 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
                     acFrameOption: acFrameOption                                      
                 }
             });
-            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));            
         }        
     }
 ]);
