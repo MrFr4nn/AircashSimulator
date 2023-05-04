@@ -69,7 +69,7 @@ namespace AircashFrame
                 DeclineUrl = initiateRequestDTO.DeclineUrl,
                 OriginUrl = initiateRequestDTO.OriginUrl,
                 CancelUrl = initiateRequestDTO.CancelUrl,
-                Locale = "en-US"
+                Locale = initiateRequestDTO.Locale
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateRequest);
             Logger.LogInformation(partner.PrivateKey);
