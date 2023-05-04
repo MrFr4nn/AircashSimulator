@@ -195,13 +195,6 @@ namespace AircashFrame
             }
         }
 
-        public async Task<object> TransactionStatusCashierFrameV2(Guid partnerId, string transactionId)
-        {
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
-            var frontResponse = await CheckTransactionStatusCashierFrameV2(partner, transactionId);
-            return frontResponse;
-        }
-
         public async Task<AircashTransactionStatusResponseV2> CheckTransactionStatusCashierFrameV2(PartnerEntity partner, string transactionId)
         {
             var aircashTransactionStatusRequest = new AircashTransactionStatusRequestV2
@@ -214,16 +207,40 @@ namespace AircashFrame
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashTransactionStatusRequest.Signature = signature;
             var aircashTransactionStatusResponse = new AircashTransactionStatusResponseV2();
-            if (AircashSignatureService.VerifySignature(dataToSign, aircashTransactionStatusRequest.Signature, $"{AircashConfiguration.AcFramePublicKey}"))
+            var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{TransactionStatusEndpoint}");
+            aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2>(response.ResponseContent);
+            return aircashTransactionStatusResponse;
+        }
+
+        public async Task<object> CheckTransactionStatusFrame(Guid partnerId, string transactionId)
+        {
+            var returnResponse = new Response();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var aircashTransactionStatusRequest = new AircashTransactionStatusRequestV2
             {
-                var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{TransactionStatusEndpoint}");             
+                PartnerId = partner.PartnerId.ToString(),
+                PartnerTransactionId = transactionId,
+            };
+            returnResponse.ServiceRequest = aircashTransactionStatusRequest;
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashTransactionStatusRequest);
+            returnResponse.Sequence = dataToSign;
+            Logger.LogInformation(partner.PrivateKey);
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+            aircashTransactionStatusRequest.Signature = signature;
+            var aircashTransactionStatusResponse = new object();
+            var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{TransactionStatusEndpoint}");
+            returnResponse.ResponseDateTimeUTC = DateTime.Now;
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
                 aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2>(response.ResponseContent);
-                return aircashTransactionStatusResponse;
             }
             else
             {
-                return aircashTransactionStatusResponse;
+                aircashTransactionStatusResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
+            returnResponse.ServiceResponse = aircashTransactionStatusResponse;
+            return returnResponse;
         }
     }
 }

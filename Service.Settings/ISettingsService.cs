@@ -20,5 +20,6 @@ namespace Service.Settings
         string TestAircashPaymentPass { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid BlockedUserId { get; }
+        Guid AircashFramePartnerId { get; }
     }
 }

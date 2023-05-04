@@ -29,6 +29,7 @@ namespace Service.Settings
         public string TestAircashPaymentPass { get { return GetSetting("TestAircashPaymentPass", string.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AircashFramePartnerId { get { return GetSetting("AircashFramePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)
         {
