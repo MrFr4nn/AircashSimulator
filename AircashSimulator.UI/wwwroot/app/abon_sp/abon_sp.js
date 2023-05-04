@@ -91,6 +91,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
     $scope.createCoupon = function () {
         $scope.createServiceBusy = true;
         $scope.createServiceResponse = false;
+        $scope.showPerview = false;
         abonSpService.createCoupon($scope.createCouponModel.value, $scope.createCouponModel.pointOfSaleId)
             .then(function (response) {
                 
@@ -100,10 +101,14 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
                     $scope.sequence = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.serviceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.content = response.serviceResponse.content;
-                    $scope.decodedContent = decodeURIComponent(escape(window.atob($scope.content)));
-                    document.querySelector('#content1').innerHTML = $scope.decodedContent;
                     $scope.serviceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.content) {
+                        $scope.showPerview = true;
+                        $scope.content = response.serviceResponse.content;
+                        $scope.decodedContent = decodeURIComponent(escape(window.atob($scope.content)));
+                        console.log($scope.decodedContent);
+                        document.querySelector('#content1').innerHTML = $scope.decodedContent;
+                    }
                 }
                 $scope.createServiceBusy = false;
                 $scope.createServiceResponse = true;

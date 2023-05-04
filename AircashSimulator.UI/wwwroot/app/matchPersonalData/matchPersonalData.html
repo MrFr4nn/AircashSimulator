@@ -1,0 +1,80 @@
+﻿
+<h1>Match Personal Data</h1>
+<br />
+<div class="table-responsive">
+    <table class="table  table-active col-md-6">
+        <tr>
+            <th>Environment</th>
+            <th>Method</th>
+            <th>URL</th>
+        </tr>
+        <tr>
+            <td><b>Test</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://staging-api.aircash.eu/api/Match/CompareIdentity</td>
+        </tr>
+        <tr>
+            <td><b>Production</b></td>
+            <td>
+                POST
+            </td>
+            <td>https://api.aircash.eu/api/Match/CompareIdentity</td>
+        </tr>
+    </table>
+</div>
+<br />
+<uib-tabset>
+    <uib-tab index="MatchPersonalData-tab-1" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <h6><b>Aircash user</b></h6>
+                <hr />
+                <form action="/" method="POST" name="matchPersonalDataModelFirstForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="matchPersonalDataModel.firstNameAircashUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="matchPersonalDataModel.lastNameAircashUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="matchPersonalDataModel.birthDateAircashUser" isOptional="false" out="setPersonalDataDateAircashUser"></date-picker>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-0.5"></div>
+            <div class="col-md-4">
+                <h6><b>Partner user</b></h6>
+                <hr />
+                <form action="/" method="POST" name="matchPersonalDataModelSecondForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="matchPersonalDataModel.firstNamePartnerUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="matchPersonalDataModel.lastNamePartnerUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="matchPersonalDataModel.birthDatePartnerUser" isOptional="false" out="setPersonalDataDatePartnerUser"></date-picker>
+                        </div>
+                        <button ng-click="matchPersonalData()" class="btn btn-primary w-100px me-5px" ng-disabled="matchPersonalDataServiceBusy|| checkUserForm.$invalid">Compare users <i ng-if="matchPersonalDataServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
+                Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="matchPersonalDataResponse"></jsonformatter>
+                <br />
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

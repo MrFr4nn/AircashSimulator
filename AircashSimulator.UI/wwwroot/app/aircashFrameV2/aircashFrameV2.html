@@ -8,13 +8,25 @@
     <div style="width: 100%">
         <h1>Frame V2 API</h1>
         <hr />
+        <p>
+            Aircash Frame integration enables multiple Aircash services using a single endpoint. Connect your cashier directly to the Aircash Frame API to process:
+            <ol>
+                <li>Payments via Aircash application</li>
+                <li>Deposits via Abon voucher</li>
+                <li>Withdrawals to Aircash application</li>
+            </ol>
+        </p>
         <uib-tabset>
             <uib-tab index="checkUser1-tab-0" heading="Aircash pay" classes="nav-item">
                 <h2>Aircash Pay</h2>
                 <p>
-                    This chapter describes the top up process using the Aircash application. The described
-                    process explains how the user can transfer funds from the Aircash system to the partner's system.
+                    This chapter describes the payment process using the Aircash application. Once the transaction is initiated on the merchant cashier, the user will will need to confirm/authorize the transaction using the Aircash application:
+                    <ol type="a">
+                        <li>Desktop device - user can choose to confirm the transaction by scanning the QR code with or by confirming the 3DS notification</li>
+                        <li>Mobile device - Aircash app with confirmation popup will be opened via deeplink (in case the deeplink is not supported, 3DS push notification will be sent)</li>
+                    </ol>
                 </p>
+
                 <p>
                     The process consists of the following steps:
                 </p>
@@ -23,36 +35,29 @@
                         The user selects Aircash as the deposit option and enters the amount he wants to deposit.
                     </li>
                     <li>
-                        Partner’s system initiates the payment with the amount, currency, transaction id and other
-                        mandatory parameters.
+                        Merchant’s system initiates the payment.
                     </li>
                     <li>
-                        Aircash system responds with a URL to which user needs to be redirected
+                        Aircash system responds with a URL to which user needs to be redirected.
                     </li>
                     <li>
                         A user authorizes the payment via Aircash application (by scanning the QR code or confirming the
-                        popped-up authorization screen)
+                        popped-up authorization screen).
                     </li>
                     <li>
-                        Aircash system notifies partner’s system by sending notification to designated URL
+                        Aircash system notifies merchant’s system by sending notification to designated URL.
                     </li>
                     <li>
-                        The user is redirected back to the cashier
+                        Confirmation message is displayed to the user and the redirection back to cashier happens.
                     </li>
                 </ol>
-                <b>To download diagram flow for Aircash pay click here:</b>
-                <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">
-                    <button class="btn"><i class="fa fa-download"></i> Aircash Pay Diagram flow</button>
-                </a>
+                <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAcPay" target="_blank">cashier simulator</a></p>
+
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Abon" classes="nav-item">
                 <h2>Aircash Abon deposit</h2>
                 <p>
-                    Aircash Abon is a deposit method intended for users that wish to make
-                    payments to their Online Provider accounts (betting sites, parking
-                    services, GSM topups etc.) via paper coupons that can be bought at
-                    cash registers, i.e. points of sale of Aircash Sales Partners (kiosks, gas
-                    stations, etc.).
+                    Aircash Abon deposit is a topup payment method via paper voucher. User needs to enter 16-digit code of the voucher and funds are instantly visible on the user account.
                 </p>
                 <p>
                     The process consists of the following steps:
@@ -63,53 +68,23 @@
                         The user selects Abon as the deposit option.
                     </li>
                     <li>
-                        Partner’s system initiates the payment with the currency, transaction id and other
-                        mandatory parameters.
+                        Merchant’s system initiates the payment.
                     </li>
                     <li>
                         Aircash system responds with a URL to which user needs to be redirected.
                     </li>
                     <li>
-                        Aircash frame is opened and user enters the 16-digit code from the coupon he bought
-                        and confirms the transaction of funds to an Online Provider account.
+                        User enters the 16-digit code from the voucher and confirms the transaction.
                     </li>
                     <li>
-                        Aircash system notifies partner’s system by sending notification to designated URL
+                        Aircash system notifies merchant’s system by sending notification to designated URL
                     </li>
                     <li>
-                        Aircash panel redirects the user back to the success URL and partner’s system makes a top up to
-                        the user’s account
-                    </li>
-                    <li>
-                        The funds are deposited to the user's online account, and the coupon gets expended and can no
-                        longer be used.
+                        Confirmation message is displayed to the user and the redirection back to cashier happens.
                     </li>
                 </ol>
+                <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAbon" target="_blank">cashier simulator</a></p>
 
-                <br />
-                <h4>Checkbox – I accept Abon Terms & Conditions</h4>
-                <p>
-                    In order for the users to use Abon services on the Online Provider's website, they have to accept the
-                    terms and conditions beforehand.
-                </p>
-                <p>
-                    Every Online Provider is obliged to add a checkbox for the Abon terms and conditions, which is by
-                    default always checked.
-                </p>
-                <p>
-                    The checkbox has to contain a link to Abon Terms and Conditions:
-                </p>
-                <div class="note note-gray-400 col-md-8">
-                    <div class="note-content">
-                        <code>
-                            &lta href="https://aircash.eu/terms-conditions/opci-uvjeti-poslovanja-a-bon-elektronicki-novac/" rel="nofollow"&gtI accept the Abon Terms&Conditions&lt/a&gt
-                        </code>
-                    </div>
-                </div>
-                <b>To download diagram flow for Abon click here:</b>
-                <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">
-                    <button class="btn"><i class="fa fa-download"></i> Abon Diagram flow</button>
-                </a>
             </uib-tab>
             <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item">
                 <h2>Aircash Payout</h2>
@@ -146,7 +121,7 @@
                         Partner system needs to check the status within the Aircash system by sending status request. If Aircash system responds with pending status, partner system can reserve the funds.
                     </li>
                     <li>
-                        Once the reserved funds are ready to be confirmed (either mannualy, either automatically), partner system need to send finaal Confirmation request to Aircash system.
+                        Once the reserved funds are ready to be confirmed (either mannualy, either automatically), partner system need to send final Confirmation request to Aircash system.
                     </li>
                     <li>
                         Upon recieving the confirmation request, Aircash system will top up the Aircash account.
@@ -364,7 +339,20 @@
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
                 <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
             </uib-tab>
-            
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+</pre>
+                <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
+<pre>
+
+Sequence:
+Amount=100&CancelUrl=&CurrencyId=191&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=
+
+Signaure:
+tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJPS5SsKaCyPNRxQudthErgwzNCNPM1BD7Wwrf2obrmTzNNgRbC1sfU0HXjP7lTRS8HblzNGjksiUG0wED/QJBmZiQyTUAaO60tg1f4BpeFPAwqsOA/URKB8A72MAzIrsm6w3LOIWzAtiXBwzqkKQ2ChBMsDUx+ba8R2JdU6N1X//65KcXEAHUGOIFberWNDVIcHbZHXDNVFVlFjXtl2VR0VxASioSyh7ZrLl+pyd6BkuK0ee9z6IibAZk0xIfW6TIC4VuHxnwKLmnjxZcXesQjiz+E3xg8V00g1QX23//973WFDMFDfAqOX/1kqlTcPY+Ih8wgTeVVfLXpE7nveTn7vBMLiJE2ONxYNdp2v+ba79ro5ifAkUHcXtEaPLJxpw3d+kvO7J/uDkyc6Re2GotY1Q1leY/qp0qAPjmFvDE5wOnLJp3yDkQv34i8P591xFcLf297jaoAGrn4d2fjGszPC14TxP8VqNdhE0HO8qP3IZWVw6+QnoYMCZy+GkH8uV8Wp7P+eZWGoinJTR4nodU7H8vuWfjiJzhfSKUfYAEotxfcsNKanClrmCrvY4iRlp/BqnR/PETmqVR7bJafKNhyZ6rtb00=
+</pre>
+            </uib-tab>
             <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
                 <div class="table-responsive">
                     <table class="table  table-hover">
@@ -463,7 +451,7 @@
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                 <jsonformatter data="aircashFrameV2.initiate.errorResponseExample"></jsonformatter>
             </uib-tab>
-            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item" style="display:none">
+            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
                         <div class="form-check form-check-inline">
@@ -498,10 +486,9 @@
                         <jsonformatter data="InitiateServiceRequest"></jsonformatter>
                         Sequence: {{sequenceInitiate}}
                     </div>
-                    <div ng-hide="!initiateResponded" class="col-md-5">
+                    <div ng-if="initiateResponded" class="col-md-5">
                         Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <jsonformatter data="InitiateServiceResponse"></jsonformatter>
-                        <a href="" ng-click="showFrame()">Open Aircash Frame</a>
                     </div>
                 </div>
             </uib-tab>
@@ -926,7 +913,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                                 Unique transaction id in the Aircash system
                             </td>
                         </tr>
-                       
+
                     </tbody>
                 </table>
             </div>
@@ -1003,7 +990,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </div>
             </div>
         </uib-tab>
-        
+
     </uib-tabset>
     </div>
 
@@ -1162,6 +1149,163 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
         Now, the client will be fully redirected to the Aircash Frame and after finishing the transaction it
         will be returned (redirected) to one of the URLs defined by the partner's system on transaction initiation.
     </p>
+
+    <hr />
+    <h5>Custom implementation for redirect checkout</h5>
+
+    <p>
+        This is your custom implementation of Aircash Frame integration. You can display Aircash Frame on any possible way that seems the best for your
+        requirements. For example, you can open new web browser’s window (blank or with your origin URL or any other URL) and use custom redirect to 
+        Aircash Frame URL which you will receive in the Initiate method response body. In this case you have complete control over window where is Aircash
+        Frame displayed, you can implement your scripts to handle window open, window close and window redirect to your success URL.
+    </p>
+
+    <hr />
+
+    <h1>FAQ</h1>
+
+    <br />
+
+    <div class="table-responsive">
+        <table class="table table-active">
+            <tr>
+                <td rowspan="2">1.</td>
+                <td>
+                    <b>Q:&nbsp; Is user redirected to Aircash Frame Abon and is asked to enter the 16-digit code (or scan it)?</b><br />
+                </td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes, user is redirected to Aircash Frame and in the Aircash Frame user is asked to enter 16-digit Abon code. </td>
+            </tr>
+            <tr>
+                <td rowspan="2">2.</td>
+                <td><b>Q:&nbsp; Where does customer’s journey starts with Aircash Frame AcPay? </b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Customer journey starts at the merchant's website (desktop or mobile) or native app. After customer clicks on button for example "Pay with Aircash" the Aircash Frame will pop up. Aircash Frame can be initiate either from merchant's website or native mobile app, that depends on merchant platform.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">3.</td>
+                <td><b>Q:&nbsp; Where will be customer redirected after successful Aircash Frame AcPay payment?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; After the successful payment customer will be redirected to successURL (from the initiate request) which informs that the transaction is successfully processed.</td>
+            </tr>
+            <tr>
+                <td rowspan="2">4.</td>
+                <td><b>Q:&nbsp; How can we show Aircash Frame?</b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; You can use custom implementation to show/display Aircash Frame or you can use our Aircash Frame SDK (more about SDK examples you can find on: Aircash Simulator). </td>
+            </tr>
+            <tr>
+                <td rowspan="2">5.</td>
+                <td><b>Q:&nbsp; Are there chargebacks possible?</b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; Aircash marketplace deposit -> chargeback is possible but manually<br />
+                    &emsp;&nbsp; Aircash Frame Aircash Pay -> chargeback is possible but manually<br />
+                    &emsp;&nbsp; Aircash Frame Abon -> chargeback is not possible<br />
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">6.</td>
+                <td><b>Q:&nbsp; Are there returns for the withdrawals possible? (reversal of the withdrawals/payouts) </b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes, returns for the withdrawals are possible manually. Customer must contact merchant and we can made returns manually if customer still has money in Aircash Wallet </td>
+            </tr>
+            <tr>
+                <td rowspan="2">7.</td>
+                <td><b>Q:&nbsp; Are you provided reconciliation files for download, either manual download or by putting them to our SFTP server or download from your SFTP server?   </b></td>
+            </tr>
+            <tr>
+                <td><b>A:</b>&nbsp; Yes, we provide you reconciliation files for download. We can upload files on our FTP through FTPs or we can put them to your SFTP server.  </td>
+            </tr>
+            <tr>
+                <td rowspan="2">8.</td>
+                <td><b>Q:&nbsp; When are you calling our NotificationURL which we define as parameter in "Initiate" method and what happens if the payment notification cannot be delivered?  </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp;
+                    We are calling your NotificationURL when the transaction is processed (when a user scans the QR code and clicks in Aircash mobile app "Pay" or when the user clicks on
+                    "x" in Aircash Frame). NotificationURL is defined by your side when you are calling out the method "Initiate" to display Aircash Frame. After the transaction is processed (successful
+                    transaction, declined transaction, or canceled transaction) we are calling one time your NotificationURL. After the first call of your NotificationURL, if we receive a different response
+                    than OK(200) we will call your NotificationURL two more times.
+                    <br />
+                    The main task of NotificationURL is to notify your system that the transaction is completed. It is your job to check what is the status of the transaction by sending the requests to our
+                    "status" method. If, for any reason, you haven't received the notification (network issue i.e.) you still need to ensure to check the status of the transaction on our end.
+                    <br />
+                    For example, if we agree to have a transaction timeframe of 5 minutes (within which the user needs to confirm the payment), and you haven't received the notification, your system will
+                    need to check the transaction status without being notified. These are corner cases but still may occur.
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">9.</td>
+                <td><b>Q:&nbsp; What is "partnerUserId" parameter from "Initiate" method and what is it used for?   </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; partnerUserId - this value should be a unique client identifier. It can be any type of value (int, string….). We are using it for the limits calculation, and some features
+                    (like saving the phone number for future payments) which are based on the value of partnerUserId . Still, the importance of having this value depends on the type of the merchant. For example,
+                    e-commerce merchants are low-risk categorized so we could have here some random value, UUID for example (which is not fixed). If you have that info we should use it for its real purpose, otherwise,
+                    send us some random value (only because it is required).
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">10.</td>
+                <td><b>Q:&nbsp; What is "locale" parameter from "Initiate" method and what is it used for?   </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; locale is used to define display language of the Aircash Frame and preselect dropdown with country phone code. For example, if you want display language to be english and country
+                    phone code to be Croatia you must send locale parameter as "en-HR".
+                    <p>Examples in table below:</p>
+                    <div class="table-responsive">
+                        <table class="table table-active">
+                            <thead>
+                                <tr>
+                                    <th>Locale</th>
+                                    <th>Display Language</th>
+                                    <th>Country Phone Code</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>"en-US"</td>
+                                    <td>English</td>
+                                    <td>United States of America</td>
+                                </tr>
+                                <tr>
+                                    <td>"en-HR"</td>
+                                    <td>English</td>
+                                    <td>Croatia</td>
+                                </tr>
+                                <tr>
+                                    <td>"en-GB"</td>
+                                    <td>English</td>
+                                    <td>Great Britain</td>
+                                </tr>
+                                <tr>
+                                    <td>"en-RO"</td>
+                                    <td>English</td>
+                                    <td>Romania</td>
+                                </tr>
+                                <tr>
+                                    <td>"hr-HR"</td>
+                                    <td>Croatian</td>
+                                    <td>Croatia</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
 
     <!-- #modal-dialog -->
     <div class="modal fade" id="frameModal">
