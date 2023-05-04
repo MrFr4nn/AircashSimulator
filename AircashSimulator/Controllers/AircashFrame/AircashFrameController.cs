@@ -73,6 +73,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 Amount = initiateRequest.Amount,
                 PayType = (PayTypeEnum)initiateRequest.PayType,
                 PayMethod = (PayMethodEnum)initiateRequest.PayMethod,
+                Locale = initiateRequest.Locale,
                 OriginUrl = initiateRequest.OriginUrl,
                 DeclineUrl = initiateRequest.DeclineUrl,
                 SuccessUrl = initiateRequest.SuccessUrl,

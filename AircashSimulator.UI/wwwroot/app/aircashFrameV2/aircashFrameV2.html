@@ -472,6 +472,20 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                                     <label class="form-label" for="exampleInputEmail1">Amount</label>
                                     <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" ng-required="true" name="amount">
                                 </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="locale">Locale</label>
+                                    <div>
+                                        <div class="row px-2 align-items-center">
+                                            <div class="w-25">
+                                                <input class="form-control" ng-model="locale.languageInput" type="text" ng-required="true" name="languageInput">
+                                            </div>
+                                            &nbsp; -&nbsp;
+                                            <div class="w-25">
+                                                <input class="form-control" ng-model="locale.countryISOCodeInput" type="text" ng-required="true" name="countryISOCodeInput">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button ng-click="initiateRedirectCheckout()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">
                                     <i ng-if="initiateModelSelected == 0 || initiateModelSelected == 1">DEPOSIT </i>
                                     <i ng-if="initiateModelSelected == 2">PAYOUT </i>
