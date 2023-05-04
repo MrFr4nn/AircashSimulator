@@ -133,10 +133,9 @@ namespace AircashSimulator.Controllers.AircashFrame
         }
 
         [HttpPost]
-        public async Task<IActionResult> TransactionStatusCashierFrameV2(TransactionStatusRequest transactionStatusRequest)
+        public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
-            var partnerId = SettingsService.AircashFramePartnerId;
-            var response = await AircashFrameV2Service.TransactionStatusCashierFrameV2(partnerId, transactionStatusRequest.TransactionId);
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId);
             return Ok(response);
         }        
     }

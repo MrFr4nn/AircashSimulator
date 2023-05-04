@@ -56,7 +56,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
     function transactionStatus(transactionId) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashFrame/TransactionStatusCashierFrameV2",
+            url: config.baseUrl + "AircashFrame/TransactionStatusFrameV2",
             data: {
                 TransactionId: transactionId
             }
