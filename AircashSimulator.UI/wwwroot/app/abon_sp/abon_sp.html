@@ -317,6 +317,15 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                     </div>
                 </div>
             </uib-tab>
+            <uib-tab index="request-tab-8" heading="QR code" classes="nav-item">
+                <div class="row mt-2">
+                    <div class="col-md-4">
+                        <label class="form-label" for="exampleInputPassword1">CouponCode (16-digit number)</label>
+                        <input ng-model="QRcode.couponCode" ng-keyup="generateQRcode($event)" class="form-control" type="text" placeholder="Enter CouponCode" ng-required="true">
+                    </div>
+                    <div class="col-md-8 mt-2 d-flex justify-content-center" id="qrcodeDiv"></div>
+                </div>
+            </uib-tab>
         </uib-tabset>
     </div>
 </div>
