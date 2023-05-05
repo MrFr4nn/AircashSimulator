@@ -27,11 +27,14 @@ namespace Service.Settings
         string AbonTimedOutCouponSerialNumber { get; }
         decimal AbonDefaultValue { get; }
         decimal AbonInvalidValue { get; }
+        string TestAircashPaymentPath { get; }
+        string TestAircashPaymentPass { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
         Guid AbonGenerateBlockedPartnerId { get; }
         Guid AbonGeneratePartnerIdsDoNotMatch { get; }
         Guid CouponExistsForTheGivenPartnerTransactionId { get; }
         Guid BlockedUserId { get; }
+        Guid AircashFramePartnerId { get; }
     }
 }

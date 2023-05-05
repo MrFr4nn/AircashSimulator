@@ -87,12 +87,18 @@ app.controller('appController', ['$rootScope', '$scope', function ($rootScope, $
 /* -------------------------------
    2.0 CONTROLLER - Sidebar
 ------------------------------- */
-app.controller('sidebarController', ['$scope', '$rootScope', '$state', 'JwtParser', '$localStorage', function ($scope, $rootScope, $state, JwtParser, $localStorage) {
-  angular.element(document).ready(function () {
-      $scope.pName = JwtParser.getProperty("pName");
-  });
+app.controller('sidebarController', ['$scope', '$rootScope', '$location', '$state', 'JwtParser', '$localStorage', function ($scope, $rootScope, $location, $state, JwtParser, $localStorage) {
+    angular.element(document).ready(function () {
+        $scope.pName = JwtParser.getProperty("pName");
+    });
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+
+    var subMenu = ['/app/logo', '/app/ac_business_site', '/app/ac_test_application', '/app/aircashRefund', '/app/signature'];
+    if (subMenu.find(el => el == $location.path())) {
+        $scope.submenu = true;
+    }
+
 }]);
 
 
