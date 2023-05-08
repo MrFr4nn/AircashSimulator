@@ -20,7 +20,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         transactionStatus: transactionStatus
     });
 
-    function initiateRedirectCheckout(payType, payMethod, amount, currency, successUrl, declineUrl, cancelUrl, originUrl) {
+    function initiateRedirectCheckout(payType, payMethod, amount, currency, locale, successUrl, declineUrl, cancelUrl, originUrl) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/InitiateV2",
@@ -29,6 +29,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
                 PayMethod: payMethod,
                 Amount: amount,
                 Currency: currency,
+                Locale: locale,
                 SuccessUrl: successUrl,
                 DeclineUrl: declineUrl,
                 CancelUrl: cancelUrl,
@@ -56,7 +57,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
     function transactionStatus(transactionId) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashFrameV2/TransactionStatus",
+            url: config.baseUrl + "AircashFrame/TransactionStatusFrameV2",
             data: {
                 TransactionId: transactionId
             }
@@ -135,22 +136,24 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         $scope.totalLoaded = 0;
         $scope.busy = false;
     };
+    $scope.locale = {}
 
     $scope.initiateResponded = false;
     $scope.initiateBusy = false;
     $scope.initiateRedirectCheckout = function () {
         $scope.initiateBusy = true;
         $scope.initiateResponded = false;
+        $scope.locale.value = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
         acFrameV2Service.initiateRedirectCheckout(
             $scope.initiateModel.payType,
             $scope.initiateModel.payMethod,
             $scope.initiateModel.amount,
             $scope.initiateModel.currency,
+            $scope.locale.value,
             $scope.successUrl,
             $scope.declineUrl,
             $scope.cancelUrl)
             .then(function (response) {
-                console.log(response);
                 if (response) {
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
@@ -209,8 +212,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         });
     };
 
-    
-
+ 
     $scope.statusResponded = false;
     $scope.statusBusy = false;
     $scope.transactionStatus = function (transactionId) {
@@ -219,6 +221,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         acFrameV2Service.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
+                    console.log(response);
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceStatus = response.sequence;
