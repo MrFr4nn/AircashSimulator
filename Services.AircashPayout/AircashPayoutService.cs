@@ -114,6 +114,7 @@ namespace Services.AircashPayout
             }
             else
             {
+                returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
                 createPayoutResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
             returnResponse.ServiceResponse = createPayoutResponse;
