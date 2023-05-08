@@ -108,13 +108,29 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
         $("#contentModal").modal("show");
     }
 
+    $scope.QRcode = {};
+    $scope.generateQRcode = function (event) {
+        if (event) {
+            if ('0123456789'.indexOf(event.keyCode) < 0) {
+                $scope.QRcode.couponCode = $scope.QRcode.couponCode.replaceAll(/[^0-9]/g, '');;
+            }
+            if ($scope.QRcode.couponCode.length > 16) {
+                $scope.QRcode.couponCode = $scope.QRcode.couponCode.substring(0, 16);
+            }
+            if (document.getElementById("qrcodeDiv") && $scope.QRcode.couponCode.length == 16) {
+                $("#qrcodeDiv").empty();
+                new QRCode(document.getElementById("qrcodeDiv"), $scope.QRcode.couponCode);
+            }
+        }
+    }
+    $scope.generateQRcode();
+
     $scope.createCoupon = function () {
         $scope.createServiceBusy = true;
         $scope.createServiceResponse = false;
         $scope.showPerview = false;
         abonSpService.createCoupon($scope.createCouponModel.value, $scope.createCouponModel.pointOfSaleId)
             .then(function (response) {
-                
                 if (response) {
                     $scope.requestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.responseDateTimeUTC = response.responseDateTimeUTC;
