@@ -250,7 +250,10 @@
                                 <td>
                                     Transaction amount
                                 </td>
-                                <td>YES, in case of Abon method there is no entry</td>
+                                <td>
+                                    YES, in case of Abon method it is optional.<br />
+                                    If the initiate request amount is empty or NULL, amount will be sent in the Status response. Otherwise, the amount must match the value of the Abon voucher (validation will be done in the Aircash system)
+                                </td>
                             </tr>
                             <tr>
                                 <td><b>CurrencyId</b></td>
