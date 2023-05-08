@@ -207,7 +207,7 @@ namespace Services.AircashPay
             }
             else
             {
-                aircashRefundTransactionResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+                aircashRefundTransactionResponse = JsonConvert.DeserializeObject<ErrorRefundResponse>(response.ResponseContent);
             }
             var frontResponse = new Response
             {

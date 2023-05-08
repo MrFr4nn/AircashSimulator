@@ -254,7 +254,8 @@
             </div>
         </div>
         <div class="col-12 d-flex justify-content-end">
-            <button class="btn btn-white ml-2 mt-2" ng-if="generateCheckPlayerSignatureResponded" ng-click="copy(generateCheckPlayerSignatureResponse)">Copy</button>        </div>
+            <button class="btn btn-white ml-2 mt-2" ng-if="generateCheckPlayerSignatureResponded" ng-click="copy(generateCheckPlayerSignatureResponse)">Copy</button>
+        </div>
     </uib-tab>
     <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
         <pre>
@@ -455,7 +456,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                         </label>
                     </div>
                     <div class="col-lg-9 mt-2">
-                        <input ng-model="createAndConfirmGenerateSignatureModel.amount"  ng-change="requestCreateAndConfirmChanged()" class="form-control" type="number" placeholder="Enter amount" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        <input ng-model="createAndConfirmGenerateSignatureModel.amount" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="number" placeholder="Enter amount" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
@@ -479,7 +480,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                         </label>
                     </div>
                     <div class="col-lg-9 mt-2">
-                        <input ng-model="createAndConfirmGenerateSignatureModel.currency"  ng-init="createAndConfirmGenerateSignatureModel.currency='978'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.currency" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        <input ng-model="createAndConfirmGenerateSignatureModel.currency" ng-init="createAndConfirmGenerateSignatureModel.currency='978'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.currency" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
@@ -491,7 +492,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                         </label>
                     </div>
                     <div class="col-lg-9 align-self-center">
-                        <input ng-model="createAndConfirmGenerateSignatureModel.countryCode"  ng-init="createAndConfirmGenerateSignatureModel.countryCode='HR'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.countryCode" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        <input ng-model="createAndConfirmGenerateSignatureModel.countryCode" ng-init="createAndConfirmGenerateSignatureModel.countryCode='HR'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.countryCode" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
@@ -503,7 +504,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                         </label>
                     </div>
                     <div class="col-lg-9 mt-2">
-                        <input ng-model="createAndConfirmGenerateSignatureModel.merchantId"  ng-init="createAndConfirmGenerateSignatureModel.merchantId='100'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.merchant" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        <input ng-model="createAndConfirmGenerateSignatureModel.merchantId" ng-init="createAndConfirmGenerateSignatureModel.merchantId='100'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.merchant" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
                     </div>
                 </div>
                 <hr />
@@ -516,13 +517,13 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                     </div>
                     <div ng-if="checkboxCreateAndConfirmModel.match" class="col-lg-9 align-self-center mt-2">
                         <div>
-                            <input ng-model="createAndConfirmGenerateSignatureModel.firstname"  ng-init="createAndConfirmGenerateSignatureModel.firstname='John'; requestCreateAndConfirmChanged();" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.firstname" ng-init="createAndConfirmGenerateSignatureModel.firstname='John'; requestCreateAndConfirmChanged();" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
                         </div>
                         <div class="mt-2">
-                            <input ng-model="createAndConfirmGenerateSignatureModel.lastname"  ng-init="createAndConfirmGenerateSignatureModel.lastname='Doe'; requestCreateAndConfirmChanged();" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.lastname" ng-init="createAndConfirmGenerateSignatureModel.lastname='Doe'; requestCreateAndConfirmChanged();" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
                         </div>
                         <div class="mt-2">
-                            <date-picker date="createAndConfirmGenerateSignatureModel.birthDate"  ng-init="requestCreateAndConfirmChanged();" isOptional="false" out="createAndConfirmSetDate"></date-picker>
+                            <date-picker date="createAndConfirmGenerateSignatureModel.birthDate" ng-init="requestCreateAndConfirmChanged();" isOptional="false" out="createAndConfirmSetDate"></date-picker>
                         </div>
                     </div>
                 </div>
@@ -1032,4 +1033,51 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             </td>
         </tr>
     </table>
+</div>
+
+<hr />
+<br />
+<h3>Aircash App deposit (initiated from Aircash App)</h3>
+<div class="row">
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 250px; ">1. Aircash App main screen</h5>
+        <img style="width: 200px; height: 350px;" src="../../images/aircash_app_main_screen_ac_payment.png" />
+    </div>
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 250px; ">
+            2. Aircash Marketplace screen
+        </h5>
+        <img style="width: 200px; height: 350px;" src="../../images/aircash_marketplace_screen_ac_payment.png" />
+    </div>
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 250px;">3. Enter amount and username</h5>
+        <img style="width: 200px; height: 350px;" src="../../images/enter_amount_and_username_ac_payment.png" />
+    </div>
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 250px;">4. Deposit successful</h5>
+        <img style="width: 200px; height: 350px;" src="../../images/deposit_successful_from_aircash_app_ac_payment.png" />
+    </div>
+</div>
+<br />
+<hr />
+<h3>Aircash App deposit (initiated from Partner account)</h3>
+<div class="row">
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 230px;">1. Partner deposit screen</h5>
+        <img style="width: 180px; height: 350px;" src="../../images/partner_deposit_screen_ac_payment.png" />
+    </div>
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 230px; ">
+            2. Select Aircash as a method
+        </h5>
+        <img style="width: 180px; height: 350px;" src="../../images/select_aircash_as_a_method_ac_payment.png" />
+    </div>
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 230px; ">3. Confirm deposit</h5>
+        <img style="width: 180px; height: 350px;" " src="../../images/confirm_deposti_ac_payment.png" />
+    </div>
+    <div class="text-center ml-5 mt-2">
+        <h5 style="width: 230px;">4. Deposit successful</h5>
+        <img style="width: 180px; height: 350px;" src="../../images/deposit_successful_from_partner_account_ac_payment.png" />
+    </div>
 </div>

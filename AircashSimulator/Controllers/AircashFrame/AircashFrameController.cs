@@ -11,6 +11,8 @@ using System;
 using AircashSimulator.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using AircashSimulator.Controllers.AircashPayment;
+using Service.Settings;
+
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -18,6 +20,7 @@ namespace AircashSimulator.Controllers.AircashFrame
     [ApiController]
     public class AircashFrameController : Controller
     {
+        private ISettingsService SettingsService;
         private IAircashFrameService AircashFrameService;
         private IAircashFrameV2Service AircashFrameV2Service;
         private AircashConfiguration AircashConfiguration;
@@ -28,8 +31,9 @@ namespace AircashSimulator.Controllers.AircashFrame
         private Guid partnerIdInitiateV2 = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
         private Guid userIdInitiateV2 = new Guid("4149BA7D-E4F7-4C77-8393-D03E6691C03B");
 
-        public AircashFrameController(IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext)
+        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext)
         {
+            SettingsService = settingsService;
             AircashFrameService = aircashFrameService;
             AircashFrameV2Service = aircashFrameV2Service;
             AircashConfiguration = aircashConfiguration.CurrentValue;
@@ -69,6 +73,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 Amount = initiateRequest.Amount,
                 PayType = (PayTypeEnum)initiateRequest.PayType,
                 PayMethod = (PayMethodEnum)initiateRequest.PayMethod,
+                Locale = initiateRequest.Locale,
                 OriginUrl = initiateRequest.OriginUrl,
                 DeclineUrl = initiateRequest.DeclineUrl,
                 SuccessUrl = initiateRequest.SuccessUrl,
@@ -129,10 +134,9 @@ namespace AircashSimulator.Controllers.AircashFrame
         }
 
         [HttpPost]
-        public async Task<IActionResult> TransactionStatusCashierFrameV2(TransactionStatusRequest transactionStatusRequest)
+        public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
-            var partnerId = UserContext.GetPartnerId(User);
-            var response = await AircashFrameV2Service.TransactionStatusCashierFrameV2(partnerId, transactionStatusRequest.TransactionId);
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId);
             return Ok(response);
         }        
     }
