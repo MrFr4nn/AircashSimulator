@@ -4,7 +4,7 @@ app.config(function ($stateProvider) {
     $stateProvider
         .state('app.abonSp', {
             data: {
-                pageTitle: 'A-bon generate'
+                pageTitle: 'Abon generate'
             },
             url: "/abonGenerator",
             controller: 'abonSpCtrl',

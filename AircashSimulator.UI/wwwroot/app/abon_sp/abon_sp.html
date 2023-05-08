@@ -570,6 +570,16 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
 
 <hr />
 
+<h1 style="text-align:justify">Prerequisite</h1>
+<p>To start the integration we need to exchange the following information:</p>
+<ol>
+    <li>Provide us with a list of emails for which we will open access to the Aircash back office portal.</li>
+    <li>Provide us with IPs for whitelisting (test and production)</li>
+    <li>Provide us with the Public key file (test and production). How to generate ones, please check the Signature chapter.</li>
+</ol>
+
+<hr />
+
 <h1 style="text-align:justify">Edge cases</h1>
 <p style="text-align:justify">
     This chapter will describe possible edge cases that can happen while calling the API, and how to do error recovery. Edge cases include power outage on the cash register, temporary Internet unavailability, or temporary Abon service unavailability.
@@ -789,6 +799,15 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
         </tr>
         <tr>
             <td><b>A:</b>&nbsp; On cashier an error will appear with a message that says that the Coupon has been already used.</td>
+        </tr>
+        <tr>
+            <td rowspan="2">6.</td>
+            <td><b>Q:&nbsp; Does your BS Portal have a mechanism that prevents the client from revoking an already-used voucher?</b></td>
+        </tr>
+        <tr>
+            <td>
+                <b>A:</b>&nbsp; Yes, we have a validation mechanism, you can not cancel a used or previously canceled voucher.
+            </td>
         </tr>
     </table>
 </div>
