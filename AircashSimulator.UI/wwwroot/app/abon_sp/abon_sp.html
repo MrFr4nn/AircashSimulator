@@ -282,7 +282,171 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                 </div>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
-                <jsonformatter data="aBonGenerate.couponCreation.errorResponseExample"></jsonformatter>
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="CreateTransactionError-tab-1" heading="1 - Invalid PartnerId" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.CreateTransaction.error1.request"></jsonformatter>
+
+                                Sequence:
+                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=f3e66373-11a9-4847-8611-53a7ee12cbfb&PartnerTransactionId=ad065e76-2047-4633-93e7-85660a09e2f2&PointOfSaleId=test&Value=25
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.CreateTransaction.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 1">
+                                Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateRequest"></jsonformatter>
+
+                                Sequence: {{errorCreateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 1">
+                                Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="createSimulateError(1)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CreateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 2)">
+                                Request
+                                <jsonformatter data="errorExamples.CreateTransaction.error2.request"></jsonformatter>
+
+                                Sequence:
+                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=09054b3c-1862-43af-b6a6-3fb65f80b170&PointOfSaleId=test&Value=25
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 2)">
+                                Response
+                                <jsonformatter data="errorExamples.CreateTransaction.error2.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 2">
+                                Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateRequest"></jsonformatter>
+
+                                Sequence: {{errorCreateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 2">
+                                Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="createSimulateError(2)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CreateTransactionError-tab-3" heading="3 - Invalid CouponValue" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.CreateTransaction.error3.request"></jsonformatter>
+
+                                Sequence:
+                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=894b1f8a-755c-4b74-a96f-044a39e49079&PointOfSaleId=test&Value=11
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.CreateTransaction.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 3">
+                                Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateRequest"></jsonformatter>
+
+                                Sequence: {{errorCreateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 3">
+                                Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="createSimulateError(3)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CreateTransactionError-tab-4" heading="5 - Invalid CurrencySymbol" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 5)">
+                                Request
+                                <jsonformatter data="errorExamples.CreateTransaction.error5.request"></jsonformatter>
+
+                                Sequence:
+                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUr&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=36b1a803-8a0e-476f-ab6e-61f28236a9b6&PointOfSaleId=test&Value=25
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 5)">
+                                Response
+                                <jsonformatter data="errorExamples.CreateTransaction.error5.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 5">
+                                Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateRequest"></jsonformatter>
+
+                                Sequence: {{errorCreateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 5">
+                                Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="createSimulateError(5)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CreateTransactionError-tab-5" heading="6 - Coupon exists for the given PartnerTransactionId" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 6)">
+                                Request
+                                <jsonformatter data="errorExamples.CreateTransaction.error6.request"></jsonformatter>
+
+                                Sequence:
+                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=84ba908f-cef9-4713-9396-edad8f8c2c12&PointOfSaleId=test&Value=25
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 6)">
+                                Response
+                                <jsonformatter data="errorExamples.CreateTransaction.error6.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 6">
+                                Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateRequest"></jsonformatter>
+
+                                Sequence: {{errorCreateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 6">
+                                Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="createSimulateError(6)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CreateTransactionError-tab-6" heading="8 - Daily limit exceeded" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
+                                Request
+                                <jsonformatter data="errorExamples.CreateTransaction.error8.request"></jsonformatter>
+
+                                Sequence:
+                                ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=ef104874-0bc4-459d-945a-fb461e8eae28&PartnerTransactionId=381f7f80-8a04-4be7-bf60-28a940d8772c&PointOfSaleId=test&Value=25
+
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
+                                Response
+                                <jsonformatter data="errorExamples.CreateTransaction.error8.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
+                                Request ({{errorCreateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateRequest"></jsonformatter>
+
+                                Sequence: {{errorCreateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
+                                Response ({{errorCreateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCreateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="createSimulateError(8)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                </uib-tabset>
             </uib-tab>
 
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
@@ -313,7 +477,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                     <div class="col-md-4" ng-if="createServiceResponse">
                         Response ({{responseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                         <jsonformatter data="serviceResponse"></jsonformatter>
-                        <center><button href="" ng-if="showPerview" ng-click="showContent()" class="btn btn-primary w-100px me-5px">Preview</button></center>
+                        <center><button href="" ng-click="showContent()" class="btn btn-primary w-100px me-5px">Preview</button></center>
                     </div>
                 </div>
             </uib-tab>
@@ -471,11 +635,6 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 <td>-</td>
                             </tr>
                             <tr>
-                                <td><b>3</b></td>
-                                <td>Invalid PointOfSaleId</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
                                 <td><b>4</b></td>
                                 <td>Invalid coupon serial number or partner transaction id</td>
                                 <td>-</td>
@@ -511,11 +670,6 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                                 <td>-</td>
                             </tr>
                             <tr>
-                                <td><b>11</b></td>
-                                <td>Request failed</td>
-                                <td>-</td>
-                            </tr>
-                            <tr>
                                 <td><b>500</b></td>
                                 <td>An unknown error occured</td>
                                 <td>-</td>
@@ -530,7 +684,251 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                 </div>
             </uib-tab>
             <uib-tab index="request1-tab-4" heading="Error response example" classes="nav-item">
-                <jsonformatter data="aBonGenerate.couponCancellation.errorResponseExample"></jsonformatter>
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="CancelTransactionError-tab-1" heading="1 - Invalid PartnerId" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error1.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=0b7ecd90-800a-4aa0-8cae-f3630b441608&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3521314447254926
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 1">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 1">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(1)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 2)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error2.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3521314447254926
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 2)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error2.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 2">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 2">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(2)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-4" heading="4 - Invalid coupon serial number or partner transaction id" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 4)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error4.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=0513316595342864
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 4)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error4.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 4">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 4">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(4)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-5" heading="5 - PartnerIds do not match" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 5)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error5.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3521314447254926
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 5)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error5.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 5">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 5">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(5)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-6" heading="6 - Point of sales Ids do not match" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 6)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error6.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=error&SerialNumber=3521314447254926
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 6)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error6.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 6">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 6">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(6)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-7" heading="7 - Coupon has been already canceled" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 7)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error7.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3448230981812314
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 7)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error7.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 7">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 7">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(7)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-8" heading="8 - Coupon has been already used" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 8)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error8.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3844898791528058
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 8)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error8.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 8">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 8">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(8)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-9" heading="9 - Coupon has already expired" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 9)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=0573140441237604
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 9)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 9">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 9">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(9)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                    <uib-tab index="CancelTransactionError-tab-10" heading="10 - Coupon cannot be cancelled (timeout expired)" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 10)">
+                                Request
+                                <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=5036566273639964
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
+                                Response
+                                <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 10">
+                                Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                Sequence: {{errorCancelSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 10">
+                                Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCancelResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </uib-tab>
+                </uib-tabset>
             </uib-tab>
             <uib-tab index="request1-tab-5" heading="Try it out" classes="nav-item">
                 <div class="row">
