@@ -406,7 +406,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                                 <td rowspan="4"><b>400</b></td>
                                 <td rowspan="4">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
                                 <td><b>1</b></td>
-                                <td>Invalid ProviderId</td>
+                                <td>Invalid signature or partner id</td>
                                 <td>-</td>
                                 <td rowspan="4">
                                     Contact Aircash support
@@ -452,7 +452,120 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                 </div>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
-                <jsonformatter data="aircashFrameV2.initiate.errorResponseExample"></jsonformatter>
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="InitiateError-tab-1" heading="1 - Invalid signature or partner id" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error1.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=c02142bb-b5d4-4c40-9c85-ca90bd0f1fba&PartnerTransactionId=622e7787-afa8-4ae0-adad-d356e8f91164&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(1)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="InitiateError-tab-2" heading="3 - Validation Error" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error3.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(3)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="InitiateError-tab-3" heading="1004 - Partner transaction Already Exists" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1004)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error1004.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1004)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error1004.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1004">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1004">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(1004)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1004">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="InitiateError-tab-4" heading="3000 - Invalid currency" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3000)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error3000.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=191&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=21f2098d-471f-4d5c-a68b-a855dc52d5b4&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3000)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error3000.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3000">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3000">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(3000)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3000">Copy Request</button>
+                    </uib-tab>
+                </uib-tabset>
             </uib-tab>
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
@@ -757,7 +870,121 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </div>
             </uib-tab>
             <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
-                <jsonformatter data="aircashFrameV2.transactionStatus.errorResponseExample"></jsonformatter>
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="TransactionStatusError-tab-1" heading="1 - Invalid signature or partner id" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.TransactionStatus.error1.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=fbea7431-e796-4472-8689-afddc013e723&PartnerTransactionId=fd9d8fce-6548-4cb1-839b-57a599984b8f
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.TransactionStatus.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1">
+                                Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                Sequence: {{errorTransactionStatusSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1">
+                                Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(1)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="TransactionStatusError-tab-2" heading="3 - Validation Error" classes="nav-item">
+                        Simulation not available.
+                        <!--<div class="row col-12">
+        <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+            Request
+            <jsonformatter data="errorExamples.TransactionStatus.error3.request"></jsonformatter>
+
+            Sequence:
+            Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+        </div>
+        <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+            Response
+            <jsonformatter data="errorExamples.TransactionStatus.error3.response"></jsonformatter>
+        </div>
+        <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+            Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+            Sequence: {{errorTransactionStatusSequence}}<br />
+
+        </div>
+        <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+            Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+        </div>
+    </div>
+    <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(3)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">Copy Request</button>-->
+                    </uib-tab>
+                    <uib-tab index="TransactionStatusError-tab-3" heading="1002 - Transaction does not exist" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002)">
+                                Request
+                                <jsonformatter data="errorExamples.TransactionStatus.error1002.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=c6935dce-1e91-434f-93b6-bbaa2a270b29
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002)">
+                                Response
+                                <jsonformatter data="errorExamples.TransactionStatus.error1002.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002">
+                                Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                Sequence: {{errorTransactionStatusSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002">
+                                Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(1002)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="TransactionStatusError-tab-4" heading="1003 - Transaction not processed" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003)">
+                                Request
+                                <jsonformatter data="errorExamples.TransactionStatus.error1003.request"></jsonformatter>
+
+                                Sequence:
+                                PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=fad535bd-c413-4434-851f-fb2ebce7da06
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003)">
+                                Response
+                                <jsonformatter data="errorExamples.TransactionStatus.error1003.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003">
+                                Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                Sequence: {{errorTransactionStatusSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003">
+                                Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(1003)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003">Copy Request</button>
+                    </uib-tab>
+                </uib-tabset>
             </uib-tab>
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
