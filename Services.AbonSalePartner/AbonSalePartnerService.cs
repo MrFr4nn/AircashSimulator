@@ -65,10 +65,11 @@ namespace Services.AbonSalePartner
             {
                 var successResponse = JsonConvert.DeserializeObject<CreateCouponResponse>(response.ResponseContent);
                 returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+                Enum.TryParse(isoCurrencySymbol, out CurrencyEnum currencyId);
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = value,
-                    ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                    ISOCurrencyId = currencyId,
                     PartnerId = partnerId,
                     AircashTransactionId = successResponse.SerialNumber,
                     TransactionId = partnerTransactionId,
