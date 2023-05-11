@@ -16,7 +16,6 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
     return ({
         generateTransaction: generateTransaction,
         cancelTransaction: cancelTransaction,
-        refundTransaction: refundTransaction,
         getTransactions: getTransactions,
     });
     function generateTransaction(amount, description, locationID) {
@@ -54,19 +53,6 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
-    function refundTransaction(transactionId, amount) {
-        var request = $http({
-            method: 'POST',
-            url: config.baseUrl + "AircashInAppPay/RefundTransaction",
-            data: {
-                PartnerTransactionID: transactionId,
-                Amount: amount
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-
 }
 ]);
 
@@ -79,9 +65,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     $scope.cancelTransactionModel = {
         partnerTransactionID: ""
     };
-    $scope.refundTransactionModel = {
-        amount: null
-    };
+
     $scope.setDefaults = function () {
         $scope.transactions = [];
         $scope.pageSize = 5;
@@ -113,34 +97,6 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
                 }
                 $scope.generateBusy = false;
                 $scope.generateResponded = true;
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.refundModel = {
-        transcationId: null,
-        amount: null
-    };
-
-    $scope.refundResponded = false;
-    $scope.refundBusy = false;
-    $scope.refundTransaction = function (transactionId) {
-        $scope.refundBusy = true;
-        $scope.refundResponded = false;
-        acInAppPayService.refundTransaction(transactionId, $scope.refundTransactionModel.amount)
-            .then(function (response) {
-                if (response) {
-                    $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.refundSequence = response.sequence;
-
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                }
-                $scope.refundBusy = false;
-                $scope.refundResponded = true;
             }, () => {
                 console.log("error");
             });
@@ -217,15 +173,6 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
                 additionalData: null,
             }
         },
-        refund: {
-            requestExample: {
-                PartnerID: "8f62c8f0- 7155 - 4c0e- 8ebe - cd9357cfd1bf",
-                PartnerTransactionID: "67cef954-7372-4a12-9250-98a42bcf0317",
-                RefundTransactionID: "9a90fcdc-572d-44b3-904d-1ff0629c7046",
-                Amount: "100",
-                Signature: "g/iZ .... KgY/6o="
-            }
-        }
     };
 
 }]);

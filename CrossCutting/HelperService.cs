@@ -9,9 +9,9 @@ namespace CrossCutting
     public class HelperService : IHelperService
     {
         private static Random random = new Random();
-        public string RandomString(int length)
+        public string RandomNumber(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const string chars = "0123456789";
             return new string(Enumerable.Repeat(chars, length)
                 .Select(s => s[random.Next(s.Length)]).ToArray());
         }

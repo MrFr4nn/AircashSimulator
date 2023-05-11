@@ -16,7 +16,6 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
     return ({
         generatePartnerCode: generatePartnerCode,
         cancelTransaction: cancelTransaction,
-        refundTransaction: refundTransaction,
         getTransactions: getTransactions
     });
     function generatePartnerCode(amount, description, locationID) {
@@ -38,18 +37,6 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
             url: config.baseUrl + "AircashPay/CancelTransaction",
             data: {
                 partnerTransactionID: partnerTransactionID
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-
-    function refundTransaction(amount, partnerTransactionID) {
-        var request = $http({
-            method: 'POST',
-            url: config.baseUrl + "AircashPay/RefundTransaction",
-            data: {
-                partnerTransactionID: partnerTransactionID,
-                amount: amount,
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -151,28 +138,6 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
             });
     }
 
-    $scope.refundResponded = false;
-    $scope.refundTransaction = function (transactionId) {
-        $scope.refundBusy = true;
-        $scope.refundResponded = false;
-        acPayService.refundTransaction($scope.refundTransactionModel.amount, transactionId)
-            .then(function (response) {
-                if (response) {
-                    $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.refundSequence = response.sequence;
-
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                }
-                $scope.refundBusy = false;
-                $scope.refundResponded = true;
-            }, () => {
-                console.log("error");
-            });
-    }
-
     $scope.getTransactions = function (reset) {
         if (reset) $scope.setDefaults();
         acPayService.getTransactions($scope.pageSize, $scope.pageNumber)
@@ -219,19 +184,6 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                 currencyID: 191,
                 aircashTransactionID: "122e5e33-b5fb-4398-b138-c60582b9fa2b",
                 signature: "Ff3oSWm20n...",
-            }
-        },
-        refundTransaction: {
-            requestExample: {
-                amount: 50,
-                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                partnerTransactionID: "28f0f0db-69cf-4350-8084-a0d431c2c837",
-                refundPartnerTransactionID: "abc66734-9d5a-4f7f-891a-185e1bb3144a",
-                signature: "CQ83DaMKix..."
-            },
-            errorResponseExample: {
-                ErrorCode: 3,
-                ErrorMessage: "Requested amount is higher than remaining amount from the original transaction"
             }
         }
     };
