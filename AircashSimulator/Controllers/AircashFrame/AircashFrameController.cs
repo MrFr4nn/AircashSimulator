@@ -88,6 +88,9 @@ namespace AircashSimulator.Controllers.AircashFrame
                 PartnerId = SettingsService.AircashFramePartnerId,
                 UserId = Guid.NewGuid(),
                 Amount = initiateRequest.Amount,
+                FirstName = initiateRequest.FirstName,
+                LastName = initiateRequest.LastName,
+                BirthDate = initiateRequest.BirthDate,
                 PayType = initiateRequest.PayType,
                 PayMethod = initiateRequest.PayMethod
             };
