@@ -6,7 +6,7 @@ namespace Services.AbonOnlinePartner
 {
     public interface IAbonOnlinePartnerService
     {
-        Task<object> ValidateCoupon(string CouponCode, Guid partnerId, string partnerPrivateKey, string partnerPrivateKeyPass);
+        Task<object> ValidateCoupon(string CouponCode, Guid UserId, Guid partnerId, string partnerPrivateKey, string partnerPrivateKeyPass);
         Task<object> ConfirmTransaction(string CouponCode, Guid UserId, Guid partnerId, string partnerPrivateKey, string partnerPrivateKeyPass);
     }
 }

@@ -39,6 +39,7 @@ namespace Services.AircashPosDeposit
         {
             Response returnResponse = new Response();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var user = AircashSimulatorContext.Users.Where(x => x.UserId == new Guid(partnerUserId)).FirstOrDefault();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
             var request = new AircashCheckUserRQ()
             {
@@ -53,7 +54,7 @@ namespace Services.AircashPosDeposit
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashCheckUserV4Endpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(user != null ? user.Environment : EnvironmentEnum.Staging, EndpointEnum.M2)}{AircashCheckUserV4Endpoint}");
 
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserRS>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
@@ -65,6 +66,7 @@ namespace Services.AircashPosDeposit
         {
             Response returnResponse = new Response();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var user = AircashSimulatorContext.Users.Where(x => x.UserId == new Guid(partnerUserID)).FirstOrDefault();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
             var request = new AircashCreatePayoutRQ()
             {
@@ -82,7 +84,7 @@ namespace Services.AircashPosDeposit
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{AircashCreatePayoutV4Endpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(user != null ? user.Environment : EnvironmentEnum.Staging, EndpointEnum.M2)}{AircashCreatePayoutV4Endpoint}");
 
             //var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
             //returnResponse.ServiceResponse = serviceResponse;

@@ -133,7 +133,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         [HttpPost]
         public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
-            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId);
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(UserContext.GetUserId(User) ,SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId);
             return Ok(response);
         }
         [HttpPost]
@@ -142,7 +142,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             var initiateRequestDTO = new InititateRequestV2Dto()
             {
                 PartnerId = SettingsService.AircashFramePartnerId,
-                UserId = UserContext.GetUserId(User),
+                UserId = Guid.NewGuid(),
                 Amount = SettingsService.AircashFrameDefaultAmount,
                 PayType = PayTypeEnum.Payout,
                 PayMethod = PayMethodEnum.Payout,
@@ -214,7 +214,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 default:
                     return BadRequest();
             }
-            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(partnerId, partnerTransactionId.ToString());
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(Guid.NewGuid() ,partnerId, partnerTransactionId.ToString());
             return Ok(response);
         }
     }

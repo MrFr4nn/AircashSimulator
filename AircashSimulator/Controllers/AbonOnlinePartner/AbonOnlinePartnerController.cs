@@ -30,7 +30,7 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> ValidateCoupon(ValidateCouponRequest validateCouponRequest)
         {
-            var response = await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, UserContext.GetUserId(User), SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
         }
 
@@ -38,8 +38,7 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var userId = UserContext.GetUserId(User);
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, UserContext.GetUserId(User), SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
         }
         public async Task<IActionResult> ConfirmCashierTransaction(ConfirmTransactionRequest confirmTransactionRequest)
@@ -85,7 +84,7 @@ namespace AircashSimulator
                 default:
                     return Ok();
             }
-            var response = await AbonOnlinePartnerService.ValidateCoupon(couponCode, partnerId, privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonOnlinePartnerService.ValidateCoupon(couponCode, Guid.NewGuid(), partnerId, privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
         }
 
