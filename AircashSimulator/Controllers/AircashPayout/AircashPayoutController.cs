@@ -46,7 +46,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
-            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId);
+            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId, UserContext.GetUserId(User));
             return Ok(response);
         }
     }
