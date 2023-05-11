@@ -44,7 +44,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckCode(CheckCodeDTO checkCodeDTO)
         {
-            var response = await AircashPayoutV2Service.CheckCode(PartnerId, checkCodeDTO.Barcode);
+            var response = await AircashPayoutV2Service.CheckCode(UserContext.GetUserId(User), PartnerId, checkCodeDTO.Barcode);
             return Ok(response);
         }
 
@@ -58,7 +58,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
-            var response = await AircashPayoutV2Service.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId);
+            var response = await AircashPayoutV2Service.CheckTransactionStatus(UserContext.GetUserId(User), checkTransactionStatusRequest.PartnerTransactionId);
             return Ok(response);
         }
 

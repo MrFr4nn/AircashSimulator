@@ -88,7 +88,7 @@ namespace AircashSimulator.Controllers
                 PartnerTransactionId = new Guid(cancelTransactionRequest.PartnerTransactionID),
                 UserId = UserContext.GetUserId(User)
             };
-            var response = await AircashPayService.CancelTransaction(cancelTransactionDTO);
+            var response = await AircashPayService.CancelTransaction(cancelTransactionDTO, UserContext.GetUserId(User));
             return Ok(response);
         }
 
@@ -103,7 +103,7 @@ namespace AircashSimulator.Controllers
                 RefundPartnerTransactionId = Guid.NewGuid(),
                 Amount= refundTransactionRequest.Amount
             };
-            var response = await AircashPayService.RefundTransaction(refundTransactionDTO);
+            var response = await AircashPayService.RefundTransaction(refundTransactionDTO, UserContext.GetUserId(User));
             return Ok(response);
         }
 

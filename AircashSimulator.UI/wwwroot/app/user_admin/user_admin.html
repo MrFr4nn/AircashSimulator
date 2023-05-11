@@ -92,46 +92,48 @@
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <div class="mb-3">
-                            <label class="form-label">Username: </label>
-                            <input type="text" class="form-control" ng-model="user.userName" />
-                        </div>
+                        <form action="/" method="POST" name="saveUserForm">
+                            <div class="mb-3">
+                                <label class="form-label">Username: </label>
+                                <input type="text" class="form-control" ng-model="user.userName" ng-required="true" />
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Password: </label>
-                            <input type="password" class="form-control" ng-model="user.password" />
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label">Password: </label>
+                                <input type="password" class="form-control" ng-model="user.password" ng-required="isNewUser" />
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Confirm Password: </label>
-                            <input type="password" class="form-control" ng-model="ConfirmPassword" />
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label">Confirm Password: </label>
+                                <input type="password" class="form-control" ng-model="ConfirmPassword" ng-required="isNewUser" />
+                            </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Email: </label>
-                            <input type="email" class="form-control" ng-model="user.email" />
-                        </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email: </label>
+                                <input type="text" class="form-control" ng-model="user.email" ng-required="true" />
+                            </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Partner</label>
-                            <select id="selPartner">
+                            <div class="form-group">
+                                <label class="form-label">Partner</label>
+                                <select id="selPartner" ng-required="true">
 
-                                <option ng-repeat="partner in partners" ng-selected="user.partner == partner" value="{{partner.id}}">{{partner.name}}</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Environment</label>
-                            <select class="form-control" ng-model="user.environment" ng-required="true">
-                                <option value="1" ng-selected="user.environment == 1">Dev</option>
-                                <option value="2" ng-selected="user.environment == 2">Staging</option>
-                            </select>
-                        </div>
+                                    <option ng-repeat="partner in partners" ng-selected="user.partner == partner" value="{{partner.id}}">{{partner.name}}</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Environment</label>
+                                <select class="form-control" ng-model="user.environment" ng-required="true">
+                                    <option value="1" ng-selected="user.environment == 1">Dev</option>
+                                    <option value="2" ng-selected="user.environment == 2">Staging</option>
+                                </select>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                <button type="button" ng-click="checkPassword();" class="btn btn-primary" ng-disabled="user.userName == '' || user.password == '' || user.password == null || ConfirmPassword == '' || ConfirmPassword == null || user.email == '' ">Save user</button>
+                <button type="button" ng-click="checkPassword();" class="btn btn-primary" ng-disabled="saveUserForm.$invalid">Save user</button>
             </div>
         </div>
     </div>

@@ -79,6 +79,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         $location.path('/forbidden');
     }
 
+    $scope.isNewUser = false;
     $scope.users = [];
     $scope.partners = [];
     $scope.pageSize = 10;
@@ -128,10 +129,12 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         $scope.ConfirmPassword = null;
         if ($scope.user.partner != undefined) {
             $("#selPartner").val($scope.user.partner.id).change();
+            $scope.isNewUser = false;
         }
         else
         {
             $("#selPartner").val(null).change();
+            $scope.isNewUser = true;
         }
         if ($scope.user.environment == undefined) {
             $scope.user.environment = 2;

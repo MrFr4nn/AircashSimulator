@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace Services.AircashPay
 {
@@ -6,7 +7,7 @@ namespace Services.AircashPay
     {
         Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO);
         Task<object> ConfirmTransaction(TransactionDTO transactionDTO);
-        Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO);
-        Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO);
+        Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO, Guid userId);
+        Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO, Guid userId);
     }
 }

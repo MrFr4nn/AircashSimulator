@@ -24,7 +24,7 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest) 
         {
             generateTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
-            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest);
+            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest, UserContext.GetUserId(User));
             return Ok(response);
         }
         [HttpPost]
@@ -48,7 +48,7 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CashierGenerateTransaction(GenerateTransactionRequest generateTransactionRequest)
         {
             generateTransactionRequest.PartnerID = CashierPartnerId;
-            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest);
+            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest, Guid.NewGuid());
             return Ok(response);
         }
         [HttpPost]

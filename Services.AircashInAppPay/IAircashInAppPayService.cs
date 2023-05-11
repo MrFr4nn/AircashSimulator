@@ -8,7 +8,7 @@ namespace Services.AircashInAppPay
 {
     public interface IAircashInAppPayService
     {
-        Task<object> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest);
+        Task<object> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest, Guid userId);
         Task<object> RefundTransaction(RefundTransactionRequest refundTransactionRequest);
     }
 }

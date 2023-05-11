@@ -29,8 +29,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> CheckCode(CheckCodeRequest checkCodeRequest)
         {
-            var partnerId = UserContext.GetPartnerId(User);
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, partnerId);
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, UserContext.GetPartnerId(User), UserContext.GetUserId(User));
             return Ok(response);
         }
 
@@ -38,16 +37,14 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var partnerId = UserContext.GetPartnerId(User);
-            var userId = UserContext.GetUserId(User);
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, partnerId, userId);
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, UserContext.GetPartnerId(User), UserContext.GetUserId(User));
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierCheckCode(CheckCodeRequest checkCodeRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, new Guid(PARTNER_ID));
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, new Guid(PARTNER_ID), Guid.NewGuid());
             return Ok(response);
         }
 
@@ -62,8 +59,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
-            var partnerId = UserContext.GetPartnerId(User);
-            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, partnerId);
+            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, UserContext.GetPartnerId(User), UserContext.GetUserId(User));
             return Ok(response);
         }
 
@@ -71,9 +67,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> CancelTransaction(CancelTransactionRequest cancelTransactionRequest)
         {
-            var partnerId = UserContext.GetPartnerId(User);
-            var userId = UserContext.GetUserId(User);
-            var response = await AircashPaymentAndPayoutService.CancelTransaction(cancelTransactionRequest.PartnerTransactionID, cancelTransactionRequest.LocationID, partnerId, userId);
+            var response = await AircashPaymentAndPayoutService.CancelTransaction(cancelTransactionRequest.PartnerTransactionID, cancelTransactionRequest.LocationID, UserContext.GetPartnerId(User), UserContext.GetUserId(User));
             return Ok(response);
         }
     }
