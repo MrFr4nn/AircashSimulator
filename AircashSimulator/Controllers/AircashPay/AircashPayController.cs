@@ -9,6 +9,7 @@ using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Controllers.AircashPay;
+using Services.User;
 
 namespace AircashSimulator.Controllers
 {
@@ -19,13 +20,15 @@ namespace AircashSimulator.Controllers
         private IAircashPayService AircashPayService;
         private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
+        private IUserService UserService;
         private readonly Guid PartnerIdCashier = new Guid("8db69a48-7d61-48e7-9be8-3160549c7f17");
         private readonly Guid UserIdCashier = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
-        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration)
+        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService)
         {
             AircashPayService = aircashPayService;
             UserContext = userContext;
             AircashConfiguration = aircashConfiguration.CurrentValue;
+            UserService = userService;
         }
         
         [HttpPost]
@@ -40,8 +43,8 @@ namespace AircashSimulator.Controllers
                 LocationId = generatePartnerCodeRequest.LocationID,
                 UserId = UserContext.GetUserId(User)
             };
-
-            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, environment);
             return Ok(response);
         }
 
@@ -88,7 +91,8 @@ namespace AircashSimulator.Controllers
                 PartnerTransactionId = new Guid(cancelTransactionRequest.PartnerTransactionID),
                 UserId = UserContext.GetUserId(User)
             };
-            var response = await AircashPayService.CancelTransaction(cancelTransactionDTO);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayService.CancelTransaction(cancelTransactionDTO, environment);
             return Ok(response);
         }
 
@@ -103,7 +107,8 @@ namespace AircashSimulator.Controllers
                 RefundPartnerTransactionId = Guid.NewGuid(),
                 Amount= refundTransactionRequest.Amount
             };
-            var response = await AircashPayService.RefundTransaction(refundTransactionDTO);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayService.RefundTransaction(refundTransactionDTO, environment);
             return Ok(response);
         }
 
@@ -119,7 +124,7 @@ namespace AircashSimulator.Controllers
                 UserId = UserIdCashier
             };
 
-            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO);
+            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, EnvironmentEnum.Staging);
             return Ok(response);
         }
     }

@@ -34,8 +34,12 @@ namespace Service.Settings
         decimal PayoutDefaultAmount { get; }
         decimal PayoutAmountTooSmall { get; }
         decimal PayoutAmountTooBig { get; }
+        string AircashFrameDefaultLocale { get; }
+        decimal AircashFrameDefaultAmount { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
+        Guid AircashFramePartnerTransactionAlreadyExists { get; }
+        Guid AircashFrameTransactionNotProcessed { get; }
         Guid AbonGenerateBlockedPartnerId { get; }
         Guid AbonGeneratePartnerIdsDoNotMatch { get; }
         Guid CouponExistsForTheGivenPartnerTransactionId { get; }

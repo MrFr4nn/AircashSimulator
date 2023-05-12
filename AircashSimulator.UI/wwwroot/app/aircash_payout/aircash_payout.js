@@ -262,13 +262,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             },
             error4003: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "bcfa6e25-baf8-4c17-8b84-fb834b399984",
+                    "partnerID": "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+                    "partnerTransactionID": "caed783c-6489-4101-b2f0-f9d71d330548",
                     "amount": 0.5,
-                    "phoneNumber": "385993072021",
-                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "phoneNumber": "385992500001",
+                    "partnerUserID": "1b678be1-1e76-4f0a-98ba-01aa2f9c4572",
                     "currencyID": 978,
-                    "signature": "q9Z1x6wq+9..."
+                    "signature": "uOMgRYbq38..."
                 },
                 response: {
                     "code": 4003,
@@ -277,13 +277,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             },
             error4004: {
                 request: {
-                    "partnerID": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    "partnerTransactionID": "74a1d93b-5aa0-45e9-ac32-720f3ae3068c",
+                    "partnerID": "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+                    "partnerTransactionID": "a7f9d376-9b48-481b-a945-2f9c039c0435",
                     "amount": 1100,
-                    "phoneNumber": "385993072021",
-                    "partnerUserID": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "phoneNumber": "385992500001",
+                    "partnerUserID": "66459117-bcae-4edb-a7c4-e4aa68ecec49",
                     "currencyID": 978,
-                    "signature": "SS3FUqblyI..."
+                    "signature": "MlrpYRnPcm..."
                 },
                 response: {
                     "code": 4004,

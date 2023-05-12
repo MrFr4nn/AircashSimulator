@@ -5,6 +5,7 @@ using Domain.Entities.Enum;
 using Microsoft.AspNetCore.Mvc;
 using Service.Settings;
 using Services.AircashPayout;
+using Services.User;
 using System;
 using System.Threading.Tasks;
 
@@ -18,11 +19,15 @@ namespace AircashSimulator.Controllers
         private IHelperService HelperService;
         private IAircashPayoutService AircashPayoutService;
         private UserContext UserContext;
+        private IUserService UserService;
+        private readonly Guid PartnerId = new Guid("0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6");
+        private readonly Guid UserId = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
 
-        public AircashPayoutController(IAircashPayoutService aircashPayoutService, UserContext userContext, ISettingsService settingsService, IHelperService helperService)
+        public AircashPayoutController(IAircashPayoutService aircashPayoutService, UserContext userContext, IUserService userService, ISettingsService settingsService, IHelperService helperService)
         {
             AircashPayoutService = aircashPayoutService;
             UserContext = userContext;
+            UserService = userService;
             SettingsService = settingsService;
             HelperService = helperService;
         }
@@ -30,28 +35,31 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckUser(CheckUserRequest checkUserRequest)
         {
-            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, UserContext.GetUserId(User).ToString(), SettingsService.AircashPayoutPartnerId);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, UserContext.GetUserId(User).ToString(), SettingsService.AircashPayoutPartnerId, environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreatePayout(CreatePayoutRequest createPayoutRequest)
         {
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, UserContext.GetUserId(User), SettingsService.AircashPayoutPartnerId);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, UserContext.GetUserId(User), SettingsService.AircashPayoutPartnerId, environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCashierPayout(CreatePayoutRequest createPayoutRequest)
         {
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId);
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
-            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId, environment);
             return Ok(response);
         }
 
@@ -98,7 +106,7 @@ namespace AircashSimulator.Controllers
                 default:
                     return BadRequest();
             }
-            var response = await AircashPayoutService.CreatePayout(phoneNumber, partnerTransactionID, amount, currency, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId);
+            var response = await AircashPayoutService.CreatePayout(phoneNumber, partnerTransactionID, amount, currency, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
     }
