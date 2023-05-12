@@ -48,9 +48,9 @@ namespace AircashFrame
                 ISOCurrencyId = currency,
                 PayType = initiateRequestDTO.PayType,
                 PayMethod = initiateRequestDTO.PayMethod,
-                NotificationUrl = $"{AircashConfiguration.NotificationUrl}",
-                SuccessUrl = $"{AircashConfiguration.SuccessUrl}",
-                DeclineUrl = $"{AircashConfiguration.DeclineUrl}",
+                NotificationUrl = initiateRequestDTO.NotificationUrl,
+                SuccessUrl = initiateRequestDTO.SuccessUrl,
+                DeclineUrl = initiateRequestDTO.DeclineUrl,
                 RequestDateTimeUTC = requestDateTime,
                 TransactionSatus = AcFramePreparedTransactionStatusEnum.Pending
             };
