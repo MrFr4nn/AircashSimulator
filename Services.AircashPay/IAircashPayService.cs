@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Domain.Entities.Enum;
+using System;
 using System.Threading.Tasks;
 
 namespace Services.AircashPay
 {
     public interface IAircashPayService
     {
-        Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO);
+        Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO, EnvironmentEnum environment);
         Task<object> ConfirmTransaction(TransactionDTO transactionDTO);
-        Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO, Guid userId);
-        Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO, Guid userId);
+        Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO, EnvironmentEnum environment);
+        Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO, EnvironmentEnum environment);
     }
 }

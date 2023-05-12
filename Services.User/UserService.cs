@@ -109,6 +109,13 @@ namespace Services.User
             AircashSimulatorContext.Users.Remove(findUser);
             await AircashSimulatorContext.SaveChangesAsync();
         }
+
+        public async Task<EnvironmentEnum> GetUserEnvironment(Guid userId) {
+            var environment = EnvironmentEnum.Staging;
+            var user = AircashSimulatorContext.Users.Where(x => x.UserId == userId).FirstOrDefault();
+            if(user != null) environment = user.Environment;
+            return environment;
+        }
         public async Task<UserDTO> GetUserByIdentifier(string identifier) 
         {
             return await AircashSimulatorContext.Users
