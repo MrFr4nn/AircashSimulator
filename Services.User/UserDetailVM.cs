@@ -1,4 +1,5 @@
 ﻿
+using Domain.Entities.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,6 @@ namespace Services.User
         public string Email { get; set; }
         public PartnerVM Partner { get; set; }
         public string  Password { get; set; }
+        public EnvironmentEnum Environment { get; set; }
     }
 }

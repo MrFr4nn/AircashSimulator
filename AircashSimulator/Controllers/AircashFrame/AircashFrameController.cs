@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.SignalR;
 using AircashSimulator.Controllers.AircashPayment;
 using Service.Settings;
 using AircashSimulator.UI.Pages;
-
+using Microsoft.Extensions.Hosting;
+using Services.User;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -27,8 +28,9 @@ namespace AircashSimulator.Controllers.AircashFrame
         private AircashConfiguration AircashConfiguration;
         private UserContext UserContext;
         public readonly IHubContext<NotificationHub> _hubContext;
+        private IUserService UserService;
 
-        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext)
+        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext, IUserService userService)
         {
             SettingsService = settingsService;
             AircashFrameService = aircashFrameService;
@@ -36,6 +38,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             AircashConfiguration = aircashConfiguration.CurrentValue;
             UserContext = userContext;
             _hubContext = hubContext;
+            UserService = userService;
         }
 
         public async Task SendHubMessage(string method, string msg, int status)
@@ -63,7 +66,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         [Authorize]
         public async Task<IActionResult> InitiateV2(InititateRequestV2Dto initiateRequestV2Dto)
         {
-            var response = await AircashFrameV2Service.Initiate(initiateRequestV2Dto, initiateRequestV2Dto.PartnerTransactionId, initiateRequestV2Dto.Currency);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.Initiate(initiateRequestV2Dto, initiateRequestV2Dto.PartnerTransactionId, initiateRequestV2Dto.Currency, environment);
             return Ok(response);            
         }
 
@@ -120,7 +124,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         [HttpPost]
         public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
-            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId, environment);
             return Ok(response);
         }
         [HttpPost]
@@ -129,7 +134,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             var initiateRequestDTO = new InititateRequestV2Dto()
             {
                 PartnerId = SettingsService.AircashFramePartnerId,
-                UserId = UserContext.GetUserId(User),
+                UserId = Guid.NewGuid(),
                 Amount = SettingsService.AircashFrameDefaultAmount,
                 PayType = PayTypeEnum.Payout,
                 PayMethod = PayMethodEnum.Payout,
@@ -167,7 +172,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 default:
                     return Ok();
             }
-            var response = await AircashFrameV2Service.Initiate(initiateRequestDTO, partnerTransactionId, currency);
+            var response = await AircashFrameV2Service.Initiate(initiateRequestDTO, partnerTransactionId, currency, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -201,7 +206,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 default:
                     return BadRequest();
             }
-            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(partnerId, partnerTransactionId.ToString());
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(partnerId, partnerTransactionId.ToString(), EnvironmentEnum.Staging);
             return Ok(response);
         }
     }

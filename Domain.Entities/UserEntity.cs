@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities.Enum;
+using System;
 
 namespace Domain.Entities
 {
@@ -14,5 +15,6 @@ namespace Domain.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime? BirthDate { get; set; }
+        public EnvironmentEnum Environment { get; set; }
     }
 }

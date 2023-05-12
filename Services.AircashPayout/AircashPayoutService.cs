@@ -34,7 +34,7 @@ namespace Services.AircashPayout
             HttpRequestService = httpRequestService;
         }
 
-        public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId)
+        public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var checkUserResponse = new object();
@@ -52,7 +52,7 @@ namespace Services.AircashPayout
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             checkUserRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{CheckUserEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckUserEndpoint}");
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -66,7 +66,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = checkUserResponse;
             return returnResponse;
         }
-        public async Task<object> CreatePayout(string phoneNumber, decimal amount, Guid partnerUserId, Guid partnerId)
+        public async Task<object> CreatePayout(string phoneNumber, decimal amount, Guid partnerUserId, Guid partnerId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var createPayoutResponse = new object();
@@ -88,7 +88,7 @@ namespace Services.AircashPayout
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             createPayoutRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{CreatePayoutEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CreatePayoutEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<AircashCreatePayoutResponse>(response.ResponseContent);
@@ -116,7 +116,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = createPayoutResponse;
             return returnResponse;
         }
-        public async Task<object> CheckTransactionStatus(Guid partnerTransactionId)
+        public async Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var checkTransactionStatusResponse = new object();
@@ -133,7 +133,7 @@ namespace Services.AircashPayout
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
             checkTransactionStatusRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M2)}{CheckTransactionStatusEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckTransactionStatusEndpoint}");
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {

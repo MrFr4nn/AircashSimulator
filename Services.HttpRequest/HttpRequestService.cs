@@ -57,17 +57,17 @@ namespace Services.HttpRequest
             switch (endpoint)
             {
                 case EndpointEnum.Abon:
-                    return AircashConfiguration.AircashAbonBaseUrl;
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashAbonBaseUrl: AircashConfiguration.AircashAboDevBaseUrl;
                 case EndpointEnum.M2:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.M2StagingBaseUrl : AircashConfiguration.M2DevBaseUrl;
                 case EndpointEnum.M3:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.M3StagingBaseUrl : AircashConfiguration.M3DevBaseUrl;
                 case EndpointEnum.Frame:
-                    return AircashConfiguration.AircashFrameTestUrl;
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashFrameTestUrl : AircashConfiguration.AircashFrameDevTestUrl;
                 case EndpointEnum.FrameV2:
-                    return AircashConfiguration.AircashFrameBaseUrl;
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashFrameBaseUrl : AircashConfiguration.AircashFrameDevBaseUrl;
                 case EndpointEnum.SalesV2:
-                    return AircashConfiguration.AircashSalesBaseUrl;
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashSalesBaseUrl : AircashConfiguration.AircashSalesDevBaseUrl;
                 default:
                     return string.Empty;
             }
