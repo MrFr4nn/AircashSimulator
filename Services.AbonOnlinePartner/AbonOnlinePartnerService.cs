@@ -24,7 +24,7 @@ namespace Services.AbonOnlinePartner
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
         }
-        public async Task<object> ValidateCoupon(string couponCode, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        public async Task<object> ValidateCoupon(string couponCode, string providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
         {
             var validateCouponResponse = new object();
             var abonValidateCouponRequest = new AbonValidateCouponRequest
@@ -57,17 +57,15 @@ namespace Services.AbonOnlinePartner
             return frontResponse;
         }
 
-        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        public async Task<object> ConfirmTransaction(string couponCode, string userId, string providerId,  string partnerPrivateKey, string partnerPrivateKeyPass, string providerTransactionId)
         {
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
             var confirmTransactionResponse = new object();
-            var providerTransactionId = Guid.NewGuid();
             var abonConfirmTransactionRequest = new AbonConfirmTransactionRequest
             {
                 CouponCode = couponCode,
                 ProviderId = providerId,
                 ProviderTransactionId = providerTransactionId,
-                UserId = userId.ToString()
+                UserId = userId
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
@@ -80,15 +78,32 @@ namespace Services.AbonOnlinePartner
             {
                 var successResponse = JsonConvert.DeserializeObject<AbonConfirmTransactionResponse>(response.ResponseContent);
                 var responseDateTimeUTC = DateTime.UtcNow;
+                Guid userIdGuid;
+                Guid providerIdGuid;
+                if (userId == null) {
+                    userIdGuid= Guid.Empty;
+                }
+                else
+                {
+                    userIdGuid = new Guid(userId);
+                }
+                if (providerId == null)
+                {
+                    providerIdGuid = Guid.Empty;
+                }
+                else
+                {
+                    providerIdGuid = new Guid(providerId);
+                }
                 var newTransaction = new TransactionEntity
                 {
                     Amount = successResponse.CouponValue,
                     ISOCurrencyId = successResponse.ISOCurrency,
-                    PartnerId = providerId,
+                    PartnerId = providerIdGuid,
                     TransactionId = Guid.NewGuid(),
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = DateTime.UtcNow,
-                    UserId = userId,
+                    UserId = userIdGuid ,
                     ServiceId = ServiceEnum.AbonUsed
                 };
                 AircashSimulatorContext.Add(newTransaction);

@@ -30,7 +30,7 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> ValidateCoupon(ValidateCouponRequest validateCouponRequest)
         {
-            var response = await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, validateCouponRequest.ProviderId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
         }
 
@@ -38,13 +38,13 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var userId = UserContext.GetUserId(User);
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, userId, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, confirmTransactionRequest.UserId, confirmTransactionRequest.ProviderId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, confirmTransactionRequest.ProviderTransactionId);
             return Ok(response);
         }
         public async Task<IActionResult> ConfirmCashierTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, Guid.NewGuid(), SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var partnerTransactionId = Guid.NewGuid().ToString();
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, Guid.NewGuid().ToString(), SettingsService.AbonOnlinePartnerId.ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, partnerTransactionId);
             return Ok(response);
         }
 
@@ -85,7 +85,7 @@ namespace AircashSimulator
                 default:
                     return Ok();
             }
-            var response = await AbonOnlinePartnerService.ValidateCoupon(couponCode, partnerId, privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonOnlinePartnerService.ValidateCoupon(couponCode, partnerId.ToString(), privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             return Ok(response);
         }
 
@@ -137,7 +137,8 @@ namespace AircashSimulator
                 default:
                     return Ok();
             }
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(couponCode, userId, partnerId, privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            string partnerTransactionId = Guid.NewGuid().ToString();
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(couponCode, userId.ToString(), partnerId.ToString(), privateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass,partnerTransactionId);
             return Ok(response);
         }
     }

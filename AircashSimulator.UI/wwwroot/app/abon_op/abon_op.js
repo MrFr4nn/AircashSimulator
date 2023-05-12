@@ -19,23 +19,28 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         validateSimulateError: validateSimulateError,
         confirmSimulateError: confirmSimulateError,
     });
-    function validateCoupon(couponCode) {
+    function validateCoupon(couponCode, providerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonOnlinePartner/ValidateCoupon",
             data: {
-                CouponCode: couponCode
+                CouponCode: couponCode,
+                ProviderId: providerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function confirmTransaction(couponCode) {
+    function confirmTransaction(couponCode, providerId, providerTransactionId, userId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl +"AbonOnlinePartner/ConfirmTransaction",
             data: {
-                CouponCode: couponCode
+                CouponCode: couponCode,
+                ProviderId: providerId,
+                ProviderTransactionId: providerTransactionId,
+                UserId: userId
+
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -75,10 +80,14 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     }
 
     $scope.validateCouponModel = {
-        couponCode: ""
+        couponCode: null,
+        providerId:"e9fb671b-154e-4918-9788-84b6758fb082"
     };
     $scope.confirmTransactionModel = {
-        couponCode: ""
+        couponCode: null,
+        providerId: "e9fb671b-154e-4918-9788-84b6758fb082",
+        providerTransactionId: "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+        userId:"4149ba7d-e4f7-4c77-8393-d03e6691c03b"
     };
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
@@ -89,7 +98,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.validateCoupon = function () {
         $scope.validateBusy = true;
         $scope.validateResponded = false;
-        abonOpService.validateCoupon($scope.validateCouponModel.couponCode)
+        abonOpService.validateCoupon($scope.validateCouponModel.couponCode, $scope.validateCouponModel.providerId)
             .then(function (response) {
                 if (response) {
                     $scope.ValidateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -112,7 +121,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.confirmTransaction = function () {
         $scope.confirmBusy = true;
         $scope.confirmResponded = false;
-        abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode)
+        abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode, $scope.confirmTransactionModel.providerId, $scope.confirmTransactionModel.providerTransactionId, $scope.confirmTransactionModel.userId)
             .then(function (response) {
                 if (response) {
                     $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
