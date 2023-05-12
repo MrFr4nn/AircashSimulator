@@ -10,7 +10,7 @@ namespace Services.AircashPayout
     public interface IAircashPayoutService
     {
         Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, EnvironmentEnum environment);
-        Task<object> CreatePayout(string phoneNumber, decimal amount, Guid partnerUserId, Guid partnerId, EnvironmentEnum environment);
+        Task<object> CreatePayout(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, EnvironmentEnum environment);
         Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment);
     }
 }

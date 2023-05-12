@@ -29,6 +29,11 @@ namespace Service.Settings
         decimal AbonInvalidValue { get; }
         string TestAircashPaymentPath { get; }
         string TestAircashPaymentPass { get; }
+        string TestPhoneNumber { get; }
+        string BlockedPhoneNumber { get; }
+        decimal PayoutDefaultAmount { get; }
+        decimal PayoutAmountTooSmall { get; }
+        decimal PayoutAmountTooBig { get; }
         string AircashFrameDefaultLocale { get; }
         decimal AircashFrameDefaultAmount { get; }
         Guid AbonOnlinePartnerId { get; }
@@ -38,6 +43,8 @@ namespace Service.Settings
         Guid AbonGenerateBlockedPartnerId { get; }
         Guid AbonGeneratePartnerIdsDoNotMatch { get; }
         Guid CouponExistsForTheGivenPartnerTransactionId { get; }
+        Guid AircashPayoutPartnerId { get; }
+        Guid PartnerTransactionIdAlreadyExists { get; }
         Guid BlockedUserId { get; }
         Guid AircashFramePartnerId { get; }
     }

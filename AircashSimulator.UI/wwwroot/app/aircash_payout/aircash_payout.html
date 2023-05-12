@@ -505,7 +505,178 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
         </div>
     </uib-tab>
     <uib-tab index="createPayout1-tab-6" heading="Error response example" classes="nav-item">
-        <jsonformatter data="aircashPayout.createPayout.errorResponseExample"></jsonformatter>
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="createPayoutError-tab-0" heading="4000 - Unknown phone number" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4000)">
+                        Request
+                        <jsonformatter data="errorExamples.createPayout.error4000.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=25&CurrencyID=978&PartnerID=0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6&PartnerTransactionID=b14643f4-1458-44a2-aa98-45c9bc3578f9&PartnerUserID=7b50c438-0260-4364-b5ee-2ba1036e2485&PhoneNumber=524838804872
+                    </div>
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4000)">
+                        Response
+                        <jsonformatter data="errorExamples.createPayout.error4000.response"></jsonformatter>
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4000">
+                        Request ({{errorPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutRequest"></jsonformatter>
+
+                        Sequence: {{errorPayoutSequence}}<br />
+
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4000">
+                        Response ({{errorPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="simulatePayoutError(4000)" ng-disabled="errorServiceBusy">Simulate <i ng-if="errorServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorPayoutRequestCopy)" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4000">Copy Request</button><button class="btn btn-white mt-2" ng-click="copyToClipboard(errorPayoutRequestCopy)" ng-if="errorPayoutResponded && currentPayoutErrorCode == 1">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="createPayoutError-tab-1" heading="4002 - Partner Transaction ID already exists" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4002)">
+                        Request
+                        <jsonformatter data="errorExamples.createPayout.error4002.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=25&CurrencyID=978&PartnerID=0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6&PartnerTransactionID=c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8&PartnerUserID=44aa69e2-a732-4d9c-b016-70b0b9fee532&PhoneNumber=385992500001
+                    </div>
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4002)">
+                        Response
+                        <jsonformatter data="errorExamples.createPayout.error4002.response"></jsonformatter>
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4002">
+                        Request ({{errorPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutRequest"></jsonformatter>
+
+                        Sequence: {{errorPayoutSequence}}<br />
+
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4002">
+                        Response ({{errorPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="simulatePayoutError(4002)" ng-disabled="errorServiceBusy">Simulate <i ng-if="errorServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorPayoutRequestCopy)" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4002">Copy Request</button>
+
+            </uib-tab>
+            <uib-tab index="createPayoutError-tab-2" heading="4003 - Amount too small" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4003)">
+                        Request
+                        <jsonformatter data="errorExamples.createPayout.error4003.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=0.5&CurrencyID=978&PartnerID=0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6&PartnerTransactionID=caed783c-6489-4101-b2f0-f9d71d330548&PartnerUserID=1b678be1-1e76-4f0a-98ba-01aa2f9c4572&PhoneNumber=385992500001
+                    </div>
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4003)">
+                        Response
+                        <jsonformatter data="errorExamples.createPayout.error4003.response"></jsonformatter>
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4003">
+                        Request ({{errorPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutRequest"></jsonformatter>
+
+                        Sequence: {{errorPayoutSequence}}<br />
+
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4003">
+                        Response ({{errorPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="simulatePayoutError(4003)" ng-disabled="errorServiceBusy">Simulate <i ng-if="errorServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorPayoutRequestCopy)" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4003">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="createPayoutError-tab-3" heading="4004 - Amount too big" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4004)">
+                        Request
+                        <jsonformatter data="errorExamples.createPayout.error4004.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=1100&CurrencyID=978&PartnerID=0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6&PartnerTransactionID=a7f9d376-9b48-481b-a945-2f9c039c0435&PartnerUserID=66459117-bcae-4edb-a7c4-e4aa68ecec49&PhoneNumber=385992500001
+                    </div>
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4004)">
+                        Response
+                        <jsonformatter data="errorExamples.createPayout.error4004.response"></jsonformatter>
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4004">
+                        Request ({{errorPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutRequest"></jsonformatter>
+
+                        Sequence: {{errorPayoutSequence}}<br />
+
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4004">
+                        Response ({{errorPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="simulatePayoutError(4004)" ng-disabled="errorServiceBusy">Simulate <i ng-if="errorServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorPayoutRequestCopy)" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4004">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="createPayoutError-tab-4" heading="4005 - User reached transaction limit or user is blocked" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4005)">
+                        Request
+                        <jsonformatter data="errorExamples.createPayout.error4005.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=25&CurrencyID=978&PartnerID=0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6&PartnerTransactionID=e73dd1e2-c3fe-4942-9d81-510bc63cf2e5&PartnerUserID=6d091d23-c1d0-4637-b26a-186c1237fa0d&PhoneNumber=385992500002
+                    </div>
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4005)">
+                        Response
+                        <jsonformatter data="errorExamples.createPayout.error4005.response"></jsonformatter>
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4005">
+                        Request ({{errorPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutRequest"></jsonformatter>
+
+                        Sequence: {{errorPayoutSequence}}<br />
+
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4005">
+                        Response ({{errorPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="simulatePayoutError(4005)" ng-disabled="errorServiceBusy">Simulate <i ng-if="errorServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorPayoutRequestCopy)" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4005">Copy Request</button>
+
+            </uib-tab>
+            <uib-tab index="createPayoutError-tab-5" heading="4006 - Currencies do not match" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4006)">
+                        Request
+                        <jsonformatter data="errorExamples.createPayout.error4006.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=25&CurrencyID=191&PartnerID=0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6&PartnerTransactionID=5c7242ab-05cf-4188-9f0c-f00971c38c12&PartnerUserID=f8a95979-d6ab-4583-9bbd-a43d0ccb7e66&PhoneNumber=385992500001
+                    </div>
+                    <div class="col-6" ng-if="!(errorPayoutResponded && currentPayoutErrorCode == 4006)">
+                        Response
+                        <jsonformatter data="errorExamples.createPayout.error4006.response"></jsonformatter>
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4006">
+                        Request ({{errorPayoutRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutRequest"></jsonformatter>
+
+                        Sequence: {{errorPayoutSequence}}<br />
+
+                    </div>
+                    <div class="col-6" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4006">
+                        Response ({{errorPayoutResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorPayoutResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="simulatePayoutError(4006)" ng-disabled="errorServiceBusy">Simulate <i ng-if="errorServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorPayoutRequestCopy)" ng-if="errorPayoutResponded && currentPayoutErrorCode == 4006">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
     </uib-tab>
     <uib-tab index="createPayout1-tab-7" heading="Try it out" classes="nav-item">
         <div class="row">
