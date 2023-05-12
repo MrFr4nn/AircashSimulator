@@ -61,22 +61,9 @@ namespace AircashSimulator.Controllers.AircashFrame
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> InitiateV2(InitiateRequest initiateRequest)
+        public async Task<IActionResult> InitiateV2(InititateRequestV2Dto initiateRequestV2Dto)
         {
-            var initiateRequestDTO = new InititateRequestV2Dto
-            {
-                PartnerId = SettingsService.AircashFramePartnerId,
-                UserId = UserContext.GetUserId(User),
-                Amount = initiateRequest.Amount,
-                PayType = (PayTypeEnum)initiateRequest.PayType,
-                PayMethod = (PayMethodEnum)initiateRequest.PayMethod,
-                Locale = initiateRequest.Locale,
-                OriginUrl = initiateRequest.OriginUrl,
-                DeclineUrl = initiateRequest.DeclineUrl,
-                SuccessUrl = initiateRequest.SuccessUrl,
-                CancelUrl = initiateRequest.CancelUrl
-            };
-            var response = await AircashFrameV2Service.Initiate(initiateRequestDTO, Guid.NewGuid(), CurrencyEnum.EUR);
+            var response = await AircashFrameV2Service.Initiate(initiateRequestV2Dto, initiateRequestV2Dto.PartnerTransactionId, initiateRequestV2Dto.Currency);
             return Ok(response);            
         }
 

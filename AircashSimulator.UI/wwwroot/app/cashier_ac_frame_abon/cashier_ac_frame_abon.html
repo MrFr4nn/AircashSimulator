@@ -4,7 +4,7 @@
         <div class="card">
             <div class="card-header text-white" style="background-color: #F62727;">
                 <div class="col-md-6" style="float:left;">
-                    <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - AcPay</h2>
+                    <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - Abon</h2>
                 </div>
                 <div class="col-md-6" style="float:right;">
                     <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
@@ -27,13 +27,17 @@
                     <div class="col-md-1"></div>
                 </div>
                 <form action="/" method="POST" name="transactionForm1">
-                    <fieldset>                        
+                    <fieldset>
                         <div class="row row-cols-1 row-cols-sm-2">
                             <div class="col-md-1"></div>
                             <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
                                 <div class="form-check">
                                     <input ng-checked="true" ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-init="confirmCheckBox=true" ng-change="checkStatusBtnInitiateAcFrame(confirmCheckBox)" />
                                     <label class="form-check-label" for="checkbox1" style=" padding-top: 4px; padding-left:10px; font-size:15px;"><a href="https://abon.cash/terms-conditions-en/" rel="nofollow" target="_blank">I accept the Abon Terms&Conditions</a></label>
+                                </div>
+                                <div class="mt-3" ng-if="useAmountCheckBox">
+                                    <label class="form-label">Amount</label>
+                                    <input class="form-control form-control-lg" ng-model="abon.amount" type="text" placeholder="Enter amount" ng-disabled="createCashierAcFrameAbonServiceBusy" ng-required="true">
                                 </div>
                             </div>
                             <div class="col-md-1"></div>
@@ -58,6 +62,31 @@
                         </div>
                     </fieldset>
                 </form>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#AcFrameAbonConfiguration" aria-expanded="false" aria-controls="AcFrameAbonConfiguration">
+                                            Configuration
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="AcFrameAbonConfiguration" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input ng-checked="false" ng-model="useAmountCheckBox" class="form-check-input" type="checkbox" id="checkbox2" style=" width: 1.55rem; height: 1.55rem;" ng-init="useAmountCheckBox=false" />
+                                            <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Send amount with Abon code</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

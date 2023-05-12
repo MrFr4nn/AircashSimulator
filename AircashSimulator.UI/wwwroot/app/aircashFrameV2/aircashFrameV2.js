@@ -22,20 +22,24 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         transactionStatusSimulateError: transactionStatusSimulateError,
     });
 
-    function initiateRedirectCheckout(payType, payMethod, amount, currency, locale, successUrl, declineUrl, cancelUrl, originUrl) {
+    function initiateRedirectCheckout(initiateModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/InitiateV2",
             data: {
-                PayType: payType,
-                PayMethod: payMethod,
-                Amount: amount,
-                Currency: currency,
-                Locale: locale,
-                SuccessUrl: successUrl,
-                DeclineUrl: declineUrl,
-                CancelUrl: cancelUrl,
-                OriginUrl: "https://domain.com"
+                PartnerId: initiateModel.partnerId,
+                UserId: initiateModel.partnerUserId,
+                NotificationUrl: initiateModel.notificationUrl,
+                PayType: initiateModel.payType,
+                PayMethod: initiateModel.payMethod,
+                Amount: initiateModel.amount,
+                PartnerTransactionId: initiateModel.partnerTransactionId,
+                Currency: initiateModel.currency,
+                Locale: initiateModel.locale,
+                SuccessUrl: initiateModel.successUrl,
+                DeclineUrl: initiateModel.declineUrl,
+                CancelUrl: initiateModel.cancelUrl,
+                OriginUrl: initiateModel.originUrl
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -101,7 +105,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
 }
 ]);
 
-acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
@@ -115,39 +119,104 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
     //$scope.successUrl = "https://localhost:44317/#!/success";
     //$scope.declineUrl = "https://localhost:44317/#!/decline";
     //$scope.cancelUrl = "https://localhost:44317/#!/decline";
-    $scope.originUrl = "https://localhost:44317";
+    //$scope.originUrl = "https://localhost:44317";
 
-    $scope.initiateModels = [0, 1, 2];
+    $scope.currencyOptions = [
+        {
+            currencyIsoCode: "EUR",
+            currencyId: 978
+        },
+        {
+            currencyIsoCode: "BAM",
+            currencyId: 977
+        },
+        {
+            currencyIsoCode: "RON",
+            currencyId: 946
+        },
+    ];
 
-    $scope.initiateModelSelected = $scope.initiateModels[0];
+    $scope.payMethodOptions = [
+        {
+            name: "Abon",
+            code: 0
+        },
+        {
+            name: "AcPay",
+            code: 2
+        },
+        {
+            name: "Payout",
+            code: 10
+        }
+    ];
 
-    $scope.initiateModels =
-        [
-            {
-                payType: 0,
-                payMethod: 2,
-                amount: 10,
-                selected: true
-            },
-            {
-                payType: 0,
-                payMethod: 0,
-                amount: 0,
-                selected: true
-            },
-            {
-                payType: 1,
-                payMethod: 10,
-                amount: 10,
-                selected: true
-            }
-        ];
-    $scope.initiateModel = $scope.initiateModels[0];
+    $scope.payTypeOptions = [
+        {
+            name: "Payment",
+            code: 0
+        },
+        {
+            name: "Payout",
+            code: 1
+        }
+    ];
 
-    $scope.setInititateModel = function (value) {
-        $scope.initiateModel = $scope.initiateModels[value.initiateModelSelected];
-        $scope.initiateModelSelected = value.initiateModelSelected;
+    $scope.initiateModels =[
+        {
+            name: "Aircash payment",
+            payType: 0,
+            payMethod: 2,
+            amount: 10,
+        },
+        {
+            name: "Abon deposit",
+            payType: 0,
+            payMethod: 0,
+            amount: 0,
+        },
+        {
+            name: "Aircash withdrawal",
+            payType: 1,
+            payMethod: 10,
+            amount: 10,
+        }
+    ];
+    $scope.initiateModelSelected = {};
+    $scope.initiateModel = {};
+    $scope.initiateModelSelected.data = $scope.initiateModels[0];
+
+    $scope.setInititateModel = function () {
+        $scope.initiateModel.payType = $scope.initiateModelSelected.data.payType;
+        $scope.initiateModel.payMethod = $scope.initiateModelSelected.data.payMethod;
+        $scope.initiateModel.amount = $scope.initiateModelSelected.data.amount;
     };
+
+    $scope.setInititateModel();
+
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+            .replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+    }
+    $scope.setDefaultInitiateModel = function () {
+        $scope.locale.languageInput = "en";
+        $scope.locale.countryISOCodeInput = "HR"
+
+        $scope.initiateModel.partnerId = "5680e089-9e86-4105-b1a2-acd0Cd77653c";
+        $scope.initiateModel.partnerUserId= uuidv4();
+        $scope.initiateModel.notificationUrl = $location.absUrl();
+        $scope.initiateModel.partnerTransactionId = uuidv4();
+        $scope.initiateModel.currency = 978;
+        $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
+        $scope.initiateModel.successUrl = "";
+        $scope.initiateModel.declineUrl = "";
+        $scope.initiateModel.cancelUrl = "";
+        $scope.initiateModel.originUrl = $location.absUrl();
+    }
 
     $scope.transactionId;
 
@@ -172,16 +241,8 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
     $scope.initiateRedirectCheckout = function () {
         $scope.initiateBusy = true;
         $scope.initiateResponded = false;
-        $scope.locale.value = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
-        acFrameV2Service.initiateRedirectCheckout(
-            $scope.initiateModel.payType,
-            $scope.initiateModel.payMethod,
-            $scope.initiateModel.amount,
-            $scope.initiateModel.currency,
-            $scope.locale.value,
-            $scope.successUrl,
-            $scope.declineUrl,
-            $scope.cancelUrl)
+        $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
+        acFrameV2Service.initiateRedirectCheckout($scope.initiateModel)
             .then(function (response) {
                 if (response) {
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -206,6 +267,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
                 $scope.initiateBusy = false;
                 $scope.initiateResponded = true;
             }, () => {
+                $scope.initiateBusy = false;
                 console.log("error");
             });
     };
@@ -345,6 +407,8 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         $scope.pageSize = pageSize;
         $scope.getTransactions();
     };
+
+    $scope.setDefaultInitiateModel();
 
     $scope.setDefaults();
 
