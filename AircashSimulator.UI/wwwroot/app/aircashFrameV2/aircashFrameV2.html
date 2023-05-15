@@ -1579,6 +1579,17 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                     the implementation of the "CheckPlayer" method and the "CreateAndConfirmPayment" method.
                 </td>
             </tr>
+            <tr>
+                <td rowspan="2">12.</td>
+                <td><b>Q:&nbsp; Are we expected to call Status periodically and wait for it to be moved to Pending so that the Confirmation can be called?   </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; Default behaviour of your system would be to wait for notification.  If, from any reason the notification is not received, you can call
+                    "Status" method 30 seconds after Aircash Frame timer expired to make sure there was not any network or other issues and make sure you had the right 
+                    transaction status in your system (the same as in the Aircash system).
+                </td>
+            </tr>
         </table>
     </div>
 
