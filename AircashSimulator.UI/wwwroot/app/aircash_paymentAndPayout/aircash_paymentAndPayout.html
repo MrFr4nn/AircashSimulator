@@ -76,6 +76,20 @@
     </ol>
 </p>
 <hr />
+<h1>Aircash Barcode</h1>
+<p>Aircash barcode is 16 character code, barcode consists of "AC1" or "AC2" and 13-digit unique number. Barcode that begins with "AC1" is for TopUp and barcode that begins "AC2" is for PayOut.</p>
+<div class="row">
+    <div class="mr-3 ml-3 text-center">
+        <img width="400" height="150" src="../../images/Barcode_TopUp.jpg" />
+        <p class="mt-1">TopUp Barcode Example </p>
+    </div>
+    <div class="mr-3 ml-3 text-center">
+        <img width="400" height="150" src="../../images/Barcode_PayOut.jpg" />
+        <p class="mt-1">PayOut Barcode Example </p>
+    </div>
+
+</div>
+<hr />
 <h1>Methods called by the sales partner system to the Aircash system</h1>
 <p>
     The partner should connect to REST methods that receive JSON objects in order to successfully make requests.
@@ -331,29 +345,29 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                 <uib-tab index="CheckCodeTransactionError-tab-3" heading="3 - Transaction limit" classes="nav-item">
                     Simulation not available.
                     <!--<div class="row col-12">
-        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
-            Request
-            <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
-            con
-            Sequence:
-            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
-        </div>
-        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
-            Response
-            <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
-        </div>
-        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
-            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCheckRequest"></jsonformatter>
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
+                            con
+                            Sequence:
+                            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
 
-            Sequence: {{errorCheckSequence}}<br />
+                            Sequence: {{errorCheckSequence}}<br />
 
-        </div>
-        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
-            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCheckResponse"></jsonformatter>
-        </div>
-    </div>-->
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>-->
                     <!--<button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(3)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
                     <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">Copy Request</button>-->
                 </uib-tab>
@@ -655,33 +669,33 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                 <uib-tab index="CheckCodeTransactionError-tab-3" heading="3 - Transaction limit" classes="nav-item">
                     Simulation not available.
                     <!--<div class="row col-12">
-        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
-            Request
-            <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
-            con
-            Sequence:
-            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
-        </div>
-        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
-            Response
-            <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
-        </div>
-        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
-            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCheckRequest"></jsonformatter>
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Request
+                            <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
+                            con
+                            Sequence:
+                            BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                            Response
+                            <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckRequest"></jsonformatter>
 
-            Sequence: {{errorCheckSequence}}<br />
+                            Sequence: {{errorCheckSequence}}<br />
 
-        </div>
-        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
-            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCheckResponse"></jsonformatter>
-        </div>
-    </div>-->
+                        </div>
+                        <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                            Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorCheckResponse"></jsonformatter>
+                        </div>
+                    </div>-->
                     <!--<button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(3)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
                     <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">Copy Request</button>-->
                 </uib-tab>
-</uib-tab>
+        </uib-tab>
         <uib-tab index="CheckCode-tab-7" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-4">
@@ -948,7 +962,7 @@ OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y
                     <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 2)">
                         Request
                         <jsonformatter data="errorExamples.ConfirmTransaction.error2.request"></jsonformatter>
-                        
+
                         Sequence:
                         BarCode=AC15694794016276&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8&PartnerTransactionID=d8b5649c-3001-4c12-bc45-f024d67585c6
                     </div>
@@ -974,29 +988,29 @@ OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y
             <uib-tab index="ConfirmTransactionError-tab-2" heading="3 - Transaction limit" classes="nav-item">
                 Simulation not available.
                 <!--<div class="row col-12">
-        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
-            Request
-            <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
 
-            Sequence:
+                        Sequence:
 
-        </div>
-        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
-            Response
-            <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
-        </div>
-        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
-            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorConfirmRequest"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
 
-            Sequence: {{errorConfirmSequence}}<br />
+                        Sequence: {{errorConfirmSequence}}<br />
 
-        </div>
-        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
-            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-        </div>
-    </div>-->
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>-->
                 <!--<button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
                 <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">Copy Request</button>-->
             </uib-tab>
@@ -1608,60 +1622,60 @@ caaKshrXnbLKujZI9XNo3arbHSVbx7zDQGMEnXQ7BBYMhBEgYNaM6xshqRZtpqT0qNI0pJmts+60m5vi
             <uib-tab index="CancelTransactionError-tab-3" heading="9 - Transaction in wrong status" classes="nav-item">
                 Simulation not available.
                 <!--<div class="row col-12">
-        <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 9)">
-            Request
-            <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 9)">
+                        Request
+                        <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
 
-            Sequence:
-            BarCode=AC23556664963151&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=bc9219ca-6851-4cd2-a652-8d079d6d754e
-        </div>
-        <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 9)">
-            Response
-            <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
-        </div>
-        <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">
-            Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancellRequest"></jsonformatter>
+                        Sequence:
+                        BarCode=AC23556664963151&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=bc9219ca-6851-4cd2-a652-8d079d6d754e
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 9)">
+                        Response
+                        <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">
+                        Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellRequest"></jsonformatter>
 
-            Sequence: {{errorCancellSequence}}<br />
+                        Sequence: {{errorCancellSequence}}<br />
 
-        </div>
-        <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">
-            Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancellResponse"></jsonformatter>
-        </div>
-    </div>
-    <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(9)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
-    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">Copy Request</button>-->
+                    </div>
+                    <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">
+                        Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(9)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 9">Copy Request</button>-->
             </uib-tab>
             <uib-tab index="CancelTransactionError-tab-4" heading="10 - Cancellation period expired" classes="nav-item">
                 Simulation not available.
                 <!--<div class="row col-12">
-        <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 10)">
-            Request
-            <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 10)">
+                        Request
+                        <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
 
-            Sequence:
-            BarCode=AC19637316401565&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=7aed09af-2bc2-406d-8536-af11a3fdb06e
-        </div>
-        <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 10)">
-            Response
-            <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
-        </div>
-        <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">
-            Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancellRequest"></jsonformatter>
+                        Sequence:
+                        BarCode=AC19637316401565&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=7aed09af-2bc2-406d-8536-af11a3fdb06e
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorCancelResponded && cancellCurrentErrorCode == 10)">
+                        Response
+                        <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">
+                        Request ({{errorCancellRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellRequest"></jsonformatter>
 
-            Sequence: {{errorCancellSequence}}<br />
+                        Sequence: {{errorCancellSequence}}<br />
 
-        </div>
-        <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">
-            Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-            <jsonformatter data="errorCancellResponse"></jsonformatter>
-        </div>
-    </div>
-    <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
-    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">Copy Request</button>-->
+                    </div>
+                    <div class="col-sm-6" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">
+                        Response ({{errorCancellResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorCancellResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCancellRequestCopy)" ng-if="errorCancelResponded && cancellCurrentErrorCode == 10">Copy Request</button>-->
             </uib-tab>
         </uib-tabset>
     </uib-tab>
