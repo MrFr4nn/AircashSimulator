@@ -1,0 +1,73 @@
+﻿<div class="row">
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6 col-12">
+        <div class="panel panel-default">
+            <div class="panel-heading bg-red text-white">
+                <h3>Abon</h3>
+                <div class="panel-heading-btn">
+
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="row row-cols-1 row-cols-md-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-lg-10 col-md-12">
+                        <div class="text-center mb-4 mt-3">
+                            <img style="height:100px;" alt="" src="/images/abon_logo_H.jpg">
+                        </div>
+                        <h6>
+                            Enter 16 digit coupon code or scan the QR code from the Aircash Abon voucher, select deposit and funds will instantly be available on your account. Buy Aircash Abon paper vouchers on more than 100.000 <a href="https://abon.cash/locations/" target="_blank">Aircash partner's' locations</a>.
+                        </h6>
+                        <br />
+                        <div id="content">
+                            <div class="form-group">
+                                <label class="d-inline-block" for="abon_lang"><small><strong>Select language for your abon voucher:</strong></small></label>
+                                <select name="abon_lang" class="form-control form-control-sm d-inline-block" style="width: auto;" id="abon_lang"
+                                        ng-options="item.language for item in abon_languages"
+                                        ng-model="selectedAbonLanguage" ng-disabled="createServiceBusy" ng-required="true">
+                                </select>
+                            </div>
+                            <div class="d-flex justify-content-around flex-wrap">
+                                <button ng-repeat="abon in abons" ng-click="createCoupon(abon.value)" type="button" class="btn aBtnRed" ng-disabled="createServiceBusy" style="width: 100px !important; height: 100px !important; font-size: 15px;">
+                                    <img src="/images/abonWhite.png" alt="Alternate Text" width="40px" style="margin-top: -5px;">
+                                    <br />
+                                    <div>
+                                        <span>{{abon.value}}</span> {{abon.currency}}
+                                    </div>
+                                </button>
+                            </div>
+                            <br />
+                            <div ng-if="createServiceResponse">
+                                <h5>Response ({{responseDateTimeUTC}})</h5>
+                                <h6>Coupon: {{couponValue}} {{isoCurrencySymbol}}</h6>
+                                <h6>Coupon code: {{couponCode}}</h6>
+                                <h6>Serial number: {{serialNumber}}</h6>
+                                <h6>Content: {{contentSubstring}}</h6>
+                                <center><button href="" ng-click="showContent()" class="btn btn-danger w-100px me-5px">Preview</button></center>
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+    </div>
+</div>
+
+<div class="modal fade" id="contentModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">A-bon preview</h4>
+            </div>
+            <div class="modal-body" id="content1">
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>

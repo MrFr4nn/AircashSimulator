@@ -8,6 +8,7 @@
     'cashier_acRedeemTicket',
     'cashier_acC2DPayout',
     'cashier_acPaymentAndPayout',
+    'cashier_abon_sp',
     'cashier_c2d'
 ]);
 
