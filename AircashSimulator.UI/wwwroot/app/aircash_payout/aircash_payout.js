@@ -312,7 +312,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     "amount": 25,
                     "phoneNumber": "385992500001",
                     "partnerUserID": "f8a95979-d6ab-4583-9bbd-a43d0ccb7e66",
-                    "currencyID": 191,
+                    "currencyID": 978,
                     "signature": "e+4hug1AGI..."
                 },
                 response: {
@@ -345,7 +345,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 amount: 100,
                 phoneNumber: "385995712738",
                 partnerUserID: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                currencyID: 191,
+                currencyID: 978,
                 signature: "Hm38lRCyOP..."
             },
             responseExample: {

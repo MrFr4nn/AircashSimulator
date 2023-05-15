@@ -76,7 +76,7 @@ signatureModule.controller("SignatureCtrl",
                 generatingPartnersSignatureExample: {
                     partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                     amount: 123.45,
-                    currencyID: 191,
+                    currencyID: 978,
                     partnerTransactionID: "7f087237-b81a-48af-8dce-bc048fede397",
                     description: "test",
                     locationID: "test",
