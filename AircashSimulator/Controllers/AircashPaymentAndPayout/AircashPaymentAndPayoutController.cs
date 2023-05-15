@@ -1,8 +1,10 @@
 ﻿using AircashSimulator.Controllers.AircashPayment;
 using AircashSimulator.Extensions;
+using CrossCutting;
 using Domain.Entities.Enum;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Service.Settings;
 using Services.AircashPaymentAndPayout;
 using Services.User;
 using System;
@@ -16,16 +18,18 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
     [ApiController]
     public class AircashPaymentAndPayoutController : ControllerBase
     {
+        private ISettingsService SettingsService;
+        private IHelperService HelperService;
         private IAircashPaymentAndPayoutService AircashPaymentAndPayoutService;
         private UserContext UserContext;
         private IUserService UserService;
 
-        private const string PARTNER_ID = "e747a837-85d9-4287-a412-ffbb5d1b0ad8";
-        private const string USER_ID = "358B9D22-BB9A-4311-B94D-8F6DAEB38B40";
-        public AircashPaymentAndPayoutController(IAircashPaymentAndPayoutService aircashPaymentAndPayoutService, UserContext userContext, IUserService userService)
+        public AircashPaymentAndPayoutController(IAircashPaymentAndPayoutService aircashPaymentAndPayoutService, UserContext userContext, ISettingsService settingsService, IHelperService helperService, IUserService userService)
         {
             AircashPaymentAndPayoutService = aircashPaymentAndPayoutService;
             UserContext = userContext;
+            SettingsService = settingsService;
+            HelperService = helperService;
             UserService = userService;
         }
 
@@ -34,7 +38,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         public async Task<IActionResult> CheckCode(CheckCodeRequest checkCodeRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, UserContext.GetPartnerId(User), environment);
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, environment);
             return Ok(response);
         }
 
@@ -43,21 +47,22 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, UserContext.GetPartnerId(User), UserContext.GetUserId(User), environment);
+            var userId = UserContext.GetUserId(User);
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, userId, Guid.NewGuid(), environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierCheckCode(CheckCodeRequest checkCodeRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, new Guid(PARTNER_ID), EnvironmentEnum.Staging);
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, new Guid(PARTNER_ID), new Guid(USER_ID), EnvironmentEnum.Staging);
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, Guid.NewGuid(), Guid.NewGuid(), EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -65,7 +70,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, UserContext.GetPartnerId(User), EnvironmentEnum.Staging);
+            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -74,7 +79,117 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         public async Task<IActionResult> CancelTransaction(CancelTransactionRequest cancelTransactionRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPaymentAndPayoutService.CancelTransaction(cancelTransactionRequest.PartnerTransactionID, cancelTransactionRequest.LocationID, UserContext.GetPartnerId(User), UserContext.GetUserId(User), environment);
+            var userId = UserContext.GetUserId(User);
+            var response = await AircashPaymentAndPayoutService.CancelTransaction(cancelTransactionRequest.PartnerTransactionID, cancelTransactionRequest.LocationID, SettingsService.SalesPartnerId, userId, environment);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CheckCodeSimulateError([FromBody] SalesPartnerCheckCodeErrorEnum errorCode)
+        {
+            var barcode = "";
+            switch (errorCode)
+            {
+                case SalesPartnerCheckCodeErrorEnum.InvalidBarcode:
+                {
+                    barcode = "AC" + HelperService.RandomNumber(14);
+                    break;
+                }
+                case SalesPartnerCheckCodeErrorEnum.BarcodeAlreadyUsed:
+                {
+                    barcode = SettingsService.UsedBarcode;
+                    break;
+                }
+                case SalesPartnerCheckCodeErrorEnum.TransactionLimit:
+                {
+                    barcode = SettingsService.BarcodeOverLimit;
+                    break;
+                }
+                default:
+                {
+                    return BadRequest();
+                }
+            }
+            var response = await AircashPaymentAndPayoutService.CheckCode(barcode, SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ConfirmTransactionSimulateError([FromBody] SalesPartnerConfirmTransactionErroCodeEnum errorCode)
+        {
+            var barcode = SettingsService.ValidBarcode;
+            var partnerTransactionId = Guid.NewGuid();
+            switch (errorCode)
+            {
+                case SalesPartnerConfirmTransactionErroCodeEnum.BarcodeAlreadyUsed:
+                {
+                    barcode = SettingsService.UsedBarcode;
+                    break;
+                }
+                case SalesPartnerConfirmTransactionErroCodeEnum.TransactionLimit:
+                {
+                    barcode = SettingsService.BarcodeOverLimit;
+                    break;
+                }
+                case SalesPartnerConfirmTransactionErroCodeEnum.PartnerTransactionIdIsNotUnique:
+                {
+                    partnerTransactionId = SettingsService.PartnerTransactionIdAlreadyExists;
+                    break;
+                }
+                case SalesPartnerConfirmTransactionErroCodeEnum.UnableToConfirmTransactionWithoutCallingCheckBarcodeFirst:
+                {
+                    barcode = SettingsService.NotCheckedBarcode;
+                    break;
+                }
+                default:
+                {
+                    return BadRequest();
+                }
+            }
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(barcode, SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, Guid.NewGuid(), partnerTransactionId, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CheckTransactionStatusSimulateError()
+        {
+            var partnerTransactionId = Guid.NewGuid().ToString();
+            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(partnerTransactionId, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize] 
+        public async Task<IActionResult> CancelTransactionSimulateError([FromBody] SalesPartnerCancelTransactionErrorCodeEnum errorCode)
+        {
+            var partnerTransactionId = Guid.NewGuid();
+            switch (errorCode)
+            {
+                case SalesPartnerCancelTransactionErrorCodeEnum.UnableToCancelPayout:
+                {
+                    partnerTransactionId = SettingsService.UnableToCancelPayoutTransactionId;
+                    break;
+                }
+                case SalesPartnerCancelTransactionErrorCodeEnum.TransactionAlreadyCanceled:
+                {
+                    partnerTransactionId = SettingsService.TransactionAlreadyCanceledId;
+                    break;
+                }
+                case SalesPartnerCancelTransactionErrorCodeEnum.TransactionInWrongStatus:
+                {
+                    return Ok();
+                }
+                case SalesPartnerCancelTransactionErrorCodeEnum.CancellationPeriodExpired:
+                {
+                    return Ok();
+                }
+                default:
+                    return BadRequest();
+            }
+            var response = await AircashPaymentAndPayoutService.CancelTransaction(partnerTransactionId.ToString(), SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, Guid.NewGuid(), EnvironmentEnum.Staging);
             return Ok(response);
         }
     }

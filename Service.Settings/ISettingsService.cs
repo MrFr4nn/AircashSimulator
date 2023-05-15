@@ -36,6 +36,11 @@ namespace Service.Settings
         decimal PayoutAmountTooBig { get; }
         string AircashFrameDefaultLocale { get; }
         decimal AircashFrameDefaultAmount { get; }
+        string SalesPartnerLocation { get; }
+        string ValidBarcode { get; }
+        string UsedBarcode { get; }
+        string BarcodeOverLimit { get; }
+        string NotCheckedBarcode { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
         Guid AircashFramePartnerTransactionAlreadyExists { get; }
@@ -46,6 +51,9 @@ namespace Service.Settings
         Guid AircashPayoutPartnerId { get; }
         Guid PartnerTransactionIdAlreadyExists { get; }
         Guid BlockedUserId { get; }
+        Guid SalesPartnerId { get; }
+        Guid UnableToCancelPayoutTransactionId { get; }
+        Guid TransactionAlreadyCanceledId { get; }
         Guid AircashFramePartnerId { get; }
     }
 }
