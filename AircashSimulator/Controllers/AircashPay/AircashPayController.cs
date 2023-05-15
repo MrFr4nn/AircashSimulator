@@ -122,10 +122,9 @@ namespace AircashSimulator.Controllers
                 Description = generatePartnerCodeRequest.Description,
                 LocationId = generatePartnerCodeRequest.LocationID,
                 UserId = UserIdCashier,
-                Environment = generatePartnerCodeRequest.Environment
             };
 
-            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, EnvironmentEnum.Staging);
+            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, generatePartnerCodeRequest.Environment);
             return Ok(response);
         }
     }

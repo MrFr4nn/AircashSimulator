@@ -43,7 +43,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CashierCreatePayout(CreatePayoutRQ createPayoutRQ)
         {
-            var response = await AircashPayoutV2Service.CreatePayout(PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserId.ToString(), createPayoutRQ.Parameters, EnvironmentEnum.Staging);
+            var response = await AircashPayoutV2Service.CreatePayout(PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserId.ToString(), createPayoutRQ.Parameters, createPayoutRQ.Environment);
             return Ok(response);
         }
 
@@ -58,7 +58,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRQ confirmTransactionRQ)
         {
-            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, PartnerId, UserId, EnvironmentEnum.Staging);
+            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, PartnerId, UserId, confirmTransactionRQ.Environment);
             return Ok(response);
         }
 

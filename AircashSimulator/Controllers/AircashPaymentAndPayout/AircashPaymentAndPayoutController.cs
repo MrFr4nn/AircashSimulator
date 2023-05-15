@@ -55,14 +55,14 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [HttpPost]
         public async Task<IActionResult> CashierCheckCode(CheckCodeRequest checkCodeRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, checkCodeRequest.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, Guid.NewGuid(), Guid.NewGuid(), EnvironmentEnum.Staging);
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, Guid.NewGuid(), Guid.NewGuid(), confirmTransactionRequest.Environment);
             return Ok(response);
         }
 
@@ -70,7 +70,8 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, SettingsService.SalesPartnerId, environment);
             return Ok(response);
         }
 

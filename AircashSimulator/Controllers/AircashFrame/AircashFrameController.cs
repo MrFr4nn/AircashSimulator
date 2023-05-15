@@ -109,12 +109,12 @@ namespace AircashSimulator.Controllers.AircashFrame
             {
                 return BadRequest();
             }
-            var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO);            
+            var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO, initiateRequest.Environment);            
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId )
         {
             await AircashFrameV2Service.NotificationCashierFrameV2(new Guid(partnerTransactionId));
             await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);

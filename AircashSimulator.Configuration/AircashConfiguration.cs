@@ -27,7 +27,6 @@ namespace AircashSimulator.Configuration
         public string AcFrameOriginUrl { get; set; }
         public string AcFrameApiUrl { get; set; }
         public string AircashFrameDevTestUrl { get; set; }
-        public string AircashSalesDevBaseUrl { get; set; }
         public string AircashAboDevBaseUrl { get; set; }
         public string AircashFrameDevBaseUrl { get; set; }
     }

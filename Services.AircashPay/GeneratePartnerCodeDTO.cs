@@ -10,6 +10,5 @@ namespace Services.AircashPay
         public string Description { get; set; }
         public string LocationId { get; set; }
         public Guid UserId { get; set; }
-        public EnvironmentEnum Environment { get; set; }
     }
 }
