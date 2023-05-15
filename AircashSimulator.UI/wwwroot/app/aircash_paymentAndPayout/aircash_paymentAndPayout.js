@@ -413,27 +413,27 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
                 response: {
                     "errorCode": 1,
                     "errorMessage": "Invalid bar code "
+                }
+            },
+            error2: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC15694794016276",
+                    "locationID": "123",
+                    "signature": "ShZjKjbLsZ..."
                 },
-                error2: {
-                    request: {
-                        "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
-                        "barCode": "AC15694794016276",
-                        "locationID": "123",
-                        "signature": "ShZjKjbLsZ..."
-                    },
-                    response: {
-                        "errorCode": 2,
-                        "errorMessage": "Bar code already used "
-                    }
+                response: {
+                    "errorCode": 2,
+                    "errorMessage": "Bar code already used "
+                }
+            },
+            error3: {
+                request: {
                 },
-                error3: {
-                    request: {
-                    },
-                    response: {
+                response: {
 
-                    }
-                },
-            }
+                }
+            },
         },
         ConfirmTransaction: {
             error2: {
