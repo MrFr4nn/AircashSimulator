@@ -11,6 +11,10 @@ using System;
 using AircashSimulator.Hubs;
 using Microsoft.AspNetCore.SignalR;
 using AircashSimulator.Controllers.AircashPayment;
+using Service.Settings;
+using AircashSimulator.UI.Pages;
+using Microsoft.Extensions.Hosting;
+using Services.User;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -18,21 +22,23 @@ namespace AircashSimulator.Controllers.AircashFrame
     [ApiController]
     public class AircashFrameController : Controller
     {
+        private ISettingsService SettingsService;
         private IAircashFrameService AircashFrameService;
         private IAircashFrameV2Service AircashFrameV2Service;
         private AircashConfiguration AircashConfiguration;
         private UserContext UserContext;
         public readonly IHubContext<NotificationHub> _hubContext;
-        private Guid partnerId = new Guid("5680E089-9E86-4105-B1A2-ACD0CD77653C");
-        private Guid userId = new Guid("F0BC2E22-9C2D-4217-BEEE-99CC1AA3C26D");
+        private IUserService UserService;
 
-        public AircashFrameController(IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext)
+        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext, IUserService userService)
         {
+            SettingsService = settingsService;
             AircashFrameService = aircashFrameService;
             AircashFrameV2Service = aircashFrameV2Service;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             UserContext = userContext;
             _hubContext = hubContext;
+            UserService = userService;
         }
 
         public async Task SendHubMessage(string method, string msg, int status)
@@ -46,7 +52,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             var initiateRequestDTO = new InitiateRequestDTO
             {
-                PartnerId = UserContext.GetPartnerId(User),
+                PartnerId = SettingsService.AircashFramePartnerId,
                 UserId = UserContext.GetUserId(User),
                 Amount = initiateRequest.Amount,
                 PayType = (PayTypeEnum)initiateRequest.PayType,
@@ -58,22 +64,11 @@ namespace AircashSimulator.Controllers.AircashFrame
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> InitiateV2(InitiateRequest initiateRequest)
+        public async Task<IActionResult> InitiateV2(InititateRequestV2Dto initiateRequestV2Dto)
         {
-            var initiateRequestDTO = new InititateRequestV2Dto
-            {
-                PartnerId = UserContext.GetPartnerId(User),
-                UserId = UserContext.GetUserId(User),
-                Amount = initiateRequest.Amount,
-                PayType = (PayTypeEnum)initiateRequest.PayType,
-                PayMethod = (PayMethodEnum)initiateRequest.PayMethod,
-                OriginUrl = initiateRequest.OriginUrl,
-                DeclineUrl = initiateRequest.DeclineUrl,
-                SuccessUrl = initiateRequest.SuccessUrl,
-                CancelUrl = initiateRequest.CancelUrl
-            };
-            var response = await AircashFrameV2Service.Initiate(initiateRequestDTO);
-            return Ok(response);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.Initiate(initiateRequestV2Dto, initiateRequestV2Dto.PartnerTransactionId, initiateRequestV2Dto.Currency, environment);
+            return Ok(response);            
         }
 
         [HttpPost]
@@ -81,8 +76,8 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             var initiateRequestDTO = new InititateRequestV2Dto
             {
-                PartnerId = partnerId,
-                UserId = userId,
+                PartnerId = SettingsService.AircashFramePartnerId,
+                UserId = Guid.NewGuid(),
                 Amount = initiateRequest.Amount,
                 PayType = initiateRequest.PayType,
                 PayMethod = initiateRequest.PayMethod
@@ -127,11 +122,92 @@ namespace AircashSimulator.Controllers.AircashFrame
         }
 
         [HttpPost]
-        public async Task<IActionResult> TransactionStatusCashierFrameV2(TransactionStatusRequest transactionStatusRequest)
+        public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
-            var partnerId = UserContext.GetPartnerId(User);
-            var response = await AircashFrameV2Service.TransactionStatusCashierFrameV2(partnerId, transactionStatusRequest.TransactionId);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId, environment);
             return Ok(response);
-        }        
+        }
+        [HttpPost]
+        public async Task<IActionResult> InitiateSimulateError([FromBody] AcFrameInitiateErrorCodeEnum errorCode)
+        {
+            var initiateRequestDTO = new InititateRequestV2Dto()
+            {
+                PartnerId = SettingsService.AircashFramePartnerId,
+                UserId = Guid.NewGuid(),
+                Amount = SettingsService.AircashFrameDefaultAmount,
+                PayType = PayTypeEnum.Payout,
+                PayMethod = PayMethodEnum.Payout,
+                Locale = SettingsService.AircashFrameDefaultLocale,
+                OriginUrl = "https://aircash.eu",
+                DeclineUrl = "",
+                SuccessUrl = "",
+                CancelUrl = ""
+            };
+            var currency = CurrencyEnum.EUR;
+            var partnerTransactionId = Guid.NewGuid();
+            switch (errorCode)
+            {
+                case AcFrameInitiateErrorCodeEnum.InvalidSignatureOrPartnerId:
+                    {
+                        initiateRequestDTO.PartnerId = Guid.NewGuid();
+                        break;
+                    }
+                case AcFrameInitiateErrorCodeEnum.ValidationError:
+                    {
+                        initiateRequestDTO.Locale = "";
+                        break;
+                    }
+                case AcFrameInitiateErrorCodeEnum.PartnerTransactionAlreadyExists:
+                    {
+                        partnerTransactionId = SettingsService.AircashFramePartnerTransactionAlreadyExists;
+                        break;
+                    }
+                case AcFrameInitiateErrorCodeEnum.InvalidCurrency:
+                    {
+                        currency = CurrencyEnum.HRK;
+                        break;
+                    }
+
+                default:
+                    return Ok();
+            }
+            var response = await AircashFrameV2Service.Initiate(initiateRequestDTO, partnerTransactionId, currency, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TransactionStatusSimulateError([FromBody] AcFrameTransactionStatusErrorCodeEnum errorCode)
+        {
+            var partnerId = SettingsService.AircashFramePartnerId;
+            var partnerTransactionId = Guid.NewGuid();
+            switch (errorCode)
+            {
+                case AcFrameTransactionStatusErrorCodeEnum.InvalidSignatureOrPartnerId:
+                    {
+                        partnerId = Guid.NewGuid();
+                        break;
+                    }
+                //case AcFrameTransactionStatusErrorCodeEnum.ValidationError:
+                //    {
+                //        break;
+                //    }
+                case AcFrameTransactionStatusErrorCodeEnum.TransactionDoesNotExist:
+                    {
+                        partnerTransactionId = Guid.NewGuid();
+                        break;
+                    }
+                case AcFrameTransactionStatusErrorCodeEnum.TransactionNotProcessed:
+                    {
+                        partnerTransactionId = SettingsService.AircashFrameTransactionNotProcessed;
+                        break;
+                    }
+
+                default:
+                    return BadRequest();
+            }
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(partnerId, partnerTransactionId.ToString(), EnvironmentEnum.Staging);
+            return Ok(response);
+        }
     }
 }

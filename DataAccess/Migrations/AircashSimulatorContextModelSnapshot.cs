@@ -345,6 +345,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Environment")
+                        .HasColumnType("int");
+
                     b.Property<string>("FirstName")
                         .HasMaxLength(64)
                         .HasColumnType("nvarchar(64)");

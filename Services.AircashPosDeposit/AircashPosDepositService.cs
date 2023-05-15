@@ -53,9 +53,7 @@ namespace Services.AircashPosDeposit
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var environmentRQ = environment > 0 ? environment : partner.Environment;
-
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environmentRQ, EndpointEnum.M2)}{AircashCheckUserV4Endpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{AircashCheckUserV4Endpoint}");
 
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserRS>(response.ResponseContent);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
@@ -84,9 +82,7 @@ namespace Services.AircashPosDeposit
 
             request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
 
-            var environmentRQ = environment > 0 ? environment : partner.Environment;
-
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environmentRQ, EndpointEnum.M2)}{AircashCreatePayoutV4Endpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{AircashCreatePayoutV4Endpoint}");
 
             //var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
             //returnResponse.ServiceResponse = serviceResponse;
