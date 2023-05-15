@@ -1,0 +1,51 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1 style="text-align:justify">Edge cases</h1>
+    <p style="text-align:justify">
+        This chapter will describe possible edge cases that can happen while calling the API, and how to do error recovery. Edge cases include power outage on the cash register, temporary Internet unavailability, or temporary Abon service unavailability.
+    </p>
+    <h4 style="text-align:justify">CreateCoupon method – invalid or no response</h4>
+    <p style="text-align:justify">
+        In the case of an unsuccessful CreateCoupon call, the following error recovery methods should be
+        applied.
+    </p>
+    <ol>
+        <li>
+            Retry policy<br /> Possible when a partner sends an internal transaction identifier (PartnerTransactionId). If the method is called again with the same parameters (mandatory same PartnerTransactionId), and if it was not previously recorded on the Abon system, it will return the created coupon. If the coupon has been previously created and recorded on the Abon system, the return value will be error 6: "Coupon is for the given PartnerTransactionId". For security reasons, coupon content is only sent in the first response. Therefore, in order to recover from the error, first the CancelCoupon method with the same PartnerTransactionId has to be called. After successfully invoking the CancelCoupon method, it is possible to call CreateCoupon again with the same parameters (and the same PartnerTransactionId can be used).
+        </li>
+        <li>
+            If a Partner does not send the PartnerTransactionId, it is not possible to recover from the error. In this case, it is necessary to call the method again with the same parameters. If the transaction was successful, coupon dana will be recorded on the Abon system. When a repeated call is made, a new coupon will be created in the system. Coupons created in the Abon system and not delivered to the Partner will be canceled in the periodic adjustment process.
+        </li>
+    </ol>
+
+    <h4 style="text-align:justify">
+        CreateCoupon method – response received
+    </h4>
+
+    <p style="text-align:justify">
+        Partner takes over the responsibility of delivering the actual coupon paper to the buyer. When a coupon was successfully received from CreateCoupon method, but not delivered to the buyer (e.g. lack of paper in the printer), there are two scenarios possible.
+    </p>
+
+    <ol>
+        <li>
+            The Partner calls the CancelCoupon method with the serial number of the undelivered coupon (or with the PartnerTransactionId, if it was initially assigned). The coupon is then canceled in the Abon system and is not included in the reports (it is not subjected to periodic adjustment.) Partner then recalls the CreateCoupon method and creates a new coupon.
+        </li>
+        <li>
+            The partner can cache the coupon in memory until the conditions to deliver the coupon are met (e.g. the paper in the printer was replaced)
+        </li>
+    </ol>
+
+    <h4 style="text-align:justify">CancelCoupon method – invalid response</h4>
+    <p style="text-align:justify">
+        The method supports repeated calls. The method can be called again with the same parameters in the case of an invalid response. In the event that the coupon was canceled by a previous call (whose response was not received), the return value contains the message 7: "Coupon has been already canceled".
+    </p>
+
+    <hr />
+
+</body>
+</html>
