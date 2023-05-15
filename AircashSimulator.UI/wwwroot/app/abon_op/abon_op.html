@@ -24,6 +24,7 @@
                     An example of an Aircash Abon is shown <a href="" ng-click="showCoupon()">here</a>.
                 </p>
             </div>
+
         </div>
         <hr />
         <h1>Technical integration aspects</h1>
@@ -335,7 +336,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(1)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 1">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 1">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ValidateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
                         <div class="row col-12">
@@ -363,7 +364,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(2)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 2">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 2">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ValidateTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
                         <div class="row col-12">
@@ -391,7 +392,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(3)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 3">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 3">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ValidateTransactionError-tab-4" heading="4 - Conversion Module Error" classes="nav-item">
                         Simulation not available.
@@ -422,7 +423,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(7)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 7">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 7">Copy Request</button>
                     </uib-tab>
                 </uib-tabset>
             </uib-tab>
@@ -700,7 +701,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
                         <div class="row col-12">
@@ -728,7 +729,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
                         <div class="row col-12">
@@ -756,7 +757,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-4" heading="4 - Coupon Already Used" classes="nav-item">
                         <div class="row col-12">
@@ -784,7 +785,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-5" heading="5 - Conversion Module Error" classes="nav-item">
                         Simulation not available.
@@ -815,7 +816,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(7)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-7" heading="9 - Limit exceeded" classes="nav-item">
                         <div class="row col-12">
@@ -873,8 +874,14 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                 </div>
             </uib-tab>
         </uib-tabset>
-
-
+        <hr />
+        <h1>Prerequisite</h1>
+        <p>To start the integration we need to exchange the following information:</p>
+        <ol>
+            <li>Provide us with a list of emails for which we will open access to the Aircash back office portal.</li>
+            <li>Provide us with IPs for whitelisting (test and production)</li>
+            <li>Provide us with the Public key file (test and production). How to generate ones, please check the Signature chapter.</li>
+        </ol>
         <hr />
         <div class="chapter">
             <div class="technical-integration-aspects-container">
@@ -923,51 +930,70 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
 
         <div class="table-responsive">
             <table class="table table-active">
-                    <tr>
-                        <td rowspan="2">1.</td>
-                        <td>
-                            <b>Q:&nbsp; What are supported countries and currencies?</b><br />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>A:</b>&nbsp; All European Union countries and currencies</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">2.</td>
-                        <td><b>Q:&nbsp; What are available denominations? </b></td>
-                    </tr>
-                    <tr>
-                        <td><b>A:</b>&nbsp; 5, 10, 20, 25, 50 EUR</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">3.</td>
-                        <td><b>Q:&nbsp; Can the Abon be used more than once?</b></td>
-                    </tr>
-                    <tr>
-                        <td><b>A:</b>&nbsp; The Abon cannot be used more than once, but must be used in its entirety.</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">4.</td>
-                        <td><b>Q:&nbsp; Is it possible for the Abon to expire after purchase and if so, how long does it expire if it is not used?</b></td>
-                    </tr>
-                    <tr>
-                        <td><b>A:</b>&nbsp; Abon voucher does not have an expiration date. After 6 months, if not used, Aircash will decrease the value of the voucher, but it will not be depleted or invalid.</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">5.</td>
-                        <td><b>Q:&nbsp; Does the user need to enter the amount during the Abon deposit?</b></td>
-                    </tr>
-                    <tr>
-                        <td><b>A:</b>&nbsp; No, the user needs to enter only 16-digit code</td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2">6.</td>
-                        <td><b>Q:&nbsp; How to check the limit if the user does not need to amount?</b></td>
-                    </tr>
-                    <tr>
-                        <td><b>A:</b>&nbsp; You can use the ValidateCoupon method which will return to you the amount, but it will not consume the Abon</td>
-                    </tr>
+                <tr>
+                    <td rowspan="2">1.</td>
+                    <td>
+                        <b>Q:&nbsp; What are supported countries and currencies?</b><br />
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>A:</b>&nbsp; All European Union countries and currencies</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">2.</td>
+                    <td><b>Q:&nbsp; What are available denominations? </b></td>
+                </tr>
+                <tr>
+                    <td><b>A:</b>&nbsp; 5, 10, 20, 25, 50 EUR</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">3.</td>
+                    <td><b>Q:&nbsp; Can the Abon be used more than once?</b></td>
+                </tr>
+                <tr>
+                    <td><b>A:</b>&nbsp; The Abon cannot be used more than once, but must be used in its entirety.</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">4.</td>
+                    <td><b>Q:&nbsp; Is it possible for the Abon to expire after purchase and if so, how long does it expire if it is not used?</b></td>
+                </tr>
+                <tr>
+                    <td><b>A:</b>&nbsp; Abon voucher does not have an expiration date. After 6 months, if not used, Aircash will decrease the value of the voucher, but it will not be depleted or invalid.</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">5.</td>
+                    <td><b>Q:&nbsp; Does the user need to enter the amount during the Abon deposit?</b></td>
+                </tr>
+                <tr>
+                    <td><b>A:</b>&nbsp; No, the user needs to enter only 16-digit code</td>
+                </tr>
+                <tr>
+                    <td rowspan="2">6.</td>
+                    <td><b>Q:&nbsp; How to check the limit if the user does not need to amount?</b></td>
+                </tr>
+                <tr>
+                    <td><b>A:</b>&nbsp; You can use the ValidateCoupon method which will return to you the amount, but it will not consume the Abon</td>
+                </tr>
             </table>
+        </div>
+    </div>
+
+    <hr />
+    <h2>Abon deposit</h2>
+    <div class="row col-12">
+        <div class="text-center ml-5 mt-2">
+            <h5 style="width: 230px;">1. Partner deposit screen</h5>
+            <img style="width: 180px; height: 350px;" src="../../images/partner_deposit_screen_abon_deposit.png" />
+        </div>
+        <div class="text-center ml-5 mt-2">
+            <h5 style="width: 230px;">
+                2. Select Abon as a method Insert or Scan Abon
+            </h5>
+            <img style="width: 180px; height: 350px;" src="../../images/select_abon_as_method_abon_deposit.png" />
+        </div>
+        <div class="text-center ml-5 mt-2">
+            <h5 style="width: 230px;">3. Deposit successful</h5>
+            <img style="width: 180px; height: 350px;" src="../../images/deposit_successful_abon_deposit.png" />
         </div>
     </div>
 

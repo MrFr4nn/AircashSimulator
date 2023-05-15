@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Settings;
 using Services.AircashPaymentAndPayout;
+using Services.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +22,23 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         private IHelperService HelperService;
         private IAircashPaymentAndPayoutService AircashPaymentAndPayoutService;
         private UserContext UserContext;
+        private IUserService UserService;
 
-        public AircashPaymentAndPayoutController(IAircashPaymentAndPayoutService aircashPaymentAndPayoutService, UserContext userContext, ISettingsService settingsService, IHelperService helperService)
+        public AircashPaymentAndPayoutController(IAircashPaymentAndPayoutService aircashPaymentAndPayoutService, UserContext userContext, ISettingsService settingsService, IHelperService helperService, IUserService userService)
         {
             AircashPaymentAndPayoutService = aircashPaymentAndPayoutService;
             UserContext = userContext;
             SettingsService = settingsService;
             HelperService = helperService;
+            UserService = userService;
         }
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CheckCode(CheckCodeRequest checkCodeRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, environment);
             return Ok(response);
         }
 
@@ -42,22 +46,23 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var userId = UserContext.GetUserId(User);
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, userId, Guid.NewGuid());
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, userId, Guid.NewGuid(), environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierCheckCode(CheckCodeRequest checkCodeRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId);
+            var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, Guid.NewGuid(), Guid.NewGuid());
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(confirmTransactionRequest.BarCode, confirmTransactionRequest.LocationID, SettingsService.SalesPartnerId, Guid.NewGuid(), Guid.NewGuid(), EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -65,7 +70,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
-            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, SettingsService.SalesPartnerId);
+            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionID, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -73,8 +78,9 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         [Authorize]
         public async Task<IActionResult> CancelTransaction(CancelTransactionRequest cancelTransactionRequest)
         {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var userId = UserContext.GetUserId(User);
-            var response = await AircashPaymentAndPayoutService.CancelTransaction(cancelTransactionRequest.PartnerTransactionID, cancelTransactionRequest.LocationID, SettingsService.SalesPartnerId, userId);
+            var response = await AircashPaymentAndPayoutService.CancelTransaction(cancelTransactionRequest.PartnerTransactionID, cancelTransactionRequest.LocationID, SettingsService.SalesPartnerId, userId, environment);
             return Ok(response);
         }
 
@@ -105,7 +111,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
                     return BadRequest();
                 }
             }
-            var response = await AircashPaymentAndPayoutService.CheckCode(barcode, SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId);
+            var response = await AircashPaymentAndPayoutService.CheckCode(barcode, SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -142,7 +148,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
                     return BadRequest();
                 }
             }
-            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(barcode, SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, Guid.NewGuid(), partnerTransactionId);
+            var response = await AircashPaymentAndPayoutService.ConfirmTransaction(barcode, SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, Guid.NewGuid(), partnerTransactionId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -151,7 +157,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         public async Task<IActionResult> CheckTransactionStatusSimulateError()
         {
             var partnerTransactionId = Guid.NewGuid().ToString();
-            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(partnerTransactionId, SettingsService.SalesPartnerId);
+            var response = await AircashPaymentAndPayoutService.CheckTransactionStatus(partnerTransactionId, SettingsService.SalesPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -183,7 +189,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
                 default:
                     return BadRequest();
             }
-            var response = await AircashPaymentAndPayoutService.CancelTransaction(partnerTransactionId.ToString(), SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, Guid.NewGuid());
+            var response = await AircashPaymentAndPayoutService.CancelTransaction(partnerTransactionId.ToString(), SettingsService.SalesPartnerLocation, SettingsService.SalesPartnerId, Guid.NewGuid(), EnvironmentEnum.Staging);
             return Ok(response);
         }
     }

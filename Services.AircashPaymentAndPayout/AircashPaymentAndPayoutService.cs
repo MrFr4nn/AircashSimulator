@@ -39,7 +39,7 @@ namespace Services.AircashPaymentAndPayout
             SettingsService = settingsService;
         }
 
-        public async Task<object> CheckCode(string barCode, string locationID, Guid partnerId) 
+        public async Task<object> CheckCode(string barCode, string locationID, Guid partnerId, EnvironmentEnum environment) 
         {
             Response returnResponse = new Response();
             var checkCodeResponse = new object();
@@ -56,8 +56,8 @@ namespace Services.AircashPaymentAndPayout
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             checkCodeRequest.Signature = signature;
-            returnResponse.ServiceRequest = checkCodeRequest; 
-            var response = await HttpRequestService.SendRequestAircash(checkCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner != null? partner.Environment: EnvironmentEnum.Staging, EndpointEnum.M2)}" +$"{CheckCodeEndpoint}");
+            returnResponse.ServiceRequest = checkCodeRequest;
+            var response = await HttpRequestService.SendRequestAircash(checkCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}" +$"{CheckCodeEndpoint}");
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 checkCodeResponse= JsonConvert.DeserializeObject<CheckCodeResponse>(response.ResponseContent);
@@ -75,7 +75,7 @@ namespace Services.AircashPaymentAndPayout
 
         }
 
-        public async Task<object> ConfirmTransaction(string barCode, string locationID, Guid partnerId, Guid userId, Guid partnerTransactionID)
+        public async Task<object> ConfirmTransaction(string barCode, string locationID, Guid partnerId, Guid userId, Guid partnerTransactionID, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var confirmTransactionResponse = new object();
@@ -94,7 +94,7 @@ namespace Services.AircashPaymentAndPayout
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             confirmTransactionRequest.Signature = signature;
             returnResponse.ServiceRequest = confirmTransactionRequest;
-            var response = await HttpRequestService.SendRequestAircash(confirmTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner != null? partner.Environment: EnvironmentEnum.Staging, EndpointEnum.M2)}" + $"{ConfirmTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(confirmTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}" + $"{ConfirmTransactionEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
@@ -128,7 +128,7 @@ namespace Services.AircashPaymentAndPayout
 
         }
 
-        public async Task<object> CheckTransactionStatus(string partnerTransactionID, Guid partnerId)
+        public async Task<object> CheckTransactionStatus(string partnerTransactionID, Guid partnerId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var checkTransactionStatusResponse = new object();
@@ -145,7 +145,7 @@ namespace Services.AircashPaymentAndPayout
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             checkTransactionStatusRequest.Signature = signature;
             returnResponse.ServiceRequest = checkTransactionStatusRequest;
-            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner != null? partner.Environment: EnvironmentEnum.Staging, EndpointEnum.M2)}" + $"{PaymentCheckTransactionStatusEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}" + $"{PaymentCheckTransactionStatusEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
@@ -161,7 +161,7 @@ namespace Services.AircashPaymentAndPayout
 
         }
 
-        public async Task<object> CancelTransaction(string partnerTransactionID, string locationID, Guid partnerId, Guid userId)
+        public async Task<object> CancelTransaction(string partnerTransactionID, string locationID, Guid partnerId, Guid userId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var cancelTransactionResponse = new object();
@@ -180,7 +180,7 @@ namespace Services.AircashPaymentAndPayout
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             cancelTransactionRequest.Signature = signature;
             returnResponse.ServiceRequest = cancelTransactionRequest;
-            var response = await HttpRequestService.SendRequestAircash(cancelTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner != null? partner.Environment: EnvironmentEnum.Staging, EndpointEnum.M2)}" + $"{PaymentCancelTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(cancelTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}" + $"{PaymentCancelTransactionEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)

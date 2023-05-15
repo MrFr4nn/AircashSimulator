@@ -179,20 +179,7 @@ public  static String signData(String privateCertFilePath, String privateCertPas
 	return new String(Base64.encodeBase64(sign.sign()), &quot;UTF-8&quot;);
 }
 
-public  static String signDataAbon(String privateCertFilePath, String privateCertPass, String dataToSgin, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException, KeyStoreException, UnrecoverableKeyException{
-	KeyStore keyStore  = KeyStore.getInstance(&quot;pkcs12&quot;);
-	FileInputStream instream = new FileInputStream(new File(privateCertFilePath));
-	keyStore.load(instream, privateCertPass.toCharArray());
-	Enumeration&lt;String&gt;  aliases = keyStore.aliases();
-	String alias = (String) aliases.nextElement();
-	
-	PrivateKey privateKey = (PrivateKey)keyStore.getKey(alias, privateCertPass.toCharArray());
-	
-	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
-	sign.initSign(privateKey);
-	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
-	return new String(Base64.encodeBase64(sign.sign()), &quot;ASCII&quot;);
-}</pre>
+</pre>
         </uib-tab>
         <uib-tab index="request-tab-2" heading="Ruby" classes="nav-item">
             <pre style="background-color: white">
@@ -344,17 +331,7 @@ public  static boolean verifySignature(String publicCertFilePath, String dataToS
 	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;UTF-8&quot;)));
 }
 
-public  static boolean verifySignatureAbon(String publicCertFilePath, String dataToSgin, String signature, String rsaKeyValue) throws IOException, InvalidKeyException, SignatureException, CertificateException, NoSuchAlgorithmException{
-	FileInputStream stream = new FileInputStream(publicCertFilePath);
-	CertificateFactory certificateFactory = CertificateFactory.getInstance(&quot;X.509&quot;);
-	java.security.cert.Certificate certificate = certificateFactory.generateCertificate(stream);
-	PublicKey publicKey = certificate.getPublicKey();
-				
-	Signature sign = Signature.getInstance(&quot;SHA1withRSA&quot;);
-	sign.initVerify(publicKey);
-	sign.update((dataToSgin +rsaKeyValue).getBytes(&quot;ASCII&quot;));
-	return sign.verify(Base64.decodeBase64(signature.getBytes(&quot;ASCII&quot;)));
-}</pre>
+</pre>
         </uib-tab>
         <uib-tab index="request-tab-2" heading="Python" classes="nav-item">
             <pre style="background-color: white">

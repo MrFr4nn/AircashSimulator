@@ -17,22 +17,29 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         initiateRedirectCheckout: initiateRedirectCheckout,
         initiateWindowCheckout: initiateWindowCheckout,
         getTransactions: getTransactions,
-        transactionStatus: transactionStatus
+        transactionStatus: transactionStatus,
+        initiateSimulateError: initiateSimulateError,
+        transactionStatusSimulateError: transactionStatusSimulateError,
     });
 
-    function initiateRedirectCheckout(payType, payMethod, amount, currency, successUrl, declineUrl, cancelUrl, originUrl) {
+    function initiateRedirectCheckout(initiateModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/InitiateV2",
             data: {
-                PayType: payType,
-                PayMethod: payMethod,
-                Amount: amount,
-                Currency: currency,
-                SuccessUrl: successUrl,
-                DeclineUrl: declineUrl,
-                CancelUrl: cancelUrl,
-                OriginUrl: "https://domain.com"
+                PartnerId: initiateModel.partnerId,
+                UserId: initiateModel.partnerUserId,
+                NotificationUrl: initiateModel.notificationUrl,
+                PayType: initiateModel.payType,
+                PayMethod: initiateModel.payMethod,
+                Amount: initiateModel.amount,
+                PartnerTransactionId: initiateModel.partnerTransactionId,
+                Currency: initiateModel.currency,
+                Locale: initiateModel.locale,
+                SuccessUrl: initiateModel.successUrl,
+                DeclineUrl: initiateModel.declineUrl,
+                CancelUrl: initiateModel.cancelUrl,
+                OriginUrl: initiateModel.originUrl
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -56,7 +63,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
     function transactionStatus(transactionId) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashFrameV2/TransactionStatus",
+            url: config.baseUrl + "AircashFrame/TransactionStatusFrameV2",
             data: {
                 TransactionId: transactionId
             }
@@ -75,52 +82,141 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function initiateSimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/InitiateSimulateError",
+            data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function transactionStatusSimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/TransactionStatusSimulateError",
+            data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 }
 ]);
 
-acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
         $location.path('/forbidden');
     }
 
+
+    $scope.copyToClipboard = function (data) {
+        navigator.clipboard.writeText(data);
+    }
     //$scope.successUrl = "https://localhost:44317/#!/success";
     //$scope.declineUrl = "https://localhost:44317/#!/decline";
     //$scope.cancelUrl = "https://localhost:44317/#!/decline";
-    $scope.originUrl = "https://localhost:44317";
+    //$scope.originUrl = "https://localhost:44317";
 
-    $scope.initiateModels = [0, 1, 2];
+    $scope.currencyOptions = [
+        {
+            currencyIsoCode: "EUR",
+            currencyId: 978
+        },
+        {
+            currencyIsoCode: "BAM",
+            currencyId: 977
+        },
+        {
+            currencyIsoCode: "RON",
+            currencyId: 946
+        },
+    ];
 
-    $scope.initiateModelSelected = $scope.initiateModels[0];
+    $scope.payMethodOptions = [
+        {
+            name: "Abon",
+            code: 0
+        },
+        {
+            name: "AcPay",
+            code: 2
+        },
+        {
+            name: "Payout",
+            code: 10
+        }
+    ];
 
-    $scope.initiateModels =
-        [
-            {
-                payType: 0,
-                payMethod: 2,
-                amount: 10,
-                selected: true
-            },
-            {
-                payType: 0,
-                payMethod: 0,
-                amount: 0,
-                selected: true
-            },
-            {
-                payType: 1,
-                payMethod: 10,
-                amount: 10,
-                selected: true
-            }
-        ];
-    $scope.initiateModel = $scope.initiateModels[0];
+    $scope.payTypeOptions = [
+        {
+            name: "Payment",
+            code: 0
+        },
+        {
+            name: "Payout",
+            code: 1
+        }
+    ];
 
-    $scope.setInititateModel = function (value) {
-        $scope.initiateModel = $scope.initiateModels[value.initiateModelSelected];
-        $scope.initiateModelSelected = value.initiateModelSelected;
+    $scope.initiateModels =[
+        {
+            name: "Aircash payment",
+            payType: 0,
+            payMethod: 2,
+            amount: 10,
+        },
+        {
+            name: "Abon deposit",
+            payType: 0,
+            payMethod: 0,
+            amount: 0,
+        },
+        {
+            name: "Aircash withdrawal",
+            payType: 1,
+            payMethod: 10,
+            amount: 10,
+        }
+    ];
+    $scope.initiateModelSelected = {};
+    $scope.initiateModel = {};
+    $scope.initiateModelSelected.data = $scope.initiateModels[0];
+
+    $scope.setInititateModel = function () {
+        $scope.initiateModel.payType = $scope.initiateModelSelected.data.payType;
+        $scope.initiateModel.payMethod = $scope.initiateModelSelected.data.payMethod;
+        $scope.initiateModel.amount = $scope.initiateModelSelected.data.amount;
     };
+
+    $scope.setInititateModel();
+
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+            .replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+    }
+    $scope.setDefaultInitiateModel = function () {
+        $scope.locale.languageInput = "en";
+        $scope.locale.countryISOCodeInput = "HR"
+
+        $scope.initiateModel.partnerId = "5680e089-9e86-4105-b1a2-acd0Cd77653c";
+        $scope.initiateModel.partnerUserId= uuidv4();
+        $scope.initiateModel.notificationUrl = $location.absUrl();
+        $scope.initiateModel.partnerTransactionId = uuidv4();
+        $scope.initiateModel.currency = 978;
+        $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
+        $scope.initiateModel.successUrl = "";
+        $scope.initiateModel.declineUrl = "";
+        $scope.initiateModel.cancelUrl = "";
+        $scope.initiateModel.originUrl = $location.absUrl();
+    }
 
     $scope.transactionId;
 
@@ -135,22 +231,19 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         $scope.totalLoaded = 0;
         $scope.busy = false;
     };
+    $scope.locale = {
+        languageInput: "en",
+        countryISOCodeInput: "HR"
+    }
 
     $scope.initiateResponded = false;
     $scope.initiateBusy = false;
     $scope.initiateRedirectCheckout = function () {
         $scope.initiateBusy = true;
         $scope.initiateResponded = false;
-        acFrameV2Service.initiateRedirectCheckout(
-            $scope.initiateModel.payType,
-            $scope.initiateModel.payMethod,
-            $scope.initiateModel.amount,
-            $scope.initiateModel.currency,
-            $scope.successUrl,
-            $scope.declineUrl,
-            $scope.cancelUrl)
+        $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
+        acFrameV2Service.initiateRedirectCheckout($scope.initiateModel)
             .then(function (response) {
-                console.log(response);
                 if (response) {
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
@@ -174,6 +267,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
                 $scope.initiateBusy = false;
                 $scope.initiateResponded = true;
             }, () => {
+                $scope.initiateBusy = false;
                 console.log("error");
             });
     };
@@ -209,8 +303,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         });
     };
 
-    
-
+ 
     $scope.statusResponded = false;
     $scope.statusBusy = false;
     $scope.transactionStatus = function (transactionId) {
@@ -219,6 +312,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
         acFrameV2Service.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
+                    console.log(response);
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceStatus = response.sequence;
@@ -252,14 +346,207 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$state', '$filter', 'acF
             });
     }
 
+
+    $scope.currentInitiateErrorCode = 0;
+    $scope.errorInitiateResponded = false;
+    $scope.errorInitiateServiceBusy = false;
+    $scope.initiateSimulateError = (errCode) => {
+        $scope.currentInitiateErrorCode = 0;
+        $scope.errorInitiateResponded = false;
+        $scope.errorInitiateServiceBusy = true;
+        acFrameV2Service.initiateSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorInitiateRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorInitiateResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorInitiateSequence = response.sequence;
+                    $scope.errorInitiateRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorInitiateResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorInitiateRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentInitiateErrorCode = errCode;
+                $scope.errorInitiateResponded = true;
+                $scope.errorInitiateServiceBusy = false;
+            }, (err) => {
+
+                console.log(err);
+                console.log("error");
+            });
+    }
+
+    $scope.currentTransactionStatusErrorCode = 0;
+    $scope.errorTransactionStatusResponded = false;
+    $scope.errorTransactionStatusServiceBusy = false;
+    $scope.transactionStatusSimulateError = (errCode) => {
+        $scope.currentTransactionStatusErrorCode = 0;
+        $scope.errorTransactionStatusResponded = false;
+        $scope.errorTransactionStatusServiceBusy = true;
+        acFrameV2Service.transactionStatusSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorTransactionStatusSequence = response.sequence;
+                    $scope.errorTransactionStatusRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorTransactionStatusResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorTransactionStatusRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentTransactionStatusErrorCode = errCode;
+                $scope.errorTransactionStatusResponded = true;
+                $scope.errorTransactionStatusServiceBusy = false;
+            }, (err) => {
+
+                console.log(err);
+                console.log("error");
+            });
+    }
+
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
         $scope.getTransactions();
     };
 
+    $scope.setDefaultInitiateModel();
+
     $scope.setDefaults();
 
     $scope.getTransactions();
+
+    $scope.errorExamples = {
+        Initiate: {
+            error1: {
+                request: {
+                    "partnerId": "c02142bb-b5d4-4c40-9c85-ca90bd0f1fba",
+                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerTransactionId": "622e7787-afa8-4ae0-adad-d356e8f91164",
+                    "amount": 10,
+                    "currencyId": 978,
+                    "payType": 1,
+                    "payMethod": 10,
+                    "notificationUrl": "https://aircash.eu",
+                    "successUrl": "",
+                    "declineUrl": "",
+                    "cancelUrl": "",
+                    "originUrl": "https://aircash.eu",
+                    "locale": "en-HR",
+                    "signature": "elhPTBJ/hH..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid signature or partner id."
+                }
+            },
+            error3: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerTransactionId": "aa1ccf34-cd9c-4f31-84c6-10e9130ad231",
+                    "amount": 10,
+                    "currencyId": 978,
+                    "payType": 1,
+                    "payMethod": 10,
+                    "notificationUrl": "https://aircash.eu",
+                    "successUrl": "",
+                    "declineUrl": "",
+                    "cancelUrl": "",
+                    "originUrl": "https://aircash.eu",
+                    "locale": "",
+                    "signature": "Qlh2vKRfvQ..."
+                },
+                response: {
+                    "code": 3,
+                    "message": "Locale cannot be empty."
+                }
+            },
+            error1004: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerTransactionId": "c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8",
+                    "amount": 10,
+                    "currencyId": 978,
+                    "payType": 1,
+                    "payMethod": 10,
+                    "notificationUrl": "https://aircash.eu",
+                    "successUrl": "",
+                    "declineUrl": "",
+                    "cancelUrl": "",
+                    "originUrl": "https://aircash.eu",
+                    "locale": "en-HR",
+                    "signature": "MnfnyRyBEF..."
+                },
+                response: {
+                    "code": 1004,
+                    "message": "Partner transaction already exists."
+                }
+            },
+            error3000: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "partnerTransactionId": "21f2098d-471f-4d5c-a68b-a855dc52d5b4",
+                    "amount": 10,
+                    "currencyId": 191,
+                    "payType": 1,
+                    "payMethod": 10,
+                    "notificationUrl": "https://aircash.eu",
+                    "successUrl": "",
+                    "declineUrl": "",
+                    "cancelUrl": "",
+                    "originUrl": "https://aircash.eu",
+                    "locale": "en-HR",
+                    "signature": "dZiRP20OMA..."
+                },
+                response: {
+                    "code": 3000,
+                    "message": "Invalid currency."
+                }
+            }
+
+        },
+        TransactionStatus: {
+            error1: {
+                request: {
+                    "partnerId": "fbea7431-e796-4472-8689-afddc013e723",
+                    "partnerTransactionId": "fd9d8fce-6548-4cb1-839b-57a599984b8f",
+                    "signature": "KLzsXlvjAW..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid signature or partner id."
+                }
+            },
+            error3: {
+                request: {},
+                response: {}
+            },
+            error1002: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "c6935dce-1e91-434f-93b6-bbaa2a270b29",
+                    "signature": "Se0NO0yJaZ..."
+                },
+                response: {
+                    "code": 1002,
+                    "message": "Transaction doesn't exist."
+                }
+            },
+            error1003: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "fad535bd-c413-4434-851f-fb2ebce7da06",
+                    "signature": "Ba+zwZ9OxE..."
+                },
+                response: {
+                    "code": 1003,
+                    "message": "Transaction not processed."
+                }
+            }
+        }
+
+    }
 
     $scope.aircashFrameV2 = {
         initiate: {
