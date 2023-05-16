@@ -143,7 +143,7 @@ namespace Services.AbonSalePartner
             return returnResponse;
         }
 
-        public async Task<string> CreateMultipleCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+        public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
         {
             var returnResponse = "";
             var requestDateTimeUTC = DateTime.UtcNow;
