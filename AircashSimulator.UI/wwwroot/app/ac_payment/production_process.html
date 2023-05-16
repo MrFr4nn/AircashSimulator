@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1 style="text-align:justify">Production process</h1>
+    <p>
+        The production process consists of several steps that take place sequentially:
+        <ol>
+            <li>
+                All acceptance criteria are checked and are performing in line with expectations
+            </li>
+            <li>
+                The partner will push his service to production and define addresses for CheckPlayer and
+                CreateAndConfirmTransaction method
+            </li>
+            <li>
+                Aircash will enable the partner payment option for several users in Aircash application to
+                test integration in production environment
+            </li>
+            <li>
+                After the first 3 steps are in line with expectations, Aircash will enable partner payment
+                for all users
+            </li>
+        </ol>
+    </p>
+
+    <h2 style="text-align:justify">Acceptance criteria</h2>
+    <p>
+        To release the service in the production, you need to make several tests to see if the integration is
+        well-made and ready for production
+        <div class="table-responsive">
+            <table class="table table-active">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>Test description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Successful player verification</b></td>
+                        <td>
+                            The check player method returns true only to users
+                            that are able to receive money via Aircash
+                            application.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Unsuccessful player verification</b></td>
+                        <td>
+                            The partner system returns appropriate error code
+                            in case when user is not able to receive money via
+                            Aircash application.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Successful verification with additional parameters</b></td>
+                        <td>
+                            The method returns additional parameters with
+                            agreed names and parameter types.
+                        </td>
+                        <td>
+                            YES, if additional
+                            parameters are agreed
+                            for this method
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Payment confirmation</b></td>
+                        <td>
+                            The partner system insert transaction in the partner
+                            system. The partner system returns valid response
+                            to Aircash system with unique transaction identifier.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Payment confirmation with the same TransactionID</b></td>
+                        <td>
+                            The partner system reject transaction with error
+                            code that is associated with not unique
+                            transactionID
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Payment confirmation with additional parameters </b></td>
+                        <td>
+                            The method returns additional parameters with
+                            agreed names and parameter types in case of a new
+                            transaction and in the case of transactions with the
+                            same transaction ID
+                        </td>
+                        <td>
+                            YES, if additional
+                            parameters are agreed
+                            for this method
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Deep link test</b></td>
+                        <td>
+                            Check if generated link is well formatted and it all
+                            parameters are inputted correctly
+                        </td>
+                        <td>
+                            YES, if partner uses
+                            deep link option
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </p>
+    <hr />
+
+</body>
+</html>
