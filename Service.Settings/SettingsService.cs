@@ -48,7 +48,6 @@ namespace Service.Settings
         public decimal AircashFrameDefaultAmount { get { return GetSetting("AircashFrameDefaultAmount", decimal.Zero, throwExceptionIfMissing: true); } }
         public string SalesPartnerLocation { get { return GetSetting("SalesPartnerLocation", string.Empty, throwExceptionIfMissing: true); } }
         public string ValidBarcode { get { return GetSetting("ValidBarcode", string.Empty, throwExceptionIfMissing: true); } }
-        public string AbonSPCashierPointOfSale { get { return GetSetting("AbonSPCashierPointOfSale", string.Empty, throwExceptionIfMissing: true); } }
         public string UsedBarcode { get { return GetSetting("UsedBarcode", string.Empty, throwExceptionIfMissing: true); } }
         public string BarcodeOverLimit { get { return GetSetting("BarcodeOverLimit", string.Empty, throwExceptionIfMissing: true); } }
         public string NotCheckedBarcode { get { return GetSetting("NotCheckedBarcode", string.Empty, throwExceptionIfMissing: true); } }

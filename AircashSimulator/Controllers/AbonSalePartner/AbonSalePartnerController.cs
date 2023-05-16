@@ -58,7 +58,7 @@ namespace AircashSimulator
         public async Task<IActionResult> CreateCashierCoupon(CreateCashierCouponRequest createCouponRequest)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == new Guid(createCouponRequest.PartnerId)).FirstOrDefault();
-            var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, SettingsService.AbonSPCashierPointOfSale, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+            var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, SettingsService.PointOfSaleIdCashier, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
             return Ok(response);
         }
         [HttpPost]
@@ -72,7 +72,7 @@ namespace AircashSimulator
                 coupons.Add("Denomination: " + value.ToString() + " "+ ((CurrencyEnum)partner.CurrencyId).ToString());
                 for (int i = 0; i < SettingsService.AbonSPCashierNumberOfCouponCodesPerDenomination; i++)
                 {
-                    var response = await AbonSalePartnerService.CreateCouponCashier(value, SettingsService.AbonSPCashierPointOfSale, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+                    var response = await AbonSalePartnerService.CreateCouponCashier(value, SettingsService.PointOfSaleIdCashier, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
                     coupons.Add(response);
                 }
                 coupons.Add("");

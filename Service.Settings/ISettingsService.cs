@@ -39,7 +39,6 @@ namespace Service.Settings
         decimal AircashFrameDefaultAmount { get; }
         string SalesPartnerLocation { get; }
         string ValidBarcode { get; }
-        string AbonSPCashierPointOfSale { get; }
         string UsedBarcode { get; }
         string BarcodeOverLimit { get; }
         string NotCheckedBarcode { get; }
