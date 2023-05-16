@@ -1,0 +1,383 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h4>ConfirmTransaction</h4>
+
+    <p>
+        Method used by the partner system to confirm the transaction in Aircash system. Aircash suggests setting the timeout to this call to a minimum of 30 seconds, in order to avoid unnecessary timeout errors.<br />
+        Before calling ConfirmTransaction method is mandatory to call CheckCode method to ensure the barcode is valid.<br />
+    </p>
+
+    <div class="table-responsive">
+        <table class="table  table-active col-md-6">
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Test</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://staging-api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+                </tr>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://api.aircash.eu/api/SalesPartner/ConfirmTransaction</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <uib-tabset>
+        <uib-tab index="ConfirmTransaction-tab-0" heading="Request parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>String</td>
+                            <td>Partner identifier</td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>BarCode</b></td>
+                            <td>String</td>
+                            <td>User’s scanned barcode</td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionID</b></td>
+                            <td>String</td>
+                            <td>
+                                Partner’s unique identifier of the transaction
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>LocationID</b></td>
+                            <td>String</td>
+                            <td>
+                                Sales partner location identifier, in case the partner wants to have reports per location, a unique location identifier should be sent for each location. If the partner wants the reports per something else, e.g. the user, he can send the user identifier etc.
+                            </td>
+                            <td>NO</td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature</b></td>
+                            <td>String</td>
+                            <td>
+                                Signature to confirm that the partner is indeed making the request. Data to sign is BarCode={0}&LocationID={1}&PartnerID={2}&PartnerTransactionID={3}
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
+            <jsonformatter data="SalesPartner.ConfirmTransaction.RequestExample"></jsonformatter>
+        </uib-tab>
+        <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+            <pre>
+Sequence template (values in red {value} need to be replaced with the values from the request)
+<b style="font-size:12px;">
+    BarCode=<i class="text-danger">{barCode}</i>&LocationID=<i class="text-danger">{locationID}</i>&PartnerID=<i class="text-danger">{partnerID}</i>&PartnerTransactionID=<i class="text-danger">{partnerTransactionID}</i>
+</b>
+Request example:
+</pre>
+            <jsonformatter data="SalesPartner.ConfirmTransaction.RequestExample"></jsonformatter>
+            <pre>
+
+Sequence:
+BarCode=AC23436263654000&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=c88dcc81-8b43-4808-8ac5-da498bf08439
+		
+Signature:
+OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y5vNoNWi0boyTXPXWnfLWWl3GlFYLletthJCmyNteD+lW3w78aMlOCTdf9xwn2BKDkJPX3oMjK3qZzAF5IO04R5RNkLngvs5XnQwXsl07RCIv5Ue6PkCPkmyB2nJLOYmCmFrAkxQ/HGi15gzmKtlccB0zdaB6rDuosYm7MntuMCa24AUHRJnx+ho+T+R6AK2aJMoThMo11gTlr60j7+zhcSB/AsOJsgNVgs+JAvxOTE8lHxAXhgu8lzgj94YxXRBGllzq4SiW6spC+nzTduVT0cNL/oP2gh225KBDM2D0k3f0hpIxlDrqq406Rkw0lueZa34Aa/83o5SWj3TEqIOlcgptjaV59DqWoq7CXmvAzhDQ4fRoWvoaByEfTL2G0SgImJ4aTd5QI8pLI0SKQIhkMN6tZwVkUp6G1/rsD3LPshSHG236r5YzFkwY+M53y6cvzqVnZjLA51hwyiRgDKWJ6i5O5Ix49GYs97nQd0us70RHaxl8W3EKyZeS0Be5Mne5jWOxStFwn6UENPxlZm1OzHUDxgzA5I1/eKfMOLWwDw2fZI6X8q+QdW5h0zstCuw4o9BGfwEPpECSFtB2d8GbAC+ADfI=
+
+
+</pre>
+        </uib-tab>
+        <uib-tab index="ConfirmTransaction-tab-3" heading="Response parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>BarCode</b></td>
+                            <td>String</td>
+                            <td>Barcode that was sent in the request</td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>Number</td>
+                            <td>
+                                A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>AircashTransactionID</b></td>
+                            <td>String</td>
+                            <td>
+                                Aircash system’s unique identifier of the transaction
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="ConfirmTransaction-tab-4" heading="200 OK Response example" classes="nav-item">
+            <jsonformatter data="SalesPartner.ConfirmTransaction.ResponseExample"></jsonformatter>
+        </uib-tab>
+        <uib-tab index="ConfirmTransaction-tab-5" heading="Error response messages" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Error Code</th>
+                            <th>Message</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>401</b></td>
+                            <td>
+                                The partner is sending an unknown partner ID, or the signature is not valid.
+                            </td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>
+                                Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td rowspan="4"><b>400</b></td>
+                            <td rowspan="4">
+                                An invalid request was made. The response will contain an error code and message
+                            </td>
+                            <td><b>2</b></td>
+                            <td>Bar code already used</td>
+                            <td>
+                                The barcode was already used.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>3</b></td>
+                            <td>Transaction limit</td>
+                            <td>
+                                The user has reached one or more Aircash system limits, and the transaction was refused. The exact reason of the refusal will be visible to the user in the Aircash app. In case of withdrawal if there are not enough funds on the wallet, this error will appear and the bar code will be used.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>4</b></td>
+                            <td>PartnerTransactionID is not unique</td>
+                            <td>
+                                Partner transaction ID is not unique for this sales partner. Aircash suggests using Guid for PartnerTransactionIDs to avoid this.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>6</b></td>
+                            <td>Unable to confirm transaction without calling check bar code first</td>
+                            <td>
+                                First you have to call check code in order to confirm the transaction
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>500</b></td>
+                            <td>
+                                Unexpected system error
+                            </td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>
+                                Try again until the system recovers.
+                            </td>
+                        </tr>
+                </table>
+            </div>
+            <p>
+                Corner cases<br />
+                In case of Aircash system not returning a response to a ConfirmTransaction call, or
+                responding with an error 500, the sales partner system should check the transaction status in
+                Aircash system by calling the CheckTransactionStatus method.
+            </p>
+        </uib-tab>
+        <uib-tab index="ConfirmTransaction-tab-6" heading="Error response example" classes="nav-item">
+            <uib-tabset class="row tabs-left">
+                <uib-tab index="ConfirmTransactionError-tab-1" heading="2 - Bar code already used" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 2)">
+                            Request
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error2.request"></jsonformatter>
+
+                            Sequence:
+                            BarCode=AC15694794016276&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8&PartnerTransactionID=d8b5649c-3001-4c12-bc45-f024d67585c6
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 2)">
+                            Response
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error2.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">
+                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                            Sequence: {{errorConfirmSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">
+                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">Copy Request</button>
+                </uib-tab>
+                <uib-tab index="ConfirmTransactionError-tab-2" heading="3 - Transaction limit" classes="nav-item">
+                    Simulation not available.
+                    <!--<div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
+                            Request
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
+
+                            Sequence:
+
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
+                            Response
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
+                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                            Sequence: {{errorConfirmSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
+                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                        </div>
+                    </div>-->
+                    <!--<button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                    <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">Copy Request</button>-->
+                </uib-tab>
+                <uib-tab index="ConfirmTransactionError-tab-3" heading="4 - Partner Transaction ID is not unique" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 4)">
+                            Request
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error4.request"></jsonformatter>
+
+                            Sequence:
+                            BarCode=AC16758848507711&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8&PartnerTransactionID=c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 4)">
+                            Response
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error4.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">
+                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                            Sequence: {{errorConfirmSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">
+                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">Copy Request</button>
+                </uib-tab>
+                <uib-tab index="ConfirmTransactionError-tab-4" heading="6 - Unable to confirm transaction without calling check bar code first" classes="nav-item">
+                    <div class="row col-12">
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 6)">
+                            Request
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error6.request"></jsonformatter>
+
+                            Sequence:
+                            BarCode=AC16004150724597&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8&PartnerTransactionID=b9258777-26bd-4863-a9fd-4046e7e4df71
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 6)">
+                            Response
+                            <jsonformatter data="errorExamples.ConfirmTransaction.error6.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">
+                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                            Sequence: {{errorConfirmSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">
+                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(6)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">Copy Request</button>
+                </uib-tab>
+            </uib-tabset>
+        </uib-tab>
+        <uib-tab index="ConfirmTransaction-tab-7" heading="Try it out" classes="nav-item">
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="/" method="POST" name="transactionForm1">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label">BarCode</label>
+                                <input ng-model="confirmTransactionModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">LocationID</label>
+                                <input ng-model="confirmTransactionModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="confirmTransactionServiceBusy">
+                            </div>
+                            <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || transactionForm1.$invalid">Confirm <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="col-md-4" ng-if="confirmTransactionServiceResponded">
+                    Request ({{confirmTransactionRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="confirmTransactionServiceRequest"></jsonformatter>
+                    Sequence: {{confirmTransactionSequence}}<br />
+                </div>
+                <div class="col-md-4" ng-if="confirmTransactionServiceResponded">
+                    Response ({{confirmTransactionResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="confirmTransactionServiceResponse"></jsonformatter>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+
+</body>
+</html>
