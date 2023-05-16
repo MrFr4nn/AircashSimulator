@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2 style="text-align:justify">CreateAndConfirmPayment</h2>
+    <p style="text-align:justify">
+        The method used to let the Aircash platform notify the partner system that the payment has
+        been made and that the user's account should be charged with the specified amount.
+    </p>
+    <p style="text-align: justify">
+        When agreeing to this method, Aircash will send the same parameters as for the CheckPayer
+        method to identify the reimbursement account.
+    </p>
+    <uib-tabset>
+        <uib-tab index="CreateAndConfirmPayment1-tab-0" heading="Request parameters" " classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2"><b>TransactionID</b></td>
+                            <td>String</td>
+                            <td>Id of transactions in the Aircash system</td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Amount</b></td>
+                            <td>Decimal</td>
+                            <td>Transaction Amount</td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Parameters</b></td>
+                            <td>List&lt;Object&gt;</td>
+                            <td>
+                                A list of parameters that uniquely define
+                                a user's account for a supplement of
+                                funds
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1"></td>
+                            <td colspan="1"><b>Key</b></td>
+                            <td>String</td>
+                            <td>
+                                The name of the parameter to be sent
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1"></td>
+                            <td colspan="1"><b>Value</b></td>
+                            <td>String</td>
+                            <td>
+                                The value of the parameter to be sent
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><b>Signature</b></td>
+                            <td>String</td>
+                            <td>
+                                Signature by Aircash system confirming that Aircash is sending request to the partner system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="CreateAndConfirmPayment1-tab-1" heading="Request example" classes="nav-item">
+            <div class="form-group row mx-2">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-lg-3 align-self-center mt-3 pl-3">
+                            <label>
+                                Amount
+                            </label>
+                        </div>
+                        <div class="col-lg-9 mt-2">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.amount" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="number" placeholder="Enter amount" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-3 mt-2 ">
+                            <select class="form-control" id="select2" ng-change="requestCreateAndConfirmChanged()" ng-model="createAndConfirmUsernameEmailSelected" ng-init="createAndConfirmUsernameEmailSelected = 'username'">
+                                <option value="email">Email</option>
+                                <option value="username">Username</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-9 mt-2">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.identificator" ng-keyup="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter {{createAndConfirmUsernameEmailSelected}}" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                            <input class="form-check-input" type="checkbox" ng-change="requestCreateAndConfirmChanged()" ng-model="checkboxCreateAndConfirmModel.currency">
+                            <label class="form-check-label">
+                                CurrencyId
+                            </label>
+                        </div>
+                        <div class="col-lg-9 mt-2">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.currency" ng-init="createAndConfirmGenerateSignatureModel.currency='978'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.currency" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                            <input class="form-check-input" type="checkbox" ng-change="requestCreateAndConfirmChanged()" ng-model="checkboxCreateAndConfirmModel.countryCode">
+                            <label class="form-check-label">
+                                CountryCode
+                            </label>
+                        </div>
+                        <div class="col-lg-9 align-self-center">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.countryCode" ng-init="createAndConfirmGenerateSignatureModel.countryCode='HR'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.countryCode" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                            <input class="form-check-input" type="checkbox" ng-change="requestCreateAndConfirmChanged()" ng-model="checkboxCreateAndConfirmModel.merchant">
+                            <label class="form-check-label">
+                                MerchantId
+                            </label>
+                        </div>
+                        <div class="col-lg-9 mt-2">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.merchantId" ng-init="createAndConfirmGenerateSignatureModel.merchantId='100'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.merchant" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-3 form-check mt-2 pl-4">
+                            <input class="form-check-input" type="checkbox" ng-change="requestCreateAndConfirmChanged()" ng-model="checkboxCreateAndConfirmModel.match">
+                            <label class="form-check-label">
+                                Match personal data
+                            </label>
+                        </div>
+                        <div ng-if="checkboxCreateAndConfirmModel.match" class="col-lg-9 align-self-center mt-2">
+                            <div>
+                                <input ng-model="createAndConfirmGenerateSignatureModel.firstname" ng-init="createAndConfirmGenerateSignatureModel.firstname='John'; requestCreateAndConfirmChanged();" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                            </div>
+                            <div class="mt-2">
+                                <input ng-model="createAndConfirmGenerateSignatureModel.lastname" ng-init="createAndConfirmGenerateSignatureModel.lastname='Doe'; requestCreateAndConfirmChanged();" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                            </div>
+                            <div class="mt-2">
+                                <date-picker date="createAndConfirmGenerateSignatureModel.birthDate" ng-init="requestCreateAndConfirmChanged();" isOptional="false" out="createAndConfirmSetDate"></date-picker>
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+                <div class="col-6">
+                    <div ng-if="generateCreateAndConfirmSignatureResponded">
+                        <jsonformatter data="generateCreateAndConfirmSignatureResponse"></jsonformatter>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-white ml-2 mt-2" ng-if="generateCreateAndConfirmSignatureResponded" ng-click="copy(generateCreateAndConfirmSignatureResponse)">Copy</button>
+            </div>
+
+        </uib-tab>
+        <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+            <pre>
+Request example:
+</pre>
+            <jsonformatter data="aircashPayment.createAndConfirmPayment.requestExample"></jsonformatter>
+<pre>
+
+Sequence:
+Amount=123.45&Parameters=Key=username&Value=aircash&TransactionID=c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a
+
+Signature:
+Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4HwdiNNda6gOJffI8ZVOFgPLbLuDhEVzJ/gwKKeNa6MqPxo3Us4VKbhPKdMgQoSS5zQp3w6ptSdey58iU/hxzMi/9PyaGYGYRsYGohInm721AyYnBFAmXe8az6efPsUnQT9YQGSechYRadF1QpBjVs2yNwnFz3p9IdhIqYPVetq5PXlrTtv8FGJ6ocK38imNVZrhxbciIIRDsCP6DxBvKYRY16yBEqJwLsSxmfx9ZZTkilkWtANczDnPHbl3x5FZNnmD2WC4MHgGabgyzQGn+zF3+Kf2m9mJZI7CT0nU9ZQLWM3Q+zkcmWC/mPpmDD3rKORPPIqT7M3aMEG8k+M1gNmvdaR/Xw8x1CCwINSQ3osYEghaZN+m+0H9ilx0NZVTOWyP3U8m0vzm7Cd3uc6h4z3LHirOr0DaFp6hk3/5fSwAbLATghQi3IkYuc9lJCenC5BXhWxrDkcby5foBqxDQcTolVKwOCSyO5r9j+DzzsXYcopNwlBfl9ZclRqYMQK9io9fbeu5RSCKa/jQv+q9Va9XA0T/He+KWUyK47yCVzOBcgoBurc+ycdbnPttrGbLiNuqicOnXIwZuHHN0krKzSmTOthyqP/4=
+</pre>
+        </uib-tab>
+        <uib-tab index="CreateAndConfirmPayment1-tab-3" heading="Response parameters" classes="nav-item">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="3">Return value</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="3"><b>Success</b></td>
+                                    <td>Bool</td>
+                                    <td>
+                                        True if payment is successful, otherwise false
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><b>PartnerTransactionID</b></td>
+                                    <td>String</td>
+                                    <td>
+                                        Transaction ID in partner system, must be unique.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><b>Error</b></td>
+                                    <td>Object</td>
+                                    <td>
+                                        In case of error, return the corresponding error so
+                                        that the user can see what went wrong
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>ErrorCode</b></td>
+                                    <td>Int</td>
+                                    <td>
+                                        Possible error codes and error messages mappings
+                                        should be sent to user support, so they can be
+                                        displayed in the mobile application.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>ErrorMessage</b></td>
+                                    <td>String</td>
+                                    <td>
+                                        Error description.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3"><b>Parameters</b></td>
+                                    <td>List &lt;Object&gt;</td>
+                                    <td>
+                                        The List of objects of type ParameterRS. In the event
+                                        that some additional parameters have to be shown
+                                        to the user, they can be returned in this object. The
+                                        parameters are agreed in cooperation with Aircash
+                                        support.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>Key</b></td>
+                                    <td>String</td>
+                                    <td>Parameter name</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>Type</b></td>
+                                    <td>String</td>
+                                    <td>
+                                        Parameter type: String, Date, Decimal, DateTime,
+                                        Boolean
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><b>Value</b></td>
+                                    <td>String</td>
+                                    <td>Parameter value</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+        <uib-tab index="CreateAndConfirmPayment1-tab-4" heading="200 OK response example" classes="nav-item">
+            <jsonformatter data="aircashPayment.createAndConfirmPayment.responseExample"></jsonformatter>
+        </uib-tab>
+        <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error response example" classes="nav-item">
+            <jsonformatter data="aircashPayment.createAndConfirmPayment.errorResponseExample"></jsonformatter>
+        </uib-tab>
+    </uib-tabset>
+
+</body>
+</html>
