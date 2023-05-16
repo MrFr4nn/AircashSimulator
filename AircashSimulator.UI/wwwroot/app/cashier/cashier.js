@@ -34,7 +34,8 @@ cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location', '$
 
         $scope.languages = [
             { language: "en", },
-            { language: "hr"  }
+            { language: "hr" },
+            { language: "es"}
         ];
         
         if (window.localStorage.getItem('selectedLanguage') != null) {
