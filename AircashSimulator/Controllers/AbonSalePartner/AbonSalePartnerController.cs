@@ -61,14 +61,13 @@ namespace AircashSimulator
             var coupons = new List<string>();
             foreach (decimal value in createMultipleCashierCouponRequest.Values)
             {
-                var partnerId = new Guid(createMultipleCashierCouponRequest.PartnerId);
-                var response = await AbonSalePartnerService.CreateMultipleCouponCashier(value, createMultipleCashierCouponRequest.PointOfSaleId, partnerId, createMultipleCashierCouponRequest.CurrencyISOCode, Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
-                if (response != null)
+                for (int i = 0; i < 5; i++)
                 {
+                    var partnerId = new Guid(createMultipleCashierCouponRequest.PartnerId);
+                    var response = await AbonSalePartnerService.CreateMultipleCouponCashier(value, createMultipleCashierCouponRequest.PointOfSaleId, partnerId, createMultipleCashierCouponRequest.CurrencyISOCode, Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
                     coupons.Add(response);
                 }
             }
-            
             return Ok(coupons);
         }
 

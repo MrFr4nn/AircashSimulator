@@ -59,7 +59,7 @@ cashierAbonSpModule.service("cashierAbonSpService", ['$http', '$q', 'handleRespo
 cashierAbonSpModule.controller("cashierAbonSpCtrl",
     ['$scope', '$state', 'cashierAbonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, cashierAbonSpService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-            $scope.abons = [5, 10, 20, 25, 50];
+            $scope.abons = [];
 
             $scope.createCouponModel = {
                 value: 100,
@@ -108,32 +108,32 @@ cashierAbonSpModule.controller("cashierAbonSpCtrl",
                 $scope.createMultipleServiceBusy = true;
                 cashierAbonSpService.createAndSaveCoupons($scope.abons, $scope.createCouponModel.pointOfSaleId, $scope.selectedAbonCountry.partnerId, $scope.selectedAbonCountry.isoCurrencySymbol)
                     .then(function (response) {
-                        console.log(response);
-                        //else {
-                        //    //$scope.responseDateTimeUTC = response.responseDateTimeUTC;
-                        //    //$scope.contentSubstring = response.serviceResponse.content.substring(0, 30) + "...";
-                        //    //$scope.couponCode = response.serviceResponse.couponCode;
-                        //    //$scope.serialNumber = response.serviceResponse.serialNumber;
-                        //    //$scope.isoCurrencySymbol = response.serviceResponse.isoCurrencySymbol;
-                        //    //$scope.couponValue = response.serviceResponse.value;
-                        //    //$scope.content = response.serviceResponse.content;
-                        //    //$scope.decodedContent = decodeURIComponent(escape(window.atob($scope.content)));
-                        //    //document.querySelector('#content1').innerHTML = $scope.decodedContent;
-                        //    //$scope.createServiceResponse = true;
-                        //}
-                        $scope.createMultipleServiceBusy = false;
+                        //var denominations = "";
+                        var i = 1;
+                        var counter = 1;
+                        var denominations = "Value: " + $scope.abons[0]+ "\n";
+                        response.forEach(x => {
+                            if (i > 5) {
+                                i = 1;
+                                denominations += "Value: " + $scope.abons[counter] + "\n";
+                                counter++;
+                            }
+                            denominations += x + "\n";
+                            
+                            i++;
+                        });
+                        $scope.saveDonominations(denominations);
                     }, () => {
                         console.log("error");
                         $scope.createMultipleServiceBusy = false;
                     });
             }
 
-            $scope.denominations = [];
             $scope.getDenominations = function () {
                 cashierAbonSpService.getDenominations($scope.selectedAbonCountry.partnerId)
                     .then(function (response) {
                         if (response) {
-                            $scope.abons = $scope.denominations.concat(response);
+                            $scope.abons = response;
                         }
                     }, () => {
                         console.log("error");
@@ -143,7 +143,7 @@ cashierAbonSpModule.controller("cashierAbonSpCtrl",
             $scope.saveDonominations = function (textToWrite) {
                 let denominationsAsBlob = new Blob([textToWrite], { type: 'text/plain' });
                 let downloadLink = document.createElement('a');
-                downloadLink.download = "Denominations.txt";
+                downloadLink.download = "Denominations" + $scope.selectedAbonCountry.isoCurrencySymbol + ".txt";
                 downloadLink.innerHTML = 'Download File';
 
                 if (window.webkitURL != null) {
@@ -157,6 +157,7 @@ cashierAbonSpModule.controller("cashierAbonSpCtrl",
                 }
 
                 downloadLink.click();
+                $scope.createMultipleServiceBusy = false;
             }
 
             $scope.setDefaults = function () {

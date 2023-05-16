@@ -186,7 +186,7 @@ namespace Services.AbonSalePartner
             else
             {
                 var createCouponResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
-                throw new SimulatorException(SimulatorExceptionErrorEnum.Error, createCouponResponse.ToString());
+                throw new SimulatorException(SimulatorExceptionErrorEnum.Error, createCouponResponse.Message);
             }
             return returnResponse;
         }
