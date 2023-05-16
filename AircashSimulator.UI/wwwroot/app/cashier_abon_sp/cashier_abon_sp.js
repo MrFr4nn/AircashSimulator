@@ -111,11 +111,12 @@ cashierAbonSpModule.controller("cashierAbonSpCtrl",
                         //var denominations = "";
                         var i = 1;
                         var counter = 1;
-                        var denominations = "Value: " + $scope.abons[0]+ "\n";
+                        var denominations = "Denomination: " + $scope.abons[0]+ "\n";
                         response.forEach(x => {
                             if (i > 5) {
                                 i = 1;
-                                denominations += "Value: " + $scope.abons[counter] + "\n";
+                                denominations += "\n"
+                                denominations += "Denomination: " + $scope.abons[counter] + "\n";
                                 counter++;
                             }
                             denominations += x + "\n";
