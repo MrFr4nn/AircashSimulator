@@ -8,6 +8,8 @@ using CrossCutting;
 using Service.Settings;
 using AircashSimulator.Extensions;
 using Services.User;
+using AircashSimulator.Controllers.AbonSalePartner;
+using System.Collections.Generic;
 
 namespace AircashSimulator
 {
@@ -50,8 +52,24 @@ namespace AircashSimulator
         public async Task<IActionResult> CreateCashierCoupon(CreateCashierCouponRequest createCouponRequest)
         {
             var partnerId = new Guid(createCouponRequest.PartnerId);
-            var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, partnerId, CurrencyEnum.EUR.ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+            var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, partnerId, createCouponRequest.CurrencyISOCode, Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
             return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateMultipleCashierCoupon(CreateMultipleCashierCouponRequest createMultipleCashierCouponRequest)
+        {
+            var coupons = new List<string>();
+            foreach (decimal value in createMultipleCashierCouponRequest.Values)
+            {
+                var partnerId = new Guid(createMultipleCashierCouponRequest.PartnerId);
+                var response = await AbonSalePartnerService.CreateMultipleCouponCashier(value, createMultipleCashierCouponRequest.PointOfSaleId, partnerId, createMultipleCashierCouponRequest.CurrencyISOCode, Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+                if (response != null)
+                {
+                    coupons.Add(response);
+                }
+            }
+            
+            return Ok(coupons);
         }
 
         [HttpPost]
