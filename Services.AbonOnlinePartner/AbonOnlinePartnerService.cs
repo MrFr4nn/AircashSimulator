@@ -30,7 +30,7 @@ namespace Services.AbonOnlinePartner
             var abonValidateCouponRequest =  GetValidateCouponRequest(couponCode,providerId,partnerPrivateKey,partnerPrivateKeyPass);
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonValidateCouponRequest);
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post,GetValidateCouponEndpoint());
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post,GetValidateCouponEndpoint(environment));
             DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -63,9 +63,9 @@ namespace Services.AbonOnlinePartner
             abonValidateCouponRequest.Signature = signature;
             return abonValidateCouponRequest;
         }
-        public string GetValidateCouponEndpoint()
+        public string GetValidateCouponEndpoint(EnvironmentEnum environment)
         {
-            return $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
         }
         public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
@@ -76,7 +76,7 @@ namespace Services.AbonOnlinePartner
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
             DateTime requestDateTime = DateTime.UtcNow;
             
-            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, GetConfirmTransactionEndpoint());
+            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, GetConfirmTransactionEndpoint(environment));
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -131,9 +131,9 @@ namespace Services.AbonOnlinePartner
             return abonConfirmTransactionRequest;
 
         }
-        public string GetConfirmTransactionEndpoint()
+        public string GetConfirmTransactionEndpoint(EnvironmentEnum environment)
         {
-            return $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.Abon)}{ConfirmTransactionEndpoint}";
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ConfirmTransactionEndpoint}";
         }
     }
 }

@@ -8,9 +8,9 @@ namespace Services.AbonOnlinePartner
     {
         Task<object> ValidateCoupon(string CouponCode, Guid partnerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment);
         AbonValidateCouponRequest GetValidateCouponRequest(string CouponCode, Guid partnerId, string partnerPrivateKey, string partnerPrivateKeyPass);
-        string GetValidateCouponEndpoint();
+        string GetValidateCouponEndpoint(EnvironmentEnum environment);
         Task<object> ConfirmTransaction(string CouponCode, Guid UserId, Guid partnerId, string partnerPrivateKey, string partnerPrivateKeyPass,EnvironmentEnum environment);
         AbonConfirmTransactionRequest GetConfirmTransactionRequest(string CouponCode, Guid UserId, Guid partnerId, string partnerPrivateKey, string partnerPrivateKeyPass);
-        string GetConfirmTransactionEndpoint();
+        string GetConfirmTransactionEndpoint(EnvironmentEnum environment);
     }
 }

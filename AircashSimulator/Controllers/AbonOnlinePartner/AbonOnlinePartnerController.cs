@@ -40,8 +40,9 @@ namespace AircashSimulator
         }
         public async Task<IActionResult> GetCurlValidateCoupon(ValidateCouponRequest validateCouponRequest)
         {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var request = AbonOnlinePartnerService.GetValidateCouponRequest(validateCouponRequest.CouponCode, SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
-            var curl = HelperService.GetCurl(request, AbonOnlinePartnerService.GetValidateCouponEndpoint());
+            var curl = HelperService.GetCurl(request, AbonOnlinePartnerService.GetValidateCouponEndpoint(environment));
             return Ok(curl);
         }
         [HttpPost]
@@ -55,7 +56,6 @@ namespace AircashSimulator
         public async Task<IActionResult> GetCurlConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-
             var request = AbonOnlinePartnerService.GetConfirmTransactionRequest(confirmTransactionRequest.CouponCode, UserContext.GetUserId(User), SettingsService.AbonOnlinePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             var curl = HelperService.GetCurl(request, AbonOnlinePartnerService.GetConfirmTransactionEndpoint(environment));
             return Ok(curl);

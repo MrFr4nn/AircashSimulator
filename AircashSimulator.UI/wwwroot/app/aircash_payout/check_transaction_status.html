@@ -242,6 +242,53 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
                 </div>
             </div>
         </uib-tab>
+        <uib-tab index="CheckTransactionStatus-tab-8" heading="Curl" classes="nav-item">
+            <div class="row">
+                <div class="col-md-4">
+                    <br />
+                    <p>Recent transactions:</p>
+                    <div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Transaction ID</th>
+                                        <th>Amount</th>
+                                        <th>Check</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="totalLoaded == 0 && !busy">
+                                        <td colspan="12" align="center">
+                                            <i>No data</i>
+                                        </td>
+                                    </tr>
+                                    <tr ng-repeat="transaction in transactions">
+                                        <td>{{$index + 1}}.</td>
+                                        <td>{{transaction.transactionId}}</td>
+                                        <td>{{transaction.amount | number:2}}</td>
+                                        <td style="text-align: center; vertical-align: inherit">
+                                            <button class="btn btn-primary fa fa-check" ng-click="getCurlCheckTransactionStatus(transaction.transactionId)"></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                    </div>
+                </div>
+
+                <div class="col-md-8" ng-if="CurlCheckTransactionStatusServiceResponse">
+                    <pre>
+                    <jsonformatter data="CurlResponseTransactionStatus"></jsonformatter>
+                        </pre>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseTransactionStatus)">Copy</button>
+
+                </div>
+            </div>
+        </uib-tab>
     </uib-tabset>
     <hr />
 

@@ -206,6 +206,28 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
                 </div>
             </div>
         </uib-tab>
+        <uib-tab index="checkUser1-tab-8" heading="Curl" classes="nav-item">
+            <div class="row">
+                <div class="col-md-2">
+                    <form action="/" method="POST" name="transactionForm2">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label">Phone number</label>
+                                <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCheckUserBusy" ng-required="true">
+                            </div>
+                            <button ng-click="getCurlCheckUser()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCheckUserBusy|| transactionForm2.$invalid"> Get Curl <i ng-if="curlCheckUserBusy" class="fa fa-cog fa-spin"></i></button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div class="col-md-10" ng-if="curlCheckUserResponded">
+                    <pre>
+                    <jsonformatter id="curlLink" data="CurlResponseCheckUser"></jsonformatter>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCheckUser)">Copy</button>
+                </pre>
+                </div>
+            </div>
+        </uib-tab>
     </uib-tabset>
 
 </body>

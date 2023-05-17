@@ -34,10 +34,11 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayoutV2Service.CheckUser(checkUserRQV2.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User), checkUserRQV2.Parameters, environment);
             return Ok(response);
         }
-        public object GetCurlCheckUser(CheckUserRQ checkUserRQV2)
+        public async Task<IActionResult> GetCurlCheckUser(CheckUserRQ checkUserRQV2)
         {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var request =AircashPayoutV2Service.GetCheckUserRequest(checkUserRQV2.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User), checkUserRQV2.Parameters);
-            var curl = HelperService.GetCurl(request, AircashPayoutV2Service.GetCheckUserEndpoint(UserContext.GetPartnerId(User)));
+            var curl = HelperService.GetCurl(request, AircashPayoutV2Service.GetCheckUserEndpoint(environment));
             return Ok(curl);
         }
         [HttpPost]
@@ -47,11 +48,11 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayoutV2Service.CreatePayout(UserContext.GetPartnerId(User), createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), createPayoutRQ.Parameters, environment);
             return Ok(response);
         }
-        public object GetCurlCreatePayout(CreatePayoutRQ createPayoutRQ)
+        public async Task<IActionResult> GetCurlCreatePayout(CreatePayoutRQ createPayoutRQ)
         {
-      
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var request =  AircashPayoutV2Service.GetCreatePayoutRequest(UserContext.GetPartnerId(User), createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), createPayoutRQ.Parameters);
-            var curl = HelperService.GetCurl(request, AircashPayoutV2Service.GetCreatePayoutEndpoint(UserContext.GetPartnerId(User)));
+            var curl = HelperService.GetCurl(request, AircashPayoutV2Service.GetCreatePayoutEndpoint(environment));
             return Ok(curl);
         }
 

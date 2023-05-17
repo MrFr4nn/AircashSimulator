@@ -444,6 +444,32 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
                 </div>
             </div>
         </uib-tab>
+        <uib-tab index="createPayout1-tab-8" heading="Curl" classes="nav-item">
+            <div class="row">
+                <div class="col-md-2">
+                    <form action="/" method="POST" name="transactionForm3">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label">Phone number</label>
+                                <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Amount</label>
+                                <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                            </div>
+                            <button ng-click="getCurlCreatePayout()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCreatePayoutServiceBusy || transactionForm3.$invalid">Create payout <i ng-if="curlCreatePayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <div ng-if="curlCreatePayoutServiceResponse" class="col-md-10">
+                    <pre>
+                    <jsonformatter data="CurlResponseCreatePayout"></jsonformatter>
+                        </pre>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCreatePayout)">Copy</button>
+                </div>
+            </div>
+        </uib-tab>
     </uib-tabset>
 
 </body>
