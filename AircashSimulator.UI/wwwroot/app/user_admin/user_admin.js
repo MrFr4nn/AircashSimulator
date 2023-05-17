@@ -42,7 +42,8 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
                 UserName: user.userName,
                 Email: user.email,
                 Partner: user.partner,
-                Password: user.password
+                Password: user.password,
+                Environment: parseInt(user.environment)
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -78,6 +79,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         $location.path('/forbidden');
     }
 
+    $scope.isNewUser = false;
     $scope.users = [];
     $scope.partners = [];
     $scope.pageSize = 10;
@@ -106,7 +108,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     };
 
     $scope.SearchTable = function () {
-
+        $scope.user = {};
         $scope.users = [];
         $scope.pageNumber = 1;
         $scope.getUsers();
@@ -127,10 +129,15 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
         $scope.ConfirmPassword = null;
         if ($scope.user.partner != undefined) {
             $("#selPartner").val($scope.user.partner.id).change();
+            $scope.isNewUser = false;
         }
         else
         {
             $("#selPartner").val(null).change();
+            $scope.isNewUser = true;
+        }
+        if ($scope.user.environment == undefined) {
+            $scope.user.environment = 2;
         }
         $scope.toggleAddEditUserModal(true);
     }
@@ -156,7 +163,6 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
             alert("Select partner!");
             return;
         }
-            
         $scope.user.partner = filter;
         userAdminService.saveUser($scope.user)
             .then(function (response) {

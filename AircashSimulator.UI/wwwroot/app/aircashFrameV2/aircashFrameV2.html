@@ -350,7 +350,7 @@ Request example:
 <pre>
 
 Sequence:
-Amount=100&CancelUrl=&CurrencyId=191&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=
+Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=
 
 Signaure:
 tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJPS5SsKaCyPNRxQudthErgwzNCNPM1BD7Wwrf2obrmTzNNgRbC1sfU0HXjP7lTRS8HblzNGjksiUG0wED/QJBmZiQyTUAaO60tg1f4BpeFPAwqsOA/URKB8A72MAzIrsm6w3LOIWzAtiXBwzqkKQ2ChBMsDUx+ba8R2JdU6N1X//65KcXEAHUGOIFberWNDVIcHbZHXDNVFVlFjXtl2VR0VxASioSyh7ZrLl+pyd6BkuK0ee9z6IibAZk0xIfW6TIC4VuHxnwKLmnjxZcXesQjiz+E3xg8V00g1QX23//973WFDMFDfAqOX/1kqlTcPY+Ih8wgTeVVfLXpE7nveTn7vBMLiJE2ONxYNdp2v+ba79ro5ifAkUHcXtEaPLJxpw3d+kvO7J/uDkyc6Re2GotY1Q1leY/qp0qAPjmFvDE5wOnLJp3yDkQv34i8P591xFcLf297jaoAGrn4d2fjGszPC14TxP8VqNdhE0HO8qP3IZWVw6+QnoYMCZy+GkH8uV8Wp7P+eZWGoinJTR4nodU7H8vuWfjiJzhfSKUfYAEotxfcsNKanClrmCrvY4iRlp/BqnR/PETmqVR7bJafKNhyZ6rtb00=
@@ -570,23 +570,66 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" ng-value="0" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
-                            <label class="form-check-label" for="inlineRadio1">Aircash payment</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" ng-value="1" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
-                            <label class="form-check-label" for="customRadio2">Abon deposit</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" ng-value="2" ng-model="initiateModelSelected" ng-change="setInititateModel(this)" name="inlineRadio">
-                            <label class="form-check-label" for="customRadio2">Aircash withdrawal</label>
-                        </div>
+                        <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                        <br />
+                        <select class="form-control mb-3" ng-model="initiateModelSelected.data" ng-change="setInititateModel()">
+                            <option ng-repeat="option in initiateModels" ng-value="option">{{option.name}}</option>
+                        </select>
                         <form action="/" method="POST" name="initiateForm">
                             <fieldset>
-                                <div class="mb-3" ng-hide="initiateModelSelected == 1">
-                                    <label class="form-label" for="exampleInputEmail1">Amount</label>
+                                <div class="mb-3">
+                                    <label class="form-label" for="partnerId">PartnerId(Guid)</label>
+                                    <input ng-model="initiateModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="partnerUserId">PartnerUserId(Guid)</label>
+                                    <input ng-model="initiateModel.partnerUserId" type="text" class="form-control" ng-required="true" name="partnerUserId">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="partnerTransactionId">PartnerTransactionId(Guid)</label>
+                                    <input ng-model="initiateModel.partnerTransactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="amount">Amount</label>
                                     <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" ng-required="true" name="amount">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="currencyId">CurrencyId</label>
+                                    <select class="form-control" ng-model="initiateModel.currency">
+                                        <option ng-repeat="currency in currencyOptions" ng-value="currency.currencyId">{{currency.currencyIsoCode}}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="payType">PayType</label>
+                                    <select class="form-control" ng-model="initiateModel.payType">
+                                        <option ng-repeat="payType in payTypeOptions" ng-value="payType.code">{{payType.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="payMethod">PayMethod</label>
+                                    <select class="form-control" ng-model="initiateModel.payMethod">
+                                        <option ng-repeat="payMethod in payMethodOptions" ng-value="payMethod.code">{{payMethod.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="notificationUrl">NotificationUrl</label>
+                                    <input ng-model="initiateModel.notificationUrl" type="text" class="form-control" ng-required="true" name="notificationUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="successUrl">SuccessUrl</label>
+                                    <input ng-model="initiateModel.successUrl" type="text" class="form-control" name="successUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="declineUrl">DeclineUrl</label>
+                                    <input ng-model="initiateModel.declineUrl" type="text" class="form-control" name="declineUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="cancelUrl">CancelUrl</label>
+                                    <input ng-model="initiateModel.cancelUrl" type="text" class="form-control" name="cancelUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="originUrl">OriginUrl</label>
+                                    <input ng-model="initiateModel.originUrl" type="text" class="form-control" name="originUrl">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="locale">Locale</label>
@@ -603,8 +646,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                                     </div>
                                 </div>
                                 <button ng-click="initiateRedirectCheckout()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">
-                                    <i ng-if="initiateModelSelected == 0 || initiateModelSelected == 1">DEPOSIT </i>
-                                    <i ng-if="initiateModelSelected == 2">PAYOUT </i>
+                                    Initiate
                                     <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i>
                                 </button>
                             </fieldset>
@@ -1300,7 +1342,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
             <pre>
 <code>  {</code>
 <code>      "amount": 100.0,</code>
-<code>      "currencyId": 191                                       //ISO-4217 currency code</code>
+<code>      "currencyId": 978                                       //ISO-4217 currency code</code>
 <code>  }</code>
 </pre>
         </uib-tab>
@@ -1535,6 +1577,17 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                     the user will choose the merchant logo, and he will need to enter the amount and identification parameter (email or username). Compared to the
                     Aircash Frame implementation, deposit transaction starts in the Aircash native app (not at the merchant cashier). AircashPayment integration includes
                     the implementation of the "CheckPlayer" method and the "CreateAndConfirmPayment" method.
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">12.</td>
+                <td><b>Q:&nbsp; Are we expected to call Status periodically and wait for it to be moved to Pending so that the Confirmation can be called?   </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp; Default behaviour of your system would be to wait for notification.  If, from any reason the notification is not received, you can call
+                    "Status" method 30 seconds after Aircash Frame timer expired to make sure there was not any network or other issues and make sure you had the right 
+                    transaction status in your system (the same as in the Aircash system).
                 </td>
             </tr>
         </table>

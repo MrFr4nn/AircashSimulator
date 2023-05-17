@@ -130,7 +130,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 amount: 123.45,
-                currencyID: 191,
+                currencyID: 978,
                 partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
                 description: "Invoice 52",
                 signature: "12345....abc"
@@ -147,7 +147,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
         confirmTransaction: {
             requestExample: {
                 amount: 123.45,
-                currencyID: 191,
+                currencyID: 978,
                 aircashTransactionID: "Aircash transaction id,",
                 partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
                 user: "user 232",
@@ -162,7 +162,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             },
             responseExample: {
                 amount: 123.45,
-                currencyID: 191,
+                currencyID: 978,
                 aircashTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
                 user: "user 232",
                 signature: "12345....abc"

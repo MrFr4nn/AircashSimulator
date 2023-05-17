@@ -190,7 +190,7 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
                 partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
                 partnerTransactionId: "3d3dbc8d-9547-4f49-b035-5a8aab8cb1ac",
                 amount: "10",
-                currencyId: 191,
+                currencyId: 978,
                 payType: 0,
                 payMethod: 2,
                 notificationUrl: "https://aircash.eu",

@@ -24,7 +24,7 @@ namespace Services.AbonOnlinePartner
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
         }
-        public async Task<object> ValidateCoupon(string couponCode, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        public async Task<object> ValidateCoupon(string couponCode, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
             var validateCouponResponse = new object();
             var abonValidateCouponRequest =  GetValidateCouponRequest(couponCode,providerId,partnerPrivateKey,partnerPrivateKeyPass);
@@ -67,7 +67,7 @@ namespace Services.AbonOnlinePartner
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
         }
-        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
             var confirmTransactionResponse = new object();
