@@ -266,6 +266,28 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
             </div>
         </div>
     </uib-tab>
+    <uib-tab index="checkUser1-tab-8" heading="Curl" classes="nav-item">
+        <div class="row">
+            <div class="col-md-2">
+                <form action="/" method="POST" name="transactionForm2">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCheckUserBusy" ng-required="true">
+                        </div>
+                        <button ng-click="getCurlCheckUser()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCheckUserBusy|| transactionForm2.$invalid"> Get Curl <i ng-if="curlCheckUserBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+           
+            <div class="col-md-10" ng-if="curlCheckUserResponded">
+                <pre>
+                <jsonformatter id="curlLink" data="CurlResponseCheckUser"></jsonformatter>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCheckUser)">Copy</button>
+                </pre>
+            </div>
+        </div>
+    </uib-tab>
 </uib-tabset>
 
 <h4>CreatePayout</h4>
@@ -536,6 +558,32 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
             </div>
         </div>
     </uib-tab>
+    <uib-tab index="createPayout1-tab-8" heading="Curl" classes="nav-item">
+        <div class="row">
+            <div class="col-md-2">
+                <form action="/" method="POST" name="transactionForm3">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                        </div>
+                        <button ng-click="getCurlCreatePayout()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCreatePayoutServiceBusy || transactionForm3.$invalid">Create payout <i ng-if="curlCreatePayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            
+            <div ng-if="curlCreatePayoutServiceResponse" class="col-md-10">
+                <pre>
+                <jsonformatter  data="CurlResponseCreatePayout"></jsonformatter>
+                        </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCreatePayout)">Copy</button>
+            </div>
+        </div>
+    </uib-tab>
 </uib-tabset>
 
 <h4>CheckTransactionStatus</h4>
@@ -772,6 +820,53 @@ BBjas91N8Br79SsxRyZrGu3toCa0ji7VrY52Px6t3TWposfCh8m95Slb35Z8A6m6krOeC8zS7EkdbkIH
             <div class="col-md-3" ng-if="checkTransactionStatusServiceResponse">
                 Response ({{checkTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="checkTransactionStatusResponse"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-8" heading="Curl" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <br />
+                <p>Recent transactions:</p>
+                <div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Transaction ID</th>
+                                    <th>Amount</th>
+                                    <th>Check</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-if="totalLoaded == 0 && !busy">
+                                    <td colspan="12" align="center">
+                                        <i>No data</i>
+                                    </td>
+                                </tr>
+                                <tr ng-repeat="transaction in transactions">
+                                    <td>{{$index + 1}}.</td>
+                                    <td>{{transaction.transactionId}}</td>
+                                    <td>{{transaction.amount | number:2}}</td>
+                                    <td style="text-align: center; vertical-align: inherit">
+                                        <button class="btn btn-primary fa fa-check" ng-click="getCurlCheckTransactionStatus(transaction.transactionId)"></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <load-more total-loaded="totalLoaded" out="loadMore"></load-more>
+                </div>
+            </div>
+
+            <div class="col-md-8" ng-if="CurlCheckTransactionStatusServiceResponse">
+                <pre>
+                <jsonformatter  data="CurlResponseTransactionStatus"></jsonformatter>
+                        </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseTransactionStatus)">Copy</button>
+
             </div>
         </div>
     </uib-tab>

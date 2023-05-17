@@ -30,7 +30,7 @@ namespace Services.AbonOnlinePartner
             var abonValidateCouponRequest =  GetValidateCouponRequest(couponCode,providerId,partnerPrivateKey,partnerPrivateKeyPass);
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonValidateCouponRequest);
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.Abon)}{ValidateCouponEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post,GetValidateCouponEndpoint());
             DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -63,7 +63,7 @@ namespace Services.AbonOnlinePartner
             abonValidateCouponRequest.Signature = signature;
             return abonValidateCouponRequest;
         }
-        public   string GetValidateCouponEndpoint()
+        public string GetValidateCouponEndpoint()
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
         }
@@ -76,7 +76,7 @@ namespace Services.AbonOnlinePartner
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
             DateTime requestDateTime = DateTime.UtcNow;
             
-            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.Abon)}{ConfirmTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, GetConfirmTransactionEndpoint());
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
