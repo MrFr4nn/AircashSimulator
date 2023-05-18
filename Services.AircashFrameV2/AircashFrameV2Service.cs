@@ -57,7 +57,7 @@ namespace AircashFrame
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();
             var aircashInitiateResponse = new object();
-            var aircashInitiateRequest = new AircashInitiateV2Request
+            var aircashInitiateSignature = new AircashInitiateV2Request
             {
                 PartnerId = preparedTransaction.PartnerId.ToString(),
                 PartnerUserId = preparedTransaction.UserId.ToString(),
@@ -73,9 +73,25 @@ namespace AircashFrame
                 CancelUrl = initiateRequestDTO.CancelUrl,
                 Locale = initiateRequestDTO.Locale
             };
-            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateRequest);
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateSignature);
             //Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var aircashInitiateRequest = new TransactionInitiateExtendedV2Request
+            {
+                PartnerId = preparedTransaction.PartnerId.ToString(),
+                PartnerUserId = preparedTransaction.UserId.ToString(),
+                PartnerTransactionId = preparedTransaction.PartnerTransactionId.ToString(),
+                Amount = preparedTransaction.Amount,
+                CurrencyId = (int)currency,
+                PayType = (int)preparedTransaction.PayType,
+                PayMethod = (int)preparedTransaction.PayMethod,
+                NotificationUrl = preparedTransaction.NotificationUrl,
+                SuccessUrl = initiateRequestDTO.SuccessUrl,
+                DeclineUrl = initiateRequestDTO.DeclineUrl,
+                OriginUrl = initiateRequestDTO.OriginUrl,
+                CancelUrl = initiateRequestDTO.CancelUrl,
+                Locale = initiateRequestDTO.Locale
+            };
             aircashInitiateRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{InitiateEndpoint}");
             var responseDateTime = DateTime.UtcNow;
