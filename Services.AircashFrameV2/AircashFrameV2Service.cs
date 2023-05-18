@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Services.AircashFrameV2;
 using Service.Settings;
+using System.Collections.Generic;
 
 namespace AircashFrame
 {
@@ -76,6 +77,7 @@ namespace AircashFrame
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateSignature);
             //Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+
             var aircashInitiateRequest = new TransactionInitiateExtendedV2Request
             {
                 PartnerId = preparedTransaction.PartnerId.ToString(),
@@ -90,10 +92,12 @@ namespace AircashFrame
                 DeclineUrl = initiateRequestDTO.DeclineUrl,
                 OriginUrl = initiateRequestDTO.OriginUrl,
                 CancelUrl = initiateRequestDTO.CancelUrl,
-                Locale = initiateRequestDTO.Locale
+                Locale = initiateRequestDTO.Locale,
+                CustomParameters = initiateRequestDTO.MatchParameters
             };
+            aircashInitiateSignature.Signature = signature;
             aircashInitiateRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{InitiateEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(initiateRequestDTO.MatchParameters.Count == 0 ? aircashInitiateSignature : aircashInitiateRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{InitiateEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);
@@ -138,7 +142,7 @@ namespace AircashFrame
             };
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();            
-            var aircashInitiateRequest = new AircashInitiateV2Request
+            var aircashInitiateSignature = new AircashInitiateV2Request
             {
                 PartnerId = preparedTransaction.PartnerId.ToString(),
                 PartnerUserId = preparedTransaction.UserId.ToString(),
@@ -154,10 +158,28 @@ namespace AircashFrame
                 CancelUrl = initiateRequestDTO.CancelUrl,
                 Locale = "en-HR"
             };
-            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateRequest);
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateSignature);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var aircashInitiateRequest = new TransactionInitiateExtendedV2Request
+            {
+                PartnerId = preparedTransaction.PartnerId.ToString(),
+                PartnerUserId = preparedTransaction.UserId.ToString(),
+                PartnerTransactionId = preparedTransaction.PartnerTransactionId.ToString(),
+                Amount = preparedTransaction.Amount,
+                CurrencyId = partner.CurrencyId,
+                PayType = (int)preparedTransaction.PayType,
+                PayMethod = (int)preparedTransaction.PayMethod,
+                NotificationUrl = preparedTransaction.NotificationUrl,
+                SuccessUrl = initiateRequestDTO.SuccessUrl,
+                DeclineUrl = initiateRequestDTO.DeclineUrl,
+                OriginUrl = initiateRequestDTO.OriginUrl,
+                CancelUrl = initiateRequestDTO.CancelUrl,
+                Locale = "en-HR",
+                CustomParameters = initiateRequestDTO.MatchParameters
+            };
+            aircashInitiateSignature.Signature = signature;
             aircashInitiateRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashInitiateRequest, HttpMethod.Post, $"{AircashConfiguration.AircashFrameBaseUrl}{InitiateEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(initiateRequestDTO.MatchParameters.Count == 0? aircashInitiateSignature : aircashInitiateRequest, HttpMethod.Post, $"{AircashConfiguration.AircashFrameBaseUrl}{InitiateEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);
