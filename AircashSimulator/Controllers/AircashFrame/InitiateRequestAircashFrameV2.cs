@@ -1,5 +1,7 @@
 ﻿using Domain.Entities.Enum;
+using Services.AircashFrameV2;
 using System;
+using System.Collections.Generic;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -8,9 +10,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         public PayTypeEnum PayType { get; set; }
         public PayMethodEnum PayMethod { get; set; }
         public decimal Amount { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public DateTime BirthDate { get; set; }
+        public List<CustomParameterModel> MatchParameters { get; set; }
         public AcFrameIntegrationCheckoutTypeEnum AcFrameOption { get; set; }
         public string NotificationUrl { get; set; }
         public string SuccessUrl { get; set; }

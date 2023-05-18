@@ -18,15 +18,13 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
             initiateAcFrame: initiateAcFrame
         });
 
-        function initiateAcFrame(amount, firstName,lastName,birthDate, payType, payMethod, acFrameOption) {
+        function initiateAcFrame(amount, matchParameters, payType, payMethod, acFrameOption) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
                 data: {                    
                     amount: amount,
-                    firstName: firstName,
-                    lastName: lastName,
-                    birthDate:birthDate,
+                    matchParameters: matchParameters,
                     payType: payType,
                     payMethod: payMethod,
                     acFrameOption: acFrameOption                                      
@@ -50,10 +48,27 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
             $scope.createCashierAcFrameAcPayServiceBusy = false;  
             $scope.frameWindow = null;
             $scope.frameTab = null;
-            
+
+            $scope.matchParameters = [];
             $scope.initiateAcFrame = function () {                
-                $scope.createCashierAcFrameAcPayServiceBusy = true;                
-                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.createCashierAcFrameAcPayModel.firstName, $scope.createCashierAcFrameAcPayModel.lastName, $scope.createCashierAcFrameAcPayModel.birthDate, 0, 2, $scope.selectedAcFrameOption.value)
+                $scope.createCashierAcFrameAcPayServiceBusy = true;
+                if ($scope.useMatchPersonalData) {
+                    $scope.matchParameters = [
+                        {
+                            key: "FirstName",
+                            value: $scope.createCashierAcFrameAcPayModel.firstName
+                        },
+                        {
+                            key: "LastName",
+                            value: $scope.createCashierAcFrameAcPayModel.lastName
+                        },
+                        {
+                            key: "DateOfBirth",
+                            value: $scope.createCashierAcFrameAcPayModel.birthDate.toLocaleDateString('en-CA')
+                        }
+                    ];
+                }
+                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.matchParameters, 0, 2, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    
                         console.log(response);                        
                         
