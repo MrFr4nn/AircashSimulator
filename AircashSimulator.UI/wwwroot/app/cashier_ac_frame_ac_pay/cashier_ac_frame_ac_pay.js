@@ -18,12 +18,15 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
             initiateAcFrame: initiateAcFrame
         });
 
-        function initiateAcFrame(amount, payType, payMethod, acFrameOption) {
+        function initiateAcFrame(amount, firstName,lastName,birthDate, payType, payMethod, acFrameOption) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
                 data: {                    
                     amount: amount,
+                    firstName: firstName,
+                    lastName: lastName,
+                    birthDate:birthDate,
                     payType: payType,
                     payMethod: payMethod,
                     acFrameOption: acFrameOption                                      
@@ -39,6 +42,9 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
         function ($scope, $state, cashierAcFrameAcPayService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {    
             $scope.createCashierAcFrameAcPayModel = {                
                 amount: 100,
+                firstName:"",
+                lastName: "",
+                birthDate: new Date("")
             };
 
             $scope.createCashierAcFrameAcPayServiceBusy = false;  
@@ -47,7 +53,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
             
             $scope.initiateAcFrame = function () {                
                 $scope.createCashierAcFrameAcPayServiceBusy = true;                
-                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, 0, 2, $scope.selectedAcFrameOption.value)
+                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.createCashierAcFrameAcPayModel.firstName, $scope.createCashierAcFrameAcPayModel.lastName, $scope.createCashierAcFrameAcPayModel.birthDate, 0, 2, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    
                         console.log(response);                        
                         
@@ -198,6 +204,10 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
 
                 $scope.selectedAcFrameOption = $scope.acFrameOptions[0];
             };
+
+            $scope.setDate = function (date) {
+                $scope.createCashierAcFrameAcPayModel.birthDate = date;
+            }
 
             $scope.setDefaults();
 

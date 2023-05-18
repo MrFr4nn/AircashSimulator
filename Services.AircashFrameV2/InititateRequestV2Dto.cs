@@ -13,6 +13,9 @@ namespace Services.AircashFrameV2
         public Guid UserId { get; set; }
         public Guid PartnerTransactionId { get; set; }
         public decimal Amount { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime BirthDate { get; set; }
         public PayTypeEnum PayType { get; set; }
         public PayMethodEnum PayMethod { get; set; }
         public string Locale { get; set; }
