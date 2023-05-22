@@ -36,6 +36,7 @@ namespace Service.Settings
         decimal PayoutAmountTooBig { get; }
         string AircashFrameDefaultLocale { get; }
         decimal AircashFrameDefaultAmount { get; }
+        decimal AcFrameConfirmPayoutAmountMismatch { get; }
         string SalesPartnerLocation { get; }
         string ValidBarcode { get; }
         string UsedBarcode { get; }
@@ -44,6 +45,8 @@ namespace Service.Settings
         Guid AbonOnlinePartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
         Guid AircashFramePartnerTransactionAlreadyExists { get; }
+        Guid AcFrameConfirmPayoutValidTransaction { get; }
+        Guid AcFrameConfirmPayoutTransactionConfirmationNotAllowed { get; }
         Guid AircashFrameTransactionNotProcessed { get; }
         Guid AbonGenerateBlockedPartnerId { get; }
         Guid AbonGeneratePartnerIdsDoNotMatch { get; }

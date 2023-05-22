@@ -27,6 +27,7 @@ namespace AircashFrame
 
         private readonly string TransactionStatusEndpoint = "status";
         private readonly string InitiateEndpoint = "initiate";
+        private readonly string ConfirmPayoutEndpoint = "confirmPayout";
 
         public AircashFrameV2Service(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashFrameV2Service> logger)
         {
@@ -280,6 +281,38 @@ namespace AircashFrame
                 aircashTransactionStatusResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
             returnResponse.ServiceResponse = aircashTransactionStatusResponse;
+            return returnResponse;
+        }
+
+        public async Task<object> ConfirmPayout(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency, EnvironmentEnum environment)
+        {
+            var returnResponse = new Response();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var aircashConfirmPayoutRequest = new ConfirmPayoutRequest
+            {
+                PartnerId = partnerId.ToString(),
+                PartnerTransactionId = transactionId,
+                Amount = amount,
+                CurrencyId = (int)currency,
+            };
+            returnResponse.ServiceRequest = aircashConfirmPayoutRequest;
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashConfirmPayoutRequest);
+            returnResponse.Sequence = dataToSign;
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            aircashConfirmPayoutRequest.Signature = signature;
+            var aircashCreatePayoutResponse = new object();
+            var response = await HttpRequestService.SendRequestAircash(aircashConfirmPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{ConfirmPayoutEndpoint}");
+            returnResponse.ResponseDateTimeUTC = DateTime.Now;
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                aircashCreatePayoutResponse = JsonConvert.DeserializeObject<ConfirmPayoutResponse>(response.ResponseContent);
+            }
+            else
+            {
+                aircashCreatePayoutResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+            returnResponse.ServiceResponse = aircashCreatePayoutResponse;
             return returnResponse;
         }
     }
