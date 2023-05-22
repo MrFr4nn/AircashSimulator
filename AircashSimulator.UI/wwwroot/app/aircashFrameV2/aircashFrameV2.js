@@ -244,7 +244,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateBusy = true;
         $scope.initiateResponded = false;
         matchParameters = [];
-        if ($scope.initiateModel.payMethod != 0 && $scope.useMatchPersonalData) {
+        if ($scope.initiateModel.payMethod != 0) {
             matchParameters = [
                 {
                     key: "FirstName",
