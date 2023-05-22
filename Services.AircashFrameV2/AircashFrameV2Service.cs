@@ -112,7 +112,7 @@ namespace AircashFrame
             }
             var frontResponse = new Response
             {
-                ServiceRequest = aircashInitiateRequest,
+                ServiceRequest = initiateRequestDTO.MatchParameters == null || initiateRequestDTO.MatchParameters.Count == 0 ? aircashInitiateSignature : aircashInitiateRequest,
                 ServiceResponse = aircashInitiateResponse,
                 Sequence = dataToSign,
                 RequestDateTimeUTC = requestDateTime,

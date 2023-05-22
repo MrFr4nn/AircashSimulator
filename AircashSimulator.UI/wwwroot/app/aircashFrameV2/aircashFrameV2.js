@@ -23,7 +23,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         transactionStatusSimulateError: transactionStatusSimulateError,
     });
 
-    function initiateRedirectCheckout(initiateModel) {
+    function initiateRedirectCheckout(initiateModel, matchParameters) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/InitiateV2",
@@ -40,7 +40,8 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
                 SuccessUrl: initiateModel.successUrl,
                 DeclineUrl: initiateModel.declineUrl,
                 CancelUrl: initiateModel.cancelUrl,
-                OriginUrl: initiateModel.originUrl
+                OriginUrl: initiateModel.originUrl,
+                matchParameters: matchParameters
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -248,13 +249,31 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         countryISOCodeInput: "HR"
     }
 
+   
     $scope.initiateResponded = false;
     $scope.initiateBusy = false;
     $scope.initiateRedirectCheckout = function () {
         $scope.initiateBusy = true;
         $scope.initiateResponded = false;
+        matchParameters = [];
+        if ($scope.initiateModel.payMethod != 0) {
+            matchParameters = [
+                {
+                    key: "PayerFirstName",
+                    value: $scope.initiateModel.firstName
+                },
+                {
+                    key: "PayerLastName",
+                    value: $scope.initiateModel.lastName
+                },
+                {
+                    key: "DateOfBirth",
+                    value: $scope.initiateModel.birthDate.toLocaleDateString('en-CA')
+                }
+            ];
+        }
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
-        acFrameV2Service.initiateRedirectCheckout($scope.initiateModel)
+        acFrameV2Service.initiateRedirectCheckout($scope.initiateModel, matchParameters)
             .then(function (response) {
                 if (response) {
                     $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -447,6 +466,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.pageSize = pageSize;
         $scope.getTransactions();
     };
+
+    $scope.setDate = function (date) {
+        $scope.initiateModel.birthDate = date;
+    }
 
     $scope.setDefaultInitiateModel();
 
