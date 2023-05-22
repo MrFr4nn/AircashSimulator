@@ -267,7 +267,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     value: $scope.initiateModel.lastName
                 },
                 {
-                    key: "DateOfBirth",
+                    key: "PayerBirthDate",
                     value: $scope.initiateModel.birthDate.toLocaleDateString('en-CA')
                 }
             ];

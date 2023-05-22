@@ -1225,30 +1225,29 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                                 <tr>
                                     <td rowspan="4"><b>400</b></td>
                                     <td rowspan="4">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
-                                    <td>4000</td>
-                                    <td>Unknown transaction</td>
+                                    <td>1000</td>
+                                    <td>Transaction doesn't exist or it is already processed.</td>
                                     <td>-</td>
                                     <td rowspan="4">
                                         Contact Aircash support
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>4001</td>
-                                    <td>Transaction already confirmed</td>
+                                    <td>1005</td>
+                                    <td>Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed.</td>
                                     <td>-</td>
                                 </tr>
                                 <tr>
-                                    <td>4002</td>
-                                    <td>Amount does not match</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td>4003</td>
+                                    <td>3008</td>
                                     <td>User reached transaction limit or user is blocked</td>
                                     <td>-</td>
 
                                 </tr>
-
+                                <tr>
+                                    <td>3016</td>
+                                    <td>Amount mismatch.</td>
+                                    <td>-</td>
+                                </tr>
                                 <tr>
                                     <td><b>401</b></td>
                                     <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
