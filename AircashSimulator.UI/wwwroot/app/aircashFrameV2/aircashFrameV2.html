@@ -1254,9 +1254,36 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </div>
             </div>
         </uib-tab>
-
+        <uib-tab index="request-tab-104" heading="Try it out" classes="nav-item">
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="/" method="POST" name="statusForm">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label" for="partnerTransactionId">Partner Transaction ID</label>
+                                <input ng-model="confirmModel.transactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="amount">Amount</label>
+                                <input ng-model="confirmModel.amount" type="number" class="form-control" ng-required="true" name="amount">
+                            </div>
+                            <button class="btn btn-primary" ng-click="confirmPayout()" ng-disabled="confirmBusy || confirmForm.$invalid">Confirm payout<i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                        </fieldset>
+                    </form>
+                </div>
+                <br />
+                <div ng-if="confirmResponded" class="col-md-4">
+                    Request ({{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="ConfirmServiceRequest"></jsonformatter>
+                    Sequence: {{sequenceConfirm}}
+                </div>
+                <div ng-if="confirmResponded" class="col-md-4">
+                    Response ({{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="ConfirmServiceResponse"></jsonformatter>
+                </div>
+            </div>
+        </uib-tab>
     </uib-tabset>
-    </div>
 
 
 

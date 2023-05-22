@@ -18,6 +18,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         initiateWindowCheckout: initiateWindowCheckout,
         getTransactions: getTransactions,
         transactionStatus: transactionStatus,
+        confirmPayout: confirmPayout,
         initiateSimulateError: initiateSimulateError,
         transactionStatusSimulateError: transactionStatusSimulateError,
     });
@@ -66,6 +67,17 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
             url: config.baseUrl + "AircashFrame/TransactionStatusFrameV2",
             data: {
                 TransactionId: transactionId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function confirmPayout(transactionId, amount) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/ConfirmPayoutFrameV2",
+            data: {
+                PartnerTransactionId: transactionId,
+                Amount: amount
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -325,6 +337,34 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 }
                 $scope.statusBusy = false;
                 $scope.statusResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+
+    $scope.confirmModel = {};
+    $scope.confirmResponded = false;
+    $scope.confirmBusy = false;
+    $scope.confirmPayout = function () {
+        $scope.confirmBusy = true;
+        $scope.confirmResponded = false;
+        acFrameV2Service.confirmPayout($scope.confirmModel.transactionId, $scope.confirmModel.amount)
+            .then(function (response) {
+                if (response) {
+                    console.log(response);
+                    $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.ConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceConfirm = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.ConfirmServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.signature) {
+                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    }
+                    $scope.ConfirmServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.confirmBusy = false;
+                $scope.confirmResponded = true;
             }, () => {
                 console.log("error");
             });

@@ -72,6 +72,15 @@ namespace AircashSimulator.Controllers.AircashFrame
         }
 
         [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> ConfirmPayoutFrameV2(ConfirmPayoutDTO confirmPayoutDTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.ConfirmPayout(SettingsService.AircashFramePartnerId , confirmPayoutDTO.PartnerTransactionId.ToString(), confirmPayoutDTO.Amount, CurrencyEnum.EUR, environment);
+            return Ok(response);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> InitiateCashierFrameV2(InitiateRequestAircashFrameV2 initiateRequest)
         {
             var initiateRequestDTO = new InititateRequestV2Dto
