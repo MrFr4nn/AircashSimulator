@@ -140,6 +140,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 PayType = PayTypeEnum.Payout,
                 PayMethod = PayMethodEnum.Payout,
                 Locale = SettingsService.AircashFrameDefaultLocale,
+                NotificationUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/success",
                 OriginUrl = "https://aircash.eu",
                 DeclineUrl = "",
                 SuccessUrl = "",

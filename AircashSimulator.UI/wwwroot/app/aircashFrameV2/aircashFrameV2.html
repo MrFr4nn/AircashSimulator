@@ -645,6 +645,27 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                                         </div>
                                     </div>
                                 </div>
+                                <div ng-if="initiateModel.payMethod != 0">
+                                    <hr />
+                                    <div class="form-group align-items-center">
+                                        <input ng-checked="true" ng-model="useMatchPersonalData" style=" width: 1.0rem; height: 1.0rem;" type="checkbox" id="checkbox2" ng-init="useMatchPersonalData=true" />
+                                        <label style=" font-size: 1.0em;" for="checkbox2">Match personal data</label>
+                                    </div>
+                                    <div ng-if="useMatchPersonalData">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="firstName">FirstName</label>
+                                            <input ng-model="initiateModel.firstName" type="text" class="form-control" ng-required="true" name="FirstName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="lastName">LastName</label>
+                                            <input ng-model="initiateModel.lastName" type="text" class="form-control" ng-required="true" name="LastName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Birth date</label>
+                                            <date-picker ng-model="initiateModel.birthDate" date="" isOptional="false" out="setDate"></date-picker>
+                                        </div>
+                                    </div>
+                                </div>
                                 <button ng-click="initiateRedirectCheckout()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">
                                     Initiate
                                     <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i>
