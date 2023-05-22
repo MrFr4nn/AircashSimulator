@@ -247,11 +247,11 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         if ($scope.initiateModel.payMethod != 0) {
             matchParameters = [
                 {
-                    key: "FirstName",
+                    key: "PayerFirstName",
                     value: $scope.initiateModel.firstName
                 },
                 {
-                    key: "LastName",
+                    key: "PayerLastName",
                     value: $scope.initiateModel.lastName
                 },
                 {
