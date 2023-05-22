@@ -20,6 +20,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         transactionStatus: transactionStatus,
         confirmPayout: confirmPayout,
         initiateSimulateError: initiateSimulateError,
+        confirmSimulateError: confirmSimulateError,
         transactionStatusSimulateError: transactionStatusSimulateError,
     });
 
@@ -100,6 +101,16 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/InitiateSimulateError",
+            data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function confirmSimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/ConfirmSimulateError",
             data: errorCode
 
         });
@@ -267,7 +278,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     value: $scope.initiateModel.lastName
                 },
                 {
-                    key: "PayerBirthDate",
+                    key: "DateOfBirth",
                     value: $scope.initiateModel.birthDate.toLocaleDateString('en-CA')
                 }
             ];
@@ -427,6 +438,34 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 $scope.currentInitiateErrorCode = errCode;
                 $scope.errorInitiateResponded = true;
                 $scope.errorInitiateServiceBusy = false;
+            }, (err) => {
+
+                console.log(err);
+                console.log("error");
+            });
+    }
+
+    $scope.currentConfirmErrorCode = 0;
+    $scope.errorConfirmResponded = false;
+    $scope.errorConfirmServiceBusy = false;
+    $scope.confirmSimulateError = (errCode) => {
+        $scope.currentConfirmErrorCode = 0;
+        $scope.errorConfirmResponded = false;
+        $scope.errorConfirmServiceBusy = true;
+        acFrameV2Service.confirmSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorConfirmSequence = response.sequence;
+                    $scope.errorConfirmRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentConfirmErrorCode = errCode;
+                $scope.errorConfirmResponded = true;
+                $scope.errorConfirmServiceBusy = false;
             }, (err) => {
 
                 console.log(err);
@@ -605,6 +644,47 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 response: {
                     "code": 1003,
                     "message": "Transaction not processed."
+                }
+            }
+        },
+        Confirm: {
+            error1000: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "60526f94-9d61-482f-b577-8c92a551da5d",
+                    "amount": 10,
+                    "currencyId": 978,
+                    "signature": "Nv62frlxIJ..."
+                },
+                response: {
+                    "code": 1000,
+                    "message": "Transaction doesn't exist or it is already processed."
+                }
+            },
+            error1005: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "6f68fa9f-065e-43a0-b8d2-4760f94f9ea3",
+                    "amount": 10,
+                    "currencyId": 978,
+                    "signature": "uFLUm25tf1..."
+                },
+                response: {
+                    "code": 1005,
+                    "message": "Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed."
+                }
+            },
+            error3016: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "amount": 12,
+                    "currencyId": 978,
+                    "signature": "DavAirjGS6..."
+                },
+                response: {
+                    "code": 3016,
+                    "message": "Amount mismatch."
                 }
             }
         }

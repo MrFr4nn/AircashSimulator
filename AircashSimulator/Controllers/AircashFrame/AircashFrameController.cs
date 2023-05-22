@@ -185,6 +185,41 @@ namespace AircashSimulator.Controllers.AircashFrame
             }
             var response = await AircashFrameV2Service.Initiate(initiateRequestDTO, partnerTransactionId, currency, EnvironmentEnum.Staging);
             return Ok(response);
+        } 
+        
+        [HttpPost]
+        public async Task<IActionResult> ConfirmSimulateError([FromBody] AcFrameConfirmPayoutErrorCodeEnum errorCode)
+        {
+            var partnerTransactionId = SettingsService.AcFrameConfirmPayoutValidTransaction;
+            decimal amount = SettingsService.AircashFrameDefaultAmount; 
+            switch (errorCode)
+            {
+                case AcFrameConfirmPayoutErrorCodeEnum.TransactionDoesntExistOrItIsAlreadyProcessed:
+                    {
+                        partnerTransactionId = Guid.NewGuid();
+                        break;
+                    }
+                case AcFrameConfirmPayoutErrorCodeEnum.TransactionConfirmationNotAllowed:
+                    {
+                        partnerTransactionId = SettingsService.AcFrameConfirmPayoutTransactionConfirmationNotAllowed;
+                        break;
+                    }
+                case AcFrameConfirmPayoutErrorCodeEnum.UserReachedTransactionLimitOrUserIsBlocked:
+                    {
+                        return Ok();
+                    }
+                case AcFrameConfirmPayoutErrorCodeEnum.AmountMismatch:
+                    {
+                        amount = SettingsService.AcFrameConfirmPayoutAmountMismatch;
+                        break;
+                    }
+
+                default:
+                    return Ok();
+            }
+            var response = await AircashFrameV2Service.ConfirmPayout(SettingsService.AircashFramePartnerId, partnerTransactionId.ToString(), amount, CurrencyEnum.EUR, EnvironmentEnum.Staging);
+
+            return Ok(response);
         }
 
         [HttpPost]
