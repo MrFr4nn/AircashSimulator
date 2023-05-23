@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Domain.Entities;
 using Domain.Entities.Enum;
 using Service.Settings;
+using System.Collections.Generic;
 
 namespace Services.AircashPayout
 {
@@ -27,6 +28,7 @@ namespace Services.AircashPayout
         private IHttpRequestService HttpRequestService;
 
         private readonly string CheckUserEndpoint = "PartnerV3/CheckUser";
+        private readonly string CheckUserV4Endpoint = "PartnerV4/CheckUser";
         private readonly string CreatePayoutEndpoint = "PartnerV3/CreatePayout";
         private readonly string CheckTransactionStatusEndpoint = "PartnerV2/CheckTransactionStatus";
 
@@ -67,6 +69,32 @@ namespace Services.AircashPayout
                 //checkUserResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
             returnResponse.ServiceResponse = checkUserResponse;
+            return returnResponse;
+        }
+
+        public async Task<object> CheckUserV4(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment)
+        {
+            Response returnResponse = new Response();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var checkUserRequest = new AircashCheckUserV4Request()
+            {
+                PartnerID = partnerId.ToString(),
+                PhoneNumber = phoneNumber,
+                PartnerUserID = partnerUserId,
+                Parameters = parameters
+            };
+            returnResponse.ServiceRequest = checkUserRequest;
+            var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
+            returnResponse.Sequence = sequence;
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            checkUserRequest.Signature = signature;
+
+            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckUserV4Endpoint}");
+            
+            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
+            returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserResponse>(response.ResponseContent);
+
             return returnResponse;
         }
         public async Task<object> CreatePayout(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, EnvironmentEnum environment)

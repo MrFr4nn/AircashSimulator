@@ -15,6 +15,7 @@ app.config(function ($stateProvider) {
 aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         checkUser: checkUser,
+        checkUserV4: checkUserV4,
         createPayout: createPayout,
         getTransactions: getTransactions,
         checkTransactionStatus: checkTransactionStatus,
@@ -27,6 +28,14 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
             data: {
                 PhoneNumber: phoneNumber
             }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function checkUserV4(checkUserRequest) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/checkUserV4",
+            data: checkUserRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -137,6 +146,37 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             });
     }
 
+    $scope.checkUserV4Model = {
+        phoneNumber: $scope.decodedToken.userPhoneNumber,
+        firstName: $scope.decodedToken.userFirstName,
+        lastName: $scope.decodedToken.userLastName,
+        birthDate: new Date($scope.decodedToken.userBirthDate),
+    };
+    $scope.checkUserV4 = function () {
+        $scope.checkUserV4ServiceBusy = true;
+        $scope.checkUserV4ServiceResponse = false;
+        $scope.checkUserRequest = {
+            phoneNumber: $scope.checkUserV4Model.phoneNumber,
+            parameters: [{ key: "PayerFirstName", value: $scope.checkUserV4Model.firstName }, { key: "PayerLastName", value: $scope.checkUserV4Model.lastName }, { key: "PayerBirthDate", value: $scope.checkUserV4Model.birthDate.toLocaleDateString('en-CA') }]
+        }
+        aircashPayoutService.checkUserV4($scope.checkUserRequest)
+            .then(function (response) {
+
+                if (response) {
+                    $scope.checkUserV4RequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.checkUserV4ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.checkUserV4Sequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkUserV4Response = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.checkUserV4Request = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.checkUserV4ServiceBusy = false;
+                $scope.checkUserV4ServiceResponse = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
     $scope.createPayout = function () {
         $scope.createPayoutServiceBusy = true;
         $scope.createPayoutServiceResponse = false;
@@ -223,6 +263,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         $scope.pageSize = pageSize;
         $scope.getTransactions(false);
     };
+
+    $scope.setCheckUserDate = function (date) {
+        $scope.checkUserV4Model.birthDate = date;
+    }
 
     $scope.setDefaults();
 
@@ -337,6 +381,33 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             errorResponseExample: {
                 message: "An error has occurred."
             }
+        },
+        checkUserV4: {
+            requestExample: {
+                "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
+                "PhoneNumber": "385981234567",
+                "PartnerUserID": "12345",
+                "Parameters": [
+                    {
+                        "Key": "PayerFirstName",
+                        "Value": "John"
+                    },
+                    {
+                        "Key": "PayerLastName",
+                        "Value": "Doe"
+                    },
+                    {
+                        "Key": "PayerBirthDate",
+                        "Value": "1990-01-01"
+                    }
+                ],
+                "Signature": "ldzZxe....I8="
+            },
+            responseExample: {
+                first: { status: "1" },
+                second: { status: "2" },
+                third: { status: "3" }
+            },
         },
         createPayout: {
             requestExample: {

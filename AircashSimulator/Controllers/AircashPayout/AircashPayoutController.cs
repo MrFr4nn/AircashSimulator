@@ -39,6 +39,14 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, UserContext.GetUserId(User).ToString(), SettingsService.AircashPayoutPartnerId, environment);
             return Ok(response);
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> CheckUserV4(CheckUserv4DTO checkUserV4Request)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayoutService.CheckUserV4(checkUserV4Request.PhoneNumber, UserContext.GetUserId(User).ToString(), SettingsService.AircashPayoutPartnerId, checkUserV4Request.Parameters, environment);
+            return Ok(response);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CreatePayout(CreatePayoutRequest createPayoutRequest)
