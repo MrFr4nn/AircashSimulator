@@ -35,10 +35,19 @@ namespace Service.Settings
         decimal PayoutAmountTooSmall { get; }
         decimal PayoutAmountTooBig { get; }
         string AircashFrameDefaultLocale { get; }
+        int AbonSPCashierNumberOfCouponCodesPerDenomination { get; }
         decimal AircashFrameDefaultAmount { get; }
+        decimal AcFrameConfirmPayoutAmountMismatch { get; }
+        string SalesPartnerLocation { get; }
+        string ValidBarcode { get; }
+        string UsedBarcode { get; }
+        string BarcodeOverLimit { get; }
+        string NotCheckedBarcode { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
         Guid AircashFramePartnerTransactionAlreadyExists { get; }
+        Guid AcFrameConfirmPayoutValidTransaction { get; }
+        Guid AcFrameConfirmPayoutTransactionConfirmationNotAllowed { get; }
         Guid AircashFrameTransactionNotProcessed { get; }
         Guid AbonGenerateBlockedPartnerId { get; }
         Guid AbonGeneratePartnerIdsDoNotMatch { get; }
@@ -46,6 +55,9 @@ namespace Service.Settings
         Guid AircashPayoutPartnerId { get; }
         Guid PartnerTransactionIdAlreadyExists { get; }
         Guid BlockedUserId { get; }
+        Guid SalesPartnerId { get; }
+        Guid UnableToCancelPayoutTransactionId { get; }
+        Guid TransactionAlreadyCanceledId { get; }
         Guid AircashFramePartnerId { get; }
     }
 }

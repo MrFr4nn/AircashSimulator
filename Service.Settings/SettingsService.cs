@@ -44,10 +44,19 @@ namespace Service.Settings
         public decimal PayoutAmountTooSmall { get { return GetSetting("PayoutAmountTooSmall", decimal.Zero, throwExceptionIfMissing: true); } }
         public decimal PayoutAmountTooBig { get { return GetSetting("PayoutAmountTooBig", decimal.Zero, throwExceptionIfMissing: true); } }
         public string AircashFrameDefaultLocale { get { return GetSetting("AircashFrameDefaultLocale", string.Empty, throwExceptionIfMissing: true); } }
+        public int AbonSPCashierNumberOfCouponCodesPerDenomination { get { return GetSetting("AbonSPCashierNumberOfCouponCodesPerDenomination", 0, throwExceptionIfMissing: true); } }
         public decimal AircashFrameDefaultAmount { get { return GetSetting("AircashFrameDefaultAmount", decimal.Zero, throwExceptionIfMissing: true); } }
+        public decimal AcFrameConfirmPayoutAmountMismatch { get { return GetSetting("AcFrameConfirmPayoutAmountMismatch", decimal.Zero, throwExceptionIfMissing: true); } }
+        public string SalesPartnerLocation { get { return GetSetting("SalesPartnerLocation", string.Empty, throwExceptionIfMissing: true); } }
+        public string ValidBarcode { get { return GetSetting("ValidBarcode", string.Empty, throwExceptionIfMissing: true); } }
+        public string UsedBarcode { get { return GetSetting("UsedBarcode", string.Empty, throwExceptionIfMissing: true); } }
+        public string BarcodeOverLimit { get { return GetSetting("BarcodeOverLimit", string.Empty, throwExceptionIfMissing: true); } }
+        public string NotCheckedBarcode { get { return GetSetting("NotCheckedBarcode", string.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonGenerateBlockedPartnerId { get { return GetSetting("AbonGenerateBlockedPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashFramePartnerTransactionAlreadyExists { get { return GetSetting("AircashFramePartnerTransactionAlreadyExists", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AcFrameConfirmPayoutValidTransaction { get { return GetSetting("AcFrameConfirmPayoutValidTransaction", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AcFrameConfirmPayoutTransactionConfirmationNotAllowed { get { return GetSetting("AcFrameConfirmPayoutTransactionConfirmationNotAllowed", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashFrameTransactionNotProcessed { get { return GetSetting("AircashFrameTransactionNotProcessed", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonGeneratePartnerIdsDoNotMatch { get { return GetSetting("AbonGeneratePartnerIdsDoNotMatch", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonGeneratePartnerId { get { return GetSetting("AbonGeneratePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
@@ -56,6 +65,9 @@ namespace Service.Settings
         public Guid PartnerTransactionIdAlreadyExists { get { return GetSetting("PartnerTransactionIdAlreadyExists", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashFramePartnerId { get { return GetSetting("AircashFramePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid SalesPartnerId { get { return GetSetting("SalesPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid UnableToCancelPayoutTransactionId { get { return GetSetting("UnableToCancelPayoutTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid TransactionAlreadyCanceledId { get { return GetSetting("TransactionAlreadyCanceledId", Guid.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)
         {

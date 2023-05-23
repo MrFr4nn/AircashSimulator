@@ -168,21 +168,11 @@
                                 <label class="form-label">Partner Name</label>
                                 <input ng-model="partner.partnerName" class="form-control" type="text" ng-required="true">
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Private Key Path</label>
-                                <input ng-model="partner.privateKey" class="form-control" type="text" ng-required="false">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Private Key Pass</label>
-                                <input ng-model="partner.privateKeyPass" class="form-control" type="text" ng-required="false">
-
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Use Default Partner</label>
-                                <select class="form-control" ng-model="partner.useDefaultPartner" ng-required="true">
-                                    <option value="true" ng-selected="partner.useDefaultPartner == 1">Yes</option>
-                                    <option value="false" ng-selected="partner.useDefaultPartner == 2">No</option>
-                                </select>
+                            <div class="mb-3" ng-if="newPartner">
+                                <div>
+                                    <label class="form-label">User</label>
+                                    <input ng-model="$parent.username" class="form-control" type="text" ng-required="true">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-2"></div>
@@ -196,33 +186,21 @@
                                 <label class="form-label">Country Code</label>
                                 <country-picker output="countryPickerCode" default-country="defaultCountry"></country-picker>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Environment</label>
-                                <select class="form-control" ng-model="partner.environment" ng-required="true">
-                                    <option value="1" ng-selected="partner.environment == 1">Dev</option>
-                                    <option value="2" ng-selected="partner.environment == 2">Staging</option>
-                                </select>
-                            </div>
-                            <div class="mb-3" ng-if="newPartner">
-                                <div  >
-                                    <label class="form-label">User</label>
-                                    <input ng-model="$parent.username" class="form-control" type="text" ng-required="true">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-lg-10">
                         <table class="table table-bordered table-hover table-condensed table-striped">
                             <tbody>
                                 <tr ng-repeat="r in roles">
                                     <td>{{r.roleName}}</td>
+                                    <td>{{getDescription(r.roleName)}}</td>
                                     <td>
                                         <input type="checkbox"
                                                name="selectedRoles[]"
                                                value="{{r.roleName}}"
-                                               ng-model="r.selected" />
+                                               ng-model="r.selected" /> 
                                     </td>
                                 </tr>
                             </tbody>
