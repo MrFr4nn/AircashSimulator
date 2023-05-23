@@ -369,6 +369,9 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.setCheckUserDate = function (date) {
         $scope.checkUserV4Model.birthDate = date;
     }
+    $scope.setCreatePayoutDate = function (date) {
+        $scope.createPayoutV4Model.birthDate = date;
+    }
 
     $scope.setDefaults();
 
@@ -486,24 +489,24 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         },
         checkUserV4: {
             requestExample: {
-                "PartnerID": "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
-                "PhoneNumber": "385981234567",
-                "PartnerUserID": "12345",
-                "Parameters": [
+                PartnerID: "496fbe8e-ca5a-42df-8999-cdde0c14ae3a",
+                PhoneNumber: "385981234567",
+                PartnerUserID: "12345",
+                Parameters: [
                     {
-                        "Key": "PayerFirstName",
-                        "Value": "John"
+                        Key: "PayerFirstName",
+                        Value: "John"
                     },
                     {
-                        "Key": "PayerLastName",
-                        "Value": "Doe"
+                        Key: "PayerLastName",
+                        Value: "Doe"
                     },
                     {
-                        "Key": "PayerBirthDate",
-                        "Value": "1990-01-01"
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
                     }
                 ],
-                "Signature": "ldzZxe....I8="
+                Signature: "ldzZxe....I8="
             },
             responseExample: {
                 first: { status: "1" },
@@ -531,30 +534,27 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         },
         createPayoutV4: {
             requestExample: {
-                PartnerID: "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
-                PhoneNumber: "385981234567",
-                PartnerUserID: "12345",
-                Parameters: [
+                "PartnerID": "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+                "PartnerTransactionID": "e631a091-f239-40ce-9f5d-bd9a443b2f55",
+                "Amount": 123.45,
+                "PhoneNumber": "385981234567",
+                "PartnerUserID": "db0c97e7-2029-44c0-97b6-6d3faee3ab34",
+                "Parameters": [
                     {
-                        Key: "email",
-                        Value: "user@example.net"
+                        "Key": "PayerFirstName",
+                        "Value": "John"
                     },
                     {
-                        Key: "PayerFirstName",
-                        Value: "John"
+                        "Key": "PayerLastName",
+                        "Value": "Doe"
                     },
                     {
-                        Key: "PayerLastName",
-                        Value: "Doe"
-                    },
-                    {
-                        Key: "PayerBirthDate",
-                        Value: "1990-01-01"
-                    }],
-                Amount: 123.45,
-                CurrencyID: 978,
-                PartnerTransactionID: "123..abc..123",
-                Signature: "CX9v6V....Bw="
+                        "Key": "PayerBirthDate",
+                        "Value": "1990-01-01"
+                    }
+                ],
+                "CurrencyID": 978,
+                "Signature": "XNqywSLWev..."
             },
             responseExample: {
                 aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
