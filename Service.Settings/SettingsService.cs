@@ -44,6 +44,7 @@ namespace Service.Settings
         public decimal PayoutAmountTooSmall { get { return GetSetting("PayoutAmountTooSmall", decimal.Zero, throwExceptionIfMissing: true); } }
         public decimal PayoutAmountTooBig { get { return GetSetting("PayoutAmountTooBig", decimal.Zero, throwExceptionIfMissing: true); } }
         public string AircashFrameDefaultLocale { get { return GetSetting("AircashFrameDefaultLocale", string.Empty, throwExceptionIfMissing: true); } }
+        public int AbonSPCashierNumberOfCouponCodesPerDenomination { get { return GetSetting("AbonSPCashierNumberOfCouponCodesPerDenomination", 0, throwExceptionIfMissing: true); } }
         public decimal AircashFrameDefaultAmount { get { return GetSetting("AircashFrameDefaultAmount", decimal.Zero, throwExceptionIfMissing: true); } }
         public decimal AcFrameConfirmPayoutAmountMismatch { get { return GetSetting("AcFrameConfirmPayoutAmountMismatch", decimal.Zero, throwExceptionIfMissing: true); } }
         public string SalesPartnerLocation { get { return GetSetting("SalesPartnerLocation", string.Empty, throwExceptionIfMissing: true); } }

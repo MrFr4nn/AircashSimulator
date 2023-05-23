@@ -22,18 +22,22 @@
                         <br />
                         <div id="content">
                             <div class="form-group">
-                                <label class="d-inline-block" for="abon_lang"><small><strong>Select language for your abon voucher:</strong></small></label>
+                                <label class="d-inline-block" for="abon_lang"><strong>Select country for your Abon voucher:</strong></label>
                                 <select name="abon_lang" class="form-control form-control-sm d-inline-block" style="width: auto;" id="abon_lang"
-                                        ng-options="item.language for item in abon_languages"
-                                        ng-model="selectedAbonLanguage" ng-disabled="createServiceBusy" ng-required="true">
+                                        ng-options="item.country for item in abon_countries"
+                                        ng-model="selectedAbonCountry" ng-disabled="createServiceBusy" ng-change="getDenominations()" ng-required="true">
                                 </select>
                             </div>
+                            <div class="form-group">
+                                <label class="d-inline-block" for="abon_lang">Download multiple Abon voucher:</label>
+                                <button ng-click="createAndSaveCoupons()" class="btn btn-danger w-100px me-5px" ng-disabled="createMultipleServiceBusy">Download<i ng-if="createMultipleServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </div>
                             <div class="d-flex justify-content-around flex-wrap">
-                                <button ng-repeat="abon in abons" ng-click="createCoupon(abon.value)" type="button" class="btn aBtnRed" ng-disabled="createServiceBusy" style="width: 100px !important; height: 100px !important; font-size: 15px;">
+                                <button ng-repeat="abon in abons" ng-click="createCoupon(abon)" type="button" class="btn aBtnRed mt-2" ng-disabled="createServiceBusy" style="width: 100px !important; height: 100px !important; font-size: 15px;">
                                     <img src="/images/abonWhite.png" alt="Alternate Text" width="40px" style="margin-top: -5px;">
                                     <br />
                                     <div>
-                                        <span>{{abon.value}}</span> {{abon.currency}}
+                                        <span>{{abon}}</span> {{selectedAbonCountry.isoCurrencySymbol}}
                                     </div>
                                 </button>
                             </div>

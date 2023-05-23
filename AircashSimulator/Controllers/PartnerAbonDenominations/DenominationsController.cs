@@ -33,5 +33,12 @@ namespace AircashSimulator.Controllers.PartnerAbonDenominations
             var response = await PartnerAbonDenominationService.GetDenominations(SettingsService.AbonGeneratePartnerId);
             return Ok(response);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> GetCashierDenominations(CashierDenominatinsDTO cashierDenominatinsDTO)
+        {
+            var response = await PartnerAbonDenominationService.GetDenominations(cashierDenominatinsDTO.PartnerId);
+            return Ok(response);
+        }
     }
 }

@@ -35,6 +35,7 @@ namespace Service.Settings
         decimal PayoutAmountTooSmall { get; }
         decimal PayoutAmountTooBig { get; }
         string AircashFrameDefaultLocale { get; }
+        int AbonSPCashierNumberOfCouponCodesPerDenomination { get; }
         decimal AircashFrameDefaultAmount { get; }
         decimal AcFrameConfirmPayoutAmountMismatch { get; }
         string SalesPartnerLocation { get; }
