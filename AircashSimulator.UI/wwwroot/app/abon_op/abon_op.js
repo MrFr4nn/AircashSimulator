@@ -151,6 +151,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     $scope.errorRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.errorResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.errorSequence = response.sequence;
+                    $scope.errorRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.errorResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.errorRequest = JSON.stringify(response.serviceRequest, null, 4);
@@ -177,6 +178,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     $scope.errorConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.errorConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.errorConfirmSequence = response.sequence;
+                    $scope.errorConfirmRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.errorConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.errorConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);

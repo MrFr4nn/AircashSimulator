@@ -336,7 +336,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(1)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 1">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 1">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ValidateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
                         <div class="row col-12">
@@ -364,7 +364,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(2)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 2">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 2">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ValidateTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
                         <div class="row col-12">
@@ -392,7 +392,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(3)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 3">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 3">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ValidateTransactionError-tab-4" heading="4 - Conversion Module Error" classes="nav-item">
                         Simulation not available.
@@ -423,7 +423,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="validateSimulateError(7)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequest)" ng-if="errorValidateResponded && currentErrorCode == 7">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 7">Copy Request</button>
                     </uib-tab>
                 </uib-tabset>
             </uib-tab>
@@ -705,7 +705,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
                         <div class="row col-12">
@@ -733,7 +733,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
                         <div class="row col-12">
@@ -761,7 +761,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-4" heading="4 - Coupon Already Used" classes="nav-item">
                         <div class="row col-12">
@@ -789,7 +789,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-5" heading="5 - Conversion Module Error" classes="nav-item">
                         Simulation not available.
@@ -820,7 +820,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                             </div>
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(7)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">Copy Request</button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">Copy Request</button>
                     </uib-tab>
                     <uib-tab index="ConfirmTransactionError-tab-7" heading="9 - Limit exceeded" classes="nav-item">
                         <div class="row col-12">

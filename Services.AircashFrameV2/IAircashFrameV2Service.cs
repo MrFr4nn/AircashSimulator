@@ -10,10 +10,11 @@ namespace Services.AircashFrameV2
 {
     public interface IAircashFrameV2Service
     {
-        public Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, Guid partnerTransactionId, CurrencyEnum currency);
+        public Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, Guid partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment);
         public Task<ResponseAircashFrameV2Url> InitiateCashierFrameV2(InititateRequestV2Dto initiateRequestDTO);
         public Task NotificationCashierFrameV2(Guid transactionId);
-        Task<object> CheckTransactionStatusFrame(Guid partnerId, string transactionId);
+        Task<object> CheckTransactionStatusFrame(Guid partnerId, string transactionId, EnvironmentEnum environment);
+        Task<object> ConfirmPayout(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency, EnvironmentEnum environment);
         public Task<AircashTransactionStatusResponseV2> CheckTransactionStatusCashierFrameV2(PartnerEntity partner, string transactionId);
     }
 }

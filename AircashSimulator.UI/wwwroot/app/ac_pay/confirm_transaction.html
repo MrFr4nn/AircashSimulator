@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <br />
+    <h4>ConfirmTransaction</h4>
+    <p>
+        Once the user confirms the transaction Aircash system will send a confirmation message
+        towards the partner system. Partner system should process that message and return a successful
+        response in case of successful processing. In case Aircash system doesn’t receive successful response
+        Aircash system will retry this request several times after which it will notify Aircash support upon
+        unsuccessful confirmation.
+    </p>
+    <p>Partner should provide an url where Aircash will send all transaction confirmations.</p>
+    <i>Aircash public keys:</i>
+    <div class="table-responsive">
+        <table class="table table-active col-md-2">
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><b>Test</b></td>
+                <td><a href="/files/AircashPayPublicKeyTest.zip" download>Link</a></td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td><a href="/files/AircashPayPublicKeyProd.zip" download>Link</a></td>
+            </tr>
+        </table>
+    </div>
+
+    <br />
+    <uib-tabset>
+        <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique partner identifier (per currency) provided by Aircash
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionID</b></td>
+                            <td>string</td>
+                            <td>
+                                ID that partner sends in the
+                                GeneratePartnerCode method.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Transaction Amount - user will not be
+                                able to change amount so this will always
+                                be same as in GeneratePartnerCode
+                                method
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>CurrencyID</b></td>
+                            <td>int</td>
+                            <td>
+                                Currency ID (e.g. 978) - user will not
+                                be able to change currency so this will
+                                always be same as in
+                                GeneratePartnerCode method
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>AircashTransactionID</b></td>
+                            <td>string</td>
+                            <td>
+                                Transaction ID in aircash system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature</b></td>
+                            <td>string</td>
+                            <td>
+                                Signature by Aircash system confirming
+                                that Aircash is sending request to the
+                                partner system
+                            </td>
+                            <td>
+                                YES
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+            <jsonformatter data="aircashPay.confirmTransaction.requestExample"></jsonformatter>
+        </uib-tab>
+        <uib-tab index="request-tab-2" heading="Response example" classes="nav-item">
+            <p>
+                Partner system should respond with HTTP response 200 OK in case of success. In case the partner
+                system isn’t able to process the transaction, the partner system should respond with HTTP response
+                code that isn’t 200 OK.
+            </p>
+        </uib-tab>
+    </uib-tabset>
+    <br />
+    <hr />
+
+</body>
+</html>

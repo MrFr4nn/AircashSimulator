@@ -195,7 +195,8 @@ namespace Services.Partner
                 Username = username,
                 Email = username,
                 PartnerId = partnerId,
-                PasswordHash = hash
+                PasswordHash = hash,
+                Environment = EnvironmentEnum.Staging
             });
         }
 

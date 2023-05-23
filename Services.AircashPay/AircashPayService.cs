@@ -32,7 +32,7 @@ namespace Services.AircashPay
             AircashConfiguration = aircashConfiguration.CurrentValue;
             Logger = logger;
         }
-        public async Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO)
+        public async Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == generatePartnerCodeDTO.PartnerId).FirstOrDefault();
@@ -65,7 +65,7 @@ namespace Services.AircashPay
             Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashGeneratePartnerCodeRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);
@@ -118,7 +118,7 @@ namespace Services.AircashPay
             }
         }
 
-        public async Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO)
+        public async Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
             var aircashCancelTransactionResponse = new object();
@@ -131,7 +131,7 @@ namespace Services.AircashPay
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashCancelTransactionRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashCancelTransactionRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashCancelTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{CancelTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashCancelTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{CancelTransactionEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -169,7 +169,7 @@ namespace Services.AircashPay
             return frontResponse;
         }
 
-        public async Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO)
+        public async Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
             var aircashRefundTransactionResponse = new object();
@@ -184,7 +184,7 @@ namespace Services.AircashPay
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashRefundTransactionRequest);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
             aircashRefundTransactionRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashRefundTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{RefundTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashRefundTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{RefundTransactionEndpoint}");
             var responseDateTime = DateTime.UtcNow;
 
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)

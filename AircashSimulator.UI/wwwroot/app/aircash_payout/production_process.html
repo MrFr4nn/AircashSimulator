@@ -1,0 +1,101 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Production process</h1>
+    <p>
+        The production process consists of several steps:
+        <ol>
+            <li>All acceptance criteria are checked and are performing in line with expectations</li>
+            <li>
+                Aircash support will add partner in Aircash production system and allow access to Aircash production system from the partner IP addresses
+            </li>
+            <li>
+                The partner will test connection to production and allow payments for individual users (if possible) in order to test integration in “silent” production
+            </li>
+            <li>
+                After the first 3 steps are in line with expectations, the partner will enable service for all user
+            </li>
+        </ol>
+    </p>
+
+    <h2>Acceptance criteria</h2>
+    <p>
+        To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
+    </p>
+
+    <div class="table-responsive">
+        <table class="table table-active">
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Test description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>CheckUser</b></td>
+                    <td>
+                        The Check User user method returns a successful check and allows the user to make a payment
+                    </td>
+                    <td>
+                        YES, in case partner use this method
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>CheckUser - error</b></td>
+                    <td>
+                        An appropriate message is printed to the user
+                    </td>
+                    <td>
+                        YES, in case partner use this method
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>CreatePayout</b></td>
+                    <td>
+                        The partner system should take funds from the user. The user should receive funds in Aircash application.
+                    </td>
+                    <td>
+                        YES
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>CreatePayout - user doesn't exist with requested data</b></td>
+                    <td>
+                        An appropriate message is printed to the user
+                    </td>
+                    <td>
+                        YES
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>CreatePayout - disable a user to exceed max transaction amount</b></td>
+                    <td>
+                        There is no need to call the method but only to disable user to make a call with a smaller or larger amount of the transaction
+                    </td>
+                    <td>
+                        YES
+                </tr>
+                <tr>
+                    <td><b>CheckTransactionStatus</b></td>
+                    <td>
+                        Check transaction status
+                    </td>
+                    <td>
+                        YES, in case partner use this method
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <hr />
+
+    <br />
+
+</body>
+</html>

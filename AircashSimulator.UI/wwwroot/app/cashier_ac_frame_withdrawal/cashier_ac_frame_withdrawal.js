@@ -18,13 +18,14 @@ cashierAcFrameModule.service("cashierAcFrameWithdrawalService", ['$http', '$q', 
             initiateAcFrameWithdrawal: initiateAcFrameWithdrawal
         });
 
-        function initiateAcFrameWithdrawal(amount, payType, payMethod, acFrameOption) {
+        function initiateAcFrameWithdrawal(amount, matchParameters, payType, payMethod, acFrameOption) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
                 data: {                    
                     amount: amount,
                     payType: payType,
+                    matchParameters: matchParameters,
                     payMethod: payMethod,
                     acFrameOption: acFrameOption                                      
                 }
@@ -44,11 +45,27 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
             $scope.createCashierAcFrameWithdrawalServiceBusy = false;  
             $scope.frameWindow = null;
             $scope.frameTab = null;
-            
+
             $scope.initiateAcFrameWithdrawal = function () {                
                 $scope.createCashierAcFrameWithdrawalServiceBusy = true;  
+                if ($scope.useMatchPersonalData) {
+                    $scope.matchParameters = [
+                        {
+                            key: "PayerFirstName",
+                            value: $scope.createCashierAcFrameWithdrawalModel.firstName
+                        },
+                        {
+                            key: "PayerLastName",
+                            value: $scope.createCashierAcFrameWithdrawalModel.lastName
+                        },
+                        {
+                            key: "PayerBirthDate",
+                            value: $scope.createCashierAcFrameWithdrawalModel.birthDate.toLocaleDateString('en-CA')
+                        }
+                    ];
+                }
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
-                cashierAcFrameWithdrawalService.initiateAcFrameWithdrawal($scope.createCashierAcFrameWithdrawalModel.amount, 1, 10, $scope.selectedAcFrameOption.value)
+                cashierAcFrameWithdrawalService.initiateAcFrameWithdrawal($scope.createCashierAcFrameWithdrawalModel.amount, $scope.matchParameters, 1, 10, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    
                         console.log(response);                        
                         
@@ -201,6 +218,10 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
             };
 
             $scope.setDefaults();
+
+            $scope.setDate = function (date) {
+                $scope.createCashierAcFrameWithdrawalModel.birthDate = date;
+            }
 
         }
     ]);

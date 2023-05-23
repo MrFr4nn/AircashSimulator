@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1 style="text-align:justify">Deep link</h1>
+    <p>
+        Payment process through Aircash application is described in previous chapters. In order to
+        simplify the process for new, but also for existing users, Aircash proposes to partners to integrate
+        deep link option inside their app.
+    </p>
+    <p>
+        In deep link option, the user can initiate payment from partner web/mobile application.
+        Integration process is easy, and user gets simple and user friendly way of payment from the partner
+        website or mobile application.
+    </p>
+    <p>
+        From user perspective flow is following:
+        <ol>
+            <li>
+                User select Aircash as payment method on the partner site. The user inputs the
+                amount that the user would like to deposit on his Aircash account.
+            </li>
+            <li>
+                After the user confirms payment on the partner site, the user will be redirected on
+                specific location based on the user’s device:
+                <ol type="a">
+                    <li>
+                        User is on a mobile device:
+                        <ol type="i">
+                            <li>
+                                If a user has the Aircash app installed, it will pop up with the already prefilled amount and username/email.
+                            </li>
+                            <li>
+                                If a user does not have the Aircash app (i.e., the phone number does not exists), a user will be just redirected to the info page where he can see how to download the Aircash app and open the account.
+                            </li>
+                        </ol>
+                    </li>
+                    <li>
+                        User is on a desktop device:
+                        <ol type="i">
+                            <li>
+                                If a user has the Aircash app installed, he will receive a push notification that will open his Aircash app with the already prefilled amount and username/email. His browser will be redirected to the Aircash info page where some short guidelines are stated. From the info page, there will be a back button for your cashier.
+                            </li>
+                            <li>
+                                If a user does not have the Aircash app (i.e., the phone number does not exist), a user will be just redirected to the info page where he can see how to download the Aircash app and open the account.
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
+            </li>
+        </ol>
+    </p>
+
+    <h2 style="text-align:justify">Integration</h2>
+    <p>
+        In deep link integration process, the partner needs to generate payment link with correct
+        parameters. Aircash will send partner correct link once parameters for the link are defined.
+        Parameter list is different for each partner, but parameter list in deep link option are same as in
+        payment integration.
+    </p>
+    <p>
+        Link example
+        <div class="row ml-1">
+            <select class="form-control form-control-sm col-md-2 col-3" ng-model="isProduction" ng-init="isProduction = false">
+                <option ng-value="true">Production</option>
+                <option ng-value="false">Test</option>
+            </select>
+            <select class="form-control form-control-sm col-md-2 col-3 ml-2" ng-model="identificator" ng-init="identificator = 'username'">
+                <option ng-value="'email'">Email</option>
+                <option ng-value="'username'">Username</option>
+            </select>
+        </div>
+        <br />
+        <div class="overflow-auto" ng-if="!isProduction">
+            <a href="">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=<b class="text-danger">{partnerName}</b>_topup&utm_medium=deeplink&utm_source=<b class="text-danger">{partnerName}</b></a>
+            <br />
+        </div>
+        <div class="overflow-auto" ng-if="isProduction">
+            <a href="">https://aircash.page.link/?link=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&apn=com.aircash.aircash&afl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&isi=1178612530&ibi=com.aircash.aircash&ifl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D<b class="text-danger">{partnerId}</b>%26{{identificator}}%3D<b class="text-danger">{<span>{{identificator}}</span>}</b>%26amount%3D<b class="text-danger">{amount}</b>%26phoneNumber%3D<b class="text-danger">{phoneNumber}</b>&utm_campaign=<b class="text-danger">{partnerName}</b>_topup&utm_medium=deeplink&utm_source=<b class="text-danger">{partnerName}</b></a>
+            <br />
+        </div>
+    </p>
+    <p>
+        In this case partner needs to replace 4 parameters values (marked in red):
+        <ul>
+            <li>
+                {partnerID} - replace with partnerID with partner identifier in Aircash system. Aircash will
+                send you this information once Aircash opens account for partner in Aircash system.
+            </li>
+            <li>
+                {<span>{{identificator}}</span>} - replace with user's {{identificator}}
+            </li>
+            <li>
+                {amount} - amount that user inputed in partner system. Amount must be whole number
+                without decimal or thousands separator. Example 1234
+            </li>
+            <li>
+                {phoneNubmer} - unique identifier for user in Aircash application. In case the user attempts
+                to make payment via desktop PC, Aircash system will find user by phoneNubmer and send him notification with transaction template. Once user open notification on this mobile device
+                Aircash application will start and prefill all parameters of the transaction; user will need to
+                authorize transaction and partner will receive payment confirmation request
+            </li>
+            <li>
+                {partnerName} - replace with partner's name
+            </li>
+        </ul>
+    </p>
+    <p>
+        Result link should look like this:
+        <br />
+        <div class="row row-cols-md-4 row-cols-lg-6 row-cols-2">
+            <div class="col form-group mr-2">
+                <label>PartnerId:</label>
+                <input class="form-control form-control-sm" ng-model="partnerId" ng-init="partnerId = '8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF'" />
+            </div>
+            <div class="col form-group mr-2">
+                <label>{{identificator.charAt(0).toUpperCase() + identificator.slice(1)}}:</label>
+                <input class="form-control form-control-sm" ng-model="username" ng-init="username = 'test'" />
+            </div>
+            <div class="col form-group mr-2">
+                <label>Amount:</label>
+                <input class="form-control form-control-sm" ng-model="amount" ng-init="amount = '100'" />
+            </div>
+            <div class="col form-group mr-2">
+                <label>Phonenumber:</label>
+                <input class="form-control form-control-sm" ng-model="phoneNumber" ng-init="phoneNumber = '385981234567'" />
+            </div>
+            <div class="col form-group mr-2">
+                <label>Partner Name:</label>
+                <input class="form-control form-control-sm" ng-model="partnerName" ng-init="partnerName = 'Brand'" />
+            </div>
+
+        </div>
+        <div class="overflow-auto" ng-if="!isProduction">
+            <a href="" id="testLink">https://aircashtest.page.link/?link=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&apn=com.aircash.aircash.test&afl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&isi=1178612530&ibi=com.aircash.aircash.test&ifl=https://staging-m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&utm_campaign={{partnerName}}_topup&utm_medium=deeplink&utm_source={{partnerName}}</a>
+            <br />
+            <button class="btn btn-sm btn-white mt-2" ng-click="copyToClipboard(isProduction)">Copy</button>
+        </div>
+        <div class="overflow-auto" ng-if="isProduction">
+            <a href="" id="prodLink">https://aircash.page.link/?link=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&apn=com.aircash.aircash&afl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&isi=1178612530&ibi=com.aircash.aircash&ifl=https://m3.aircash.eu/api/DeepLink/PartnerPayment?partnerID%3D{{partnerId}}%26{{identificator}}%3D{{username}}%26amount%3D{{amount}}%26phoneNumber%3D{{phoneNumber}}&utm_campaign={{partnerName}}_topup&utm_medium=deeplink&utm_source={{partnerName}}</a>
+            <br />
+            <button class="btn btn-sm btn-white mt-2" ng-click="copyToClipboard(isProduction)">Copy</button>
+        </div>
+    </p>
+    <p>
+        Links in this document will not work (first link doesn’t have the partner identificator, and
+        second link has non existing partner id) as they are stated just like example.
+    </p>
+    <p>
+        Links for test and production can be different so Aircash proposes link parametrization and
+        use of simple replace function to insert parameters (just like in example) because the name of the
+        parameters will be the same in test and in production.
+    </p>
+    <hr />
+
+</body>
+</html>

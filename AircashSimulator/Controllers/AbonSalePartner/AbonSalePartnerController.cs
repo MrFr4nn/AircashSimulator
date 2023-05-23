@@ -6,6 +6,12 @@ using Microsoft.AspNetCore.Authorization;
 using Domain.Entities.Enum;
 using CrossCutting;
 using Service.Settings;
+using AircashSimulator.Extensions;
+using Services.User;
+using System.Collections.Generic;
+using DataAccess;
+using System.Linq;
+using Services.PartnerAbonDenominations;
 
 namespace AircashSimulator
 {
@@ -16,18 +22,26 @@ namespace AircashSimulator
         private ISettingsService SettingsService;
         private IHelperService HelperService;
         private IAbonSalePartnerService AbonSalePartnerService;
+        private AircashSimulatorContext AircashSimulatorContext;
+        private UserContext UserContext;
+        private IUserService UserService;
+        private IPartnerAbonDenominationService PartnerAbonDenominationService;
 
-        public AbonSalePartnerController(IAbonSalePartnerService abonSalePartnerService, ISettingsService settingsService, IHelperService helperService)
+        public AbonSalePartnerController(IAbonSalePartnerService abonSalePartnerService, ISettingsService settingsService, IHelperService helperService, UserContext userContext, IUserService userService, AircashSimulatorContext aircashSimulatorContext, IPartnerAbonDenominationService denominationService)
         {
             AbonSalePartnerService = abonSalePartnerService;
             SettingsService = settingsService;
             HelperService = helperService;
+            UserContext = userContext;
+            UserService = userService;
+            AircashSimulatorContext = aircashSimulatorContext;
+            PartnerAbonDenominationService = denominationService;
         }
 
         [HttpPost]
         public async Task<IActionResult> CashierCreateCouponOnlinePartner()
         {
-            var response = await AbonSalePartnerService.CreateCoupon(SettingsService.AbonDefaultValue, SettingsService.PointOfSaleIdCashier, SettingsService.AbonGeneratePartnerId, CurrencyEnum.EUR.ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var response = await AbonSalePartnerService.CreateCoupon(SettingsService.AbonDefaultValue, SettingsService.PointOfSaleIdCashier, SettingsService.AbonGeneratePartnerId, CurrencyEnum.EUR.ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -35,15 +49,43 @@ namespace AircashSimulator
         [Authorize]
         public async Task<IActionResult> CreateCoupon(CreateCouponRequest createCouponRequest)
         {
-            var response=await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, SettingsService.AbonGeneratePartnerId, CurrencyEnum.EUR.ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response=await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, SettingsService.AbonGeneratePartnerId, CurrencyEnum.EUR.ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, environment);
             return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateCashierCoupon(CreateCashierCouponRequest createCouponRequest)
+        {
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == new Guid(createCouponRequest.PartnerId)).FirstOrDefault();
+            var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, SettingsService.PointOfSaleIdCashier, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateMultipleCashierCoupon(CreateCashierCouponRequest createCouponRequest)
+        {
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == new Guid(createCouponRequest.PartnerId)).FirstOrDefault();
+            var denominations = await PartnerAbonDenominationService.GetDenominations(partner.PartnerId);
+            var coupons = new List<string>();
+            foreach (decimal value in denominations)
+            {
+                coupons.Add("Denomination: " + value.ToString() + " "+ ((CurrencyEnum)partner.CurrencyId).ToString());
+                for (int i = 0; i < SettingsService.AbonSPCashierNumberOfCouponCodesPerDenomination; i++)
+                {
+                    var response = await AbonSalePartnerService.CreateCouponCashier(value, SettingsService.PointOfSaleIdCashier, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+                    coupons.Add(response);
+                }
+                coupons.Add("");
+            }
+            return Ok(coupons);
         }
 
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> CancelCoupon(CancelCouponRequest cancelCouponRequest)
         {
-            var response = await AbonSalePartnerService.CancelCoupon(cancelCouponRequest.SerialNumber, cancelCouponRequest.PointOfSaleId, SettingsService.AbonGeneratePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AbonSalePartnerService.CancelCoupon(cancelCouponRequest.SerialNumber, cancelCouponRequest.PointOfSaleId, SettingsService.AbonGeneratePartnerId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, environment);
             return Ok(response);
         }
 
@@ -94,7 +136,7 @@ namespace AircashSimulator
                 default:
                     return BadRequest();
             }
-            var response = await AbonSalePartnerService.CreateCoupon(abonValue, pointOfSaleId, partnerId, isoCurrencySymbol, partnerTransactionId, privateKeyPath, privateKeyPass);
+            var response = await AbonSalePartnerService.CreateCoupon(abonValue, pointOfSaleId, partnerId, isoCurrencySymbol, partnerTransactionId, privateKeyPath, privateKeyPass, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -159,7 +201,7 @@ namespace AircashSimulator
                 default:
                     return BadRequest();
             }
-            var response = await AbonSalePartnerService.CancelCoupon(serialNumber, pointOfSaleId, partnerId, privateKeyPath, privateKeyPass);
+            var response = await AbonSalePartnerService.CancelCoupon(serialNumber, pointOfSaleId, partnerId, privateKeyPath, privateKeyPass, EnvironmentEnum.Staging);
             return Ok(response);
         }
     }
