@@ -17,17 +17,16 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         checkUser: checkUser,
         checkUserV4: checkUserV4,
         createPayout: createPayout,
+        createPayoutV4: createPayoutV4,
         getTransactions: getTransactions,
         checkTransactionStatus: checkTransactionStatus,
         simulatePayoutError: simulatePayoutError,
     });
-    function checkUser(phoneNumber) {
+    function checkUser(checkUserRequest) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CheckUser",
-            data: {
-                PhoneNumber: phoneNumber
-            }
+            data: checkUserRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -39,14 +38,19 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function createPayout(phoneNumber, amount) {
+    function createPayout(createPayoutRequest) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CreatePayout",
-            data: {
-                PhoneNumber: phoneNumber,
-                Amount: amount
-            }
+            data: createPayoutRequest
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function createPayoutV4(createPayoutRequest) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/CreatePayoutV4",
+            data: createPayoutRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -96,15 +100,58 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     }
 
     $scope.checkUserModel = {
-        phoneNumber: '38512345678'
+        partnerId: "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+        partnerUserId: uuidv4(),
+        phoneNumber: $scope.decodedToken.userPhoneNumber,
+    };
+
+    $scope.checkUserV4Model = {
+        partnerId: "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+        partnerUserId: uuidv4(),
+        phoneNumber: $scope.decodedToken.userPhoneNumber,
+        firstName: $scope.decodedToken.userFirstName,
+        lastName: $scope.decodedToken.userLastName,
+        birthDate: new Date($scope.decodedToken.userBirthDate),
     };
 
     $scope.createPayoutModel = {
-        phoneNumber: '38512345678',
+        partnerId: "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+        userId: uuidv4(),
+        partnerTransactionId: uuidv4(),
+        currencyId: 978,
+        phoneNumber: $scope.decodedToken.userPhoneNumber,
         amount: 100
     };
 
+    $scope.createPayoutV4Model = {
+        partnerId: "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+        userId: uuidv4(),
+        partnerTransactionId: uuidv4(),
+        currencyId: 978,
+        phoneNumber: $scope.decodedToken.userPhoneNumber,
+        firstName: $scope.decodedToken.userFirstName,
+        lastName: $scope.decodedToken.userLastName,
+        birthDate: new Date($scope.decodedToken.userBirthDate),
+        amount: 100,
+    }
+
     $scope.setDefaults = function () {
+        $scope.createPayoutV4Model.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+        $scope.createPayoutV4Model.userId = uuidv4();
+        $scope.createPayoutV4Model.partnerTransactionId = uuidv4();
+        $scope.createPayoutV4Model.currencyId = 978;
+
+        $scope.checkUserV4Model.partnerUserId = uuidv4();
+        $scope.checkUserV4Model.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+
+        $scope.checkUserModel.partnerUserId = uuidv4();
+        $scope.checkUserModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+
+        $scope.createPayoutModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+        $scope.createPayoutModel.userId = uuidv4();
+        $scope.createPayoutModel.partnerTransactionId = uuidv4();
+        $scope.createPayoutModel.currencyId = 978;
+        
         $scope.transactions = [];
         $scope.pageSize = 5;
         $scope.pageNumber = 1;
@@ -125,10 +172,21 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.checkTransactionStatusServiceBusy = false;
     $scope.checkTransactionStatusServiceResponse = false;
 
+    $scope.checkUserV4ServiceBusy = false;
+    $scope.checkUserV4ServiceResponse = false;
+
+    $scope.createPayoutV4ServiceBusy = false;
+    $scope.createPayoutV4ServiceResponse = false;
+
     $scope.checkUser = function () {
         $scope.checkUserServiceBusy = true;
         $scope.checkUserServiceResponse = false;
-        aircashPayoutService.checkUser($scope.checkUserModel.phoneNumber)
+        $scope.checkUserRequest = {
+            partnerUserID: $scope.checkUserModel.partnerUserId,
+            partnerID: $scope.checkUserModel.partnerId,
+            phoneNumber: $scope.checkUserModel.phoneNumber
+        }
+        aircashPayoutService.checkUser($scope.checkUserRequest)
             .then(function (response) {
 
                 if (response) {
@@ -143,23 +201,21 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 $scope.checkUserServiceResponse = true;
             }, () => {
                 console.log("error");
+                $scope.checkUserServiceBusy = false;
+                $scope.checkUserServiceResponse = false;
             });
     }
 
-    $scope.checkUserV4Model = {
-        phoneNumber: $scope.decodedToken.userPhoneNumber,
-        firstName: $scope.decodedToken.userFirstName,
-        lastName: $scope.decodedToken.userLastName,
-        birthDate: new Date($scope.decodedToken.userBirthDate),
-    };
     $scope.checkUserV4 = function () {
         $scope.checkUserV4ServiceBusy = true;
         $scope.checkUserV4ServiceResponse = false;
-        $scope.checkUserRequest = {
+        $scope.checkUserV4Request = {
+            partnerUserID: $scope.checkUserV4Model.partnerUserId,
+            partnerID: $scope.checkUserV4Model.partnerId,
             phoneNumber: $scope.checkUserV4Model.phoneNumber,
             parameters: [{ key: "PayerFirstName", value: $scope.checkUserV4Model.firstName }, { key: "PayerLastName", value: $scope.checkUserV4Model.lastName }, { key: "PayerBirthDate", value: $scope.checkUserV4Model.birthDate.toLocaleDateString('en-CA') }]
         }
-        aircashPayoutService.checkUserV4($scope.checkUserRequest)
+        aircashPayoutService.checkUserV4($scope.checkUserV4Request)
             .then(function (response) {
 
                 if (response) {
@@ -174,13 +230,23 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 $scope.checkUserV4ServiceResponse = true;
             }, () => {
                 console.log("error");
+                $scope.checkUserV4ServiceBusy = false;
+                $scope.checkUserV4ServiceResponse = false;
             });
     }
 
     $scope.createPayout = function () {
         $scope.createPayoutServiceBusy = true;
         $scope.createPayoutServiceResponse = false;
-        aircashPayoutService.createPayout($scope.createPayoutModel.phoneNumber, $scope.createPayoutModel.amount)
+        $scope.createPayoutRequest = {
+            partnerID: $scope.createPayoutModel.partnerId,
+            PartnerTransactionID: $scope.createPayoutModel.partnerTransactionId,
+            PartnerUserID: $scope.createPayoutModel.userId,
+            CurrencyID: $scope.createPayoutModel.currencyId,
+            phoneNumber: $scope.createPayoutModel.phoneNumber,
+            amount: $scope.createPayoutModel.amount,
+        }
+        aircashPayoutService.createPayout($scope.createPayoutRequest)
             .then(function (response) {
 
                 if (response) {
@@ -190,14 +256,50 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.createPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.getTransactions(true);
+                    $scope.getTransactions(false);
                 }
                 $scope.createPayoutServiceBusy = false;
                 $scope.createPayoutServiceResponse = true;
             }, () => {
                 console.log("error");
+                $scope.createPayoutServiceBusy = false;
+                $scope.createPayoutServiceResponse = false;
             });
     }
+
+    $scope.createPayoutV4 = function () {
+        $scope.createPayoutV4ServiceBusy = true;
+        $scope.createPayoutV4ServiceResponse = false;
+        $scope.createPayoutV4Request = {
+            partnerID: $scope.createPayoutV4Model.partnerId,
+            PartnerTransactionID: $scope.createPayoutV4Model.partnerTransactionId,
+            PartnerUserID: $scope.createPayoutV4Model. userId,
+            CurrencyID: $scope.createPayoutV4Model.currencyId,
+            phoneNumber: $scope.createPayoutV4Model.phoneNumber,
+            amount: $scope.createPayoutV4Model.amount,
+            parameters: [{ key: "PayerFirstName", value: $scope.createPayoutV4Model.firstName }, { key: "PayerLastName", value: $scope.createPayoutV4Model.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutV4Model.birthDate.toLocaleDateString('en-CA') }]
+        }
+        aircashPayoutService.createPayoutV4($scope.createPayoutV4Request)
+            .then(function (response) {
+
+                if (response) {
+                    $scope.createPayoutV4RequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.createPayoutV4ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.createPayoutV4Sequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.createPayoutV4Response = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.createPayoutV4Request = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.getTransactions(false);
+                }
+                $scope.createPayoutV4ServiceBusy = false;
+                $scope.createPayoutV4ServiceResponse = true;
+            }, () => {
+                console.log("error");
+                $scope.createPayoutV4ServiceBusy = false;
+                $scope.createPayoutV4ServiceResponse = false;
+            });
+    }
+
 
     $scope.checkTransactionStatus = function (transactionId) {
         $scope.checkTransactionStatusServiceBusy = true;
@@ -427,6 +529,37 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 message: "PartnerTransactionID already exists"
             }
         },
+        createPayoutV4: {
+            requestExample: {
+                PartnerID: "1b8a6445-d23c-4a3a-acc0-f05abcebb081",
+                PhoneNumber: "385981234567",
+                PartnerUserID: "12345",
+                Parameters: [
+                    {
+                        Key: "email",
+                        Value: "user@example.net"
+                    },
+                    {
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    }],
+                Amount: 123.45,
+                CurrencyID: 978,
+                PartnerTransactionID: "123..abc..123",
+                Signature: "CX9v6V....Bw="
+            },
+            responseExample: {
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+            },
+        },
         checkTransactionStatus: {
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
@@ -443,5 +576,16 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             }
         }
     };
+
+
+    function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
+            .replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0,
+                    v = c == 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+    }
+
 
 }]);
