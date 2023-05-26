@@ -233,6 +233,10 @@ namespace AircashFrame
                 });
                 AircashSimulatorContext.SaveChanges();                
             }
+            if (checkTransactionStatusResponse.Status == AcFrameTransactionStatusEnum.PayoutConfirmationPending)
+            {
+                await ConfirmPayout(partner.PartnerId, preparedAircashFrameTransaction.PartnerTransactionId.ToString(), preparedAircashFrameTransaction.Amount, preparedAircashFrameTransaction.ISOCurrencyId, EnvironmentEnum.Staging);
+            }
         }
 
         public async Task<AircashTransactionStatusResponseV2> CheckTransactionStatusCashierFrameV2(PartnerEntity partner, string transactionId)
