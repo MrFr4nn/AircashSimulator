@@ -83,9 +83,12 @@ namespace AircashSimulator.Controllers.AircashFrame
         [HttpPost]
         public async Task<IActionResult> InitiateCashierFrameV2(InitiateRequestAircashFrameV2 initiateRequest)
         {
+            var partnerId = SettingsService.AircashFramePartnerId;
+            if (initiateRequest.MatchParameters != null && initiateRequest.MatchParameters.Count != 0) partnerId = SettingsService.AircashFramePartnerIdWithMatchPersonalData;
+
             var initiateRequestDTO = new InititateRequestV2Dto
             {
-                PartnerId = SettingsService.AircashFramePartnerId,
+                PartnerId = partnerId,
                 UserId = Guid.NewGuid(),
                 Amount = initiateRequest.Amount,
                 MatchParameters = initiateRequest.MatchParameters,

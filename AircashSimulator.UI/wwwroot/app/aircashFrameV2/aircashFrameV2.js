@@ -206,6 +206,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             amount: 10,
         }
     ];
+
+    $scope.config = {};
+    $scope.config.useMatchPersonalData = true;
+
     $scope.initiateModelSelected = {};
     $scope.initiateModel = {};
     $scope.initiateModelSelected.data = $scope.initiateModels[0];
@@ -230,7 +234,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.locale.languageInput = "en";
         $scope.locale.countryISOCodeInput = "HR"
 
-        $scope.initiateModel.partnerId = "5680e089-9e86-4105-b1a2-acd0Cd77653c";
+        $scope.initiateModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
         $scope.initiateModel.partnerUserId= uuidv4();
         $scope.initiateModel.notificationUrl = $location.absUrl();
         $scope.initiateModel.partnerTransactionId = uuidv4();
@@ -267,7 +271,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateBusy = true;
         $scope.initiateResponded = false;
         matchParameters = [];
-        if ($scope.initiateModel.payMethod != 0) {
+        if ($scope.config.useMatchPersonalData) {
             matchParameters = [
                 {
                     key: "PayerFirstName",

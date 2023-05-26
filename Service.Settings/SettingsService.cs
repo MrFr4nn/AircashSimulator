@@ -65,6 +65,7 @@ namespace Service.Settings
         public Guid PartnerTransactionIdAlreadyExists { get { return GetSetting("PartnerTransactionIdAlreadyExists", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashFramePartnerId { get { return GetSetting("AircashFramePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AircashFramePartnerIdWithMatchPersonalData { get { return GetSetting("AircashFramePartnerIdWithMatchPersonalData", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid SalesPartnerId { get { return GetSetting("SalesPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid UnableToCancelPayoutTransactionId { get { return GetSetting("UnableToCancelPayoutTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid TransactionAlreadyCanceledId { get { return GetSetting("TransactionAlreadyCanceledId", Guid.Empty, throwExceptionIfMissing: true); } }

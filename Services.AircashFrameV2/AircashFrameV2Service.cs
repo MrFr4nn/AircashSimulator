@@ -125,14 +125,13 @@ namespace AircashFrame
         {
             var requestDateTime = DateTime.UtcNow;
             var partnerTransactionId = Guid.NewGuid();
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == initiateRequestDTO.PartnerId).FirstOrDefault();
             var preparedTransaction = new PreparedAircashFrameTransactionEntity
             {
                 PartnerTransactionId = partnerTransactionId,
                 PartnerId = initiateRequestDTO.PartnerId,
                 UserId = initiateRequestDTO.UserId,
                 Amount = initiateRequestDTO.Amount,
-                ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                ISOCurrencyId = CurrencyEnum.EUR,
                 PayType = initiateRequestDTO.PayType,
                 PayMethod = initiateRequestDTO.PayMethod,
                 NotificationUrl = initiateRequestDTO.NotificationUrl,
@@ -149,7 +148,7 @@ namespace AircashFrame
                 PartnerUserId = preparedTransaction.UserId.ToString(),
                 PartnerTransactionId = preparedTransaction.PartnerTransactionId.ToString(),
                 Amount = preparedTransaction.Amount,
-                CurrencyId = partner.CurrencyId,
+                CurrencyId = (int)CurrencyEnum.EUR,
                 PayType = (int)preparedTransaction.PayType,
                 PayMethod = (int)preparedTransaction.PayMethod,
                 NotificationUrl = preparedTransaction.NotificationUrl,
@@ -167,7 +166,7 @@ namespace AircashFrame
                 PartnerUserId = preparedTransaction.UserId.ToString(),
                 PartnerTransactionId = preparedTransaction.PartnerTransactionId.ToString(),
                 Amount = preparedTransaction.Amount,
-                CurrencyId = partner.CurrencyId,
+                CurrencyId = (int)CurrencyEnum.EUR,
                 PayType = (int)preparedTransaction.PayType,
                 PayMethod = (int)preparedTransaction.PayMethod,
                 NotificationUrl = preparedTransaction.NotificationUrl,
