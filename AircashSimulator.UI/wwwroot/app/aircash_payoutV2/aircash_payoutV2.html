@@ -593,27 +593,27 @@ PZVGM4QwYw1QhcOUXF8JW5H2JMYVRgxqaXh5NL6Fn3AA9/+9km/7xS5lXSW65AGVxbx8do0M5GHxJ9d7
     <uib-tab index="createPayout1-tab-7" heading="Curl" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
-                <form action="/" method="POST" name="transactionForm2">
+                <form action="/" method="POST" name="transactionForm1">
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">Phone number</label>
-                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input ng-model="createPayoutModel.email" class="form-control" type="email" placeholder="Enter email" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                            <input ng-model="createPayoutModel.email" class="form-control" type="email" placeholder="Enter email" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">First name</label>
-                            <input ng-model="createPayoutModel.firstName" class="form-control" type="text" placeholder="Enter username" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                            <input ng-model="createPayoutModel.firstName" class="form-control" type="text" placeholder="Enter username" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Last name</label>
-                            <input ng-model="createPayoutModel.lastName" class="form-control" type="text" placeholder="Enter username" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                            <input ng-model="createPayoutModel.lastName" class="form-control" type="text" placeholder="Enter username" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Amount</label>
-                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="createPayoutServiceBusy" ng-required="true">
+                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Birth date</label>
@@ -623,7 +623,7 @@ PZVGM4QwYw1QhcOUXF8JW5H2JMYVRgxqaXh5NL6Fn3AA9/+9km/7xS5lXSW65AGVxbx8do0M5GHxJ9d7
                             <label class="form-label" for="exampleInputEmail1">Location ID</label>
                             <input ng-model="createPayoutModel.locationID" class="form-control" type="text" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true" placeholder="Enter location ID">
                         </div>
-                        <button ng-click="getCurlCreatePayout()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCreatePayoutServiceBusy || transactionForm2.$invalid">Create payout <i ng-if="curlCreatePayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="getCurlCreatePayout()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCreatePayoutServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="curlCreatePayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>

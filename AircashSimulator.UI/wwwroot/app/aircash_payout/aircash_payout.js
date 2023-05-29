@@ -13,22 +13,37 @@ app.config(function ($stateProvider) {
 });
 
 aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
-    return (
-        checkUserV4: checkUserV4,
-        checkUser: checkUser,    
+    return ({
+        checkUser: checkUser,
+        checkUserV4: checkUserV4,    
+        getCurlCheckUserV4: getCurlCheckUserV4,    
         getCurlCheckUser: getCurlCheckUser,  
         getCurlCreatePayout: getCurlCreatePayout,
         createPayout: createPayout,
         createPayoutV4: createPayoutV4,
+        getCurlCreatePayoutV4: getCurlCreatePayoutV4,
         getTransactions: getTransactions,
         checkTransactionStatus: checkTransactionStatus,
+        getCurlCheckTransactionStatus: getCurlCheckTransactionStatus,
         simulatePayoutError: simulatePayoutError,
-    });
+    }
+    );
     function checkUser(checkUserRequest) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CheckUser",
             data: checkUserRequest
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function getCurlCheckUser(phoneNumber) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/GetCurlCheckUser",
+            data: {
+                PhoneNumber: phoneNumber
+            }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -40,17 +55,15 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlCheckUser(phoneNumber) {
+    function getCurlCheckUserV4(checkUserRequest) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashPayout/GetCurlCheckUser",
-            data: {
-                PhoneNumber: phoneNumber
-            }
+            url: config.baseUrl + "AircashPayout/GetCurlCheckUserV4",
+            data: checkUserRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function createPayout(phoneNumber, amount) {
+    function createPayout(createPayoutRequest) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CreatePayout",
@@ -66,14 +79,19 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlCreatePayout(phoneNumber, amount) {
+    function getCurlCreatePayoutV4(createPayoutRequest) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/GetCurlCreatePayoutV4",
+            data: createPayoutRequest
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function getCurlCreatePayout(createPayoutRequest) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/GetCurlCreatePayout",
-            data: {
-                PhoneNumber: phoneNumber,
-                Amount: amount
-            }
+            data: createPayoutRequest
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -97,6 +115,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
     function getTransactions(pageSize, pageNumber, services) {
         var request = $http({
             method: 'GET',
@@ -215,6 +234,18 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.CurlCheckTransactionStatusServiceResponse = false;
 
 
+    $scope.checkUserV4ServiceBusy = false;
+    $scope.checkUserV4ServiceResponse = false;
+
+    $scope.curlCheckUserV4ServiceBusy = false;
+    $scope.curlCheckUserV4Responded = false;
+
+    $scope.createPayoutV4ServiceBusy = false;
+    $scope.createPayoutV4ServiceResponse = false;
+
+    $scope.curlCreatePayoutV4ServiceBusy = false;
+    $scope.curlCreatePayoutV4ServiceResponse = false;
+
     $scope.checkUser = function () {
         $scope.checkUserServiceBusy = true;
         $scope.checkUserServiceResponse = false;
@@ -269,6 +300,29 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 console.log("error");
                 $scope.checkUserV4ServiceBusy = false;
                 $scope.checkUserV4ServiceResponse = false;
+            });
+    }
+    $scope.getCurlCheckUserV4 = function () {
+        $scope.curlCheckUserV4ServiceBusy = true;
+        $scope.curlCheckUserV4Responded = false;
+        $scope.checkUserV4Request = {
+            partnerUserID: $scope.checkUserV4Model.partnerUserId,
+            partnerID: $scope.checkUserV4Model.partnerId,
+            phoneNumber: $scope.checkUserV4Model.phoneNumber,
+            parameters: [{ key: "PayerFirstName", value: $scope.checkUserV4Model.firstName }, { key: "PayerLastName", value: $scope.checkUserV4Model.lastName }, { key: "PayerBirthDate", value: $scope.checkUserV4Model.birthDate.toLocaleDateString('en-CA') }]
+        }
+        aircashPayoutService.getCurlCheckUserV4($scope.checkUserV4Request)
+            .then(function (response) {
+
+                if (response) {
+                    $scope.CurlResponseCheckUserV4 = response;
+                }
+                $scope.curlCheckUserV4ServiceBusy = false;
+                $scope.curlCheckUserV4Responded = true;
+            }, () => {
+                console.log("error");
+                $scope.curlCheckUserV4ServiceBusy = false;
+                $scope.curlCheckUserV4Responded = false;
             });
     }
 
@@ -350,11 +404,46 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 $scope.createPayoutV4ServiceResponse = false;
             });
     }
+    $scope.getCurlCreatePayoutV4 = function () {
+        $scope.curlCreatePayoutV4ServiceBusy = true;
+        $scope.createPayoutV4ServiceResponse = false;
+        $scope.createPayoutV4Request = {
+            partnerID: $scope.createPayoutV4Model.partnerId,
+            PartnerTransactionID: $scope.createPayoutV4Model.partnerTransactionId,
+            PartnerUserID: $scope.createPayoutV4Model.userId,
+            CurrencyID: $scope.createPayoutV4Model.currencyId,
+            phoneNumber: $scope.createPayoutV4Model.phoneNumber,
+            amount: $scope.createPayoutV4Model.amount,
+            parameters: [{ key: "PayerFirstName", value: $scope.createPayoutV4Model.firstName }, { key: "PayerLastName", value: $scope.createPayoutV4Model.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutV4Model.birthDate.toLocaleDateString('en-CA') }]
+        }
+        aircashPayoutService.getCurlCreatePayoutV4($scope.createPayoutV4Request)
+            .then(function (response) {
+
+                if (response) {
+                    $scope.CurlResponseCreatePayoutV4 = response;
+                }
+                $scope.curlCreatePayoutV4ServiceBusy = false;
+                $scope.curlCreatePayoutV4ServiceResponse = true;
+            }, () => {
+                console.log("error");
+                $scope.curlCreatePayoutV4ServiceBusy = false;
+                $scope.curlCreatePayoutV4ServiceResponse = false;
+            });
+    }
+
 
     $scope.getCurlCreatePayout = function () {
         $scope.curlCreatePayoutServiceBusy = true;
         $scope.curlCreatePayoutServiceResponse = false;
-        aircashPayoutService.getCurlCreatePayout($scope.createPayoutModel.phoneNumber, $scope.createPayoutModel.amount)
+        $scope.createPayoutRequest = {
+            partnerID: $scope.createPayoutModel.partnerId,
+            PartnerTransactionID: $scope.createPayoutModel.partnerTransactionId,
+            PartnerUserID: $scope.createPayoutModel.userId,
+            CurrencyID: $scope.createPayoutModel.currencyId,
+            phoneNumber: $scope.createPayoutModel.phoneNumber,
+            amount: $scope.createPayoutModel.amount,
+        }
+        aircashPayoutService.getCurlCreatePayout($scope.createPayoutRequest)
             .then(function (response) {
 
                 if (response) {
@@ -364,6 +453,8 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 $scope.curlCreatePayoutServiceResponse = true;
             }, () => {
                 console.log("error");
+                $scope.curlCreatePayoutServiceBusy = false;
+                $scope.curlCreatePayoutServiceResponse = false;
             });
     }
 
@@ -402,7 +493,6 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 console.log("error");
             });
     }
-
     $scope.getTransactions = function (reset) {
         if (reset) $scope.setDefaults();
         aircashPayoutService.getTransactions($scope.pageSize, $scope.pageNumber, [1, 2])

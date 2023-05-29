@@ -228,6 +228,36 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
                     </div>
                 </div>
             </uib-tab>
+            <uib-tab index="checkUser1-tab-8" heading="Curl" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                        <form action="/" method="POST" name="transactionForm0">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">PartnerId</label>
+                                    <input ng-model="checkUserModel.partnerId" class="form-control" type="text" placeholder="Enter partnerId" ng-disabled="curlCheckUserBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">PartnerUserId</label>
+                                    <input ng-model="checkUserModel.partnerUserId" class="form-control" type="text" placeholder="Enter partnerUserId" ng-disabled="curlCheckUserBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone number</label>
+                                    <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCheckUserBusy" ng-required="true">
+                                </div>
+                                <button ng-click="getCurlCheckUser()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCheckUserBusy|| transactionForm0.$invalid">Check user <i ng-if="curlCheckUserBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-8" ng-if="curlCheckUserResponded">
+                        <pre>
+                        <jsonformatter id="curlLink" data="CurlResponseCheckUser"></jsonformatter>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCheckUser)">Copy</button>
+                </pre>
+                    </div>
+                </div>
+            </uib-tab>
         </uib-tabset>
     </div>
 
@@ -458,29 +488,49 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
                     </div>
                 </div>
             </uib-tab>
-            <uib-tab index="checkUser1-tab-7" heading="Curl" classes="nav-item">
-            <div class="row">
-                <div class="col-md-2">
-                    <form action="/" method="POST" name="transactionForm2">
-                        <fieldset>
-                            <div class="mb-3">
-                                <label class="form-label">Phone number</label>
-                                <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCheckUserBusy" ng-required="true">
-                            </div>
-                            <button ng-click="getCurlCheckUser()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCheckUserBusy|| transactionForm2.$invalid"> Get Curl <i ng-if="curlCheckUserBusy" class="fa fa-cog fa-spin"></i></button>
-                        </fieldset>
-                    </form>
-                </div>
-
-                <div class="col-md-10" ng-if="curlCheckUserResponded">
-                    <pre>
-                    <jsonformatter id="curlLink" data="CurlResponseCheckUser"></jsonformatter>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCheckUser)">Copy</button>
+            <uib-tab index="checkUserv4-tab-7" heading="Curl" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                        <form action="/" method="POST" name="checkUserForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">PartnerId</label>
+                                    <input ng-model="checkUserV4Model.partnerId" class="form-control" type="text" placeholder="Enter partnerId" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">PartnerUserId</label>
+                                    <input ng-model="checkUserV4Model.partnerUserId" class="form-control" type="text" placeholder="Enter partnerUserId" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Phone number</label>
+                                    <input ng-model="checkUserV4Model.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">First name</label>
+                                    <input ng-model="checkUserV4Model.firstName" class="form-control" type="text" placeholder="Enter first name" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Last name</label>
+                                    <input ng-model="checkUserV4Model.lastName" class="form-control" type="text" placeholder="Enter last name" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Birth date</label>
+                                    <date-picker date="checkUserV4Model.birthDate" isOptional="false" out="setCheckUserDate"></date-picker>
+                                </div>
+                                <button ng-click="getCurlCheckUserV4()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCheckUserV4ServiceBusy|| checkUserV4Form.$invalid">Check user <i ng-if="curlCheckUserV4ServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-8" ng-if="curlCheckUserV4Responded">
+                        <pre>
+                        <jsonformatter id="curlLink" data="CurlResponseCheckUserV4"></jsonformatter>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCheckUserV4)">Copy</button>
                 </pre>
+                    </div>
                 </div>
-            </div>
-        </uib-tab>
-        </uib-tabset>
-    </div>
+            </uib-tab>
+
+</div>
 </body>
 </html>

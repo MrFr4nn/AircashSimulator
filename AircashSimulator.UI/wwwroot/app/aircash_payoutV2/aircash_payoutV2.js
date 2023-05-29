@@ -159,15 +159,6 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
         locationID: 123,
     };
 
-    $scope.createPayoutModel = {
-        phoneNumber: $scope.decodedToken.userPhoneNumber,
-        firstName: $scope.decodedToken.userFirstName,
-        lastName: $scope.decodedToken.userLastName,
-        birthDate: new Date($scope.decodedToken.userBirthDate),
-        email: $scope.decodedToken.email,
-        amount: 100,
-        locationID: 123,
-    };
 
     $scope.createPayoutServiceBusy = false;
     $scope.createPayoutServiceResponse = false;
