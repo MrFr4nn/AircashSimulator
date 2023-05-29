@@ -44,6 +44,15 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
 
         [HttpPost]
         [Authorize]
+        public async Task<IActionResult> CheckCodeV2(CheckCodeRequest checkCodeRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPaymentAndPayoutService.CheckCodeV2(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, environment);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
