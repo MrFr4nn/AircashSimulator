@@ -1,0 +1,641 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class="row">
+        <h4 class="col-auto">CheckCode</h4>
+        <div class="dropdown col-auto">
+            <select class="form-control" ng-model="selected" ng-init="selected = '1'">
+                <option value="1" selected>V1</option>
+                <option value="2">V2</option>
+            </select>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+
+    <p class="mt-2">
+        Method used by the partner system to check whether there’s an active transaction in the Aircash system for a given barcode. All codes that start with AC1 or AC2 and have 16 or more digits are considered Aircash codes. <br />
+    </p>
+    <div ng-if="selected == 1">
+        <div class="table-responsive">
+            <table class="table  table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://staging-api.aircash.eu/api/SalesPartner/CheckCode</td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://api.aircash.eu/api/SalesPartner/CheckCode</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <uib-tabset>
+            <uib-tab index="CheckCode-tab-0" heading="Request parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>String</td>
+                                <td>Partner identifier</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>BarCode</b></td>
+                                <td>String</td>
+                                <td>User’s scanned barcode</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>LocationID</b></td>
+                                <td>String</td>
+                                <td>Sales partner location identifier</td>
+                                <td>NO</td>
+                            </tr>
+                            <tr>
+                                <td><b>Signature</b></td>
+                                <td>String</td>
+                                <td>
+                                    Signature to confirm that the partner is indeed making the request. Data  to sign: BarCode={0}&LocationID={1}&PartnerID={2}
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
+                <jsonformatter data="SalesPartner.CheckCode.RequestExample"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+</pre>
+                <jsonformatter data="SalesPartner.CheckCode.RequestExample"></jsonformatter>
+                <pre>
+
+Sequence:
+BarCode=AC23436263654000&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
+
+Signature:
+IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nDjF00KTq9HxNPLkOjwwbtmStepU4NHeJ7xBNl8r6xbO/vqYvPsPCLmmZ0Ceg+eMuYbSWez7TAuOIvfhOxrk6kCRT2ztlFeUD1RRRj/vHUlNPpewtd+U08xaKIQyXoFEtZsbyc7Ovtf57UqXy7WCqM0ST2sIR+uh6ndY0+/g1PPt+TaS30tLkTjK8YIpytGZ2dxH2aZwYF1mbTN0lQJjnMRty8q0ITGFjL1mxM1w7AZGjaXDAghQEXTa4yDMFBWlAqJ+NqlvHSC+dkRXNYWscRuKQVH57SJtZYMmYzSqGloMUK8rWUoOaHF34csKdDKuMTM9OBajcE4ZQ7fAasfRIY0Yy0DcHnv3QieLBjzLNes47ZSff4PZnAZWGM262ZlmjzILSZU30PSg+Imj8p51S41++ac3Wh8KpEC9fpuYvZJPjp4zNjrJqXj6BNW2uSVsHxNpSXw4JNyXu/DhCvthSQ5njlZFOaZg6cduz9xPEbNh1x1YtyQA5YwlI1yJVC81tT4+rk6tu/iz15JqKbGAyoGF7ls/plOVJZVUASFV9soW59BZhzK3E3JxJk60a269l1HiMMunqW2bt1gS1UIQDjlbLTWJo=
+
+</pre>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-3" heading="Response parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>BarCode</b></td>
+                                <td>String</td>
+                                <td>Barcode that was sent in the request</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>Number</td>
+                                <td>
+                                    A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-4" heading="200 OK Response example" classes="nav-item">
+                <jsonformatter data="SalesPartner.CheckCode.ResponseExample"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-5" heading="Error response messages" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Error Code</th>
+                                <th>Message</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>401</b></td>
+                                <td>
+                                    The partner is sending an unknown partner ID, or the signature is not valid.
+                                </td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2"><b>400</b></td>
+                                <td rowspan="2">
+                                    An invalid request was made. The response will contain an error code and message
+                                </td>
+                                <td><b>1</b></td>
+                                <td>Invalid bar code</td>
+                                <td>
+                                    The barcode that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>2</b></td>
+                                <td>Bar code already used</td>
+                            </tr>
+                            <tr>
+                                <td><b>500</b></td>
+                                <td>
+                                    Unexpected system error
+                                </td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Try again until the system recovers.
+                                </td>
+                            </tr>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-6" heading="Error response example" classes="nav-item">
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="CheckCodeTransactionError-tab-1" heading="1 - Invalid bar code" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.CheckCode.error1.request"></jsonformatter>
+
+                                Sequence:
+                                BarCode=AC95890684887483&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.CheckCode.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                                Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                                Sequence: {{errorCheckSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                                Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(1)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="CheckCodeTransactionError-tab-2" heading="2 - Bar code already used" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                                Request
+                                <jsonformatter data="errorExamples.CheckCode.error2.request"></jsonformatter>
+                                con
+                                Sequence:
+                                BarCode=AC15694794016276&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                                Response
+                                <jsonformatter data="errorExamples.CheckCode.error2.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                                Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                                Sequence: {{errorCheckSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                                Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(2)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="CheckCodeTransactionError-tab-3" heading="3 - Transaction limit" classes="nav-item">
+                        Simulation not available.
+                        <!--<div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
+                                con
+                                Sequence:
+                                BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                                Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                                Sequence: {{errorCheckSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                                Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckResponse"></jsonformatter>
+                            </div>
+                        </div>-->
+                        <!--<button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(3)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                        <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">Copy Request</button>-->
+                    </uib-tab>
+                </uib-tabset>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-7" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="/" method="POST" name="transactionForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">BarCode</label>
+                                    <input ng-model="checkCodeModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">LocationID</label>
+                                    <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                </div>
+                                <button ng-click="checkCode()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-4" ng-if="checkCodeServiceResponded">
+                        Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
+                        Sequence: {{checkCodeSequence}}<br />
+                    </div>
+                    <div class="col-md-4" ng-if="checkCodeServiceResponded">
+                        Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+
+    <div ng-if="selected == 2">
+        <div class="table-responsive">
+            <table class="table  table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment </th>
+                        <th>Method</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://staging-api.aircash.eu/v2/api/SalesPartnerV2/CheckCode</td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <uib-tabset>
+            <uib-tab index="CheckCode-tab-0" heading="Request parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>String</td>
+                                <td>Partner identifier</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>BarCode</b></td>
+                                <td>String</td>
+                                <td>User’s scanned barcode</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>LocationID</b></td>
+                                <td>String</td>
+                                <td>Sales partner location identifier</td>
+                                <td>NO</td>
+                            </tr>
+                            <tr>
+                                <td><b>Signature</b></td>
+                                <td>String</td>
+                                <td>
+                                    Signature to confirm that the partner is indeed making the request. Data  to sign: BarCode={0}&LocationID={1}&PartnerID={2}
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-1" heading="Request example" classes="nav-item">
+                <jsonformatter data="SalesPartner.CheckCode.RequestExample"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+</pre>
+                <jsonformatter data="SalesPartner.CheckCode.RequestExample"></jsonformatter>
+                <pre>
+
+Sequence:
+BarCode=AC23436263654000&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
+
+Signature:
+IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nDjF00KTq9HxNPLkOjwwbtmStepU4NHeJ7xBNl8r6xbO/vqYvPsPCLmmZ0Ceg+eMuYbSWez7TAuOIvfhOxrk6kCRT2ztlFeUD1RRRj/vHUlNPpewtd+U08xaKIQyXoFEtZsbyc7Ovtf57UqXy7WCqM0ST2sIR+uh6ndY0+/g1PPt+TaS30tLkTjK8YIpytGZ2dxH2aZwYF1mbTN0lQJjnMRty8q0ITGFjL1mxM1w7AZGjaXDAghQEXTa4yDMFBWlAqJ+NqlvHSC+dkRXNYWscRuKQVH57SJtZYMmYzSqGloMUK8rWUoOaHF34csKdDKuMTM9OBajcE4ZQ7fAasfRIY0Yy0DcHnv3QieLBjzLNes47ZSff4PZnAZWGM262ZlmjzILSZU30PSg+Imj8p51S41++ac3Wh8KpEC9fpuYvZJPjp4zNjrJqXj6BNW2uSVsHxNpSXw4JNyXu/DhCvthSQ5njlZFOaZg6cduz9xPEbNh1x1YtyQA5YwlI1yJVC81tT4+rk6tu/iz15JqKbGAyoGF7ls/plOVJZVUASFV9soW59BZhzK3E3JxJk60a269l1HiMMunqW2bt1gS1UIQDjlbLTWJo=
+
+</pre>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-3" heading="Response parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>BarCode</b></td>
+                                <td>String</td>
+                                <td>Barcode that was sent in the request</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>Number</td>
+                                <td>
+                                    A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>CurrencyID</b></td>
+                                <td>Integer</td>
+                                <td>
+                                    Currency ISO code
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>FirstName</b></td>
+                                <td>String</td>
+                                <td>
+                                    Aircash user first name
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>LastName</b></td>
+                                <td>String</td>
+                                <td>
+                                    Aircash user last name
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>DateOfBirth</b></td>
+                                <td>DateTime</td>
+                                <td>
+                                    Aircash user date of birth
+                                </td>
+                                <td>YES</td>
+                            </tr>
+
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-4" heading="Response example" classes="nav-item">
+                <jsonformatter data="SalesPartner.CheckCode.ResponseExampleV2"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-5" heading="Error response messages" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Error Code</th>
+                                <th>Message</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>401</b></td>
+                                <td>
+                                    The partner is sending an unknown partner ID, or the signature is not valid.
+                                </td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>400</b></td>
+                                <td>
+                                    An invalid request was made. The response will contain an error code and message
+                                </td>
+                                <td><b>1</b></td>
+                                <td>Invalid bar code</td>
+                                <td>
+                                    The barcode that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>500</b></td>
+                                <td>
+                                    Unexpected system error
+                                </td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Try again until the system recovers.
+                                </td>
+                            </tr>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-6" heading="Error response example" classes="nav-item">
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="CheckCodeTransactionError-tab-1" heading="1 - Invalid bar code" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.CheckCode.error1.request"></jsonformatter>
+
+                                Sequence:
+                                BarCode=AC95890684887483&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.CheckCode.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                                Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                                Sequence: {{errorCheckSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">
+                                Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(1)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 1">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="CheckCodeTransactionError-tab-2" heading="2 - Bar code already used" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                                Request
+                                <jsonformatter data="errorExamples.CheckCode.error2.request"></jsonformatter>
+                                con
+                                Sequence:
+                                BarCode=AC15694794016276&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 2)">
+                                Response
+                                <jsonformatter data="errorExamples.CheckCode.error2.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                                Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                                Sequence: {{errorCheckSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">
+                                Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(2)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 2">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="CheckCodeTransactionError-tab-3" heading="3 - Transaction limit" classes="nav-item">
+                        Simulation not available.
+                        <!--<div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.CheckCode.error3.request"></jsonformatter>
+                                con
+                                Sequence:
+                                BarCode=AC26821108681329&LocationID=123&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=71a469a5-42f7-4075-97cf-58ae8260e3b4
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorCheckCodeResponded && checkCodeCurrentErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.CheckCode.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                                Request ({{errorCheckRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckRequest"></jsonformatter>
+
+                                Sequence: {{errorCheckSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">
+                                Response ({{errorCheckResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorCheckResponse"></jsonformatter>
+                            </div>
+                        </div>-->
+                        <!--<button class="btn btn-primary mt-2" ng-click="checkCodeSimulateError(3)" ng-disabled="errorCheckCodeServiceBusy">Simulate <i ng-if="errorCheckCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
+                        <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorCheckRequestCopy)" ng-if="errorCheckCodeResponded && checkCodeCurrentErrorCode == 3">Copy Request</button>-->
+                    </uib-tab>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-7" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="/" method="POST" name="transactionForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">BarCode</label>
+                                    <input ng-model="checkCodeModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">LocationID</label>
+                                    <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                </div>
+                                <button ng-click="checkCode()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-4" ng-if="checkCodeServiceResponded">
+                        Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
+                        Sequence: {{checkCodeSequence}}<br />
+                    </div>
+                    <div class="col-md-4" ng-if="checkCodeServiceResponded">
+                        Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+
+</body>
+</html>

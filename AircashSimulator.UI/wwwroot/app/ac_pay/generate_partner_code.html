@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <br />
+    <h4>GeneratePartnerCode</h4>
+    <p>
+        This method is used for the partner system to generate payment code for the transaction.
+        Each transaction must have a fixed amount and currencyID along with a unique partner transaction
+        id. Once a user confirms that transaction via Aircash app, Aircash system will send transaction
+        confirmation with these parameters to partner system.
+    </p>
+    <p>
+        PartnerID parameter is equal for each transaction for one business entity and that partner id
+        will be provided by Aircash system. In case an integrator has a system with multiple business entities
+        is important that integration enables different partner id for each business entity. This is imperative
+        as Aircash system will display business entity name to each user before payment and Aircash system
+        will use this partner id to create settlements for each partner.
+    </p>
+    <p>
+        Aircash system will ensure that one transaction can be paid only once. In order to do that
+        Aircash will use a partner transaction id to track the number of payments per transaction. In case the
+        user tries to pay one partner transaction id twice, Aircash system will reject those attempts and with
+        statement that transaction is already paid for. Partner can regenerate payment code for a partner
+        transaction ID but the partner must send identical parameters in request in order to receive the same
+        code. In case a partner sends any parameter differently from the first request API will respond with
+        appropriate error. The Partner should use this option only in case of some communication error
+        while code generation.
+    </p>
+    <p>
+        Partner system will receive one parameter in a successful response. That parameter is a link
+        that the partner system should display to users as QR code to simplify the payment process.
+    </p>
+    <i>Endpoints:</i>
+    <div class="table-responsive">
+        <table class="table table-active col-md-6">
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Test</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://staging-m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
+                </tr>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://m3.aircash.eu/api/AircashPay/GeneratePartnerCode</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <uib-tabset active="active">
+        <uib-tab index="request-tab-0" heading="Request parameters" class="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique partner identifier (per currency) provided by Aircash
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Transaction amount
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>CurrencyID</b></td>
+                            <td>int</td>
+                            <td>
+                                Currency ID (e.g. 978)
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionID</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique transaction identificator in
+                                partner system. Based on this
+                                parameter, partner will confirm
+                                transactions
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Description</b></td>
+                            <td>string</td>
+                            <td>
+                                Transaction description, additional info
+                                about transaction (e.g. payment for
+                                invoice 42)
+                            </td>
+                            <td>NO</td>
+                        </tr>
+                        <tr>
+                            <td><b>ValidForPeriod</b></td>
+                            <td>int?</td>
+                            <td>
+                                Optional code validity period in
+                                seconds. Aircash system will not allow
+                                users to confirm transactions after this
+                                period of time. Note that this period is
+                                from the moment the Aircash system
+                                processes a request not from the
+                                moment the partner system generates
+                            </td>
+                            <td>NO</td>
+                        </tr>
+                        <tr>
+                            <td><b>LocationID</b></td>
+                            <td>string</td>
+                            <td>
+                                Partner should define location id for
+                                each store as this parameter is very
+                                useful in the support process.
+                                In case partner has only one location or
+                                in case partner has only online store
+                                this parameter is optional
+                            </td>
+                            <td>
+                                NO, but highly
+                                recommended
+                                to send
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature</b></td>
+                            <td>string</td>
+                            <td>
+                                Signature
+                            </td>
+                            <td>
+                                YES
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="request-tab-1" heading="Request example" class="nav-item">
+            <jsonformatter data="aircashPay.generatePartnerCode.requestExample"></jsonformatter>
+        </uib-tab>
+        <uib-tab index="request-tab-2" heading="Signature" class="nav-item">
+            <pre>
+Request example:
+</pre>
+            <jsonformatter data="aircashPay.generatePartnerCode.requestExample"></jsonformatter>
+<pre>
+
+Sequence:
+Amount=100&CurrencyID=191&Description=test&LocationID=test&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=ef52ca13-33b4-4564-8bca-0cbfc7c5a37d
+
+Signature:
+WUY3NyUagimkDbTgQ9qkI/EgB63wtsA0J7MrsztAnGElQvqfc9Owm5NMLopFMeo4AQ6NABgkju2+XTo3gLqGBXG8BK8fA8GQJoG+by4u1eyZDJ4/sx/4zMaAWa02KrxYofo4Bb9l4y2oTPVJzZcHto8dvFZptZayTcvqm++oUGuEtKhLZjvUEK0w3lNYvWxPSf7XD1in1c/eqxbeROi2uTw+QPYBa/ueWNxVApAuQYh7Kh8di1p+CZSEUR611e+j4gVlTX7JciVoOr6Nq0p1OZcQfrKCHKZ7RJxEdkSVoikCWGZM+pBwsqDWTQTUA3wOR/+WP4XR0SXxthWy4IjQl1pLrTpalohCPDWPisb9HASmFghDvppNTS5j7Emt1xz97RMZWZB8bd6wEwgQWSs9gBEmGZjpehCOzbIaACUKV4qRMJN5RmB15gTFjOdVpTDeSM+z2iwN0M6QZO3wQIjjoNba55/7ELqpTfVi/ud7fCgOFDHTxAW3qv2ihE8E+1LhNPy6uHLG1JZOy7rtgQ2evjMbqxjRIxslY8E07Ia4Ayb+E3/YhX30QU4HCgbmUz4FqoH/NwK/WKGLFNER2cGrr/+y0SG+vVfb5p295Vfv/ZrTuw4zQ5rplTyN8t11PM/XUCXRo0d3Q3lrHhvtJi5qWZiNr/oUPIkX3GkadEanrWo=
+                </pre>
+        </uib-tab>
+        <uib-tab index="request-tab-3" heading="Response parameters" class="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>CodeLink</b></td>
+                            <td>string</td>
+                            <td>
+                                Link that partner system should display as QR code
+                                towards the end user.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="request-tab-4" heading="200 OK response example" class="nav-item">
+            <jsonformatter data="aircashPay.generatePartnerCode.responseExample"></jsonformatter>
+        </uib-tab>
+        <uib-tab index="request-tab-5" heading="Error response messages" class="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Http response</th>
+                            <th>Description</th>
+                            <th>Error Code</th>
+                            <th>Message</th>
+                            <th>Solution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>400</b></td>
+                            <td>An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                            <td>
+                                <b>1</b><br />
+                            </td>
+                            <td>
+                                Partner transaction ID is not unique.<br />
+                            </td>
+                            <td>
+                                Contact Aircash support
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>401</b></td>
+                            <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>
+                                Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="request-tab-6" heading="Try it out" class="nav-item">
+            <div class="row">
+                <div class="col-md-2">
+                    <form action="/" method="POST" name="generateForm">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputEmail1">Amount</label>
+                                <input ng-model="generatePartnerCodeModel.amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputEmail1">Description</label>
+                                <input ng-model="generatePartnerCodeModel.description" class="form-control" type="text" ng-required="true" placeholder="Enter description">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="exampleInputEmail1">Location ID</label>
+                                <input ng-model="generatePartnerCodeModel.locationID" class="form-control" type="text" ng-required="true" placeholder="Enter location ID">
+                            </div>
+                            <button ng-click="generatePartnerCode()" class="btn btn-primary w-100px me-5px" ng-disabled="generateBusy || generateForm.$invalid">Generate <i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
+                        </fieldset>
+                    </form>
+                </div>
+
+                <br />
+                <div ng-if="generateResponded" class="col-md-4">
+                    Request ({{GenerateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="GenerateServiceRequest"></jsonformatter>
+                    Sequence: {{sequenceGenerate}}
+                </div>
+                <div ng-if="generateResponded" class="col-md-6">
+                    Response ({{GenerateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="GenerateServiceResponse"></jsonformatter>
+                    <div>
+                        <button ng-click="showQRCode()" class="btn btn-primary w-100px me-5px">Show QR Code</button>
+                    </div>
+                </div>
+            </div>
+        </uib-tab>
+    </uib-tabset>
+
+</body>
+</html>

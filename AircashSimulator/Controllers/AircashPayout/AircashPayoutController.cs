@@ -36,7 +36,15 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CheckUser(CheckUserRequest checkUserRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, UserContext.GetUserId(User).ToString(), SettingsService.AircashPayoutPartnerId, environment);
+            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, checkUserRequest.PartnerUserID.ToString(), checkUserRequest.PartnerID, environment);
+            return Ok(response);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> CheckUserV4(CheckUserv4DTO checkUserV4Request)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayoutService.CheckUserV4(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID.ToString(), checkUserV4Request.PartnerID, checkUserV4Request.Parameters, environment);
             return Ok(response);
         }
 
@@ -44,7 +52,15 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CreatePayout(CreatePayoutRequest createPayoutRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, UserContext.GetUserId(User), SettingsService.AircashPayoutPartnerId, environment);
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.PartnerTransactionID, createPayoutRequest.Amount, createPayoutRequest.CurrencyID, createPayoutRequest.PartnerUserID, createPayoutRequest.PartnerID, environment);
+            return Ok(response);
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> CreatePayoutV4(CreatePayoutV4DTO createPayoutV4DTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashPayoutService.CreatePayoutV4(createPayoutV4DTO.PhoneNumber, createPayoutV4DTO.PartnerTransactionID, createPayoutV4DTO.Amount, createPayoutV4DTO.CurrencyID, createPayoutV4DTO.PartnerUserID, createPayoutV4DTO.PartnerID, createPayoutV4DTO.Parameters, environment);
             return Ok(response);
         }
 
