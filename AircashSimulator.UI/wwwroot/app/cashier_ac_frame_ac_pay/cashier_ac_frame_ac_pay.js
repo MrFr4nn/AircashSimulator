@@ -27,7 +27,8 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
                     matchParameters: matchParameters,
                     payType: payType,
                     payMethod: payMethod,
-                    acFrameOption: acFrameOption                                      
+                    acFrameOption: acFrameOption,
+                    environment: $rootScope.environment                                      
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));            

@@ -15,6 +15,7 @@ app.config(function ($stateProvider) {
 aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         checkCode: checkCode,
+        checkCodeV2: checkCodeV2,
         confirmTransaction: confirmTransaction,
         getTransactions: getTransactions,
         checkTransactionStatus: checkTransactionStatus,
@@ -28,6 +29,17 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/CheckCode",
+            data: {
+                BarCode: barCode,
+                LocationID: locationID
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function checkCodeV2(barCode, locationID) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl +"AircashPaymentAndPayout/CheckCodeV2",
             data: {
                 BarCode: barCode,
                 LocationID: locationID
@@ -129,6 +141,11 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
         locationID: '123'
     };
 
+    $scope.checkCodeV2Model = {
+        barCode: null,
+        locationID: '123'
+    };
+
     $scope.confirmTransactionModel = {
         barCode: null,
         locationID: '123'
@@ -190,6 +207,30 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
                 }
                 $scope.checkCodeServiceBusy = false;
                 $scope.checkCodeServiceResponded = true;
+               
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.checkCodeV2 = function () {
+        $scope.checkCodeV2ServiceResponded = false;
+        $scope.checkCodeV2ServiceBusy = true;
+        aircashPaymentAndPayoutService.checkCodeV2($scope.checkCodeV2Model.barCode, $scope.checkCodeV2Model.locationID)
+            .then(function (response) {
+
+                if (response) {
+                    $scope.checkCodeV2RequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.checkCodeV2ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.checkCodeV2Sequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkCodeV2ServiceResponseObject = response.serviceResponse;
+                    $scope.checkCodeV2ServiceRequestObject = response.serviceRequest;
+                    $scope.checkCodeV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.checkCodeV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.checkCodeV2ServiceBusy = false;
+                $scope.checkCodeV2ServiceResponded = true;
                
             }, () => {
                 console.log("error");

@@ -23,7 +23,8 @@ cashierAbonModule.service("cashierAbonService", ['$http', '$q', 'handleResponseS
                 method: 'POST',
                 url: config.baseUrl + "AbonOnlinePartner/ConfirmCashierTransaction",
                 data: {
-                    CouponCode: couponCode
+                    CouponCode: couponCode,
+                    Environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -32,6 +33,9 @@ cashierAbonModule.service("cashierAbonService", ['$http', '$q', 'handleResponseS
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AbonSalePartner/CashierCreateCouponOnlinePartner",
+                params: {
+                    Environment: $rootScope.environment
+                }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }

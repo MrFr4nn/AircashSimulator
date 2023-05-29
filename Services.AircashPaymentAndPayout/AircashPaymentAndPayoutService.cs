@@ -28,6 +28,7 @@ namespace Services.AircashPaymentAndPayout
         private IHttpRequestService HttpRequestService;
 
         private readonly string CheckCodeEndpoint = "SalesPartner/CheckCode";
+        private readonly string CheckCodeV2Endpoint = "SalesPartnerV2/CheckCode";
         private readonly string ConfirmTransactionEndpoint = "SalesPartner/ConfirmTransaction";
         private readonly string PaymentCancelTransactionEndpoint = "SalesPartner/CancelTransaction";
         private readonly string PaymentCheckTransactionStatusEndpoint = "SalesPartner/CheckTransactionStatus";
@@ -61,6 +62,42 @@ namespace Services.AircashPaymentAndPayout
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 checkCodeResponse= JsonConvert.DeserializeObject<CheckCodeResponse>(response.ResponseContent);
+                var responseDateTimeUTC = DateTime.UtcNow;
+                returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+            }
+            else
+            {
+                checkCodeResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+                var responseDateTimeUTC = DateTime.UtcNow;
+                returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+            }
+            returnResponse.ServiceResponse = checkCodeResponse;
+            return returnResponse;
+
+        }
+
+        public async Task<object> CheckCodeV2(string barCode, string locationID, Guid partnerId, EnvironmentEnum environment)
+        {
+            Response returnResponse = new Response();
+            var checkCodeResponse = new object();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var requestDateTimeUTC = DateTime.UtcNow;
+            returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
+            var checkCodeRequest = new CheckCodeRequest()
+            {
+                PartnerID = partnerId.ToString(),
+                BarCode = barCode,
+                LocationID = locationID
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(checkCodeRequest);
+            returnResponse.Sequence = sequence;
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            checkCodeRequest.Signature = signature;
+            returnResponse.ServiceRequest = checkCodeRequest;
+            var response = await HttpRequestService.SendRequestAircash(checkCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.SalesV2)}" + $"{CheckCodeV2Endpoint}");
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                checkCodeResponse = JsonConvert.DeserializeObject<CheckCodeV2Response>(response.ResponseContent);
                 var responseDateTimeUTC = DateTime.UtcNow;
                 returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
             }
