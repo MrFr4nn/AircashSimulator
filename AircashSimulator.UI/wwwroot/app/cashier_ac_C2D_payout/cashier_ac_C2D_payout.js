@@ -32,7 +32,8 @@ cashierAcC2DPayoutModule.service("cashier_acC2DPayoutService", ['$http', '$q', '
                 method: 'POST',
                 url: config.baseUrl + "AircashC2DPayout/CheckCode",
                 data: {
-                    barcode: barCode
+                    barcode: barCode,
+                    environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -42,7 +43,8 @@ cashierAcC2DPayoutModule.service("cashier_acC2DPayoutService", ['$http', '$q', '
                 method: 'POST',
                 url: config.baseUrl + "AircashC2DPayout/CashierConfirmTransaction",
                 data: {
-                    barcode: barCode
+                    barcode: barCode,
+                    environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -80,8 +82,10 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
                     parameters: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutModel.birthDate.toLocaleDateString('en-CA') }]
                 }
                 $scope.createPayoutServiceBusy = true;
+                $scope.createPayoutRequest.environment = $rootScope.environment;
                 cashier_acC2DPayoutService.createPayout($scope.createPayoutRequest)
                     .then(function (response) {
+                        console.log($scope.createPayoutRequest);
                         if (response) {
                             $scope.createPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
                             $scope.createPayoutResponseDateTimeUTC = response.responseDateTimeUTC;

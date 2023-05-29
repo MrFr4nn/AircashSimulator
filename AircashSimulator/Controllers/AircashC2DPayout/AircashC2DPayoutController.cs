@@ -43,14 +43,14 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CashierCreatePayout(CreatePayoutRQ createPayoutRQ)
         {
-            var response = await AircashPayoutV2Service.CreatePayout(PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserId.ToString(), createPayoutRQ.Parameters, EnvironmentEnum.Staging);
+            var response = await AircashPayoutV2Service.CreatePayout(PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserId.ToString(), createPayoutRQ.Parameters, createPayoutRQ.Environment);
             return Ok(response);
         }
 
         [HttpPost]
         public async Task<IActionResult> CheckCode(CheckCodeDTO checkCodeDTO)
         {
-            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var environment = checkCodeDTO.Environment == null? await UserService.GetUserEnvironment(UserContext.GetUserId(User)): checkCodeDTO.Environment;
             var response = await AircashPayoutV2Service.CheckCode(PartnerId, checkCodeDTO.Barcode, environment);
             return Ok(response);
         }
@@ -58,7 +58,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRQ confirmTransactionRQ)
         {
-            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, PartnerId, UserId, EnvironmentEnum.Staging);
+            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, PartnerId, UserId, confirmTransactionRQ.Environment);
             return Ok(response);
         }
 
