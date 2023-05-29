@@ -50,7 +50,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CheckCode(CheckCodeDTO checkCodeDTO)
         {
-            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var environment = checkCodeDTO.Environment == null? await UserService.GetUserEnvironment(UserContext.GetUserId(User)): checkCodeDTO.Environment;
             var response = await AircashPayoutV2Service.CheckCode(PartnerId, checkCodeDTO.Barcode, environment);
             return Ok(response);
         }

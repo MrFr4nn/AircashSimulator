@@ -1,5 +1,4 @@
-﻿using Domain.Entities.Enum;
-using System;
+﻿using System;
 
 namespace Services.AircashPay
 {
