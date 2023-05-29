@@ -36,6 +36,12 @@
                         </a>
                     </li>
                     <li ui-sref-active="active">
+                        <a ui-sref="app.generalGuidlines">
+                            <i class="fas fa-file-alt"></i>
+                            <span>{{translations.general_guidlines}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
                         <a ui-sref="app.logo">
                             <i class="fa fa-solid fa-image"></i>
                             <span>{{translations.logo_label}}</span>
@@ -60,7 +66,7 @@
                         </a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="app.acRefund"  ng-if="partnerRoles.indexOf('AircashFrameV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1">
+                        <a ui-sref="app.acRefund" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1">
                             <i class="fa fa-mobile"></i>
                             <span>{{translations.ac_refund_label}}</span>
                         </a>

@@ -1,0 +1,3 @@
+CreatedOnDateTimeUTC;AircashTransactionID;Service;Amount;Fee;PartnerTransactionID;LocationID
+2023-05-17T05:19:44;8d590e26-686f-4257-8bf7-43a3a0e6b701;PayoutCancelled;10,50;0,00;cabff550-fba9-4658-aec5-7daf44f28f75;test-reconciliation
+2023-05-17T05:18:10;7976d31a-1c0e-4a46-89a3-05c706df75d9;Payout;10,50;0,42;bad2ffe4-0838-4a8f-ae98-f72cdc7a8657;test-reconciliation

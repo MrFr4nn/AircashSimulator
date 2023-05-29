@@ -29,7 +29,7 @@
                     <div class="col-md-1"></div>
                 </div>
                 <form action="/" method="POST" name="transactionForm1">
-                    <fieldset>                        
+                    <fieldset>
                         <div class="row row-cols-1 row-cols-sm-2">
                             <div class="col-md-1"></div>
                             <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
@@ -39,6 +39,26 @@
                                     <span class="input-group-addon">€</span>
                                 </div>
                                 <label class="form-label" for="amount">{{translationsCashier.cashier_amount_input_note}}</label>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 align-items-center justify-content-center" ng-if="useMatchPersonalData">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label">First name</label>
+                                        <input ng-model="createCashierAcFrameAcPayModel.firstName" class="form-control form-control-lg" type="text" placeholder="Enter first name" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Last name</label>
+                                        <input ng-model="createCashierAcFrameAcPayModel.lastName" class="form-control form-control-lg" type="text" placeholder="Enter last name" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Birth date</label>
+                                        <date-picker ng-model="createCashierAcFrameAcPayModel.birthDate" date="" isOptional="false" out="setDate"></date-picker>
+                                    </div>
+                                </fieldset>
                             </div>
                             <div class="col-md-1"></div>
                         </div>
@@ -62,8 +82,34 @@
                         </div>
                     </fieldset>
                 </form>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#AcFrameAbonConfiguration" aria-expanded="false" aria-controls="AcFrameAbonConfiguration">
+                                            Configuration
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="AcFrameAbonConfiguration" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input ng-checked="false" ng-model="useMatchPersonalData" class="form-check-input" type="checkbox" id="checkbox2" style=" width: 1.55rem; height: 1.55rem;" ng-init="useMatchPersonalData=false" />
+                                            <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Match personal data</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     <div class="col-md-3"></div>
+    
 </div>

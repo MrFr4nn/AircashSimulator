@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Production process</h1>
+    <br />
+    <p>The production process consists of several steps that take place sequentially:</p>
+    <ol>
+        <li>All acceptance criteria are checked and are performing in line with expectations</li>
+        <li>
+            The partner will push his service to production and define address for Confirm
+            Transaction method
+        </li>
+        <li>Aircash will enable partner in production</li>
+        <li>If possible partner will generate one test transaction in production</li>
+    </ol>
+    <br />
+    <h4>Acceptance criteria</h4>
+    <br />
+    <p>
+        To release the service in the production, you need to make several tests to see if the integration is
+        well-made and ready for production
+    </p>
+    <div class="table-responsive">
+        <table class="table table-active">
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Test description</th>
+                    <th>Mandatory</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>GeneratePartnerCode</b></td>
+                    <td>
+                        Partner system generates code with a unique
+                        transaction id every time.
+                    </td>
+                    <td>YES</td>
+                </tr>
+            </tbody>
+            <tr>
+                <td><b>ConfirmTransaction</b></td>
+                <td>
+                    <p>Partner system process confirm transaction successfully:</p>
+                    <ul>
+                        <li>
+                            each transaction is processed in partner
+                            system as paid
+                        </li>
+                        <li>
+                            for each transaction partner system
+                            respond with successful response
+                        </li>
+                    </ul>
+                </td>
+                <td>YES</td>
+            </tr>
+            <tr>
+                <td><b>CancelTransaction</b></td>
+                <td>
+                    Partner system processes transaction cancellation
+                    successfully on both sides.
+                </td>
+                <td>
+                    YES, if this method is
+                    implemented
+                </td>
+            </tr>
+            <tr>
+                <td><b>RefundTransaction</b></td>
+                <td>
+                    Partner system processes transaction refund
+                    successfully on both sides.
+                </td>
+                <td>
+                    YES, if this method is
+                    implemented
+                </td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    <hr />
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <br />
+    <h2>Reconciliation process</h2>
+    <br />
+    <p>
+        We have 4 different methods on how you can get reconciliation files:
+    </p>
+    <ol>
+        <li>
+            You can get them sent to your email
+        </li>
+        <li>
+            We can push it to our FTP
+        </li>
+        <li>
+            We can push it to your FTP/SFTP
+        </li>
+        <li>
+            You can find them in our BS portal (Business Site Portal) through GUI
+        </li>
+    </ol>
+
+    <p>Explanation of table fields:</p>
+    <ul>
+        <li>
+            “CreatedOnDateTimeUTC“ - date and time when is a transaction created (UTC)
+        </li>
+        <li>
+            “AircashTransactionID“ - Unique Id of the transaction in the Aircash system
+        </li>
+        <li>
+            “Service“ - AircashPayout, AircashPayment, AbonUsed, AbonIssued, AbonCancelled, AircashPaymentCancellation, AircashPayoutCancellation
+        </li>
+        <li>
+            “Amount“ - transaction amount
+        </li>
+        <li>
+            “Fee” - transaction fee
+        </li>
+        <li>
+            “PartnerTransactionID“ - Unique Id of the transaction in the Partner system
+        </li>
+        <li>
+            “LocationID“ - Identifier of the point of sale
+        </li>
+    </ul>
+    <br />
+    <p>Examples of reconciliation:</p>
+    <div class="table-responsive">
+        <table class="table table-active col-md-9">
+            <thead>
+                <tr>
+                    <th>CreatedOnDateTimeUTC;AircashTransactionID;Service;Amount;Fee;PartnerTransactionID;LocationID</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>2023-05-17T07:01:55;33e82823-f454-4b12-b632-aec77c2779ad;Payment;100,00;0,00;02ef4ef1-bfde-4029-8cc2-57fb85833389;test-reconciliation</td>
+                </tr>
+                <tr>
+                    <td>2023-05-05T10:22:47;42e5984e-254a-8496-a241-5021a2e01c63;Payment;200,00;0,00;5421a2c5-23ba-542a-5c11-064a2cc15a6a;test-reconciliation</td>
+                </tr>
+                <tr>
+                    <td>2023-05-17T05:18:10;7976d31a-1c0e-4a46-89a3-05c706df75d9;Payout;10,50;0,42;bad2ffe4-0838-4a8f-ae98-f72cdc7a8657;test-reconciliation</td>
+                </tr>
+                <tr>
+                    <td>2023-05-22T21:36:18;425aa12b-121a-8459-57ab-12c596aa4586;Payout;50,00;0,53;45ab25c1-5894-5c1c-587d-d58a12c4587a;test-reconciliation</td>
+                </tr>
+                <tr>
+                    <td>2023-05-17T05:19:44;8d590e26-686f-4257-8bf7-43a3a0e6b701;PayoutCancelled;10,50;0,00;cabff550-fba9-4658-aec5-7daf44f28f75;test-reconciliation</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <div>
+        <p>Example of the reconciliation file:</p>
+        <a href="/files/abon-reconciliation-example.csv" download rel="noopener noreferrer">
+            <button class="btn"><i class="fa fa-download"></i> Abon</button>
+        </a>
+        <a href="/files/acpayout-reconciliation-example.csv" download rel="noopener noreferrer">
+            <button class="btn"><i class="fa fa-download"></i> Aircash Payout</button>
+        </a>
+        <a href="/files/acpayment-reconciliation-example.csv" download rel="noopener noreferrer">
+            <button class="btn"><i class="fa fa-download"></i> Aircash Payment</button>
+        </a>
+    </div>
+    
+
+</body>
+</html>

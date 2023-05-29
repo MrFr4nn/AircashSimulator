@@ -30,6 +30,7 @@ var app = angular.module('app', [
     'success',
     'decline',
     'jira', 
+    'generalGuidlines',
     'matchPersonalData',
     'inAppPay'
 ]);
