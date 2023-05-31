@@ -27,7 +27,8 @@ cashierAcFrameModule.service("cashierAcFrameWithdrawalService", ['$http', '$q', 
                     payType: payType,
                     matchParameters: matchParameters,
                     payMethod: payMethod,
-                    acFrameOption: acFrameOption                                      
+                    acFrameOption: acFrameOption,
+                    environment: $rootScope.environment                                      
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));

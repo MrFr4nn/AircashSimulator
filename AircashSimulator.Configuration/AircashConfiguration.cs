@@ -13,6 +13,7 @@ namespace AircashSimulator.Configuration
         public string AircashAbonBaseUrl { get; set; }
         public string AircashSalesBaseUrl { get; set; }
         public string ValidForPeriod { get; set; }
+        public string AircashSalesDevBaseUrl { get; set; }
         public string AcPayPublicKey { get; set; }
         public string AcFramePublicKey { get; set; }
         public string AcPaymentPublicKey { get; set; }
@@ -26,7 +27,6 @@ namespace AircashSimulator.Configuration
         public string AcFrameOriginUrl { get; set; }
         public string AcFrameApiUrl { get; set; }
         public string AircashFrameDevTestUrl { get; set; }
-        public string AircashSalesDevBaseUrl { get; set; }
         public string AircashAboDevBaseUrl { get; set; }
         public string AircashFrameDevBaseUrl { get; set; }
     }

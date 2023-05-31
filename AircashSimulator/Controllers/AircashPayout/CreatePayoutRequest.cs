@@ -14,5 +14,6 @@ namespace AircashSimulator.Controllers.AircashPayout
         public CurrencyEnum CurrencyID { get; set; }
         public decimal Amount { get; set; }
         public string PhoneNumber { get; set; }
+        public EnvironmentEnum Environment { get; set; }
     }
 }

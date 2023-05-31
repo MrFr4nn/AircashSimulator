@@ -24,7 +24,8 @@ cashierAcPayoutModule.service("cashierAcPayoutService", ['$http', '$q', 'handleR
                 url: config.baseUrl + "AircashPayout/CreateCashierPayout",
                 data: {
                     PhoneNumber: phoneNumber,
-                    Amount: amount
+                    Amount: amount,
+                    Environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));

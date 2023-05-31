@@ -5,7 +5,13 @@
     </div>
     <ul class="navbar-nav navbar-right mb-2 mr-2">
         <li>
-            <select ng-change="option(selectedlanguage)" name="language" class="form-control mt-2"
+            <select class="form-control mt-2" ng-change="setEnvironment(environment)" ng-model="environment" ng-init="environment = 2">
+                <option ng-value="1">Dev</option>
+                <option ng-value="2">Staging</option>
+            </select>
+        </li>
+        <li>
+            <select ng-change="option(selectedlanguage)" name="language" class="form-control mt-2 ml-1"
                     ng-options="item.language for item in languages"
                     ng-model="selectedlanguage" ng-required="true">
             </select>

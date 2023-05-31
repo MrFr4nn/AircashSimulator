@@ -38,6 +38,11 @@ cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location', '$
             { language: "hr" },
             { language: "es"}
         ];
+
+        $rootScope.environment = 2;
+        $scope.setEnvironment = function(env){
+            $rootScope.environment = env;
+        }
         
         if (window.localStorage.getItem('selectedLanguage') != null) {
             angular.forEach($scope.languages, function (item, index) {
