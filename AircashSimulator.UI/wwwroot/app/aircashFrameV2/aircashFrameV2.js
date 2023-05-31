@@ -19,6 +19,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         getTransactions: getTransactions,
         transactionStatus: transactionStatus,
         getCurlTransactionStatus: getCurlTransactionStatus,
+        getCurlConfirmPayout: getCurlConfirmPayout,
         confirmPayout: confirmPayout,
         initiateSimulateError: initiateSimulateError,
         confirmSimulateError: confirmSimulateError,
@@ -96,6 +97,17 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
+    function getCurlConfirmPayout(transactionId, amount) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/GetCurlConfirmPayoutFrameV2",
+            data: {
+                PartnerTransactionId: transactionId,
+                Amount: amount
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     function getTransactions(pageSize, pageNumber) {
         var request = $http({
             method: 'GET',
@@ -431,7 +443,24 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             });
     }
 
-    
+    $scope.confirmModel = {};
+    $scope.curlConfirmResponded = false;
+    $scope.curlConfirmBusy = false;
+    $scope.getCurlConfirmPayout = function () {
+        $scope.curlConfirmBusy = true;
+        $scope.curlConfirmResponded = false;
+        acFrameV2Service.getCurlConfirmPayout($scope.confirmModel.transactionId, $scope.confirmModel.amount)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlConfirmPayoutResponse = response;
+                }
+                $scope.curlConfirmResponded = true;
+                $scope.curlConfirmBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
 
     $scope.getTransactions = function (reset) {
         if (reset) $scope.setDefaults();

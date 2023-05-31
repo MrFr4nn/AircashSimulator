@@ -308,20 +308,14 @@ namespace AircashFrame
             var returnResponse = new Response();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
-            var aircashConfirmPayoutRequest = new ConfirmPayoutRequest
-            {
-                PartnerId = partnerId.ToString(),
-                PartnerTransactionId = transactionId,
-                Amount = amount,
-                CurrencyId = (int)currency,
-            };
+            var aircashConfirmPayoutRequest = GetConfirmPayoutRequest(partnerId, transactionId, amount, currency);
             returnResponse.ServiceRequest = aircashConfirmPayoutRequest;
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashConfirmPayoutRequest);
             returnResponse.Sequence = dataToSign;
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = aircashConfirmPayoutRequest.Signature;
             aircashConfirmPayoutRequest.Signature = signature;
             var aircashCreatePayoutResponse = new object();
-            var response = await HttpRequestService.SendRequestAircash(aircashConfirmPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{ConfirmPayoutEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashConfirmPayoutRequest, HttpMethod.Post, GetConfirmPayoutEndpoint(environment));
             returnResponse.ResponseDateTimeUTC = DateTime.Now;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -333,6 +327,27 @@ namespace AircashFrame
             }
             returnResponse.ServiceResponse = aircashCreatePayoutResponse;
             return returnResponse;
+        }
+        public ConfirmPayoutRequest GetConfirmPayoutRequest(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency)
+        {
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var aircashConfirmPayoutRequest = new ConfirmPayoutRequest
+            {
+                PartnerId = partnerId.ToString(),
+                PartnerTransactionId = transactionId,
+                Amount = amount,
+                CurrencyId = (int)currency,
+            };
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashConfirmPayoutRequest);
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            aircashConfirmPayoutRequest.Signature = signature;
+       
+            return aircashConfirmPayoutRequest;
+        }
+        public string GetConfirmPayoutEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{ConfirmPayoutEndpoint}";
+
         }
     }
 }
