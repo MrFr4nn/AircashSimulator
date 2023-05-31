@@ -18,6 +18,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         initiateWindowCheckout: initiateWindowCheckout,
         getTransactions: getTransactions,
         transactionStatus: transactionStatus,
+        getCurlTransactionStatus: getCurlTransactionStatus,
         confirmPayout: confirmPayout,
         initiateSimulateError: initiateSimulateError,
         confirmSimulateError: confirmSimulateError,
@@ -67,6 +68,16 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/TransactionStatusFrameV2",
+            data: {
+                TransactionId: transactionId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function getCurlTransactionStatus(transactionId) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/GetCurlTransactionStatusFrameV2",
             data: {
                 TransactionId: transactionId
             }
@@ -371,6 +382,22 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 }
                 $scope.statusBusy = false;
                 $scope.statusResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+    $scope.curlStatusResponded = false;
+    $scope.curlStatusBusy = false;
+    $scope.getCurlTransactionStatus = function (transactionId) {
+        $scope.curlStatusBusy = true;
+        $scope.curlStatusResponded = false;
+        acFrameV2Service.getCurlTransactionStatus(transactionId)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlStatusServiceResponse = response;
+                }
+                $scope.curlStatusBusy = false;
+                $scope.curlStatusResponded = true;
             }, () => {
                 console.log("error");
             });
