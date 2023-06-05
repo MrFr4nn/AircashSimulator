@@ -18,6 +18,8 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         initiateWindowCheckout: initiateWindowCheckout,
         getTransactions: getTransactions,
         transactionStatus: transactionStatus,
+        getCurlTransactionStatus: getCurlTransactionStatus,
+        getCurlConfirmPayout: getCurlConfirmPayout,
         confirmPayout: confirmPayout,
         initiateSimulateError: initiateSimulateError,
         confirmSimulateError: confirmSimulateError,
@@ -73,6 +75,16 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function getCurlTransactionStatus(transactionId) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/GetCurlTransactionStatusFrameV2",
+            data: {
+                TransactionId: transactionId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     function confirmPayout(transactionId, amount) {
         var request = $http({
             method: 'POST',
@@ -85,6 +97,17 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
+    function getCurlConfirmPayout(transactionId, amount) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/GetCurlConfirmPayoutFrameV2",
+            data: {
+                PartnerTransactionId: transactionId,
+                Amount: amount
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     function getTransactions(pageSize, pageNumber) {
         var request = $http({
             method: 'GET',
@@ -129,7 +152,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
 }
 ]);
 
-acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'HelperService', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, HelperService, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
@@ -208,7 +231,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     ];
 
     $scope.config = {};
-    $scope.config.useMatchPersonalData = true;
+    $scope.config.useMatchPersonalData = false;
 
     $scope.initiateModelSelected = {};
     $scope.initiateModel = {};
@@ -222,28 +245,20 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.setInititateModel();
 
-    function uuidv4() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-            .replace(/[xy]/g, function (c) {
-                const r = Math.random() * 16 | 0,
-                    v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-    }
     $scope.setDefaultInitiateModel = function () {
         $scope.locale.languageInput = "en";
         $scope.locale.countryISOCodeInput = "HR"
 
         $scope.initiateModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
-        $scope.initiateModel.partnerUserId= uuidv4();
+        $scope.initiateModel.partnerUserId = HelperService.NewGuid();
         $scope.initiateModel.notificationUrl = $location.absUrl();
-        $scope.initiateModel.partnerTransactionId = uuidv4();
+        $scope.initiateModel.partnerTransactionId = HelperService.NewGuid();
         $scope.initiateModel.currency = 978;
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
-        $scope.initiateModel.successUrl = "";
-        $scope.initiateModel.declineUrl = "";
-        $scope.initiateModel.cancelUrl = "";
-        $scope.initiateModel.originUrl = $location.absUrl();
+        $scope.initiateModel.successUrl = $location.absUrl().replace($location.url(), "/success");
+        $scope.initiateModel.declineUrl = $location.absUrl().replace($location.url(), "/decline");
+        $scope.initiateModel.cancelUrl = $location.absUrl().replace($location.url(), "/decline");
+        $scope.initiateModel.originUrl = "";
     }
 
     $scope.transactionId;
@@ -375,6 +390,22 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 console.log("error");
             });
     }
+    $scope.curlStatusResponded = false;
+    $scope.curlStatusBusy = false;
+    $scope.getCurlTransactionStatus = function (transactionId) {
+        $scope.curlStatusBusy = true;
+        $scope.curlStatusResponded = false;
+        acFrameV2Service.getCurlTransactionStatus(transactionId)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlStatusServiceResponse = response;
+                }
+                $scope.curlStatusBusy = false;
+                $scope.curlStatusResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
 
 
     $scope.confirmModel = {};
@@ -404,7 +435,24 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             });
     }
 
-    
+    $scope.confirmModel = {};
+    $scope.curlConfirmResponded = false;
+    $scope.curlConfirmBusy = false;
+    $scope.getCurlConfirmPayout = function () {
+        $scope.curlConfirmBusy = true;
+        $scope.curlConfirmResponded = false;
+        acFrameV2Service.getCurlConfirmPayout($scope.confirmModel.transactionId, $scope.confirmModel.amount)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlConfirmPayoutResponse = response;
+                }
+                $scope.curlConfirmResponded = true;
+                $scope.curlConfirmBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
 
     $scope.getTransactions = function (reset) {
         if (reset) $scope.setDefaults();

@@ -456,8 +456,16 @@ XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9U
                             <form action="/" method="POST" name="transactionForm1">
                                 <fieldset>
                                     <div class="mb-3">
-                                        <label class="form-label">Serial Number</label>
-                                        <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy" ng-required="true">
+                                        <label class="form-label">PartnerId</label>
+                                        <input ng-model="cancelCouponModel.cancelPartnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="cancelServiceBusy" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SerialNumber</label>
+                                        <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy" ng-required="false">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">PartnerTransactionId</label>
+                                        <input ng-model="cancelCouponModel.cancelPartnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="cancelServiceBusy" ng-required="false">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>

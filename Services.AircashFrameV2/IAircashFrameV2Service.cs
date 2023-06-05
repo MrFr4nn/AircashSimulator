@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace Services.AircashFrameV2
 {
@@ -15,6 +16,10 @@ namespace Services.AircashFrameV2
         public Task NotificationCashierFrameV2(Guid transactionId);
         Task<object> CheckTransactionStatusFrame(Guid partnerId, string transactionId, EnvironmentEnum environment);
         Task<object> ConfirmPayout(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency, EnvironmentEnum environment);
+        ConfirmPayoutRequest GetConfirmPayoutRequest(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency);
         public Task<AircashTransactionStatusResponseV2> CheckTransactionStatusCashierFrameV2(PartnerEntity partner, string transactionId);
+        AircashTransactionStatusRequestV2 GetCheckTransactionStatusFrameRequest(Guid partnerId, string transactionId);
+        string GetCheckTransactionStatusEndpoint(EnvironmentEnum environment);
+        string GetConfirmPayoutEndpoint(EnvironmentEnum environment);
     }
 }
