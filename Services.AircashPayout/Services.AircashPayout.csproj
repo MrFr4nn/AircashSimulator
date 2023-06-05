@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
+    <ProjectReference Include="..\CrossCutting\CrossCutting.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Service.Settings\Service.Settings.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />

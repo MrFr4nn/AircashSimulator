@@ -9,5 +9,6 @@ namespace CrossCutting
     public interface IHelperService
     {
         string RandomNumber(int length);
+        string GetCurl(object request, string endpoint);
     }
 }

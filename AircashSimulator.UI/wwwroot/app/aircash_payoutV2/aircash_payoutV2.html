@@ -281,6 +281,41 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
             </div>
         </div>
     </uib-tab>
+
+    <uib-tab index="checkUser1-tab-7" heading="Curl" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST" name="CurlCheckUserForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="checkUserModel.phoneNumber" class="form-control" type="text" ng-init="checkUserModel.phoneNumber='385996734186'" ng-disabled="curlCheckUserServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="checkUserModel.firstName" class="form-control" type="text" ng-init="checkUserModel.firstName='Matej'" ng-disabled="curlCheckUserServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="checkUserModel.lastName" class="form-control" type="text" ng-init="checkUserModel.lastName='Zec'" ng-disabled="curlCheckUserServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="checkUserModel.birthDate" isOptional="false" out="setDate"></date-picker>
+                        </div>
+                        <button ng-click="getCurlCheckUser()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCheckUserServiceBusy|| CurlCheckUserForm.$invalid">Check user <i ng-if="curlCheckUserServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+
+            <div class="col-md-8" ng-if="curlCheckUserServiceResponse">
+                <pre>
+                <jsonformatter id="curlLink" data="CurlResponseCheckUser"></jsonformatter>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCheckUser)">Copy</button>
+                </pre>
+            </div>
+        </div>
+    </uib-tab>
 </uib-tabset>
 
 
@@ -553,6 +588,53 @@ PZVGM4QwYw1QhcOUXF8JW5H2JMYVRgxqaXh5NL6Fn3AA9/+9km/7xS5lXSW65AGVxbx8do0M5GHxJ9d7
             <div class="col-md-4"></div>
             <div class="col-md-0.5"></div>
             <div class="col-md-7" ng-if="createPayoutServiceResponse && !createPayoutServiceBusy"><pre>Sequence: {{createPayoutSequence}}<br /></pre></div>
+        </div>
+    </uib-tab>
+    <uib-tab index="createPayout1-tab-7" heading="Curl" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="createPayoutModel.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input ng-model="createPayoutModel.email" class="form-control" type="email" placeholder="Enter email" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">First name</label>
+                            <input ng-model="createPayoutModel.firstName" class="form-control" type="text" placeholder="Enter username" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last name</label>
+                            <input ng-model="createPayoutModel.lastName" class="form-control" type="text" placeholder="Enter username" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount</label>
+                            <input ng-model="createPayoutModel.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Birth date</label>
+                            <date-picker date="createPayoutModel.birthDate" isOptional="false" out="setBirthDatePayout"></date-picker>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Location ID</label>
+                            <input ng-model="createPayoutModel.locationID" class="form-control" type="text" ng-disabled="curlCreatePayoutServiceBusy" ng-required="true" placeholder="Enter location ID">
+                        </div>
+                        <button ng-click="getCurlCreatePayout()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCreatePayoutServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="curlCreatePayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div ng-if="curlCreatePayoutServiceResponse" class="col-md-8">
+                <pre>
+                <jsonformatter data="CurlResponseCreatePayout"></jsonformatter>
+                        </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseCreatePayout)">Copy</button>
+
+            </div>
+           
         </div>
     </uib-tab>
 </uib-tabset>

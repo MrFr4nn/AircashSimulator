@@ -15,6 +15,8 @@ using Service.Settings;
 using AircashSimulator.UI.Pages;
 using Microsoft.Extensions.Hosting;
 using Services.User;
+using CrossCutting;
+using Services.AircashPayoutV2;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -29,8 +31,9 @@ namespace AircashSimulator.Controllers.AircashFrame
         private UserContext UserContext;
         public readonly IHubContext<NotificationHub> _hubContext;
         private IUserService UserService;
+        private IHelperService HelperService;
 
-        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext, IUserService userService)
+        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext, IUserService userService, IHelperService helperService)
         {
             SettingsService = settingsService;
             AircashFrameService = aircashFrameService;
@@ -39,6 +42,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             UserContext = userContext;
             _hubContext = hubContext;
             UserService = userService;
+            HelperService = helperService;
         }
 
         public async Task SendHubMessage(string method, string msg, int status)
@@ -78,6 +82,14 @@ namespace AircashSimulator.Controllers.AircashFrame
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var response = await AircashFrameV2Service.ConfirmPayout(SettingsService.AircashFramePartnerId , confirmPayoutDTO.PartnerTransactionId.ToString(), confirmPayoutDTO.Amount, CurrencyEnum.EUR, environment);
             return Ok(response);
+        }
+        public async Task<IActionResult> GetCurlConfirmPayoutFrameV2(ConfirmPayoutDTO confirmPayoutDTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashFrameV2Service.GetConfirmPayoutRequest(SettingsService.AircashFramePartnerId, confirmPayoutDTO.PartnerTransactionId.ToString(), confirmPayoutDTO.Amount, CurrencyEnum.EUR);
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetConfirmPayoutEndpoint(environment));
+            return Ok(curl);
+
         }
 
         [HttpPost]
@@ -141,6 +153,14 @@ namespace AircashSimulator.Controllers.AircashFrame
             var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId, environment);
             return Ok(response);
         }
+        public async Task<IActionResult> GetCurlTransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request =  AircashFrameV2Service.GetCheckTransactionStatusFrameRequest(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId);
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCheckTransactionStatusEndpoint(environment));
+            return Ok(curl);
+        }
+
         [HttpPost]
         public async Task<IActionResult> InitiateSimulateError([FromBody] AcFrameInitiateErrorCodeEnum errorCode)
         {
