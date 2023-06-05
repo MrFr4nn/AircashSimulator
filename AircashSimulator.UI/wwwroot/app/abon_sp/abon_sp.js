@@ -79,7 +79,7 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService,$scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AbonGenerate") == -1) {
@@ -87,20 +87,20 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
     }
 
     $scope.createCouponModel = {
-        value : 100,
-        pointOfSaleId: 'test',
+        value : 50,
+        pointOfSaleId: 'TestLocation',
         partnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
-        partnerTransactionId: '76b266ae-4d61-414b-baa9-44f9da1182e1',
+        partnerTransactionId: HelperService.NewGuid(),
         isoCurrencySymbol: 'EUR',
         contentType: null,
         contentWidth:null
     };
 
     $scope.cancelCouponModel = {
-        cancelSerialNumber: '9889251688979846',
-        cancelPointOfSaleId: 'test',
+        cancelSerialNumber: '',
+        cancelPointOfSaleId: 'TestLocation',
         cancelPartnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
-        cancelPartnerTransactionId:'76b266ae-4d61-414b-baa9-44f9da1182e1'
+        cancelPartnerTransactionId:''
     };
 
     $scope.createServiceBusy = false;
