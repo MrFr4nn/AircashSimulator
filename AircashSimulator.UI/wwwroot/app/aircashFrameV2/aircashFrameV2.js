@@ -231,7 +231,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     ];
 
     $scope.config = {};
-    $scope.config.useMatchPersonalData = true;
+    $scope.config.useMatchPersonalData = false;
 
     $scope.initiateModelSelected = {};
     $scope.initiateModel = {};
@@ -263,10 +263,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateModel.partnerTransactionId = uuidv4();
         $scope.initiateModel.currency = 978;
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
-        $scope.initiateModel.successUrl = "";
-        $scope.initiateModel.declineUrl = "";
-        $scope.initiateModel.cancelUrl = "";
-        $scope.initiateModel.originUrl = $location.absUrl();
+        $scope.initiateModel.successUrl = $location.absUrl().replace($location.url(), "/success");
+        $scope.initiateModel.declineUrl = $location.absUrl().replace($location.url(), "/decline");
+        $scope.initiateModel.cancelUrl = $location.absUrl().replace($location.url(), "/decline");
+        $scope.initiateModel.originUrl = "";
     }
 
     $scope.transactionId;
