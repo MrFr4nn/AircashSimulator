@@ -433,14 +433,32 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                                 <fieldset>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">Value</label>
-                                        <select class="form-control"
-                                                ng-options="item for item in denominations"
-                                                ng-model="createCouponModel.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true">
-                                        </select>
+                                        <input class="form-control"
+                                               ng-model="createCouponModel.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
                                         <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">PartnerId</label>
+                                        <input ng-model="createCouponModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">PartnerTransactionId</label>
+                                        <input ng-model="createCouponModel.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="createServiceBusy" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">IsoCurrencySymbol</label>
+                                        <input ng-model="createCouponModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">ContentType</label>
+                                        <input ng-model="createCouponModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">ContentWidth</label>
+                                        <input ng-model="createCouponModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
                                     </div>
                                     <button ng-click="createCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
                                 </fieldset>
