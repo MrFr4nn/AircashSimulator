@@ -257,7 +257,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
         $scope.initiateModel.successUrl = $location.absUrl().replace($location.url(), "/success");
         $scope.initiateModel.declineUrl = $location.absUrl().replace($location.url(), "/decline");
-        $scope.initiateModel.cancelUrl = $location.absUrl().replace($location.url(), "/decline");
+        $scope.initiateModel.cancelUrl = $location.absUrl().replace($location.url(), "/cancel");
         $scope.initiateModel.originUrl = "";
     }
 

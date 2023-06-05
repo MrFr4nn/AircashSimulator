@@ -142,7 +142,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
             $scope.onCancel = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Tranasction - Cancel");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                location.href = config.acFrameOriginUrl + '/#!/cancel';
             }
 
             //SIGNAL R START

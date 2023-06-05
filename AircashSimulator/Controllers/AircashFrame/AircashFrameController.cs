@@ -120,7 +120,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 initiateRequestDTO.NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}/NotificationCashierFrameV2";
                 initiateRequestDTO.DeclineUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";
                 initiateRequestDTO.SuccessUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/success";
-                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";                                
+                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/cancel";                                
             }
             else if (initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.CustomWindowCheckout || initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.CustomRedirectCheckout)
             {
@@ -128,7 +128,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 initiateRequestDTO.NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}/NotificationCashierFrameV2";
                 initiateRequestDTO.DeclineUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";
                 initiateRequestDTO.SuccessUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/success";
-                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";
+                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/cancel";
             }
             else
             {
