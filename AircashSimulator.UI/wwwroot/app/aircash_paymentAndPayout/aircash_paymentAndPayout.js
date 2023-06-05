@@ -144,21 +144,21 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.checkCodeModel = {
         partnerId:'8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
-        barCode: 'AC23436263654000',
-        locationID: '123'
+        barCode: '',
+        locationID: 'TestLocation'
     };
 
     $scope.checkCodeV2Model = {
         partnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
-        barCode: 'AC23436263654000',
-        locationID: '123'
+        barCode: '',
+        locationID: 'TestLocation'
     };
 
     $scope.confirmTransactionModel = {
         partnerId:'8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
-        barCode: 'AC23436263654000',
+        barCode: '',
         partnerTransactionId:'c88dcc81-8b43-4808-8ac5-da498bf08439',
-        locationID: '123'
+        locationID: 'TestLocation'
     };
 
     $scope.setDefaults = function () {
@@ -181,8 +181,8 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.cancelTransactionModel = {
         partnerId:'8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
-        partnerTransactionID: 'c88dcc81-8b43-4808-8ac5-da498bf08439',
-        locationID: "123"
+        partnerTransactionID: '',
+        locationID: "TestLocation"
     };
 
     $scope.checkCodeServiceBusy = false;
