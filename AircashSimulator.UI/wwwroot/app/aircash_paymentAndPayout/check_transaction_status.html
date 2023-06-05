@@ -233,52 +233,26 @@ pzuh1G6yfUythTRV0CeENIWjJLcJVWTL49NyOYiA9fwZQTDKlmJ930h0KJt3FnfZhBNOCdJ2C8Royrph
         <uib-tab index="CheckTransactionStatus-tab-7" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-4">
-                    <br />
-                    <p>Recent transactions:</p>
-                    <div>
-                        <div class="table-responsive">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Transaction ID</th>
-                                            <th>Amount</th>
-                                            <th>Check</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-if="checkTotalLoaded == 0 && !checkBusy">
-                                            <td colspan="12" align="center">
-                                                <i>No data</i>
-                                            </td>
-                                        </tr>
-                                        <tr ng-repeat="transaction in checkTransactions">
-                                            <td>{{$index + 1}}.</td>
-                                            <td>{{transaction.transactionId}}</td>
-                                            <td>{{transaction.amount | number:2}}</td>
-                                            <td style="text-align: center; vertical-align: inherit">
-                                                <button class="btn btn-primary fa fa-check" ng-click="checkTransactionStatus(transaction.transactionId)"></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <form action="/" method="POST" name="transactionFormCheck">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label">PartnerId</label>
+                                <input ng-model="checkTransactionStatusModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="checkTransactionStatusServiceBusy" ng-required="true">
+                            </div><div class="mb-3">
+                                <label class="form-label">PartnerTransactionId</label>
+                                <input ng-model="checkTransactionStatusModel.partnerTransactionID" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="checkTransactionStatusServiceBusy" ng-required="true">
                             </div>
-                        </div>
-                        <load-more total-loaded="checkTotalLoaded" out="checkLoadMore"></load-more>
-                    </div>
+                            <button ng-click="checkTransactionStatus()" class="btn btn-primary w-100px me-5px" ng-disabled="checkTransactionStatusServiceBusy || transactionFormCheck.$invalid">Check <i ng-if="checkTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </fieldset>
+                    </form>
                 </div>
-                <div class="col-md-0.5"></div>
-                <br />
-                <div ng-if="checkTransactionStatusServiceResponded" class="col-md-4">
+                <div class="col-md-4" ng-if="checkTransactionStatusServiceResponded">
                     Request ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="checkTransactionStatusServiceRequest"></jsonformatter>
                     Sequence: {{checkTransactionStatusSequence}}<br />
                 </div>
-                <div ng-if="checkTransactionStatusServiceResponded" class="col-md-3">
-                    <p>
-                        Response ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                    </p>
+                <div class="col-md-4" ng-if="checkTransactionStatusServiceResponded">
+                    Response ({{checkTransactionStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="checkTransactionStatusServiceResponse"></jsonformatter>
                 </div>
             </div>
