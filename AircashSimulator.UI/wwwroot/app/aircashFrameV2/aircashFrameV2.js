@@ -152,7 +152,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
 }
 ]);
 
-acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'HelperService', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, HelperService, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
@@ -245,22 +245,14 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.setInititateModel();
 
-    function uuidv4() {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'
-            .replace(/[xy]/g, function (c) {
-                const r = Math.random() * 16 | 0,
-                    v = c == 'x' ? r : (r & 0x3 | 0x8);
-                return v.toString(16);
-            });
-    }
     $scope.setDefaultInitiateModel = function () {
         $scope.locale.languageInput = "en";
         $scope.locale.countryISOCodeInput = "HR"
 
         $scope.initiateModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
-        $scope.initiateModel.partnerUserId= uuidv4();
+        $scope.initiateModel.partnerUserId = HelperService.NewGuid();
         $scope.initiateModel.notificationUrl = $location.absUrl();
-        $scope.initiateModel.partnerTransactionId = uuidv4();
+        $scope.initiateModel.partnerTransactionId = HelperService.NewGuid();
         $scope.initiateModel.currency = 978;
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
         $scope.initiateModel.successUrl = $location.absUrl().replace($location.url(), "/success");
