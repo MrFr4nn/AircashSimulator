@@ -1038,13 +1038,19 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
             <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
+                        <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                        <br />
                         <form action="/" method="POST" name="statusForm">
                             <fieldset>
                                 <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Transaction ID</label>
-                                    <input ng-model="transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    <label class="form-label" for="partnerId">PartnerId</label>
+                                    <input ng-model="transactionModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
                                 </div>
-                                <button class="btn btn-primary" ng-click="transactionStatus(transactionId)" ng-disabled="statusBusy || statusForm.$invalid">Check status<i ng-if="statusBusy" class="fa fa-cog fa-spin"></i></button>
+                                <div class="mb-3">
+                                    <label class="form-label" for="transactionId">Transaction ID</label>
+                                    <input ng-model="transactionModel.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                </div>
+                                <button class="btn btn-primary" ng-click="transactionStatus()" ng-disabled="statusBusy || statusForm.$invalid">Check status<i ng-if="statusBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
@@ -1063,11 +1069,17 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
             <uib-tab index="request-tab-8" heading="Curl" classes="nav-item">
                 <div class="row">
                     <div class="col-md-4">
+                        <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                        <br />
                         <form action="/" method="POST" name="statusForm">
                             <fieldset>
                                 <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Transaction ID</label>
-                                    <input ng-model="transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    <label class="form-label" for="partnerId">PartnerId</label>
+                                    <input ng-model="transactionModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="transactionId">Transaction ID</label>
+                                    <input ng-model="transactionModel.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
                                 </div>
                                 <button class="btn btn-primary" ng-click="getCurlTransactionStatus(transactionId)" ng-disabled="curlStatusBusy || statusForm.$invalid">Check status<i ng-if="curlStatusBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
@@ -1411,8 +1423,18 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
         <uib-tab index="request-tab-104" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-4">
+                    <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                    <br />
                     <form action="/" method="POST" name="statusForm">
                         <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label" for="PartnerId">PartnerId</label>
+                                <input ng-model="confirmModel.partnerId" type="text" class="form-control" ng-required="true" name="PartnerId">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="CurrencyId">CurrencyId</label>
+                                <input ng-model="confirmModel.currencyId" type="text" class="form-control" ng-required="true" name="CurrencyId">
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label" for="partnerTransactionId">Partner Transaction ID</label>
                                 <input ng-model="confirmModel.transactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">
@@ -1440,8 +1462,18 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
         <uib-tab index="request-tab-8" heading="Curl" classes="nav-item">
             <div class="row">
                 <div class="col-md-4">
+                    <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                    <br />
                     <form action="/" method="POST" name="statusForm">
                         <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label" for="PartnerId">PartnerId</label>
+                                <input ng-model="confirmModel.partnerId" type="text" class="form-control" ng-required="true" name="PartnerId">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label" for="CurrencyId">CurrencyId</label>
+                                <input ng-model="confirmModel.currencyId" type="text" class="form-control" ng-required="true" name="CurrencyId">
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label" for="partnerTransactionId">Partner Transaction ID</label>
                                 <input ng-model="confirmModel.transactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">

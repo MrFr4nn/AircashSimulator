@@ -65,45 +65,51 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function transactionStatus(transactionId) {
+    function transactionStatus(transactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/TransactionStatusFrameV2",
             data: {
-                TransactionId: transactionId
+                TransactionId: transactionModel.transactionId,
+                PartnerId: transactionModel.partnerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlTransactionStatus(transactionId) {
+    function getCurlTransactionStatus(transactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/GetCurlTransactionStatusFrameV2",
             data: {
-                TransactionId: transactionId
+                TransactionId: transactionModel.transactionId,
+                PartnerId: transactionModel.partnerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function confirmPayout(transactionId, amount) {
+    function confirmPayout(confirmModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/ConfirmPayoutFrameV2",
             data: {
-                PartnerTransactionId: transactionId,
-                Amount: amount
+                PartnerId: confirmModel.partnerId,
+                PartnerTransactionId: confirmModel.transactionId,
+                CurrencyId: parseInt(confirmModel.currencyId),
+                Amount: confirmModel.amount
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function getCurlConfirmPayout(transactionId, amount) {
+    function getCurlConfirmPayout(confirmModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashFrame/GetCurlConfirmPayoutFrameV2",
             data: {
-                PartnerTransactionId: transactionId,
-                Amount: amount
+                PartnerId: confirmModel.partnerId,
+                PartnerTransactionId: confirmModel.transactionId,
+                CurrencyId: parseInt(confirmModel.currencyId),
+                Amount: confirmModel.amount
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -237,6 +243,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     $scope.initiateModel = {};
     $scope.initiateModelSelected.data = $scope.initiateModels[0];
 
+    $scope.transactionModel = {};
+    $scope.confirmModel = {};
+
     $scope.setInititateModel = function () {
         $scope.initiateModel.payType = $scope.initiateModelSelected.data.payType;
         $scope.initiateModel.payMethod = $scope.initiateModelSelected.data.payMethod;
@@ -259,6 +268,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateModel.declineUrl = $location.absUrl().replace($location.url(), "/decline");
         $scope.initiateModel.cancelUrl = $location.absUrl().replace($location.url(), "/cancel");
         $scope.initiateModel.originUrl = "";
+
+        $scope.confirmModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
+        $scope.confirmModel.currencyId = 978;
+        $scope.transactionModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
     }
 
     $scope.transactionId;
@@ -334,7 +347,6 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     };
 
     $scope.onSuccess = function (obj) {
-        console.log(obj);
         alert("Success:" + obj.amount);
     };
 
@@ -364,16 +376,15 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         });
     };
 
- 
+    
     $scope.statusResponded = false;
     $scope.statusBusy = false;
-    $scope.transactionStatus = function (transactionId) {
+    $scope.transactionStatus = function () {
         $scope.statusBusy = true;
         $scope.statusResponded = false;
-        acFrameV2Service.transactionStatus(transactionId)
+        acFrameV2Service.transactionStatus($scope.transactionModel)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceStatus = response.sequence;
@@ -392,10 +403,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     }
     $scope.curlStatusResponded = false;
     $scope.curlStatusBusy = false;
-    $scope.getCurlTransactionStatus = function (transactionId) {
+    $scope.getCurlTransactionStatus = function () {
         $scope.curlStatusBusy = true;
         $scope.curlStatusResponded = false;
-        acFrameV2Service.getCurlTransactionStatus(transactionId)
+        acFrameV2Service.getCurlTransactionStatus($scope.transactionModel)
             .then(function (response) {
                 if (response) {
                     $scope.CurlStatusServiceResponse = response;
@@ -408,16 +419,14 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     }
 
 
-    $scope.confirmModel = {};
     $scope.confirmResponded = false;
     $scope.confirmBusy = false;
     $scope.confirmPayout = function () {
         $scope.confirmBusy = true;
         $scope.confirmResponded = false;
-        acFrameV2Service.confirmPayout($scope.confirmModel.transactionId, $scope.confirmModel.amount)
+        acFrameV2Service.confirmPayout($scope.confirmModel)
             .then(function (response) {
                 if (response) {
-                    console.log(response);
                     $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
                     $scope.ConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceConfirm = response.sequence;
@@ -435,13 +444,12 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             });
     }
 
-    $scope.confirmModel = {};
     $scope.curlConfirmResponded = false;
     $scope.curlConfirmBusy = false;
     $scope.getCurlConfirmPayout = function () {
         $scope.curlConfirmBusy = true;
         $scope.curlConfirmResponded = false;
-        acFrameV2Service.getCurlConfirmPayout($scope.confirmModel.transactionId, $scope.confirmModel.amount)
+        acFrameV2Service.getCurlConfirmPayout($scope.confirmModel)
             .then(function (response) {
                 if (response) {
                     $scope.CurlConfirmPayoutResponse = response;
