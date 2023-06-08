@@ -217,7 +217,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.initiateModels =[
         {
-            name: "Aircash marketplace deposit",
+            name: "Aircash Pay",
             payType: 0,
             payMethod: 2,
             amount: 10,
