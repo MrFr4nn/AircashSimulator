@@ -3,13 +3,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header text-white" style="background-color: #F62727;">
-                <div class="col-md-6" style="float:left;">
-                    <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - AcPay</h2>
-                </div>
-                <div class="col-md-6" style="float:right;">
-                    <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
-                    </select>
-                </div>
+                <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - AcPay</h2>
             </div>
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-sm-2 text-center">
@@ -96,6 +90,10 @@
                                 </div>
                                 <div id="AcFrameAbonConfiguration" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                     <div class="card-body">
+                                        <div class="form-group">
+                                            <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
+                                            </select>
+                                        </div>
                                         <div class="form-check">
                                             <input ng-checked="false" ng-model="useMatchPersonalData" class="form-check-input" type="checkbox" id="checkbox2" style=" width: 1.55rem; height: 1.55rem;" ng-init="useMatchPersonalData=false" />
                                             <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">{{translationsCashier.ac_pay_configuration_checkbox}}</label>
