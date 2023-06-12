@@ -781,16 +781,16 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         },
         transactionStatus: {
             requestExample: {
-                partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
-                signature: "dUrE4gtau5..."
+                "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                "partnerTransactionId": "571fd959-fe70-412b-90d5-e6db6df953ea",
+                "signature": "JmdPLkrzTZ..."
             },
             responseExample: {
-                aircashTransactionId: "b74854c8-db9d-48d7-985a-59f587637a75",
-                status: 2,
-                currencyId: 978,
-                amount: 1.78,
-                signature: "jBMpdollER..."
+                "status": 2,
+                "amount": 10,
+                "currencyId": 978,
+                "aircashTransactionId": "11da2e60-f35e-43a9-be63-26cf34b12e3b",
+                "signature": "SsRvc7uHsL..."
             },
             errorResponseExample: {
                 code: 1003,
