@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Services.AircashPayment
 {
-    public class AircashPaymentResponse
+    public class CreateAndConfirmRS
     {
         public bool Success { get; set; }
 

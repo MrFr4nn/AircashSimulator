@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.AircashPayment
 {
-    public class CheckPlayerParameters
+    public class AircashPaymentParameters
     {
         public string Key { get; set; }
         public string Value { get; set; }
