@@ -134,7 +134,7 @@ namespace Services.AircashPayment
             returnResponse.ServiceRequest = request;
             var sequence = AircashSignatureService.ConvertObjectToString(request);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
             request.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, endpoint);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
@@ -155,7 +155,7 @@ namespace Services.AircashPayment
             returnResponse.ServiceRequest = request;
             var sequence = AircashSignatureService.ConvertObjectToString(request);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
             request.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, endpoint);
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
