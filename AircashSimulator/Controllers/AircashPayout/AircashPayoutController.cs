@@ -103,7 +103,7 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId, environment);
+            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerId, checkTransactionStatusRequest.PartnerTransactionId, checkTransactionStatusRequest.AircashTransactionId, environment);
             return Ok(response);
         }
 
@@ -157,7 +157,7 @@ namespace AircashSimulator.Controllers
         {
 
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var request =  AircashPayoutService.GetCheckTransactionStatusRequest(checkTransactionStatusRequest.PartnerTransactionId);
+            var request = AircashPayoutService.GetCheckTransactionStatusRequest(checkTransactionStatusRequest.PartnerId, checkTransactionStatusRequest.PartnerTransactionId, checkTransactionStatusRequest.AircashTransactionId);
             var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckTransactionStatusEndpoint(environment));
             return Ok(curl);
         }

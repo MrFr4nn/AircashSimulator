@@ -240,13 +240,11 @@ namespace Services.AircashPayout
         }
 
 
-        public async Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment)
+        public async Task<object> CheckTransactionStatus(Guid partnerId, Guid partnerTransactionId, Guid aircashTransactionId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var checkTransactionStatusResponse = new object();
-            var checkTransactionStatusRequest = GetCheckTransactionStatusRequest(partnerTransactionId);
-            var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionId).FirstOrDefault();
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == transaction.PartnerId).FirstOrDefault();
+            var checkTransactionStatusRequest = GetCheckTransactionStatusRequest(partnerId, partnerTransactionId, aircashTransactionId);
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
             returnResponse.ServiceRequest = checkTransactionStatusRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
@@ -267,16 +265,14 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = checkTransactionStatusResponse;
             return returnResponse;
         }
-        public AircashCheckTransactionStatusRequest GetCheckTransactionStatusRequest(Guid partnerTransactionId)
+        public AircashCheckTransactionStatusRequest GetCheckTransactionStatusRequest(Guid partnerId, Guid partnerTransactionId, Guid aircashTransactionId)
         {
-            var checkTransactionStatusResponse = new object();
-            var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionId).FirstOrDefault();
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == transaction.PartnerId).FirstOrDefault();
-       
+            var checkTransactionStatusResponse = new object();       
             var checkTransactionStatusRequest = new AircashCheckTransactionStatusRequest()
             {
-                PartnerID = transaction.PartnerId.ToString(),
-                PartnerTransactionID = partnerTransactionId.ToString(),
+                PartnerID = partnerId.ToString(),
+                PartnerTransactionID = partnerTransactionId != Guid.Empty? partnerTransactionId.ToString(): null,
+                AircashTransactionID = aircashTransactionId != Guid.Empty ?  aircashTransactionId.ToString() : null,
             };
             var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);

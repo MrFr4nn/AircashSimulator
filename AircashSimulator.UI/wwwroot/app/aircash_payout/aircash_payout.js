@@ -95,22 +95,26 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function checkTransactionStatus(partnerTransactionId) {
+    function checkTransactionStatus(TransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CheckTransactionStatus",
             data: {
-                PartnerTransactionId: partnerTransactionId
+                PartnerID: TransactionModel.partnerId,
+                PartnerTransactionId: TransactionModel.partenrTransactionId || undefined,
+                AircashTransactionId: TransactionModel.aircashTransactionId || undefined
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlCheckTransactionStatus(partnerTransactionId) {
+    function getCurlCheckTransactionStatus(TransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/GetCurlCheckTransactionStatus",
             data: {
-                PartnerTransactionId: partnerTransactionId
+                PartnerID: TransactionModel.partnerId,
+                PartnerTransactionId: TransactionModel.partenrTransactionId || undefined,
+                AircashTransactionId: TransactionModel.aircashTransactionId || undefined
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -458,10 +462,12 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             });
     }
 
-    $scope.checkTransactionStatus = function (transactionId) {
+    $scope.transactionModel = {};
+    $scope.transactionModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+    $scope.checkTransactionStatus = function () {
         $scope.checkTransactionStatusServiceBusy = true;
         $scope.checkTransactionStatusServiceResponse = false;
-        aircashPayoutService.checkTransactionStatus(transactionId)
+        aircashPayoutService.checkTransactionStatus($scope.transactionModel)
             .then(function (response) {
 
                 if (response) {
@@ -478,10 +484,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 console.log("error");
             });
     }
-    $scope.getCurlCheckTransactionStatus = function (transactionId) {
+
+    $scope.transactionCurlModel = {};
+    $scope.transactionCurlModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+    $scope.getCurlCheckTransactionStatus = function () {
         $scope.CurlCheckTransactionStatusServiceBusy = true;
         $scope.CurlCheckTransactionStatusServiceResponse = false;
-        aircashPayoutService.getCurlCheckTransactionStatus(transactionId)
+        aircashPayoutService.getCurlCheckTransactionStatus($scope.transactionCurlModel)
             .then(function (response) {
 
                 if (response) {

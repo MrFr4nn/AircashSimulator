@@ -8,6 +8,7 @@ using DataAccess;
 using Services.HttpRequest;
 using Newtonsoft.Json;
 using Domain.Entities;
+using Service.Settings;
 
 namespace Services.AircashInAppPay
 {
@@ -23,16 +24,19 @@ namespace Services.AircashInAppPay
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISettingsService SettingsService;
         private const string GenerateTransactionSuccessURL = "https://dev-simulator.aircash.eu/#!/success";
         private const string GenerateTransactionConfirmURL = "https://dev-simulator-api.aircash.eu/api/AircashInAppPay/ConfirmTransaction";
         private const string GenerateTransactionDeclineURL = "https://dev-simulator.aircash.eu/#!/decline";
 
         private readonly string AircashPayGenerateTransactionEndpoint = "AircashPay/GenerateTransaction";
         private readonly string RefundTransactionEndpoint = "AircashPay/RefundTransaction";
-        public AircashInAppPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService) 
+        private readonly string CheckTransactionStatusEndpoint = "AircashPay/CheckTransactionStatus";
+        public AircashInAppPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService) 
         {
             AircashSimulatorContext= aircashSimulatorContext;
             HttpRequestService= httpRequestService;
+            SettingsService= settingsService;
         }
         public async Task<object> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest, EnvironmentEnum environment) 
         {
@@ -111,6 +115,34 @@ namespace Services.AircashInAppPay
                 returnResponse.ServiceResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
 
+            return returnResponse;
+        }
+
+        public async Task<object> CheckTransactionStatus(Guid partnerId, Guid partnerTransactionId, EnvironmentEnum environment)
+        {
+            Response returnResponse = new Response();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var request = new CheckTransactionStatusRQ()
+            {
+               PartnerId = partnerId.ToString(),
+               PartnerTransactionId = partnerTransactionId.ToString(),
+            };
+            returnResponse.ServiceRequest = request;
+            returnResponse.Sequence = AircashSignatureService.ConvertObjectToString(request);
+
+            request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{CheckTransactionStatusEndpoint}");
+
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                returnResponse.ServiceResponse = JsonConvert.DeserializeObject<CheckTransactionStatusRS>(response.ResponseContent);
+            }
+            else
+            {
+                returnResponse.ServiceResponse = JsonConvert.DeserializeObject<ErrorResponseMessage>(response.ResponseContent);
+            } 
+            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             return returnResponse;
         }
     }

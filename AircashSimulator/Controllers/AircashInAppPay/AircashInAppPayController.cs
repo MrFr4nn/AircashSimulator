@@ -37,10 +37,13 @@ namespace AircashSimulator.Controllers
         {
             return Ok();
         }
+
         [HttpPost]
-        public async Task<IActionResult> getTransactions(GetTransactionsRequest getTransactionsRequest)
+        public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest) 
         {
-            return Ok();
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = AircashInAppPayService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerId, checkTransactionStatusRequest.PartnerTransactionId, environment);
+            return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> RefundTransaction(RefundTransactionRequest refundTransactionRequest)
