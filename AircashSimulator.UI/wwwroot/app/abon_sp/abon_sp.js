@@ -89,7 +89,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     $scope.createCouponModel = {
         value : 50,
         pointOfSaleId: 'TestLocation',
-        partnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerId: '52f46879-294d-4904-be7e-368ab0161771',
         partnerTransactionId: HelperService.NewGuid(),
         isoCurrencySymbol: 'EUR',
         contentType: null,
@@ -99,7 +99,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     $scope.cancelCouponModel = {
         cancelSerialNumber: '',
         cancelPointOfSaleId: 'TestLocation',
-        cancelPartnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        cancelPartnerId: '52f46879-294d-4904-be7e-368ab0161771',
         cancelPartnerTransactionId:''
     };
 

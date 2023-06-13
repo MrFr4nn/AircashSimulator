@@ -430,17 +430,17 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-3">
-                        <form action="/" method="POST" name="transactionForm0">
+                        <form action="/" method="POST" name="validateForm0">
                             <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                    <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
-                                </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Provider Id</label>
                                     <input ng-model="validateCouponModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
                                 </div>
-                                <button ng-click="validateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="validateBusy">Validate <i ng-if="validateBusy" class="fa fa-cog fa-spin"></i></button>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                                    <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                                </div>
+                                <button ng-click="validateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="validateBusy || validateForm0.$invalid">Validate <i ng-if="validateBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
@@ -458,21 +458,25 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
             </uib-tab>
             <uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-2">
-                        <form action="/" method="POST" name="transactionForm1">
+                    <div class="col-md-3">
+                        <form action="/" method="POST" name="validateForm1">
                             <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Provider Id</label>
+                                    <input ng-model="validateCouponModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Coupon code</label>
                                     <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
                                 </div>
-                                <button ng-click="getCurlValidateCoupon()" class="btn btn-primary mt-2" ng-disabled="curlValidateBusy || transactionForm1.$invalid">Get Curl <i ng-if="curlValidateBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="getCurlValidateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="curlValidateBusy || validateForm1.$invalid">Get Curl <i ng-if="curlValidateBusy" class="fa fa-cog fa-spin"></i></button>
 
                             </fieldset>
                         </form>
                     </div>
                     <br/>
 
-                    <div ng-if="curlValidateResponded" class="col-md-10">
+                    <div ng-if="curlValidateResponded" class="col-md-9">
                         <pre>
                         <jsonformatter  data="CurlResponse"></jsonformatter>
                         </pre>
@@ -879,25 +883,25 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
             <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
                 <div class="row">
                     <div class="col-md-3">
-                        <form action="/" method="POST" name="transactionForm2">
+                        <form action="/" method="POST" name="confirmForm0">
                             <fieldset>
-                                <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
-                                </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Provider Id</label>
                                     <input ng-model="confirmTransactionModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">User Id</label>
+                                    <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Provider Transaction Id</label>
                                     <input ng-model="confirmTransactionModel.providerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="exampleInputEmail1">User Id</label>
-                                    <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
+                                    <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                                    <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
                                 </div>
-                                <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy">Confirm transaction <i ng-if="confirmBusy || transactionForm2.$invalid" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy || confirmForm0.$invalid">Confirm transaction <i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
@@ -915,21 +919,32 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
             </uib-tab>
             <uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
                 <div class="row">
-                    <div class="col-md-2">
-                        <form action="/" method="POST" name="transactionForm3">
+                    <div class="col-md-3">
+                        <form action="/" method="POST" name="confirmForm1">
                             <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Provider Id</label>
+                                    <input ng-model="confirmTransactionModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">User Id</label>
+                                    <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="exampleInputEmail1">Provider Transaction Id</label>
+                                    <input ng-model="confirmTransactionModel.providerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label" for="exampleInputEmail1">Coupon code</label>
                                     <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
                                 </div>
-                                <button ng-click="getCurlConfirmTransaction()" class="btn btn-primary mt-2" ng-disabled="curlConfirmBusy || transactionForm3.$invalid">Get Curl <i ng-if="curlConfirmBusy" class="fa fa-cog fa-spin"></i></button>
-
+                                <button ng-click="getCurlConfirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="curlConfirmBusy || confirmForm1.$invalid">Get Curl <i ng-if="curlConfirmBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
                     <br />
 
-                    <div ng-if="curlConfirmResponded" class="col-md-10">
+                    <div ng-if="curlConfirmResponded" class="col-md-9">
                         <pre>
                         <jsonformatter  data="CurlResponseConfirmTransaction"></jsonformatter>
                         </pre>

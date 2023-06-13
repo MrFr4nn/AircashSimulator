@@ -32,37 +32,41 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlValidateCoupon(couponCode) {
+    function getCurlValidateCoupon(couponCode, providerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonOnlinePartner/GetCurlValidateCoupon",
             data: {
-                CouponCode: couponCode
+                CouponCode: couponCode,
+                ProviderId: providerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function confirmTransaction(couponCode, providerId, providerTransactionId, userId) {
+    function confirmTransaction(confirmTransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl +"AbonOnlinePartner/ConfirmTransaction",
             data: {
-                CouponCode: couponCode,
-                ProviderId: providerId,
-                ProviderTransactionId: providerTransactionId,
-                UserId: userId
+                CouponCode: confirmTransactionModel.couponCode,
+                ProviderId: confirmTransactionModel.providerId,
+                ProviderTransactionId: confirmTransactionModel.providerTransactionId,
+                UserId: confirmTransactionModel.userId
 
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlConfirmTransaction(couponCode) {
+    function getCurlConfirmTransaction(confirmTransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonOnlinePartner/GetCurlConfirmTransaction",
             data: {
-                CouponCode: couponCode
+                CouponCode: confirmTransactionModel.couponCode,
+                ProviderId: confirmTransactionModel.providerId,
+                ProviderTransactionId: confirmTransactionModel.providerTransactionId,
+                UserId: confirmTransactionModel.userId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -121,7 +125,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.getCurlValidateCoupon = function () {
         $scope.curlValidateBusy = true;
         $scope.curlValidateResponded = false;
-        abonOpService.getCurlValidateCoupon($scope.validateCouponModel.couponCode)
+        abonOpService.getCurlValidateCoupon($scope.validateCouponModel.couponCode, $scope.validateCouponModel.providerId)
             .then(function (response) {
                 if (response) {
                     $scope.CurlResponse = response;
@@ -161,7 +165,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.confirmTransaction = function () {
         $scope.confirmBusy = true;
         $scope.confirmResponded = false;
-        abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode, $scope.confirmTransactionModel.providerId, $scope.confirmTransactionModel.providerTransactionId, $scope.confirmTransactionModel.userId)
+        abonOpService.confirmTransaction($scope.confirmTransactionModel)
             .then(function (response) {
                 if (response) {
                     $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -184,7 +188,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.getCurlConfirmTransaction = function () {
         $scope.curlConfirmBusy = true;
         $scope.curlConfirmResponded = false;
-        abonOpService.getCurlConfirmTransaction($scope.confirmTransactionModel.couponCode)
+        abonOpService.getCurlConfirmTransaction($scope.confirmTransactionModel)
             .then(function (response) {
                 if (response) {
                     $scope.CurlResponseConfirmTransaction = response;
