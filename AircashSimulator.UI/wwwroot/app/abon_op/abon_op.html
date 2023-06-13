@@ -585,13 +585,12 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
 Request example:
 </pre>
                 <jsonformatter data="aBonDeposit.confirmTransaction.requestExample"></jsonformatter>
-<pre>
+                <pre>
 Sequence:
-CouponCode=5460446045144493&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=d711c31b-9e20-48dd-a749-91778627b569&UserId=574f32a7-4ecb-48b2-9723-ac660b9c835d
+CouponCode=2326186935891516&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=e126aa6b-0073-4e5f-bb3c-9eeefb6d392f&UserId=4149ba7d-e4f7-4c77-8393-d03e6691c03b
 
 Signature:
-CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1NpdTWhENuyLaQKHOfUj3s6esS7meVr5Cfhc4g2QXrHUyz/vajS3p8qd/uYt7ZK+i3oEIAiKKcLuCMevtiFtIDeMAXUCzCO5CD9wIey7rfVEWI+Qsf2ffhs8jM4KCjsjnSvovipdDzcj6D4npUcrxW8YduYnFatoByug71dybZSAqs8kbEFbDtcn6QipETXXHYdo0QG/JieqhjmRVe4gjdgL/h2uV9pMRLjln83sB9WwcKnVZR1DoRywsiRXrSEdvAyNIOVrgkxCHaf4VEIUg9rDBWwevYi8jC1c29hUwXhtvtDK1Cf5kA9PSF0qINNeACFz7WsLLt2UkB8lgFH62wz+f640nkScLW9tUB+NSVK6J5P5dSu89TF4U+8UNWXaQfn9ZqLtVU8yrxYKk3PDgtcnzNr6FOVTDTBee2drxupWr3NUy41BOa7IRgbOFJGRqLqP3MLInWGkKgmBhR5mjBvDHjA7H+63beko6XFw3pIxNawKNz+4axaY6XZGVxo7C9zvpWS7a/sHyzF/8Wx9L3dOb2d8K5qxsa8PU9iqSi9USOa5Xt2g7oy2IPTH/msAzBh6czzp2pbFxj0wMPTqjfKKelQM=
-</pre>
+eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQPNwctggadHHvQpGBOW1d7avb4oSPqQy1KEgeCBceZeN5ErZn4sNsKo1W7UkCIyhGfS7Fb6/b9cLXMqh5pOBD1L+YdFGiDlG439wE6rfvomrv0Qzl23R2OVTdFF9V6m/B7cHvwNrl6iL3dXXksmWkW/XP7fUx+zqDPFLlnkMrNseUScqL7wXBNxJEWUTRyon8KuoAl7tfUHCcjPEuJyLnEMuQ3eEwmNgSOZh4P+orpAw60A8OjzriPGCALAD/BBXlHe+dofm6oerVflZHFzAT9ev8mcsEMqx5K/jlc+kWLqO8O5PLKRKE2GEZH7t8sI12YUgk33VENJSAmiJFWVcOwpKjkpMZUsBk679uzQT0n9FOY1xMp/vUMTdIp9tf4L1cgJ7CRId5wq3Dl1GlU2r+2rW1xTR4W+ybZ0U6Mh6fyJcNCKtcVb40T5VDVoncbxyDJ0Wr8Kc8kpU3I7oNcMtABYW0iHhew2/uYBDpB5tekkXymWAuvSKMKnjY2dyoOWcCexb9aQEKmlwT1XNZM6dFU6G7b4kNYNrSvSA89DAOoRRw7vwP8HF2aJrPulgR3+dGMPeMW/+nTTD+YwXeedpa/hw8CPk=</pre>
             </uib-tab>
             <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
                 <div class="table-responsive">
@@ -624,6 +623,20 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                                 <td>
                                     Transaction identifier in the Online Provider system (has value
                                     only if the coupon has been used)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>SalePartnerId</b></td>
+                                <td>string</td>
+                                <td>
+                                    Id of the point of sale - where the coupon was bought
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>IsoCountryCode</b></td>
+                                <td>string</td>
+                                <td>
+                                    ISO 3166 standard – Codes for the representation of names of countries and their subdivisions (e.g. HR, DE, RO ...)
                                 </td>
                             </tr>
                         </tbody>

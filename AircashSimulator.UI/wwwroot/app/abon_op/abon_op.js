@@ -428,16 +428,18 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         },
         confirmTransaction: {
             requestExample: {
-                couponCode: "5460446045144493",
-                providerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                providerTransactionId: "d711c31b-9e20-48dd-a749-91778627b569",
-                userId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                signature: "CVrMFUqDzg..."
+                "couponCode": "2326186935891516",
+                "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                "providerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "userId": "4149ba7d-e4f7-4c77-8393-d03e6691c03b",
+                "signature": "eOplj4Cgfm..."
             },
             responseExample: {
-                couponValue: 50.0,
-                ISOCurrency: "HRK",
-                providerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+                "couponValue": 50,
+                "isoCurrency": 978,
+                "providerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "salePartnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                "isoCountryCode": null
             },
             errorResponseExample: {
                 code: 4,
