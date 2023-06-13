@@ -20,23 +20,30 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         createSimulateError: createSimulateError,
         cancelSimulateError: cancelSimulateError,
     });
-    function createCoupon(value, pointOfSaleId) {
+    function createCoupon(value, pointOfSaleId, partnerId, partnerTransactionId, isoCurrencySymbol, contentType, contentWidth) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonSalePartner/CreateCoupon",
             data: {
                 Value: value,
-                PointOfSaleId: pointOfSaleId
+                PointOfSaleId: pointOfSaleId,
+                PartnerId: partnerId,
+                PartnerTransactionId: partnerTransactionId,
+                IsoCurrencySymbol: isoCurrencySymbol,
+                ContentType: contentType,
+                ContentWidth: contentWidth
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function cancelCoupon(serialNumber, cancelPointOfSaleId) {
+    function cancelCoupon(partnerId,serialNumber, partnerTransactionId, cancelPointOfSaleId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonSalePartner/CancelCoupon",
             data: {
+                PartnerId: partnerId,
                 SerialNumber: serialNumber,
+                PartnerTransactionId: partnerTransactionId,
                 PointOfSaleId: cancelPointOfSaleId
             }
         });
@@ -72,7 +79,7 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService,$scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AbonGenerate") == -1) {
@@ -81,12 +88,19 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
 
     $scope.createCouponModel = {
         value : 50,
-        pointOfSaleId : 'test'
+        pointOfSaleId: 'TestLocation',
+        partnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerTransactionId: HelperService.NewGuid(),
+        isoCurrencySymbol: 'EUR',
+        contentType: null,
+        contentWidth:null
     };
 
     $scope.cancelCouponModel = {
-        cancelSerialNumber: null,
-        cancelPointOfSaleId: 'test'
+        cancelSerialNumber: '',
+        cancelPointOfSaleId: 'TestLocation',
+        cancelPartnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        cancelPartnerTransactionId:''
     };
 
     $scope.createServiceBusy = false;
@@ -129,7 +143,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
         $scope.createServiceBusy = true;
         $scope.createServiceResponse = false;
         $scope.showPerview = false;
-        abonSpService.createCoupon($scope.createCouponModel.value, $scope.createCouponModel.pointOfSaleId)
+        abonSpService.createCoupon($scope.createCouponModel.value, $scope.createCouponModel.pointOfSaleId, $scope.createCouponModel.partnerId, $scope.createCouponModel.partnerTransactionId, $scope.createCouponModel.isoCurrencySymbol, $scope.createCouponModel.contentType, $scope.createCouponModel.contentWidth)
             .then(function (response) {
                 if (response) {
                     $scope.requestDateTimeUTC = response.requestDateTimeUTC;
@@ -156,7 +170,7 @@ abonSpModule.controller("abonSpCtrl", ['$scope', '$state', 'abonSpService', '$fi
     $scope.cancelCoupon = function () {
         $scope.cancelServiceBusy = true;
         $scope.cancelServiceResponse = false;
-        abonSpService.cancelCoupon($scope.cancelCouponModel.cancelSerialNumber, $scope.cancelCouponModel.cancelPointOfSaleId)
+        abonSpService.cancelCoupon($scope.cancelCouponModel.cancelPartnerId, $scope.cancelCouponModel.cancelSerialNumber, $scope.cancelCouponModel.cancelPartnerTransactionId, $scope.cancelCouponModel.cancelPointOfSaleId)
             .then(function (response) {
                 if (response) {
                     $scope.cancelRequestDateTimeUTC = response.requestDateTimeUTC;

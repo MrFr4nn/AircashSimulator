@@ -15,6 +15,8 @@ using Service.Settings;
 using AircashSimulator.UI.Pages;
 using Microsoft.Extensions.Hosting;
 using Services.User;
+using CrossCutting;
+using Services.AircashPayoutV2;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
@@ -29,8 +31,9 @@ namespace AircashSimulator.Controllers.AircashFrame
         private UserContext UserContext;
         public readonly IHubContext<NotificationHub> _hubContext;
         private IUserService UserService;
+        private IHelperService HelperService;
 
-        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext, IUserService userService)
+        public AircashFrameController(ISettingsService settingsService,IAircashFrameService aircashFrameService, IAircashFrameV2Service aircashFrameV2Service, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IHubContext<NotificationHub> hubContext, IUserService userService, IHelperService helperService)
         {
             SettingsService = settingsService;
             AircashFrameService = aircashFrameService;
@@ -39,6 +42,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             UserContext = userContext;
             _hubContext = hubContext;
             UserService = userService;
+            HelperService = helperService;
         }
 
         public async Task SendHubMessage(string method, string msg, int status)
@@ -76,16 +80,27 @@ namespace AircashSimulator.Controllers.AircashFrame
         public async Task<IActionResult> ConfirmPayoutFrameV2(ConfirmPayoutDTO confirmPayoutDTO)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashFrameV2Service.ConfirmPayout(SettingsService.AircashFramePartnerId , confirmPayoutDTO.PartnerTransactionId.ToString(), confirmPayoutDTO.Amount, CurrencyEnum.EUR, environment);
+            var response = await AircashFrameV2Service.ConfirmPayout(confirmPayoutDTO.PartnerId, confirmPayoutDTO.PartnerTransactionId.ToString(), confirmPayoutDTO.Amount, confirmPayoutDTO.CurrencyId, environment);
             return Ok(response);
+        }
+        public async Task<IActionResult> GetCurlConfirmPayoutFrameV2(ConfirmPayoutDTO confirmPayoutDTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashFrameV2Service.GetConfirmPayoutRequest(confirmPayoutDTO.PartnerId, confirmPayoutDTO.PartnerTransactionId.ToString(), confirmPayoutDTO.Amount, confirmPayoutDTO.CurrencyId);
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetConfirmPayoutEndpoint(environment));
+            return Ok(curl);
+
         }
 
         [HttpPost]
         public async Task<IActionResult> InitiateCashierFrameV2(InitiateRequestAircashFrameV2 initiateRequest)
         {
+            var partnerId = SettingsService.AircashFramePartnerId;
+            if (initiateRequest.MatchParameters != null && initiateRequest.MatchParameters.Count != 0) partnerId = SettingsService.AircashFramePartnerIdWithMatchPersonalData;
+
             var initiateRequestDTO = new InititateRequestV2Dto
             {
-                PartnerId = SettingsService.AircashFramePartnerId,
+                PartnerId = partnerId,
                 UserId = Guid.NewGuid(),
                 Amount = initiateRequest.Amount,
                 MatchParameters = initiateRequest.MatchParameters,
@@ -105,7 +120,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 initiateRequestDTO.NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}/NotificationCashierFrameV2";
                 initiateRequestDTO.DeclineUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";
                 initiateRequestDTO.SuccessUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/success";
-                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";                                
+                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/cancel";                                
             }
             else if (initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.CustomWindowCheckout || initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.CustomRedirectCheckout)
             {
@@ -113,18 +128,18 @@ namespace AircashSimulator.Controllers.AircashFrame
                 initiateRequestDTO.NotificationUrl = $"{AircashConfiguration.AcFrameApiUrl}/NotificationCashierFrameV2";
                 initiateRequestDTO.DeclineUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";
                 initiateRequestDTO.SuccessUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/success";
-                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/decline";
+                initiateRequestDTO.CancelUrl = $"{AircashConfiguration.AcFrameOriginUrl}/#!/cancel";
             }
             else
             {
                 return BadRequest();
             }
-            var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO);            
+            var response = await AircashFrameV2Service.InitiateCashierFrameV2(initiateRequestDTO, initiateRequest.Environment);            
             return Ok(response);
         }
 
         [HttpGet]
-        public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId )
         {
             await AircashFrameV2Service.NotificationCashierFrameV2(new Guid(partnerTransactionId));
             await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);
@@ -135,9 +150,17 @@ namespace AircashSimulator.Controllers.AircashFrame
         public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(SettingsService.AircashFramePartnerId, transactionStatusRequest.TransactionId, environment);
+            var response = await AircashFrameV2Service.CheckTransactionStatusFrame(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId, environment);
             return Ok(response);
         }
+        public async Task<IActionResult> GetCurlTransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request =  AircashFrameV2Service.GetCheckTransactionStatusFrameRequest(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId);
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCheckTransactionStatusEndpoint(environment));
+            return Ok(curl);
+        }
+
         [HttpPost]
         public async Task<IActionResult> InitiateSimulateError([FromBody] AcFrameInitiateErrorCodeEnum errorCode)
         {

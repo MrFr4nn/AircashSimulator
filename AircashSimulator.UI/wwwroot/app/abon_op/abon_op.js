@@ -15,6 +15,8 @@ app.config(function ($stateProvider) {
 abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         validateCoupon: validateCoupon,
+        getCurlValidateCoupon: getCurlValidateCoupon,
+        getCurlConfirmTransaction:getCurlConfirmTransaction,
         confirmTransaction: confirmTransaction,
         validateSimulateError: validateSimulateError,
         confirmSimulateError: confirmSimulateError,
@@ -26,6 +28,16 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
             data: {
                 CouponCode: couponCode,
                 ProviderId: providerId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function getCurlValidateCoupon(couponCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonOnlinePartner/GetCurlValidateCoupon",
+            data: {
+                CouponCode: couponCode
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -45,6 +57,17 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function getCurlConfirmTransaction(couponCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonOnlinePartner/GetCurlConfirmTransaction",
+            data: {
+                CouponCode: couponCode
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
 
     function validateSimulateError(errorCode) {
         var request = $http({
@@ -92,6 +115,23 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
     }
+    
+    $scope.curlValidateBusy = false;
+    $scope.curlValidateResponded = false;
+    $scope.getCurlValidateCoupon = function () {
+        $scope.curlValidateBusy = true;
+        $scope.curlValidateResponded = false;
+        abonOpService.getCurlValidateCoupon($scope.validateCouponModel.couponCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlResponse = response;
+                }
+                $scope.curlValidateBusy = false;
+                $scope.curlValidateResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
 
     $scope.validateResponded = false;
     $scope.validateBusy = false;
@@ -134,6 +174,23 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 }
                 $scope.confirmBusy = false;
                 $scope.confirmResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.curlConfirmResponded = false;
+    $scope.curlConfirmBusy = false;
+    $scope.getCurlConfirmTransaction = function () {
+        $scope.curlConfirmBusy = true;
+        $scope.curlConfirmResponded = false;
+        abonOpService.getCurlConfirmTransaction($scope.confirmTransactionModel.couponCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlResponseConfirmTransaction = response;
+                }
+                $scope.curlConfirmBusy = false;
+                $scope.curlConfirmResponded = true;
             }, () => {
                 console.log("error");
             });

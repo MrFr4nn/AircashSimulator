@@ -121,10 +121,10 @@ namespace AircashSimulator.Controllers
                 Amount = generatePartnerCodeRequest.Amount,
                 Description = generatePartnerCodeRequest.Description,
                 LocationId = generatePartnerCodeRequest.LocationID,
-                UserId = UserIdCashier
+                UserId = UserIdCashier,
             };
 
-            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, EnvironmentEnum.Staging);
+            var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, generatePartnerCodeRequest.Environment);
             return Ok(response);
         }
     }

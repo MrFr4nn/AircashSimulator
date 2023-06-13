@@ -115,10 +115,17 @@ app.controller('rightSidebarController', function ($scope, $rootScope, $state) {
 /* -------------------------------
    4.0 CONTROLLER - Header
 ------------------------------- */
-app.controller('headerController', function ($scope, $rootScope, $state, JwtParser) {
+app.controller('headerController', function ($scope, $rootScope, $window, $state, JwtParser) {
   angular.element(document).ready(function () {
       $scope.username = JwtParser.getProperty("unique_name");
   });
+
+    $scope.options = {};
+    $scope.options.toggleOptions = false;
+    if ($window.innerWidth > 575) {
+        $scope.options.toggleOptions = true;
+    }
+
 });
 
 

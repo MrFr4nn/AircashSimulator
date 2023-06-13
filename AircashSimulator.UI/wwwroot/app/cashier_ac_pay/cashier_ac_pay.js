@@ -24,7 +24,8 @@ cashierAcPayModule.service("cashierAcPayService", ['$http', '$q', 'handleRespons
                 data: {
                     Amount: amount,
                     Description: description,
-                    LocationID: locationID
+                    LocationID: locationID,
+                    Environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));

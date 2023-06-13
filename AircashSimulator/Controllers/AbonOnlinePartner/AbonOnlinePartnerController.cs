@@ -7,6 +7,7 @@ using System;
 using Service.Settings;
 using Domain.Entities.Enum;
 using CrossCutting;
+using Newtonsoft.Json;
 using Services.User;
 
 namespace AircashSimulator
@@ -37,7 +38,13 @@ namespace AircashSimulator
             var response = await AbonOnlinePartnerService.ValidateCoupon(validateCouponRequest.CouponCode, validateCouponRequest.ProviderId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, environment);
             return Ok(response);
         }
-
+        public async Task<IActionResult> GetCurlValidateCoupon(ValidateCouponRequest validateCouponRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AbonOnlinePartnerService.GetValidateCouponRequest(validateCouponRequest.CouponCode, SettingsService.AbonOnlinePartnerId.ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var curl = HelperService.GetCurl(request, AbonOnlinePartnerService.GetValidateCouponEndpoint(environment));
+            return Ok(curl);
+        }
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
@@ -46,9 +53,16 @@ namespace AircashSimulator
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, confirmTransactionRequest.ProviderId, confirmTransactionRequest.ProviderTransactionId, confirmTransactionRequest.UserId,  SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, environment);
             return Ok(response);
         }
+        public async Task<IActionResult> GetCurlConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AbonOnlinePartnerService.GetConfirmTransactionRequest(confirmTransactionRequest.CouponCode, confirmTransactionRequest.UserId, confirmTransactionRequest.ProviderId, confirmTransactionRequest.ProviderTransactionId, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var curl = HelperService.GetCurl(request, AbonOnlinePartnerService.GetConfirmTransactionEndpoint(environment));
+            return Ok(curl);
+        }
         public async Task<IActionResult> ConfirmCashierTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, SettingsService.AbonOnlinePartnerId.ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+            var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, SettingsService.AbonOnlinePartnerId.ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, confirmTransactionRequest.Environment);
             return Ok(response);
         }
 

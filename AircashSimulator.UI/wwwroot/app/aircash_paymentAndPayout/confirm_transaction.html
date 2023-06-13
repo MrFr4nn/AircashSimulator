@@ -355,8 +355,16 @@ OFD4bHqnAMZN9X91uFD7LWglz6es8L+suwqASJSSh4z1FeBVPsBLwl8DZGQKKw/27PvDw9SZ3jyxmc2Y
                     <form action="/" method="POST" name="transactionForm1">
                         <fieldset>
                             <div class="mb-3">
+                                <label class="form-label">PartnerId</label>
+                                <input ng-model="confirmTransactionModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                            </div>
+                            <div class="mb-3">
                                 <label class="form-label">BarCode</label>
                                 <input ng-model="confirmTransactionModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">PartnerTransactionId</label>
+                                <input ng-model="confirmTransactionModel.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="confirmTransactionServiceBusy" ng-required="true">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">LocationID</label>

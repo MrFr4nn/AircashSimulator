@@ -26,7 +26,6 @@ namespace Services.AircashPayout
         private ISettingsService SettingsService;
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
-
         private readonly string CheckUserEndpoint = "PartnerV3/CheckUser";
         private readonly string CheckUserV4Endpoint = "PartnerV4/CheckUser";
         private readonly string CreatePayoutV4Endpoint = "PartnerV4/CreatePayout";
@@ -44,21 +43,15 @@ namespace Services.AircashPayout
         {
             Response returnResponse = new Response();
             var checkUserResponse = new object();
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
-            var checkUserRequest = new AircashCheckUserRequest()
-            {
-                PartnerID=partnerId.ToString(),
-                PhoneNumber=phoneNumber,
-                PartnerUserID=partnerUserId
-                
-            };
-            returnResponse.ServiceRequest = checkUserRequest;
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+
+            var checkUserRequest = GetCheckUserRequest(phoneNumber, partnerUserId, partnerId);
             var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
+            checkUserRequest.Signature = checkUserRequest.Signature;
+            returnResponse.ServiceRequest = checkUserRequest;
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
-            checkUserRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckUserEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, GetCheckUserEndpoint(environment));
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -73,11 +66,43 @@ namespace Services.AircashPayout
             return returnResponse;
         }
 
+        public AircashCheckUserRequest GetCheckUserRequest(string phoneNumber, string partnerUserId, Guid partnerId)
+        {
+
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+
+            var checkUserRequest = new AircashCheckUserRequest()
+            {
+                PartnerID = partnerId.ToString(),
+                PhoneNumber = phoneNumber,
+                PartnerUserID = partnerUserId
+
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            checkUserRequest.Signature = signature;
+             return checkUserRequest;
+        }
+
         public async Task<object> CheckUserV4(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var checkUserRequest = GetCheckUserV4Request(phoneNumber,partnerUserId,partnerId,parameters);
+            returnResponse.ServiceRequest = checkUserRequest;
+            var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
+            returnResponse.Sequence = sequence;
+            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, GetCheckUserV4Endpoint(environment));
+            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
+            returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserResponse>(response.ResponseContent);
+
+            return returnResponse;
+        }
+        public AircashCheckUserV4Request GetCheckUserV4Request(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameter> parameters)
+        {
+
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var checkUserRequest = new AircashCheckUserV4Request()
             {
                 PartnerID = partnerId.ToString(),
@@ -85,18 +110,10 @@ namespace Services.AircashPayout
                 PartnerUserID = partnerUserId,
                 Parameters = parameters
             };
-            returnResponse.ServiceRequest = checkUserRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
-            returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             checkUserRequest.Signature = signature;
-
-            var response = await HttpRequestService.SendRequestAircash(checkUserRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckUserV4Endpoint}");
-            
-            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
-            returnResponse.ServiceResponse = JsonConvert.DeserializeObject<AircashCheckUserResponse>(response.ResponseContent);
-
-            return returnResponse;
+            return checkUserRequest;
         }
         public async Task<object> CreatePayout(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, EnvironmentEnum environment)
         {
@@ -106,21 +123,11 @@ namespace Services.AircashPayout
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
-            var createPayoutRequest = new AircashCreatePayoutRequest()
-            {
-                PartnerID = partnerId.ToString(),
-                PartnerTransactionID= partnerTransactionId.ToString(),
-                Amount = amount,
-                PhoneNumber = phoneNumber,
-                PartnerUserID = partnerUserId.ToString(),
-                CurrencyID= (int)currency
-            };
+            var createPayoutRequest = GetCreatePayoutRequest(phoneNumber,partnerTransactionId,amount,currency,partnerUserId,partnerId);
             returnResponse.ServiceRequest = createPayoutRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
-            createPayoutRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CreatePayoutEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, GetCreatePayoutEndpoint(environment));
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<AircashCreatePayoutResponse>(response.ResponseContent);
@@ -149,7 +156,26 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = createPayoutResponse;
             return returnResponse;
         }
-        
+        public AircashCreatePayoutRequest GetCreatePayoutRequest(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId)
+        { 
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var createPayoutRequest = new AircashCreatePayoutRequest()
+            {
+                PartnerID = partnerId.ToString(),
+                PartnerTransactionID = partnerTransactionId.ToString(),
+                Amount = amount,
+                PhoneNumber = phoneNumber,
+                PartnerUserID = partnerUserId.ToString(),
+                CurrencyID = (int)currency
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            createPayoutRequest.Signature = signature;
+            return createPayoutRequest;
+        }
+
+
+
         public async Task<object> CreatePayoutV4(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment)
         {
             
@@ -158,23 +184,12 @@ namespace Services.AircashPayout
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
-            var createPayoutRequest = new AircashCreatePayoutV4Request()
-            {
-                PartnerID = partnerId.ToString(),
-                PartnerTransactionID= partnerTransactionId.ToString(),
-                Amount = amount,
-                PhoneNumber = phoneNumber,
-                PartnerUserID = partnerUserId.ToString(),
-                CurrencyID= (int)currency,
-                Parameters = parameters,
-                
-            };
+            var createPayoutRequest =  GetCreatePayoutV4Request(phoneNumber,partnerTransactionId,amount,currency,partnerUserId,partnerId,parameters);
             returnResponse.ServiceRequest = createPayoutRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
-            createPayoutRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CreatePayoutV4Endpoint}");
+            var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post,GetCreatePayoutV4Endpoint(environment));
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<AircashCreatePayoutResponse>(response.ResponseContent);
@@ -203,24 +218,42 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = createPayoutResponse;
             return returnResponse;
         }
+        public AircashCreatePayoutV4Request GetCreatePayoutV4Request(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, List<Parameter> parameters)
+        {
+                var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var createPayoutRequest = new AircashCreatePayoutV4Request()
+            {
+                PartnerID = partnerId.ToString(),
+                PartnerTransactionID = partnerTransactionId.ToString(),
+                Amount = amount,
+                PhoneNumber = phoneNumber,
+                PartnerUserID = partnerUserId.ToString(),
+                CurrencyID = (int)currency,
+                Parameters = parameters,
+
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            createPayoutRequest.Signature = signature;
+
+            return createPayoutRequest;
+        }
+
+
         public async Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var checkTransactionStatusResponse = new object();
+            var checkTransactionStatusRequest = GetCheckTransactionStatusRequest(partnerTransactionId);
             var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionId).FirstOrDefault();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == transaction.PartnerId).FirstOrDefault();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
-            var checkTransactionStatusRequest = new AircashCheckTransactionStatusRequest()
-            {
-                PartnerID = transaction.PartnerId.ToString(),
-                PartnerTransactionID=partnerTransactionId.ToString(),           
-            };
             returnResponse.ServiceRequest = checkTransactionStatusRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
             returnResponse.Sequence = sequence;
             var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             checkTransactionStatusRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckTransactionStatusEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, GetCheckTransactionStatusEndpoint(environment));
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -234,5 +267,43 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = checkTransactionStatusResponse;
             return returnResponse;
         }
+        public AircashCheckTransactionStatusRequest GetCheckTransactionStatusRequest(Guid partnerTransactionId)
+        {
+            var checkTransactionStatusResponse = new object();
+            var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionId).FirstOrDefault();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == transaction.PartnerId).FirstOrDefault();
+       
+            var checkTransactionStatusRequest = new AircashCheckTransactionStatusRequest()
+            {
+                PartnerID = transaction.PartnerId.ToString(),
+                PartnerTransactionID = partnerTransactionId.ToString(),
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            checkTransactionStatusRequest.Signature = signature;
+            return checkTransactionStatusRequest;
+        }
+        public string GetCheckTransactionStatusEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckTransactionStatusEndpoint}";
+        }
+
+        public string GetCheckUserEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckUserEndpoint}";
+        }
+        public string GetCheckUserV4Endpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CheckUserV4Endpoint}";
+        }
+        public string GetCreatePayoutEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CreatePayoutEndpoint}";
+        }
+        public string GetCreatePayoutV4Endpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M2)}{CreatePayoutV4Endpoint}";
+        }
+       
     }
 }

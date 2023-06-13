@@ -289,12 +289,16 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                         <form action="/" method="POST" name="transactionForm">
                             <fieldset>
                                 <div class="mb-3">
+                                    <label class="form-label">PartnerId</label>
+                                    <input ng-model="checkCodeModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label">BarCode</label>
                                     <input ng-model="checkCodeModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">LocationID</label>
-                                    <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                    <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="false">
                                 </div>
                                 <button ng-click="checkCode()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
@@ -612,25 +616,29 @@ IAoje/HtaHPWH3KYFMT+fke2EQ75+yTM7JJDAZIlgdrmH0gBRzAp1vHB5WTOF18vRL+NHjV/I5/JJ3nD
                         <form action="/" method="POST" name="transactionForm">
                             <fieldset>
                                 <div class="mb-3">
+                                    <label class="form-label">PartnerId</label>
+                                    <input ng-model="checkCodeV2Model.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="checkCodeV2ServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label">BarCode</label>
-                                    <input ng-model="checkCodeModel.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                    <input ng-model="checkCodeV2Model.barCode" class="form-control" type="text" placeholder="Enter BarCode" ng-disabled="checkCodeV2ServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">LocationID</label>
-                                    <input ng-model="checkCodeModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeServiceBusy" ng-required="true">
+                                    <input ng-model="checkCodeV2Model.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkCodeV2ServiceBusy" ng-required="false">
                                 </div>
-                                <button ng-click="checkCode()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="checkCodeV2()" class="btn btn-primary w-100px me-5px" ng-disabled="checkCodeV2ServiceBusy || transactionForm.$invalid">Check <i ng-if="checkCodeV2ServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>
-                    <div class="col-md-4" ng-if="checkCodeServiceResponded">
-                        Request ({{checkCodeRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <jsonformatter data="checkCodeServiceRequest"></jsonformatter>
-                        Sequence: {{checkCodeSequence}}<br />
+                    <div class="col-md-4" ng-if="checkCodeV2ServiceResponded">
+                        Request ({{checkCodeV2RequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkCodeV2ServiceRequest"></jsonformatter>
+                        Sequence: {{checkCodeV2Sequence}}<br />
                     </div>
-                    <div class="col-md-4" ng-if="checkCodeServiceResponded">
-                        Response ({{checkCodeResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <jsonformatter data="checkCodeServiceResponse"></jsonformatter>
+                    <div class="col-md-4" ng-if="checkCodeV2ServiceResponded">
+                        Response ({{checkCodeV2ResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkCodeV2ServiceResponse"></jsonformatter>
                     </div>
                 </div>
             </uib-tab>

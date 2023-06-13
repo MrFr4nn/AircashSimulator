@@ -24,7 +24,8 @@ cashierAcPaymentAndPayoutModule.service("cashieracPaymentAndPayoutService", ['$h
                 url: config.baseUrl + "AircashPaymentAndPayout/CashierCheckCode",
                 data: {
                     BarCode: barCode,
-                    LocationID: locationID
+                    LocationID: locationID,
+                    Environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -35,7 +36,8 @@ cashierAcPaymentAndPayoutModule.service("cashieracPaymentAndPayoutService", ['$h
                 url: config.baseUrl + "AircashPaymentAndPayout/CashierConfirmTransaction",
                 data: {
                     BarCode: barCode,
-                    LocationID: locationID
+                    LocationID: locationID,
+                    Environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
