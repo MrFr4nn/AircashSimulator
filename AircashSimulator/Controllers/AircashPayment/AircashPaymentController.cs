@@ -36,6 +36,20 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> CheckPlayerPartner(CheckPlayerPartnerRequest checkPlayerPartnerRequest)
+        {
+            var response = await AircashPaymentService.CheckPlayerPartner(checkPlayerPartnerRequest.Parameters, checkPlayerPartnerRequest.Endpoint);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAndConfirmPartner(CreateAndConfirmPartnerRequest createAndConfirmPartnerRequest)
+        {
+            var response = await AircashPaymentService.CreateAndConfirmPartner(createAndConfirmPartnerRequest.Parameters, createAndConfirmPartnerRequest.Endpoint, createAndConfirmPartnerRequest.Amount, createAndConfirmPartnerRequest.TransactionId);
+            return Ok(response);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> CheckPlayer(AircashPaymentCheckPlayer aircashPaymentCheckPlayer)
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashPaymentCheckPlayer);
@@ -44,9 +58,9 @@ namespace AircashSimulator.Controllers
 
             if(valid == true)
             {
-                var findUser = new List<CheckPlayerParameters>();
+                var findUser = new List<AircashPaymentParameters>();
              
-                aircashPaymentCheckPlayer.Parameters.ForEach(v => findUser.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+                aircashPaymentCheckPlayer.Parameters.ForEach(v => findUser.Add(new AircashPaymentParameters { Key = v.Key, Value = v.Value }));
 
                 var response = await AircashPaymentService.CheckPlayer(findUser);
 
@@ -74,9 +88,9 @@ namespace AircashSimulator.Controllers
 
             if (valid == true)
             {
-                var parameters = new List<CheckPlayerParameters>();
+                var parameters = new List<AircashPaymentParameters>();
               
-                aircashPaymentCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+                aircashPaymentCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new AircashPaymentParameters { Key = v.Key, Value = v.Value }));
 
                 var send = new CreateAndConfirmPaymentReceive
                 {
@@ -85,7 +99,7 @@ namespace AircashSimulator.Controllers
                     Parameters = parameters
                 };
                 var response = await AircashPaymentService.CreateAndConfirmPayment(send); 
-                if (((AircashPaymentResponse)response).Success == true)
+                if (((CreateAndConfirmRS)response).Success == true)
                 {
                     await SendHubMessage("TransactionConfirmedMessagePayment", "Deposited: " + aircashPaymentCreateAndConfirmPayment.Amount + "€, time: " + DateTime.Now, 1);
                     return Ok(response);

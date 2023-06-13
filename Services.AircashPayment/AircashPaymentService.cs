@@ -5,19 +5,36 @@ using System;
 using Domain.Entities.Enum;
 using System.Collections.Generic;
 using System.Linq;
+using AircashSignature;
+using System.Net.Http;
+using Services.HttpRequest;
+using Service.Settings;
+using Newtonsoft.Json;
 
 namespace Services.AircashPayment
 {
+    public class Response
+    {
+        public object ServiceRequest { get; set; }
+        public object ServiceResponse { get; set; }
+        public string Sequence { get; set; }
+        public DateTime RequestDateTimeUTC { get; set; }
+        public DateTime ResponseDateTimeUTC { get; set; }
+    }
     public class AircashPaymentService : IAircashPaymentService
     {
         private AircashSimulatorContext AircashSimulatorContext;
+        private IHttpRequestService HttpRequestService;
+        private ISettingsService SettingsService;
 
-        public AircashPaymentService(AircashSimulatorContext aircashSimulatorContext)
+        public AircashPaymentService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
+            HttpRequestService = httpRequestService;
+            SettingsService = settingsService;
         }
 
-        public async Task<object> CheckPlayer(List<CheckPlayerParameters> checkPlayerParameters)
+        public async Task<object> CheckPlayer(List<AircashPaymentParameters> checkPlayerParameters)
         {
             Guid UserId = ReturnUser(checkPlayerParameters);
           
@@ -74,7 +91,7 @@ namespace Services.AircashPayment
                 AircashSimulatorContext.Transactions.Add(transactionEntity);
                 await AircashSimulatorContext.SaveChangesAsync();
 
-                var response = new AircashPaymentResponse
+                var response = new CreateAndConfirmRS
                 {
                     Success = true,
                     PartnerTransactionId = transactionEntity.TransactionId.ToString(),
@@ -92,7 +109,7 @@ namespace Services.AircashPayment
             }
             else
               {
-                var response = new AircashPaymentResponse
+                var response = new CreateAndConfirmRS
                 {
                     Success = false,
                     Error = new ResponseError
@@ -106,7 +123,49 @@ namespace Services.AircashPayment
                 }
         }
 
-        public Guid ReturnUser(List<CheckPlayerParameters> checkPlayerParameters)
+        public async Task<object> CheckPlayerPartner(List<AircashPaymentParameters> checkPlayerParameters , string endpoint)
+        {
+            var returnResponse = new Response();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var request = new CheckPlayerPartnerRQ
+            {
+                Parameters = checkPlayerParameters,
+            };
+            returnResponse.ServiceRequest = request;
+            var sequence = AircashSignatureService.ConvertObjectToString(request);
+            returnResponse.Sequence = sequence;
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            request.Signature = signature;
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, endpoint);
+            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
+            returnResponse.ServiceResponse = JsonConvert.DeserializeObject<CheckPlayerResponse>(response.ResponseContent);
+            return returnResponse;
+        }
+        
+        public async Task<object> CreateAndConfirmPartner(List<AircashPaymentParameters> checkPlayerParameters, string endpoint, decimal amount, string transactionId)
+        {
+            var returnResponse = new Response();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var request = new CreateAndConfirmPartnerRQ
+            {
+                TransactionID = transactionId,
+                Parameters = checkPlayerParameters,
+                Amount = amount
+            };
+            returnResponse.ServiceRequest = request;
+            var sequence = AircashSignatureService.ConvertObjectToString(request);
+            returnResponse.Sequence = sequence;
+            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            request.Signature = signature;
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, endpoint);
+            returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
+            returnResponse.ServiceResponse = JsonConvert.DeserializeObject<CreateAndConfirmRS>(response.ResponseContent);
+            return returnResponse;
+        }
+
+        
+
+        public Guid ReturnUser(List<AircashPaymentParameters> checkPlayerParameters)
         {
             UserEntity user = null;
             if (checkPlayerParameters.Select(attribute => attribute.Key).Contains("username"))
