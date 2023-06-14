@@ -26,7 +26,8 @@ cashierAcFrameModule.service("cashierAcFrameAbonService", ['$http', '$q', 'handl
                     amount: amount,
                     payType: payType,
                     payMethod: payMethod,
-                    acFrameOption: acFrameOption                                      
+                    acFrameOption: acFrameOption,
+                    environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -123,7 +124,7 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
             $scope.onCancel = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Tranasction - Cancel");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                location.href = config.acFrameOriginUrl + '/#!/cancel';
             }
 
             //SIGNAL R START

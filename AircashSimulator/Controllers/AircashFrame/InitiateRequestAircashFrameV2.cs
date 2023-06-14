@@ -16,6 +16,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         public string SuccessUrl { get; set; }
         public string DeclineUrl { get; set; }
         public string OriginUrl { get; set; }
-        public string CancelUrl { get; set; }       
+        public string CancelUrl { get; set; }
+        public EnvironmentEnum Environment { get; set; }
     }
 }

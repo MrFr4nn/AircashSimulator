@@ -289,6 +289,130 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
         <uib-tab index="CreateAndConfirmPayment1-tab-5" heading="Error response example" classes="nav-item">
             <jsonformatter data="aircashPayment.createAndConfirmPayment.errorResponseExample"></jsonformatter>
         </uib-tab>
+        <uib-tab index="CreateAndConfirmPayment1-tab-6" heading="Try it out" classes="nav-item">
+            <div class="row">
+                <div class="col-4">
+                    <form action="/" method="POST" name="createAndConfrimForm">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-3 align-self-center mt-3 pl-3">
+                                    <label>
+                                        Endpoint
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.endpoint" class="form-control" type="text" placeholder="Enter endpoint" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 mt-2 ">
+                                    <select class="form-control" id="select2" ng-model="select.createAndConfirmUsernameEmailSelected" ng-init="select.createAndConfirmUsernameEmailSelected = 'username'">
+                                        <option value="email">Email</option>
+                                        <option value="username">Username</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.identificator" class="form-control" type="text" placeholder="Enter {{select.createAndConfirmUsernameEmailSelected}}" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 align-self-center mt-3 pl-3">
+                                    <label>
+                                        TransactionId
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.transactionId" class="form-control" type="text" placeholder="Enter transactionId" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 align-self-center mt-3 pl-3">
+                                    <label>
+                                        Amount
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.amount" class="form-control" type="number" placeholder="Enter amount" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                                    <input class="form-check-input" type="checkbox" ng-model="checkboxCreateAndConfirm.currency">
+                                    <label class="form-check-label">
+                                        CurrencyId
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.currency" ng-if="checkboxCreateAndConfirm.currency" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                                    <input class="form-check-input" type="checkbox" ng-model="checkboxCreateAndConfirm.countryCode">
+                                    <label class="form-check-label">
+                                        CountryCode
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 align-self-center">
+                                    <input ng-model="createAndConfirmModel.countryCode" ng-if="checkboxCreateAndConfirm.countryCode" class="form-control" type="text" placeholder="Enter countryCode e.g. HR" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                                    <input class="form-check-input" type="checkbox" ng-model="checkboxCreateAndConfirm.merchant">
+                                    <label class="form-check-label">
+                                        MerchantId
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.merchantId" ng-if="checkboxCreateAndConfirm.merchant" class="form-control" type="text" placeholder="Enter merchantId e.g. 100" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 form-check mt-2 pl-4">
+                                    <input class="form-check-input" type="checkbox" ng-model="checkboxCreateAndConfirm.match">
+                                    <label class="form-check-label">
+                                        Match personal data
+                                    </label>
+                                </div>
+                                <div ng-if="checkboxCreateAndConfirm.match" class="col-lg-9 align-self-center mt-2">
+                                    <div>
+                                        <input ng-model="createAndConfirmModel.firstname" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                    </div>
+                                    <div class="mt-2">
+                                        <input ng-model="createAndConfirmModel.lastname" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                    </div>
+                                    <div class="mt-2">
+                                        <date-picker date="createAndConfirmModel.birthDate" isOptional="false" out="createAndConfirmModelSetDate"></date-picker>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                        </fieldset>
+                    </form>
+                    <button ng-click="createAndConfirm()" class="btn btn-primary w-100px me-5px" ng-disabled="createAndConfirmBusy|| createAndConfrimForm.$invalid">Send POST <i ng-if="createAndConfirmBusy" class="fa fa-cog fa-spin"></i></button>
+
+                </div>
+                <div class="col-4" ng-if="createAndConfirmResponded">
+                    Request ({{createAndConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="createAndConfirmRequest"></jsonformatter>
+                    <div class="overflow-auto">
+                        Sequence: {{createAndConfirmSequence}}<br />
+                    </div>
+                </div>
+                <div class="col-4" ng-if="createAndConfirmResponded">
+                    Response ({{createAndConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="createAndConfirmResponse"></jsonformatter>
+                </div>
+            </div>
+        </uib-tab>
     </uib-tabset>
 
 </body>

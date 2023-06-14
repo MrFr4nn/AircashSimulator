@@ -39,13 +39,27 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, checkUserRequest.PartnerUserID.ToString(), checkUserRequest.PartnerID, environment);
             return Ok(response);
         }
-        
+        public async Task<IActionResult> GetCurlCheckUser(CheckUserRequest checkUserRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashPayoutService.GetCheckUserRequest(checkUserRequest.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User));
+            var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckUserEndpoint(environment));
+            return Ok(curl);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CheckUserV4(CheckUserv4DTO checkUserV4Request)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var response = await AircashPayoutService.CheckUserV4(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID.ToString(), checkUserV4Request.PartnerID, checkUserV4Request.Parameters, environment);
             return Ok(response);
+        }
+        public async Task<IActionResult> GetCurlCheckUserV4(CheckUserv4DTO checkUserV4Request)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashPayoutService.GetCheckUserV4Request(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID.ToString(), checkUserV4Request.PartnerID, checkUserV4Request.Parameters);
+            var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckUserV4Endpoint(environment));
+            return Ok(curl);
         }
 
         [HttpPost]
@@ -55,7 +69,14 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, createPayoutRequest.PartnerTransactionID, createPayoutRequest.Amount, createPayoutRequest.CurrencyID, createPayoutRequest.PartnerUserID, createPayoutRequest.PartnerID, environment);
             return Ok(response);
         }
-        
+        public async Task<IActionResult> GetCurlCreatePayout(CreatePayoutRequest createPayoutRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashPayoutService.GetCreatePayoutRequest(createPayoutRequest.PhoneNumber, createPayoutRequest.PartnerTransactionID, createPayoutRequest.Amount, createPayoutRequest.CurrencyID, createPayoutRequest.PartnerUserID, createPayoutRequest.PartnerID);
+            var curl = HelperService.GetCurl(request, AircashPayoutService.GetCreatePayoutEndpoint(environment));
+            return Ok(curl);
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreatePayoutV4(CreatePayoutV4DTO createPayoutV4DTO)
         {
@@ -64,10 +85,17 @@ namespace AircashSimulator.Controllers
             return Ok(response);
         }
 
+        public async Task<IActionResult> GetCurlCreatePayoutV4(CreatePayoutV4DTO createPayoutV4DTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashPayoutService.GetCreatePayoutV4Request(createPayoutV4DTO.PhoneNumber, createPayoutV4DTO.PartnerTransactionID, createPayoutV4DTO.Amount, createPayoutV4DTO.CurrencyID, createPayoutV4DTO.PartnerUserID, createPayoutV4DTO.PartnerID, createPayoutV4DTO.Parameters);
+            var curl = HelperService.GetCurl(request, AircashPayoutService.GetCreatePayoutV4Endpoint(environment));
+            return Ok(curl);
+        }
         [HttpPost]
         public async Task<IActionResult> CreateCashierPayout(CreatePayoutRequest createPayoutRequest)
         {
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, createPayoutRequest.Environment);
             return Ok(response);
         }
 
@@ -124,6 +152,14 @@ namespace AircashSimulator.Controllers
             }
             var response = await AircashPayoutService.CreatePayout(phoneNumber, partnerTransactionID, amount, currency, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
+        }
+        public async Task<IActionResult> GetCurlCheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
+        {
+
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request =  AircashPayoutService.GetCheckTransactionStatusRequest(checkTransactionStatusRequest.PartnerTransactionId);
+            var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckTransactionStatusEndpoint(environment));
+            return Ok(curl);
         }
     }
 

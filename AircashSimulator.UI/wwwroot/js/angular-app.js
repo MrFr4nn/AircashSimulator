@@ -29,6 +29,7 @@ var app = angular.module('app', [
     'forbidden',
     'success',
     'decline',
+    'cancel',
     'jira', 
     'generalGuidlines',
     'matchPersonalData',

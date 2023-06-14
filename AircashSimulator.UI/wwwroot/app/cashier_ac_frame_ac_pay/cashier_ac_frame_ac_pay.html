@@ -3,13 +3,7 @@
     <div class="col-md-6">
         <div class="card">
             <div class="card-header text-white" style="background-color: #F62727;">
-                <div class="col-md-6" style="float:left;">
-                    <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - AcPay</h2>
-                </div>
-                <div class="col-md-6" style="float:right;">
-                    <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
-                    </select>
-                </div>
+                <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - AcPay</h2>
             </div>
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-sm-2 text-center">
@@ -47,15 +41,15 @@
                             <div class="col-md-10 col-sm-12 align-items-center justify-content-center" ng-if="useMatchPersonalData">
                                 <fieldset>
                                     <div class="mb-3">
-                                        <label class="form-label">First name</label>
-                                        <input ng-model="createCashierAcFrameAcPayModel.firstName" class="form-control form-control-lg" type="text" placeholder="Enter first name" ng-required="true">
+                                        <label class="form-label">{{translationsCashier.cashier_first_name_input_label}}</label>
+                                        <input ng-model="createCashierAcFrameAcPayModel.firstName" class="form-control form-control-lg" type="text" placeholder={{translationsCashier.cashier_first_name_placeholder}} ng-required="true">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Last name</label>
-                                        <input ng-model="createCashierAcFrameAcPayModel.lastName" class="form-control form-control-lg" type="text" placeholder="Enter last name" ng-required="true">
+                                        <label class="form-label">{{translationsCashier.cashier_last_name_input_label}}</label>
+                                        <input ng-model="createCashierAcFrameAcPayModel.lastName" class="form-control form-control-lg" type="text" placeholder={{translationsCashier.cashier_last_name_placeholder}} ng-required="true">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label">Birth date</label>
+                                        <label class="form-label">{{translationsCashier.cashier_birth_date_input_label}}</label>
                                         <date-picker ng-model="createCashierAcFrameAcPayModel.birthDate" date="" isOptional="false" out="setDate"></date-picker>
                                     </div>
                                 </fieldset>
@@ -65,7 +59,7 @@
                         <div class="row row-cols-1 row-cols-sm-2 text-center" style="margin-top: 10px;">
                             <div class="col-md-1"></div>
                             <div class="col-md-10 col-sm-12 d-flex align-items-center justify-content-center" id="dvBtnInitiateFrame">
-                                <button ng-click="initiateAcFrame()" type="button" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createCashierAcFrameAcPayServiceBusy || transactionForm1.$invalid">{{translationsCashier.ac_payment_cashier_deposit_button}}<i ng-if="createCashierAcFrameAcPayServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                <button ng-click="initiateAcFrame()" type="button" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createCashierAcFrameAcPayServiceBusy || transactionForm1.$invalid">{{translationsCashier.ac_pay_cashier_button}}<i ng-if="createCashierAcFrameAcPayServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </div>
                             <div class="col-md-1"></div>
                         </div>
@@ -90,15 +84,19 @@
                                 <div class="card-header" id="headingOne">
                                     <h5 class="mb-0">
                                         <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#AcFrameAbonConfiguration" aria-expanded="false" aria-controls="AcFrameAbonConfiguration">
-                                            Configuration
+                                            {{translationsCashier.cashier_configuration_button}}
                                         </button>
                                     </h5>
                                 </div>
                                 <div id="AcFrameAbonConfiguration" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                     <div class="card-body">
+                                        <div class="form-group">
+                                            <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
+                                            </select>
+                                        </div>
                                         <div class="form-check">
                                             <input ng-checked="false" ng-model="useMatchPersonalData" class="form-check-input" type="checkbox" id="checkbox2" style=" width: 1.55rem; height: 1.55rem;" ng-init="useMatchPersonalData=false" />
-                                            <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Match personal data</label>
+                                            <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">{{translationsCashier.ac_pay_configuration_checkbox}}</label>
                                         </div>
                                     </div>
                                 </div>

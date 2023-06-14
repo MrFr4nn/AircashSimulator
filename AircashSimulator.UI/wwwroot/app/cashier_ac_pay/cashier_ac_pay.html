@@ -24,7 +24,7 @@
                             <fieldset>
                                 <label for="amount">{{translationsCashier.cashier_amount_input_label}}</label>
                                 <div class="input-group mb-3">
-                                    <input ng-model="generatePartnerCodeModel.amount" class="form-control form-control-lg" type="number" ng-required="true" name="amount" min="0" step="0.01" />
+                                    <input ng-model="generatePartnerCodeModel.amount" class="form-control form-control-lg" type="number" ng-required="true" name="amount" min="0" step="0.01" placeholder={{translationsCashier.cashier_amount_placeholder}} />
                                     <div class="input-group-append">
                                         <button ng-click="generateCashierPartnerCode()" class="btn btn-lg btn-danger w-100px me-5px" ng-disabled="generateBusy || transactionForm1.$invalid">{{translationsCashier.ac_pay_cashier_button}}<i ng-if="generateBusy" class="fa fa-cog fa-spin"></i></button>
                                     </div>

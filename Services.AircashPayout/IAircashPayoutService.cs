@@ -11,8 +11,18 @@ namespace Services.AircashPayout
     {
         Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, EnvironmentEnum environment);
         Task<object> CheckUserV4(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment);
+        AircashCheckUserRequest GetCheckUserRequest(string phoneNumber, string partnerUserId, Guid partnerId);
+        AircashCheckUserV4Request GetCheckUserV4Request(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameter> parameters);
         Task<object> CreatePayout(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, EnvironmentEnum environment);
         Task<object> CreatePayoutV4(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment);
+        AircashCreatePayoutRequest GetCreatePayoutRequest(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId);
+        AircashCreatePayoutV4Request GetCreatePayoutV4Request(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, List<Parameter> parameters);
         Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment);
+        AircashCheckTransactionStatusRequest GetCheckTransactionStatusRequest(Guid partnerTransactionId);
+        string GetCheckTransactionStatusEndpoint(EnvironmentEnum environment);
+        string GetCheckUserEndpoint(EnvironmentEnum environment);
+        string GetCheckUserV4Endpoint(EnvironmentEnum environment);
+        string GetCreatePayoutEndpoint(EnvironmentEnum environment);
+        string GetCreatePayoutV4Endpoint(EnvironmentEnum environment);
     }
 }

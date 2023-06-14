@@ -305,51 +305,30 @@ caaKshrXnbLKujZI9XNo3arbHSVbx7zDQGMEnXQ7BBYMhBEgYNaM6xshqRZtpqT0qNI0pJmts+60m5vi
         <uib-tab index="CancelTransaction-tab-6" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-4">
-                    <br />
-                    <p>Recent transactions:</p>
-                    <div>
-                        <div class="table-responsive">
-                            <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-condensed">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Transaction ID</th>
-                                            <th>Amount</th>
-                                            <th>LocationID</th>
-                                            <th>Cancel</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr ng-if="cancelTotalLoaded == 0 && !cancelBusy">
-                                            <td colspan="12" align="center">
-                                                <i>No data</i>
-                                            </td>
-                                        </tr>
-                                        <tr ng-repeat="transaction in cancelTransactions">
-                                            <td>{{$index + 1}}.</td>
-                                            <td>{{transaction.transactionId}}</td>
-                                            <td>{{transaction.amount | number:2}}</td>
-                                            <td>{{transaction.pointOfSaleId}}</td>
-                                            <td style="text-align: center; vertical-align: inherit">
-                                                <button class="btn btn-danger fa fa-ban" ng-click="cancelTransaction(transaction.transactionId, transaction.pointOfSaleId)"></button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                    <form action="/" method="POST" name="transactionFormCancel">
+                        <fieldset>
+                            <div class="mb-3">
+                                <label class="form-label">PartnerId</label>
+                                <input ng-model="cancelTransactionModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="cancelTransactionServiceBusy" ng-required="true">
                             </div>
-                        </div>
-                        <load-more total-loaded="cancelTotalLoaded" out="cancelLoadMore"></load-more>
-                    </div>
+                            <div class="mb-3">
+                                <label class="form-label">PartnerTransactionId</label>
+                                <input ng-model="cancelTransactionModel.partnerTransactionID" class="form-control" type="text" placeholder="Enter PartnerTransactionID" ng-disabled="cancelTransactionServiceBusy" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">LocationID</label>
+                                <input ng-model="cancelTransactionModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="cancelTransactionServiceBusy">
+                            </div>
+                            <button ng-click="cancelTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelTransactionServiceBusy || transactionFormCancel.$invalid">Confirm <i ng-if="cancelTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </fieldset>
+                    </form>
                 </div>
-                <div class="col-md-0.5"></div>
-                <br />
-                <div ng-if="cancelTransactionServiceResponded" class="col-md-4">
+                <div class="col-md-4" ng-if="cancelTransactionServiceResponded">
                     Request({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="cancelTransactionServiceRequest"></jsonformatter>
                     Sequence: {{cancelTransactionSequence}}
                 </div>
-                <div ng-if="cancelTransactionServiceResponded" class="col-md-3">
+                <div class="col-md-4" ng-if="cancelTransactionServiceResponded">
                     Response ({{cancelTransactionRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="cancelTransactionServiceResponse"></jsonformatter>
                 </div>
