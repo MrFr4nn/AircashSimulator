@@ -103,7 +103,7 @@ namespace AircashSimulator.Controllers
             var refundTransactionDTO = new RefundTransactionDTO
             {
                 PartnerId = UserContext.GetPartnerId(User),
-                PartnerTransactionId = new Guid(refundTransactionRequest.PartnerTransactionID),
+                PartnerTransactionId = refundTransactionRequest.PartnerTransactionID,
                 RefundPartnerTransactionId = Guid.NewGuid(),
                 Amount= refundTransactionRequest.Amount
             };
