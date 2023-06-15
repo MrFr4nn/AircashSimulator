@@ -250,6 +250,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateModel.payType = $scope.initiateModelSelected.data.payType;
         $scope.initiateModel.payMethod = $scope.initiateModelSelected.data.payMethod;
         $scope.initiateModel.amount = $scope.initiateModelSelected.data.amount;
+        $scope.config.useMatchPersonalData = false;
+        $scope.initiateModel.firstName = "";
+        $scope.initiateModel.lastName = "";
     };
 
     $scope.setInititateModel();
