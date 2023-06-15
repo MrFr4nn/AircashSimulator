@@ -201,9 +201,14 @@
                 </div>
                 <div class="col-6">
                     <div ng-if="generateCheckPlayerSignatureResponded">
-                        <jsonformatter data="generateCheckPlayerSignatureResponse"></jsonformatter>
+                        <pre>
+                        <jsonformatter data="generateCheckPlayerSignatureResponse"></jsonformatter>  
+Sequence: 
+{{RequestExampleSequence}}
+</pre>
                     </div>
                 </div>
+            
             </div>
             <div class="col-12 d-flex justify-content-end">
                 <button class="btn btn-white ml-2 mt-2" ng-if="generateCheckPlayerSignatureResponded" ng-click="copy(generateCheckPlayerSignatureResponse)">Copy</button>
