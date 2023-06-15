@@ -132,6 +132,18 @@
                     <hr />
                     <div class="row">
                         <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                            <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.aircashUserID">
+                            <label class="form-check-label">
+                                AircashUserID
+                            </label>
+                        </div>
+                        <div class="col-lg-9 mt-2">
+                            <input ng-model="checkPlayerGenerateSignatureModel.aircashUserID" ng-init="checkPlayerGenerateSignatureModel.aircashUserID = '0e7fa3df-4195-4ecd-896a-70bdb1ceb904'; requestCheckPlayerChanged();" ng-if="checkboxCheckPlayerModel.aircashUserID" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter aircashUserID" ng-disabled="generateCheckPlayerSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
                             <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.currency">
                             <label class="form-check-label">
                                 CurrencyId
@@ -335,6 +347,18 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                                 </div>
                                 <div class="col-lg-9 mt-2">
                                     <input ng-model="checkPlayerModel.identificator" class="form-control" type="text" placeholder="Enter {{select.checkPlayerUsernameEmailSelected}}" ng-disabled="checkPlayerBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                                    <input class="form-check-input" type="checkbox" ng-model="checkboxCheckPlayer.aircashUserID">
+                                    <label class="form-check-label">
+                                        AircashUserID
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="checkPlayerModel.aircashUserID" ng-if="checkboxCheckPlayer.aircashUserID" class="form-control" type="text" placeholder="Enter aircashUserID" ng-disabled="checkPlayerBusy" ng-required="true">
                                 </div>
                             </div>
                             <hr />

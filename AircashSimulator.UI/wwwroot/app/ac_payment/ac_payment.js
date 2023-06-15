@@ -120,6 +120,10 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                 key: "countryCode",
                 value: generateSignatureModel.countryCode
             },
+            aircashUserID: {
+                key: "AircashUserID",
+                value: generateSignatureModel.aircashUserID
+            },
             firstName: {
                 key: "FirstName",
                 value: generateSignatureModel.firstname
@@ -189,6 +193,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCheckPlayerModel.currency) $scope.checkPlayerParameters.push($scope.requestExample.currency);
         if ($scope.checkboxCheckPlayerModel.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCheckPlayerModel.merchant) $scope.checkPlayerParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCheckPlayerModel.aircashUserID) $scope.checkPlayerParameters.push($scope.requestExample.aircashUserID);
         if ($scope.checkboxCheckPlayerModel.match)
             $scope.checkPlayerParameters.push(
                 $scope.requestExample.firstName,
@@ -231,6 +236,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCreateAndConfirmModel.currency) $scope.createAndConfirmParameters.push($scope.requestExample.currency);
         if ($scope.checkboxCreateAndConfirmModel.countryCode) $scope.createAndConfirmParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCreateAndConfirmModel.merchant) $scope.createAndConfirmParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCreateAndConfirmModel.aircashUserID) $scope.createAndConfirmParameters.push($scope.requestExample.aircashUserID);
         if ($scope.checkboxCreateAndConfirmModel.match)
             $scope.createAndConfirmParameters.push(
                 $scope.requestExample.firstName,
@@ -391,6 +397,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCreateAndConfirm.currency) $scope.createAndConfirmParameters.push($scope.requestExample.currency);
         if ($scope.checkboxCreateAndConfirm.countryCode) $scope.createAndConfirmParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCreateAndConfirm.merchant) $scope.createAndConfirmParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCreateAndConfirm.aircashUserID) $scope.createAndConfirmParameters.push($scope.requestExample.aircashUserID);
         if ($scope.checkboxCreateAndConfirm.match)
             $scope.createAndConfirmParameters.push(
                 $scope.requestExample.firstName,
@@ -420,6 +427,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCheckPlayer.currency) $scope.checkPlayerParameters.push($scope.requestExample.currency);
         if ($scope.checkboxCheckPlayer.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCheckPlayer.merchant) $scope.checkPlayerParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCheckPlayer.aircashUserID) $scope.checkPlayerParameters.push($scope.requestExample.aircashUserID);
         if ($scope.checkboxCheckPlayer.match)
             $scope.checkPlayerParameters.push(
                 $scope.requestExample.firstName,

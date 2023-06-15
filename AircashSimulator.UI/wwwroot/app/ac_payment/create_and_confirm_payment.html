@@ -107,6 +107,18 @@
                     <hr />
                     <div class="row">
                         <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                            <input class="form-check-input" type="checkbox" ng-change="requestCreateAndConfirmChanged()" ng-model="checkboxCreateAndConfirmModel.aircashUserID">
+                            <label class="form-check-label">
+                                AircashUserID
+                            </label>
+                        </div>
+                        <div class="col-lg-9 mt-2">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.aircashUserID" ng-init="createAndConfirmGenerateSignatureModel.aircashUserID = '0e7fa3df-4195-4ecd-896a-70bdb1ceb904'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.aircashUserID" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter aircashUserID" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
                             <input class="form-check-input" type="checkbox" ng-change="requestCreateAndConfirmChanged()" ng-model="checkboxCreateAndConfirmModel.currency">
                             <label class="form-check-label">
                                 CurrencyId
@@ -336,6 +348,18 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
                                 </div>
                                 <div class="col-lg-9 mt-2">
                                     <input ng-model="createAndConfirmModel.amount" class="form-control" type="number" placeholder="Enter amount" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                                    <input class="form-check-input" type="checkbox" ng-model="checkboxCreateAndConfirm.aircashUserID">
+                                    <label class="form-check-label">
+                                        AircashUserID
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.aircashUserID"  ng-if="checkboxCreateAndConfirm.aircashUserID"  class="form-control" type="text" placeholder="Enter aircashUserID" ng-disabled="createAndConfirmBusy" ng-required="true">
                                 </div>
                             </div>
                             <hr />
