@@ -208,8 +208,7 @@ namespace AircashFrame
             {
                 return;
             }
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == preparedAircashFrameTransaction.PartnerId).FirstOrDefault();
-            var checkTransactionStatusResponse = await CheckTransactionStatusCashierFrameV2(partner, transactionId.ToString());
+            var checkTransactionStatusResponse = await CheckTransactionStatusCashierFrameV2(preparedAircashFrameTransaction.PartnerId, transactionId.ToString());
             var responseDateTime = DateTime.UtcNow;
             if (checkTransactionStatusResponse.Status == AcFrameTransactionStatusEnum.Success)
             {
@@ -237,19 +236,19 @@ namespace AircashFrame
             }
             if (checkTransactionStatusResponse.Status == AcFrameTransactionStatusEnum.PayoutConfirmationPending)
             {
-                await ConfirmPayout(partner.PartnerId, preparedAircashFrameTransaction.PartnerTransactionId.ToString(), preparedAircashFrameTransaction.Amount, preparedAircashFrameTransaction.ISOCurrencyId, EnvironmentEnum.Staging);
+                await ConfirmPayout(preparedAircashFrameTransaction.PartnerId, preparedAircashFrameTransaction.PartnerTransactionId.ToString(), preparedAircashFrameTransaction.Amount, preparedAircashFrameTransaction.ISOCurrencyId, EnvironmentEnum.Staging);
             }
         }
 
-        public async Task<AircashTransactionStatusResponseV2> CheckTransactionStatusCashierFrameV2(PartnerEntity partner, string transactionId)
+        public async Task<AircashTransactionStatusResponseV2> CheckTransactionStatusCashierFrameV2(Guid partnerId, string transactionId)
         {
             var aircashTransactionStatusRequest = new AircashTransactionStatusRequestV2
             {
-                PartnerId = partner.PartnerId.ToString(),
+                PartnerId = partnerId.ToString(),
                 PartnerTransactionId = transactionId,
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashTransactionStatusRequest);
-            Logger.LogInformation(partner.PrivateKey);
+            //Logger.LogInformation(partner.PrivateKey);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
             aircashTransactionStatusRequest.Signature = signature;
             var aircashTransactionStatusResponse = new AircashTransactionStatusResponseV2();
