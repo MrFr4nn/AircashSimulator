@@ -35,9 +35,9 @@
                                 </div>
                             </fieldset>
                         </form>
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-danger w-100px me-5px" ng-click="Deposit()" ng-disabled="paymentServiceBusy|| paymentForm.$invalid">{{translationsCashier.ac_payment_cashier_deposit_button}}<i ng-if="paymentServiceBusy" class="fa fa-cog fa-spin"> </i></button>
-                        </div>
+
+                        <button class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-click="Deposit()" ng-disabled="paymentServiceBusy|| paymentForm.$invalid">{{translationsCashier.ac_payment_cashier_deposit_button}}<i ng-if="paymentServiceBusy" class="fa fa-cog fa-spin"> </i></button>
+
                         <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
                             <div class="iconGoogleMarket col-md-4 col-sm-12 p-0 align-items-center justify-content-center">
                                 <a target="_blank" href="https://play.google.com/store/apps/details?id=com.aircash.aircash"><img src="../../app/cashier/img/google-play-en.svg" style="max-width: 70%"></a>
