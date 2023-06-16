@@ -143,19 +143,19 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
     }
 
     $scope.checkCodeModel = {
-        partnerId:'8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
         barCode: '',
         locationID: 'TestLocation'
     };
 
     $scope.checkCodeV2Model = {
-        partnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerId: 'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
         barCode: '',
         locationID: 'TestLocation'
     };
 
     $scope.confirmTransactionModel = {
-        partnerId:'8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
         barCode: '',
         partnerTransactionId:'c88dcc81-8b43-4808-8ac5-da498bf08439',
         locationID: 'TestLocation'
@@ -175,12 +175,12 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
     };
 
     $scope.checkTransactionStatusModel = {
-        partnerId:'8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
         partnerTransactionID: HelperService.NewGuid()
     };
 
     $scope.cancelTransactionModel = {
-        partnerId:'8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
         partnerTransactionID: '',
         locationID: "TestLocation"
     };
