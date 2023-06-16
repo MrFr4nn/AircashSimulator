@@ -455,6 +455,14 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
 
     $scope.getCancelTransactions();
 
+    $scope.showVideoDeposit = function () {
+        $("#videoModalDeposit").modal("show");
+    }
+
+    $scope.showVideoWithdrawal = function () {
+        $("#videoModalWithdrawal").modal("show");
+    }
+
     $scope.errorExamples = {
         CheckCode: {
             error1: {

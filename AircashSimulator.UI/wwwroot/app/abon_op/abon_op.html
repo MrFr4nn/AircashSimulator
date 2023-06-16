@@ -23,6 +23,7 @@
                 <p>
                     An example of an Aircash Abon is shown <a href="" ng-click="showCoupon()">here</a>.
                 </p>
+                <p>Watch video example <a href="" ng-click="showVideoAbon()">here</a>.</p>
             </div>
 
         </div>
@@ -466,11 +467,11 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </fieldset>
                         </form>
                     </div>
-                    <br/>
+                    <br />
 
                     <div ng-if="curlValidateResponded" class="col-md-10">
                         <pre>
-                        <jsonformatter  data="CurlResponse"></jsonformatter>
+                        <jsonformatter data="CurlResponse"></jsonformatter>
                         </pre>
                         <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponse)">Copy</button>
                     </div>
@@ -915,7 +916,7 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
 
                     <div ng-if="curlConfirmResponded" class="col-md-10">
                         <pre>
-                        <jsonformatter  data="CurlResponseConfirmTransaction"></jsonformatter>
+                        <jsonformatter data="CurlResponseConfirmTransaction"></jsonformatter>
                         </pre>
                         <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseConfirmTransaction)">Copy</button>
                     </div>
@@ -1054,6 +1055,25 @@ CVrMFUqDzgk8FIu7hT29Prcek9ptqsjIUCu1gRK/5BxsUgRWs+XmyYCWrvYTl3HdKU/OdSPTkpZdsxb1
                 </div>
                 <div class="modal-body" align="center">
                     <img src="../../images/abon.png" alt="Abon">
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="videoModalAbon">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Abon</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <video width="600" controls muted>
+                        <source src="../../videos/ac_abon.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
                 <div class="modal-footer">
                     <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>

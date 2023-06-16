@@ -59,6 +59,7 @@
         </ul>
     </li>
 </ol>
+<p>Watch video example <a href="" ng-click="showVideoAcPayout()">here</a>.</p>
 
 <hr />
 <h1>Methods called by the partner system on Aircash system</h1>
@@ -72,3 +73,22 @@
 <ng-include src="'app/aircash_payout/production_process.html'"></ng-include>
 <ng-include src="'app/aircash_payout/aircash_app_withdrawal.html'"></ng-include>
 
+<!-- #modal-dialog -->
+<div class="modal fade" id="videoModalAcPayout">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Aircash Payout</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <video width="600" controls muted>
+                    <source src="../../videos/ac_payout.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>

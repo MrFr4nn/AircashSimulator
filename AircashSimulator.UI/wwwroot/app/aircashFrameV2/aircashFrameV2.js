@@ -576,6 +576,18 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.getTransactions();
 
+    $scope.showVideoAcPay = function () {
+        $("#videoModalAcPay").modal("show");
+    }
+
+    $scope.showVideoAbon = function () {
+        $("#videoModalAbon").modal("show");
+    }
+
+    $scope.showVideoWithdrawal = function () {
+        $("#videoModalWithdrawal").modal("show");
+    }
+
     $scope.errorExamples = {
         Initiate: {
             error1: {
