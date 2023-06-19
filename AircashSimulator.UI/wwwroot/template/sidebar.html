@@ -161,7 +161,7 @@
                 </a>
             </li>
             <li ui-sref-active="active">
-                <a ui-sref="app.acPaymentSlotMachines">
+                <a ui-sref="app.acPaymentSlotMachines" ng-if="partnerRoles.indexOf('SlotMachines') != -1">
                     <i class="fa fa-mobile"></i>
                     <span>{{translations.ac_payment_slot_machines}}</span>
                 </a>

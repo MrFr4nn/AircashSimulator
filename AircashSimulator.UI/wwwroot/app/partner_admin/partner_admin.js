@@ -317,6 +317,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 return "AircashPay payments via AircashMarketplace";
             case "AircashPayoutV2":
                 return "C2D witdhrawals";
+            case "SlotMachines":
+                return "Slot machines integration";
             default:
                 break;
 
