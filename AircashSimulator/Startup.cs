@@ -123,10 +123,8 @@ namespace AircashSimulator
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
             services.AddTransient<IAircashSignatureService, AircashSignatureService>();
-
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));
-
             services.AddSignalR(o => o.EnableDetailedErrors = true);
 
         }
