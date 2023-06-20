@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
 using Services.AircashFrameV2;
 using Service.Settings;
+using Services.Signature;
 using System.Collections.Generic;
 
 namespace AircashFrame
@@ -20,6 +21,7 @@ namespace AircashFrame
     public class AircashFrameV2Service : IAircashFrameV2Service
     {
         private ISettingsService SettingsService;
+        private ISignatureService SignatureService;
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
         private AircashConfiguration AircashConfiguration;
@@ -30,13 +32,14 @@ namespace AircashFrame
         private readonly string ConfirmPayoutEndpoint = "confirmPayout";
         private EnvironmentEnum cashierEnvironment = EnvironmentEnum.Staging;
 
-        public AircashFrameV2Service(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashFrameV2Service> logger)
+        public AircashFrameV2Service(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashFrameV2Service> logger, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             Logger = logger;
             SettingsService = settingsService;
+            SignatureService = signatureService;
         }
       
         public async Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, Guid partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment)
@@ -78,7 +81,7 @@ namespace AircashFrame
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateSignature);
             //Logger.LogInformation(partner.PrivateKey);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(initiateRequestDTO.PartnerId, dataToSign);
 
             var aircashInitiateRequest = new TransactionInitiateExtendedV2Request
             {
@@ -267,7 +270,7 @@ namespace AircashFrame
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashTransactionStatusRequest);
             returnResponse.Sequence = dataToSign;
             //Logger.LogInformation(partner.PrivateKey);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, dataToSign);
             aircashTransactionStatusRequest.Signature = signature;
             var aircashTransactionStatusResponse = new object();
             var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, GetCheckTransactionStatusEndpoint(environment));
@@ -292,7 +295,7 @@ namespace AircashFrame
                 PartnerTransactionId = transactionId,
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashTransactionStatusRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, dataToSign);
             aircashTransactionStatusRequest.Signature = signature;
             return aircashTransactionStatusRequest;
         }
@@ -338,7 +341,7 @@ namespace AircashFrame
                 CurrencyId = (int)currency,
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashConfirmPayoutRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, dataToSign);
             aircashConfirmPayoutRequest.Signature = signature;
        
             return aircashConfirmPayoutRequest;
