@@ -42,7 +42,7 @@ using Newtonsoft.Json;
 using Services.Translations;
 using Service.Settings;
 using CrossCutting;
-using Services.AircashSignature;
+using Services.Signature;
 
 namespace AircashSimulator
 {
@@ -122,7 +122,7 @@ namespace AircashSimulator
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
-            services.AddTransient<IAircashSignatureService, AircashSignatureService>();
+            services.AddTransient<ISignatureService, SignatureService>();
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));
             services.AddSignalR(o => o.EnableDetailedErrors = true);
