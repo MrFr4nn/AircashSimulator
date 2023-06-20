@@ -157,7 +157,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
     $scope.confirmTransactionModel = {
         partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
         barCode: '',
-        partnerTransactionId:'c88dcc81-8b43-4808-8ac5-da498bf08439',
+        partnerTransactionId: HelperService.NewGuid(),
         locationID: 'TestLocation'
     };
 
