@@ -97,8 +97,6 @@ namespace Services.Partner
                 var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
                 id = partner.PartnerId;
                 partner.PartnerName = request.PartnerName;
-                partner.PrivateKey = request.PrivateKey;
-                partner.PrivateKeyPass = request.PrivateKeyPass;
                 partner.CurrencyId = request.CurrencyId;
                 partner.CountryCode = request.CountryCode;
                 partner.Environment = request.Environment;
