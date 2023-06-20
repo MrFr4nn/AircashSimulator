@@ -31,6 +31,7 @@ var app = angular.module('app', [
     'success',
     'decline',
     'cancel',
+    'partnerPrivateKey',
     'jira', 
     'generalGuidlines',
     'matchPersonalData',

@@ -21,8 +21,8 @@ namespace Services.Partner
         private AircashSimulatorContext AircashSimulatorContext;
         private IUserService UserService;
 
-        private const string DefaultPrivateKey = "-";
-        private const string DefaultPrivateKeyPass = "-";
+        private const string DefaultPrivateKey = "";
+        private const string DefaultPrivateKeyPass = "";
 
         public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService)
         {

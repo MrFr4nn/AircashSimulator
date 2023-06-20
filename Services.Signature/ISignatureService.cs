@@ -10,6 +10,7 @@ namespace Services.Signature
     {
         string GenerateSignature(Guid partnerId, string dataToSign);
         bool ValidatePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest);
-        Task SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId);
+        Task<string> SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId);
+        KeyToSing GetKeyToSing(Guid partnerId);
     }
 }

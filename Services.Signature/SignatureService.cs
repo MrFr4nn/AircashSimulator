@@ -46,11 +46,6 @@ namespace Services.Signature
                 return GenerateSignatureFromPemString(dataToSign, keys.PrivateKey, keys.PrivateKeyPass);
             }
 
-            if (keys.PrivateKey != null && keys.PrivateKey != "")
-            {
-                return AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
-            }
-
             return AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
         }
 
@@ -72,7 +67,6 @@ namespace Services.Signature
                     {
                         result = rsa.VerifyData(dataToVerifyBytes, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
                     }
-
                 }
             }
             catch
@@ -82,16 +76,18 @@ namespace Services.Signature
             return result;
         }
 
-        public async Task SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId) 
+        public async Task<string> SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId) 
         {
-            if (ValidatePartnerKey(validateAndSavePartnerKeyRequest)) 
+            if (ValidatePartnerKey(validateAndSavePartnerKeyRequest) || (validateAndSavePartnerKeyRequest.PrivateKey == "" && validateAndSavePartnerKeyRequest.Password == "" && validateAndSavePartnerKeyRequest.PublicKey == "")) 
             {
                 var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
                 partner.PrivateKey = validateAndSavePartnerKeyRequest.PrivateKey;
                 partner.PublicKey = validateAndSavePartnerKeyRequest.PublicKey;
                 partner.PrivateKeyPass = validateAndSavePartnerKeyRequest.Password;
                 AircashSimulatorContext.SaveChanges();
+                return "Success";
             }
+            return "Provided keys are invalid";
         }
 
         public KeyToSing GetKeyToSing(Guid partnerId)
