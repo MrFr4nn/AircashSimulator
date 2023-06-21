@@ -760,7 +760,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
                 partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
-                amount: "100",
+                amount: 100,
                 currencyId: 978,
                 payType: 0,
                 payMethod: 2,
