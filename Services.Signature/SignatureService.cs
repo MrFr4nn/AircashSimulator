@@ -53,7 +53,7 @@ namespace Services.Signature
         {
             var result = false;
             try
-            {
+            { 
                 var key = RSA.Create();
                 key.ImportFromEncryptedPem(validateAndSavePartnerKeyRequest.PrivateKey.ToCharArray(), validateAndSavePartnerKeyRequest.Password.ToCharArray());
                 var bytePublicKey = Encoding.UTF8.GetBytes(validateAndSavePartnerKeyRequest.PublicKey);
@@ -74,6 +74,33 @@ namespace Services.Signature
                 result = false;
             }
             return result;
+        }
+        public bool ValidateSignature(string dataToSign,string signature,Guid partnerId)
+        {
+            var result = false;
+            try
+            {
+
+                var keys = GetKeyToSing(partnerId);
+            var bytePublicKey = Encoding.UTF8.GetBytes(keys.PublicKey);
+            var certificate = new X509Certificate2(bytePublicKey);
+            var byteSignature = Encoding.UTF8.GetBytes(signature);
+            var byteDataToSign = Encoding.UTF8.GetBytes(dataToSign);
+
+                using (var sha256 = new SHA256Managed())
+                {
+                    using (var rsa = certificate.GetRSAPublicKey())
+                    {
+                        result = rsa.VerifyData(byteDataToSign, byteSignature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+                    }
+                }
+            }
+            catch
+            {
+                result = false;
+            }
+            return result;
+
         }
 
         public async Task<string> SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId) 

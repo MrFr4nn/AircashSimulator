@@ -15,7 +15,9 @@ app.config(function ($stateProvider) {
 signatureModule.service("signatureService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope',
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
-            validatePublicKey: validatePublicKey
+            validatePublicKey: validatePublicKey,
+            validateSignature: validateSignature,
+            getSignature: getSignature
         });
         function validatePublicKey(publicKey) {
             var request = $http({
@@ -23,6 +25,27 @@ signatureModule.service("signatureService", ['$http', '$q', 'handleResponseServi
                 url: config.baseUrl + "Signature/ValidatePublicKey",
                 data: {
                     publicKey: publicKey
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
+        function getSignature(dataSign) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "Signature/GetSignature",
+                data: {
+                    dataSign: dataSign
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
+        function validateSignature(dataToSign,signatureToValidate) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "Signature/ValidateSignature",
+                data: {
+                    dataToSign: dataToSign,
+                    signatureToValidate: signatureToValidate
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -46,7 +69,36 @@ signatureModule.controller("SignatureCtrl",
                         $scope.ValidatePublicKeyServiceBusy = false;
                     });
             }
-
+            $scope.GenerateSignatureServiceBusy = false;
+            $scope.GenerateSignatureResponded = false;
+            $scope.getSignature = function () {
+                $scope.GenerateSignatureServiceBusy = true;
+                signatureService.getSignature($scope.dataSign)
+                    .then(function (response) {
+                        $scope.GenerateSignatureResponse=response;
+                        $scope.GenerateSignatureResponded = true;
+                        $scope.GenerateSignatureServiceBusy = false;
+                    })
+                    .catch(function (error) {
+                        $scope.GenerateSignatureServiceBusy = false;
+                        $scope.generateSignatureResponded = false;
+                    });
+            }
+            $scope.ValidateSignatureResponded= false;
+            $scope.ValidateSignatureServiceBusy = false;
+            $scope.validateSignature = function () {
+                $scope.ValidateSignatureServiceBusy = true;
+                signatureService.validateSignature($scope.dataToValidate, $scope.signatureToValidate)
+                    .then(function (response) {
+                        $scope.ValidateSignatureResponse = response;
+                        $scope.ValidateSignatureServiceBusy = true;
+                        $scope.ValidateSignatureResponded = false;
+                    })
+                    .catch(function (error) {
+                        $scope.ValidateSignatureServiceBusy = false;
+                        $scope.ValidateSignatureResponded = false;
+                    });
+            }
 
             $scope.examplePartner = JSON.stringify({
                 "partnerID": "3de97a57-e9c7-42a8-aed0-ee864bf6d042",

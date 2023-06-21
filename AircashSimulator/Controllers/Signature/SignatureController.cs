@@ -2,10 +2,10 @@
 using AircashSimulator.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Services.Signature;
+using System;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace AircashSimulator.Controllers.Signature
 {
     [Route("api/[controller]/[action]")]
@@ -41,7 +41,23 @@ namespace AircashSimulator.Controllers.Signature
             var response = await SignatureService.SavePartnerKey(validateAndSavePartnerKeyRequest, UserContext.GetPartnerId(User));
             return Ok(response);
         }
-        
+
+        [HttpPost]
+        public async Task<IActionResult> ValidateSignature(string dataToSign,string signature)
+        {
+            dataToSign = "test";
+
+            var response =  SignatureService.ValidateSignature(dataToSign,signature, UserContext.GetPartnerId(User));
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetSignature(GenerateSignatureDTO generateSignatureDTO)
+        {
+            generateSignatureDTO.dataToSign = "test";
+            var response =  SignatureService.GenerateSignature(UserContext.GetPartnerId(User), generateSignatureDTO.dataToSign);
+            return Ok(response);
+        }
+
         [HttpPost]
         public async Task<KeyToSing> GetPartnerKeys()
         {

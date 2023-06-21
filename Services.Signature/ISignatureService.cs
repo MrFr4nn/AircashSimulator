@@ -8,9 +8,11 @@ namespace Services.Signature
 {
     public interface ISignatureService
     {
+
         string GenerateSignature(Guid partnerId, string dataToSign);
         bool ValidatePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest);
         Task<string> SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId);
         KeyToSing GetKeyToSing(Guid partnerId);
+        bool ValidateSignature(string dataToSign, string signature, Guid partnerId);
     }
 }
