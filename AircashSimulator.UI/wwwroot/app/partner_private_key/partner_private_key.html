@@ -2,7 +2,7 @@
 <br />
 <div class="note note-gray-400 col-md-6">
     <div class="note-content col">
-        <h5>If you want to test with your private key insert:</h5>
+        <h6>If you want to test with your private key insert inputs, if you want to use default private key leave inputs empty (after change you have to log out and log in)</h6>
         <br />
         <label>Public key:</label>
         <textarea class="form-control mb-3" rows="20" ng-model="inputs.publicKey" placeholder="-----BEGIN CERTIFICATE-----"></textarea>
@@ -11,5 +11,6 @@
         <label>Password:</label>
         <input class="form-control mb-3" ng-model="inputs.password" />
         <button ng-click="validateAndSave()" class="btn btn-primary w-100px me-5px" ng-disabled="validateAndSaveServiceBusy">Save private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        <button ng-click="removePartnerKeys()" class="btn btn-primary w-100px  me-5px ml-2" ng-disabled="validateAndSaveServiceBusy">Remove private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
     </div>
 </div>
