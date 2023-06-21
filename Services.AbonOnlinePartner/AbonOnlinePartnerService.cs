@@ -28,13 +28,13 @@ namespace Services.AbonOnlinePartner
             HttpRequestService = httpRequestService;
             SignatureService = signatureService;
         }
-        public async Task<object> ValidateCoupon(string couponCode, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
+        public async Task<object> ValidateCoupon(string couponCode, string providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
             var validateCouponResponse = new object();
-            var abonValidateCouponRequest =  GetValidateCouponRequest(couponCode,providerId,partnerPrivateKey,partnerPrivateKeyPass);
+            var abonValidateCouponRequest = GetValidateCouponRequest(couponCode, providerId, partnerPrivateKey, partnerPrivateKeyPass);
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonValidateCouponRequest);
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post,GetValidateCouponEndpoint(environment));
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, GetValidateCouponEndpoint(environment));
             DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -54,7 +54,7 @@ namespace Services.AbonOnlinePartner
             };
             return frontResponse;
         }
-        public AbonValidateCouponRequest GetValidateCouponRequest(string couponCode, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        public AbonValidateCouponRequest GetValidateCouponRequest(string couponCode, string providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
         {
             var abonValidateCouponRequest = new AbonValidateCouponRequest
             {
@@ -79,15 +79,13 @@ namespace Services.AbonOnlinePartner
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
         }
-        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
+        public async Task<object> ConfirmTransaction(string couponCode, string providerId, string providerTransactionId, string userId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
             var confirmTransactionResponse = new object();
-            var providerTransactionId = Guid.NewGuid();
-            var abonConfirmTransactionRequest = GetConfirmTransactionRequest(couponCode, userId, providerId, partnerPrivateKey, partnerPrivateKeyPass);
+            var abonConfirmTransactionRequest = GetConfirmTransactionRequest(couponCode, userId, providerId, providerTransactionId, partnerPrivateKey, partnerPrivateKeyPass);
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
             DateTime requestDateTime = DateTime.UtcNow;
-            
+
             var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, GetConfirmTransactionEndpoint(environment));
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
@@ -98,11 +96,11 @@ namespace Services.AbonOnlinePartner
                 {
                     Amount = successResponse.CouponValue,
                     ISOCurrencyId = successResponse.ISOCurrency,
-                    PartnerId = providerId,
+                    PartnerId = new Guid(providerId),
                     TransactionId = Guid.NewGuid(),
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = DateTime.UtcNow,
-                    UserId = userId,
+                    UserId = new Guid(userId),
                     ServiceId = ServiceEnum.AbonUsed
                 };
                 AircashSimulatorContext.Add(newTransaction);
@@ -125,10 +123,8 @@ namespace Services.AbonOnlinePartner
 
 
         }
-        public AbonConfirmTransactionRequest GetConfirmTransactionRequest(string couponCode, Guid userId, Guid providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        public AbonConfirmTransactionRequest GetConfirmTransactionRequest(string couponCode, string userId, string providerId, string providerTransactionId, string partnerPrivateKey, string partnerPrivateKeyPass)
         {
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
-            var providerTransactionId = Guid.NewGuid();
             var abonConfirmTransactionRequest = new AbonConfirmTransactionRequest
             {
                 CouponCode = couponCode,
@@ -157,3 +153,4 @@ namespace Services.AbonOnlinePartner
         }
     }
 }
+
