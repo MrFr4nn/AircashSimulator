@@ -85,7 +85,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         public async Task<IActionResult> CheckUser(CheckUserRQ checkUserRQ)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPosDepositService.CheckUser(checkUserRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User), checkUserRQ.Parameters, environment);
+            var response = await AircashPosDepositService.CheckUser(checkUserRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), checkUserRQ.PartnerId, checkUserRQ.Parameters, environment);
             return Ok(response);
         }
 
@@ -94,7 +94,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         public async Task<IActionResult> CreatePayout(CreatePayoutRQ createPayoutRQ)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPosDepositService.CreatePayout(UserContext.GetPartnerId(User), createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), createPayoutRQ.Parameters, environment);
+            var response = await AircashPosDepositService.CreatePayout(createPayoutRQ.PartnerId, createPayoutRQ.Amount, createPayoutRQ.PhoneNumber, UserContext.GetUserId(User).ToString(), createPayoutRQ.Parameters, environment);
             return Ok(response);
         }
 

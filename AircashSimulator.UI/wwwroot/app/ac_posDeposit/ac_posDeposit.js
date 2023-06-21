@@ -39,6 +39,7 @@ acPosDeposit.service("acPosDepositService", ['$http', '$q', 'handleResponseServi
 acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositService', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, acPosDepositService, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AircashPosDeposit") == -1) {
         $location.path('/forbidden');
     }
@@ -55,6 +56,7 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
 
     $scope.checkUser = function () {
         $scope.checkUserRequest = {
+            partnerId: $scope.partnerIds.C2DDepositPartnerId,
             phoneNumber: $scope.checkUserModel.phoneNumber,
             parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toLocaleDateString('en-CA') }]
         }
@@ -90,6 +92,7 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
 
     $scope.createPayout = function () {
         $scope.createPayoutRequest = {
+            partnerId: $scope.partnerIds.C2DDepositPartnerId,
             phoneNumber: $scope.createPayoutModel.phoneNumber,
             amount: $scope.createPayoutModel.amount,
             parameters: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutModel.birthDate.toLocaleDateString('en-CA') }]

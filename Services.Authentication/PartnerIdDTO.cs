@@ -12,6 +12,7 @@ namespace Services.Authentication
         public string AbonOnlinePartnerId { get; set; }
         public string AbonGeneratePartnerId { get; set; }
         public string AircashFramePartnerId { get; set; }
+        public string AircashFramePartnerIdWithMatchPersonalData { get; set; }
         public string SalesPartnerId { get; set; }
         public string AircashPayoutPartnerId { get; set; }
         public string C2DPayoutPartnerId { get; set; }

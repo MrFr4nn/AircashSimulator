@@ -134,6 +134,7 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
 aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['HelperService','$scope', '$state', 'aircashPaymentAndPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService,$scope, $state, aircashPaymentAndPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("SalePartner") == -1) {
         $location.path('/forbidden');
     }
@@ -143,19 +144,19 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
     }
 
     $scope.checkCodeModel = {
-        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
+        partnerId: $scope.partnerIds.SalesPartnerId,
         barCode: '',
         locationID: 'TestLocation'
     };
 
     $scope.checkCodeV2Model = {
-        partnerId: 'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
+        partnerId: $scope.partnerIds.SalesPartnerId,
         barCode: '',
         locationID: 'TestLocation'
     };
 
     $scope.confirmTransactionModel = {
-        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
+        partnerId: $scope.partnerIds.SalesPartnerId,
         barCode: '',
         partnerTransactionId: HelperService.NewGuid(),
         locationID: 'TestLocation'
@@ -175,12 +176,12 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
     };
 
     $scope.checkTransactionStatusModel = {
-        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
+        partnerId: $scope.partnerIds.SalesPartnerId,
         partnerTransactionID: HelperService.NewGuid()
     };
 
     $scope.cancelTransactionModel = {
-        partnerId:'e747a837-85d9-4287-a412-ffbb5d1b0ad8',
+        partnerId: $scope.partnerIds.SalesPartnerId,
         partnerTransactionID: '',
         locationID: "TestLocation"
     };
