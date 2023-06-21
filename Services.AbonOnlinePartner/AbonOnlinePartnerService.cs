@@ -70,7 +70,7 @@ namespace Services.AbonOnlinePartner
             }
             else
             {
-                signature = SignatureService.GenerateSignature(providerId, dataToSign);
+                signature = SignatureService.GenerateSignature(new Guid(providerId), dataToSign);
             }
             abonValidateCouponRequest.Signature = signature;
             return abonValidateCouponRequest;
@@ -140,7 +140,7 @@ namespace Services.AbonOnlinePartner
             }
             else
             {
-                signature = SignatureService.GenerateSignature(providerId, dataToSign);
+                signature = SignatureService.GenerateSignature(new Guid(providerId), dataToSign);
             }
             abonConfirmTransactionRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
