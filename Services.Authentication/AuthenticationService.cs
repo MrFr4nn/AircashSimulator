@@ -69,6 +69,9 @@ namespace Services.Authentication
                 SalesPartnerId = SettingsService.SalesPartnerId.ToString(),
                 AircashPayoutPartnerId = SettingsService.AircashPayoutPartnerId.ToString(),
                 C2DPayoutPartnerId = SettingsService.C2DPayoutPartnerId.ToString(),
+                C2DDepositPartnerId = SettingsService.C2DDepositPartnerId.ToString(),
+                AcPayPartnerId = SettingsService.AcPayPartnerId.ToString(),
+                InAppPayPartnerId = SettingsService.InAppPayPartnerId.ToString(),
                 DefaulrPartnerId = DefaultPartnerID.ToString(),
             };
             var partnerId = partner.PartnerId;
@@ -80,6 +83,9 @@ namespace Services.Authentication
                 partnerIds.SalesPartnerId = partnerId.ToString();
                 partnerIds.AircashPayoutPartnerId = partnerId.ToString();
                 partnerIds.C2DPayoutPartnerId = partnerId.ToString();
+                partnerIds.C2DDepositPartnerId = partnerId.ToString();
+                partnerIds.AcPayPartnerId = partnerId.ToString();
+                partnerIds.InAppPayPartnerId = partnerId.ToString();
                 partnerIds.DefaulrPartnerId = partnerId.ToString();
             }
 

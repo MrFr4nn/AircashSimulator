@@ -89,12 +89,11 @@ namespace Services.AircashPayoutV2
 
             request.Signature = SignatureService.GenerateSignature(partnerId, returnResponse.Sequence);
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, GetCreatePayoutEndpoint(environment));
-            var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
-            returnResponse.ServiceResponse = serviceResponse;
             var responseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+                var serviceResponse = JsonConvert.DeserializeObject<AircashCreatePayoutRS>(response.ResponseContent);
+                returnResponse.ServiceResponse = serviceResponse;
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = amount,
@@ -108,6 +107,10 @@ namespace Services.AircashPayoutV2
                     ResponseDateTimeUTC = responseDateTimeUTC
                 });
                 AircashSimulatorContext.SaveChanges();
+            }
+            else 
+            {
+                returnResponse.ServiceResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
 
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;

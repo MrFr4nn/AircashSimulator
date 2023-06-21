@@ -45,6 +45,9 @@ namespace Service.Settings
         string NotCheckedBarcode { get; }
         Guid AbonOnlinePartnerId { get; }
         Guid C2DPayoutPartnerId { get; }
+        Guid C2DDepositPartnerId { get; }
+        Guid AcPayPartnerId { get; }
+        Guid InAppPayPartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
         Guid AircashFramePartnerTransactionAlreadyExists { get; }
         Guid AcFrameConfirmPayoutValidTransaction { get; }
