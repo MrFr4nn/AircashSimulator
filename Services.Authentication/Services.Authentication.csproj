@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AircashSimulator.Configuration\AircashSimulator.Configuration.csproj" />
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
+    <ProjectReference Include="..\Service.Settings\Service.Settings.csproj" />
   </ItemGroup>
 
 </Project>

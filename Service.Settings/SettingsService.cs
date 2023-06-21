@@ -53,6 +53,7 @@ namespace Service.Settings
         public string BarcodeOverLimit { get { return GetSetting("BarcodeOverLimit", string.Empty, throwExceptionIfMissing: true); } }
         public string NotCheckedBarcode { get { return GetSetting("NotCheckedBarcode", string.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid C2DPayoutPartnerId { get { return GetSetting("C2DPayoutPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonGenerateBlockedPartnerId { get { return GetSetting("AbonGenerateBlockedPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashFramePartnerTransactionAlreadyExists { get { return GetSetting("AircashFramePartnerTransactionAlreadyExists", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AcFrameConfirmPayoutValidTransaction { get { return GetSetting("AcFrameConfirmPayoutValidTransaction", Guid.Empty, throwExceptionIfMissing: true); } }

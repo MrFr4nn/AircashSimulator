@@ -10,6 +10,6 @@
         <textarea class="form-control mb-3" rows="20" ng-model="inputs.privateKey" placeholder="-----BEGIN ENCRYPTED PRIVATE KEY-----"></textarea>
         <label>Password:</label>
         <input class="form-control mb-3" ng-model="inputs.password" />
-        <button ng-click="validateAndSave()" class="btn btn-primary w-100px me-5px" ng-disabled="validateAndSaveServiceBusy || true">Save private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        <button ng-click="validateAndSave()" class="btn btn-primary w-100px me-5px" ng-disabled="validateAndSaveServiceBusy">Save private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
     </div>
 </div>

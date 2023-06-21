@@ -82,6 +82,7 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
 abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService,$scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AbonGenerate") == -1) {
         $location.path('/forbidden');
     }
@@ -89,7 +90,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     $scope.createCouponModel = {
         value : 50,
         pointOfSaleId: 'TestLocation',
-        partnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        partnerId: partnerIds.AbonGeneratePartnerId,
         partnerTransactionId: HelperService.NewGuid(),
         isoCurrencySymbol: 'EUR',
         contentType: null,
@@ -99,7 +100,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     $scope.cancelCouponModel = {
         cancelSerialNumber: '',
         cancelPointOfSaleId: 'TestLocation',
-        cancelPartnerId: '8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf',
+        cancelPartnerId: partnerIds.AbonGeneratePartnerId,
         cancelPartnerTransactionId:''
     };
 
