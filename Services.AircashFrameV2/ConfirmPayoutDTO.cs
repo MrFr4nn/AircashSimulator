@@ -12,6 +12,6 @@ namespace Services.AircashFrameV2
         public Guid PartnerId { get; set; }
         public decimal Amount { get; set; }
         public CurrencyEnum CurrencyId { get; set; }
-        public Guid PartnerTransactionId { get; set; }
+        public string PartnerTransactionId { get; set; }
     }
 }

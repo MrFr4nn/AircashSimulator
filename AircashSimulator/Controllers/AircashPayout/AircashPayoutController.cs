@@ -95,7 +95,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCashierPayout(CreatePayoutRequest createPayoutRequest)
         {
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, createPayoutRequest.Environment);
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid().ToString(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid().ToString(), SettingsService.AircashPayoutPartnerId, createPayoutRequest.Environment);
             return Ok(response);
         }
 
@@ -111,7 +111,7 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CreatePayoutSimulateError([FromBody] AcPayoutCreatePayoutErrorCodeEnum errorCode)
         {
             var phoneNumber = SettingsService.TestPhoneNumber;
-            var partnerTransactionID = Guid.NewGuid();
+            var partnerTransactionID = Guid.NewGuid().ToString();
             var amount = SettingsService.PayoutDefaultAmount;
             var currency = CurrencyEnum.EUR;
 
@@ -150,7 +150,7 @@ namespace AircashSimulator.Controllers
                 default:
                     return BadRequest();
             }
-            var response = await AircashPayoutService.CreatePayout(phoneNumber, partnerTransactionID, amount, currency, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
+            var response = await AircashPayoutService.CreatePayout(phoneNumber, partnerTransactionID, amount, currency, Guid.NewGuid().ToString(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
         public async Task<IActionResult> GetCurlCheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)

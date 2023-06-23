@@ -267,7 +267,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
             var transactionEntity = new TransactionEntity
             {
                 Amount = aircashPosDepositCreateAndConfirmPayment.Amount,
-                TransactionId = Guid.NewGuid(),
+                TransactionId = Guid.NewGuid().ToString(),
                 PartnerId = PartnerId,
                 UserId = user.UserId,
                 AircashTransactionId = aircashPosDepositCreateAndConfirmPayment.TransactionID,

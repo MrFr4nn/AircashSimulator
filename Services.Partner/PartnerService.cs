@@ -189,7 +189,7 @@ namespace Services.Partner
 
             await AircashSimulatorContext.Users.AddAsync(new UserEntity
             {
-                UserId = Guid.NewGuid(),
+                UserId = Guid.NewGuid().ToString(),
                 Username = username,
                 Email = username,
                 PartnerId = partnerId,
