@@ -57,6 +57,7 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
             method: 'POST',
             url: config.baseUrl + "Partner/SavePartner",
             data: {
+                NewPartnerId: partner.newPartnerId,
                 PartnerId: partner.partnerId,
                 PartnerName: partner.partnerName,
                 PrivateKey: partner.privateKey,

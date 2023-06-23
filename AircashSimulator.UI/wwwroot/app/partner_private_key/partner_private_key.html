@@ -4,12 +4,14 @@
     <div class="note-content col">
         <h5>If you want to test with your private key insert:</h5>
         <br />
+        <label>PartnerId(Guid):</label>
+        <input class="form-control mb-3" ng-model="inputs.partnerId" />
         <label>Public key:</label>
         <textarea class="form-control mb-3" rows="20" ng-model="inputs.publicKey" placeholder="-----BEGIN CERTIFICATE-----"></textarea>
         <label>Private key:</label>
         <textarea class="form-control mb-3" rows="20" ng-model="inputs.privateKey" placeholder="-----BEGIN ENCRYPTED PRIVATE KEY-----"></textarea>
         <label>Password:</label>
         <input class="form-control mb-3" ng-model="inputs.password" />
-        <button ng-click="validateAndSave()" class="btn btn-primary w-100px me-5px" ng-disabled="validateAndSaveServiceBusy || true">Save private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        <button ng-click="validateAndSave()" class="btn btn-primary w-100px me-5px" ng-disabled="validateAndSaveServiceBusy || inputs.publicKey=='' || inputs.privateKey=='' || inputs.password=='' || inputs.partnerId=='' ">Save private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
     </div>
 </div>

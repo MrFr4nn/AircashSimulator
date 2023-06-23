@@ -78,12 +78,23 @@ namespace Services.Signature
 
         public async Task<string> SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId) 
         {
-            if (ValidatePartnerKey(validateAndSavePartnerKeyRequest) || (validateAndSavePartnerKeyRequest.PrivateKey == "" && validateAndSavePartnerKeyRequest.Password == "" && validateAndSavePartnerKeyRequest.PublicKey == "")) 
+            if (ValidatePartnerKey(validateAndSavePartnerKeyRequest))
             {
                 var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
                 partner.PrivateKey = validateAndSavePartnerKeyRequest.PrivateKey;
                 partner.PublicKey = validateAndSavePartnerKeyRequest.PublicKey;
                 partner.PrivateKeyPass = validateAndSavePartnerKeyRequest.Password;
+                partner.PartnerId = validateAndSavePartnerKeyRequest.PartnerId;
+                var users = AircashSimulatorContext.Users.Where(x => x.PartnerId == partnerId).ToList();
+                var partnerRoles = AircashSimulatorContext.PartnerRoles.Where(x => x.PartnerId == partnerId).ToList();
+                foreach (var user in users)
+                {
+                    user.PartnerId = validateAndSavePartnerKeyRequest.PartnerId; ;
+                }
+                foreach (var role in partnerRoles)
+                {
+                    role.PartnerId = validateAndSavePartnerKeyRequest.PartnerId; ;
+                }
                 AircashSimulatorContext.SaveChanges();
                 return "Success";
             }
