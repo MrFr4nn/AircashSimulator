@@ -303,19 +303,24 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             },
             outputParametersExample: {
                 first: {
-                    status: 1
+                    status: 1,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 },
                 second: {
-                    status: 2
+                    status: 2,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 },
                 third: {
-                    status: 3
+                    status: 3,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 },
                 forth: {
-                    status: 4
+                    status: 4,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 },
                 fifth: {
-                    status: 5
+                    status: 5,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 }
             }
         },
@@ -351,7 +356,8 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
                 Signature: "CX9v6V....Bw="
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
             },
         },
         checkCode: {

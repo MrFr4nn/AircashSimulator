@@ -191,7 +191,7 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Status </td>
+                                <td><b>Status</b> </td>
                                 <td>Int</td>
                                 <td>
                                     1- an uknown phone number<br />
@@ -199,6 +199,13 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
                                     3- there is a user, it is possible to make a payment<br />
                                     4-User exists but has no verified data.<br />
                                     5-User exists but verification is pending.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>AircashUserId </b> </td>
+                                <td>String</td>
+                                <td>
+                                    Aircash user identifier
                                 </td>
                             </tr>
                         </tbody>
@@ -486,10 +493,18 @@ PZVGM4QwYw1QhcOUXF8JW5H2JMYVRgxqaXh5NL6Fn3AA9/+9km/7xS5lXSW65AGVxbx8do0M5GHxJ9d7
                 </thead>
                 <tbody>
                     <tr>
-                        <td>AircashTransationID</td>
+                        <td><b>AircashTransationID</b></td>
                         <td>String</td>
                         <td>Transaction ID from Aircash system. Returns only in case of successful payment.</td>
                         <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>AircashUserId </b> </td>
+                        <td>String</td>
+                        <td>
+                            Aircash user identifier
+                        </td>
+                        <td>NO</td>
                     </tr>
                 </tbody>
             </table>
