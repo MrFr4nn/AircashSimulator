@@ -36,13 +36,13 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CheckUser(CheckUserRequest checkUserRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, checkUserRequest.PartnerUserID.ToString(), checkUserRequest.PartnerID, environment);
+            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, checkUserRequest.PartnerUserID, checkUserRequest.PartnerID, environment);
             return Ok(response);
         }
         public async Task<IActionResult> GetCurlCheckUser(CheckUserRequest checkUserRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var request = AircashPayoutService.GetCheckUserRequest(checkUserRequest.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User));
+            var request = AircashPayoutService.GetCheckUserRequest(checkUserRequest.PhoneNumber, UserContext.GetUserId(User), UserContext.GetPartnerId(User));
             var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckUserEndpoint(environment));
             return Ok(curl);
         }
@@ -51,13 +51,13 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CheckUserV4(CheckUserv4DTO checkUserV4Request)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CheckUserV4(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID.ToString(), checkUserV4Request.PartnerID, checkUserV4Request.Parameters, environment);
+            var response = await AircashPayoutService.CheckUserV4(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID, checkUserV4Request.PartnerID, checkUserV4Request.Parameters, environment);
             return Ok(response);
         }
         public async Task<IActionResult> GetCurlCheckUserV4(CheckUserv4DTO checkUserV4Request)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var request = AircashPayoutService.GetCheckUserV4Request(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID.ToString(), checkUserV4Request.PartnerID, checkUserV4Request.Parameters);
+            var request = AircashPayoutService.GetCheckUserV4Request(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID, checkUserV4Request.PartnerID, checkUserV4Request.Parameters);
             var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckUserV4Endpoint(environment));
             return Ok(curl);
         }

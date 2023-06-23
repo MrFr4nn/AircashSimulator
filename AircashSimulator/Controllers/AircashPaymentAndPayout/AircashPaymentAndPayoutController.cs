@@ -25,7 +25,7 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
         private UserContext UserContext;
         private IUserService UserService;
         private Guid partnerId;
-        private Guid partnerTransactionId;
+        private string partnerTransactionId;
 
         public AircashPaymentAndPayoutController(IAircashPaymentAndPayoutService aircashPaymentAndPayoutService, UserContext userContext, ISettingsService settingsService, IHelperService helperService, IUserService userService)
         {
