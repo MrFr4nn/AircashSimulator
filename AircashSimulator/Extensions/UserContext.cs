@@ -8,9 +8,9 @@ namespace AircashSimulator.Extensions
 {
     public class UserContext
     {
-        public Guid GetUserId(ClaimsPrincipal user)
+        public string GetUserId(ClaimsPrincipal user)
         {
-            return new Guid(user.FindFirst("userId")?.Value);
+            return user.FindFirst("userId")?.Value;
         }
 
         public Guid GetPartnerId(ClaimsPrincipal user)

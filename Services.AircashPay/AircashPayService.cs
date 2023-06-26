@@ -41,7 +41,7 @@ namespace Services.AircashPay
                 PartnerId = generatePartnerCodeDTO.PartnerId,
                 Amount = generatePartnerCodeDTO.Amount,
                 ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
-                PartnerTransactionId = Guid.NewGuid(),
+                PartnerTransactionId = Guid.NewGuid().ToString(),
                 Description = generatePartnerCodeDTO.Description,
                 ValidForPeriod = int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
                 LocationId = generatePartnerCodeDTO.LocationId,

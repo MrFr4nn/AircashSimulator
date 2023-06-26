@@ -98,9 +98,9 @@ namespace Services.AircashPosDeposit
                     ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
                     PartnerId = partnerId,
                     AircashTransactionId = serviceResponse.AircashTransactionID,
-                    TransactionId = Guid.Parse(request.PartnerTransactionID),
+                    TransactionId = request.PartnerTransactionID,
                     ServiceId = ServiceEnum.AircashPayout,
-                    UserId = Guid.Parse(partnerUserID),
+                    UserId = partnerUserID,
                     RequestDateTimeUTC = returnResponse.RequestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC
                 });

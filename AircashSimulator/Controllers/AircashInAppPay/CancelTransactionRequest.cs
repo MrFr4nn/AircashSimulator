@@ -4,6 +4,6 @@ namespace AircashSimulator.Controllers.AircashInAppPay
 {
     public class CancelTransactionRequest
     {
-        public Guid PartnerTransactionId { get; set; }
+        public string PartnerTransactionId { get; set; }
     }
 }

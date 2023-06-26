@@ -10,8 +10,8 @@ namespace Services.AircashFrameV2
     public class InititateRequestV2Dto
     {
         public Guid PartnerId { get; set; }
-        public Guid UserId { get; set; }
-        public Guid PartnerTransactionId { get; set; }
+        public string UserId { get; set; }
+        public string PartnerTransactionId { get; set; }
         public decimal Amount { get; set; }
         public List<CustomParameterModel> MatchParameters { get; set; }
         public PayTypeEnum PayType { get; set; }

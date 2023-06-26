@@ -39,7 +39,7 @@ namespace AircashFrame
             SettingsService = settingsService;
         }
       
-        public async Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, Guid partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment)
+        public async Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, string partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
             var preparedTransaction = new PreparedAircashFrameTransactionEntity
@@ -126,7 +126,7 @@ namespace AircashFrame
         {
             cashierEnvironment = environment;
             var requestDateTime = DateTime.UtcNow;
-            var partnerTransactionId = Guid.NewGuid();
+            var partnerTransactionId = Guid.NewGuid().ToString();
             var preparedTransaction = new PreparedAircashFrameTransactionEntity
             {
                 PartnerTransactionId = partnerTransactionId,
@@ -201,7 +201,7 @@ namespace AircashFrame
             return responseToController;
         }
 
-        public async Task NotificationCashierFrameV2(Guid transactionId)
+        public async Task NotificationCashierFrameV2(string transactionId)
         {
             var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == transactionId).FirstOrDefault();
             if (preparedAircashFrameTransaction.TransactionSatus == AcFramePreparedTransactionStatusEnum.Confirmed)

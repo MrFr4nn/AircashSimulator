@@ -38,7 +38,7 @@ namespace Services.AbonSalePartner
             HttpRequestService = httpRequestService;
         }
 
-        public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment, string contentType, int? contentWidth)
+        public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment, string contentType, int? contentWidth)
         {
             var returnResponse=new Response();
             var createCouponResponse=new object();
@@ -74,7 +74,7 @@ namespace Services.AbonSalePartner
                     AircashTransactionId = successResponse.SerialNumber,
                     TransactionId = partnerTransactionId,
                     ServiceId = ServiceEnum.AbonIssued,
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     PointOfSaleId = pointOfSaleId,
                     RequestDateTimeUTC = requestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC
@@ -91,17 +91,8 @@ namespace Services.AbonSalePartner
             return returnResponse;
         }
 
-        public async Task<object> CancelCoupon(string serialNumber, string pointOfSaleId, Guid partnerId, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+        public async Task<object> CancelCoupon(string serialNumber, string pointOfSaleId, Guid partnerId, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
         {
-            string partnerTransactionIdString;
-            if (partnerTransactionId==Guid.Empty)
-            {
-                partnerTransactionIdString = null;
-            }
-            else
-            {
-                partnerTransactionIdString=partnerTransactionId.ToString();
-            }
             var returnResponse = new Response();
             var cancelCouponResponse = new object();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
@@ -111,7 +102,7 @@ namespace Services.AbonSalePartner
             {
                 PartnerId = partnerId.ToString(),
                 SerialNumber = serialNumber,
-                PartnerTransactionId=partnerTransactionIdString,
+                PartnerTransactionId = partnerTransactionId,
                 PointOfSaleId = pointOfSaleId,
             };
             returnResponse.ServiceRequest = cancelCouponRequest;
@@ -135,7 +126,7 @@ namespace Services.AbonSalePartner
                         AircashTransactionId = $"CTX-{serialNumber}",
                         TransactionId = partnerTransactionId,
                         ServiceId = ServiceEnum.AbonCancelled,
-                        UserId = Guid.NewGuid(),
+                        UserId = Guid.NewGuid().ToString(),
                         PointOfSaleId = pointOfSaleId,
                         RequestDateTimeUTC = requestDateTimeUTC,
                         ResponseDateTimeUTC = responseDateTimeUTC
@@ -153,7 +144,7 @@ namespace Services.AbonSalePartner
             return returnResponse;
         }
 
-        public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+        public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
         {
             var returnResponse = "";
             var requestDateTimeUTC = DateTime.UtcNow;
@@ -186,7 +177,7 @@ namespace Services.AbonSalePartner
                     AircashTransactionId = successResponse.SerialNumber,
                     TransactionId = partnerTransactionId,
                     ServiceId = ServiceEnum.AbonIssued,
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     PointOfSaleId = pointOfSaleId,
                     RequestDateTimeUTC = requestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC
