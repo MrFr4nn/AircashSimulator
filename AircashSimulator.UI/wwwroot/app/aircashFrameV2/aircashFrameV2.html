@@ -1750,9 +1750,11 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 <td><b>Q:&nbsp; In the withdrawal process via Aircash Frame can the Amount from Confirm payout method differ from the Initiate method? </b></td>
             </tr>
             <tr>
-                <td><b>A:</b>&nbsp; Once you initiate withdrawal via Aircash Frame and send Amount as a parameter you must reserve funds on the user's Wallet 
-                on the merchant's side. If you have manual approval of withdrawals or automatic ones once you call Confirm payout method funds will be shown 
-                on the user’s Wallet in the Aircash System. So you must send the same Amount in Confirm payout method as you sent in the Initiate method. </td>
+                <td>
+                    <b>A:</b>&nbsp; Once you initiate withdrawal via Aircash Frame and send Amount as a parameter you must reserve funds on the user's Wallet
+                    on the merchant's side. If you have manual approval of withdrawals or automatic ones once you call Confirm payout method funds will be shown
+                    on the user’s Wallet in the Aircash System. So you must send the same Amount in Confirm payout method as you sent in the Initiate method.
+                </td>
             </tr>
             <tr>
                 <td rowspan="2">7.</td>
@@ -1869,6 +1871,18 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                     <b>A:</b>&nbsp; Default behaviour of your system would be to wait for notification.  If, from any reason the notification is not received, you can call
                     "Status" method 30 seconds after Aircash Frame timer expired to make sure there was not any network or other issues and make sure you had the right
                     transaction status in your system (the same as in the Aircash system).
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">14.</td>
+                <td><b>Q:&nbsp; Is there any timer for Aircash Frame transactions? What happense once the timer expire?  </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp;We suggest making a timestamp of 5min for the Aircash Frame timer. Once transaction time pass (5min) and transaction timeouts, we will 
+                    call your NotificationUrl and the transaction will be in status 1 – declined. If for any reason (network problems etc.) the notification is not received,
+                    you can call the Status method 30 seconds after the Aircash Frame timer expired to make sure there was not any network or other issues and make sure you 
+                    had the right transaction status in your system (the same as in the Aircash system)
                 </td>
             </tr>
         </table>
