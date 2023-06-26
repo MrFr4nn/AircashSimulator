@@ -144,16 +144,25 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
             },
             outputParametersExample: {
                 first: {
-                    status: 1,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 1,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 second: {
-                    status: 2,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 2,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 third: {
-                    status: 3,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 3,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 }
             }
         },
@@ -185,8 +194,11 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
                 Signature: "CX9v6V....Bw="
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
-                AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                Parameters: {
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }
             },
         },
         checkPlayer: {
