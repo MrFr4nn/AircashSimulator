@@ -648,7 +648,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerUserID: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                phoneNumber: 385995712738,
+                phoneNumber: "385995712738",
                 signature: "VA514erV6V..."
             },
             responseExample: {
@@ -680,9 +680,18 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 Signature: "ldzZxe....I8="
             },
             responseExample: {
-                first: { status: "1" },
-                second: { status: "2" },
-                third: { status: "3" }
+                first: {
+                    status: 1,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                },
+                second: {
+                    status: 2,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                },
+                third: {
+                    status: 3,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                }
             },
         },
         createPayout: {
@@ -728,7 +737,8 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 "Signature": "XNqywSLWev..."
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
             },
         },
         checkTransactionStatus: {

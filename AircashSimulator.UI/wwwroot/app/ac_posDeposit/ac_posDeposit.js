@@ -144,13 +144,16 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
             },
             outputParametersExample: {
                 first: {
-                    status: 1
+                    status: 1,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 },
                 second: {
-                    status: 2
+                    status: 2,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 },
                 third: {
-                    status: 3
+                    status: 3,
+                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
                 }
             }
         },
@@ -182,7 +185,8 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
                 Signature: "CX9v6V....Bw="
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
             },
         },
         checkPlayer: {

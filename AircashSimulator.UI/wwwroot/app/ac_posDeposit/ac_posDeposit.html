@@ -271,13 +271,20 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Status </td>
+                                <td><b>Status</b></td>
                                 <td>Int</td>
                                 <td>
                                     1- an uknown phone number<br />
                                     2- there is a user, but the personal data is not matched. Transaction will be rejected.<br />
                                     3- there is a user, it is possible to make a payment<br />
                                     4-
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>AircashUserId </b> </td>
+                                <td>String</td>
+                                <td>
+                                    Aircash user identifier
                                 </td>
                             </tr>
                         </tbody>
@@ -513,10 +520,18 @@ CX9v6VsQWtjE3QZuLeSSLRGsJP8T36c603SRU0Gil7NdqupbOKkPQcz8aYIvsU7ZmwIfGX2/J/KsXdwX
                 </thead>
                 <tbody>
                     <tr>
-                        <td>AircashTransationID</td>
+                        <td><b>AircashTransationID</b></td>
                         <td>String</td>
                         <td>Transaction ID from Aircash system. Returns only in case of successful payment.</td>
                         <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>AircashUserId </b> </td>
+                        <td>String</td>
+                        <td>
+                            Aircash user identifier
+                        </td>
+                        <td>NO</td>
                     </tr>
                 </tbody>
             </table>
