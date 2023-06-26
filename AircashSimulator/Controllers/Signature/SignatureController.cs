@@ -43,18 +43,15 @@ namespace AircashSimulator.Controllers.Signature
         }
 
         [HttpPost]
-        public async Task<IActionResult> ValidateSignature(string dataToSign,string signature)
+        public async Task<IActionResult> ValidateSignature(ValidateSignatureDTO validateSignatureDTO)
         {
-            dataToSign = "test";
-
-            var response =  SignatureService.ValidateSignature(dataToSign,signature, UserContext.GetPartnerId(User));
+            var response =  SignatureService.ValidateSignature(validateSignatureDTO.dataToSign,validateSignatureDTO.signatureToValidate, UserContext.GetPartnerId(User));
             return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> GetSignature(GenerateSignatureDTO generateSignatureDTO)
         {
-            generateSignatureDTO.dataToSign = "test";
-            var response =  SignatureService.GenerateSignature(UserContext.GetPartnerId(User), generateSignatureDTO.dataToSign);
+            var response =  SignatureService.GenerateSignature(UserContext.GetPartnerId(User), generateSignatureDTO.dataSign);
             return Ok(response);
         }
 

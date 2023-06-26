@@ -34,7 +34,7 @@ signatureModule.service("signatureService", ['$http', '$q', 'handleResponseServi
                 method: 'POST',
                 url: config.baseUrl + "Signature/GetSignature",
                 data: {
-                    dataSign: dataSign
+                    dataSign:dataSign
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -57,6 +57,15 @@ signatureModule.controller("SignatureCtrl",
     ['$scope', '$state', 'signatureService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, signatureService, $filter, $http, JwtParser, $uibModal, $rootScope) {
 
+            $scope.getSignatureModel = {
+                dataSign: $scope.dataSign
+            };
+            $scope.validateSignatureModel = {
+                dataToValidate: $scope.dataToValidate,
+                signatureToValidate: $scope.signatureToValidate
+            };
+
+
             $scope.ValidatePublicKeyServiceBusy = false;
             $scope.validatePublicKey = function () {
                 $scope.ValidatePublicKeyServiceBusy = true;
@@ -73,7 +82,8 @@ signatureModule.controller("SignatureCtrl",
             $scope.GenerateSignatureResponded = false;
             $scope.getSignature = function () {
                 $scope.GenerateSignatureServiceBusy = true;
-                signatureService.getSignature($scope.dataSign)
+                console.log($scope.dataSign)
+                signatureService.getSignature($scope.getSignatureModel.dataSign)
                     .then(function (response) {
                         $scope.GenerateSignatureResponse=response;
                         $scope.GenerateSignatureResponded = true;
@@ -88,11 +98,11 @@ signatureModule.controller("SignatureCtrl",
             $scope.ValidateSignatureServiceBusy = false;
             $scope.validateSignature = function () {
                 $scope.ValidateSignatureServiceBusy = true;
-                signatureService.validateSignature($scope.dataToValidate, $scope.signatureToValidate)
+                signatureService.validateSignature($scope.validateSignatureModel.dataToValidate, $scope.validateSignatureModel.signatureToValidate)
                     .then(function (response) {
                         $scope.ValidateSignatureResponse = response;
-                        $scope.ValidateSignatureServiceBusy = true;
-                        $scope.ValidateSignatureResponded = false;
+                        $scope.ValidateSignatureServiceBusy = false;
+                        $scope.ValidateSignatureResponded = true;
                     })
                     .catch(function (error) {
                         $scope.ValidateSignatureServiceBusy = false;

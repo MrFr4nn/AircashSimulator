@@ -82,9 +82,9 @@ namespace Services.Signature
             {
 
                 var keys = GetKeyToSing(partnerId);
-            var bytePublicKey = Encoding.UTF8.GetBytes(keys.PublicKey);
+                var bytePublicKey = Encoding.UTF8.GetBytes(keys.PublicKey);
             var certificate = new X509Certificate2(bytePublicKey);
-            var byteSignature = Encoding.UTF8.GetBytes(signature);
+            var byteSignature = Convert.FromBase64String(signature);
             var byteDataToSign = Encoding.UTF8.GetBytes(dataToSign);
 
                 using (var sha256 = new SHA256Managed())
