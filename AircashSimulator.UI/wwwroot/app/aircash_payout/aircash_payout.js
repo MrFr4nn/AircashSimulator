@@ -648,7 +648,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerUserID: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                phoneNumber: 385995712738,
+                phoneNumber: "385995712738",
                 signature: "VA514erV6V..."
             },
             responseExample: {
