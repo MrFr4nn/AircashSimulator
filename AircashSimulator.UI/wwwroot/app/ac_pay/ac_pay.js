@@ -18,11 +18,12 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         cancelTransaction: cancelTransaction,
         getTransactions: getTransactions
     });
-    function generatePartnerCode(amount, description, locationID) {
+    function generatePartnerCode(amount, description, locationID, partnerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/GeneratePartnerCode",
             data: {
+                PartnerId: partnerId,
                 Amount: amount,
                 Description: description,
                 LocationID: locationID
@@ -31,11 +32,12 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function cancelTransaction(partnerTransactionID) {
+    function cancelTransaction(partnerTransactionID, partnerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/CancelTransaction",
             data: {
+                PartnerId: partnerId,
                 partnerTransactionID: partnerTransactionID
             }
         });
@@ -60,6 +62,7 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
 acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AircashPay") == -1) {
         $location.path('/forbidden');
     }
@@ -95,7 +98,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         $("#qrcode").empty();
         $scope.generateBusy = true;
         $scope.generateResponded = false;
-        acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
+        acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID, $scope.partnerIds.AcPayPartnerId)
             .then(function (response) {
                 if (response) {
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -120,7 +123,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.cancelTransaction = function (transactionId) {
         $scope.cancelBusy = true;
         $scope.cancelResponded = false;
-        acPayService.cancelTransaction(transactionId)
+        acPayService.cancelTransaction(transactionId, $scope.partnerIds.AcPayPartnerId)
             .then(function (response) {
                 if (response) {
                     $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;

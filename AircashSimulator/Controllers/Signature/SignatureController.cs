@@ -48,5 +48,11 @@ namespace AircashSimulator.Controllers.Signature
             var response = SignatureService.GetKeyToSing(UserContext.GetPartnerId(User));
             return response;
         }
+        [HttpPost]
+        public async Task<IActionResult> RemovePartnerKeys()
+        {
+            var response = await SignatureService.RemovePartnerKeys(UserContext.GetPartnerId(User));
+            return Ok(response);
+        }
     }
 }

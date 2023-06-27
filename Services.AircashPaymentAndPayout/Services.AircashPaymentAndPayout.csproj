@@ -13,6 +13,7 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Service.Settings\Service.Settings.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
+    <ProjectReference Include="..\Services.Signature\Services.Signature.csproj" />
   </ItemGroup>
 
 </Project>

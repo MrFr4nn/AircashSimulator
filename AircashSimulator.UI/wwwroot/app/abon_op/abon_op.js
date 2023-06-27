@@ -95,9 +95,10 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', 'HelperService', '$localStorage', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope, HelperService, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AbonDeposit") == -1) {
         $location.path('/forbidden');
     }
@@ -108,13 +109,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
 
     $scope.validateCouponModel = {
         couponCode: null,
-        providerId:"e9fb671b-154e-4918-9788-84b6758fb082"
+        providerId: $scope.partnerIds.AbonOnlinePartnerId
     };
     $scope.confirmTransactionModel = {
         couponCode: null,
-        providerId: "e9fb671b-154e-4918-9788-84b6758fb082",
-        providerTransactionId: "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
-        userId:"4149ba7d-e4f7-4c77-8393-d03e6691c03b"
+        providerId: $scope.partnerIds.AbonOnlinePartnerId,
+        providerTransactionId: HelperService.NewGuid(),
+        userId: HelperService.NewGuid()
     };
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");

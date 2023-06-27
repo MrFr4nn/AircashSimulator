@@ -10,6 +10,7 @@ using Domain.Entities;
 using Domain.Entities.Enum;
 using Service.Settings;
 using System.Collections.Generic;
+using Services.Signature;
 
 namespace Services.AircashPayout
 {
@@ -26,17 +27,19 @@ namespace Services.AircashPayout
         private ISettingsService SettingsService;
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
         private readonly string CheckUserEndpoint = "PartnerV3/CheckUser";
         private readonly string CheckUserV4Endpoint = "PartnerV4/CheckUser";
         private readonly string CreatePayoutV4Endpoint = "PartnerV4/CreatePayout";
         private readonly string CreatePayoutEndpoint = "PartnerV3/CreatePayout";
         private readonly string CheckTransactionStatusEndpoint = "PartnerV2/CheckTransactionStatus";
 
-        public AircashPayoutService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService)
+        public AircashPayoutService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
             SettingsService = settingsService;
+            SignatureService = signatureService;
         }
 
         public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, EnvironmentEnum environment)
@@ -79,7 +82,7 @@ namespace Services.AircashPayout
 
             };
             var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, sequence);
             checkUserRequest.Signature = signature;
              return checkUserRequest;
         }
@@ -111,7 +114,7 @@ namespace Services.AircashPayout
                 Parameters = parameters
             };
             var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, sequence);
             checkUserRequest.Signature = signature;
             return checkUserRequest;
         }
@@ -169,7 +172,7 @@ namespace Services.AircashPayout
                 CurrencyID = (int)currency
             };
             var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, sequence);
             createPayoutRequest.Signature = signature;
             return createPayoutRequest;
         }
@@ -188,7 +191,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceRequest = createPayoutRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, sequence);
             var response = await HttpRequestService.SendRequestAircash(createPayoutRequest, HttpMethod.Post,GetCreatePayoutV4Endpoint(environment));
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -233,7 +236,7 @@ namespace Services.AircashPayout
 
             };
             var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(partnerId, sequence);
             createPayoutRequest.Signature = signature;
 
             return createPayoutRequest;
@@ -251,7 +254,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceRequest = checkTransactionStatusRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(transaction.PartnerId, sequence);
             checkTransactionStatusRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, GetCheckTransactionStatusEndpoint(environment));
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
@@ -279,7 +282,7 @@ namespace Services.AircashPayout
                 PartnerTransactionID = partnerTransactionId.ToString(),
             };
             var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
-            var signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(transaction.PartnerId, sequence);
             checkTransactionStatusRequest.Signature = signature;
             return checkTransactionStatusRequest;
         }

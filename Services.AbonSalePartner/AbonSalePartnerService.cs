@@ -7,6 +7,7 @@ using Domain.Entities.Enum;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Services.HttpRequest;
+using Services.Signature;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,14 +29,16 @@ namespace Services.AbonSalePartner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
 
         private readonly string CancelCouponEndpoint = "CashRegister/CancelCoupon";
         private readonly string CreateCouponEndpoint = "CashRegister/CreateCoupon";
 
-        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
+        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
+            SignatureService = signatureService;
         }
 
         public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment, string contentType, int? contentWidth)
@@ -57,7 +60,15 @@ namespace Services.AbonSalePartner
             returnResponse.ServiceRequest = createCouponRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(createCouponRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            string signature;
+            if (privateKeyPath != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            }
+            else 
+            {
+                signature = SignatureService.GenerateSignature(partnerId, sequence);
+            }
             createCouponRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(createCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CreateCouponEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;
@@ -108,7 +119,15 @@ namespace Services.AbonSalePartner
             returnResponse.ServiceRequest = cancelCouponRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(cancelCouponRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            string signature;
+            if (privateKeyPath != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            }
+            else
+            {
+                signature = SignatureService.GenerateSignature(partnerId, sequence);
+            }
             cancelCouponRequest.Signature = signature;
             var response=await HttpRequestService.SendRequestAircash(cancelCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CancelCouponEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;

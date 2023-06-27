@@ -15,6 +15,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Service.Settings;
 
 namespace Services.Authentication
 {
@@ -22,12 +23,14 @@ namespace Services.Authentication
     {
         private readonly JwtConfiguration JwtConfiguration;
         private readonly AircashSimulatorContext AircashSimulatorContext;
+        private readonly ISettingsService SettingsService;
         private Guid DefaultPartnerID => new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF");
 
-        public AuthenticationService(IOptionsMonitor<JwtConfiguration> jwtConfiguration, AircashSimulatorContext aircashSimulatorContext)
+        public AuthenticationService(IOptionsMonitor<JwtConfiguration> jwtConfiguration, AircashSimulatorContext aircashSimulatorContext, ISettingsService settingsService)
         {
             JwtConfiguration = jwtConfiguration.CurrentValue;
             AircashSimulatorContext = aircashSimulatorContext;
+            SettingsService = settingsService;
         }
 
         public async Task<string> Login(string username, string password)
@@ -58,11 +61,39 @@ namespace Services.Authentication
             {
                 partnerRoles.Add(partnerRoleEntity.PartnerRole.ToString());
             }
+            var partnerIds = new PartnerIdDTO
+            {
+                AbonOnlinePartnerId = SettingsService.AbonOnlinePartnerId.ToString(),
+                AbonGeneratePartnerId = SettingsService.AbonGeneratePartnerId.ToString(),
+                AircashFramePartnerId = SettingsService.AircashFramePartnerId.ToString(),
+                AircashFramePartnerIdWithMatchPersonalData = SettingsService.AircashFramePartnerIdWithMatchPersonalData.ToString(),
+                SalesPartnerId = SettingsService.SalesPartnerId.ToString(),
+                AircashPayoutPartnerId = SettingsService.AircashPayoutPartnerId.ToString(),
+                C2DPayoutPartnerId = SettingsService.C2DPayoutPartnerId.ToString(),
+                C2DDepositPartnerId = SettingsService.C2DDepositPartnerId.ToString(),
+                AcPayPartnerId = SettingsService.AcPayPartnerId.ToString(),
+                InAppPayPartnerId = SettingsService.InAppPayPartnerId.ToString(),
+                DefaulrPartnerId = DefaultPartnerID.ToString(),
+            };
             var partnerId = partner.PartnerId;
-            if (partner.UseDefaultPartner) partnerId = (await AircashSimulatorContext.Partners.Where(p => p.PartnerId == DefaultPartnerID).SingleOrDefaultAsync()).PartnerId;
+            if (partner.PrivateKey != null && partner.PrivateKey != "")
+            {
+                partnerIds.AbonOnlinePartnerId = partnerId.ToString();
+                partnerIds.AbonGeneratePartnerId = partnerId.ToString();
+                partnerIds.AircashFramePartnerId = partnerId.ToString();
+                partnerIds.AircashFramePartnerIdWithMatchPersonalData = partnerId.ToString();
+                partnerIds.SalesPartnerId = partnerId.ToString();
+                partnerIds.AircashPayoutPartnerId = partnerId.ToString();
+                partnerIds.C2DPayoutPartnerId = partnerId.ToString();
+                partnerIds.C2DDepositPartnerId = partnerId.ToString();
+                partnerIds.AcPayPartnerId = partnerId.ToString();
+                partnerIds.InAppPayPartnerId = partnerId.ToString();
+                partnerIds.DefaulrPartnerId = partnerId.ToString();
+            }
 
             var claims = new List<Claim>();
             claims.Add(new Claim("partnerId", partnerId.ToString()));
+            claims.Add(new Claim("partnerIdsDTO", JsonConvert.SerializeObject(partnerIds)));
             claims.Add(new Claim("username", user.Username));
             claims.Add(new Claim(ClaimTypes.Email, user.Email));
             claims.Add(new Claim("userId", user.UserId.ToString()));
