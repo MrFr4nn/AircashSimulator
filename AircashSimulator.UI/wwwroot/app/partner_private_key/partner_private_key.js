@@ -24,6 +24,7 @@ partnerPrivateKeyModule.service("partnerPrivateKeyService", ['$http', '$q', 'han
                 method: 'POST',
                 url: config.baseUrl + "Signature/ValidateAndSavePartnerKey",
                 data: {
+                    PartnerId: inputs.partnerId,
                     PublicKey: inputs.publicKey,
                     PrivateKey: inputs.privateKey,
                     Password: inputs.password

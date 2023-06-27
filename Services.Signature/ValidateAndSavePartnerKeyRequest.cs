@@ -8,6 +8,7 @@ namespace Services.Signature
 {
     public class ValidateAndSavePartnerKeyRequest
     {
+        public Guid PartnerId { get; set; }
         public string PrivateKey { get; set; }
         public string PublicKey { get; set; }
         public string Password { get; set; }

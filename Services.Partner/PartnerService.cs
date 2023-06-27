@@ -92,10 +92,15 @@ namespace Services.Partner
         public async Task SavePartner(SavePartnerVM request)
         {
             Guid id;
-            if (request.PartnerId != null)
+            if (request.PartnerId != null )
             {
                 var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
                 id = partner.PartnerId;
+                if (request.NewPartnerId != Guid.Empty) 
+                {
+                    id = request.NewPartnerId;
+                }
+                partner.PartnerId = id;
                 partner.PartnerName = request.PartnerName;
                 partner.CurrencyId = request.CurrencyId;
                 partner.CountryCode = request.CountryCode;
@@ -109,6 +114,11 @@ namespace Services.Partner
                     {
                         AircashSimulatorContext.PartnerRoles.Remove(role);
                     }
+                }
+                var users = await AircashSimulatorContext.Users.Where(x=>x.PartnerId== request.PartnerId).ToListAsync();
+                foreach (var user in users)
+                {
+                    user.PartnerId = id;
                 }
 
                 AircashSimulatorContext.Partners.Update(partner);
