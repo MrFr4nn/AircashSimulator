@@ -115,7 +115,7 @@ namespace Services.AircashPaymentAndPayout
 
         }
 
-        public async Task<object> ConfirmTransaction(string barCode, string locationID, Guid partnerId, Guid userId, Guid partnerTransactionID, EnvironmentEnum environment)
+        public async Task<object> ConfirmTransaction(string barCode, string locationID, Guid partnerId, string userId, string partnerTransactionID, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var confirmTransactionResponse = new object();
@@ -201,11 +201,11 @@ namespace Services.AircashPaymentAndPayout
 
         }
 
-        public async Task<object> CancelTransaction(string partnerTransactionID, string locationID, Guid partnerId, Guid userId, EnvironmentEnum environment)
+        public async Task<object> CancelTransaction(string partnerTransactionID, string locationID, Guid partnerId, string userId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var cancelTransactionResponse = new object();
-            var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId.ToString() == partnerTransactionID).FirstOrDefault();
+            var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionID).FirstOrDefault();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
@@ -232,7 +232,7 @@ namespace Services.AircashPaymentAndPayout
                     ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
                     PartnerId = partnerId,
                     AircashTransactionId = transaction.AircashTransactionId,
-                    TransactionId = new Guid (partnerTransactionID),
+                    TransactionId = partnerTransactionID,
                     ServiceId = ServiceEnum.AircashCancellation,
                     UserId = userId,
                     PointOfSaleId = locationID,

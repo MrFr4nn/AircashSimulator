@@ -939,6 +939,56 @@
 
         <hr />
 
+        <h1>Encryption and decryption</h1>
+        <br />
+        <div class="overflow-auto">
+            <p>
+                The URL we are opening looks like:
+                <br />
+                <a href="">https://example.com?platform=aircash&encrypted=<b class="text-danger">{encrypted}</b></a>
+            </p>
+            <p>
+                where <b class="text-danger">{encrypted}</b> is replaced with URL encoded string, for example:
+                <br />
+                <a href="">https://example.com?platform=aircash&encrypted=m8QHxyY5uLsWwecdLY1coYLbx%2bb%2bW59wBuU7suMV%2fwtA5BYnzViJoIfk4E8n0lxgmQ9neJo1dUGscywjzOpV%2bDFLqTYQb%2bntbXcBXAF7F3avcPKmedJeGmWmH1Tma%2bVVQ2Odx3xtx1a1qienstkn62IYxTdGFPjfFXKdzvmVonOiug4ojtfvRVWwhrKBHE1wZ78PVlJJNTptq1AsbwTmwO8Gh1qgA0of4VXKRMb5LS%2bWk1N0Kc01ulAkSVx25ermrdCAkSV%2fWp93PdU7oNLa9zqCzYSvn9ocdXDPQqBL8xulDgGg7CNGn3BMPbvVb306pkXhpNbCwYokk%2fDsdZkP8LCmgolGBRLp%2bYJEPtHXIDU%3d</a>
+
+            </p>
+            <p>
+
+                <b>Instructions for decryption:</b>
+                <ul>
+                    <li class="mb-2">
+                        First you need to decode the URL encoded string to receive base64 string:
+                        <br />
+                        bThRSHh5WTV1THNXd2VjZExZMWNvWUxieCtiK1c1OXdCdVU3c3VNVi93dEE1QlluelZpSm9JZms0RThuMGx4Z21ROW5lSm8xZFVHc2N5d2p6T3BWK0RGTHFUWVFiK250YlhjQlhBRjdGM2F2Y1BLbWVkSmVHbVdtSDFUbWErVlZRMk9keDN4dHgxYTFxaWVuc3RrbjYySVl4VGRHRlBqZkZYS2R6dm1Wb25PaXVnNG9qdGZ2UlZXd2hyS0JIRTF3Wjc4UFZsSkpOVHB0cTFBc2J3VG13TzhHaDFxZ0Ewb2Y0VlhLUk1iNUxTK1drMU4wS2MwMXVsQWtTVngyNWVybXJkQ0FrU1YvV3A5M1BkVTdvTkxhOXpxQ3pZU3ZuOW9jZFhEUFFxQkw4eHVsRGdHZzdDTkduM0JNUGJ2VmIzMDZwa1hocE5iQ3dZb2trL0RzZFprUDhMQ21nb2xHQlJMcCtZSkVQdEhYSURVPQ=
+                    </li>
+                    <li class="mb-2">
+                        Then it needs to be decrypted with AES symmetric key (we are using 128-bit key SXFPCHYKONI6S89U).
+                    </li>
+                    <li>
+                        After decryption the result is in JSON format:
+                        <pre>
+                    {
+                        "partnerId": "469234fe-e988-4425-8752-e336112931bf",
+                        "userId": "4b33b042-7adb-4277-af09-ab0afbae5f9e",
+                        "email": "john.doe@gmail.com",
+                        "firstName": "John",
+                        "lastName": "Doe",
+                        "phoneNumber": "385989097929",
+                        "country": "HR",
+                        "postalCode": "-",
+                        "city": "-",
+                        "address": "-",
+                        "language": "en"
+                    }
+                    </pre>
+                    </li>
+                </ul>
+            </p>
+        </div>
+
+        <hr />
+
         <h1>Production process</h1>
         <br />
         <p>The production process consists of several steps that take place sequentially:</p>

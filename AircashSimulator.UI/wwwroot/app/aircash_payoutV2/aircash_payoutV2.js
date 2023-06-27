@@ -304,19 +304,39 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             },
             outputParametersExample: {
                 first: {
-                    status: 1
+                    Status: 1,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 second: {
-                    status: 2
+                    Status: 2,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 third: {
-                    status: 3
+                    Status: 3,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 forth: {
-                    status: 4
+                    Status: 4,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 fifth: {
-                    status: 5
+                    Status: 5,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 }
             }
         },
@@ -352,7 +372,11 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
                 Signature: "CX9v6V....Bw="
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+                AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                Parameters: {
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }
             },
         },
         checkCode: {

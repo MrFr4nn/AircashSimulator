@@ -48,7 +48,7 @@ namespace AircashSimulator.Controllers
                     ISOCurrencyId = (CurrencyEnum)aircashConfirmTransactionRequest.ISOCurrencyID,
                     PartnerId = new Guid(aircashConfirmTransactionRequest.PartnerID),
                     AircashTransactionId = aircashConfirmTransactionRequest.AircashTransactionID,
-                    PartnerTransactionId = new Guid(aircashConfirmTransactionRequest.PartnerTransactionID)
+                    PartnerTransactionId = aircashConfirmTransactionRequest.PartnerTransactionID
                 };
                 var response = await AircashPayStaticCodeService.ConfirmTransaction(transaction);
                 if (true)

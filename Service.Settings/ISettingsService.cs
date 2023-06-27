@@ -49,15 +49,15 @@ namespace Service.Settings
         Guid AcPayPartnerId { get; }
         Guid InAppPayPartnerId { get; }
         Guid AbonGeneratePartnerId { get; }
-        Guid AircashFramePartnerTransactionAlreadyExists { get; }
+        string AircashFramePartnerTransactionAlreadyExists { get; }
         Guid AcFrameConfirmPayoutValidTransaction { get; }
         Guid AcFrameConfirmPayoutTransactionConfirmationNotAllowed { get; }
         Guid AircashFrameTransactionNotProcessed { get; }
         Guid AbonGenerateBlockedPartnerId { get; }
         Guid AbonGeneratePartnerIdsDoNotMatch { get; }
-        Guid CouponExistsForTheGivenPartnerTransactionId { get; }
+        string CouponExistsForTheGivenPartnerTransactionId { get; }
         Guid AircashPayoutPartnerId { get; }
-        Guid PartnerTransactionIdAlreadyExists { get; }
+        string PartnerTransactionIdAlreadyExists { get; }
         Guid BlockedUserId { get; }
         Guid SalesPartnerId { get; }
         Guid UnableToCancelPayoutTransactionId { get; }

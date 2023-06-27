@@ -118,7 +118,7 @@ namespace Services.AircashPayout
             checkUserRequest.Signature = signature;
             return checkUserRequest;
         }
-        public async Task<object> CreatePayout(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, EnvironmentEnum environment)
+        public async Task<object> CreatePayout(string phoneNumber, string partnerTransactionId, decimal amount, CurrencyEnum currency, string partnerUserId, Guid partnerId, EnvironmentEnum environment)
         {
             
             Response returnResponse = new Response();
@@ -159,7 +159,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = createPayoutResponse;
             return returnResponse;
         }
-        public AircashCreatePayoutRequest GetCreatePayoutRequest(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId)
+        public AircashCreatePayoutRequest GetCreatePayoutRequest(string phoneNumber, string partnerTransactionId, decimal amount, CurrencyEnum currency, string partnerUserId, Guid partnerId)
         { 
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var createPayoutRequest = new AircashCreatePayoutRequest()
@@ -179,7 +179,7 @@ namespace Services.AircashPayout
 
 
 
-        public async Task<object> CreatePayoutV4(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment)
+        public async Task<object> CreatePayoutV4(string phoneNumber, string partnerTransactionId, decimal amount, CurrencyEnum currency, string partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment)
         {
             
             Response returnResponse = new Response();
@@ -221,7 +221,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = createPayoutResponse;
             return returnResponse;
         }
-        public AircashCreatePayoutV4Request GetCreatePayoutV4Request(string phoneNumber, Guid partnerTransactionId, decimal amount, CurrencyEnum currency, Guid partnerUserId, Guid partnerId, List<Parameter> parameters)
+        public AircashCreatePayoutV4Request GetCreatePayoutV4Request(string phoneNumber, string partnerTransactionId, decimal amount, CurrencyEnum currency, string partnerUserId, Guid partnerId, List<Parameter> parameters)
         {
                 var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var createPayoutRequest = new AircashCreatePayoutV4Request()
@@ -243,7 +243,7 @@ namespace Services.AircashPayout
         }
 
 
-        public async Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment)
+        public async Task<object> CheckTransactionStatus(string partnerTransactionId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var checkTransactionStatusResponse = new object();
@@ -270,7 +270,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceResponse = checkTransactionStatusResponse;
             return returnResponse;
         }
-        public AircashCheckTransactionStatusRequest GetCheckTransactionStatusRequest(Guid partnerTransactionId)
+        public AircashCheckTransactionStatusRequest GetCheckTransactionStatusRequest(string partnerTransactionId)
         {
             var checkTransactionStatusResponse = new object();
             var transaction = AircashSimulatorContext.Transactions.Where(x => x.TransactionId == partnerTransactionId).FirstOrDefault();

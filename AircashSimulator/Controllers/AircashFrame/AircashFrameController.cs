@@ -101,7 +101,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             var initiateRequestDTO = new InititateRequestV2Dto
             {
                 PartnerId = partnerId,
-                UserId = Guid.NewGuid(),
+                UserId = Guid.NewGuid().ToString(),
                 Amount = initiateRequest.Amount,
                 MatchParameters = initiateRequest.MatchParameters,
                 PayType = initiateRequest.PayType,
@@ -141,7 +141,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         [HttpGet]
         public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId )
         {
-            await AircashFrameV2Service.NotificationCashierFrameV2(new Guid(partnerTransactionId));
+            await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
             await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);
             return Ok();            
         }
@@ -167,7 +167,7 @@ namespace AircashSimulator.Controllers.AircashFrame
             var initiateRequestDTO = new InititateRequestV2Dto()
             {
                 PartnerId = SettingsService.AircashFramePartnerId,
-                UserId = Guid.NewGuid(),
+                UserId = Guid.NewGuid().ToString(),
                 Amount = SettingsService.AircashFrameDefaultAmount,
                 PayType = PayTypeEnum.Payout,
                 PayMethod = PayMethodEnum.Payout,
@@ -179,7 +179,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 CancelUrl = ""
             };
             var currency = CurrencyEnum.EUR;
-            var partnerTransactionId = Guid.NewGuid();
+            var partnerTransactionId = Guid.NewGuid().ToString();
             switch (errorCode)
             {
                 case AcFrameInitiateErrorCodeEnum.InvalidSignatureOrPartnerId:

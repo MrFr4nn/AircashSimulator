@@ -100,9 +100,9 @@ namespace Services.AircashPayoutV2
                     ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
                     PartnerId = partnerId,
                     AircashTransactionId = serviceResponse.AircashTransactionID,
-                    TransactionId = Guid.Parse(request.PartnerTransactionID),
+                    TransactionId = request.PartnerTransactionID,
                     ServiceId = ServiceEnum.AircashPayout,
-                    UserId = Guid.Parse(partnerUserID),
+                    UserId = partnerUserID,
                     RequestDateTimeUTC = returnResponse.RequestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC
                 });
@@ -163,11 +163,11 @@ namespace Services.AircashPayoutV2
             return returnResponse;
         }
 
-        public async Task<object> ConfirmTransaction(string barCode, Guid partnerId, Guid userId, EnvironmentEnum environment)
+        public async Task<object> ConfirmTransaction(string barCode, Guid partnerId, string userId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var confirmTransactionResponse = new object();
-            var partnerTransactionID = Guid.NewGuid();
+            var partnerTransactionID = Guid.NewGuid().ToString();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
@@ -175,7 +175,7 @@ namespace Services.AircashPayoutV2
             {
                 PartnerID = partnerId.ToString(),
                 BarCode = barCode,
-                PartnerTransactionID = partnerTransactionID.ToString()
+                PartnerTransactionID = partnerTransactionID
             };
             var sequence = AircashSignatureService.ConvertObjectToString(confirmTransactionRequest);
             returnResponse.Sequence = sequence;
@@ -216,7 +216,7 @@ namespace Services.AircashPayoutV2
 
         }
 
-        public async Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment)
+        public async Task<object> CheckTransactionStatus(string partnerTransactionId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var checkTransactionStatusResponse = new object();

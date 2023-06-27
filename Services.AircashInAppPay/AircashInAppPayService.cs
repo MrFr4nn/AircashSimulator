@@ -94,14 +94,14 @@ namespace Services.AircashInAppPay
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 returnResponse.ServiceResponse = JsonConvert.DeserializeObject<RefundTrancsactionApiRS>(response.ResponseContent);
-                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == new Guid(refundTransactionRequest.PartnerTransactionID));
+                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == refundTransactionRequest.PartnerTransactionID);
 
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = refundTransactionRequest.Amount,
                     ISOCurrencyId = transaction.ISOCurrencyId,
                     AircashTransactionId = ((RefundTrancsactionApiRS)returnResponse.ServiceResponse).TransactionID,
-                    TransactionId = new Guid(refundTransactionRequest.PartnerTransactionID),
+                    TransactionId = refundTransactionRequest.PartnerTransactionID,
                     ServiceId = ServiceEnum.AircashPayCancellation,
                     RequestDateTimeUTC = returnResponse.RequestDateTimeUTC,
                     ResponseDateTimeUTC = returnResponse.ResponseDateTimeUTC,

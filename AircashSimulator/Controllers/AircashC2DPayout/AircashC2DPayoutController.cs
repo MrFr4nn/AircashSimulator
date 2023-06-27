@@ -75,7 +75,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRQ confirmTransactionRQ)
         {
-            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, SettingsService.C2DPayoutPartnerId, Guid.NewGuid(), confirmTransactionRQ.Environment);
+            var response = await AircashPayoutV2Service.ConfirmTransaction(confirmTransactionRQ.BarCode, SettingsService.C2DPayoutPartnerId, Guid.NewGuid().ToString(), confirmTransactionRQ.Environment);
             return Ok(response);
         }
 

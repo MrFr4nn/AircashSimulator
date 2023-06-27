@@ -649,7 +649,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerUserID: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                phoneNumber: 385995712738,
+                phoneNumber: "385995712738",
                 signature: "VA514erV6V..."
             },
             responseExample: {
@@ -681,9 +681,27 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 Signature: "ldzZxe....I8="
             },
             responseExample: {
-                first: { status: "1" },
-                second: { status: "2" },
-                third: { status: "3" }
+                first: {
+                    Status: 1,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
+                },
+                second: {
+                    Status: 2,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
+                },
+                third: {
+                    Status: 3,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
+                }
             },
         },
         createPayout: {
@@ -729,7 +747,11 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 "Signature": "XNqywSLWev..."
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+                AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                Parameters: {
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }
             },
         },
         checkTransactionStatus: {
