@@ -8,6 +8,8 @@ using AircashSignature;
 using Domain.Entities.Enum;
 using Services.HttpRequest;
 using System.Threading.Tasks;
+using Services.Signature;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Services.AbonOnlinePartner
 {
@@ -15,14 +17,16 @@ namespace Services.AbonOnlinePartner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
 
         private readonly string ValidateCouponEndpoint = "OnlineProvider/ValidateCoupon";
         private readonly string ConfirmTransactionEndpoint = "OnlineProvider/ConfirmTransaction";
 
-        public AbonOnlinePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
+        public AbonOnlinePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
+            SignatureService = signatureService;
         }
         public async Task<object> ValidateCoupon(string couponCode, string providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
@@ -59,7 +63,15 @@ namespace Services.AbonOnlinePartner
             };
 
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonValidateCouponRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
+            string signature;
+            if (partnerPrivateKey != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
+            }
+            else
+            {
+                signature = SignatureService.GenerateSignature(new Guid(providerId), dataToSign);
+            }
             abonValidateCouponRequest.Signature = signature;
             return abonValidateCouponRequest;
         }
@@ -85,10 +97,10 @@ namespace Services.AbonOnlinePartner
                     Amount = successResponse.CouponValue,
                     ISOCurrencyId = successResponse.ISOCurrency,
                     PartnerId = new Guid(providerId),
-                    TransactionId = Guid.NewGuid(),
+                    TransactionId = Guid.NewGuid().ToString(),
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = DateTime.UtcNow,
-                    UserId = new Guid(userId),
+                    UserId = userId,
                     ServiceId = ServiceEnum.AbonUsed
                 };
                 AircashSimulatorContext.Add(newTransaction);
@@ -121,7 +133,15 @@ namespace Services.AbonOnlinePartner
                 UserId = userId.ToString()
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
+            string signature;
+            if (partnerPrivateKey != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
+            }
+            else
+            {
+                signature = SignatureService.GenerateSignature(new Guid(providerId), dataToSign);
+            }
             abonConfirmTransactionRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
             return abonConfirmTransactionRequest;

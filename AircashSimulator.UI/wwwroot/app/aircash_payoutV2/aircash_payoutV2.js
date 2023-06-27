@@ -61,7 +61,7 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
             method: 'POST',
             url: config.baseUrl + "aircashC2DPayout/CheckTransactionStatus",
             data: {
-                PartnerTransactionId: partnerTransactionId
+                PartnerTransactionId: partnerTransactionId,
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -86,6 +86,7 @@ aircashPayoutV2Module.service("aircashPayoutV2Service", ['$http', '$q', 'handleR
 aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'aircashPayoutV2Service', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, aircashPayoutV2Service, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AircashPayoutV2") == -1) {
         $location.path('/forbidden');
     }
@@ -103,15 +104,14 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
     $scope.checkUserServiceResponse = false;
 
     $scope.checkUser = function () {
-        console.log("CheckUser...");
         $scope.checkUserRequest = {
+            partnerId: $scope.partnerIds.C2DPayoutPartnerId,
             phoneNumber: $scope.checkUserModel.phoneNumber,
             parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toLocaleDateString('en-CA') }]
         }
         $scope.checkUserServiceBusy = true;
         aircashPayoutV2Service.checkUser($scope.checkUserRequest)
             .then(function (response) {
-                console.log(response);
 
                 if (response) {
                     $scope.checkUserRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -131,15 +131,14 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
     $scope.curlCheckUserServiceBusy = false;
     $scope.curlCheckUserServiceResponse = false;
     $scope.getCurlCheckUser = function () {
-        console.log("CheckUser...");
         $scope.checkUserRequest = {
+            partnerId: $scope.partnerIds.C2DPayoutPartnerId,
             phoneNumber: $scope.checkUserModel.phoneNumber,
             parameters: [{ key: "PayerFirstName", value: $scope.checkUserModel.firstName }, { key: "PayerLastName", value: $scope.checkUserModel.lastName }, { key: "PayerBirthDate", value: $scope.checkUserModel.birthDate.toLocaleDateString('en-CA') }]
         }
         $scope.curlCheckUserServiceBusy = true;
         aircashPayoutV2Service.getCurlCheckUser($scope.checkUserRequest)
             .then(function (response) {
-                console.log(response);
                 if (response) {
                   $scope.CurlResponseCheckUser = response;
                 }
@@ -165,6 +164,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
 
     $scope.createPayout = function () {
         $scope.createPayoutRequest = {
+            partnerId: $scope.partnerIds.C2DPayoutPartnerId,
             phoneNumber: $scope.createPayoutModel.phoneNumber,
             amount: $scope.createPayoutModel.amount,
             locationID: $scope.checkUserModel.locationID,
@@ -193,6 +193,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
     $scope.curlCreatePayoutServiceResponse = false;
     $scope.getCurlCreatePayout = function () {
         $scope.createPayoutRequest = {
+            partnerId: $scope.partnerIds.C2DPayoutPartnerId,
             phoneNumber: $scope.createPayoutModel.phoneNumber,
             amount: $scope.createPayoutModel.amount,
             locationID: $scope.checkUserModel.locationID,
@@ -303,24 +304,39 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             },
             outputParametersExample: {
                 first: {
-                    status: 1,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 1,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 second: {
-                    status: 2,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 2,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 third: {
-                    status: 3,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 3,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 forth: {
-                    status: 4,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 4,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 },
                 fifth: {
-                    status: 5,
-                    AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                    Status: 5,
+                    Parameters: {
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
                 }
             }
         },
@@ -356,8 +372,11 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
                 Signature: "CX9v6V....Bw="
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
-                AircashUserId: "0e7fa3df-4195-4ecd-896a-70bdb1ceb904"
+                AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                Parameters: {
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }
             },
         },
         checkCode: {

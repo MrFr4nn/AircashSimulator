@@ -99,6 +99,15 @@ namespace Services.Signature
                 return "Success";
             }
             return "Provided keys are invalid";
+        } 
+        public async Task<string> RemovePartnerKeys(Guid partnerId)
+        {
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            partner.PrivateKey = "";
+            partner.PublicKey = "";
+            partner.PrivateKeyPass = "";
+            AircashSimulatorContext.SaveChanges();
+            return "Success";
         }
 
         public KeyToSing GetKeyToSing(Guid partnerId)

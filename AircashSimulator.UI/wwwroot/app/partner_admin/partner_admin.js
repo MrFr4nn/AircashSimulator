@@ -190,8 +190,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         for (var i = 0; i < $scope.filteredRoles.length; i++) {
             $scope.sendRoles.push($scope.filteredRoles[i].roleId);
         }
-        $scope.partner.privateKey = "-";
-        $scope.partner.privateKeyPass = "-";
+        $scope.partner.privateKey = "";
+        $scope.partner.privateKeyPass = "";
         $scope.useDefaultPartner = 1;
         $scope.environment = 2;
         $scope.partner.countryCode = $scope.countryPickerCode.countryCode;

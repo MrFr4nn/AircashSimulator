@@ -16,6 +16,7 @@ partnerPrivateKeyModule.service("partnerPrivateKeyService", ['$http', '$q', 'han
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
             validateAndSave: validateAndSave,
+            removePartnerKeys: removePartnerKeys,
             getPartnerKeys: getPartnerKeys
         });
         function validateAndSave(inputs) {
@@ -38,6 +39,13 @@ partnerPrivateKeyModule.service("partnerPrivateKeyService", ['$http', '$q', 'han
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
+        function removePartnerKeys() {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "Signature/RemovePartnerKeys",
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
     }
 ]);
 
@@ -57,6 +65,7 @@ partnerPrivateKeyModule.controller("partnerPrivateKeyCtrl",
                     })
                     .catch(function (error) {
                         $scope.validateAndSaveServiceBusy = false;
+                        $rootScope.showGritter("error");
                     });
             }
 
@@ -68,7 +77,17 @@ partnerPrivateKeyModule.controller("partnerPrivateKeyCtrl",
                         $scope.inputs.password = response.privateKeyPass
                     })
                     .catch(function (error) {
-                        
+                        $rootScope.showGritter("error");
+                    });
+            }
+            $scope.removePartnerKeys = function () {
+                partnerPrivateKeyService.removePartnerKeys()
+                    .then(function (response) {
+                        $rootScope.showGritter(response);
+                        $scope.getPartnerKeys();
+                    })
+                    .catch(function (error) {
+                        $rootScope.showGritter("error");
                     });
             }
 

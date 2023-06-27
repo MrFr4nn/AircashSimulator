@@ -11,9 +11,9 @@ namespace Services.AircashFrameV2
 {
     public interface IAircashFrameV2Service
     {
-        public Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, Guid partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment);
+        public Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, string partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment);
         public Task<ResponseAircashFrameV2Url> InitiateCashierFrameV2(InititateRequestV2Dto initiateRequestDTO, EnvironmentEnum environment);
-        public Task NotificationCashierFrameV2(Guid transactionId);
+        public Task NotificationCashierFrameV2(string transactionId);
         Task<object> CheckTransactionStatusFrame(Guid partnerId, string transactionId, EnvironmentEnum environment);
         Task<object> ConfirmPayout(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency, EnvironmentEnum environment);
         ConfirmPayoutRequest GetConfirmPayoutRequest(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency);

@@ -12,8 +12,8 @@ namespace Services.AircashPayoutV2
         Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameters> customParameters, EnvironmentEnum environment);
         Task<object> CreatePayout(Guid partnerId, decimal amount, string phoneNumber, string partnerUserID, List<Parameters> parameters, EnvironmentEnum environment);
         Task<object> CheckCode(Guid partnerId, string barCode, EnvironmentEnum environment);
-        Task<object> ConfirmTransaction(string barCode, Guid partnerId, Guid userId, EnvironmentEnum environment);
-        Task<object> CheckTransactionStatus(Guid partnerTransactionId, EnvironmentEnum environment);
+        Task<object> ConfirmTransaction(string barCode, Guid partnerId, string userId, EnvironmentEnum environment);
+        Task<object> CheckTransactionStatus(string partnerTransactionId, EnvironmentEnum environment);
         string GetCreatePayoutEndpoint(EnvironmentEnum environment);
         string GetCheckUserEndpoint(EnvironmentEnum environment);
         AircashCheckUserRQ GetCheckUserRequest(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameters> customParameters);
