@@ -80,11 +80,7 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                 $scope.amountPaidModel.AmountPaid =String(number) ;
                 $scope.$apply();
             });
-            $scope.update = function (value) {
-                $scope.amountPaidModel.AmountPaid = value;
-            };
             start();
-
             $scope.setDefaults();
 
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
