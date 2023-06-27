@@ -29,6 +29,9 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                 phoneNumber: "",
                 amount: 0,
             };
+            $scope.amountPaidModel = {
+                AmountPaid: "0",
+            };
 
             $scope.setDefaults = function () {
                 $scope.paymentModel.amount = 0;
@@ -36,6 +39,7 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
                 $scope.paymentModel.phoneNumber = "";
                 $scope.deepLinkServiceBusy = false;
             };
+
 
             $scope.Deposit = function ($event) {
                 var link = "";
@@ -69,8 +73,16 @@ cashierAcPaymentModule.controller("cashierAcPaymentCtrl",
             });
             connection.on("TransactionConfirmedMessagePayment", (message) => {
                 $rootScope.showGritter("Payment received ", message);
+                let stringToSplit = message;
+                let stringarray = stringToSplit.split(" ");
+                stringarray[1] = stringarray[1].replace("€", "").replace(",", "");
+                let number = Number(stringarray[1]) + Number($scope.amountPaidModel.AmountPaid);
+                $scope.amountPaidModel.AmountPaid =String(number) ;
+                $scope.$apply();
             });
-
+            $scope.update = function (value) {
+                $scope.amountPaidModel.AmountPaid = value;
+            };
             start();
 
             $scope.setDefaults();
