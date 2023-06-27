@@ -50,9 +50,11 @@ partnerPrivateKeyModule.service("partnerPrivateKeyService", ['$http', '$q', 'han
 ]);
 
 partnerPrivateKeyModule.controller("partnerPrivateKeyCtrl",
-    ['$scope', '$state', 'partnerPrivateKeyService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, $state, partnerPrivateKeyService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-
+    ['$scope', '$state', 'partnerPrivateKeyService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage',
+        function ($scope, $state, partnerPrivateKeyService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+            $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+            $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+            $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
 
             $scope.inputs = {};
             $scope.validateAndSaveServiceBusy = false;
@@ -72,6 +74,7 @@ partnerPrivateKeyModule.controller("partnerPrivateKeyCtrl",
             $scope.getPartnerKeys = function () {
                 partnerPrivateKeyService.getPartnerKeys()
                     .then(function (response) {
+                        $scope.inputs.partnerId = $scope.decodedToken.partnerId
                         $scope.inputs.publicKey = response.publicKey
                         $scope.inputs.privateKey = response.privateKey
                         $scope.inputs.password = response.privateKeyPass
