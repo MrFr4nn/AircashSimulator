@@ -182,6 +182,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             }
             $scope.checkPlayerParameters.push($scope.requestExample.email);
         } else {
+
             if ($scope.checkPlayerGenerateSignatureModel.identificator == "user@example.net") {
                 $scope.checkPlayerGenerateSignatureModel.identificator = "aircash";
                 setRequestExamples($scope.checkPlayerGenerateSignatureModel);
