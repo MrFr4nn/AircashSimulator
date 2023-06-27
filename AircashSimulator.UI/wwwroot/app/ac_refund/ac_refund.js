@@ -63,7 +63,7 @@ acRefundModule.controller("acRefundModuleCtrl", ['$scope', '$state', '$filter', 
         $scope.requestExample= {
                 PartnerID: "8f62c8f0- 7155 - 4c0e- 8ebe - cd9357cfd1bf",
                 PartnerTransactionID: "67cef954-7372-4a12-9250-98a42bcf0317",
-                RefundTransactionID: "9a90fcdc-572d-44b3-904d-1ff0629c7046",
+                RefundPartnerTransactionID: "9a90fcdc-572d-44b3-904d-1ff0629c7046",
                 Amount: "100",
                 Signature: "g/iZ .... KgY/6o="
             }

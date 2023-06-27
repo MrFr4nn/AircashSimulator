@@ -10,6 +10,7 @@ namespace Services.Partner
     public class SavePartnerVM
     {
         public Guid? PartnerId { get; set; }
+        public Guid NewPartnerId { get; set; }
         public string PartnerName { get; set; }
         public string PrivateKey { get; set; }
         public string PrivateKeyPass { get; set; }

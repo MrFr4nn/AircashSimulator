@@ -1,0 +1,677 @@
+﻿<h1>Deposit process</h1>
+<p>
+    This chapter describes the deposit process using the Aircash application. The described process explains how
+    the user can scan the QR code and top up the slot machine.
+</p>
+<p></p>>The transfer process consists of three steps:</p>
+<ol>
+    <li>
+        Scanning the QR code (ReadCode)
+        <ul>
+            <li>
+                After the user scans the QR code, Aircash will check the status of the slot machine by sending the
+                ReadCode request.
+            </li>
+            <li>
+                Partner platform will return the payment status of the machine along with the initiated transaction id
+            </li>
+        </ul>
+    </li>
+    <li>
+        User payment
+        <ul>
+            <li>
+                The user needs to enter the amount within the Aircash application and confirm the transaction
+            </li>
+            <li>
+                User will have the option to confirm or reject transaction payment. If the transaction is rejected, the
+                Aircash system will not send the confirmation request.
+            </li>
+        </ul>
+    </li>
+    <li>
+        Transaction confirmation (ConfirmTransaction)
+        <ul>
+            <li>
+                The partner system is obliged to provide an access point through which funds are transferred to the
+                slot machine - a request to this endpoint will be sent once the user confirms the transaction
+            </li>
+            <li>
+                Partner system must ensure that transaction is confirmed and processed only once as Aircash can
+                confirm one transaction several times in case of network issues
+            </li>
+            <li>
+                Partner system must acknowledge each processed transaction to Aircash system
+            </li>
+        </ul>
+    </li>
+</ol>
+
+<hr />
+
+<h1>Withdrawal process</h1>
+
+<p>
+    This chapter describes the withdrawal process using the Aircash application. The described process explains
+    how the user can scan the QR code and withdraw the funds from the slot machine.
+</p>
+<p>The transfer process consists of two steps:</p>
+
+<ol>
+    <li>
+        Scanning the QR code (ReadCode)
+        <ul>
+            <li>
+                After the user scans the QR code, Aircash will check the status of the slot machine by sending the
+                ReadCode request.
+            </li>
+            <li>
+                Partner platform will return the withdrawal status of the machine
+            </li>
+        </ul>
+    </li>
+    <li>
+        Create payout
+        <ul>
+            <li>
+                If the status of the slot machine is pending withdrawal, the Partner platform should send a
+                CreatePayout request with the phone number provided in the ReadCode request
+            </li>
+            <li>
+                Aircash will receive the request and top up the user’s wallet
+            </li>
+        </ul>
+    </li>
+</ol>
+
+<hr />
+
+<h1>User flow</h1>
+
+<h4>User deposit flow</h4>
+<ol>
+    <li>
+        Using the Aircash application (Scan&Pay), the user scans the QR code printed on the frontal slot machine part
+    </li>
+    <li>
+        The user enters the amount he wants to deposit
+        <ol type="a">
+            <li>If the user enters the amount below the minimum, Aircash will display an error message</li>
+            <li>If the user enters the amount above the maximum, Aircash will display an error message</li>
+        </ol>
+    </li>
+    <li>
+        The user confirms the transaction and the slot machine is credited
+    </li>
+</ol>
+<h4>User withdrawal flow</h4>
+<ol>
+    <li>The user clicks the collect button on slot machine</li>
+    <li>
+        The user opens his Aircash application and using the Scan&Pay option, scans the QR code printed on the
+        frontal slot machine part
+    </li>
+    <li>
+        After scanning the QR code, the Aircash application will display the information message to the user notifying
+        him that the withdrawal transaction is processing
+    </li>
+    <li>
+        The user receives a notification and the wallet is credited
+    </li>
+</ol>
+
+<hr />
+
+<h1>API</h1>
+
+<h4>Methods called by Aircash on the partner system</h4>
+
+<p>
+    The Partner should open two REST method that receives JSON objects in order to successfully process transactions:
+</p>
+<ul>
+    <li>
+        ReadCode - the method used by the Aircash to check the status of the slot machine.
+    </li>
+    <li>
+        ConfirmTransaction - the method used by the Aircash to confirm the deposit transaction.
+    </li>
+</ul>
+
+
+<h4>Methods called by partner system on the Aircash system</h4>
+
+<p>In case of the withdrawal process, Aircash will provide REST method that receives JSON objects:</p>
+<ul>
+    <li>
+        CreatePayout
+    </li>
+</ul>
+
+<p>All methods should have common behavior in case of responses:</p>
+<ul>
+    <li>
+        In case of successful response: HTTP 200 OK message with JSON content
+    </li>
+    <li>
+        In case of server error: HTTP response 500 Server error
+    </li>
+    <li>
+        In case of bad request: HTTP response 400 Bad request with json content about error
+    </li>
+    <li>
+        In case of invalid signature: 401 Unauthorized
+    </li>
+</ul>
+
+<h4>ReadCode</h4>
+
+<p>
+    The method is used by the Aircash platform to check the status of the slot machine. The Enciso platform should
+    enable the REST API endpoint to which the Aircash platform will send a request after the user scans the QR code
+    printed on the slot machine.
+</p>
+
+<uib-tabset>
+    <uib-tab index="ReadCode-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>String</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Code</b></td>
+                        <td>string</td>
+                        <td>
+                            Slot machine unique code displayed as a QR code sticker
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PhoneNumber</b></td>
+                        <td>string</td>
+                        <td>
+                            Phone number is a unique identifier in the Aircash system, and can
+                            uniquely define the Aircash user. This parameter will be used by the
+                            Partner platform in the withdrawal process. The phone number will be in
+                            MSISDN format (eg. 3859812345678)
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            Signature generated by the Aircash system that will be verified by the
+                            Partner platform before processing the request.
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="ReadCode-tab-1" heading="Request example" classes="nav-item">
+        <jsonformatter data="slotMachine.ReadCode.requestExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="ReadCode-tab-2" heading="Output parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="4">Status</td>
+                        <td rowspan="4">int</td>
+                        <td>
+                            1 - payment mode (slot machine can accept the payment)
+                        </td>
+                        <td rowspan="4">YES</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            2 - payout mode (player has pressed the collect button on the
+                            slot)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            3 - out of order (deposit and withdrawal not possible)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4 - not exists (deposit and withdrawal not possible)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>PartnerID</td>
+                        <td>String</td>
+                        <td>
+                            Unique identifier of the partner. The value of this parameter is
+                            provided by the Aircash. Used for different entities (per country,
+                            per currency, or company)
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>PartnerTransactionID</td>
+                        <td>String</td>
+                        <td>
+                            Unique identifier of the transaction in the platform
+                        </td>
+                        <td>YES (if status is 1 or 2)</td>
+                    </tr>
+                    <tr>
+                        <td>Min</td>
+                        <td>Decimal?</td>
+                        <td>
+                            The minimum amount in case of payment status (1)
+                        </td>
+                        <td>YES (if status is 1)</td>
+                    </tr>
+                    <tr>
+                        <td>Max</td>
+                        <td>Decimal?</td>
+                        <td>
+                            The maximum amount in case of payment status (1)
+                        </td>
+                        <td>YES (if status is 1)</td>
+                    </tr>
+                    <tr>
+                        <td>CurrencyID</td>
+                        <td>Int?</td>
+                        <td>
+                            ISO currency code (eg. 191, 978…)
+                        </td>
+                        <td>YES (if status is 1)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="ReadCode-tab-3" heading="Error Messages" class="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case of the signature mismatch, Aircash should receive an unauthorized response.
+                        </td>
+                        <td>
+                            Verify the sequence and certificates with Aircash support
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <p>When agreeing to this method, Aircash will need a list of other possible errors that may happen.</p>
+    </uib-tab>
+</uib-tabset>
+
+<h4>ConfirmTransaction</h4>
+
+<p>
+    The method used by the Aircash system to notify the Partner platform to process the deposit transaction identified by
+    the PartnerTransactionID from the ReadCode response:
+</p>
+
+<ul>
+    <li>
+        If the transaction is a deposit request, the Aircash will send the amount that needs to be added to the slot
+        machine
+    </li>
+</ul>
+
+<p>
+    Aircash will send the request after the user confirms the deposit within the Aircash application. This method should
+    be idempotent, so in case of any failure, Aircash will repeat the request with the same parameters.
+</p>
+
+<uib-tabset>
+    <uib-tab index="ConfirmTransaction-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>String</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Transaction ID in the partner system (returned in
+                            the ReadCode response)
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>AircashTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique Transaction ID in the Aircash system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>Decimal</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>String</td>
+                        <td>
+                            Signature generated by the Aircash system that
+                            will be verified by Partner platform before
+                            processing request.
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-1" heading="Request example" classes="nav-item">
+        <jsonformatter data="slotMachine.ConfirmTransaction.requestExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-2" heading="Response parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PartnerTransactionID</td>
+                        <td>String</td>
+                        <td>
+                            Transaction ID in the partner system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>AircashTransactionID</td>
+                        <td>String</td>
+                        <td>
+                            Unique Transaction ID in the Aircash system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-3" heading="Response example" class="nav-item">
+        <jsonformatter data="slotMachine.ConfirmTransaction.responseExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="ConfirmTransaction-tab-4" heading="Error Messages" class="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case of the signature mismatch, Aircash should receive an unauthorized response.
+                        </td>
+                        <td>
+                            Verify the sequence and certificates with Aircash support
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <p>When agreeing to this method, Aircash will need a list of other possible errors that may happen.</p>
+    </uib-tab>
+</uib-tabset>
+
+<h4>CreatePayout</h4>
+
+<p>
+    The method used by the Partner platform to confirm the withdrawal on the Aircash platform. On each successful
+    request, the Aircash system will deposit funds into the user's account. This method needs to be sent to the Aircash
+    platform automatically upon receiving the ReadCode request, in case of the payout status of the slot machine.
+</p>
+
+<uib-tabset>
+    <uib-tab index="CreatePayout-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>String</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Partner identifier
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Transaction ID in the partner system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>Decimal</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>PhoneNumber</b></td>
+                        <td>string</td>
+                        <td>
+                            Phone number is unique identifier in Aircash
+                            system, and can uniquely define Aircash user.
+                            Phone number must be in MSISDN format.
+                            Eg. 3859812345678 (State Number
+                            385, number of operators 98, number of users
+                            1234567)
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerUserID</b></td>
+                        <td>string</td>
+                        <td>
+                            Slot machine unique identifier
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>CurrencyID</b></td>
+                        <td>int</td>
+                        <td>
+                            ISO 4217 code of the currency the payout will
+                            be made in
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>String</td>
+                        <td>
+                            Signature generated by the Aircash system that
+                            will be verified by Partner platform before
+                            processing request.
+                        </td>
+                        <td>
+                            YES
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="CreatePayout-tab-1" heading="Request example" classes="nav-item">
+        <jsonformatter data="slotMachine.CreatePayout.requestExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="CreatePayout-tab-2" heading="Response parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AircashTransactionID</td>
+                        <td>String</td>
+                        <td>
+                            Transaction ID from Aircash system.
+                            Returns only in case of successful
+                            payment.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="CreatePayout-tab-3" heading="Response example" class="nav-item">
+        <jsonformatter data="slotMachine.CreatePayout.responseExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="CreatePayout-tab-4" heading="Error Messages" class="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>401</b></td>
+                        <td>
+                            In case the partner sends an
+                            unknown partner ID or invalid
+                            signature Aircash system will
+                            return this response
+                        </td>
+                        <td>
+                            Verify that PartnerID and Signature are correct in your
+                            request. If they are all according to documentation please
+                            contact Aircash support
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="7"><b>400</b></td>
+                        <td rowspan="7">
+                            Aircash system returns in this case response containing the
+                            error code with error info that
+                            partner system can send
+                            corresponding message to the
+                            partner.
+                        </td>
+                        <td>
+                            4000 - unknown phone number - warn user that user
+                            with inputted number doesn't exist in Aircash system
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4001 - user with phone number exist in Aircash system
+                            but doesn’t have correct PersonaID. This error can occur
+                            only in case the partner send personalID in request
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4002 - transaction with PartnerTransactionID already
+                            exists
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4003 - amount is below limit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4004 - amount is over limit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4005 - user is blocked or user has reached limit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            4006 - currencies do not match
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+</uib-tabset>

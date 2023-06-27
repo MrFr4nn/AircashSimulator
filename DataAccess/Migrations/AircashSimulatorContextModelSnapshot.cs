@@ -142,6 +142,9 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PublicKey")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("UseDefaultPartner")
                         .HasColumnType("bit");
 
@@ -190,8 +193,8 @@ namespace DataAccess.Migrations
                     b.Property<Guid>("PartnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PartnerTransactionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PartnerTransactionId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PayMethod")
                         .HasColumnType("int");
@@ -211,8 +214,8 @@ namespace DataAccess.Migrations
                     b.Property<int>("TransactionSatus")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -242,8 +245,9 @@ namespace DataAccess.Migrations
                     b.Property<Guid>("PartnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PartnerTransactionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("PartnerTransactionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("RequestDateTimeUTC")
                         .HasColumnType("datetime2");
@@ -254,8 +258,9 @@ namespace DataAccess.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("ValidForPeriod")
                         .HasColumnType("int");
@@ -320,11 +325,13 @@ namespace DataAccess.Migrations
                     b.Property<int>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TransactionId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("TransactionId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -367,8 +374,9 @@ namespace DataAccess.Migrations
                         .HasMaxLength(24)
                         .HasColumnType("nvarchar(24)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Username")
                         .IsRequired()

@@ -18,11 +18,12 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
         cancelTransaction: cancelTransaction,
         checkTransactionStatus: checkTransactionStatus,
     });
-    function generateTransaction(amount, description, locationID) {
+    function generateTransaction(amount, description, locationID, partnerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashInAppPay/GenerateTransaction",
             data: {
+                PartnerId: partnerId,
                 Amount: amount,
                 Description: description,
                 LocationID: locationID
@@ -55,7 +56,14 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
 }
 ]);
 
-acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'acInAppPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acInAppPayService, $http, JwtParser, $uibModal, $rootScope) {
+acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'acInAppPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, acInAppPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
+    if ($scope.partnerRoles.indexOf("AircashInAppPay") == -1) {
+        $location.path('/forbidden');
+    }
+
     $scope.generateTransactionModel = {
         amount: null,
         description: null
@@ -82,7 +90,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     $scope.generateTransaction = function () {
         $scope.generateBusy = true;
         $scope.generateResponded = false;
-        acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID)
+        acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID, $scope.partnerIds.InAppPayPartnerId)
             .then(function (response) {
                 if (response) {
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;

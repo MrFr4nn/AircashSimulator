@@ -6,6 +6,7 @@ using AircashSimulator.Extensions;
 using System;
 using Services.User;
 using Domain.Entities.Enum;
+using Service.Settings;
 
 namespace AircashSimulator.Controllers
 {
@@ -16,19 +17,19 @@ namespace AircashSimulator.Controllers
         private IAircashInAppPayService AircashInAppPayService;
         private UserContext UserContext;
         private IUserService UserService;
-        private Guid CashierPartnerId = new Guid("d47af4a2-fdc4-44f5-a1d6-79ddca59f5dc");
-        public AircashInAppPayController(IAircashInAppPayService aircashInAppPayService, UserContext userContext, IUserService userService) 
+        private ISettingsService SettingsService;
+        public AircashInAppPayController(IAircashInAppPayService aircashInAppPayService, UserContext userContext, IUserService userService, ISettingsService settingsService) 
         {
             AircashInAppPayService = aircashInAppPayService;
             UserContext = userContext;
             UserService = userService;
+            SettingsService = settingsService;
         }
 
         [HttpPost]
         public async Task<IActionResult> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest) 
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            generateTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
             var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest, environment);
             return Ok(response);
         }
@@ -56,7 +57,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CashierGenerateTransaction(GenerateTransactionRequest generateTransactionRequest)
         {
-            generateTransactionRequest.PartnerID = CashierPartnerId;
+            generateTransactionRequest.PartnerID = SettingsService.InAppPayPartnerId;
             var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest, EnvironmentEnum.Staging);
             return Ok(response);
         }

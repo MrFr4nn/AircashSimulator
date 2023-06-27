@@ -161,11 +161,12 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
 acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'HelperService', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, HelperService, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
         $location.path('/forbidden');
     }
 
-
+    console.log($scope.partnerIds);
     $scope.copyToClipboard = function (data) {
         navigator.clipboard.writeText(data);
     }
@@ -250,6 +251,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateModel.payType = $scope.initiateModelSelected.data.payType;
         $scope.initiateModel.payMethod = $scope.initiateModelSelected.data.payMethod;
         $scope.initiateModel.amount = $scope.initiateModelSelected.data.amount;
+        $scope.config.useMatchPersonalData = false;
+        $scope.initiateModel.firstName = "";
+        $scope.initiateModel.lastName = "";
     };
 
     $scope.setInititateModel();
@@ -258,7 +262,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.locale.languageInput = "en";
         $scope.locale.countryISOCodeInput = "HR"
 
-        $scope.initiateModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
+        $scope.initiateModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.initiateModel.partnerUserId = HelperService.NewGuid();
         $scope.initiateModel.notificationUrl = $location.absUrl();
         $scope.initiateModel.partnerTransactionId = HelperService.NewGuid();
@@ -269,9 +273,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateModel.cancelUrl = $location.absUrl().replace($location.url(), "/cancel");
         $scope.initiateModel.originUrl = "";
 
-        $scope.confirmModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
+        $scope.confirmModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.confirmModel.currencyId = 978;
-        $scope.transactionModel.partnerId = $scope.config.useMatchPersonalData ? "94fed252-c749-4aa3-98e8-f4ff62a957a1" : "5680e089-9e86-4105-b1a2-acd0Cd77653c";
+        $scope.transactionModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
     }
 
     $scope.transactionId;
@@ -757,7 +761,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
                 partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
-                amount: "100",
+                amount: 100,
                 currencyId: 978,
                 payType: 0,
                 payMethod: 2,
@@ -802,7 +806,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             requestExample: {
                 partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
-                amount: "100",
+                amount: 100,
                 currencyId: 978,
                 signature: "jBMpdollER..."
             },

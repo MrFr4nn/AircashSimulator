@@ -51,7 +51,7 @@ cashierAcPayoutModule.controller("cashierAcPayoutCtrl",
                 cashierAcPayoutService.createCashierPayout($scope.createPayoutModel.phoneNumber, $scope.createPayoutModel.amount)
                     .then(function (response) {
                         console.log(response);
-                        if (response.serviceResponse.message == "Unknown phone number") {
+                        if (response.serviceResponse.message != null) {
                             $rootScope.showGritter("Error", response.serviceResponse.message);
                         }
                         else {

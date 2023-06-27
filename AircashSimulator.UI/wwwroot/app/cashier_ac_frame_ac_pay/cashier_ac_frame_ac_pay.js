@@ -56,15 +56,15 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                 if ($scope.useMatchPersonalData) {
                     $scope.matchParameters = [
                         {
-                            key: "FirstName",
+                            key: "PayerFirstName",
                             value: $scope.createCashierAcFrameAcPayModel.firstName
                         },
                         {
-                            key: "LastName",
+                            key: "PayerLastName",
                             value: $scope.createCashierAcFrameAcPayModel.lastName
                         },
                         {
-                            key: "DateOfBirth",
+                            key: "PayerBirthDate",
                             value: $scope.createCashierAcFrameAcPayModel.birthDate.toLocaleDateString('en-CA')
                         }
                     ];

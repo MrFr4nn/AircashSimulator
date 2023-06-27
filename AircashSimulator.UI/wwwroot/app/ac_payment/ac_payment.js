@@ -16,7 +16,9 @@ acPaymentModule.service("acPaymentService", ['$http', '$q', 'handleResponseServi
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
             generateCheckPlayerSignature: generateCheckPlayerSignature,
-            generateCreateAndConfirmSignature: generateCreateAndConfirmSignature
+            generateCreateAndConfirmSignature: generateCreateAndConfirmSignature,
+            checkPlayer: checkPlayer,
+            createAndConfirm: createAndConfirm,
         });
         function generateCheckPlayerSignature(parameters) {
             var request = $http({
@@ -39,10 +41,34 @@ acPaymentModule.service("acPaymentService", ['$http', '$q', 'handleResponseServi
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
+        function checkPlayer(endpint, parameters) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "AircashPayment/CheckPlayerPartner",
+                data: {
+                    Endpoint: endpint,
+                    Parameters: parameters
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
+        function createAndConfirm(endpint, parameters, amount, transactionId) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "AircashPayment/CreateAndConfirmPartner",
+                data: {
+                    Endpoint: endpint,
+                    Amount: amount,
+                    TransactionId: transactionId,
+                    Parameters: parameters
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
     }
 ]);
 
-acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentService', '$filter', '$timeout', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, acPaymentService, $filter, $timeout, $http, JwtParser, $uibModal, $rootScope) {
+acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentService', '$filter', '$timeout', '$http', 'JwtParser', '$uibModal', 'config', 'HelperService', '$rootScope', function ($scope, $state, acPaymentService, $filter, $timeout, $http, JwtParser, $uibModal, config, HelperService, $rootScope) {
 
     $scope.copyToClipboard = function (isProduction) {
         if (isProduction) {
@@ -73,9 +99,10 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         firstname: "John",
         lastname: "Doe",
         birthDate: new Date('1990-01-01'),
-        amount:  123.45
+        amount: 123.45
     }
-    function setRequestExamples(generateSignatureModel) {;
+    function setRequestExamples(generateSignatureModel) {
+        ;
         $scope.requestExample = {
             username: {
                 key: "username",
@@ -92,6 +119,10 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             countryCode: {
                 key: "countryCode",
                 value: generateSignatureModel.countryCode
+            },
+            aircashUserID: {
+                key: "AircashUserID",
+                value: generateSignatureModel.aircashUserID
             },
             firstName: {
                 key: "FirstName",
@@ -151,6 +182,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             }
             $scope.checkPlayerParameters.push($scope.requestExample.email);
         } else {
+
             if ($scope.checkPlayerGenerateSignatureModel.identificator == "user@example.net") {
                 $scope.checkPlayerGenerateSignatureModel.identificator = "aircash";
                 setRequestExamples($scope.checkPlayerGenerateSignatureModel);
@@ -162,6 +194,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCheckPlayerModel.currency) $scope.checkPlayerParameters.push($scope.requestExample.currency);
         if ($scope.checkboxCheckPlayerModel.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCheckPlayerModel.merchant) $scope.checkPlayerParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCheckPlayerModel.aircashUserID) $scope.checkPlayerParameters.push($scope.requestExample.aircashUserID);
         if ($scope.checkboxCheckPlayerModel.match)
             $scope.checkPlayerParameters.push(
                 $scope.requestExample.firstName,
@@ -204,6 +237,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCreateAndConfirmModel.currency) $scope.createAndConfirmParameters.push($scope.requestExample.currency);
         if ($scope.checkboxCreateAndConfirmModel.countryCode) $scope.createAndConfirmParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCreateAndConfirmModel.merchant) $scope.createAndConfirmParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCreateAndConfirmModel.aircashUserID) $scope.createAndConfirmParameters.push($scope.requestExample.aircashUserID);
         if ($scope.checkboxCreateAndConfirmModel.match)
             $scope.createAndConfirmParameters.push(
                 $scope.requestExample.firstName,
@@ -222,7 +256,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         typingTimerCreateAndConfirm = setTimeout(() => {
             $scope.generateCreateAndConfirmSignature();
         }, 1000);
-        
+
     }
 
     $scope.generateCheckPlayerSignatureBusy = false;
@@ -233,7 +267,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         acPaymentService.generateCheckPlayerSignature($scope.checkPlayerParameters)
             .then(function (response) {
                 if (response) {
-                    $scope.generateCheckPlayerSignatureResponse = JSON.stringify(response, null, 4);
+                    $scope.generateCheckPlayerSignatureResponse = JSON.stringify(response.aircashPaymentCheckPlayer, null, 4);
+                    $scope.RequestExampleSequence = response.sequence;
                 }
                 $scope.generateCheckPlayerSignatureBusy = false;
                 $scope.generateCheckPlayerSignatureResponded = true;
@@ -251,7 +286,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         acPaymentService.generateCreateAndConfirmSignature($scope.createAndConfirmParameters, $scope.createAndConfirmGenerateSignatureModel.amount)
             .then(function (response) {
                 if (response) {
-                    $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response, null, 4);
+                    $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response.aircashPaymentCreateAndConfirmPayment, null, 4);
+                    $scope.RequestExampleSequence = response.sequence;
                 }
                 $scope.generateCreateAndConfirmSignatureBusy = false;
                 $scope.generateCreateAndConfirmSignatureResponded = true;
@@ -269,6 +305,140 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     $scope.createAndConfirmSetDate = function (date) {
         $scope.createAndConfirmGenerateSignatureModel.birthDate = date;
         $scope.requestCreateAndConfirmChanged();
+    }
+
+    $scope.checkboxCheckPlayer = {};
+    $scope.checkPlayerModel = {
+        endpoint: config.baseUrl + "AircashPayment/CheckPlayer",
+        birthDate: new Date('1990-01-01'),
+        identificator: "aircah"
+    };
+    $scope.checkPlayerBusy = false;
+    $scope.checkPlayerResponded = false;
+    $scope.checkPlayer = function () {
+        $scope.checkPlayerBusy = true;
+        $scope.checkPlayerResponded = false;
+        setRequestExamples($scope.checkPlayerModel);
+        acPaymentService.checkPlayer($scope.checkPlayerModel.endpoint, CheckPlayerRequstGeneration())
+            .then(function (response) {
+                if (response) {
+                    $scope.checkPlayerRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.checkPlayerResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.checkPlayerSequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkPlayerResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.checkPlayerRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.checkPlayerBusy = false;
+                $scope.checkPlayerResponded = true;
+            }, () => {
+                $rootScope.showGritter("Error");
+                $scope.checkPlayerBusy = false;
+                $scope.checkPlayerResponded = true;
+            });
+    }
+    $scope.createAndConfirmCheckbox = {};
+    $scope.createAndConfirmModel = {
+        transactionId: HelperService.NewGuid(),
+        endpoint: config.baseUrl + "AircashPayment/CreateAndConfirmPayment",
+        birthDate: new Date('1990-01-01'),
+        amount: 10,
+        identificator: "aircash"
+    };
+    $scope.createAndConfirmBusy = false;
+    $scope.createAndConfirmResponded = false;
+    $scope.createAndConfirm = function () {
+        $scope.createAndConfirmBusy = true;
+        $scope.createAndConfirmResponded = false;
+        setRequestExamples($scope.createAndConfirmModel);
+        acPaymentService.createAndConfirm($scope.createAndConfirmModel.endpoint, CreateAndConfirmRequstGeneration(), $scope.createAndConfirmModel.amount, $scope.createAndConfirmModel.transactionId)
+            .then(function (response) {
+                if (response) {
+                    console.log(response);
+                    $scope.createAndConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.createAndConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.createAndConfirmSequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.createAndConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.createAndConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.createAndConfirmBusy = false;
+                $scope.createAndConfirmResponded = true;
+            }, () => {
+                $rootScope.showGritter("Error");
+                $scope.createAndConfirmBusy = false;
+                $scope.createAndConfirmResponded = true;
+            });
+    }
+    $scope.checkPlayerModelSetDate = function (date) {
+        $scope.checkPlayerModel.birthDate = date;
+        $scope.requestCreateAndConfirmChanged();
+    }
+    $scope.createAndConfirmModelSetDate = function (date) {
+        $scope.createAndConfirmModel.birthDate = date;
+        $scope.requestCreateAndConfirmChanged();
+    }
+    $scope.select = {};
+    $scope.checkboxCreateAndConfirm = {};
+    function CreateAndConfirmRequstGeneration() {
+        $scope.createAndConfirmParameters = [];
+        if ($scope.select.createAndConfirmUsernameEmailSelected == "email") {
+            if ($scope.createAndConfirmModel.identificator == "aircash") {
+                $scope.createAndConfirmModel.identificator = "user@example.net";
+                setRequestExamples($scope.createAndConfirmModel);
+            }
+            $scope.createAndConfirmParameters.push($scope.requestExample.email);
+        } else {
+            if ($scope.createAndConfirmModel.identificator == "user@example.net") {
+                $scope.createAndConfirmModel.identificator = "aircash";
+                setRequestExamples($scope.createAndConfirmModel);
+            }
+            $scope.createAndConfirmParameters.push($scope.requestExample.username);
+        }
+
+
+        if ($scope.checkboxCreateAndConfirm.currency) $scope.createAndConfirmParameters.push($scope.requestExample.currency);
+        if ($scope.checkboxCreateAndConfirm.countryCode) $scope.createAndConfirmParameters.push($scope.requestExample.countryCode);
+        if ($scope.checkboxCreateAndConfirm.merchant) $scope.createAndConfirmParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCreateAndConfirm.aircashUserID) $scope.createAndConfirmParameters.push($scope.requestExample.aircashUserID);
+        if ($scope.checkboxCreateAndConfirm.match)
+            $scope.createAndConfirmParameters.push(
+                $scope.requestExample.firstName,
+                $scope.requestExample.lastName,
+                $scope.requestExample.birthDate,
+            );
+
+        return $scope.createAndConfirmParameters;
+    }
+    function CheckPlayerRequstGeneration() {
+        $scope.checkPlayerParameters = [];
+        if ($scope.select.checkPlayerUsernameEmailSelected == "email") {
+            if ($scope.checkPlayerModel.identificator == "aircash") {
+                $scope.checkPlayerModel.identificator = "user@example.net";
+                setRequestExamples($scope.checkPlayerModel);
+            }
+            $scope.checkPlayerParameters.push($scope.requestExample.email);
+        } else {
+            if ($scope.checkPlayerModel.identificator == "user@example.net") {
+                $scope.checkPlayerModel.identificator = "aircash";
+                setRequestExamples($scope.checkPlayerModel);
+            }
+            $scope.checkPlayerParameters.push($scope.requestExample.username);
+        }
+
+
+        if ($scope.checkboxCheckPlayer.currency) $scope.checkPlayerParameters.push($scope.requestExample.currency);
+        if ($scope.checkboxCheckPlayer.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
+        if ($scope.checkboxCheckPlayer.merchant) $scope.checkPlayerParameters.push($scope.requestExample.merchantId);
+        if ($scope.checkboxCheckPlayer.aircashUserID) $scope.checkPlayerParameters.push($scope.requestExample.aircashUserID);
+        if ($scope.checkboxCheckPlayer.match)
+            $scope.checkPlayerParameters.push(
+                $scope.requestExample.firstName,
+                $scope.requestExample.lastName,
+                $scope.requestExample.birthDate,
+            );
+       
+        return $scope.checkPlayerParameters;
     }
 
     $scope.aircashPayment = {

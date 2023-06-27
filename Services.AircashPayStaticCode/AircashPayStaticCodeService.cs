@@ -28,7 +28,7 @@ namespace Services.AircashPayStaticCode
                 ServiceId = ServiceEnum.AircashPay,
                 RequestDateTimeUTC = DateTime.Today,
                 ResponseDateTimeUTC = DateTime.Now,
-                UserId = Guid.NewGuid()
+                UserId = Guid.NewGuid().ToString(),
             });
             await AircashSimulatorContext.SaveChangesAsync();
             return null;

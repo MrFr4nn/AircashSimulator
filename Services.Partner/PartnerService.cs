@@ -21,8 +21,8 @@ namespace Services.Partner
         private AircashSimulatorContext AircashSimulatorContext;
         private IUserService UserService;
 
-        private const string DefaultPrivateKey = "-";
-        private const string DefaultPrivateKeyPass = "-";
+        private const string DefaultPrivateKey = "";
+        private const string DefaultPrivateKeyPass = "";
 
         public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService)
         {
@@ -92,13 +92,16 @@ namespace Services.Partner
         public async Task SavePartner(SavePartnerVM request)
         {
             Guid id;
-            if (request.PartnerId != null)
+            if (request.PartnerId != null )
             {
                 var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
                 id = partner.PartnerId;
+                if (request.NewPartnerId != Guid.Empty) 
+                {
+                    id = request.NewPartnerId;
+                }
+                partner.PartnerId = id;
                 partner.PartnerName = request.PartnerName;
-                partner.PrivateKey = request.PrivateKey;
-                partner.PrivateKeyPass = request.PrivateKeyPass;
                 partner.CurrencyId = request.CurrencyId;
                 partner.CountryCode = request.CountryCode;
                 partner.Environment = request.Environment;
@@ -111,6 +114,11 @@ namespace Services.Partner
                     {
                         AircashSimulatorContext.PartnerRoles.Remove(role);
                     }
+                }
+                var users = await AircashSimulatorContext.Users.Where(x=>x.PartnerId== request.PartnerId).ToListAsync();
+                foreach (var user in users)
+                {
+                    user.PartnerId = id;
                 }
 
                 AircashSimulatorContext.Partners.Update(partner);
@@ -191,7 +199,7 @@ namespace Services.Partner
 
             await AircashSimulatorContext.Users.AddAsync(new UserEntity
             {
-                UserId = Guid.NewGuid(),
+                UserId = Guid.NewGuid().ToString(),
                 Username = username,
                 Email = username,
                 PartnerId = partnerId,

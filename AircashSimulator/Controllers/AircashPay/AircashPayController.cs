@@ -10,6 +10,7 @@ using AircashSimulator.Configuration;
 using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Controllers.AircashPay;
 using Services.User;
+using Service.Settings;
 
 namespace AircashSimulator.Controllers
 {
@@ -21,14 +22,14 @@ namespace AircashSimulator.Controllers
         private UserContext UserContext;
         private AircashConfiguration AircashConfiguration;
         private IUserService UserService;
-        private readonly Guid PartnerIdCashier = new Guid("8db69a48-7d61-48e7-9be8-3160549c7f17");
-        private readonly Guid UserIdCashier = new Guid("358B9D22-BB9A-4311-B94D-8F6DAEB38B40");
-        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService)
+        private ISettingsService SettingsService;
+        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService, ISettingsService settingsService)
         {
             AircashPayService = aircashPayService;
             UserContext = userContext;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             UserService = userService;
+            SettingsService = settingsService;
         }
         
         [HttpPost]
@@ -37,7 +38,7 @@ namespace AircashSimulator.Controllers
         {
             var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
             {
-                PartnerId = UserContext.GetPartnerId(User),
+                PartnerId = generatePartnerCodeRequest.PartnerId,
                 Amount = generatePartnerCodeRequest.Amount,
                 Description = generatePartnerCodeRequest.Description,
                 LocationId = generatePartnerCodeRequest.LocationID,
@@ -62,7 +63,7 @@ namespace AircashSimulator.Controllers
                     ISOCurrencyId = (CurrencyEnum)aircashConfirmTransactionRequest.CurrencyID,
                     PartnerId = new Guid(aircashConfirmTransactionRequest.PartnerID),
                     AircashTransactionId = aircashConfirmTransactionRequest.AircashTransactionID,
-                    PartnerTransactionId = new Guid(aircashConfirmTransactionRequest.PartnerTransactionID)
+                    PartnerTransactionId = aircashConfirmTransactionRequest.PartnerTransactionID
                 };
                 var response = await AircashPayService.ConfirmTransaction(transactionDTO);
                 if (((ConfirmResponse)response).ResponseCode == 1)
@@ -87,8 +88,8 @@ namespace AircashSimulator.Controllers
         {
             var cancelTransactionDTO = new CancelTransactionDTO
             {
-                PartnerId = UserContext.GetPartnerId(User),
-                PartnerTransactionId = new Guid(cancelTransactionRequest.PartnerTransactionID),
+                PartnerId = cancelTransactionRequest.PartnerId,
+                PartnerTransactionId = cancelTransactionRequest.PartnerTransactionID,
                 UserId = UserContext.GetUserId(User)
             };
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
@@ -103,8 +104,8 @@ namespace AircashSimulator.Controllers
             var refundTransactionDTO = new RefundTransactionDTO
             {
                 PartnerId = UserContext.GetPartnerId(User),
-                PartnerTransactionId = new Guid(refundTransactionRequest.PartnerTransactionID),
-                RefundPartnerTransactionId = Guid.NewGuid(),
+                PartnerTransactionId = refundTransactionRequest.PartnerTransactionID,
+                RefundPartnerTransactionId = Guid.NewGuid().ToString(),
                 Amount= refundTransactionRequest.Amount
             };
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
@@ -117,11 +118,11 @@ namespace AircashSimulator.Controllers
         {
             var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
             {
-                PartnerId = PartnerIdCashier,
+                PartnerId = SettingsService.AcPayPartnerId,
                 Amount = generatePartnerCodeRequest.Amount,
                 Description = generatePartnerCodeRequest.Description,
                 LocationId = generatePartnerCodeRequest.LocationID,
-                UserId = UserIdCashier,
+                UserId = Guid.NewGuid().ToString(),
             };
 
             var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, generatePartnerCodeRequest.Environment);

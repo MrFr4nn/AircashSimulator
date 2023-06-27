@@ -8,6 +8,7 @@ using DataAccess;
 using Services.HttpRequest;
 using Newtonsoft.Json;
 using Domain.Entities;
+using Services.Signature;
 using Service.Settings;
 
 namespace Services.AircashInAppPay
@@ -24,6 +25,7 @@ namespace Services.AircashInAppPay
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
         private ISettingsService SettingsService;
         private const string GenerateTransactionSuccessURL = "https://dev-simulator.aircash.eu/#!/success";
         private const string GenerateTransactionConfirmURL = "https://dev-simulator-api.aircash.eu/api/AircashInAppPay/ConfirmTransaction";
@@ -32,10 +34,11 @@ namespace Services.AircashInAppPay
         private readonly string AircashPayGenerateTransactionEndpoint = "AircashPay/GenerateTransaction";
         private readonly string RefundTransactionEndpoint = "AircashPay/RefundTransaction";
         private readonly string CheckTransactionStatusEndpoint = "AircashPay/CheckTransactionStatus";
-        public AircashInAppPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService) 
+        public AircashInAppPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService, ISettingsService settingsService) 
         {
             AircashSimulatorContext= aircashSimulatorContext;
             HttpRequestService= httpRequestService;
+            SignatureService= signatureService;
             SettingsService= settingsService;
         }
         public async Task<object> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest, EnvironmentEnum environment) 
@@ -58,7 +61,7 @@ namespace Services.AircashInAppPay
             returnResponse.ServiceRequest = request;
             returnResponse.Sequence = AircashSignatureService.ConvertObjectToString(request);
 
-            request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
+            request.Signature = SignatureService.GenerateSignature(generateTransactionRequest.PartnerID, returnResponse.Sequence);
 
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{AircashPayGenerateTransactionEndpoint}");
 
@@ -85,7 +88,7 @@ namespace Services.AircashInAppPay
             returnResponse.ServiceRequest = request;
             returnResponse.Sequence = AircashSignatureService.ConvertObjectToString(request);
 
-            request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, partner.PrivateKey, partner.PrivateKeyPass);
+            request.Signature = SignatureService.GenerateSignature(refundTransactionRequest.PartnerID, returnResponse.Sequence);
 
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{RefundTransactionEndpoint}");
 
@@ -95,14 +98,14 @@ namespace Services.AircashInAppPay
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 returnResponse.ServiceResponse = JsonConvert.DeserializeObject<RefundTrancsactionApiRS>(response.ResponseContent);
-                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == new Guid(refundTransactionRequest.PartnerTransactionID));
+                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == refundTransactionRequest.PartnerTransactionID);
 
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = refundTransactionRequest.Amount,
                     ISOCurrencyId = transaction.ISOCurrencyId,
                     AircashTransactionId = ((RefundTrancsactionApiRS)returnResponse.ServiceResponse).TransactionID,
-                    TransactionId = new Guid(refundTransactionRequest.PartnerTransactionID),
+                    TransactionId = refundTransactionRequest.PartnerTransactionID,
                     ServiceId = ServiceEnum.AircashPayCancellation,
                     RequestDateTimeUTC = returnResponse.RequestDateTimeUTC,
                     ResponseDateTimeUTC = returnResponse.ResponseDateTimeUTC,
