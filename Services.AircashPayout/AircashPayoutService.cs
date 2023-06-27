@@ -252,7 +252,7 @@ namespace Services.AircashPayout
             returnResponse.ServiceRequest = checkTransactionStatusRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
             returnResponse.Sequence = sequence;
-            var signature = SignatureService.GenerateSignature(transaction.PartnerId, sequence);
+            var signature = SignatureService.GenerateSignature(partnerId, sequence);
             checkTransactionStatusRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(checkTransactionStatusRequest, HttpMethod.Post, GetCheckTransactionStatusEndpoint(environment));
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
@@ -274,11 +274,11 @@ namespace Services.AircashPayout
             var checkTransactionStatusRequest = new AircashCheckTransactionStatusRequest()
             {
                 PartnerID = partnerId.ToString(),
-                PartnerTransactionID = partnerTransactionId != Guid.Empty? partnerTransactionId.ToString(): null,
-                AircashTransactionID = aircashTransactionId != Guid.Empty ?  aircashTransactionId.ToString() : null,
+                PartnerTransactionID = partnerTransactionId,
+                AircashTransactionID = aircashTransactionId,
             };
             var sequence = AircashSignatureService.ConvertObjectToString(checkTransactionStatusRequest);
-            var signature = SignatureService.GenerateSignature(transaction.PartnerId, sequence);
+            var signature = SignatureService.GenerateSignature(partnerId, sequence);
             checkTransactionStatusRequest.Signature = signature;
             return checkTransactionStatusRequest;
         }

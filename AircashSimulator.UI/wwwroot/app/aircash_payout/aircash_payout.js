@@ -464,7 +464,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     }
 
     $scope.transactionModel = {};
-    $scope.transactionModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+    $scope.transactionModel.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
     $scope.checkTransactionStatus = function () {
         $scope.checkTransactionStatusServiceBusy = true;
         $scope.checkTransactionStatusServiceResponse = false;

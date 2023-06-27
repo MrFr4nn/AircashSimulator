@@ -47,7 +47,7 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
             method: 'POST',
             url: config.baseUrl + "AircashInAppPay/CheckTransactionStatus",
             data: {
-                PartnerTransactionId: transactionModel.partnerTransactionId,
+                PartnerTransactionId: transactionModel.partenrTransactionId,
                 PartnerId: transactionModel.partnerId
             }
         });
@@ -109,7 +109,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     }
 
     $scope.transactionModel = {};
-    $scope.transactionModel.partnerId = "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf";
+    $scope.transactionModel.partnerId = $scope.partnerIds.InAppPayPartnerId;
     $scope.statusResponded = false;
     $scope.statusBusy = false;
     $scope.checkTransactionStatus = function () {

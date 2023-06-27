@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using Domain.Entities;
 using Services.Signature;
 using Service.Settings;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Services.AircashInAppPay
 {
@@ -121,19 +122,19 @@ namespace Services.AircashInAppPay
             return returnResponse;
         }
 
-        public async Task<object> CheckTransactionStatus(Guid partnerId, Guid partnerTransactionId, EnvironmentEnum environment)
+        public async Task<object> CheckTransactionStatus(Guid partnerId, string partnerTransactionId, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
             var request = new CheckTransactionStatusRQ()
             {
                PartnerId = partnerId.ToString(),
-               PartnerTransactionId = partnerTransactionId.ToString(),
+               PartnerTransactionId = partnerTransactionId,
             };
             returnResponse.ServiceRequest = request;
             returnResponse.Sequence = AircashSignatureService.ConvertObjectToString(request);
 
-            request.Signature = AircashSignatureService.GenerateSignature(returnResponse.Sequence, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
+            request.Signature = SignatureService.GenerateSignature(partnerId, returnResponse.Sequence); ;
 
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{CheckTransactionStatusEndpoint}");
 

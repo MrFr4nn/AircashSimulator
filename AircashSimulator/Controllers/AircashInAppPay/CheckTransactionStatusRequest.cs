@@ -5,6 +5,6 @@ namespace AircashSimulator.Controllers.AircashInAppPay
     public class CheckTransactionStatusRequest
     {
         public Guid PartnerId { get; set; }
-        public Guid PartnerTransactionId { get; set; }
+        public string PartnerTransactionId { get; set; }
     }
 }
