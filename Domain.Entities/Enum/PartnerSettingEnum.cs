@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Domain.Entities.Enum
 {
-    public enum PartnerSettingsEnum
+    public enum PartnerSettingEnum
     {
     }
 }

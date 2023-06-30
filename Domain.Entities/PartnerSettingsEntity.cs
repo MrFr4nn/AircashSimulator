@@ -8,7 +8,7 @@ namespace Domain.Entities
         [Key]
         public int Id { get; set; }
         public Guid PartnerId { get; set; }
-        public PartnerSettingsEnum Key { get; set; }
+        public PartnerSettingEnum Key { get; set; }
         public string Value { get; set; }
     }
 }
