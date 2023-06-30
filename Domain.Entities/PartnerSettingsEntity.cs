@@ -8,8 +8,7 @@ namespace Domain.Entities
         [Key]
         public int Id { get; set; }
         public Guid PartnerId { get; set; }
-        public PartnerSettingsRoleEnum Role { get; set; }
-        public int Version {get; set; }
-        public string Parameteres { get; set; }
+        public PartnerSettingsRoleEnum Key { get; set; }
+        public string Value { get; set; }
     }
 }

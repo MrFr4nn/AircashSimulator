@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AircashSimulatorContext))]
-    [Migration("20230630073314_addedPartnerSettings")]
-    partial class addedPartnerSettings
+    [Migration("20230630084438_AddedPartnerSettings")]
+    partial class AddedPartnerSettings
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,17 +180,14 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Parameteres")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Key")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("PartnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Version")
-                        .HasColumnType("int");
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
