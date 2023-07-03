@@ -15,6 +15,7 @@ namespace Services.Authentication
         public string AircashFramePartnerIdWithMatchPersonalData { get; set; }
         public string SalesPartnerId { get; set; }
         public string AircashPayoutPartnerId { get; set; }
+        public string AircashPayoutV4PartnerId { get; set; }
         public string C2DPayoutPartnerId { get; set; }
         public string C2DDepositPartnerId { get; set; }
         public string AcPayPartnerId { get; set; }

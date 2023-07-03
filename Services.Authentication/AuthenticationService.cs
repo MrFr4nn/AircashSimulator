@@ -68,6 +68,7 @@ namespace Services.Authentication
                 AircashFramePartnerId = SettingsService.AircashFramePartnerId.ToString(),
                 AircashFramePartnerIdWithMatchPersonalData = SettingsService.AircashFramePartnerIdWithMatchPersonalData.ToString(),
                 SalesPartnerId = SettingsService.SalesPartnerId.ToString(),
+                AircashPayoutV4PartnerId = SettingsService.AircashPayoutV4PartnerId.ToString(),
                 AircashPayoutPartnerId = SettingsService.AircashPayoutPartnerId.ToString(),
                 C2DPayoutPartnerId = SettingsService.C2DPayoutPartnerId.ToString(),
                 C2DDepositPartnerId = SettingsService.C2DDepositPartnerId.ToString(),
@@ -84,6 +85,7 @@ namespace Services.Authentication
                 partnerIds.AircashFramePartnerIdWithMatchPersonalData = partnerId.ToString();
                 partnerIds.SalesPartnerId = partnerId.ToString();
                 partnerIds.AircashPayoutPartnerId = partnerId.ToString();
+                partnerIds.AircashPayoutV4PartnerId = partnerId.ToString();
                 partnerIds.C2DPayoutPartnerId = partnerId.ToString();
                 partnerIds.C2DDepositPartnerId = partnerId.ToString();
                 partnerIds.AcPayPartnerId = partnerId.ToString();

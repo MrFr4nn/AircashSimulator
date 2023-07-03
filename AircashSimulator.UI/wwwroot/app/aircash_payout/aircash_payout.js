@@ -163,7 +163,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     };
 
     $scope.checkUserV4Model = {
-        partnerId: $scope.partnerIds.C2DPayoutPartnerId,
+        partnerId: $scope.partnerIds.AircashPayoutV4PartnerId,
         partnerUserId: uuidv4(),
         phoneNumber: $scope.decodedToken.userPhoneNumber,
         firstName: $scope.decodedToken.userFirstName,
@@ -181,7 +181,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     };
 
     $scope.createPayoutV4Model = {
-        partnerId: $scope.partnerIds.C2DPayoutPartnerId,
+        partnerId: $scope.partnerIds.AircashPayoutV4PartnerId,
         userId: uuidv4(),
         partnerTransactionId: uuidv4(),
         currencyId: 978,
@@ -193,13 +193,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     }
 
     $scope.setDefaults = function () {
-        $scope.createPayoutV4Model.partnerId = $scope.partnerIds.C2DPayoutPartnerId;
+        $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
         $scope.createPayoutV4Model.userId = uuidv4();
         $scope.createPayoutV4Model.partnerTransactionId = uuidv4();
         $scope.createPayoutV4Model.currencyId = 978;
 
         $scope.checkUserV4Model.partnerUserId = uuidv4();
-        $scope.checkUserV4Model.partnerId = $scope.partnerIds.C2DPayoutPartnerId;
+        $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
 
         $scope.checkUserModel.partnerUserId = uuidv4();
         $scope.checkUserModel.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
