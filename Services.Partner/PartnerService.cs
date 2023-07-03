@@ -48,7 +48,7 @@ namespace Services.Partner
             roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
             return roles;
         }
-        public List<SettingRoles> GetPartnerSettingRoles()
+       public List<SettingRoles> GetPartnerSettingRoles()
         {
             var roles = Enum.GetValues(typeof(PartnerSettingEnum)).Cast<PartnerSettingEnum>().ToList().Select(x => new SettingRoles { SettingId = x, SettingName = x.ToString() }).ToList();
             return roles;
