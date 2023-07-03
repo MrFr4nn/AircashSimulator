@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.AircashPayoutV2
+namespace Services.AircashPayout
 {
-    public class AircashCheckUserResponse
+    public class AircashCheckUserV4Response
     {
         public int Status { get; set; }
-        public List<Parameters> Parameters { get; set; }
+        public List<Parameter> Parameters { get; set; }
     }
 }

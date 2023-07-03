@@ -38,7 +38,7 @@ namespace Services.AircashPosDeposit
             SignatureService = signatureService;
         }
 
-        public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<AdditionalParameter> parameters, EnvironmentEnum environment)
+        public async Task<object> CheckUser(string phoneNumber, string partnerUserId, Guid partnerId, List<Parameter> parameters, EnvironmentEnum environment)
         {
             Response returnResponse = new Response();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
