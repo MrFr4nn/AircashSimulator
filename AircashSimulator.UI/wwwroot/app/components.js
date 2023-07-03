@@ -147,6 +147,7 @@ app.component('currencyidPicker', {
                 { name: "HRK", code: 191 },
                 { name: "EUR", code: 978 },
                 { name: "BAM", code: 977 },
+                { name: "CHF", code: 756 },
                 { name: "RON", code: 946 }
             ];
 

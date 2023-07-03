@@ -188,6 +188,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             currencyIsoCode: "RON",
             currencyId: 946
         },
+        {
+            currencyIsoCode: "CHF",
+            currencyId: 756
+        },
     ];
 
     $scope.payMethodOptions = [

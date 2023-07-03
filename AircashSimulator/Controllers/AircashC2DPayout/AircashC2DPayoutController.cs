@@ -80,7 +80,7 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
+        public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatus checkTransactionStatusRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var response = await AircashPayoutV2Service.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId, environment);

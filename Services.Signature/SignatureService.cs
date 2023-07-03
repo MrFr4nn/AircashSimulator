@@ -114,7 +114,7 @@ namespace Services.Signature
                 }
                 return result;
             }
-            catch
+            catch 
             {
                 result = false;
             }
