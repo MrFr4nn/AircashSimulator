@@ -313,10 +313,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
                 },
                 third: {
                     Status: 3,
-                    Parameters: {
-                        Key: "AircashUserID",
-                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
-                    }
+                    Parameters: null
                 },
                 forth: {
                     Status: 4,
@@ -361,10 +358,7 @@ aircashPayoutV2Module.controller("aircashPayoutV2Ctrl", ['$scope', '$state', 'ai
             },
             responseExample: {
                 AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
-                Parameters: {
-                    Key: "AircashUserID",
-                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
-                }
+                Parameters: null
             },
         },
         checkCode: {
