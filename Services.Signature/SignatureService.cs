@@ -31,7 +31,7 @@ namespace Services.Signature
             return password.ToCharArray();
         }
     }
-    public class SignatureService: ISignatureService
+    public class SignatureService : ISignatureService
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private ISettingsService SettingsService;
@@ -54,8 +54,9 @@ namespace Services.Signature
                     return Convert.ToBase64String(signeddata);
                 }
             }
-            catch {
-            
+            catch
+            {
+
             }
             using (var textReader = new StringReader(pem))
             {
@@ -96,7 +97,7 @@ namespace Services.Signature
         {
             var result = false;
             try
-            { 
+            {
                 var key = RSA.Create();
                 key.ImportFromEncryptedPem(validateAndSavePartnerKeyRequest.PrivateKey.ToCharArray(), validateAndSavePartnerKeyRequest.Password.ToCharArray());
                 var bytePublicKey = Encoding.UTF8.GetBytes(validateAndSavePartnerKeyRequest.PublicKey);
@@ -113,11 +114,12 @@ namespace Services.Signature
                 }
                 return result;
             }
-            catch
+            catch 
             {
                 result = false;
             }
-            try {
+            try
+            {
                 byte[] signeddata;
                 var bytePublicKey = Encoding.UTF8.GetBytes(validateAndSavePartnerKeyRequest.PublicKey);
                 var certificate = new X509Certificate2(bytePublicKey);
@@ -145,13 +147,13 @@ namespace Services.Signature
                 }
                 return result;
             }
-            catch 
+            catch
             {
                 result = false;
             }
             return result;
         }
-        public bool ValidateSignature(string dataToSign,string signature,Guid partnerId)
+        public bool ValidateSignature(string dataToSign, string signature, Guid partnerId)
         {
             var result = false;
             try
@@ -159,9 +161,9 @@ namespace Services.Signature
 
                 var keys = GetKeyToSing(partnerId);
                 var bytePublicKey = Encoding.UTF8.GetBytes(keys.PublicKey);
-            var certificate = new X509Certificate2(bytePublicKey);
-            var byteSignature = Convert.FromBase64String(signature);
-            var byteDataToSign = Encoding.UTF8.GetBytes(dataToSign);
+                var certificate = new X509Certificate2(bytePublicKey);
+                var byteSignature = Convert.FromBase64String(signature);
+                var byteDataToSign = Encoding.UTF8.GetBytes(dataToSign);
 
                 using (var sha256 = new SHA256Managed())
                 {
@@ -179,7 +181,7 @@ namespace Services.Signature
 
         }
 
-        public async Task<string> SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId) 
+        public async Task<string> SavePartnerKey(ValidateAndSavePartnerKeyRequest validateAndSavePartnerKeyRequest, Guid partnerId)
         {
             if (ValidatePartnerKey(validateAndSavePartnerKeyRequest))
             {
@@ -202,7 +204,7 @@ namespace Services.Signature
                 return "Success";
             }
             return "Provided keys are invalid";
-        } 
+        }
         public async Task<string> RemovePartnerKeys(Guid partnerId)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
@@ -217,7 +219,7 @@ namespace Services.Signature
         {
             string privateKey = null;
             string privateKeyPass = null;
-            string publicKey = null;    
+            string publicKey = null;
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             if (partner != null && partner.PrivateKey != null)
             {

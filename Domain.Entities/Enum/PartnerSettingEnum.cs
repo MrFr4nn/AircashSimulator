@@ -4,12 +4,7 @@ using System.Text;
 
 namespace Domain.Entities.Enum
 {
-    public enum CurrencyEnum
+    public enum PartnerSettingEnum
     {
-        HRK=191,
-        EUR=978,
-        BAM=977,
-        RON=946,
-        CHF=756
     }
 }

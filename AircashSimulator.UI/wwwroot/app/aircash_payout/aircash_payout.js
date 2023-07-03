@@ -692,17 +692,11 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             responseExample: {
                 first: {
                     Status: 1,
-                    Parameters: {
-                        Key: "AircashUserID",
-                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
-                    }
+                    Parameters: null
                 },
                 second: {
                     Status: 2,
-                    Parameters: {
-                        Key: "AircashUserID",
-                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
-                    }
+                    Parameters: null
                 },
                 third: {
                     Status: 3,
