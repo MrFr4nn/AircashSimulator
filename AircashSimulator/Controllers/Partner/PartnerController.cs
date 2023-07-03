@@ -9,6 +9,7 @@ using System.Linq;
 using Services.Authentication;
 using Domain.Entities.Enum;
 using System.Collections.Generic;
+using Services.User;
 
 namespace AircashSimulator.Controllers.Partner
 {
@@ -50,8 +51,16 @@ namespace AircashSimulator.Controllers.Partner
             var roles = PartnerService.GetRoles();
             return Ok(roles);
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetPartnerSettingRoles()
+        {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
 
-        
+            var roles = PartnerService.GetPartnerSettingRoles();
+            return Ok(roles);
+        }
+
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> GetPartnersDetail(int pageSize, int pageNumber, string search)
@@ -61,7 +70,15 @@ namespace AircashSimulator.Controllers.Partner
             var partners = await PartnerService.GetPartnersDetail(pageSize, pageNumber, search);
             return Ok(partners);
         }
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetPartnerSetting(Guid partnerId)
+        {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
 
+            var partnersetting = await PartnerService.GetPartnerSetting(partnerId);
+            return Ok(partnersetting);
+        }
 
         [HttpPost]
         [Authorize]
@@ -82,7 +99,14 @@ namespace AircashSimulator.Controllers.Partner
             await PartnerService.SavePartner(request);
             return Ok("Ok");
         }
-
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> SavePartnersetting(SavePartnerSettingVM request)
+        {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+            await PartnerService.SavePartnerSetting(request);
+            return Ok("Ok");
+        }
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> DeletePartner(PartnerDetailVM Partner)
