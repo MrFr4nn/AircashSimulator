@@ -181,12 +181,11 @@ namespace Services.Partner
         }
         public async Task SavePartnerSetting(SavePartnerSettingVM request)
         {
-
             var settingsDb = await AircashSimulatorContext.PartnerSettings.Where(x=>x.PartnerId==request.PartnerId).ToListAsync();
             var partnerSettings = request.NewPartnerSetting;
             var settingsToUpdate = settingsDb.Where(x => partnerSettings.Any(y => y.settingId == x.Key && !String.IsNullOrEmpty( y.input) && y.input!= x.Value)).ToList();
             var settingsToDelete = settingsDb.Where(x => partnerSettings.Any(y => y.settingId == x.Key && String.IsNullOrEmpty(y.input))).ToList();
-            var settingsToAdd = request.NewPartnerSetting.Where(x => !settingsDb.Any(y => y.Key == x.settingId  && !String.IsNullOrEmpty(x.input))).ToList();
+            var settingsToAdd = request.NewPartnerSetting.Where(x => !settingsDb.Any(y => y.Key == x.settingId  ) && !String.IsNullOrEmpty(x.input)).ToList();
             foreach (var setting in settingsToDelete)
             {
                 AircashSimulatorContext.PartnerSettings.Remove(setting);
@@ -198,8 +197,6 @@ namespace Services.Partner
             }
             foreach (var setting in settingsToAdd)
             {
-                if(setting.input!="")
-                { 
                 var settingDb = new PartnerSettingsEntity
                 {
                     PartnerId=setting.PartnerId,
@@ -208,7 +205,6 @@ namespace Services.Partner
 
                 };
                  AircashSimulatorContext.PartnerSettings.Add(settingDb);
-                }
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
