@@ -105,6 +105,8 @@ namespace Services.Authentication
             claims.Add(new Claim("userBirthDate", user.BirthDate.HasValue ? user.BirthDate.Value.ToString("yyyy-MM-dd") : ""));
             claims.Add(new Claim("userPhoneNumber", user?.PhoneNumber ?? ""));
             claims.Add(new Claim("email", user.Email));
+            claims.Add(new Claim("partnerName", partner.PartnerName));
+            claims.Add(new Claim("enviroment", user.Environment.ToString()));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(JwtConfiguration.Secret));
             var signingCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
