@@ -52,6 +52,7 @@
                     </li>
                 </ol>
                 <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_acPay.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAcPay" target="_blank">cashier simulator</a></p>
+                <p>Watch video examples <a href="" ng-click="showVideoAcPay()">here</a>.</p>
 
             </uib-tab>
             <uib-tab index="checkUser1-tab-1" heading="Abon" classes="nav-item">
@@ -84,7 +85,7 @@
                     </li>
                 </ol>
                 <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAbon" target="_blank">cashier simulator</a></p>
-
+                <p>Watch video example <a href="" ng-click="showVideoAbon()">here</a>.</p>
             </uib-tab>
             <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item">
                 <h2>Aircash Payout</h2>
@@ -127,6 +128,7 @@
                         Upon recieving the confirmation request, Aircash system will top up the Aircash account.
                     </li>
                 </ol>
+                <p>Watch video example <a href="" ng-click="showVideoWithdrawal()">here</a>.</p>
             </uib-tab>
         </uib-tabset>
         <hr />
@@ -1048,10 +1050,8 @@ SsRvc7uHsLjXxPfMNhSgqpvcRBg6GjG+YXw+CX3nYoHS9Pl2BNNpTzbfUTDVmrdczXUuBtz2yHTuKVs/
                     </uib-tab>
                     <uib-tab index="TransactionStatusError-tab-3" heading="1002 - Transaction does not exist" classes="nav-item">
                         <div class="row col-12">
-                            as
                             <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002)">
                                 Request
-                                2.
                                 <jsonformatter data="errorExamples.TransactionStatus.error1002.request"></jsonformatter>
 
                                 Sequence:
@@ -1435,31 +1435,31 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 <uib-tab index="ConfirmError-tab-5" heading="3008 - User reached transaction limit or user is blocked" classes="nav-item">
                     Simulation not implemented.
                     <!--<div class="row col-12">
-                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3008)">
-                        Request
-                        <jsonformatter data="errorExamples.Confirm.error3008.request"></jsonformatter>
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3008)">
+                            Request
+                            <jsonformatter data="errorExamples.Confirm.error3008.request"></jsonformatter>
 
-                        Sequence:
-                        Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
-                    </div>
-                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3008)">
-                        Response
-                        <jsonformatter data="errorExamples.Confirm.error3008.response"></jsonformatter>
-                    </div>
-                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3008">
-                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+                            Sequence:
+                            Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                        </div>
+                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3008)">
+                            Response
+                            <jsonformatter data="errorExamples.Confirm.error3008.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3008">
+                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
 
-                        Sequence: {{errorConfirmSequence}}<br />
+                            Sequence: {{errorConfirmSequence}}<br />
 
+                        </div>
+                        <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3008">
+                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                        </div>
                     </div>
-                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3008">
-                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                    </div>
-                </div>
-                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3008)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3008">Copy Request</button>-->
+                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3008)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3008">Copy Request</button>-->
                 </uib-tab>
                 <uib-tab index="ConfirmError-tab-6" heading="3016 - Amount mismatch." classes="nav-item">
                     <div class="row col-12">
@@ -1731,7 +1731,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
 
     <p>
         This is your custom implementation of Aircash Frame integration. You can display Aircash Frame on any possible way that seems the best for your
-        requirements. For example, you can open new web browser’s window (blank or with your origin URL or any other URL) and use custom redirect to 
+        requirements. For example, you can open new web browser’s window (blank or with your origin URL or any other URL) and use custom redirect to
         Aircash Frame URL which you will receive in the Initiate method response body. In this case you have complete control over window where is Aircash
         Frame displayed, you can implement your scripts to handle window open, window close and window redirect to your success URL.
     </p>
@@ -1945,5 +1945,67 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="videoModalAcPay">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Aircash Pay</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <video width="600" controls muted>
+                        <source src="../../videos/frame_acPay.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <video width="600" class="mt-5" controls muted>
+                        <source src="../../videos/frame_acPay_QRcode.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="videoModalAbon">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Abon</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <video width="600" controls muted>
+                        <source src="../../videos/frame_abon.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="videoModalWithdrawal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Withdrawal</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <video width="600" controls muted>
+                        <source src="../../videos/frame_withdrawal.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

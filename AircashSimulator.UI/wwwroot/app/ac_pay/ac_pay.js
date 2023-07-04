@@ -164,6 +164,10 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
 
     $scope.getTransactions();
 
+    $scope.showVideoAcPay = function () {
+        $("#videoModalAcPay").modal("show");
+    }
+
     $scope.aircashPay = {
         generatePartnerCode: {
             requestExample: {

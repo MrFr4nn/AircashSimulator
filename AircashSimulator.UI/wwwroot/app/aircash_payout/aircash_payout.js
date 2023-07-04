@@ -558,6 +558,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
 
     $scope.getTransactions();
 
+    $scope.showVideoAcPayout = function () {
+        $("#videoModalAcPayout").modal("show");
+    }
+
     $scope.errorExamples = {
         createPayout: {
             error4000: {

@@ -89,6 +89,7 @@
     </div>
 
 </div>
+<p>Watch video example for <a href="" ng-click="showVideoDeposit()">deposit</a> and <a href="" ng-click="showVideoWithdrawal()">withdrawal</a>.</p>
 <hr />
 <h1>Methods called by the sales partner system to the Aircash system</h1>
 <p>
@@ -100,3 +101,42 @@
 <ng-include src="'app/aircash_paymentAndPayout/check_transaction_status.html'"></ng-include>
 <ng-include src="'app/aircash_paymentAndPayout/cancel_transaction.html'"></ng-include>
 <ng-include src="'app/aircash_paymentAndPayout/production_release_process.html'"></ng-include>
+
+<!-- #modal-dialog -->
+<div class="modal fade" id="videoModalDeposit">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Deposit</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <video width="600" controls muted>
+                    <source src="../../videos/salesPartner_deposit.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="videoModalWithdrawal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Withdrawal</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <video width="600" controls muted>
+                    <source src="../../videos/salesPartner_withdrawal.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>

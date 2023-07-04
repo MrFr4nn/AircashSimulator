@@ -120,6 +120,10 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
     }
+
+    $scope.showVideoAbon = function () {
+        $("#videoModalAbon").modal("show");
+    }
     
     $scope.curlValidateBusy = false;
     $scope.curlValidateResponded = false;

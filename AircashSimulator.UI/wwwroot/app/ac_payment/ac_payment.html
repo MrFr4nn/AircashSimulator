@@ -58,6 +58,7 @@
         </li>
     </ol>
 </p>
+<p>Watch video examples <a href="" ng-click="showVideoMarketplaceDeposit()">here</a>.</p>
 <hr />
 <h1 style="text-align:justify">Methods called by Aircash on the partner system</h1>
 <p style="text-align:justify">
@@ -75,3 +76,27 @@
 <ng-include src="'app/ac_payment/FAQ.html'"></ng-include>
 <ng-include src="'app/ac_payment/aircash_app_deposit.html'"></ng-include>
 
+<!-- #modal-dialog -->
+
+<div class="modal fade" id="videoModalMarketplaceDeposit">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Aircash marketplace deposit</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <video width="600" controls muted>
+                    <source src="../../videos/ac_marketplace_deposit.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <video width="600" class="mt-5" controls muted>
+                    <source src="../../videos/ac_marketplace_deposit_mobile.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -159,6 +159,10 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         merchant: false
     }
 
+    $scope.showVideoMarketplaceDeposit = function () {
+        $("#videoModalMarketplaceDeposit").modal("show");
+    }
+
     $scope.checkPlayerUsernameEmailSelected = "username";
     $scope.checkPlayerParameters = [];
     $scope.checkPlayerParameters.push($scope.requestExample.username);
