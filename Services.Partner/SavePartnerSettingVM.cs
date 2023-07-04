@@ -15,7 +15,7 @@ namespace Services.Partner
     public class SavePartnerDTO
     {
         public Guid PartnerId { get; set; }
-        public int settingId { get; set;}
+        public PartnerSettingEnum settingId { get; set;}
         public string input { get; set; }
     }
 }

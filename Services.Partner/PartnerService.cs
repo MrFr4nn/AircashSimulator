@@ -182,18 +182,18 @@ namespace Services.Partner
         public async Task SavePartnerSetting(SavePartnerSettingVM request)
         {
 
-            var settingsDb = await AircashSimulatorContext.PartnerSettings.Where(db=>db.PartnerId==request.PartnerId).ToListAsync();
+            var settingsDb = await AircashSimulatorContext.PartnerSettings.Where(x=>x.PartnerId==request.PartnerId).ToListAsync();
             var partnerSettings = request.NewPartnerSetting;
-            var settingsToUpdate = settingsDb.Where(settingDb => partnerSettings.Any(setting => (PartnerSettingEnum)setting.settingId == settingDb.Key && setting.input != "" && setting.input!=settingDb.Value)).ToList();
-            var settingsToDelete = settingsDb.Where(settingDb => partnerSettings.Any(setting => (PartnerSettingEnum)setting.settingId == settingDb.Key && setting.input == "" )).ToList();
-            var settingsToAdd = request.NewPartnerSetting.Where(setting => !settingsDb.Any(settingDb => settingDb.Key == (PartnerSettingEnum)setting.settingId  && setting.input!=""  )).ToList();
+            var settingsToUpdate = settingsDb.Where(x => partnerSettings.Any(y => y.settingId == x.Key && !String.IsNullOrEmpty( y.input) && y.input!= x.Value)).ToList();
+            var settingsToDelete = settingsDb.Where(x => partnerSettings.Any(y => y.settingId == x.Key && String.IsNullOrEmpty(y.input))).ToList();
+            var settingsToAdd = request.NewPartnerSetting.Where(x => !settingsDb.Any(y => y.Key == x.settingId  && !String.IsNullOrEmpty(x.input))).ToList();
             foreach (var setting in settingsToDelete)
             {
                 AircashSimulatorContext.PartnerSettings.Remove(setting);
             }
             foreach (var setting in settingsToUpdate)
             {
-                setting.Value = partnerSettings.Where(x => x.settingId == (int)setting.Key).Select(x => x.input).FirstOrDefault();
+                setting.Value = partnerSettings.Where(x => x.settingId == setting.Key).Select(x => x.input).FirstOrDefault();
                 AircashSimulatorContext.PartnerSettings.Update(setting);
             }
             foreach (var setting in settingsToAdd)
@@ -203,7 +203,7 @@ namespace Services.Partner
                 var settingDb = new PartnerSettingsEntity
                 {
                     PartnerId=setting.PartnerId,
-                    Key = (PartnerSettingEnum)setting.settingId,
+                    Key = setting.settingId,
                     Value = setting.input
 
                 };
