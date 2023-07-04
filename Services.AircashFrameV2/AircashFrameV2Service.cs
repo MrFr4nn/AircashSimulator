@@ -277,7 +277,11 @@ namespace AircashFrame
             returnResponse.ResponseDateTimeUTC = DateTime.Now;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2>(response.ResponseContent);
+                aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2NoAmount>(response.ResponseContent);
+                var convertedResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2>(response.ResponseContent);
+                if (convertedResponse.Status == AcFrameTransactionStatusEnum.Success) {
+                    aircashTransactionStatusResponse = convertedResponse;
+                }
             }
             else
             {
