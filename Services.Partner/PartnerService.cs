@@ -13,6 +13,7 @@ using System.Text;
 using System.Security.Cryptography;
 using Services.User;
 using AircashSimulator;
+using System.Data;
 
 namespace Services.Partner
 {
@@ -45,6 +46,11 @@ namespace Services.Partner
         {
             var roles = Enum.GetValues(typeof(RoleEnum)).Cast<RoleEnum>().ToList().Select(x => new Role { RoleId = x, RoleName = x.ToString() }).ToList();
             roles.Remove(roles.Where(x => x.RoleId == RoleEnum.Admin).FirstOrDefault());
+            return roles;
+        }
+       public List<SettingRoles> GetPartnerSettingRoles()
+        {
+            var roles = Enum.GetValues(typeof(PartnerSettingEnum)).Cast<PartnerSettingEnum>().ToList().Select(x => new SettingRoles { SettingId = x, SettingName = x.ToString() }).ToList();
             return roles;
         }
 
@@ -87,7 +93,21 @@ namespace Services.Partner
                 }
             }
             return partners;
-        } 
+        }
+        public async Task<List<PartnerSettingVM>> GetPartnerSetting(Guid partnerId)
+        {
+            var partnerSetting = await AircashSimulatorContext.PartnerSettings.Select(x => new PartnerSettingVM
+            {
+                Id = x.Id,
+                PartnerId = x.PartnerId,
+                Key = x.Key,
+                Value = x.Value
+            }).ToListAsync();
+            partnerSetting.RemoveAll(p => p.PartnerId != partnerId);
+
+            return partnerSetting;
+        }
+
 
         public async Task SavePartner(SavePartnerVM request)
         {
@@ -156,6 +176,35 @@ namespace Services.Partner
             if (request.Username != null) 
             {
                 await SaveUser(request.Username, id);
+            }
+            await AircashSimulatorContext.SaveChangesAsync();
+        }
+        public async Task SavePartnerSetting(SavePartnerSettingVM request)
+        {
+            var settingsDb = await AircashSimulatorContext.PartnerSettings.Where(x=>x.PartnerId==request.PartnerId).ToListAsync();
+            var partnerSettings = request.NewPartnerSetting;
+            var settingsToUpdate = settingsDb.Where(x => partnerSettings.Any(y => y.settingId == x.Key && !String.IsNullOrEmpty( y.input) && y.input!= x.Value)).ToList();
+            var settingsToDelete = settingsDb.Where(x => partnerSettings.Any(y => y.settingId == x.Key && String.IsNullOrEmpty(y.input))).ToList();
+            var settingsToAdd = request.NewPartnerSetting.Where(x => !settingsDb.Any(y => y.Key == x.settingId  ) && !String.IsNullOrEmpty(x.input)).ToList();
+            foreach (var setting in settingsToDelete)
+            {
+                AircashSimulatorContext.PartnerSettings.Remove(setting);
+            }
+            foreach (var setting in settingsToUpdate)
+            {
+                setting.Value = partnerSettings.Where(x => x.settingId == setting.Key).Select(x => x.input).FirstOrDefault();
+                AircashSimulatorContext.PartnerSettings.Update(setting);
+            }
+            foreach (var setting in settingsToAdd)
+            {
+                var settingDb = new PartnerSettingsEntity
+                {
+                    PartnerId=setting.PartnerId,
+                    Key = setting.settingId,
+                    Value = setting.input
+
+                };
+                 AircashSimulatorContext.PartnerSettings.Add(settingDb);
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
