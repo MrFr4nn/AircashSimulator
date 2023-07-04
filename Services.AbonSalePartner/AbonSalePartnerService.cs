@@ -7,6 +7,7 @@ using Domain.Entities.Enum;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Services.HttpRequest;
+using Services.Signature;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,17 +29,19 @@ namespace Services.AbonSalePartner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
 
         private readonly string CancelCouponEndpoint = "CashRegister/CancelCoupon";
         private readonly string CreateCouponEndpoint = "CashRegister/CreateCoupon";
 
-        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
+        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
+            SignatureService = signatureService;
         }
 
-        public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment, string contentType, int? contentWidth)
+        public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment, string contentType, int? contentWidth)
         {
             var returnResponse=new Response();
             var createCouponResponse=new object();
@@ -57,7 +60,15 @@ namespace Services.AbonSalePartner
             returnResponse.ServiceRequest = createCouponRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(createCouponRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            string signature;
+            if (privateKeyPath != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            }
+            else 
+            {
+                signature = SignatureService.GenerateSignature(partnerId, sequence);
+            }
             createCouponRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(createCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CreateCouponEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;
@@ -74,7 +85,7 @@ namespace Services.AbonSalePartner
                     AircashTransactionId = successResponse.SerialNumber,
                     TransactionId = partnerTransactionId,
                     ServiceId = ServiceEnum.AbonIssued,
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     PointOfSaleId = pointOfSaleId,
                     RequestDateTimeUTC = requestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC
@@ -91,17 +102,8 @@ namespace Services.AbonSalePartner
             return returnResponse;
         }
 
-        public async Task<object> CancelCoupon(string serialNumber, string pointOfSaleId, Guid partnerId, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+        public async Task<object> CancelCoupon(string serialNumber, string pointOfSaleId, Guid partnerId, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
         {
-            string partnerTransactionIdString;
-            if (partnerTransactionId==Guid.Empty)
-            {
-                partnerTransactionIdString = null;
-            }
-            else
-            {
-                partnerTransactionIdString=partnerTransactionId.ToString();
-            }
             var returnResponse = new Response();
             var cancelCouponResponse = new object();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
@@ -111,13 +113,21 @@ namespace Services.AbonSalePartner
             {
                 PartnerId = partnerId.ToString(),
                 SerialNumber = serialNumber,
-                PartnerTransactionId=partnerTransactionIdString,
+                PartnerTransactionId = partnerTransactionId,
                 PointOfSaleId = pointOfSaleId,
             };
             returnResponse.ServiceRequest = cancelCouponRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(cancelCouponRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            string signature;
+            if (privateKeyPath != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            }
+            else
+            {
+                signature = SignatureService.GenerateSignature(partnerId, sequence);
+            }
             cancelCouponRequest.Signature = signature;
             var response=await HttpRequestService.SendRequestAircash(cancelCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CancelCouponEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;
@@ -135,7 +145,7 @@ namespace Services.AbonSalePartner
                         AircashTransactionId = $"CTX-{serialNumber}",
                         TransactionId = partnerTransactionId,
                         ServiceId = ServiceEnum.AbonCancelled,
-                        UserId = Guid.NewGuid(),
+                        UserId = Guid.NewGuid().ToString(),
                         PointOfSaleId = pointOfSaleId,
                         RequestDateTimeUTC = requestDateTimeUTC,
                         ResponseDateTimeUTC = responseDateTimeUTC
@@ -153,7 +163,7 @@ namespace Services.AbonSalePartner
             return returnResponse;
         }
 
-        public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, Guid partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+        public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
         {
             var returnResponse = "";
             var requestDateTimeUTC = DateTime.UtcNow;
@@ -186,7 +196,7 @@ namespace Services.AbonSalePartner
                     AircashTransactionId = successResponse.SerialNumber,
                     TransactionId = partnerTransactionId,
                     ServiceId = ServiceEnum.AbonIssued,
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     PointOfSaleId = pointOfSaleId,
                     RequestDateTimeUTC = requestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC

@@ -17,6 +17,7 @@
     <ProjectReference Include="..\DataAccess\DataAccess.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
     <ProjectReference Include="..\Services.MatchService\Services.MatchService.csproj" />
+    <ProjectReference Include="..\Services.Signature\Services.Signature.csproj" />
   </ItemGroup>
 
 </Project>

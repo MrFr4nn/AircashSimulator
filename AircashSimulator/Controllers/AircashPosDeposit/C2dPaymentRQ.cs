@@ -9,7 +9,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         public decimal Amount { get; set; }
         public string PhoneNumber { get; set; }
         public List<Services.AircashPosDeposit.Parameter> ParametersCreatePayout { get; set; }
-        public List<AdditionalParameter> ParametersCheckUser { get; set; }
+        public List<Parameter> ParametersCheckUser { get; set; }
         public EnvironmentEnum Environment { get; set; }
         
 

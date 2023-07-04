@@ -21,43 +21,52 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         validateSimulateError: validateSimulateError,
         confirmSimulateError: confirmSimulateError,
     });
-    function validateCoupon(couponCode) {
+    function validateCoupon(couponCode, providerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonOnlinePartner/ValidateCoupon",
             data: {
-                CouponCode: couponCode
+                CouponCode: couponCode,
+                ProviderId: providerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlValidateCoupon(couponCode) {
+    function getCurlValidateCoupon(couponCode, providerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonOnlinePartner/GetCurlValidateCoupon",
             data: {
-                CouponCode: couponCode
+                CouponCode: couponCode,
+                ProviderId: providerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function confirmTransaction(couponCode) {
+    function confirmTransaction(confirmTransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl +"AbonOnlinePartner/ConfirmTransaction",
             data: {
-                CouponCode: couponCode
+                CouponCode: confirmTransactionModel.couponCode,
+                ProviderId: confirmTransactionModel.providerId,
+                ProviderTransactionId: confirmTransactionModel.providerTransactionId,
+                UserId: confirmTransactionModel.userId
+
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlConfirmTransaction(couponCode) {
+    function getCurlConfirmTransaction(confirmTransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonOnlinePartner/GetCurlConfirmTransaction",
             data: {
-                CouponCode: couponCode
+                CouponCode: confirmTransactionModel.couponCode,
+                ProviderId: confirmTransactionModel.providerId,
+                ProviderTransactionId: confirmTransactionModel.providerTransactionId,
+                UserId: confirmTransactionModel.userId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -86,9 +95,10 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', 'HelperService', '$localStorage', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope, HelperService, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AbonDeposit") == -1) {
         $location.path('/forbidden');
     }
@@ -98,10 +108,14 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     }
 
     $scope.validateCouponModel = {
-        couponCode: ""
+        couponCode: null,
+        providerId: $scope.partnerIds.AbonOnlinePartnerId
     };
     $scope.confirmTransactionModel = {
-        couponCode: ""
+        couponCode: null,
+        providerId: $scope.partnerIds.AbonOnlinePartnerId,
+        providerTransactionId: HelperService.NewGuid(),
+        userId: HelperService.NewGuid()
     };
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
@@ -116,7 +130,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.getCurlValidateCoupon = function () {
         $scope.curlValidateBusy = true;
         $scope.curlValidateResponded = false;
-        abonOpService.getCurlValidateCoupon($scope.validateCouponModel.couponCode)
+        abonOpService.getCurlValidateCoupon($scope.validateCouponModel.couponCode, $scope.validateCouponModel.providerId)
             .then(function (response) {
                 if (response) {
                     $scope.CurlResponse = response;
@@ -133,7 +147,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.validateCoupon = function () {
         $scope.validateBusy = true;
         $scope.validateResponded = false;
-        abonOpService.validateCoupon($scope.validateCouponModel.couponCode)
+        abonOpService.validateCoupon($scope.validateCouponModel.couponCode, $scope.validateCouponModel.providerId)
             .then(function (response) {
                 if (response) {
                     $scope.ValidateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -156,7 +170,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.confirmTransaction = function () {
         $scope.confirmBusy = true;
         $scope.confirmResponded = false;
-        abonOpService.confirmTransaction($scope.confirmTransactionModel.couponCode)
+        abonOpService.confirmTransaction($scope.confirmTransactionModel)
             .then(function (response) {
                 if (response) {
                     $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -179,7 +193,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.getCurlConfirmTransaction = function () {
         $scope.curlConfirmBusy = true;
         $scope.curlConfirmResponded = false;
-        abonOpService.getCurlConfirmTransaction($scope.confirmTransactionModel.couponCode)
+        abonOpService.getCurlConfirmTransaction($scope.confirmTransactionModel)
             .then(function (response) {
                 if (response) {
                     $scope.CurlResponseConfirmTransaction = response;
@@ -419,16 +433,18 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         },
         confirmTransaction: {
             requestExample: {
-                couponCode: "5460446045144493",
-                providerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                providerTransactionId: "d711c31b-9e20-48dd-a749-91778627b569",
-                userId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                signature: "CVrMFUqDzg..."
+                "couponCode": "2326186935891516",
+                "providerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                "providerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "userId": "4149ba7d-e4f7-4c77-8393-d03e6691c03b",
+                "signature": "eOplj4Cgfm..."
             },
             responseExample: {
-                couponValue: 50.0,
-                ISOCurrency: "HRK",
-                providerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+                "couponValue": 50,
+                "isoCurrency": 978,
+                "providerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "salePartnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                "isoCountryCode": null
             },
             errorResponseExample: {
                 code: 4,

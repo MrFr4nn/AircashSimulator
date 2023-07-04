@@ -11,6 +11,6 @@ namespace Services.AbonSalePartner
         public string SerialNumber { get; set; }
         public decimal Value { get; set; }
         public string IsoCurrencySymbol { get; set; }
-        public Guid PartnerTransactionId { get; set; }
+        public string PartnerTransactionId { get; set; }
     }
 }

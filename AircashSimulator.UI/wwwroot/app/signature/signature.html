@@ -375,7 +375,6 @@ function verify_signature($sequence, $signature)
     <br />
     <hr />
     <h1>Validate public key</h1>
-
     <p>
         You can validate public key through openSSL and running the following command:
     </p>
@@ -394,5 +393,41 @@ function verify_signature($sequence, $signature)
             <button ng-click="validatePublicKey()" class="btn btn-primary w-100px me-5px" ng-disabled="ValidatePublicKeyServiceBusy">Validate public key <i ng-if="ValidatePublicKeyServiceBusy" class="fa fa-cog fa-spin"></i></button>
         </div>
     </div>
+  
+    <uib-tabset>
+        <uib-tab index="request-tab-0" heading="Generate Signature" classes="nav-item">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Data To Sign</label>
+                    <textarea class="form-control mb-3" rows="2" ng-model="getSignatureModel.dataSign"></textarea>
+                    <button ng-click="getSignature()" class="btn btn-primary w-100px me-5px" ng-disabled="GenerateSignatureServiceBusy">Generate Signature <i ng-if="GenerateSignatureServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                </div>
+                <div ng-if="GenerateSignatureResponded" class="col-md-6">
+                    Signature:
+                    <pre>
+                    <jsonformatter data="GenerateSignatureResponse"></jsonformatter>
+           </pre>
+
+                </div>
+                </div>
+        </uib-tab>
+        <uib-tab index="request-tab-1" heading="Validate Signature" classes="nav-item">
+            <div class="row">
+                <div class="col-md-4">
+                    <label class="form-label">Data To Sign</label>
+                    <textarea class="form-control mb-3" rows="1" ng-model="validateSignatureModel.dataToValidate"></textarea>
+                    <label class="form-label">Signature</label>
+                    <textarea class="form-control mb-3" rows="3" ng-model="validateSignatureModel.signatureToValidate"></textarea>
+                    <button ng-click="validateSignature()" class="btn btn-primary w-100px me-5px" ng-disabled="ValidateSignatureServiceBusy">Validate Signature <i ng-if="ValidateSignatureServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                </div>
+
+
+                <div ng-if="ValidateSignatureResponded" class="col-md-8">
+                    Valid Signature:
+                    <jsonformatter data="ValidateSignatureResponse"></jsonformatter>
+                </div>
+            </div>
+                </uib-tab>
+    </uib-tabset>
 </body>
 </html>

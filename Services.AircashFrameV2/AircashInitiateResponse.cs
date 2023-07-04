@@ -8,7 +8,7 @@ namespace Services.AircashFrameV2
 {
     public class AircashInitiateResponse
     {
-        public Guid TransactionId { get; set; }
+        public string TransactionId { get; set; }
         public string Url { get; set; }
     }
 }

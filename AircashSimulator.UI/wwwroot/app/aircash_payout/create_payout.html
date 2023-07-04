@@ -650,7 +650,7 @@ XNqywSLWevPrLAQwhePcpdbX7HUe4kQFKQQgUXiPA/YbrPz/kUTECe6Z/rAz9K3Q8j1eBcZDed58pv2h
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Parameters</th>
+                                <th colspan="2">Parameters</th>
                                 <th>Type</th>
                                 <th>Description</th>
                                 <th>Mandatory</th>
@@ -658,9 +658,29 @@ XNqywSLWevPrLAQwhePcpdbX7HUe4kQFKQQgUXiPA/YbrPz/kUTECe6Z/rAz9K3Q8j1eBcZDed58pv2h
                         </thead>
                         <tbody>
                             <tr>
-                                <td><b>AircashTransationID </b></td>
+                                <td colspan="2"><b>AircashTransationID </b></td>
                                 <td>String</td>
                                 <td>Transaction ID from Aircash system. Returns only in case of successful payment.</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Parameters</b></td>
+                                <td>List&lt;Object&gt;</td>
+                                <td>List of parameters</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Key</b></td>
+                                <td>String</td>
+                                <td>The name of the parameter to be sent</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Value</b></td>
+                                <td>String</td>
+                                <td>The value of the parameter to be sent</td>
                                 <td>YES</td>
                             </tr>
                         </tbody>

@@ -186,6 +186,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             }
             $scope.checkPlayerParameters.push($scope.requestExample.email);
         } else {
+
             if ($scope.checkPlayerGenerateSignatureModel.identificator == "user@example.net") {
                 $scope.checkPlayerGenerateSignatureModel.identificator = "aircash";
                 setRequestExamples($scope.checkPlayerGenerateSignatureModel);
@@ -270,7 +271,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         acPaymentService.generateCheckPlayerSignature($scope.checkPlayerParameters)
             .then(function (response) {
                 if (response) {
-                    $scope.generateCheckPlayerSignatureResponse = JSON.stringify(response, null, 4);
+                    $scope.generateCheckPlayerSignatureResponse = JSON.stringify(response.aircashPaymentCheckPlayer, null, 4);
+                    $scope.RequestExampleSequence = response.sequence;
                 }
                 $scope.generateCheckPlayerSignatureBusy = false;
                 $scope.generateCheckPlayerSignatureResponded = true;
@@ -288,7 +290,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         acPaymentService.generateCreateAndConfirmSignature($scope.createAndConfirmParameters, $scope.createAndConfirmGenerateSignatureModel.amount)
             .then(function (response) {
                 if (response) {
-                    $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response, null, 4);
+                    $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response.aircashPaymentCreateAndConfirmPayment, null, 4);
+                    $scope.RequestExampleSequence = response.sequence;
                 }
                 $scope.generateCreateAndConfirmSignatureBusy = false;
                 $scope.generateCreateAndConfirmSignatureResponded = true;

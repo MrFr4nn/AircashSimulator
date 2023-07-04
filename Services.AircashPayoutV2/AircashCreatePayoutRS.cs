@@ -9,5 +9,6 @@ namespace Services.AircashPayoutV2
     public class AircashCreatePayoutRS
     {
         public string AircashTransactionID { get; set; }
+        public List<Parameters> Parameters { get; set; }
     }
 }
