@@ -1,0 +1,112 @@
+﻿<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header text-white" style="background-color: #F62727;">
+                <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - Withdrawal</h2>
+            </div>
+            <div class="card-body">
+                <div class="row row-cols-1 row-cols-sm-2 text-center">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <img src="/images/aircash_logo.png" class="aircashHeaderLogo">
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12">
+                        <h6>
+                            Enter the withdrawal amount and your phone number. Confirm the withdrawal and funds will instantly be available on your Aircash wallet. Download the free Aircash mobile application here.
+                        </h6>
+                    </div>
+                    <div class="col-md-1"></div>
+                </div>
+                <form action="/" method="POST" name="transactionForm1">
+                    <fieldset>
+                        <div class="row row-cols-1 row-cols-sm-2">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 align-items-center justify-content-center" ng-if="useMatchPersonalData">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label">First name</label>
+                                        <input ng-model="createCashierAcFrameWithdrawalModel.firstName" class="form-control form-control-lg" type="text" placeholder="Enter first name" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Last name</label>
+                                        <input ng-model="createCashierAcFrameWithdrawalModel.lastName" class="form-control form-control-lg" type="text" placeholder="Enter last name" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Birth date</label>
+                                        <date-picker ng-model="createCashierAcFrameWithdrawalModel.birthDate" date="" isOptional="false" out="setDate"></date-picker>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                                <label class="form-label" style="margin-bottom: 0px !important;">{{translationsCashier.cashier_amount_input_label}}</label>
+                                <div class="input-group" style="margin-bottom: 0px !important;">
+                                    <input ng-model="createCashierAcFrameWithdrawalModel.amount" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.cashier_amount_placeholder}}" ng-disabled="createCashierAcFrameWithdrawalServiceBusy" ng-required="true">
+                                    <span class="input-group-addon">€</span>
+                                </div>
+                                <label class="form-label" for="amount">{{translationsCashier.cashier_amount_input_note}}</label>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center" style="margin-top: 10px;">
+                            <div class="col-md-1"></div>
+                            <div class="col-md-10 col-sm-12 d-flex align-items-center justify-content-center" id="dvBtnInitiateFrame">
+                                <button ng-click="initiateAcFrameWithdrawal()" type="button" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createCashierAcFrameWithdrawalServiceBusy || transactionForm1.$invalid">Withdrawal<i ng-if="createCashierAcFrameWithdrawalServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </div>
+                            <div class="col-md-1"></div>
+                        </div>
+                        <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
+                            <div class="iconGoogleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/google-play-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconAppleMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-store-en.svg" style="max-width: 70%"></a>
+                            </div>
+                            <div class="iconHuaweiMarket col-md-4 col-sm-12 align-items-center justify-content-center">
+                                <a target="_blank" href="https://staging-m3.aircash.eu/api/DeepLink/Partner?partnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&source=VirtualPartner"><img src="../../app/cashier/img/app-gallery-en.svg" style="max-width: 70%"></a>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="row row-cols-1 row-cols-sm-2">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#AcFrameAbonConfiguration" aria-expanded="false" aria-controls="AcFrameAbonConfiguration">
+                                            Configuration
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="AcFrameAbonConfiguration" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="form-group">
+                                            <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameWithdrawalServiceBusy" ng-required="true">
+                                            </select>
+                                        </div>
+                                        <div class="form-check">
+                                            <input ng-checked="false" ng-model="useMatchPersonalData" class="form-check-input" type="checkbox" id="checkbox2" style=" width: 1.55rem; height: 1.55rem;" ng-init="useMatchPersonalData=false" />
+                                            <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Match personal data</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>

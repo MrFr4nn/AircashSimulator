@@ -40,6 +40,9 @@ using Microsoft.AspNetCore.Http;
 using System.Buffers.Text;
 using Newtonsoft.Json;
 using Services.Translations;
+using Service.Settings;
+using CrossCutting;
+using Services.Signature;
 using Services.AircashATM;
 
 namespace AircashSimulator
@@ -94,8 +97,10 @@ namespace AircashSimulator
                    ClockSkew = TimeSpan.Zero
                };
            });
-
+            services.AddMemoryCache();
             services.AddHttpClient<IHttpRequestService, HttpRequestService>();
+            services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IHelperService, HelperService>();
             services.AddTransient<IAbonSalePartnerService, AbonSalePartnerService>();
             services.AddTransient<IAbonOnlinePartnerService, AbonOnlinePartnerService>();
             services.AddTransient<IHttpRequestService, HttpRequestService>();
@@ -119,9 +124,9 @@ namespace AircashSimulator
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
+            services.AddTransient<ISignatureService, SignatureService>();
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));
-
             services.AddSignalR(o => o.EnableDetailedErrors = true);
 
         }

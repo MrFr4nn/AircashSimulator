@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using AircashSimulator.Configuration;
+using Services.Signature;
 
 namespace Services.AircashPay
 {
@@ -18,6 +19,7 @@ namespace Services.AircashPay
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
         private AircashConfiguration AircashConfiguration;
         private ILogger<AircashPayService> Logger;
 
@@ -25,14 +27,15 @@ namespace Services.AircashPay
         private readonly string CancelTransactionEndpoint = "AircashPay/CancelTransaction";
         private readonly string RefundTransactionEndpoint = "AircashPay/RefundTransaction";
 
-        public AircashPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashPayService> logger)
+        public AircashPayService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashPayService> logger, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             Logger = logger;
+            SignatureService = signatureService;
         }
-        public async Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO)
+        public async Task<object> GeneratePartnerCode(GeneratePartnerCodeDTO generatePartnerCodeDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == generatePartnerCodeDTO.PartnerId).FirstOrDefault();
@@ -41,7 +44,7 @@ namespace Services.AircashPay
                 PartnerId = generatePartnerCodeDTO.PartnerId,
                 Amount = generatePartnerCodeDTO.Amount,
                 ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
-                PartnerTransactionId = Guid.NewGuid(),
+                PartnerTransactionId = Guid.NewGuid().ToString(),
                 Description = generatePartnerCodeDTO.Description,
                 ValidForPeriod = int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
                 LocationId = generatePartnerCodeDTO.LocationId,
@@ -63,9 +66,9 @@ namespace Services.AircashPay
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequest);
             Logger.LogInformation(partner.PrivateKey);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(generatePartnerCodeDTO.PartnerId, dataToSign);
             aircashGeneratePartnerCodeRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             preparedTransaction.ResponseDateTimeUTC = responseDateTime;
             AircashSimulatorContext.Update(preparedTransaction);
@@ -118,7 +121,7 @@ namespace Services.AircashPay
             }
         }
 
-        public async Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO)
+        public async Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
             var aircashCancelTransactionResponse = new object();
@@ -129,9 +132,9 @@ namespace Services.AircashPay
             };
             var partner = AircashSimulatorContext.Partners.FirstOrDefault(x => x.PartnerId == cancelTransactionDTO.PartnerId);
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashCancelTransactionRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(cancelTransactionDTO.PartnerId, dataToSign);
             aircashCancelTransactionRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashCancelTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{CancelTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashCancelTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{CancelTransactionEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -169,7 +172,7 @@ namespace Services.AircashPay
             return frontResponse;
         }
 
-        public async Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO)
+        public async Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
             var aircashRefundTransactionResponse = new object();
@@ -182,15 +185,15 @@ namespace Services.AircashPay
             };
             var partner = AircashSimulatorContext.Partners.FirstOrDefault(x => x.PartnerId == refundTransactionDTO.PartnerId);
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashRefundTransactionRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+            var signature = SignatureService.GenerateSignature(refundTransactionDTO.PartnerId, dataToSign);
             aircashRefundTransactionRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(aircashRefundTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{RefundTransactionEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(aircashRefundTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{RefundTransactionEndpoint}");
             var responseDateTime = DateTime.UtcNow;
 
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 aircashRefundTransactionResponse = JsonConvert.DeserializeObject<AircashRefundTransactionResponse>(response.ResponseContent);
-                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId == refundTransactionDTO.PartnerTransactionId);
+                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId.ToString() == refundTransactionDTO.PartnerTransactionId);
 
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
@@ -207,7 +210,7 @@ namespace Services.AircashPay
             }
             else
             {
-                aircashRefundTransactionResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+                aircashRefundTransactionResponse = JsonConvert.DeserializeObject<ErrorRefundResponse>(response.ResponseContent);
             }
             var frontResponse = new Response
             {

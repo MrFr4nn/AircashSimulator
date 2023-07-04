@@ -19,7 +19,7 @@ inAppPayModule.service("inAppPayService", ['$http', '$q', 'handleResponseService
     function generateTransaction(amount, description, locationID) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashInAppPay/GenerateTransaction",
+            url: config.baseUrl + "AircashInAppPay/CashierGenerateTransaction",
             data: {
                 Amount: amount,
                 Description: description,
@@ -48,7 +48,7 @@ inAppPayModule.controller("InAppPayCtrl", ['$scope', '$state', '$filter', 'inApp
         inAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID)
             .then(function (response) {
                 $scope.generateBusy = false;
-                window.open(response.serviceResponse.url, '_blank');
+                window.open(response.serviceResponse.url, "_self");
             }, () => {
                 console.log("error");
             });

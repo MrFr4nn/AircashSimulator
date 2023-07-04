@@ -65,7 +65,7 @@ namespace AircashSimulator.Controllers.Partner
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SavePartner(PartnerDetailVM request)
+        public async Task<IActionResult> SavePartner(SavePartnerVM request)
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
             await PartnerService.SavePartner(request);
@@ -74,7 +74,7 @@ namespace AircashSimulator.Controllers.Partner
 
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SavePartnerV2(PartnerDetailVM request)
+        public async Task<IActionResult> SavePartnerV2(SavePartnerVM request)
         {
             request.Environment = Environment;
             request.UseDefaultPartner = UseDefaultPartner;

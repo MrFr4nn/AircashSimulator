@@ -16,14 +16,14 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
     return ({
         generatePartnerCode: generatePartnerCode,
         cancelTransaction: cancelTransaction,
-        refundTransaction: refundTransaction,
         getTransactions: getTransactions
     });
-    function generatePartnerCode(amount, description, locationID) {
+    function generatePartnerCode(amount, description, locationID, partnerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/GeneratePartnerCode",
             data: {
+                PartnerId: partnerId,
                 Amount: amount,
                 Description: description,
                 LocationID: locationID
@@ -32,24 +32,13 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function cancelTransaction(partnerTransactionID) {
+    function cancelTransaction(partnerTransactionID, partnerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/CancelTransaction",
             data: {
+                PartnerId: partnerId,
                 partnerTransactionID: partnerTransactionID
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-
-    function refundTransaction(amount, partnerTransactionID) {
-        var request = $http({
-            method: 'POST',
-            url: config.baseUrl + "AircashPay/RefundTransaction",
-            data: {
-                partnerTransactionID: partnerTransactionID,
-                amount: amount,
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -73,6 +62,7 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
 acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AircashPay") == -1) {
         $location.path('/forbidden');
     }
@@ -108,7 +98,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         $("#qrcode").empty();
         $scope.generateBusy = true;
         $scope.generateResponded = false;
-        acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
+        acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID, $scope.partnerIds.AcPayPartnerId)
             .then(function (response) {
                 if (response) {
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -133,7 +123,7 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.cancelTransaction = function (transactionId) {
         $scope.cancelBusy = true;
         $scope.cancelResponded = false;
-        acPayService.cancelTransaction(transactionId)
+        acPayService.cancelTransaction(transactionId, $scope.partnerIds.AcPayPartnerId)
             .then(function (response) {
                 if (response) {
                     $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -146,28 +136,6 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                 }
                 $scope.cancelBusy = false;
                 $scope.cancelResponded = true;
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.refundResponded = false;
-    $scope.refundTransaction = function (transactionId) {
-        $scope.refundBusy = true;
-        $scope.refundResponded = false;
-        acPayService.refundTransaction($scope.refundTransactionModel.amount, transactionId)
-            .then(function (response) {
-                if (response) {
-                    $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.refundSequence = response.sequence;
-
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                }
-                $scope.refundBusy = false;
-                $scope.refundResponded = true;
             }, () => {
                 console.log("error");
             });
@@ -196,12 +164,16 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
 
     $scope.getTransactions();
 
+    $scope.showVideoAcPay = function () {
+        $("#videoModalAcPay").modal("show");
+    }
+
     $scope.aircashPay = {
         generatePartnerCode: {
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 amount: 100,
-                currencyID: 191,
+                currencyID: 978,
                 partnerTransactionID: "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
                 description: "test",
                 locationID: "test",
@@ -216,22 +188,9 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerTransactionID: "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
                 amount: 100,
-                currencyID: 191,
+                currencyID: 978,
                 aircashTransactionID: "122e5e33-b5fb-4398-b138-c60582b9fa2b",
                 signature: "Ff3oSWm20n...",
-            }
-        },
-        refundTransaction: {
-            requestExample: {
-                amount: 50,
-                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                partnerTransactionID: "28f0f0db-69cf-4350-8084-a0d431c2c837",
-                refundPartnerTransactionID: "abc66734-9d5a-4f7f-891a-185e1bb3144a",
-                signature: "CQ83DaMKix..."
-            },
-            errorResponseExample: {
-                ErrorCode: 3,
-                ErrorMessage: "Requested amount is higher than remaining amount from the original transaction"
             }
         }
     };

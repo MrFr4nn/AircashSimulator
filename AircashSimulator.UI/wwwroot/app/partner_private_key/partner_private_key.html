@@ -1,0 +1,138 @@
+﻿<h1>Partner Private Key</h1>
+<br />
+<div class="note note-gray-400 col-md-6">
+    <div class="note-content col">
+        <h6>If you want to test with your private key insert inputs (after change you have to log out and log in)</h6>
+        <br />
+        <label>PartnerId(Guid):</label>
+        <input class="form-control mb-3" ng-model="inputs.partnerId" />
+        <label>Public key:</label><button class="btn btn-white btn-sm ml-2" data-toggle="modal" data-target="#publicKeyModal">See example</button>
+        <textarea class="form-control mb-3" rows="20" ng-model="inputs.publicKey" placeholder="-----BEGIN CERTIFICATE-----"></textarea>
+        <label>Private key:</label><button class="btn btn-white btn-sm ml-2" data-toggle="modal" data-target="#privateKeyModal">See example</button>
+        <textarea class="form-control mb-3" rows="20" ng-model="inputs.privateKey" placeholder="-----BEGIN ENCRYPTED PRIVATE KEY-----"></textarea>
+        <label>Password:</label>
+        <input class="form-control mb-3" ng-model="inputs.password" />
+        <button ng-click="validateAndSave()" class="btn btn-primary w-100px me-5px" ng-disabled="validateAndSaveServiceBusy || inputs.publicKey == '' || inputs.privateKey == '' || inputs.password == '' || inputs.partnerId == ''">Save private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
+        <button ng-click="removePartnerKeys()" class="btn btn-primary w-100px  me-5px ml-2" ng-disabled="validateAndSaveServiceBusy">Remove private key <i ng-if="validateAndSaveServiceBusy" class="fa fa-cog fa-spin"></i></button>
+    </div>
+</div>
+
+<div class="modal fade" id="publicKeyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Public key example</h4>
+            </div>
+            <div class="modal-body text-left" style="word-break: break-all;" align="center">
+                -----BEGIN CERTIFICATE-----<br />
+                MIIGEzCCA/ugAwIBAgIJAN2Dbzym/94vMA0GCSqGSIb3DQEBCwUAMIGfMQswCQYD
+                VQQGEwJSSDEjMCEGA1UECAwaUG96ZXNrby1zbGF2b25za2EgenVwYW5pamExEzAR
+                BgNVBAcMClBsZXRlcm5pY2ExEDAOBgNVBAoMB0FpcmNhc2gxEDAOBgNVBAsMB0Jh
+                Y2tlbmQxDTALBgNVBAMMBFRvbmkxIzAhBgkqhkiG9w0BCQEWFHRvbmkuY3Jua292
+                aWNAdnV2LmhyMB4XDTIyMTAyODEwMjgwMFoXDTIyMTEyNzEwMjgwMFowgZ8xCzAJ
+                BgNVBAYTAlJIMSMwIQYDVQQIDBpQb3plc2tvLXNsYXZvbnNrYSB6dXBhbmlqYTET
+                MBEGA1UEBwwKUGxldGVybmljYTEQMA4GA1UECgwHQWlyY2FzaDEQMA4GA1UECwwH
+                QmFja2VuZDENMAsGA1UEAwwEVG9uaTEjMCEGCSqGSIb3DQEJARYUdG9uaS5jcm5r
+                b3ZpY0B2dXYuaHIwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQCzfcFF
+                4Bfn6k6QnfcaC39v7rHZn44ZRkvi2JweaYXpjIZEhgTb8Pw2KN64che+EH0jT8a0
+                DaeBr7kk9mvc0IU+wJKXLh1a1lc3kISebYuwynzuBydcU7ExMiUUkCSj2du34yZM
+                m6AU99nB+zGHkLcECND4Y1i++CO4mLjJ27QTyGbJnwn74c5hQolo5zYfIDV8w9Z4
+                TKg9xAzqACAVJRM1KtQLDE9ppo1SVQD5u9TlOeQACyZKce1SDZ5ixBVSgdQ1PA/r
+                8FYCcflheyOdEPNGsDwv8FE0Z/KfeghoEP0rit6Nrm3rdvg7x7GwiBc0bIQieTWp
+                9/P7VEXy33qD6wv9PfTfVnLqnKHm5NvsNCsV5Lfdu0bZtjXqnhvYG7pol3mqWDh2
+                9j6d3FnIg0mx/A3FmsiRPC7SMWKCNjf6HpQj+38SR4KvNUvWvS/chDp9QKlX2TsH
+                T4AzopWv0+0tfleaXwISD3FW/0vZUqoQkGgZfcUdP5tJECpFo9t7YYx6Rd9Ax9zv
+                rl3Uw9KvjSaRGjf5UBv55vK005J1WBragEpyigeqvObHAXRw6DNWYZKiKybTEYzP
+                PPcgnI5HNazICaqJ1FUWwvaB9GF5SryJ+Y+10uR2k1IrLWXeD8SUlCzXfZ4T4SU3
+                jUZDKD2yOKg7fPKvneAsEiaRq3CPsdAtIwOx1QIDAQABo1AwTjAdBgNVHQ4EFgQU
+                x13ieZfXxqMgb9fKdVax133zFDAwHwYDVR0jBBgwFoAUx13ieZfXxqMgb9fKdVax
+                133zFDAwDAYDVR0TBAUwAwEB/zANBgkqhkiG9w0BAQsFAAOCAgEASooJKLZHUHdg
+                M21+J02/HTtOJTyV6oSNyt3bAvBRCeVoywE1Wijj0XmAEdD7tstXvEi9McK98oqc
+                uDOe/43KdMRBS7YMnVwEPPhvPE0iaNHuRfZXD9/agCCppnwLpDuTXIoZ1H0fY1RS
+                BnL+F3DfDESH0dc8Wvzp9DypDmZqDVFPOi+sErgHuPVrdl/jFbn8G1CP/Od7ibrU
+                7zh9fqa2Qa6X+Mmi9iBJzgcsxx5W2igLKPZQnFx1WmuwxrWJuuiSw4obo/8snzjH
+                z3pNO13m5invt1eT2aDBXQUVD9BjHKCitugJd8ctO3qflE2rWGp41msEyPSOA/lH
+                fWn0zw+X1JnpfC85N5nJRGJ4+F8/zoVrY33pi209yl1dl1S1qXP+NeUMm2pIUeRo
+                RTtuLBrJKD8ER7bofgsRODSAY2YznfDyLuQzbEoQDlk/XnqulFCflmRszIvSlpWz
+                ETQr74SEqpym8sMkX2zyNYu+Equs9xRKkH+Dw3fM3btp6ddYIrvKWd8slrMxS9GL
+                LO2zc7hXvwGpxMLAyWeTh+rWgUYBRuYoPUO01g96RfSOCFw1GyzucAla7SRvdXi6
+                pggcEtl/F/lTTsXxkvf2gjQBxZN29E5j6GHwM6Rv/Lln6+NxY+VZ7hMhH0bH4jWC
+                mTSjboLt4SoEjjqto6SCIELjUDEkf3Y=<br />
+                -----END CERTIFICATE-----
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="privateKeyModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Private key example</h4>
+            </div>
+            <div class="modal-body text-left" style="word-break: break-all;" align="center">
+                -----BEGIN ENCRYPTED PRIVATE KEY-----<br />
+                MIIJjjBABgkqhkiG9w0BBQ0wMzAbBgkqhkiG9w0BBQwwDgQIh4KIL75oBaUCAggA
+                MBQGCCqGSIb3DQMHBAhRS6YQ+Mlj0gSCCUiMDh9pHaiUyvEC0IWCMN2IP1wX83SU
+                Hu8U1720nhbgQ+WX5qUhf161EymkkzzQ+hm1SmzclcHmgUZuK1MbxI29PVneXYY/
+                LVKapnThQUa5IwOMBnCjhnofT31jOB0HIrnhAVLPXB3o475zmXh7yZIDjv7ORQAq
+                8gNV7Ym0m8q7fcrLaq3LZmAD84D2gYPpeOiTLrlHaX7odEFVj2C2D9yYUGQuFycY
+                ujjjU7p3zEWdEVLsxtmdINLoT7IPa+6nysTFAXUGDPGXA5UJanCOaZV40lFNdxAR
+                pNzn3Q/etVqB/HdrLB/jGokglb8P0X3JaaSw+PVtDvgbDwjicaz2V2h9/idhXhag
+                XrE6zWduE4yfZueh/0BK6lU5dHRlnHfMCk8ZMpdjhBTFtuq4EAaccdLdiF6BD2VV
+                KLd+/YykqIaBXS0JICtcNLRzLHrx5q25JffO86655WTNcOIFAejF5F8QQtzl+/xW
+                xMd+oWcC8/WpSurbUa0P1SmT8/lPmUkeGwTrynLBHJ0QKvG3Fq4O2obsSnYAyIIB
+                p15NP35xfmyJ3iHyI/ij/Vm7feL3GmEsK5uNjssCEBpAgeuhhnq2FzyfRNng2Xhc
+                luLZMScU97V28xBxyRJ9u4qPwU+QwLU9zbubSPGHo9WuNNnWwU7uOoisM5wn59RI
+                i8xn17O41115a15BUrmVJNSDXW30UD/nA07i05Foma51tMlYrsF6C1kBBN5LpgO2
+                0p0Y1ugA26G/H/9et842Vb6IMvdZpdIEn2EG7t5sPkn1tm+qkeGzqgXKBJGYxuNZ
+                FzCNlcALhe3eWJho1IFF8oG2/pMsbJnLWCRLx9odChcGS3ugImVJgDvi9r78UiM1
+                z24/ILg1XXgt7SxihC3O07dE1FqURe0scEg5xLYgVLDYIWVWy1GxxPDefVYvh/7W
+                7f8onKqxUp+D2plFZVFFrdGFWXbwHNCb8q+lLbPp1YI5NITxQ2qMaDVgRPZSBLpK
+                Afe407nFxprc60q8aEsSL8KW4+UmMrxRrUi70pkddtaCFDtPcbf21iSwo99DcVwn
+                ApmNaA1INBnfTHzdxZqV/Mmah4CRN8I4Qx+McxALdkg4Jh7qI3XGuY5Ahk+rjZGK
+                BxkWM9gNWTeNMNKoWEHUdgBPgLtkh5z1GVEHniU8I5QyeK+tf33Q7DeAFKRzLkPW
+                JKlhBz6K9Qok4zCXFqvVEiIdjDjsajWpOAztsasmVXQP6u2kEm2ez3B/ry8T9m+p
+                BcevHGRLepNyPEtaOEMfBqH+cVIMfLKVzyC01pw+CBgruorLrTwVYiiu+7rpjKa7
+                cBtBfhSlyvzPutPJxrZ9FIz6DYyWohe4uysNXeypHmhWC3N16bO5BgOpVJSZzftI
+                LJaSii+IBWZuFzD4AladK0q/Xf44A3Wa11dYE+pCe1qjrtxi8B7sQXy3miSE639S
+                XB6ec048FOnl4ZSYVBJUxF/Ii0TFgUQRVuIbupp7seXLNm3rqs1URqXVNWoFhixE
+                bWs7Id5i1NNKsP5wq62l8WF/e+mN4j3VDLSkrHQfPpOHcnAzJwxliQtPbhFIHR5p
+                J1rbPFsefVO8p6jCchqHqLgVFGavtTIj9ma10Cvdu1beW76uZn2IIIJUUekQVzH7
+                Ok5epmHlHyOempWhRYFjVzv1g28Jp7dIjjxefBMyesMuKSx/SPuWIaNUHjWyGtvo
+                bVKY3QsegjBqK7wXUA/NcL1xnpw69XDKTQbZCM8//b7fehpmnUZS6GatYbX4Bnag
+                WVHuxDzcGiKAP/WPcymBksRm5VEymvih51gX725u+EnJPBDbhB2KqSHnATKY+dCl
+                HvdA2XWA1c48rtF3u7UpYfD46b8B6bJRJDHoinEJJWZ91Q3c945d3suE7J3d34zQ
+                ebMYLYJZrUGH0CXPgxW6jZ5lgl/5KDZaSOgtxAvGjnmrZjEZ1u4QT9s+pW6p/abk
+                FLnBIdquTXq7To+TRtWFj3QWY9lMlQ7Kx6ZcsNWcA41APnbd5F7P8Tiphd9pZSDD
+                EXZTPL/Ib/DeZUFbOESJH36yFPwJC3HCabIEgowbo20HwiVpf5BDc4l+B/SfhCE6
+                8kVu6J7xU+JTpHlq7EH3c6cr6M81tljMDviVDPilE4gTrpGhpPytL5kOFyrmyp0M
+                5AKUQHeBTzskdhYuwfnMwVlQFShZzKRxsrcZ9oNDa8UIDNzq3H3ZeG6UZs52TgBn
+                sewGfYme6zrVN6nJuhuUE7WIT0EOt88WAFXLmQ1DhN90DIpZUGOo2LzqT8qTEto5
+                dBmFM2ZrYWfNi8ifpuoPCFMkgru2UDOR+cieY9h5ncYLxpNLZpeTzSnHptlm1/En
+                Mgy4uAuj4Y0J60y1DLs66JRnTsal9PNZ5TEgDnJYvGYfYhy6tFGC4ew15NrdB/pG
+                6Z0d5AMukCxy1WO1GgzkHLXYfZdsEOHTTkWZHMN4OwyuhKuWDTIN2bMmu09HZPpm
+                IYsLh7guR7ydIAx3BQFW8RYqa3MxbKgsxA8Ijon1vMa1rDte4YH03gQec9gvvpRG
+                vt1aUudm+TNe9xmmGgxzzCcQkJWicoKwc0V5OAGNM2f6NiP9wro1Sp5VgzSKSx0+
+                l4ejXDRPgDDuyIPDwN1OLVrK/cdPSNJAdTjzUvKRGLIMmo9MStcPG9FCggelXQM0
+                +guBY6OMi3uxw780dNDrQ4133NjDsEQlog4qQKQbTWmhp/kwMnC8xbqW4dgBB+QY
+                SxRe0luuKyT7WrQTHwIypKd7bLut1udLh0ASe/CMecqdxh40mK0udD8DudwyaGie
+                8o2yDz8yUf2+JaquVjFhSGHOtJp0qBPOlQGoyqoOh+SlaVZjF2NIl/ODVkErvFiv
+                qjoCQ+Wdqxu1MazxRtcZYsgUvYMmQsPchytXoguDrcs3l/xzxmhWyGAPXbdKQjoS
+                ASNrmcNTRnlM7TwKX3powYLRS78LqFpytFzQAvpE8Ezz6+laLYabJ7E09VaXooO3
+                Eznh8RAr+BKnS8KJLKHpsah7BYidSrRfE1Le5c9YF8LK+s2+IS5EU19ICxe/SBKD
+                AS0wE+0Vz+nrGkKsT1pptbryR/66/nP+XG/0sXxrhqKmARvhI7TgR3Aja4ycQ4Fn
+                n4vXZkRQXeWRL+oLdqel9QNwusBJvPba4f9yyskPB/4rxwgif1sVWNRTGIOaN0dn
+                Vvo=<br />
+                -----END ENCRYPTED PRIVATE KEY-----
+
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>

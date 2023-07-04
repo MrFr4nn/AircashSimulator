@@ -15,6 +15,8 @@ namespace Domain.Entities
 
         public string PrivateKeyPass { get; set; }
 
+        public string PublicKey { get; set; }
+
         public int CurrencyId { get; set; }
 
         public string CountryCode { get; set; }

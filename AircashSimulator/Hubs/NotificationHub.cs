@@ -22,7 +22,10 @@ namespace AircashSimulator.Hubs
         {
             await Clients.All.SendAsync("InvalidSignatureMessage", msg, status);
         }
-
+        public async Task TransactionConfirmedPayment(string msg, int status)
+        {
+            await Clients.All.SendAsync("TransactionConfirmedMessagePayment", msg, status);
+        }
 
 
     }

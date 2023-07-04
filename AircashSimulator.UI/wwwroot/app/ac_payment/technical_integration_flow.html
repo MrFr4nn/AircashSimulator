@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1 style="text-align:justify">Technical integration flow</h1>
+    <ol>
+        <li>
+            The user opens the Aircash application, selects the Aircash marketplace and partner's logo.
+        </li>
+        <li>
+            Partner's deposit screen in the Aircash application opens. Screen contains fields for the identifier (username or email) and for the amount of input.
+        </li>
+        <li>
+            The user click the deposit button.
+        </li>
+        <li>
+            Aircash system triggers a CheckPlayer request that contains the identifier for checking if the user exists in the partner's system.
+        </li>
+        <li>
+            Depending on whether user exist in partner's system or not, next step will be:
+            <ol type="a">
+                <li>
+                    If the user exists, Aircash will automatically send second request: CreateAndConfirmPayment.
+                </li>
+                <li>
+                    If the user does not exists (or any other error is received from partner, i.e. “User is blocked“), Aircash will display a  proper error message and the process is finished.
+                </li>
+            </ol>
+        </li>
+        <li>
+            When a CreateAndConfirmPayment request is sent, funds are reserved and Aircash expects to receive a response:
+            <ol type="a">
+                <li>
+                    If he receive a successful response, it means that the user's balance in partner's system is increased.
+                </li>
+                <li>
+                    If for any known reason, the balance can not be updated (i.e. the user has reached its limits), partner's system will return response with the appropriate error code which means that we need to return the funds to the user’s wallet.
+                </li>
+                <li>
+                    If there is some timeout or unknown error, Aircash will repeat the CreateAndConfirmPayment 10 times in the period of 6 hours (or until the first valid response - either a successful response or a known error code). If a transaction cannot be confirmed during this retry period, it will remain in the pending status on our end and needs to be checked manually.
+                </li>
+            </ol>
+        </li>
+        <li>
+            When a successful response is received, the process is finished.
+        </li>
+    </ol>
+</body>
+</html>

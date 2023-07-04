@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Entities.Enum;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace Services.User
         Task<List<UserDetailVM>> GetUsers(int PageNumber, int PageSize, string Search);
         Task SaveUser(UserDetailVM request);
 
-        Task DeleteUser(Guid? userId);
+        Task DeleteUser(string? userId);
+        Task<EnvironmentEnum> GetUserEnvironment(string userId);
 
         Task<UserDTO> GetUserByIdentifier(string identifier);
     }
