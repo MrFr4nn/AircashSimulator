@@ -101,7 +101,7 @@ namespace AircashSimulator.Controllers.Partner
         }
         [HttpPost]
         [Authorize]
-        public async Task<IActionResult> SavePartnersetting(SavePartnerSettingVM request)
+        public async Task<IActionResult> SavePartnerSetting(SavePartnerSettingVM request)
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
             await PartnerService.SavePartnerSetting(request);

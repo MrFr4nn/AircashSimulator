@@ -98,7 +98,7 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
             url: config.baseUrl + "Partner/SavePartnerSetting",
             data: {
                 partnerId: partnerId,
-                NewPartnerSetting: SettingsRoles
+                NewPartnerSetting: SettingsRoles,
 
             }
         });
@@ -174,9 +174,9 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                         s.input = "";
                         if ($scope.partnersetting.filter(x => x.key == s.settingId).length > 0) {
                             s.input = $scope.partnersetting.find(y => y.key == s.settingId).value;
-                        }
-                        
 
+                        }
+                        s.PartnerId = $scope.partnerId;
                     })
                 }
             }, () => {
