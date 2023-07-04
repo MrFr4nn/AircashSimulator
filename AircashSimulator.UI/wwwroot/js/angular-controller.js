@@ -94,6 +94,9 @@ app.controller('sidebarController', ['$scope', '$rootScope', '$location', '$stat
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
 
+    $scope.partnerName = $scope.decodedToken.partnerName;
+    $scope.enviroment = $scope.decodedToken.enviroment;
+
     var subMenu = ['/app/logo', '/app/ac_business_site', '/app/ac_test_application', '/app/aircashRefund', '/app/signature'];
     if (subMenu.find(el => el == $location.path())) {
         $scope.submenu = true;
