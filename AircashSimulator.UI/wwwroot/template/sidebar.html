@@ -158,6 +158,12 @@
                     <span>{{translations.ac_payment_slot_machines}}</span>
                 </a>
             </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.aircash_ATM" ng-if="partnerRoles.indexOf('AircashATM') != -1">
+                    <i class="fa fa-mobile-alt"></i>
+                    <span>ATM integration</span>
+                </a>
+            </li>
             <li>
                 <hr />
             </li>

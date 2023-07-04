@@ -320,6 +320,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 return "C2D witdhrawals";
             case "SlotMachines":
                 return "Slot machines integration";
+            case "AircashATM":
+                return "Aircash ATM";
             default:
                 break;
 

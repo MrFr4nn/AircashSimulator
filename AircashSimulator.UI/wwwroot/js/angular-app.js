@@ -35,6 +35,7 @@ var app = angular.module('app', [
     'jira', 
     'generalGuidlines',
     'matchPersonalData',
+    'aircash_ATM',
     'inAppPay'
 ]);
 
