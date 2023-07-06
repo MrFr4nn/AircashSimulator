@@ -16,13 +16,14 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
     return ({
         generateTransaction: generateTransaction,
         cancelTransaction: cancelTransaction,
-        getTransactions: getTransactions,
+        checkTransactionStatus: checkTransactionStatus,
     });
-    function generateTransaction(amount, description, locationID) {
+    function generateTransaction(amount, description, locationID, partnerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashInAppPay/GenerateTransaction",
             data: {
+                PartnerId: partnerId,
                 Amount: amount,
                 Description: description,
                 LocationID: locationID
@@ -41,14 +42,13 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
-    function getTransactions(pageSize, pageNumber) {
+    function checkTransactionStatus(transactionModel) {
         var request = $http({
-            method: 'GET',
-            url: config.baseUrl + "Transaction/GetAircashPayPreparedTransactions",
-            params: {
-                PageSize: pageSize,
-                PageNumber: pageNumber
+            method: 'POST',
+            url: config.baseUrl + "AircashInAppPay/CheckTransactionStatus",
+            data: {
+                PartnerTransactionId: transactionModel.partenrTransactionId,
+                PartnerId: transactionModel.partnerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -56,7 +56,14 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
 }
 ]);
 
-acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'acInAppPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acInAppPayService, $http, JwtParser, $uibModal, $rootScope) {
+acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'acInAppPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, acInAppPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
+    if ($scope.partnerRoles.indexOf("AircashInAppPay") == -1) {
+        $location.path('/forbidden');
+    }
+
     $scope.generateTransactionModel = {
         amount: null,
         description: null
@@ -83,7 +90,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     $scope.generateTransaction = function () {
         $scope.generateBusy = true;
         $scope.generateResponded = false;
-        acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID)
+        acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID, $scope.partnerIds.InAppPayPartnerId)
             .then(function (response) {
                 if (response) {
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -93,7 +100,6 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.codeLink = response.serviceResponse.url;
-                    $scope.getTransactions(true);
                 }
                 $scope.generateBusy = false;
                 $scope.generateResponded = true;
@@ -102,28 +108,35 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             });
     }
 
-    $scope.getTransactions = function (reset) {
-        if (reset) $scope.setDefaults();
-        acInAppPayService.getTransactions($scope.pageSize, $scope.pageNumber)
+    $scope.transactionModel = {};
+    $scope.transactionModel.partnerId = $scope.partnerIds.InAppPayPartnerId;
+    $scope.statusResponded = false;
+    $scope.statusBusy = false;
+    $scope.checkTransactionStatus = function () {
+        $scope.statusBusy = true;
+        $scope.statusResponded = false;
+        acInAppPayService.checkTransactionStatus($scope.transactionModel)
             .then(function (response) {
-                $scope.pageNumber += 1;
                 if (response) {
-                    $scope.totalLoaded = response.length;
-                    $scope.transactions = $scope.transactions.concat(response);
+                    $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceStatus = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.StatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.signature) {
+                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    }
+                    $scope.checkTransactionStatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                 }
+                $scope.statusBusy = false;
+                $scope.statusResponded = true;
             }, () => {
                 console.log("error");
             });
     }
 
-    $scope.loadMore = function (pageSize) {
-        $scope.pageSize = pageSize;
-        $scope.getTransactions();
-    };
-
     $scope.setDefaults();
 
-    $scope.getTransactions();
 
     $scope.inAppPay = {
         generateTransaction: {

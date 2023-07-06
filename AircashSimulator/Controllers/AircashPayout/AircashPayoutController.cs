@@ -36,13 +36,13 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CheckUser(CheckUserRequest checkUserRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, checkUserRequest.PartnerUserID.ToString(), checkUserRequest.PartnerID, environment);
+            var response = await AircashPayoutService.CheckUser(checkUserRequest.PhoneNumber, checkUserRequest.PartnerUserID, checkUserRequest.PartnerID, environment);
             return Ok(response);
         }
         public async Task<IActionResult> GetCurlCheckUser(CheckUserRequest checkUserRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var request = AircashPayoutService.GetCheckUserRequest(checkUserRequest.PhoneNumber, UserContext.GetUserId(User).ToString(), UserContext.GetPartnerId(User));
+            var request = AircashPayoutService.GetCheckUserRequest(checkUserRequest.PhoneNumber, UserContext.GetUserId(User), UserContext.GetPartnerId(User));
             var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckUserEndpoint(environment));
             return Ok(curl);
         }
@@ -51,13 +51,13 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CheckUserV4(CheckUserv4DTO checkUserV4Request)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CheckUserV4(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID.ToString(), checkUserV4Request.PartnerID, checkUserV4Request.Parameters, environment);
+            var response = await AircashPayoutService.CheckUserV4(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID, checkUserV4Request.PartnerID, checkUserV4Request.Parameters, environment);
             return Ok(response);
         }
         public async Task<IActionResult> GetCurlCheckUserV4(CheckUserv4DTO checkUserV4Request)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var request = AircashPayoutService.GetCheckUserV4Request(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID.ToString(), checkUserV4Request.PartnerID, checkUserV4Request.Parameters);
+            var request = AircashPayoutService.GetCheckUserV4Request(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID, checkUserV4Request.PartnerID, checkUserV4Request.Parameters);
             var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckUserV4Endpoint(environment));
             return Ok(curl);
         }
@@ -95,7 +95,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCashierPayout(CreatePayoutRequest createPayoutRequest)
         {
-            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, createPayoutRequest.Environment);
+            var response = await AircashPayoutService.CreatePayout(createPayoutRequest.PhoneNumber, Guid.NewGuid().ToString(), createPayoutRequest.Amount, CurrencyEnum.EUR, Guid.NewGuid().ToString(), SettingsService.AircashPayoutPartnerId, createPayoutRequest.Environment);
             return Ok(response);
         }
 
@@ -103,7 +103,7 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerTransactionId, environment);
+            var response = await AircashPayoutService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerId, checkTransactionStatusRequest.PartnerTransactionId, checkTransactionStatusRequest.AircashTransactionId, environment);
             return Ok(response);
         }
 
@@ -111,7 +111,7 @@ namespace AircashSimulator.Controllers
         public async Task<IActionResult> CreatePayoutSimulateError([FromBody] AcPayoutCreatePayoutErrorCodeEnum errorCode)
         {
             var phoneNumber = SettingsService.TestPhoneNumber;
-            var partnerTransactionID = Guid.NewGuid();
+            var partnerTransactionID = Guid.NewGuid().ToString();
             var amount = SettingsService.PayoutDefaultAmount;
             var currency = CurrencyEnum.EUR;
 
@@ -150,14 +150,14 @@ namespace AircashSimulator.Controllers
                 default:
                     return BadRequest();
             }
-            var response = await AircashPayoutService.CreatePayout(phoneNumber, partnerTransactionID, amount, currency, Guid.NewGuid(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
+            var response = await AircashPayoutService.CreatePayout(phoneNumber, partnerTransactionID, amount, currency, Guid.NewGuid().ToString(), SettingsService.AircashPayoutPartnerId, EnvironmentEnum.Staging);
             return Ok(response);
         }
         public async Task<IActionResult> GetCurlCheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest)
         {
 
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var request =  AircashPayoutService.GetCheckTransactionStatusRequest(checkTransactionStatusRequest.PartnerTransactionId);
+            var request = AircashPayoutService.GetCheckTransactionStatusRequest(checkTransactionStatusRequest.PartnerId, checkTransactionStatusRequest.PartnerTransactionId, checkTransactionStatusRequest.AircashTransactionId);
             var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckTransactionStatusEndpoint(environment));
             return Ok(curl);
         }

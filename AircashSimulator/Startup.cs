@@ -42,6 +42,8 @@ using Newtonsoft.Json;
 using Services.Translations;
 using Service.Settings;
 using CrossCutting;
+using Services.Signature;
+using Services.AircashATM;
 
 namespace AircashSimulator
 {
@@ -115,15 +117,16 @@ namespace AircashSimulator
             services.AddTransient<IAircashFrameService, AircashFrameService>();
             services.AddTransient<IAircashFrameV2Service, AircashFrameV2Service>();
             services.AddTransient<IMatchService, MatchService>();
+            services.AddTransient<IAircashATMService, AircashATMService>();
             services.AddTransient<IAircashPaymentService, AircashPaymentService>();
             services.AddTransient<IAircashInAppPayService, AircashInAppPayService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
+            services.AddTransient<ISignatureService, SignatureService>();
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));
-
             services.AddSignalR(o => o.EnableDetailedErrors = true);
 
         }

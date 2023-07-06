@@ -95,22 +95,26 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function checkTransactionStatus(partnerTransactionId) {
+    function checkTransactionStatus(TransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CheckTransactionStatus",
             data: {
-                PartnerTransactionId: partnerTransactionId
+                PartnerID: TransactionModel.partnerId,
+                PartnerTransactionId: TransactionModel.partenrTransactionId || undefined,
+                AircashTransactionId: TransactionModel.aircashTransactionId || undefined
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getCurlCheckTransactionStatus(partnerTransactionId) {
+    function getCurlCheckTransactionStatus(TransactionModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPayout/GetCurlCheckTransactionStatus",
             data: {
-                PartnerTransactionId: partnerTransactionId
+                PartnerID: TransactionModel.partnerId,
+                PartnerTransactionId: TransactionModel.partenrTransactionId || undefined,
+                AircashTransactionId: TransactionModel.aircashTransactionId || undefined
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -143,6 +147,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
 aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircashPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, aircashPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("AircashPayout") == -1) {
         $location.path('/forbidden');
     }
@@ -152,13 +157,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     }
 
     $scope.checkUserModel = {
-        partnerId: "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+        partnerId: $scope.partnerIds.AircashPayoutPartnerId,
         partnerUserId: uuidv4(),
         phoneNumber: $scope.decodedToken.userPhoneNumber,
     };
 
     $scope.checkUserV4Model = {
-        partnerId: "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0",
+        partnerId: $scope.partnerIds.AircashPayoutV4PartnerId,
         partnerUserId: uuidv4(),
         phoneNumber: $scope.decodedToken.userPhoneNumber,
         firstName: $scope.decodedToken.userFirstName,
@@ -167,7 +172,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     };
 
     $scope.createPayoutModel = {
-        partnerId: "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6",
+        partnerId: $scope.partnerIds.AircashPayoutPartnerId,
         userId: uuidv4(),
         partnerTransactionId: uuidv4(),
         currencyId: 978,
@@ -176,7 +181,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     };
 
     $scope.createPayoutV4Model = {
-        partnerId: "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0",
+        partnerId: $scope.partnerIds.AircashPayoutV4PartnerId,
         userId: uuidv4(),
         partnerTransactionId: uuidv4(),
         currencyId: 978,
@@ -188,18 +193,18 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     }
 
     $scope.setDefaults = function () {
-        $scope.createPayoutV4Model.partnerId = "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0";
+        $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
         $scope.createPayoutV4Model.userId = uuidv4();
         $scope.createPayoutV4Model.partnerTransactionId = uuidv4();
         $scope.createPayoutV4Model.currencyId = 978;
 
         $scope.checkUserV4Model.partnerUserId = uuidv4();
-        $scope.checkUserV4Model.partnerId = "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0";
+        $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
 
         $scope.checkUserModel.partnerUserId = uuidv4();
-        $scope.checkUserModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+        $scope.checkUserModel.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
 
-        $scope.createPayoutModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+        $scope.createPayoutModel.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
         $scope.createPayoutModel.userId = uuidv4();
         $scope.createPayoutModel.partnerTransactionId = uuidv4();
         $scope.createPayoutModel.currencyId = 978;
@@ -458,10 +463,12 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             });
     }
 
-    $scope.checkTransactionStatus = function (transactionId) {
+    $scope.transactionModel = {};
+    $scope.transactionModel.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
+    $scope.checkTransactionStatus = function () {
         $scope.checkTransactionStatusServiceBusy = true;
         $scope.checkTransactionStatusServiceResponse = false;
-        aircashPayoutService.checkTransactionStatus(transactionId)
+        aircashPayoutService.checkTransactionStatus($scope.transactionModel)
             .then(function (response) {
 
                 if (response) {
@@ -478,10 +485,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 console.log("error");
             });
     }
-    $scope.getCurlCheckTransactionStatus = function (transactionId) {
+
+    $scope.transactionCurlModel = {};
+    $scope.transactionCurlModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+    $scope.getCurlCheckTransactionStatus = function () {
         $scope.CurlCheckTransactionStatusServiceBusy = true;
         $scope.CurlCheckTransactionStatusServiceResponse = false;
-        aircashPayoutService.getCurlCheckTransactionStatus(transactionId)
+        aircashPayoutService.getCurlCheckTransactionStatus($scope.transactionCurlModel)
             .then(function (response) {
 
                 if (response) {
@@ -652,7 +662,7 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerUserID: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                phoneNumber: 385995712738,
+                phoneNumber: "385995712738",
                 signature: "VA514erV6V..."
             },
             responseExample: {
@@ -684,9 +694,21 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 Signature: "ldzZxe....I8="
             },
             responseExample: {
-                first: { status: "1" },
-                second: { status: "2" },
-                third: { status: "3" }
+                first: {
+                    Status: 1,
+                    Parameters: null
+                },
+                second: {
+                    Status: 2,
+                    Parameters: null
+                },
+                third: {
+                    Status: 3,
+                    Parameters: [{
+                        Key: "AircashUserID",
+                        Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }]
+                }
             },
         },
         createPayout: {
@@ -732,7 +754,11 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 "Signature": "XNqywSLWev..."
             },
             responseExample: {
-                aircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc"
+                AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
+                Parameters: [{
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }]
             },
         },
         checkTransactionStatus: {

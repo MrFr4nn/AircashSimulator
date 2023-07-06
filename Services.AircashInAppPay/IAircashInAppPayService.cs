@@ -11,5 +11,6 @@ namespace Services.AircashInAppPay
     {
         Task<object> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest, EnvironmentEnum environment);
         Task<object> RefundTransaction(RefundTransactionRequest refundTransactionRequest, EnvironmentEnum environment);
+        Task<object> CheckTransactionStatus(Guid partnerId, string partnerTransactionId, EnvironmentEnum environment);
     }
 }

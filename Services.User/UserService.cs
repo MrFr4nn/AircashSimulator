@@ -93,7 +93,7 @@ namespace Services.User
 
                 await AircashSimulatorContext.Users.AddAsync(new UserEntity
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     Username = request.UserName,
                     Email = request.Email,
                     PartnerId = request.Partner.Id,
@@ -103,14 +103,14 @@ namespace Services.User
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
-        public async Task DeleteUser(Guid? userId)
+        public async Task DeleteUser(string? userId)
         {
             var findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
             AircashSimulatorContext.Users.Remove(findUser);
             await AircashSimulatorContext.SaveChangesAsync();
         }
 
-        public async Task<EnvironmentEnum> GetUserEnvironment(Guid userId) {
+        public async Task<EnvironmentEnum> GetUserEnvironment(string userId) {
             var environment = EnvironmentEnum.Staging;
             var user = AircashSimulatorContext.Users.Where(x => x.UserId == userId).FirstOrDefault();
             if(user != null) environment = user.Environment;

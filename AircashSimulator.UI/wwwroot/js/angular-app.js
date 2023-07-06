@@ -26,13 +26,16 @@ var app = angular.module('app', [
     'aircashPayoutV2',
     'ac_business_site',
     'ac_test_application',
+    'acPaymentSlotMachines',
     'forbidden',
     'success',
     'decline',
     'cancel',
+    'partnerPrivateKey',
     'jira', 
     'generalGuidlines',
     'matchPersonalData',
+    'aircash_ATM',
     'inAppPay'
 ]);
 

@@ -383,20 +383,37 @@ ldzZxeYDQVXuch8EvxDXSXzGx8Yp4E6/UtVj5TgeH++eCAbXKezn1FeeuIHvjDWfdhdx9V92vSVvbbHJ
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Parameters</th>
+                                        <th colspan="2">Parameters</th>
                                         <th>Type</th>
                                         <th>Description</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><b>Status </b> </td>
+                                        <td colspan="2"><b>Status </b> </td>
                                         <td>Int</td>
                                         <td>
                                             1- an uknown phone number<br />
                                             2- there is a user, but the personal data is not matched. Transaction will be rejected.<br />
                                             3- there is a user, it is possible to make a payment<br />
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Parameters</b></td>
+                                        <td>List&lt;Object&gt;</td>
+                                        <td>List of parameters</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><b>Key</b></td>
+                                        <td>String</td>
+                                        <td>The name of the parameter to be sent</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><b>Value</b></td>
+                                        <td>String</td>
+                                        <td>The value of the parameter to be sent</td>
                                     </tr>
                                 </tbody>
                             </table>

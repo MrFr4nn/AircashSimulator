@@ -8,6 +8,8 @@ namespace Services.AbonOnlinePartner
         public bool IsValid { get; set; }
         public CurrencyEnum ISOCurrency { get; set; }
         public string ProviderTransactionId { get; set; }
+        public string SalePartnerId { get; set; }
+        public string IsoCountryCode { get; set; }
         public decimal OriginalCouponValue { get; set; }
         public CurrencyEnum OriginalISOCurrency { get; set; }
     }

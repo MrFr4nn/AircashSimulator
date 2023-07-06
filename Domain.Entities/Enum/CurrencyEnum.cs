@@ -9,6 +9,7 @@ namespace Domain.Entities.Enum
         HRK=191,
         EUR=978,
         BAM=977,
-        RON =946
+        RON=946,
+        CHF=756
     }
 }

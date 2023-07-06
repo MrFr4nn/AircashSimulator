@@ -215,7 +215,7 @@
                     <table class="table  table-hover">
                         <thead>
                             <tr>
-                                <th>Parameters</th>
+                                <th colspan="2">Parameters</th>
                                 <th>Type</th>
                                 <th>Description</th>
                                 <th>Required</th>
@@ -223,7 +223,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><b>PartnerId</b></td>
+                                <td colspan="2"><b>PartnerId</b></td>
                                 <td>string</td>
                                 <td>
                                     Unique partner identifier (per currency) provided by Aircash
@@ -231,7 +231,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>PartnerUserId</b></td>
+                                <td colspan="2"><b>PartnerUserId</b></td>
                                 <td>string</td>
                                 <td>
                                     Unique user identifier in the merchant’s system
@@ -239,7 +239,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>PartnerTransactionId</b></td>
+                                <td colspan="2"><b>PartnerTransactionId</b></td>
                                 <td>string</td>
                                 <td>
                                     Unique transaction id in partner’s system
@@ -247,7 +247,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>Amount</b></td>
+                                <td colspan="2"><b>Amount</b></td>
                                 <td>decimal</td>
                                 <td>
                                     Transaction amount
@@ -258,7 +258,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><b>CurrencyId</b></td>
+                                <td colspan="2"><b>CurrencyId</b></td>
                                 <td>int</td>
                                 <td>
                                     ISO-4217 currency code
@@ -266,7 +266,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>PayType</b></td>
+                                <td colspan="2"><b>PayType</b></tdcolspan="2">
                                 <td>int</td>
                                 <td>
                                     Pay type identifier ( 0 - Payment; 1 - Payout )
@@ -274,7 +274,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>PayMethod</b></td>
+                                <td colspan="2"><b>PayMethod</b></td>
                                 <td>int</td>
                                 <td>
                                     Pay method identifier ( 0 - Abon; 2 - Aircash Pay; 10 - Aircash Payout )
@@ -282,7 +282,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>NotificationUrl</b></td>
+                                <td colspan="2"><b>NotificationUrl</b></td>
                                 <td>string</td>
                                 <td>
                                     URL to which notification after the authorization has been successfully completed.
@@ -290,7 +290,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>SuccessUrl</b></td>
+                                <td colspan="2"><b>SuccessUrl</b></td>
                                 <td>string</td>
                                 <td>
                                     Aircash frame redirects the customer back to the success URL if the payment is successful
@@ -298,7 +298,7 @@
                                 <td>YES, conditonally</td>
                             </tr>
                             <tr>
-                                <td><b>DeclineUrl</b></td>
+                                <td colspan="2"><b>DeclineUrl</b></td>
                                 <td>string</td>
                                 <td>
                                     Aircash frame redirects the customer back to the decline URL in case payment failed
@@ -306,7 +306,7 @@
                                 <td>YES, conditonally</td>
                             </tr>
                             <tr>
-                                <td><b>CancelUrl</b></td>
+                                <td colspan="2"><b>CancelUrl</b></td>
                                 <td>string</td>
                                 <td>
                                     URL where the client will be redirected after manual transaction cancelation
@@ -314,7 +314,7 @@
                                 <td>YES, conditonally</td>
                             </tr>
                             <tr>
-                                <td><b>OriginUrl</b></td>
+                                <td colspan="2"><b>OriginUrl</b></td>
                                 <td>string</td>
                                 <td>
                                     Domain where your web application runs
@@ -322,7 +322,7 @@
                                 <td>YES, conditonally</td>
                             </tr>
                             <tr>
-                                <td><b>Locale</b></td>
+                                <td colspan="2"><b>Locale</b></td>
                                 <td>string</td>
                                 <td>
                                     Language Identifiers (RFC 3066)
@@ -330,12 +330,36 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>Signature</b></td>
+                                <td colspan="2"><b>Signature</b></td>
                                 <td>string</td>
                                 <td>
                                     A sequence that has been digitally signed with the provider's private signature, used for authentication
                                 </td>
                                 <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>CustomParameters</b></td>
+                                <td>List &lt;Object&gt;</td>
+                                <td>List of parameters</td>
+                                <td>NO, <b>CustomParameters are not part of Sequence</b></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>&nbsp;Key</b></td>
+                                <td>String</td>
+                                <td>
+                                    The name of the parameter to be sent
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>&nbsp;Value</b></td>
+                                <td>String</td>
+                                <td>
+                                    The value of the parameter to be sent
+                                </td>
+                                <td></td>
                             </tr>
                         </tbody>
                     </table>
@@ -577,11 +601,11 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                                     <input ng-model="initiateModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="partnerUserId">PartnerUserId(Guid)</label>
+                                    <label class="form-label" for="partnerUserId">PartnerUserId</label>
                                     <input ng-model="initiateModel.partnerUserId" type="text" class="form-control" ng-required="true" name="partnerUserId">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label" for="partnerTransactionId">PartnerTransactionId(Guid)</label>
+                                    <label class="form-label" for="partnerTransactionId">PartnerTransactionId</label>
                                     <input ng-model="initiateModel.partnerTransactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">
                                 </div>
                                 <div class="mb-3">
@@ -686,6 +710,43 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
         <p>
             After transaction is processed, Aircash system will send notification to the NotificationUrl provided within the initiate request.
         </p>
+        <div class="table-responsive">
+            <table class="table  table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                        <th>IP addresse to whitelist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.83.162.239
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.129.44.205
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
         <p>
             Notification example (HTTP GET):
         </p>
@@ -704,6 +765,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
             </div>
         </div>
         <br />
+
         <h4>Transaction status</h4>
         <p>
             Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
@@ -960,31 +1022,31 @@ SsRvc7uHsLjXxPfMNhSgqpvcRBg6GjG+YXw+CX3nYoHS9Pl2BNNpTzbfUTDVmrdczXUuBtz2yHTuKVs/
                     <uib-tab index="TransactionStatusError-tab-2" heading="3 - Validation Error" classes="nav-item">
                         Simulation not available.
                         <!--<div class="row col-12">
-                            <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
-                                Request
-                                <jsonformatter data="errorExamples.TransactionStatus.error3.request"></jsonformatter>
+                        <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+                            Request
+                            <jsonformatter data="errorExamples.TransactionStatus.error3.request"></jsonformatter>
 
-                                Sequence:
-                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
-                            </div>
-                            <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
-                                Response
-                                <jsonformatter data="errorExamples.TransactionStatus.error3.response"></jsonformatter>
-                            </div>
-                            <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
-                                Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
-
-                                Sequence: {{errorTransactionStatusSequence}}<br />
-
-                            </div>
-                            <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
-                                Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
-                            </div>
+                            Sequence:
+                            Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
                         </div>
-                        <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(3)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">Copy Request</button>-->
+                        <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+                            Response
+                            <jsonformatter data="errorExamples.TransactionStatus.error3.response"></jsonformatter>
+                        </div>
+                        <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+                            Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                            Sequence: {{errorTransactionStatusSequence}}<br />
+
+                        </div>
+                        <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+                            Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(3)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">Copy Request</button>-->
                     </uib-tab>
                     <uib-tab index="TransactionStatusError-tab-3" heading="1002 - Transaction does not exist" classes="nav-item">
                         <div class="row col-12">
@@ -1849,6 +1911,18 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                     <b>A:</b>&nbsp; Default behaviour of your system would be to wait for notification.  If, from any reason the notification is not received, you can call
                     "Status" method 30 seconds after Aircash Frame timer expired to make sure there was not any network or other issues and make sure you had the right
                     transaction status in your system (the same as in the Aircash system).
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2">14.</td>
+                <td><b>Q:&nbsp; Is there any timer for Aircash Frame transactions? What happense once the timer expire?  </b></td>
+            </tr>
+            <tr>
+                <td>
+                    <b>A:</b>&nbsp;We suggest making a timestamp of 5min for the Aircash Frame timer. Once transaction time pass (5min) and transaction timeouts, we will 
+                    call your NotificationUrl and the transaction will be in status 1 – declined. If for any reason (network problems etc.) the notification is not received,
+                    you can call the Status method 30 seconds after the Aircash Frame timer expired to make sure there was not any network or other issues and make sure you 
+                    had the right transaction status in your system (the same as in the Aircash system)
                 </td>
             </tr>
         </table>

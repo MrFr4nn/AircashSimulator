@@ -2,27 +2,13 @@
 <div id="sidebar" class="sidebar" ng-controller="sidebarController" ng-class="{ 'sidebar-transparent': setting.layout.pageSidebarTransparent }">
     <!-- begin sidebar scrollbar -->
     <div data-scrollbar="true" data-height="100%">
-        <!-- begin sidebar user -->
-        <ul class="nav">
-            <li class="nav-profile">
-                <a href="javascript:;" data-toggle="nav-profile">
-                    <div class="cover with-shadow"></div>
-                    <div class="info">
-                        <b>{{partnerName}}</b>
-                    </div>
-                </a>
-            </li>
-            <li ng-if="false">
-                <ul class="nav nav-profile">
-                    <li><a href="javascript:;"><i class="fa fa-cog"></i> Settings</a></li>
-                    <li><a href="javascript:;"><i class="fa fa-pencil-alt"></i> Send Feedback</a></li>
-                    <li><a href="javascript:;"><i class="fa fa-question-circle"></i> Helps</a></li>
-                </ul>
-            </li>
-        </ul>
-        <!-- end sidebar user -->
         <!-- begin sidebar nav -->
         <ul class="nav">
+            <li class="nav-header mt-2 mb-0">
+                <h5>
+                    {{partnerName}} ({{enviroment}})
+                </h5>
+            </li>
             <li class="nav-header">{{translations.menu_label}}</li>
             <li ui-sref-active="active">
                 <a ui-sref="app.dashboard">
@@ -69,6 +55,12 @@
                         <a ui-sref="app.acRefund" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1">
                             <i class="fa fa-mobile"></i>
                             <span>{{translations.ac_refund_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.partnerPrivateKey">
+                            <i class="fas fa-key"></i>
+                            <span>{{translations.partner_private_key}}</span>
                         </a>
                     </li>
                     <li ui-sref-active="active">
@@ -158,6 +150,18 @@
                 <a ui-sref="app.abonSp" ng-if="partnerRoles.indexOf('AbonGenerate') != -1">
                     <i class="fa fa-file-invoice"></i>
                     <span>{{translations.abon_sp_label}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.acPaymentSlotMachines" ng-if="partnerRoles.indexOf('SlotMachines') != -1">
+                    <i class="fa fa-mobile"></i>
+                    <span>{{translations.ac_payment_slot_machines}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.aircash_ATM" ng-if="partnerRoles.indexOf('AircashATM') != -1">
+                    <i class="fa fa-mobile-alt"></i>
+                    <span>ATM integration</span>
                 </a>
             </li>
             <li>

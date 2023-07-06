@@ -19,9 +19,18 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         getEnvironment: getEnvironment,
         savePartner: savePartner,
         savePartnerV2: savePartnerV2,
-        deletePartner: deletePartner
+        savePartnerSetting: savePartnerSetting,
+        deletePartner: deletePartner,    
+        getPartnerSettingRoles: getPartnerSettingRoles,
+        getPartnerSetting: getPartnerSetting
     });
-
+    function getPartnerSettingRoles() {
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "Partner/GetPartnerSettingRoles"
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     function getRoles() {
         var request = $http({
             method: 'GET',
@@ -51,12 +60,24 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
         );
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function getPartnerSetting(partnerId) {
+        var request = $http({
+            method: 'GET',
+            url: config.baseUrl + "Partner/GetPartnerSetting",
+            params: {
+                partnerId: partnerId
+            }
+        }
+        );
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 
     function savePartner(partner, roles, username) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "Partner/SavePartner",
             data: {
+                NewPartnerId: partner.newPartnerId,
                 PartnerId: partner.partnerId,
                 PartnerName: partner.partnerName,
                 PrivateKey: partner.privateKey,
@@ -67,6 +88,18 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
                 Roles: roles,
                 UseDefaultPartner: (partner.useDefaultPartner === 'true'),
                 Username: username
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function savePartnerSetting(partnerId,SettingsRoles) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "Partner/SavePartnerSetting",
+            data: {
+                partnerId: partnerId,
+                NewPartnerSetting: SettingsRoles,
+
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -106,13 +139,12 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     if ($scope.partnerRoles.indexOf("Admin") == -1) {
         $location.path('/forbidden');
     }
-
     $scope.partners = [];
     $scope.pageSize = 10;
     $scope.pageNumber = 1;
     $scope.totalLoaded = 0;
     $scope.busy = false;
-
+    $scope.partnersetting = [];
     $scope.searchedPartner = null;
 
     $scope.setDefaults = function () {
@@ -124,11 +156,31 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         partnerAdminService.getPartnersDetail($scope.pageSize, $scope.pageNumber, $scope.searchedPartner)
             .then(function (response) {
                 if (response) {
+                    console.log(response);
                     $scope.totalLoaded = response.length;
                     $scope.partners = $scope.partners.concat(response);
                 }
             }, () => {
                 console.log("Error, could not fetch partners!");
+            });
+    };
+    $scope.getPartnerSetting = function () {
+        partnerAdminService.getPartnerSetting($scope.partnerId)
+            .then(function (response) {
+                if (response) {
+                   
+                    $scope.partnersetting = $scope.partnersetting.concat(response);
+                    $scope.SettingsRoles.forEach(s =>{
+                        s.input = "";
+                        if ($scope.partnersetting.filter(x => x.key == s.settingId).length > 0) {
+                            s.input = $scope.partnersetting.find(y => y.key == s.settingId).value;
+
+                        }
+                        s.PartnerId = $scope.partnerId;
+                    })
+                }
+            }, () => {
+                console.log("Error, could not fetch partner setting!");
             });
     };
 
@@ -148,6 +200,18 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.setCurrency = 978; 
     }
     $scope.partner = {};
+    $scope.partnersett = {};
+    $scope.showPartnerSettingsModal = function (partner) {
+        if (partner) {
+            $scope.partnerId = partner.partnerId;
+            $scope.getPartnerSetting();
+            partner.useDefaultPartner = String(partner.useDefaultPartner);
+            angular.copy(partner, $scope.partner);
+        }
+        $scope.togglePartnerSettingsModal(true);
+
+    }
+
     $scope.showPartnerModal = function (partner, newPartner) {
         $scope.newPartner = newPartner;
         if (partner) {
@@ -173,7 +237,9 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     $scope.toggePartnerModal = function (flag) {
         $("#PartnerModal").modal(flag ? 'show' : 'hide');
     }
-
+    $scope.togglePartnerSettingsModal = function (flag) {
+        $("#PartnerSettingsModal").modal(flag ? 'show' : 'hide');
+    }
     $scope.toggePartnerNewModal = function (flag, newRoleId) {
         $scope.defaultCountry = "HR";
         $scope.setCurrency = 978;
@@ -181,7 +247,6 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.sendRolesV2 = newRoleId;      
         $("#partnerV2Modal").modal(flag ? 'show' : 'hide');
     }
-
     $scope.savePartner = function () {
         $scope.sendRoles = [];
         $scope.filteredRoles = $filter('filter')($scope.roles, { selected: true });
@@ -189,8 +254,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         for (var i = 0; i < $scope.filteredRoles.length; i++) {
             $scope.sendRoles.push($scope.filteredRoles[i].roleId);
         }
-        $scope.partner.privateKey = "-";
-        $scope.partner.privateKeyPass = "-";
+        $scope.partner.privateKey = "";
+        $scope.partner.privateKeyPass = "";
         $scope.useDefaultPartner = 1;
         $scope.environment = 2;
         $scope.partner.countryCode = $scope.countryPickerCode.countryCode;
@@ -200,6 +265,14 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 $scope.SearchTable();
                 $scope.defaultCountry = "";
                 $scope.setCurrency = 0;
+            }, () => {
+                console.log("Error, could not save partner!");
+            });
+        $scope.toggePartnerModal();
+    }
+    $scope.savePartnerSetting = function () {
+        partnerAdminService.savePartnerSetting($scope.partnerId,$scope.SettingsRoles)
+            .then(function (resposne) {         
             }, () => {
                 console.log("Error, could not save partner!");
             });
@@ -288,7 +361,18 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
             }
         }
     }
+    $scope.getPartnerSettingRoles = function () {
+        partnerAdminService.getPartnerSettingRoles()
+            .then(function (response) {
+                $scope.SettingsRoles = response;
+            },
+                () => { console.log("Error, could not get roles!"); })
+    }
 
+
+    $("#PartnerSettingsModal").on("hidden.bs.modal", function () {
+        $scope.partnersetting = [];
+    });
     $scope.getDescription = function (roleName) {
         switch (roleName) {
             case "SalePartner":
@@ -317,6 +401,10 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 return "AircashPay payments via AircashMarketplace";
             case "AircashPayoutV2":
                 return "C2D witdhrawals";
+            case "SlotMachines":
+                return "Slot machines integration";
+            case "AircashATM":
+                return "Aircash ATM";
             default:
                 break;
 
@@ -333,7 +421,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.defaultCountry = "";
         $scope.setCurrency = 0;
     });
-
+    $scope.getPartnerSettingRoles();
     $scope.getPartnersDetail();
     $scope.getRoles();
 }]);

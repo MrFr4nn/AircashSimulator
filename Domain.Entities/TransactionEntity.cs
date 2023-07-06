@@ -11,11 +11,11 @@ namespace Domain.Entities
         //public string CouponCode { get; set; } 
         public Guid PartnerId { get; set; } 
         public string AircashTransactionId { get; set; }
-        public Guid TransactionId { get; set; } 
+        public string TransactionId { get; set; } 
         public DateTime? RequestDateTimeUTC { get; set; } 
         public DateTime? ResponseDateTimeUTC { get; set; } 
         public ServiceEnum ServiceId { get; set; } 
-        public Guid UserId { get; set; } 
+        public string UserId { get; set; } 
         public string PointOfSaleId { get; set; } 
 
 

@@ -36,9 +36,9 @@ namespace Services.AircashPayment
 
         public async Task<object> CheckPlayer(List<AircashPaymentParameters> checkPlayerParameters)
         {
-            Guid UserId = ReturnUser(checkPlayerParameters);
+            string UserId = ReturnUser(checkPlayerParameters);
           
-            if (UserId != Guid.Empty)
+            if (UserId != "")
             {
                 var parameters = new List<Parameters>();
                 parameters.Add(new Parameters
@@ -73,13 +73,13 @@ namespace Services.AircashPayment
 
         public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
         {
-            Guid UserId = ReturnUser(ReceiveData.Parameters);
-            if (UserId != Guid.Empty)
+            string UserId = ReturnUser(ReceiveData.Parameters);
+            if (UserId != "")
             {
                 TransactionEntity transactionEntity = new TransactionEntity
                 {
                     Amount = ReceiveData.Amount,
-                    TransactionId = Guid.NewGuid(),
+                    TransactionId = Guid.NewGuid().ToString(),
                     PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"),
                     UserId = UserId,
                     AircashTransactionId = ReceiveData.AircashTransactionId,
@@ -165,7 +165,7 @@ namespace Services.AircashPayment
 
         
 
-        public Guid ReturnUser(List<AircashPaymentParameters> checkPlayerParameters)
+        public string ReturnUser(List<AircashPaymentParameters> checkPlayerParameters)
         {
             UserEntity user = null;
             if (checkPlayerParameters.Select(attribute => attribute.Key).Contains("username"))
@@ -176,7 +176,7 @@ namespace Services.AircashPayment
             {
                 user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayerParameters.Select(attribute => attribute.Value).Contains(v.Email));
             }
-            return user != null ? user.UserId : Guid.Empty;
+            return user != null ? user.UserId : "";
         }
 
     }
