@@ -115,7 +115,9 @@ namespace Services.Partner
             if (request.PartnerId != null )
             {
                 var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
+                var partnerExist = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.NewPartnerId);
                 id = partner.PartnerId;
+                if (partnerExist != null && request.PartnerId != request.NewPartnerId) throw new SimulatorException(SimulatorExceptionErrorEnum.PartnerIdAlreadyTaken, "PartnerId already taken");
                 if (request.NewPartnerId != Guid.Empty) 
                 {
                     id = request.NewPartnerId;

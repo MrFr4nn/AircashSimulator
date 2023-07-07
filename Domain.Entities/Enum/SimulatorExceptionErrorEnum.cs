@@ -11,6 +11,7 @@ namespace Domain.Entities.Enum
         InvalidPassword = 3,
         UsernameNotFound = 4,
         UsernameAlreadyTaken = 5,
+        PartnerIdAlreadyTaken = 6,
         Error = 100
     }
 }

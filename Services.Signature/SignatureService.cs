@@ -186,6 +186,10 @@ namespace Services.Signature
             if (ValidatePartnerKey(validateAndSavePartnerKeyRequest))
             {
                 var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+                var partnerExist = AircashSimulatorContext.Partners.Where(x => x.PartnerId == validateAndSavePartnerKeyRequest.PartnerId).FirstOrDefault();
+                if (partnerExist != null && partnerId != validateAndSavePartnerKeyRequest.PartnerId) {
+                    return "PartnerId already exist";
+                }
                 partner.PrivateKey = validateAndSavePartnerKeyRequest.PrivateKey;
                 partner.PublicKey = validateAndSavePartnerKeyRequest.PublicKey;
                 partner.PrivateKeyPass = validateAndSavePartnerKeyRequest.Password;
