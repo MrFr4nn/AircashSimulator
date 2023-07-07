@@ -10,6 +10,9 @@ namespace AircashSimulator.Controllers
         public decimal Amount { get; set; }
         public string Description { get; set; }
         public string LocationID { get; set; }
+        public string PartnerTransactionId { get; set; }
+        public int CurrencyId { get; set; }
+        public int? ValidForPeriod { get; set; }
         public EnvironmentEnum Environment { get; set; }
     }
 }

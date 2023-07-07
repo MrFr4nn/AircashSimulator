@@ -43,10 +43,10 @@ namespace Services.AircashPay
             {
                 PartnerId = generatePartnerCodeDTO.PartnerId,
                 Amount = generatePartnerCodeDTO.Amount,
-                ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
-                PartnerTransactionId = Guid.NewGuid().ToString(),
+                ISOCurrencyId = (CurrencyEnum)generatePartnerCodeDTO.CurrencyId,
+                PartnerTransactionId = generatePartnerCodeDTO.PartnerTransactionId,
                 Description = generatePartnerCodeDTO.Description,
-                ValidForPeriod = int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
+                ValidForPeriod = generatePartnerCodeDTO.ValidForPeriod, //int.Parse($"{ AircashConfiguration.ValidForPeriod }"),
                 LocationId = generatePartnerCodeDTO.LocationId,
                 UserId = generatePartnerCodeDTO.UserId,
                 Status = AcPayTransactionSatusEnum.Pending,
@@ -55,6 +55,15 @@ namespace Services.AircashPay
             AircashSimulatorContext.Add(preparedTransaction);
             AircashSimulatorContext.SaveChanges();
             var aircashGeneratePartnerCodeResponse = new object();
+            var aircashGeneratePartnerCodeRequestForSignature = new AircashGeneratePartnerCodeRequestForSignature
+            {
+                PartnerID = preparedTransaction.PartnerId,
+                Amount = preparedTransaction.Amount,
+                CurrencyID = preparedTransaction.ISOCurrencyId,
+                PartnerTransactionID = preparedTransaction.PartnerTransactionId,
+                Description = preparedTransaction.Description,
+                LocationID = preparedTransaction.LocationId,
+            };
             var aircashGeneratePartnerCodeRequest = new AircashGeneratePartnerCodeRequest 
             {
                 PartnerID = preparedTransaction.PartnerId,
@@ -62,9 +71,10 @@ namespace Services.AircashPay
                 CurrencyID = preparedTransaction.ISOCurrencyId,
                 PartnerTransactionID = preparedTransaction.PartnerTransactionId,
                 Description = preparedTransaction.Description,
-                LocationID = preparedTransaction.LocationId
+                LocationID = preparedTransaction.LocationId,
+                ValidForPeriod = preparedTransaction.ValidForPeriod
             };
-            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequest);
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequestForSignature);
             Logger.LogInformation(partner.PrivateKey);
             var signature = SignatureService.GenerateSignature(generatePartnerCodeDTO.PartnerId, dataToSign);
             aircashGeneratePartnerCodeRequest.Signature = signature;
