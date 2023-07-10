@@ -818,6 +818,29 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 additionalData: null
             }
         },
+        transactionStatusV2: {
+            requestExample: {
+                "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                "partnerTransactionId": "571fd959-fe70-412b-90d5-e6db6df953ea",
+                "signature": "JmdPLkrzTZ..."
+            },
+            responseExample: {
+                "status": 2,
+                "amount": 10,
+                "currencyId": 978,
+                "aircashTransactionId": "11da2e60-f35e-43a9-be63-26cf34b12e3b",
+                "parameters": [{
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }],
+                "signature": "ljkUcvi4iM..."
+            },
+            errorResponseExample: {
+                code: 1003,
+                message: "Transaction not processed",
+                additionalData: null
+            }
+        },
         confirm: {
             requestExample: {
                 partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
