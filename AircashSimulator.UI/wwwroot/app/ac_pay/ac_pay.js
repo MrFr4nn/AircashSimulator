@@ -171,13 +171,13 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     $scope.aircashPay = {
         generatePartnerCode: {
             requestExample: {
-                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                amount: 100,
-                currencyID: 978,
-                partnerTransactionID: "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
-                description: "test",
-                locationID: "test",
-                signature: "WUY3NyUagi..."
+                "partnerID": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+                "amount": 100,
+                "currencyID": 978,
+                "partnerTransactionID": "032ea6aa-6b90-4abe-b36d-38eea494f761",
+                "description": "test",
+                "locationID": "test",
+                "signature": "gtTKL9UWSX..."
             },
             responseExample: {
                 codeLink: "https://aircashtest.page.link/?link=https%3a%2f%2faircash.eu%2facpay%3ftype%3d3%26code%3da14cfc86-fb75-4e07-a02f-630db813e91e&apn=com.aircash.aircash.test&ibi=com.aircash.aircash.test&afl=https://aircash.eu/acpay&ifl=https://aircash.eu/acpay&efr=1"

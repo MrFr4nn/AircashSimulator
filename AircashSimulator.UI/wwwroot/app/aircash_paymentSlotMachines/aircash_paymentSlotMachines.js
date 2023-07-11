@@ -48,7 +48,7 @@ aircashPaymentSlotMachinesModule.controller("aircashPaymentSlotMachinesCtrl",
                         PhoneNumber: "385981234567",
                         PartnerUserID: "12345",
                         Amount: 123.00,
-                        CurrencyID: 191,
+                        CurrencyID: 978,
                         PartnerTransactionID: "123..abc..123",
                         Signature: "12345....abc"
                     },
