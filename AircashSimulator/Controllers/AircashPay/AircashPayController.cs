@@ -42,7 +42,10 @@ namespace AircashSimulator.Controllers
                 Amount = generatePartnerCodeRequest.Amount,
                 Description = generatePartnerCodeRequest.Description,
                 LocationId = generatePartnerCodeRequest.LocationID,
-                UserId = UserContext.GetUserId(User)
+                UserId = UserContext.GetUserId(User),
+                CurrencyId = generatePartnerCodeRequest.CurrencyId,
+                PartnerTransactionId = generatePartnerCodeRequest.PartnerTransactionId,
+                ValidForPeriod = generatePartnerCodeRequest.ValidForPeriod,
             };
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, environment);

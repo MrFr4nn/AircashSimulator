@@ -9,5 +9,8 @@ namespace Services.AircashPay
         public string Description { get; set; }
         public string LocationId { get; set; }
         public string UserId { get; set; }
+        public string PartnerTransactionId { get; set; }
+        public int CurrencyId { get; set; }
+        public int? ValidForPeriod { get; set; }
     }
 }

@@ -18,15 +18,18 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
         cancelTransaction: cancelTransaction,
         getTransactions: getTransactions
     });
-    function generatePartnerCode(amount, description, locationID, partnerId) {
+    function generatePartnerCode(generatePartnerCodeModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/GeneratePartnerCode",
             data: {
-                PartnerId: partnerId,
-                Amount: amount,
-                Description: description,
-                LocationID: locationID
+                PartnerId: generatePartnerCodeModel.partnerId,
+                Amount: generatePartnerCodeModel.amount,
+                Description: generatePartnerCodeModel.description,
+                LocationID: generatePartnerCodeModel.locationID,
+                CurrencyId: generatePartnerCodeModel.currencyId,
+                PartnerTransactionId: generatePartnerCodeModel.partnerTransactionId,
+                ValidForPeriod: generatePartnerCodeModel.validForPeriod
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -59,7 +62,7 @@ acPayModule.service("acPayService", ['$http', '$q', 'handleResponseService', 'co
 }
 ]);
 
-acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
+acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location', 'HelperService', function ($scope, $state, $filter, acPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location, HelperService) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
@@ -68,9 +71,13 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
     }
 
     $scope.generatePartnerCodeModel = {
+        partnerId: $scope.partnerIds.AcPayPartnerId,
         amount: null,
         description: null,
-        locationID: null
+        locationID: null,
+        currencyId: null,
+        validForPeriod: null,
+        partnerTransactionId: HelperService.NewGuid()
     };
 
     $scope.cancelTransactionModel = {
@@ -94,11 +101,12 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
 
     $scope.generateResponded = false;
     $scope.generateBusy = false;
+    $scope.codeLink = "";
     $scope.generatePartnerCode = function () {
         $("#qrcode").empty();
         $scope.generateBusy = true;
         $scope.generateResponded = false;
-        acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID, $scope.partnerIds.AcPayPartnerId)
+        acPayService.generatePartnerCode($scope.generatePartnerCodeModel)
             .then(function (response) {
                 if (response) {
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -107,7 +115,9 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.codeLink = response.serviceResponse.codeLink;
+                    if (response.serviceResponse) {
+                        $scope.codeLink = response.serviceResponse.codeLink;
+                    }
                     new QRCode(document.getElementById("qrcode"), $scope.codeLink);
                     $scope.getTransactions(true);
                 }
