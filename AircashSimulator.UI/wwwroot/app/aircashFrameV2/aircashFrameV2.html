@@ -1130,7 +1130,7 @@ SsRvc7uHsLjXxPfMNhSgqpvcRBg6GjG+YXw+CX3nYoHS9Pl2BNNpTzbfUTDVmrdczXUuBtz2yHTuKVs/
                                         <input ng-model="transactionModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label" for="transactionId">Transaction ID</label>
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
                                         <input ng-model="transactionModel.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
                                     </div>
                                     <button class="btn btn-primary" ng-click="transactionStatus()" ng-disabled="statusBusy || statusForm.$invalid">Check status<i ng-if="statusBusy" class="fa fa-cog fa-spin"></i></button>
@@ -1161,7 +1161,7 @@ SsRvc7uHsLjXxPfMNhSgqpvcRBg6GjG+YXw+CX3nYoHS9Pl2BNNpTzbfUTDVmrdczXUuBtz2yHTuKVs/
                                         <input ng-model="transactionModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label" for="transactionId">Transaction ID</label>
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
                                         <input ng-model="transactionModel.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
                                     </div>
                                     <button class="btn btn-primary" ng-click="getCurlTransactionStatus(transactionId)" ng-disabled="curlStatusBusy || statusForm.$invalid">Check status<i ng-if="curlStatusBusy" class="fa fa-cog fa-spin"></i></button>
@@ -1310,7 +1310,7 @@ JmdPLkrzTZAR+ol3V3F5z/CAUfEV2kZ1VvLGBc/u1kGfWliEwZVjh9LCfsUJIrjlWOQpsbZ8BSlGdIWz
                                     <td colspan="2"><b>Amount</b></td>
                                     <td>decimal</td>
                                     <td>
-                                        Transaction amount
+                                        Transaction amount, Amount is sent only if Status is 2.
                                     </td>
                                 </tr>
                                 <tr>
