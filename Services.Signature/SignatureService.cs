@@ -156,10 +156,16 @@ namespace Services.Signature
         public bool ValidateSignature(string dataToSign, string signature, Guid partnerId)
         {
             var result = false;
+            var keys = GetKeyToSing(partnerId);
+            var valid = ValidatePartnerKey(new ValidateAndSavePartnerKeyRequest
+            {
+                PrivateKey = keys.PrivateKey,
+                Password = keys.PrivateKeyPass,
+                PublicKey = keys.PublicKey,
+            });
+            if (!valid) return AircashSignatureService.VerifySignature(dataToSign, signature, SettingsService.AircashSimulatorPublicKeyPath);
             try
             {
-
-                var keys = GetKeyToSing(partnerId);
                 var bytePublicKey = Encoding.UTF8.GetBytes(keys.PublicKey);
                 var certificate = new X509Certificate2(bytePublicKey);
                 var byteSignature = Convert.FromBase64String(signature);

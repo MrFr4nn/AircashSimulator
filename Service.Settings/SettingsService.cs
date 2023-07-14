@@ -20,6 +20,7 @@ namespace Service.Settings
         const decimal defualtTransactionMatchAutoRefundAmountInEur = 67;
 
         public string AircashSimulatorPrivateKeyPath { get { return GetSetting("AircashSimulatorPrivateKeyPath", string.Empty, throwExceptionIfMissing: true); } }
+        public string AircashSimulatorPublicKeyPath { get { return GetSetting("AircashSimulatorPublicKeyPath", string.Empty, throwExceptionIfMissing: true); } }
         public string PrivateKeyForInvalidSignature { get { return GetSetting("PrivateKeyForInvalidSignature", string.Empty, throwExceptionIfMissing: true); } }
         public string AircashSimulatorPrivateKeyPass { get { return GetSetting("AircashSimulatorPrivateKeyPass", string.Empty, throwExceptionIfMissing: true); } }
         public string UsedCuponCodeForSimulatingError { get { return GetSetting("UsedCuponCodeForSimulatingError", string.Empty, throwExceptionIfMissing: true); } }
