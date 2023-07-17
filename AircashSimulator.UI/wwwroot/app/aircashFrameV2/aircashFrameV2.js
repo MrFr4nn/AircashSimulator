@@ -162,7 +162,6 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
-    $scope.environment = $scope.decodedToken.enviroment;
     if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
         $location.path('/forbidden');
     }
