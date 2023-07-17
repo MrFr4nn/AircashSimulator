@@ -36,7 +36,8 @@ cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location', '$
         $scope.languages = [
             { language: "en", },
             { language: "hr" },
-            { language: "es"}
+            { language: "es" },
+            { language: "ro" }
         ];
 
         $rootScope.environment = 2;

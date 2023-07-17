@@ -9,8 +9,8 @@
                             <h3 class="card-title pt-2">Aircash Frame - AcPay</h3>
                             <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
                         </div>
-                        <p class="card-text">
-                            Select the Scan and Pay option inside the Aircash mobile application and scan or tap on the QR code. Confirm the deposit and funds are instantly available on your account. Top-up your Aircash wallet easily with cash on more than 100.000 Aircash partner locations or debit/credit cards. Download the free Aircash mobile application here.
+                        <p ng-bind-html="translationsCashier.ac_pay_cashier_description" class="card-text">
+                            {{translationsCashier.ac_pay_cashier_description}}
                         </p>
                     </div>
                 </div>
@@ -41,8 +41,8 @@
                             <h3 class="card-title pt-2">Aircash Frame - Withdrawal</h3>
                             <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
                         </div>
-                        <p class="card-text">
-                            Enter the withdrawal amount and your phone number. Confirm the withdrawal and funds will instantly be available on your Aircash wallet. Download the free Aircash mobile application here.
+                        <p ng-bind-html="translationsCashier.ac_payout_cashier_description">
+                            {{translationsCashier.ac_payout_cashier_description}}
                         </p>
                     </div>
                 </div>
