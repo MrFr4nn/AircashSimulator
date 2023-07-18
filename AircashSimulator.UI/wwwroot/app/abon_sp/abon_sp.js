@@ -15,9 +15,11 @@ app.config(function ($stateProvider) {
 abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         createCoupon: createCoupon,
+        createMultipleCoupons: createMultipleCoupons,
         cancelCoupon: cancelCoupon,
         getDenominations: getDenominations,
         createSimulateError: createSimulateError,
+        createSimulateErrorMultiple: createSimulateErrorMultiple,
         cancelSimulateError: cancelSimulateError,
     });
     function createCoupon(value, pointOfSaleId, partnerId, partnerTransactionId, isoCurrencySymbol, contentType, contentWidth) {
@@ -36,7 +38,23 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function cancelCoupon(partnerId,serialNumber, partnerTransactionId, cancelPointOfSaleId) {
+
+    function createMultipleCoupons(pointOfSaleId, partnerId, isoCurrencySymbol, contentType, contentWidth, denominations) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonSalePartner/CreateMultipleCoupons",
+            data: {
+                PartnerId: partnerId,
+                PointOfSaleId: pointOfSaleId,
+                IsoCurrencySymbol: isoCurrencySymbol,
+                ContentType: contentType,
+                ContentWidth: contentWidth,
+                Denominations: denominations
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function cancelCoupon(partnerId, serialNumber, partnerTransactionId, cancelPointOfSaleId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonSalePartner/CancelCoupon",
@@ -67,6 +85,16 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function createSimulateErrorMultiple(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonSalePartner/CreateMultipleCouponsSimulateError",
+            data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
     function cancelSimulateError(errorCode) {
         var request = $http({
             method: 'POST',
@@ -79,7 +107,8 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService,$scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService, $scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.denominationsMultiple = [{ value: 0, partnerTransactionId: "" }];
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
@@ -88,20 +117,20 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     }
 
     $scope.createCouponModel = {
-        value : 50,
+        value: 50,
         pointOfSaleId: 'TestLocation',
         partnerId: $scope.partnerIds.AbonGeneratePartnerId,
         partnerTransactionId: HelperService.NewGuid(),
         isoCurrencySymbol: 'EUR',
         contentType: null,
-        contentWidth:null
+        contentWidth: null
     };
 
     $scope.cancelCouponModel = {
         cancelSerialNumber: '',
         cancelPointOfSaleId: 'TestLocation',
         cancelPartnerId: $scope.partnerIds.AbonGeneratePartnerId,
-        cancelPartnerTransactionId:''
+        cancelPartnerTransactionId: ''
     };
 
     $scope.createServiceBusy = false;
@@ -140,6 +169,23 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     }
     $scope.generateQRcode();
 
+    $scope.QRcodeMultiple = {};
+    $scope.generateQRcodeMultiple = function (event) {
+        if (event) {
+            if ('0123456789'.indexOf(event.keyCode) < 0) {
+                $scope.QRcodeMultiple.couponCode = $scope.QRcodeMultiple.couponCode.replaceAll(/[^0-9]/g, '');;
+            }
+            if ($scope.QRcodeMultiple.couponCode.length > 16) {
+                $scope.QRcodeMultiple.couponCode = $scope.QRcodeMultiple.couponCode.substring(0, 16);
+            }
+            if (document.getElementById("qrcodeDivMultiple") && $scope.QRcodeMultiple.couponCode.length == 16) {
+                $("#qrcodeDivMultiple").empty();
+                new QRCode(document.getElementById("qrcodeDivMultiple"), $scope.QRcodeMultiple.couponCode);
+            }
+        }
+    }
+    $scope.generateQRcode();
+
     $scope.createCoupon = function () {
         $scope.createServiceBusy = true;
         $scope.createServiceResponse = false;
@@ -156,7 +202,35 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                     if (response.serviceResponse.content) {
                         $scope.showPerview = true;
                         $scope.content = response.serviceResponse.content;
-                        $scope.decodedContent = decodeURIComponent(escape(window.atob($scope.content)));
+                        $scope.decodedContent = decodeURIComponent($scope.content);
+                        console.log($scope.decodedContent);
+                        document.querySelector('#content1').innerHTML = $scope.decodedContent;
+                    }
+                }
+                $scope.createServiceBusy = false;
+                $scope.createServiceResponse = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.createMultipleCoupons = function () {
+        $scope.createServiceBusy = true;
+        $scope.createServiceResponse = false;
+        $scope.showPerview = false;
+        abonSpService.createMultipleCoupons($scope.createCouponModel.pointOfSaleId, $scope.createCouponModel.partnerId, $scope.createCouponModel.isoCurrencySymbol, $scope.createCouponModel.contentType, $scope.createCouponModel.contentWidth, $scope.denominationsMultiple)
+            .then(function (response) {
+                if (response) {
+                    $scope.requestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.responseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.serviceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.serviceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.content) {
+                        $scope.showPerview = true;
+                        $scope.content = response.serviceResponse.content;
+                        $scope.decodedContent = decodeURIComponent($scope.content);
                         console.log($scope.decodedContent);
                         document.querySelector('#content1').innerHTML = $scope.decodedContent;
                     }
@@ -188,15 +262,19 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
             });
     }
 
-    $scope.getDenominations = function () {;
+    $scope.getDenominations = function () {
         abonSpService.getDenominations()
-            .then(function (response) {                
+            .then(function (response) {
                 if (response) {
                     $scope.denominations = $scope.denominations.concat(response);
                 }
             }, () => {
                 console.log("error");
             });
+    }
+
+    $scope.addDenomination = function () {
+        $scope.denominationsMultiple.push({ value: 0, partnerTransactionId: "" });
     }
 
     $scope.currentCreateErrorCode = 0;
@@ -206,6 +284,28 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         $scope.errorCreateResponded = false;
         $scope.errorCreateServiceBusy = true;
         abonSpService.createSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorCreateRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorCreateResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorCreateSequence = response.sequence;
+                    $scope.errorCreateRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorCreateResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorCreateRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentCreateErrorCode = errCode;
+                $scope.errorCreateResponded = true;
+                $scope.errorCreateServiceBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.createSimulateErrorMultiple = (errCode) => {
+        $scope.errorCreateResponded = false;
+        $scope.errorCreateServiceBusy = true;
+        abonSpService.createSimulateErrorMultiple(errCode)
             .then(function (response) {
                 if (response) {
                     $scope.errorCreateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -273,14 +373,23 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
             },
             error2: {
                 request: {
-                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
-                    "value": 25,
-                    "pointOfSaleId": "test",
+                    "contentType": "pdf",
+                    "contentWidth": 50,
                     "isoCurrencySymbol": "EUR",
-                    "partnerTransactionId": "09054b3c-1862-43af-b6a6-3fb65f80b170",
-                    "contentType": null,
-                    "contentWidth": null,
-                    "signature": "m8wKpF8MRL..."
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "pointOfSaleId": "TestLocation",
+                    "denominations": [
+                        {
+                            "value": 50,
+                            "partnerTransactionId": "ae132377-03d9-4bf9-91ce-0b43f1ef6af5"
+                        },
+                        {
+                            "value": 25,
+                            "partnerTransactionId": "eb418b62-98e4-467e-b6d0-a9af2554d232"
+                        }
+                    ],
+                    "signature": "Iww1xTuZm+g2dq1ka6TM2FXnDnPm47KkVpjHhhTt2OxH+cnlZ2KCdA6ovVff5qgRnMssFgEjDPeOyGdPEOzxMfqDS43OaBDPTOVEX2O6cHyUdhTxP09tqfRR40T0FduYgbrDc3hnDY60v4VjOaHRmnWeJ0hymPMTHMtH4XhJt2tZMfXNNLuoEWftF6GQ626O6AHZwYqH3zDcidd/O7gmPU+t3A5TnxSE1cb4SfdvPAMzPG9m9kZjd7FF8oD2AljrByVRbs4KDg7WxSZhLA4g8ienekBvhKRNwMK7LESCZX5zOieE24wBIJtyfmzYKsIZnnAyI2Jd7ib8t8LukWeHJpxXGW31xnobRuWQQb+OIgfxVum33IR5SX/uABVErHicEbcBU/qDvtWM326PdbHVSVdVetZ/OBouvXydD2AmsV3nm2OcL/+BnuuDJ4Kzjyu8QAwejbhsBf8Mt+P8ubjbFCS8edOVJDEjYY4+vhdMDHSaJWEVuy6i0S8BuJbWo9bAe3WbyaD+so0/vbwBrUXVCiLsQVrr+3/61WirgEtMb7I0gC8Sihx75mvQyjROZBHggVqfHeFWHrrN1bSFNdIm0GgOjrdqasofvDXi4PW5DrUhT3EaTjW+nZ3Q+gHdZQ/QMdKh1YkIhGASzprgYpkLZPdvbTCyFzIKjPrcS9aAG1s=",
+                    "additionalParameter": 10
                 },
                 response: {
                     "code": 2,
@@ -354,6 +463,169 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                     "contentType": null,
                     "contentWidth": null,
                     "signature": "KAvRKfwCeV..."
+                },
+                response: {
+                    "code": 8,
+                    "message": "Limit exceeded",
+                    "additionalData": null
+                }
+            }
+        },
+        CreateMultipleTransactions: {
+            error1: {
+                request: {
+                    "contentType": "pdf",
+                    "contentWidth": 50,
+                    "isoCurrencySymbol": "EUR",
+                    "partnerId": "",
+                    "pointOfSaleId": "TestLocation",
+                    "denominations": [
+                        {
+                            "value": 50,
+                            "partnerTransactionId": "192502a3-97b8-4477-bba7-1338das1abbe"
+                        },
+                        {
+                            "value": 25,
+                            "partnerTransactionId": "512122a3-97b8-4477-bba7-1338dga1abbe"
+                        }
+                    ],
+                    "signature": "D9pwlT9cKs..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid PartnerId",
+                    "additionalData": null
+                }
+            },
+            error2: {
+                request: {
+                    "contentType": "pdf",
+                    "contentWidth": 50,
+                    "isoCurrencySymbol": "EUR",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "pointOfSaleId": "TestLocation",
+                    "denominations": [
+                        {
+                            "value": 50,
+                            "partnerTransactionId": "ae132377-03d9-4bf9-91ce-0b43f1ef6af5"
+                        },
+                        {
+                            "value": 25,
+                            "partnerTransactionId": "eb418b62-98e4-467e-b6d0-a9af2554d232"
+                        }
+                    ],
+                    "signature": "Iww1xTuZm+g2dq1ka6TM2FXnDnPm47KkVpjHhhTt2OxH+cnlZ2KCdA6ovVff5qgRnMssFgEjDPeOyGdPEOzxMfqDS43OaBDPTOVEX2O6cHyUdhTxP09tqfRR40T0FduYgbrDc3hnDY60v4VjOaHRmnWeJ0hymPMTHMtH4XhJt2tZMfXNNLuoEWftF6GQ626O6AHZwYqH3zDcidd/O7gmPU+t3A5TnxSE1cb4SfdvPAMzPG9m9kZjd7FF8oD2AljrByVRbs4KDg7WxSZhLA4g8ienekBvhKRNwMK7LESCZX5zOieE24wBIJtyfmzYKsIZnnAyI2Jd7ib8t8LukWeHJpxXGW31xnobRuWQQb+OIgfxVum33IR5SX/uABVErHicEbcBU/qDvtWM326PdbHVSVdVetZ/OBouvXydD2AmsV3nm2OcL/+BnuuDJ4Kzjyu8QAwejbhsBf8Mt+P8ubjbFCS8edOVJDEjYY4+vhdMDHSaJWEVuy6i0S8BuJbWo9bAe3WbyaD+so0/vbwBrUXVCiLsQVrr+3/61WirgEtMb7I0gC8Sihx75mvQyjROZBHggVqfHeFWHrrN1bSFNdIm0GgOjrdqasofvDXi4PW5DrUhT3EaTjW+nZ3Q+gHdZQ/QMdKh1YkIhGASzprgYpkLZPdvbTCyFzIKjPrcS9aAG1s=",
+                    "additionalParameter": 10
+                },
+                response:
+                {
+                    "code": 2,
+                    "message": "Invalid Signature",
+                    "additionalData": null
+                }
+            },
+            error3: {
+                request: {
+                    "contentType": "pdf",
+                    "contentWidth": 50,
+                    "isoCurrencySymbol": "EUR",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "pointOfSaleId": "TestLocation",
+                    "denominations": [
+                        {
+                            "value": 50,
+                            "partnerTransactionId": "192502a3-97b8-4477-foma-1338das1abbe"
+                        },
+                        {
+                            "value": 100,
+                            "partnerTransactionId": "512122a3-97b8-4477-fasf-1338dga1abbe"
+                        }
+                    ],
+                    "signature": "D9pwlT9cKs..."
+                },
+                response: {
+                    "code": 3,
+                    "message": "Invalid CouponValue",
+                    "additionalData": null
+                }
+            },
+            error5: {
+                request: {
+                    "contentType": "pdf",
+                    "contentWidth": 50,
+                    "isoCurrencySymbol": "EUr",
+                    "partnerId": "52F46879-294D-4904-BE7E-368AB0161771",
+                    "pointOfSaleId": "TestLocation",
+                    "denominations": [
+                        {
+                            "value": 50,
+                            "partnerTransactionId": "192502a3-97b8-4477-bba7-1338das1abbe"
+                        },
+                        {
+                            "value": 25,
+                            "partnerTransactionId": "512122a3-97b8-4477-bba7-1338dga1abbe"
+                        }
+                    ],
+                    "signature": "D9pwlT9cKs..."
+                },
+                response: {
+                    "code": 5,
+                    "message": "Invalid CurrencySymbol",
+                    "additionalData": null
+                }
+
+            },
+            error6: {
+                request: {
+                    "contentType": "pdf",
+                    "contentWidth": 50,
+                    "isoCurrencySymbol": "EUR",
+                    "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                    "pointOfSaleId": "TestLocation",
+                    "denominations": [
+                        {
+                            "value": 50,
+                            "partnerTransactionId": "192502a3-97b8-4477-asdf-1338das1abbe"
+                        },
+                        {
+                            "value": 25,
+                            "partnerTransactionId": "192502a3-97b8-4477-asdf-1338das1abbe"
+                        }
+                    ],
+                    "signature": "D9pwlT9cKs..."
+                },
+                response:
+                {
+                    "code": 6,
+                    "message": "Coupon exists for the given PartnerTransactionId",
+                    "additionalData": {
+                        "serialNumber": "7831729896718976",
+                        "value": 50.00,
+                        "isoCurrencySymbol": "EUR",
+                        "partnerTransactionId": "192502a3-97b8-4477-bba7-1338das1abbe"
+                    }
+                }
+
+
+            },
+            error8: {
+                request: {
+                    "contentType": "pdf",
+                    "contentWidth": 50,
+                    "isoCurrencySymbol": "EUR",
+                    "partnerId": "ef104874-0bc4-459d-945a-fb461e8eae28",
+                    "pointOfSaleId": "TestLocation",
+                    "denominations": [
+                        {
+                            "value": 50,
+                            "partnerTransactionId": "192502a3-97b8-4477-bba7-1338das1abbe"
+                        },
+                        {
+                            "value": 25,
+                            "partnerTransactionId": "512122a3-97b8-4477-bba7-1338dga1abbe"
+                        }
+                    ],
+                    "signature": "D9pwlT9cKs..."
                 },
                 response: {
                     "code": 8,
@@ -525,6 +797,27 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                     partnerTransactionId: "9059ca5c-675a-48b5-b41a-e04ab5b981ae"
                 }
             }
+        },
+        multipleCouponsCreation: {
+            requestExample: {
+                "contentType": "pdf",
+                "contentWidth": 50,
+                "isoCurrencySymbol": "EUR",
+                "partnerId": "52F46879-294D-4904-BE7E-368AB0161771",
+                "pointOfSaleId": "TestLocation",
+                "denominations": [
+                    {
+                        "value": 50,
+                        "partnerTransactionId": "192502a3-97b8-4477-bba7-1338das1abbe"
+                    },
+                    {
+                        "value": 25,
+                        "partnerTransactionId": "512122a3-97b8-4477-bba7-1338dga1abbe"
+                    }
+                ]
+            },
+            responseExample: {},
+            errorResponseExample: {}
         },
         couponCancellation: {
             requestExample: {
