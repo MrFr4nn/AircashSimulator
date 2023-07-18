@@ -728,6 +728,19 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             }
         },
         Confirm: {
+            error1: {
+                request: {
+                    "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "amount": 10,
+                    "currencyId": 978,
+                    "signature": "os0+rv9Mwp..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid signature or partner id."
+                }
+            },
             error1000: {
                 request: {
                     "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
@@ -752,6 +765,19 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 response: {
                     "code": 1005,
                     "message": "Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed."
+                }
+            },
+            error3000: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "amount": 10,
+                    "currencyId": 977,
+                    "signature": "IOWErWP7eP..."
+                },
+                response: {
+                    "code": 3000,
+                    "message": "Invalid currency."
                 }
             },
             error3016: {
