@@ -215,8 +215,15 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             var partnerTransactionId = SettingsService.AcFrameConfirmPayoutValidTransaction;
             decimal amount = SettingsService.AircashFrameDefaultAmount; 
+            var partnerId = SettingsService.AircashFramePartnerId;
+            var currencyId = CurrencyEnum.EUR;
             switch (errorCode)
             {
+                case AcFrameConfirmPayoutErrorCodeEnum.InvalidSignatureOrPartnerId:
+                    {
+                        partnerId = SettingsService.AcPayPartnerId; 
+                        break;
+                    }
                 case AcFrameConfirmPayoutErrorCodeEnum.TransactionDoesntExistOrItIsAlreadyProcessed:
                     {
                         partnerTransactionId = Guid.NewGuid();
@@ -227,9 +234,10 @@ namespace AircashSimulator.Controllers.AircashFrame
                         partnerTransactionId = SettingsService.AcFrameConfirmPayoutTransactionConfirmationNotAllowed;
                         break;
                     }
-                case AcFrameConfirmPayoutErrorCodeEnum.UserReachedTransactionLimitOrUserIsBlocked:
+                case AcFrameConfirmPayoutErrorCodeEnum.InvalidCurrency:
                     {
-                        return Ok();
+                        currencyId = CurrencyEnum.BAM;
+                        break;
                     }
                 case AcFrameConfirmPayoutErrorCodeEnum.AmountMismatch:
                     {
@@ -240,7 +248,7 @@ namespace AircashSimulator.Controllers.AircashFrame
                 default:
                     return Ok();
             }
-            var response = await AircashFrameV2Service.ConfirmPayout(SettingsService.AircashFramePartnerId, partnerTransactionId.ToString(), amount, CurrencyEnum.EUR, EnvironmentEnum.Staging);
+            var response = await AircashFrameV2Service.ConfirmPayout(partnerId, partnerTransactionId.ToString(), amount, currencyId, EnvironmentEnum.Staging);
 
             return Ok(response);
         }
