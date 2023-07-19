@@ -528,14 +528,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
         <br />
         <h4>Confirm payment - push notification</h4>
         <p>
-            In case when the customer needs to authorize a voucher by entering his phone number, A-bon
+            In case when the customer needs to authorize a voucher by entering his phone number, Abon
             service will send push notification towards the agreed URL. The method is used to let the Aircash
-            platform notify the partner system that the A-bon payment has been authorized and approved from the
+            platform notify the partner system that the Abon payment has been authorized and approved from the
             end-user
         </p>
         <p>
-            The notification will be sent after the user authorizes the A-bon coupon using the Aircash
-            application. During the authorization, the A-bon deposit screen should display a message and further
+            The notification will be sent after the user authorizes the Abon coupon using the Aircash
+            application. During the authorization, the Abon deposit screen should display a message and further
             instructions to the user (message and instructions will be provided by Aircash). After receiving the
             notification, the partner’s system will be able to deposit the amount of the authorized coupon by
             repeating the Validate coupon and ConfirmTransaction request
@@ -591,10 +591,10 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
             successfully delivered (200 OK response) or the maximum number of retry attempts has been reached.
         </p>
         <p>
-            User’s behavior during the payment authorization (i.e. user has closed the A-bon deposit
+            User’s behavior during the payment authorization (i.e. user has closed the Abon deposit
             window, user’s session has expired, user has logged out) may affect total amount of time, in case there is
             a time window defined on the partner's cashier within which user's payment needs to be captured after
-            initiating deposit. Aircash will not decline any A-bon deposit request that came after expiring the time
+            initiating deposit. Aircash will not decline any Abon deposit request that came after expiring the time
             window (if any) and Aircash doesn't need to be aware of it. If the push notification is sent outside time
             frame boundaries, the transaction still can be processed by sending a
             ValidateCoupon/ConfirmTransactions request, if conditions are met on the partner's cashiers
@@ -605,7 +605,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
             system can expect that the notification will be sent as soon as the user authorizes the coupon.
         </p>
         <p>
-            The notification will not be sent if the coupon is already authorized. A-bon will remain in the authorized
+            The notification will not be sent if the coupon is already authorized. Abon will remain in the authorized
             status if the ValidateCoupon/ConfirmTransaction requests are not being sent due to technical errors. In
             this scenario, the partner's system will receive valid status (IsValid parameter from the ValidateCoupon
             method will be set to true) and the ConfirmTransaction request can be sent towards the Aircash system.
