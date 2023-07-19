@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using DataAccess;
 using System.Linq;
 using Services.PartnerAbonDenominations;
-using AircashSimulator.Controllers.AbonSalePartner;
 
 namespace AircashSimulator
 {

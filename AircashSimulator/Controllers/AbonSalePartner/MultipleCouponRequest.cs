@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 
-namespace AircashSimulator.Controllers.AbonSalePartner
+namespace AircashSimulator
 {
     public class MultipleCouponRequest
     {
