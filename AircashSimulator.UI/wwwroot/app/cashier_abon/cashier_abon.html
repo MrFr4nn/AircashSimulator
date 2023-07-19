@@ -26,6 +26,10 @@
                                     <label class="form-label">{{translationsCashier.abon_cashier_deposit_input_label}}</label>
                                     <input ng-model="confirmTransactionModel.couponCode" class="form-control form-control-lg w-50" type="text" ng-keyup="addHyphen($event)" placeholder="{{translationsCashier.abon_cashier_deposit_input_placeholder}}" ng-required="true" />
                                 </div>
+                                <div class="mb-3" ng-if="useAuthorizationCheckBox">
+                                    <label class="form-label">{{translationsCashier.cashier_phone_number_input_label}}</label>
+                                    <phone-number-input output="confirmTransactionModel.phoneNumber"></phone-number-input>
+                                </div>
                                 <div class="mb-3">
                                     <div class="form-check">
                                         <input ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-init="confirmCheckBox = true" ng-checked="true" />
@@ -37,6 +41,31 @@
                         </form>
                     </div>
                     <div class="col-md-1"></div>
+                </div>
+                <div class="row row-cols-1 row-cols-sm-2 mt-3">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
+                        <div id="accordion">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#AcFrameAbonConfiguration" aria-expanded="false" aria-controls="AcFrameAbonConfiguration">
+                                            {{translationsCashier.cashier_configuration_button}}
+                                        </button>
+                                    </h5>
+                                </div>
+                                <div id="AcFrameAbonConfiguration" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                                    <div class="card-body">
+                                        <div class="form-check">
+                                            <input ng-checked="false" ng-model="useAuthorizationCheckBox" class="form-check-input" type="checkbox" id="checkbox2" style=" width: 1.55rem; height: 1.55rem;" ng-init="useAuthorizationCheckBox=false" />
+                                            <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Use Abon authorization</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1"></div>
+                    </div>
                 </div>
             </div>
         </div>

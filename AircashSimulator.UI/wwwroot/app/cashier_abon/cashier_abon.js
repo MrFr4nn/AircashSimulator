@@ -18,12 +18,13 @@ cashierAbonModule.service("cashierAbonService", ['$http', '$q', 'handleResponseS
             generateCashierAbon: generateCashierAbon,
             confirmCashierTransaction: confirmCashierTransaction
         });
-        function confirmCashierTransaction(couponCode) {
+        function confirmCashierTransaction(couponCode, phoneNumber) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AbonOnlinePartner/ConfirmCashierTransaction",
                 data: {
                     CouponCode: couponCode,
+                    PhoneNumber: phoneNumber,
                     Environment: $rootScope.environment
                 }
             });
@@ -47,13 +48,14 @@ cashierAbonModule.controller("cashierAbonCtrl",
         function ($scope, $state, cashierAbonService, $filter, $http, JwtParser, $uibModal, $rootScope) {
 
             $scope.confirmTransactionModel = {
-                couponCode: ""
+                couponCode: "",
+                phoneNumber: ""
             }
 
             $scope.confirmBusy = false;
             $scope.confirmCashierTransaction = function () {
                 $scope.confirmBusy = true;
-                cashierAbonService.confirmCashierTransaction($scope.confirmTransactionModel.couponCode.replaceAll('-', ''))
+                cashierAbonService.confirmCashierTransaction($scope.confirmTransactionModel.couponCode.replaceAll('-', ''), $scope.confirmTransactionModel.phoneNumber)
                     .then(function (response) {
                         if (response.serviceResponse.code) {
                             $rootScope.showGritter("Error", response.serviceResponse.message);

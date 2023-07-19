@@ -10,5 +10,6 @@ namespace Services.AbonOnlinePartner
         public string ProviderTransactionId { get; set; }
         public string UserId { get; set; }
         public string Signature { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

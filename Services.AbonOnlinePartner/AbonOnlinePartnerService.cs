@@ -79,10 +79,10 @@ namespace Services.AbonOnlinePartner
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
         }
-        public async Task<object> ConfirmTransaction(string couponCode, string providerId, string providerTransactionId, string userId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
+        public async Task<object> ConfirmTransaction(string couponCode, string phoneNumber, string providerId, string providerTransactionId, string userId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
             var confirmTransactionResponse = new object();
-            var abonConfirmTransactionRequest = GetConfirmTransactionRequest(couponCode, userId, providerId, providerTransactionId, partnerPrivateKey, partnerPrivateKeyPass);
+            var abonConfirmTransactionRequest = GetConfirmTransactionRequest(couponCode, phoneNumber, userId, providerId, providerTransactionId, partnerPrivateKey, partnerPrivateKeyPass);
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
             DateTime requestDateTime = DateTime.UtcNow;
 
@@ -123,11 +123,12 @@ namespace Services.AbonOnlinePartner
 
 
         }
-        public AbonConfirmTransactionRequest GetConfirmTransactionRequest(string couponCode, string userId, string providerId, string providerTransactionId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        public AbonConfirmTransactionRequest GetConfirmTransactionRequest(string couponCode, string phoneNumber, string userId, string providerId, string providerTransactionId, string partnerPrivateKey, string partnerPrivateKeyPass)
         {
             var abonConfirmTransactionRequest = new AbonConfirmTransactionRequest
             {
                 CouponCode = couponCode,
+                PhoneNumber = phoneNumber,
                 ProviderId = providerId,
                 ProviderTransactionId = providerTransactionId,
                 UserId = userId.ToString()
