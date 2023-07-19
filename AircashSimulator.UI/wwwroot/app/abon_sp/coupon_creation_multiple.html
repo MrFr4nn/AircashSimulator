@@ -403,43 +403,43 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                             <form action="/" method="POST" name="transactionForm0">
                                 <fieldset>
                                     <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
+                                        <label class="form-label">PointOfSaleId</label>
                                         <input ng-model="createMultipleCouponsModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">PartnerId</label>
+                                        <label class="form-label">PartnerId</label>
                                         <input ng-model="createMultipleCouponsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">IsoCurrencySymbol</label>
+                                        <label class="form-label">IsoCurrencySymbol</label>
                                         <input ng-model="createMultipleCouponsModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">ContentType</label>
+                                        <label class="form-label">ContentType</label>
                                         <input ng-model="createMultipleCouponsModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">ContentWidth</label>
+                                        <label class="form-label">ContentWidth</label>
                                         <input ng-model="createMultipleCouponsModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
                                     </div>
                                     <hr />
                                     <div class="row">
                                         <div class="col-3"><b>Denominations </b></div>
                                         <div class="col-5"></div>
-                                        <div class="col-4"><button ng-click="addDenomination()" class="btn btn-primary">Add denomination</button></div>
+                                        <div class="col-4"><button type="button" ng-click="addDenomination()" class="btn btn-primary">Add denomination</button></div>
                                     </div>
                                     <div ng-repeat="denomination in createMultipleCouponsModel.denominations">
                                         <div class="mb-3">
-                                            <label class="form-label" for="exampleInputPassword1">Value</label>
+                                            <label class="form-label">Value</label>
                                             <input class="form-control"
                                                    ng-model="denomination.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label" for="exampleInputPassword1">PartnerTransactionId</label>
+                                            <label class="form-label">PartnerTransactionId</label>
                                             <input ng-model="denomination.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="createServiceBusy" ng-required="true">
                                         </div>
                                     </div>
-                                    <button ng-click="createMultipleCoupons()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                    <button type="submit" ng-click="createMultipleCoupons()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
                                 </fieldset>
                             </form>
                         </div>
@@ -457,7 +457,7 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                 <uib-tab index="request-tab-8" heading="QR code" classes="nav-item">
                     <div class="row mt-2">
                         <div class="col-md-4">
-                            <label class="form-label" for="exampleInputPassword1">CouponCode (16-digit number)</label>
+                            <label class="form-label">CouponCode (16-digit number)</label>
                             <input ng-model="QRcodeMultiple.couponCode" ng-keyup="generateQRcodeMultiple($event)" class="form-control" type="text" placeholder="Enter CouponCode" ng-required="true">
                         </div>
                         <div class="col-md-8 mt-2 d-flex justify-content-center" id="qrcodeDivMultiple"></div>
