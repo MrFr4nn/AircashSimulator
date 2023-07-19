@@ -253,22 +253,22 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                     <uib-tabset class="row tabs-left">
                         <uib-tab index="CreateTransactionError-tab-1" heading="1 - Invalid PartnerId" classes="nav-item">
                             <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 1)">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1)">
                                     Request
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error1.request"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 1)">
+                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1)">
                                     Response
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error1.response"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 1">
+                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1">
                                     Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
 
                                     Sequence: {{errorCreateSequenceMultiple}}<br />
 
                                 </div>
-                                <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 1">
+                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1">
                                     Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
                                 </div>
@@ -277,23 +277,23 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                         </uib-tab>
                         <uib-tab index="CreateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
                             <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 2)">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2)">
                                     Request
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error2.request"></jsonformatter>
 
                                 </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 2)">
+                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2)">
                                     Response
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error2.response"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 2">
+                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2">
                                     Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
 
                                     Sequence: {{errorCreateSequenceMultiple}}<br />
 
                                 </div>
-                                <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 2">
+                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2">
                                     Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
                                 </div>
@@ -302,22 +302,22 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                         </uib-tab>
                         <uib-tab index="CreateTransactionError-tab-3" heading="3 - Invalid CouponValue" classes="nav-item">
                             <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 3)">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3)">
                                     Request
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error3.request"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 3)">
+                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3)">
                                     Response
                                     <jsonformatter data="errorExamples.CreateTransaction.error3.response"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 3">
+                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3">
                                     Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
 
                                     Sequence: {{errorCreateSequenceMultiple}}<br />
 
                                 </div>
-                                <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 3">
+                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3">
                                     Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
                                 </div>
@@ -326,22 +326,22 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                         </uib-tab>
                         <uib-tab index="CreateTransactionError-tab-4" heading="5 - Invalid CurrencySymbol" classes="nav-item">
                             <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 5)">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5)">
                                     Request
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error5.request"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 5)">
+                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5)">
                                     Response
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error5.response"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 5">
+                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5">
                                     Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
 
                                     Sequence: {{errorCreateSequenceMultiple}}<br />
 
                                 </div>
-                                <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 5">
+                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5">
                                     Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
                                 </div>
@@ -350,22 +350,22 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                         </uib-tab>
                         <uib-tab index="CreateTransactionError-tab-5" heading="6 - Coupon exists for the given PartnerTransactionId" classes="nav-item">
                             <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 6)">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6)">
                                     Request
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error6.request"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 6)">
+                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6)">
                                     Response
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error6.response"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 6">
+                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6">
                                     Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
 
                                     Sequence: {{errorCreateSequenceMultiple}}<br />
 
                                 </div>
-                                <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 6">
+                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6">
                                     Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
                                 </div>
@@ -374,22 +374,20 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                         </uib-tab>
                         <uib-tab index="CreateTransactionError-tab-6" heading="8 - Daily limit exceeded" classes="nav-item">
                             <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8)">
                                     Request
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error8.request"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 8)">
+                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8)">
                                     Response
                                     <jsonformatter data="errorExamples.CreateMultipleTransactions.error8.response"></jsonformatter>
                                 </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
+                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8">
                                     Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
-
                                     Sequence: {{errorCreateSequenceMultiple}}<br />
-
                                 </div>
-                                <div class="col-sm-6" ng-if="errorCreateResponded && currentCreateErrorCode == 8">
+                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8">
                                     Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
                                     <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
                                 </div>
@@ -406,23 +404,23 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                                 <fieldset>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
-                                        <input ng-model="createCouponModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
+                                        <input ng-model="createMultipleCouponsModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PartnerId</label>
-                                        <input ng-model="createCouponModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
+                                        <input ng-model="createMultipleCouponsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">IsoCurrencySymbol</label>
-                                        <input ng-model="createCouponModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
+                                        <input ng-model="createMultipleCouponsModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">ContentType</label>
-                                        <input ng-model="createCouponModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
+                                        <input ng-model="createMultipleCouponsModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">ContentWidth</label>
-                                        <input ng-model="createCouponModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
+                                        <input ng-model="createMultipleCouponsModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
                                     </div>
                                     <hr />
                                     <div class="row">
@@ -430,7 +428,7 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                                         <div class="col-5"></div>
                                         <div class="col-4"><button ng-click="addDenomination()" class="btn btn-primary">Add denomination</button></div>
                                     </div>
-                                    <div ng-repeat="denomination in denominationsMultiple">
+                                    <div ng-repeat="denomination in createMultipleCouponsModel.denominations">
                                         <div class="mb-3">
                                             <label class="form-label" for="exampleInputPassword1">Value</label>
                                             <input class="form-control"

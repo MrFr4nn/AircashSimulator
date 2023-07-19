@@ -39,17 +39,17 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function createMultipleCoupons(pointOfSaleId, partnerId, isoCurrencySymbol, contentType, contentWidth, denominations) {
+    function createMultipleCoupons(createMultipleCouponsModel) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AbonSalePartner/CreateMultipleCoupons",
             data: {
-                PartnerId: partnerId,
-                PointOfSaleId: pointOfSaleId,
-                IsoCurrencySymbol: isoCurrencySymbol,
-                ContentType: contentType,
-                ContentWidth: contentWidth,
-                Denominations: denominations
+                PartnerId: createMultipleCouponsModel.partnerId,
+                PointOfSaleId: createMultipleCouponsModel.pointOfSaleId,
+                IsoCurrencySymbol: createMultipleCouponsModel.isoCurrencySymbol,
+                ContentType: createMultipleCouponsModel.contentType,
+                ContentWidth: createMultipleCouponsModel.contentWidth,
+                Denominations: createMultipleCouponsModel.denominations
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -108,7 +108,6 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
 ]);
 
 abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abonSpService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService, $scope, $state, abonSpService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
-    $scope.denominationsMultiple = [{ value: 0, partnerTransactionId: "" }];
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
@@ -124,6 +123,15 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         isoCurrencySymbol: 'EUR',
         contentType: null,
         contentWidth: null
+    };
+
+    $scope.createMultipleCouponsModel = {
+        pointOfSaleId: 'TestLocation',
+        partnerId: $scope.partnerIds.AbonGeneratePartnerId,
+        isoCurrencySymbol: 'EUR',
+        contentType: null,
+        contentWidth: null,
+        denominations: [{ value: 50, partnerTransactionId: HelperService.NewGuid() }]
     };
 
     $scope.cancelCouponModel = {
@@ -217,7 +225,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     $scope.createMultipleCoupons = function () {
         $scope.createServiceBusy = true;
         $scope.createServiceResponseMultiple = false;
-        abonSpService.createMultipleCoupons($scope.createCouponModel.pointOfSaleId, $scope.createCouponModel.partnerId, $scope.createCouponModel.isoCurrencySymbol, $scope.createCouponModel.contentType, $scope.createCouponModel.contentWidth, $scope.denominationsMultiple)
+        abonSpService.createMultipleCoupons($scope.createMultipleCouponsModel)
             .then(function (response) {
                 if (response) {
                     $scope.requestMultipleDateTimeUTC = response.requestDateTimeUTC;
@@ -272,11 +280,13 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     }
 
     $scope.addDenomination = function () {
-        $scope.denominationsMultiple.push({ value: 0, partnerTransactionId: "" });
+        $scope.createMultipleCouponsModel.denominations.push({ value: 50, partnerTransactionId: HelperService.NewGuid() });
     }
 
     $scope.currentCreateErrorCode = 0;
+    $scope.currentCreateErrorCodeMultiple = 0;
     $scope.errorCreateResponded = false;
+    $scope.errorCreateRespondedMultiple = false;
     $scope.errorCreateServiceBusy = false;
     $scope.createSimulateError = (errCode) => {
         $scope.errorCreateResponded = false;
@@ -301,7 +311,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     }
 
     $scope.createSimulateErrorMultiple = (errCode) => {
-        $scope.errorCreateResponded = false;
+        $scope.errorCreateRespondedMultiple = false;
         $scope.errorCreateServiceBusy = true;
         abonSpService.createSimulateErrorMultiple(errCode)
             .then(function (response) {
@@ -310,12 +320,11 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                     $scope.errorCreateResponseMultipleDateTimeUTC = response.responseDateTimeUTC;
                     $scope.errorCreateSequenceMultiple = response.sequence;
                     $scope.errorCreateRequestCopyMultiple = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.errorCreateResponseMultiple = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.errorCreateRequestMultiple = JSON.stringify(response.serviceRequest, null, 4);
                 }
-                $scope.currentCreateErrorCode = errCode;
-                $scope.errorCreateResponded = true;
+                $scope.currentCreateErrorCodeMultiple = errCode;
+                $scope.errorCreateRespondedMultiple = true;
                 $scope.errorCreateServiceBusy = false;
             }, () => {
                 console.log("error");
