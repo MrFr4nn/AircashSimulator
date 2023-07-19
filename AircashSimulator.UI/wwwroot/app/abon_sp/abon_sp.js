@@ -216,27 +216,25 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
 
     $scope.createMultipleCoupons = function () {
         $scope.createServiceBusy = true;
-        $scope.createServiceResponse = false;
-        $scope.showPerview = false;
+        $scope.createServiceResponseMultiple = false;
         abonSpService.createMultipleCoupons($scope.createCouponModel.pointOfSaleId, $scope.createCouponModel.partnerId, $scope.createCouponModel.isoCurrencySymbol, $scope.createCouponModel.contentType, $scope.createCouponModel.contentWidth, $scope.denominationsMultiple)
             .then(function (response) {
                 if (response) {
-                    $scope.requestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.responseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequence = response.sequence;
+                    $scope.requestMultipleDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.responseMultipleDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceMultiple = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.serviceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.serviceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.serviceResponseMultiple = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.serviceRequestMultiple = JSON.stringify(response.serviceRequest, null, 4);
                     if (response.serviceResponse.content) {
-                        $scope.showPerview = true;
-                        $scope.content = response.serviceResponse.content;
-                        $scope.decodedContent = decodeURIComponent($scope.content);
+                        $scope.contentMultiple = response.serviceResponse.content;
+                        $scope.decodedContentMultiple = decodeURIComponent($scope.contentMultiple);
                         console.log($scope.decodedContent);
                         document.querySelector('#content1').innerHTML = $scope.decodedContent;
                     }
                 }
                 $scope.createServiceBusy = false;
-                $scope.createServiceResponse = true;
+                $scope.createServiceResponseMultiple = true;
             }, () => {
                 console.log("error");
             });

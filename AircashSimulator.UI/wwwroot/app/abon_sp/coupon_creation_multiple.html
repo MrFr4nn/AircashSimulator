@@ -445,15 +445,14 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                                 </fieldset>
                             </form>
                         </div>
-                        <div class="col-md-4" ng-if="createServiceResponse">
-                            Request ({{requestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="serviceRequest"></jsonformatter>
-                            Sequence: {{sequence}}<br />
+                        <div class="col-md-4" ng-if="createServiceResponseMultiple">
+                            Request ({{requestMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="serviceRequestMultiple"></jsonformatter>
+                            Sequence: {{sequenceMultiple}}<br />
                         </div>
-                        <div class="col-md-4" ng-if="createServiceResponse">
-                            Response ({{responseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="serviceResponse"></jsonformatter>
-                            <center><button href="" ng-click="showContent()" class="btn btn-primary w-100px me-5px">Preview</button></center>
+                        <div class="col-md-4" ng-if="createServiceResponseMultiple">
+                            Response ({{responseMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="serviceResponseMultiple"></jsonformatter>
                         </div>
                     </div>
                 </uib-tab>
