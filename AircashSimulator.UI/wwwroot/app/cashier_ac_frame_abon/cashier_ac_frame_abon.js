@@ -112,19 +112,19 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
             $scope.onSuccess = function (windowCheckoutResponse) {                 
                 console.log(windowCheckoutResponse); 
                 $rootScope.showGritter("Transaction - Success");
-                location.href = config.acFrameOriginUrl + '/#!/success';
+                //location.href = config.acFrameOriginUrl + '/#!/success';
             }
 
             $scope.onDecline = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Transaction - Decline");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                //location.href = config.acFrameOriginUrl + '/#!/decline';
             }
 
             $scope.onCancel = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Tranasction - Cancel");
-                location.href = config.acFrameOriginUrl + '/#!/cancel';
+                //location.href = config.acFrameOriginUrl + '/#!/cancel';
             }
 
             //SIGNAL R START
