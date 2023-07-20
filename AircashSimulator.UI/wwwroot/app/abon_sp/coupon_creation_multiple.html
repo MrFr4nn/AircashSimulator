@@ -203,7 +203,7 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                             <tbody>
                                 <tr>
                                     <td rowspan="6"><b>400</b></td>
-                                    <td rowspan="6">
+                                    <td rowspan="5">
                                         An invalid request was made. The response will contain an error code, message and optionally additionalData.
                                     </td>
                                     <td><b>1</b></td>
@@ -231,8 +231,11 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                                     <td>SerialNumber, Value, IsoCurrencySymbol, PartnerTransactionId</td>
                                 </tr>
                                 <tr>
+                                    <td>
+                                        Partner or location has exceeded the daily limit or creation of more than 20 coupons is ordered
+                                    </td>
                                     <td><b>8</b></td>
-                                    <td>Daily limit exceeded</td>
+                                    <td>Limit exceeded</td>
                                     <td>-</td>
                                 </tr>
                                 <tr>
@@ -372,7 +375,7 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                             </div>
                             <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(6)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
                         </uib-tab>
-                        <uib-tab index="CreateTransactionError-tab-6" heading="8 - Daily limit exceeded" classes="nav-item">
+                        <uib-tab index="CreateTransactionError-tab-6" heading="8 - Limit exceeded" classes="nav-item">
                             <div class="row col-12">
                                 <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8)">
                                     Request
