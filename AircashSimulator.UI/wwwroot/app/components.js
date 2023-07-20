@@ -49,7 +49,7 @@ app.component('phoneNumberInput', {
 
         this.countries = [{ country: "AT", code: "+43" }, { country: "BE", code: "+32" }, { country: "BG", code: "+359" }, { country: "HR", code: "+385" },
         { country: "CY", code: "+357" }, { country: "CZ", code: "+420" }, { country: "DK", code: "+45" }, { country: "EE", code: "+372" }, { country: "FI", code: "+358" },
-        { country: "FR", code: "+33" }, { country: "DE", code: "+49" }, { country: "GR", code: "+30" }, { country: "HU", code: "+36" }, { country: "IS", code: "+354" },
+        { country: "FR", code: "+33" }, { country: "DE", code: "+49" }, { country: "GR", code: "+30" }, { country: "HU", code: "+36" }, { country: "IN", code: "+91" }, { country: "IS", code: "+354" },
         { country: "IE", code: "+353" }, { country: "IT", code: "+39" }, { country: "LV", code: "+371" }, { country: "LI", code: "+423" }, { country: "LT", code: "+370" },
         { country: "LU", code: "+352" }, { country: "MT", code: "+356" }, { country: "NL", code: "+31" }, { country: "PL", code: "+48" }, { country: "PT", code: "+351" },
         { country: "RO", code: "+40" }, { country: "SK", code: "+421" }, { country: "SI", code: "+386" }, { country: "ES", code: "+34" }, { country: "SE", code: "+46" }];
