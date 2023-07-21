@@ -68,6 +68,8 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                             value: $scope.createCashierAcFrameAcPayModel.birthDate.toLocaleDateString('en-CA')
                         }
                     ];
+                } else {
+                    $scope.matchParameters = [];    
                 }
                 cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.matchParameters, 0, 2, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    

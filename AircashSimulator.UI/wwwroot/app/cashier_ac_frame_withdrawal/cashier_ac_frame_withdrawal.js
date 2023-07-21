@@ -64,6 +64,8 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
                             value: $scope.createCashierAcFrameWithdrawalModel.birthDate.toLocaleDateString('en-CA')
                         }
                     ];
+                } else {
+                    $scope.matchParameters = [];
                 }
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
                 cashierAcFrameWithdrawalService.initiateAcFrameWithdrawal($scope.createCashierAcFrameWithdrawalModel.amount, $scope.matchParameters, 1, 10, $scope.selectedAcFrameOption.value)
