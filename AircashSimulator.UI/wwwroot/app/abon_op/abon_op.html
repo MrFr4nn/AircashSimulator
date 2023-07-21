@@ -118,7 +118,7 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Parameters</th>
+                                <th colspan="2">Parameters</th>
                                 <th>Type</th>
                                 <th>Description</th>
                                 <th>Required</th>
@@ -126,7 +126,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td><b>CouponCode</b></td>
+                                <td colspan="2"><b>CouponCode</b></td>
                                 <td>string</td>
                                 <td>
                                     16 digit coupon code that the user enters in the Merchant's web interface
@@ -134,7 +134,7 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>PhoneNumber</b></td>
+                                <td colspan="2"><b>PhoneNumber</b></td>
                                 <td>string</td>
                                 <td>
                                     User’s phone number. Phone number must be in MSISDN format. Eg. 3859812345678
@@ -146,7 +146,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><b>ProviderTransactionId</b></td>
+                                <td colspan="2"><b>ProviderTransactionId</b></td>
                                 <td>string</td>
                                 <td>
                                     Transaction identifier in the Online Provider system
@@ -157,7 +157,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><b>ProviderId</b></td>
+                                <td colspan="2"><b>ProviderId</b></td>
                                 <td>string</td>
                                 <td>
                                     Unique partner identifier (per currency) provided by Aircash
@@ -165,7 +165,30 @@
                                 <td>YES</td>
                             </tr>
                             <tr>
-                                <td><b>Signature</b></td>
+                                <td colspan="2"><b>Parameters</b></td>
+                                <td>List&lt;Object&gt;</td>
+                                <td>List of parameters</td>
+                                <td>
+                                    YES,
+                                    conditionally
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Key</b></td>
+                                <td>String</td>
+                                <td>The name of the parameter to be sent</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>Value</b></td>
+                                <td>String</td>
+                                <td>The value of the parameter to be sent</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Signature</b></td>
                                 <td>string</td>
                                 <td>
                                     A sequence that has been digitally signed with the
@@ -790,14 +813,14 @@ eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQ
                         </thead>
                         <tbody>
                             <tr>
-                                <td rowspan="8"><b>400</b></td>
-                                <td rowspan="8">
+                                <td rowspan="11"><b>400</b></td>
+                                <td rowspan="11">
                                     An invalid request was made. The response will contain an error code, message and optionally additionalData.
                                 </td>
                                 <td><b>1</b></td>
                                 <td>Invalid ProviderId</td>
                                 <td>-</td>
-                                <td rowspan="8">
+                                <td rowspan="11">
                                     The response will contain an error code,
                                     message and optionally additionalData.
 
@@ -838,6 +861,27 @@ eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQ
                                 <td>Authorization pending</td>
                                 <td>
                                     ISOCurrency, CouponValue
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>13</b></td>
+                                <td>User data do not match</td>
+                                <td>
+                                    -
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>14</b></td>
+                                <td>Authorization timeout</td>
+                                <td>
+                                    -
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>15</b></td>
+                                <td>Authorization declined</td>
+                                <td>
+                                    -
                                 </td>
                             </tr>
                             <tr>
