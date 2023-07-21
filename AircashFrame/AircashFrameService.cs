@@ -24,6 +24,7 @@ namespace AircashFrame
 
         private readonly string InitiateEndpoint = "initiate";
         private readonly string TransactionStatusEndpoint = "status";
+        private readonly string RefundTransactionEndpoint = "RefundTransaction";
 
         public AircashFrameService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashFrameService> logger)
         {
@@ -169,6 +170,31 @@ namespace AircashFrame
             {
                 ServiceRequest = aircashTransactionStatusRequest,
                 ServiceResponse = aircashTransactionStatusResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
+        }
+
+        public async Task<Response> RefundTransaction(AircashRefundTransactionRequest request)
+		{
+			var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == request.PartnerId).FirstOrDefault();
+			var requestDateTime = DateTime.UtcNow;
+
+            var dataToSign = AircashSignatureService.ConvertObjectToString(request);
+            Logger.LogInformation(partner.PrivateKey);
+
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
+			request.Signature = signature;
+
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{RefundTransactionEndpoint}");
+            var responseDateTime = DateTime.UtcNow;
+            var refundTransactionResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponse>(response.ResponseContent);
+            var frontResponse = new Response
+            {
+                ServiceRequest = request,
+                ServiceResponse = refundTransactionResponse,
                 Sequence = dataToSign,
                 RequestDateTimeUTC = requestDateTime,
                 ResponseDateTimeUTC = responseDateTime

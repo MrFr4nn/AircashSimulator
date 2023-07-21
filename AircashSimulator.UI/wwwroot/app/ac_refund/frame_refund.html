@@ -1,10 +1,10 @@
-﻿<h4>Refund (E-commerce)</h4>
+﻿<h4>Frame Refund (E-commerce)</h4>
 <p>
-    In order to refund transaction, partner can send a request towards Aircash refund endpoint
+    In order to refund transaction, partner can send a request towards Frame refund endpoint
     containing the information that will uniquely identify the original transaction that needs to be refunded,
     along with the amount that will be added to the Aircash user’s wallet. Refund method can be called
     multiple times as long as the sum of previous refund amounts is less or equal to the amount of the original
-    transaction.
+    transaction and RefundPartnerTransactionID is unique for each refund transaction.
 </p>
 <i>Endpoints:</i>
 <table class="table table-active col-md-6">
@@ -18,13 +18,20 @@
         <td>
             POST
         </td>
-        <td>https://staging-m3.aircash.eu/api/AircashPay/RefundTransaction</td>
+        <td>https://stage-frame-api.aircash.eu/api/v1/RefundTransaction</td>
+    </tr>
+    <tr>
+        <td><b>Production</b></td>
+        <td>
+            POST
+        </td>
+        <td>https://frame-api.aircash.eu/api/v1/RefundTransaction</td>
     </tr>
 </table>
 <br />
 
 <uib-tabset>
-    <uib-tab index="refund-tab-0" heading="Input parameters" classes="nav-item">
+    <uib-tab index="frame-refund-tab-0" heading="Input parameters" classes="nav-item">
         <table class="table table-hover">
             <tr>
                 <th>Parameter</th>
@@ -74,10 +81,10 @@
             </tr>
         </table>
     </uib-tab>
-    <uib-tab index="refund-tab-1" heading="Request example" classes="nav-item">
+    <uib-tab index="frame-refund-tab-1" heading="Request example" classes="nav-item">
         <jsonformatter data="requestExample"></jsonformatter>
     </uib-tab>
-    <uib-tab index="refund-tab-2" heading="HTTP 200 OK output parameters" classes="nav-item">
+    <uib-tab index="frame-refund-tab-2" heading="HTTP 200 OK output parameters" classes="nav-item">
         <table class="table table-hover">
             <tr>
                 <th>Return value</th>
@@ -101,7 +108,7 @@
             </tr>
         </table>
     </uib-tab>
-    <uib-tab index="refund-tab-3" heading="Error Responses" classes="nav-item">
+    <uib-tab index="frame-refund-tab-3" heading="Error Responses" classes="nav-item">
         <table class="table table-hover">
             <tr>
                 <th>Http response</th>
@@ -136,53 +143,60 @@
                 <th>Error message</th>
             </tr>
             <tr>
-                <td><b>0</b></td>
-                <td>Request not well formatted</td>
-            </tr>
-            <tr>
                 <td><b>1</b></td>
-                <td>Requested amount must be higher than 0</td>
-            </tr>
-            <tr>
-                <td><b>2</b></td>
-                <td>Transaction with PartnerTransactionID not found in the Aircash system</td>
+                <td>Invalid signature or PartnerId</td>
             </tr>
             <tr>
                 <td><b>3</b></td>
-                <td>Requested amount is higher than remaining amount from the original transaction</td>
+                <td>Request not well formatted</td>
+            </tr>
+            <tr>
+                <td><b>1002</b></td>
+                <td>Transaction with PartnerTransactionID not found in the Aircash system</td>
+            </tr>
+            <tr>
+                <td><b>1007</b></td>
+                <td>Type of transaction is not refundable</td>
             </tr>
         </table>
     </uib-tab>
-    <uib-tab index="refund-tab-4" heading="Try it out" classes="nav-item">
+    <uib-tab index="frame-refund-tab-4" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
-                <form action="/" method="POST" name="refundForm">
+                <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                <form action="/" method="POST" name="frameRefundForm">
                     <fieldset>
                         <div class="mb-3">
-                            <label class="form-label" for="exampleInputEmail1">Refund Amount</label>
-                            <input ng-model="refundModel.amount" placeholder="Amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                            <label class="form-label">Partner ID</label>
+                            <input ng-model="frameRefundModel.partnerId" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="frameRefundServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Partner Transaction ID</label>
-                            <input ng-model="refundModel.PartnerTransactionID" placeholder="Enter PartnerTransactionID" class="form-control" type="text" ng-disabled="refundServiceBusy" ng-required="true">
+                            <input ng-model="frameRefundModel.partnerTransactionId" placeholder="Enter PartnerTransactionID" class="form-control" type="text" ng-disabled="frameRefundServiceBusy" ng-required="true">
                         </div>
-                        <button ng-click="refundTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="refundServiceBusy|| refundForm.$invalid">Refund Transaction <i ng-if="refundServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <div class="mb-3">
+                            <label class="form-label">Refund Partner Transaction ID</label>
+                            <input ng-model="frameRefundModel.refundPartnerTransactionId" placeholder="Enter RefundPartnerTransactionID" class="form-control" type="text" ng-disabled="frameRefundServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Frame Refund Amount</label>
+                            <input ng-model="frameRefundModel.amount" placeholder="Amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                        </div>
+                        <button ng-click="frameRefundTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="frameRefundServiceBusy|| frameRefundForm.$invalid">Refund Transaction <i ng-if="frameRefundServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
 
             <br />
-            <div ng-if="refundResponded" class="col-md-4">
-                Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <jsonformatter data="refundServiceRequest"></jsonformatter>
+            <div ng-if="frameRefundResponded" class="col-md-4">
+                Request ({{RefundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="frameRefundServiceRequest"></jsonformatter>
                 Sequence: {{sequenceRefund}}
             </div>
-            <div ng-if="refundResponded" class="col-md-4">
+            <div ng-if="frameRefundResponded" class="col-md-4">
                 Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <jsonformatter data="refundServiceResponse"></jsonformatter>
+                <jsonformatter data="frameRefundServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
 </uib-tabset>
-
-<ng-include src="'app/ac_refund/frame_refund.html'"></ng-include>
