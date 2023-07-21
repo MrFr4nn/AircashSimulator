@@ -10,7 +10,7 @@ using CrossCutting;
 using Newtonsoft.Json;
 using Services.User;
 
-namespace AircashSimulator
+namespace AircashSimulator.Controllers.AbonOnlinePartner
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
