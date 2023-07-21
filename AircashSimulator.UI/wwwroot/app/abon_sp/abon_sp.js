@@ -231,7 +231,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                     $scope.requestMultipleDateTimeUTC = response.requestDateTimeUTC;
                     $scope.responseMultipleDateTimeUTC = response.responseDateTimeUTC;
                     $scope.sequenceMultiple = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    response.serviceRequest.signature = response.serviceRequest.signature?.substring(0, 10) + "...";
                     $scope.serviceResponseMultiple = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.serviceRequestMultiple = JSON.stringify(response.serviceRequest, null, 4);
                     if (response.serviceResponse.content) {
@@ -245,6 +245,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                 $scope.createServiceResponseMultiple = true;
             }, () => {
                 console.log("error");
+                $scope.createServiceBusy = false;
             });
     }
 
