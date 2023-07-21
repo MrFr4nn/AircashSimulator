@@ -431,6 +431,28 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 additionalData: null
             }
         },
+        validateCouponWithAutorization: {
+            requestExample: {
+                couponCode: "5460446045144493",
+                providerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                phoneNumber: "385981234567",
+                parameters: [
+                    {
+                        Key: "PayerFirstName",
+                        Value: "John"
+                    },
+                    {
+                        Key: "PayerLastName",
+                        Value: "Doe"
+                    },
+                    {
+                        Key: "PayerBirthDate",
+                        Value: "1990-01-01"
+                    },
+                ],
+                signature: "in4sV7zjw..."
+            }
+        },
         confirmTransaction: {
             requestExample: {
                 "couponCode": "2326186935891516",

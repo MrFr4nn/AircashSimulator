@@ -201,7 +201,18 @@
                 </div>
             </uib-tab>
             <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                <jsonformatter data="aBonDeposit.validateCoupon.requestExample"></jsonformatter>
+                <div class="row">
+                    <div class="col-6">
+                        <h5>ValidateCoupon without authorization:</h5>
+                        <br />
+                        <jsonformatter data="aBonDeposit.validateCoupon.requestExample"></jsonformatter>
+                    </div>
+                    <div class="col-6">
+                        <h5>ValidateCoupon with authorization:</h5>
+                        <br />
+                        <jsonformatter data="aBonDeposit.validateCouponWithAutorization.requestExample"></jsonformatter>
+                    </div>
+                </div>
             </uib-tab>
             <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
 <pre>
