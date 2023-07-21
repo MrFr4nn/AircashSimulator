@@ -30,7 +30,7 @@
         <li ng-if="partnerRoles.indexOf('AircashFrameV2')!= -1 || partnerRoles.indexOf('AircashPayment') != -1||partnerRoles.indexOf('AircashPayout') != -1 || partnerRoles.indexOf('AbonDeposit') != -1 || partnerRoles.indexOf('AircashPosDeposit') != -1 || partnerRoles.indexOf('AircashPayoutV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1 || partnerRoles.indexOf('AircashPayStaticCode') != -1">
             <button class="btn btn-dark mt-2 ml-2" onclick="location.href = '/#!/cashier/onlinemenu';">Cashier Online</button>
         </li>
-        <li ng-if="partnerRoles.indexOf('SalePartner') != -1 || partnerRoles.indexOf('AbonGenerate') != -1">
+        <li ng-if="partnerRoles.indexOf('SalePartner') != -1 "> <!--|| partnerRoles.indexOf('AbonGenerate') != -1-->
             <button class="btn btn-dark mt-2 ml-2" onclick="location.href = '/#!/cashier/distributormenu';">Cashier Distributor</button>
         </li>
         <li class="dropdown navbar-user">
