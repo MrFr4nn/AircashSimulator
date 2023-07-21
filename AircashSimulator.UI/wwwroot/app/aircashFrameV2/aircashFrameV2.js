@@ -158,7 +158,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
 }
 ]);
 
-acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'HelperService', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $location, $state, $filter, HelperService, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'HelperService', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$window', '$localStorage', 'config', function ($scope, $location, $state, $filter, HelperService, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $window, $localStorage, config) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
@@ -323,6 +323,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 }
             ];
         }
+        $scope.showButtonCopyUrl = false;
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
         acFrameV2Service.initiateRedirectCheckout($scope.initiateModel, matchParameters)
             .then(function (response) {
@@ -333,6 +334,11 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.InitiateServiceResponseObject = response.serviceResponse;
+                    $scope.showButtonCopyUrl = false;
+                    if ($scope.InitiateServiceResponseObject.url != undefined) {
+                        $scope.showButtonCopyUrl = true;
+                    }
 
                     //$scope.getRedirectModal(response.serviceResponse.transactionId);
                     /*new AircashFrame.WindowCheckout({
@@ -349,17 +355,18 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 $scope.initiateBusy = false;
                 $scope.initiateResponded = true;
             }, () => {
+                $scope.showButtonCopyUrl = false;
                 $scope.initiateBusy = false;
                 console.log("error");
             });
     };
 
     $scope.onSuccess = function (obj) {
-        alert("Success:" + obj.amount);
+        $rootScope.showGritter("Success");
     };
 
     $scope.onDecline = function (obj) {
-
+        
     };
 
     $scope.onCancel = function (obj) {
@@ -728,6 +735,19 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             }
         },
         Confirm: {
+            error1: {
+                request: {
+                    "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "amount": 10,
+                    "currencyId": 978,
+                    "signature": "os0+rv9Mwp..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid signature or partner id."
+                }
+            },
             error1000: {
                 request: {
                     "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
@@ -752,6 +772,19 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 response: {
                     "code": 1005,
                     "message": "Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed."
+                }
+            },
+            error3000: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "amount": 10,
+                    "currencyId": 977,
+                    "signature": "IOWErWP7eP..."
+                },
+                response: {
+                    "code": 3000,
+                    "message": "Invalid currency."
                 }
             },
             error3016: {

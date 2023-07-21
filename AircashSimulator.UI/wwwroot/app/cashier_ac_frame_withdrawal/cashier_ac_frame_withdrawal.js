@@ -64,6 +64,8 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
                             value: $scope.createCashierAcFrameWithdrawalModel.birthDate.toLocaleDateString('en-CA')
                         }
                     ];
+                } else {
+                    $scope.matchParameters = [];
                 }
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
                 cashierAcFrameWithdrawalService.initiateAcFrameWithdrawal($scope.createCashierAcFrameWithdrawalModel.amount, $scope.matchParameters, 1, 10, $scope.selectedAcFrameOption.value)
@@ -127,19 +129,19 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
             $scope.onSuccess = function (windowCheckoutResponse) {                 
                 console.log(windowCheckoutResponse); 
                 $rootScope.showGritter("Transaction - Success");
-                location.href = config.acFrameOriginUrl + '/#!/success';
+                //location.href = config.acFrameOriginUrl + '/#!/success';
             }
 
             $scope.onDecline = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Transaction - Decline");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                //location.href = config.acFrameOriginUrl + '/#!/decline';
             }
 
             $scope.onCancel = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Tranasction - Cancel");
-                location.href = config.acFrameOriginUrl + '/#!/cancel';
+                //location.href = config.acFrameOriginUrl + '/#!/cancel';
             }
 
             //SIGNAL R START
