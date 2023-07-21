@@ -1,5 +1,6 @@
 ﻿var cashierModule = angular.module('cashier', [
-    'primaryMenu',
+    'distributorMenu',
+    'onlineMenu',
     'cashier_abon',
     'cashier_acPay',    
     'cashier_acFrameMenu',

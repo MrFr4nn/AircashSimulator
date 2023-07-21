@@ -99,9 +99,10 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay', '/cashier/menu', '/cashier/abon', '/cashier/aircashPay',
+        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay','/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu',
-            '/cashier/aircashFrameAcPay', '/cashier/aircashFrameAbon', '/cashier/aircashFrameWithdrawal', '/cashier/PayoutC2D', '/cashier/SalesPartner', '/cashier/abon_sp'];
+            '/cashier/aircashFrameAcPay', '/cashier/aircashFrameAbon', '/cashier/aircashFrameWithdrawal', '/cashier/PayoutC2D', '/cashier/SalesPartner',
+            '/cashier/abon_sp', '/cashier/onlinemenu', '/cashier/distributormenu'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if ($location.path().indexOf('cashier') > -1 && restrictedPage) {
             $location.path('/cashier/menu');

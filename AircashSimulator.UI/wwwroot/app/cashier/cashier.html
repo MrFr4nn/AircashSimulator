@@ -1,43 +1,36 @@
 ﻿<div id="header" class="header navbar-default" ng-controller="headerController">
     <!-- begin navbar-header -->
-    <div class="navbar-header">
-        <a href="/#!/cashier/menu"><img src="/images/aircash_logo.png" style="max-width: 200px" /></a>
-        <button type="button" class="navbar-toggle pull-right" ng-click="options.toggleOptions = !options.toggleOptions">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-        </button>
-    </div>
-    <div ng-If="options.toggleOptions" class="col m-0 p-0">
-        <ul class="navbar-nav pull-right mb-2 mr-2">
-            <li>
-                <select class="form-control mt-2 p-2" ng-change="setEnvironment(environment)" ng-model="environment" ng-init="environment = 2">
-                    <option ng-value="1">Dev</option>
-                    <option ng-value="2">Staging</option>
-                </select>
-            </li>
-            <li>
-                <select ng-change="option(selectedlanguage)" name="language" class="form-control mt-2 ml-1 p-2"
-                        ng-options="item.language for item in languages"
-                        ng-model="selectedlanguage" ng-required="true">
-                </select>
-            </li>
-            <li>
-                <button class="btn btn-white mt-2 ml-2" ng-click="ChangeLanguage(selectedlanguage)">
-                    Set language
-                </button>
-            </li>
-            <li>
-                <button class="btn btn-dark mt-2 ml-2" onclick="location.href = '/#!/cashier/menu';">Cashier</button>
-            </li>
-            <li>
-                <button class="btn btn-dark mt-2 ml-2" onclick="location.href = '/#!/app/dashboard';">Documentation</button>
-            </li>
-        </ul>
+    <div class="navbar-header col-12">
+        <a href="#"><img onclick="javascript:history.back(1)" src="/images/aircash_logo.png" style="max-width: 200px" /></a>
+        <div class="w-100 d-flex justify-content-end">
+            <div class="mt-2 mr-3">
 
+                <ul class="navbar-nav navbar-right mb-2 mr-2">
+                    <li>
+                        <select ng-change="option(selectedlanguage)" name="language" class="form-control mt-2"
+                                ng-options="item.language for item in languages"
+                                ng-model="selectedlanguage" ng-required="true">
+                        </select>
+                    </li>
+                    <li>
+                        <button class="btn btn-white mt-2 ml-2" ng-click="ChangeLanguage(selectedlanguage)">
+                            Set language
+                        </button>
+                    </li>
+                    <li ng-if="partnerRoles.indexOf('AircashFrameV2')!= -1 || partnerRoles.indexOf('AircashPayment') != -1||partnerRoles.indexOf('AircashPayout') != -1 || partnerRoles.indexOf('AbonDeposit') != -1 || partnerRoles.indexOf('AircashPosDeposit') != -1 || partnerRoles.indexOf('AircashPayoutV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1 || partnerRoles.indexOf('AircashPayStaticCode') != -1">
+                        <button class="btn btn-dark mt-2 ml-2" onclick="location.href = '/#!/cashier/onlinemenu';">Cashier Online</button>
+                    </li>
+                    <li ng-if="partnerRoles.indexOf('SalePartner') != -1 || partnerRoles.indexOf('AbonGenerate') != -1">
+                        <button class="btn btn-dark mt-2 ml-2" onclick="location.href = '/#!/cashier/distributormenu';">Cashier Distributor</button>
+                    </li>
+                    <li>
+                        <button class="btn btn-dark mt-2 ml-2" onclick="location.href = '/#!/app/dashboard';">Documentation</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-    </div>
-    <div id="content" class="mt-3" style="overflow-x: hidden" view-content>
-        <div ui-view ng-class="{ 'height-full': setting.layout.pageContentFullHeight }"></div>
-    </div>
-
+          </div>
+<div id="content" class="mt-3" style="overflow-x: hidden" view-content>
+    <div ui-view ng-class="{ 'height-full': setting.layout.pageContentFullHeight }"></div>
+</div>
