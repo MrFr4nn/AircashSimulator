@@ -10,7 +10,7 @@ namespace Services.AircashPayment
     {
         public string AircashTransactionId { get; set; }
         public decimal Amount { get; set; }
-        public List<CheckPlayerParameters> Parameters { get; set; }
+        public List<AircashPaymentParameters> Parameters { get; set; }
 
     }
 }

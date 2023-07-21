@@ -26,7 +26,8 @@ cashierAcFrameModule.service("cashierAcFrameAbonService", ['$http', '$q', 'handl
                     amount: amount,
                     payType: payType,
                     payMethod: payMethod,
-                    acFrameOption: acFrameOption                                      
+                    acFrameOption: acFrameOption,
+                    environment: $rootScope.environment
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -40,11 +41,13 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
             $scope.createCashierAcFrameAbonServiceBusy = false;  
             $scope.frameWindow = null;
             $scope.frameTab = null;
-            
+
+            $scope.abon = {}
+
             $scope.initiateAcFrameAbon = function () {                       
                 $scope.createCashierAcFrameAbonServiceBusy = true;                
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
-                cashierAcFrameAbonService.initiateAcFrameAbon(0, 0, 0, $scope.selectedAcFrameOption.value)
+                cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    
                         console.log(response);                        
                         
@@ -109,19 +112,19 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
             $scope.onSuccess = function (windowCheckoutResponse) {                 
                 console.log(windowCheckoutResponse); 
                 $rootScope.showGritter("Transaction - Success");
-                location.href = config.acFrameOriginUrl + '/#!/success';
+                //location.href = config.acFrameOriginUrl + '/#!/success';
             }
 
             $scope.onDecline = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Transaction - Decline");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                //location.href = config.acFrameOriginUrl + '/#!/decline';
             }
 
             $scope.onCancel = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Tranasction - Cancel");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                //location.href = config.acFrameOriginUrl + '/#!/cancel';
             }
 
             //SIGNAL R START

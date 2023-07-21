@@ -18,15 +18,17 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
             initiateAcFrame: initiateAcFrame
         });
 
-        function initiateAcFrame(amount, payType, payMethod, acFrameOption) {
+        function initiateAcFrame(amount, matchParameters, payType, payMethod, acFrameOption) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
                 data: {                    
                     amount: amount,
+                    matchParameters: matchParameters,
                     payType: payType,
                     payMethod: payMethod,
-                    acFrameOption: acFrameOption                                      
+                    acFrameOption: acFrameOption,
+                    environment: $rootScope.environment                                      
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));            
@@ -39,15 +41,35 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
         function ($scope, $state, cashierAcFrameAcPayService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {    
             $scope.createCashierAcFrameAcPayModel = {                
                 amount: 100,
+                firstName:"",
+                lastName: "",
+                birthDate: new Date("")
             };
 
             $scope.createCashierAcFrameAcPayServiceBusy = false;  
             $scope.frameWindow = null;
             $scope.frameTab = null;
-            
+
+            $scope.matchParameters = [];
             $scope.initiateAcFrame = function () {                
-                $scope.createCashierAcFrameAcPayServiceBusy = true;                
-                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, 0, 2, $scope.selectedAcFrameOption.value)
+                $scope.createCashierAcFrameAcPayServiceBusy = true;
+                if ($scope.useMatchPersonalData) {
+                    $scope.matchParameters = [
+                        {
+                            key: "PayerFirstName",
+                            value: $scope.createCashierAcFrameAcPayModel.firstName
+                        },
+                        {
+                            key: "PayerLastName",
+                            value: $scope.createCashierAcFrameAcPayModel.lastName
+                        },
+                        {
+                            key: "PayerBirthDate",
+                            value: $scope.createCashierAcFrameAcPayModel.birthDate.toLocaleDateString('en-CA')
+                        }
+                    ];
+                }
+                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.matchParameters, 0, 2, $scope.selectedAcFrameOption.value)
                     .then(function (response) {    
                         console.log(response);                        
                         
@@ -108,19 +130,19 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
             $scope.onSuccess = function (windowCheckoutResponse) {                 
                 console.log(windowCheckoutResponse); 
                 $rootScope.showGritter("Transaction - Success");
-                location.href = config.acFrameOriginUrl + '/#!/success';
+                //location.href = config.acFrameOriginUrl + '/#!/success';
             }
 
             $scope.onDecline = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Transaction - Decline");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                //location.href = config.acFrameOriginUrl + '/#!/decline';
             }
 
             $scope.onCancel = function (windowCheckoutResponse) {
                 console.log(windowCheckoutResponse);
                 $rootScope.showGritter("Tranasction - Cancel");
-                location.href = config.acFrameOriginUrl + '/#!/decline';
+                //location.href = config.acFrameOriginUrl + '/#!/cancel';
             }
 
             //SIGNAL R START
@@ -198,6 +220,10 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
 
                 $scope.selectedAcFrameOption = $scope.acFrameOptions[0];
             };
+
+            $scope.setDate = function (date) {
+                $scope.createCashierAcFrameAcPayModel.birthDate = date;
+            }
 
             $scope.setDefaults();
 

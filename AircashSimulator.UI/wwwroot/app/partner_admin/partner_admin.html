@@ -84,6 +84,7 @@
                                     <th>Roles</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
+                                    <th>Settings</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -97,6 +98,7 @@
                                     <td style="cursor:pointer" ng-click="ShowPartnerRolesModal(p)"><i class="fa fa-id-card"></i></td>
                                     <td style="cursor:pointer" ng-click="showPartnerModal(p, false);"><i class="fa fa-pen"></i></td>
                                     <td style="cursor:pointer" ng-click="confirmDeleteModal(p);"><i class="fa fa-trash"></i></td>
+                                    <td style="cursor:pointer" ng-click="showPartnerSettingsModal(p);"><i class="fa fa-cog"></i></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -131,7 +133,7 @@
                                 <label class="form-label">Currency ID</label>
                                 <currencyid-picker output="currencyPay" default-currency="setCurrency"></currencyid-picker>
                             </div>
-                        </div>  
+                        </div>
                         <div class="col-md-2"></div>
                         <div class="col-md-5">
                             <div class="mb-3">
@@ -164,25 +166,19 @@
                 <form action="/" method="POST" name="addPartnerForm">
                     <div class="row">
                         <div class="col-md-5">
+                            <div class="mb-3" ng-if="!newPartner">
+                                <label class="form-label">New PartnerId</label>
+                                <input ng-model="partner.newPartnerId" class="form-control" type="text">
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label">Partner Name</label>
                                 <input ng-model="partner.partnerName" class="form-control" type="text" ng-required="true">
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Private Key Path</label>
-                                <input ng-model="partner.privateKey" class="form-control" type="text" ng-required="false">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Private Key Pass</label>
-                                <input ng-model="partner.privateKeyPass" class="form-control" type="text" ng-required="false">
-
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Use Default Partner</label>
-                                <select class="form-control" ng-model="partner.useDefaultPartner" ng-required="true">
-                                    <option value="true" ng-selected="partner.useDefaultPartner == 1">Yes</option>
-                                    <option value="false" ng-selected="partner.useDefaultPartner == 2">No</option>
-                                </select>
+                            <div class="mb-3" ng-if="newPartner">
+                                <div>
+                                    <label class="form-label">User</label>
+                                    <input ng-model="$parent.username" class="form-control" type="text" ng-required="true">
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-2"></div>
@@ -196,28 +192,16 @@
                                 <label class="form-label">Country Code</label>
                                 <country-picker output="countryPickerCode" default-country="defaultCountry"></country-picker>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Environment</label>
-                                <select class="form-control" ng-model="partner.environment" ng-required="true">
-                                    <option value="1" ng-selected="partner.environment == 1">Dev</option>
-                                    <option value="2" ng-selected="partner.environment == 2">Staging</option>
-                                </select>
-                            </div>
-                            <div class="mb-3" ng-if="newPartner">
-                                <div  >
-                                    <label class="form-label">User</label>
-                                    <input ng-model="$parent.username" class="form-control" type="text" ng-required="true">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </form>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-lg-10">
                         <table class="table table-bordered table-hover table-condensed table-striped">
                             <tbody>
                                 <tr ng-repeat="r in roles">
                                     <td>{{r.roleName}}</td>
+                                    <td>{{getDescription(r.roleName)}}</td>
                                     <td>
                                         <input type="checkbox"
                                                name="selectedRoles[]"
@@ -238,7 +222,36 @@
     </div>
 </div>
 
+<div class="modal fade" id="PartnerSettingsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Partner Settings</h4>
+            </div>
+            <div class="modal-body" align="center">
+                <div class="row">
+                    <div class="col-lg-10">
+                        <table class="table table-bordered table-hover table-condensed table-striped">
+                            <tbody>
+                                <tr ng-repeat="s in SettingsRoles">
+                                    <td>{{s.settingName}}</td>
+                                    <td>
+                                        <input ng-model="s.input" class="form-control" type="text">
+                                    </td>
+                                </tr>
 
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" ng-click="savePartnerSetting();">Save</button>
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" id="PartnerRolesModal">
     <div class="modal-dialog">

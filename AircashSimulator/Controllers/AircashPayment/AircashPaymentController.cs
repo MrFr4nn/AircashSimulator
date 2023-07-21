@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System;
 using AircashSimulator.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Service.Settings;
 
 namespace AircashSimulator.Controllers
 {
@@ -16,20 +17,36 @@ namespace AircashSimulator.Controllers
     [ApiController]
     public class AircashPaymentController : Controller
     {
+        private ISettingsService SettingsService;
         private AircashConfiguration AircashConfiguration;
         private IAircashPaymentService AircashPaymentService;
         public readonly IHubContext<NotificationHub> _hubContext;
 
-        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService, IHubContext<NotificationHub> hubContext)
+        public AircashPaymentController(IOptionsMonitor<AircashConfiguration> aircashConfiguration,IAircashPaymentService aircashPaymentService, IHubContext<NotificationHub> hubContext, ISettingsService settingsService)
         {
             AircashConfiguration = aircashConfiguration.CurrentValue;
             AircashPaymentService = aircashPaymentService;
             _hubContext = hubContext;
+            SettingsService = settingsService;
         }
 
         public async Task SendHubMessage(string method, string msg, int status)
         {
             await _hubContext.Clients.All.SendAsync(method, msg, status);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckPlayerPartner(CheckPlayerPartnerRequest checkPlayerPartnerRequest)
+        {
+            var response = await AircashPaymentService.CheckPlayerPartner(checkPlayerPartnerRequest.Parameters, checkPlayerPartnerRequest.Endpoint);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateAndConfirmPartner(CreateAndConfirmPartnerRequest createAndConfirmPartnerRequest)
+        {
+            var response = await AircashPaymentService.CreateAndConfirmPartner(createAndConfirmPartnerRequest.Parameters, createAndConfirmPartnerRequest.Endpoint, createAndConfirmPartnerRequest.Amount, createAndConfirmPartnerRequest.TransactionId);
+            return Ok(response);
         }
 
         [HttpPost]
@@ -41,9 +58,9 @@ namespace AircashSimulator.Controllers
 
             if(valid == true)
             {
-                var findUser = new List<CheckPlayerParameters>();
+                var findUser = new List<AircashPaymentParameters>();
              
-                aircashPaymentCheckPlayer.Parameters.ForEach(v => findUser.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+                aircashPaymentCheckPlayer.Parameters.ForEach(v => findUser.Add(new AircashPaymentParameters { Key = v.Key, Value = v.Value }));
 
                 var response = await AircashPaymentService.CheckPlayer(findUser);
 
@@ -71,9 +88,9 @@ namespace AircashSimulator.Controllers
 
             if (valid == true)
             {
-                var parameters = new List<CheckPlayerParameters>();
+                var parameters = new List<AircashPaymentParameters>();
               
-                aircashPaymentCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new CheckPlayerParameters { Key = v.Key, Value = v.Value }));
+                aircashPaymentCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new AircashPaymentParameters { Key = v.Key, Value = v.Value }));
 
                 var send = new CreateAndConfirmPaymentReceive
                 {
@@ -82,7 +99,7 @@ namespace AircashSimulator.Controllers
                     Parameters = parameters
                 };
                 var response = await AircashPaymentService.CreateAndConfirmPayment(send); 
-                if (((AircashPaymentResponse)response).Success == true)
+                if (((CreateAndConfirmRS)response).Success == true)
                 {
                     await SendHubMessage("TransactionConfirmedMessagePayment", "Deposited: " + aircashPaymentCreateAndConfirmPayment.Amount + "€, time: " + DateTime.Now, 1);
                     return Ok(response);
@@ -96,6 +113,25 @@ namespace AircashSimulator.Controllers
             {
                 return BadRequest("Invalid signature");
             }
+        }
+
+        [HttpPost]
+        public async Task<object> GenerateCheckPlayerSignature(AircashPaymentCheckPlayer aircashPaymentCheckPlayer) {
+
+            var sequence = AircashSignatureService.ConvertObjectToString(aircashPaymentCheckPlayer);
+            aircashPaymentCheckPlayer.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
+            
+        
+            return new  {AircashPaymentCheckPlayer = aircashPaymentCheckPlayer,Sequence = sequence}; ;
+        }
+
+        [HttpPost]
+        public async Task<object> GenerateCreateAndConfirmSignature(AircashPaymentCreateAndConfirmPayment aircashPaymentCreateAndConfirmPayment)
+        {
+            aircashPaymentCreateAndConfirmPayment.TransactionID = Guid.NewGuid().ToString();
+            var sequence = AircashSignatureService.ConvertObjectToString(aircashPaymentCreateAndConfirmPayment);
+            aircashPaymentCreateAndConfirmPayment.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
+            return new{AircashPaymentCreateAndConfirmPayment = aircashPaymentCreateAndConfirmPayment,Sequence = sequence}; ;
         }
     }
 }

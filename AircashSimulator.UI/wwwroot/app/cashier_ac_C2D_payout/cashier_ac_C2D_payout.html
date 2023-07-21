@@ -71,11 +71,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <div class="d-flex justify-content-end">
-                                            <button ng-click="createPayout()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || payoutForm.$invalid">{{translationsCashier.c2dpayout_cashier_withdrawal_button}}<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                                        </div>
-
+                                        <button ng-click="createPayout()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createPayoutServiceBusy || payoutForm.$invalid">{{translationsCashier.c2dpayout_cashier_withdrawal_button}}<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
                                     </fieldset>
                                 </form>
                             </div>
@@ -94,7 +90,7 @@
                                             <input ng-model="barcode" class="form-control form-control-lg" type="text" placeholder="{{translationsCashier.c2dpayout_cashier_barcode_placeholder}}" ng-disabled="checkCodeServiceBusy" ng-required="true">
                                         </div>
                                         <div class="d-flex justify-content-end">
-                                            <button ng-click="checkCode()" class="btn btn-danger w-100px me-5px" ng-disabled="checkCodeServiceBusy || checkCodeForm.$invalid">{{translationsCashier.c2dpayout_cashier_barcode_button}}<i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                            <button ng-click="checkCode()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="checkCodeServiceBusy || checkCodeForm.$invalid">{{translationsCashier.c2dpayout_cashier_barcode_button}}<i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
                                         </div>
 
                                     </fieldset>
@@ -139,7 +135,7 @@
                                             <input ng-model="confirmModel.dateOfBirth" class="form-control form-control-lg" type="text" placeholder="" ng-disabled="confirmTransactionServiceBusy" ng-required="true" ng-readonly="true">
                                         </div>
                                         <div class="d-flex justify-content-end">
-                                            <button ng-click="confirmTransaction()" class="btn btn-danger w-100px me-5px" ng-disabled="confirmTransactionServiceBusy || confirmTransactionForm.$invalid">Confirm {{transactionType}} <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                            <button ng-click="confirmTransaction()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="confirmTransactionServiceBusy || confirmTransactionForm.$invalid">Confirm {{transactionType}} <i ng-if="confirmTransactionServiceBusy" class="fa fa-cog fa-spin"></i></button>
                                         </div>
                                     </fieldset>
                                 </form>

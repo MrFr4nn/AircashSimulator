@@ -15,48 +15,70 @@ app.config(function ($stateProvider) {
 aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         checkCode: checkCode,
+        checkCodeV2: checkCodeV2,
         confirmTransaction: confirmTransaction,
         getTransactions: getTransactions,
         checkTransactionStatus: checkTransactionStatus,
-        cancelTransaction: cancelTransaction
+        cancelTransaction: cancelTransaction,
+        checkCodeSimulateError: checkCodeSimulateError,
+        confirmSimulateError: confirmSimulateError,
+        checkTransactionStatusSimulateError: checkTransactionStatusSimulateError,
+        cancelSimulateError: cancelSimulateError,
     });
-    function checkCode(barCode, locationID) {
+    function checkCode(partnerId,barCode, locationID) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/CheckCode",
             data: {
+                PartnerId:partnerId,
                 BarCode: barCode,
                 LocationID: locationID
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function confirmTransaction(barCode, locationID) {
+    function checkCodeV2(partnerId,barCode, locationID) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl +"AircashPaymentAndPayout/CheckCodeV2",
+            data: {
+                PartnerId:partnerId,
+                BarCode: barCode,
+                LocationID: locationID
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function confirmTransaction(partnerId, barCode, partnerTransactionId, locationID) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/ConfirmTransaction",
             data: {
+                PartnerId:partnerId,
                 BarCode: barCode,
+                PartnerTransactionId: partnerTransactionId,
                 LocationID: locationID
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function checkTransactionStatus(partnerTransactionID) {
+    function checkTransactionStatus(partnerId,partnerTransactionID) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/CheckTransactionStatus",
             data: {
+                PartnerId:partnerId,
                 PartnerTransactionID: partnerTransactionID
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function cancelTransaction(partnerTransactionID,locationID) {
+    function cancelTransaction(partnerId, partnerTransactionID, locationID) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl+"AircashPaymentAndPayout/CancelTransaction",
             data: {
+                PartnerId:partnerId,
                 PartnerTransactionID: partnerTransactionID,
                 LocationID: locationID
             }
@@ -75,24 +97,69 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function checkCodeSimulateError(errCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPaymentAndPayout/CheckCodeSimulateError",
+            data: errCode
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function checkTransactionStatusSimulateError() {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPaymentAndPayout/CheckTransactionStatusSimulateError",
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function confirmSimulateError(errCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPaymentAndPayout/ConfirmTransactionSimulateError",
+            data: errCode
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function cancelSimulateError(errCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPaymentAndPayout/CancelTransactionSimulateError",
+            data: errCode
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 }
 ]);
 
-aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope', '$state', 'aircashPaymentAndPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, aircashPaymentAndPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['HelperService','$scope', '$state', 'aircashPaymentAndPayoutService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function (HelperService,$scope, $state, aircashPaymentAndPayoutService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
     if ($scope.partnerRoles.indexOf("SalePartner") == -1) {
         $location.path('/forbidden');
     }
 
+    $scope.copyToClipboard = function (data) {
+        navigator.clipboard.writeText(data);
+    }
+
     $scope.checkCodeModel = {
-        barCode: null,
-        locationID: '123'
+        partnerId: $scope.partnerIds.SalesPartnerId,
+        barCode: '',
+        locationID: 'TestLocation'
+    };
+
+    $scope.checkCodeV2Model = {
+        partnerId: $scope.partnerIds.SalesPartnerId,
+        barCode: '',
+        locationID: 'TestLocation'
     };
 
     $scope.confirmTransactionModel = {
-        barCode: null,
-        locationID: '123'
+        partnerId: $scope.partnerIds.SalesPartnerId,
+        barCode: '',
+        partnerTransactionId: HelperService.NewGuid(),
+        locationID: 'TestLocation'
     };
 
     $scope.setDefaults = function () {
@@ -109,12 +176,14 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     };
 
     $scope.checkTransactionStatusModel = {
-        partnerTransactionID: null
+        partnerId: $scope.partnerIds.SalesPartnerId,
+        partnerTransactionID: HelperService.NewGuid()
     };
 
     $scope.cancelTransactionModel = {
-        partnerTransactionID: null,
-        locationID: 123
+        partnerId: $scope.partnerIds.SalesPartnerId,
+        partnerTransactionID: '',
+        locationID: "TestLocation"
     };
 
     $scope.checkCodeServiceBusy = false;
@@ -136,7 +205,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
     $scope.checkCode = function () {
         $scope.checkCodeServiceResponded = false;
         $scope.checkCodeServiceBusy = true;
-        aircashPaymentAndPayoutService.checkCode($scope.checkCodeModel.barCode, $scope.checkCodeModel.locationID)
+        aircashPaymentAndPayoutService.checkCode($scope.checkCodeModel.partnerId,$scope.checkCodeModel.barCode, $scope.checkCodeModel.locationID)
             .then(function (response) {
 
                 if (response) {
@@ -157,10 +226,34 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
             });
     }
 
+    $scope.checkCodeV2 = function () {
+        $scope.checkCodeV2ServiceResponded = false;
+        $scope.checkCodeV2ServiceBusy = true;
+        aircashPaymentAndPayoutService.checkCodeV2($scope.checkCodeV2Model.partnerId, $scope.checkCodeV2Model.barCode, $scope.checkCodeV2Model.locationID)
+            .then(function (response) {
+
+                if (response) {
+                    $scope.checkCodeV2RequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.checkCodeV2ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.checkCodeV2Sequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkCodeV2ServiceResponseObject = response.serviceResponse;
+                    $scope.checkCodeV2ServiceRequestObject = response.serviceRequest;
+                    $scope.checkCodeV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.checkCodeV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.checkCodeV2ServiceBusy = false;
+                $scope.checkCodeV2ServiceResponded = true;
+               
+            }, () => {
+                console.log("error");
+            });
+    }
+
     $scope.confirmTransaction = function () {
         $scope.confirmTransactionServiceBusy = true;
         $scope.confirmTransactionServiceResponded = false;
-        aircashPaymentAndPayoutService.confirmTransaction($scope.confirmTransactionModel.barCode, $scope.confirmTransactionModel.locationID)
+        aircashPaymentAndPayoutService.confirmTransaction($scope.confirmTransactionModel.partnerId, $scope.confirmTransactionModel.barCode, $scope.confirmTransactionModel.partnerTransactionId, $scope.confirmTransactionModel.locationID)
             .then(function (response) {
 
                 if (response) {
@@ -180,10 +273,10 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
             });
     }
 
-    $scope.checkTransactionStatus = function (transactionId) {
+    $scope.checkTransactionStatus = function () {
         $scope.checkTransactionStatusServiceBusy = true;
         $scope.checkTransactionStatusServiceResponded = false;
-        aircashPaymentAndPayoutService.checkTransactionStatus(transactionId)
+        aircashPaymentAndPayoutService.checkTransactionStatus($scope.checkTransactionStatusModel.partnerId, $scope.checkTransactionStatusModel.partnerTransactionID)
             .then(function (response) {
                 if (response) {
                     $scope.checkTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -200,10 +293,11 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
             });
     }
 
-    $scope.cancelTransaction = function (transactionId, pointOFSaleId) {
+    $scope.cancelTransaction = function () {
         $scope.cancelTransactionServiceBusy = true;
         $scope.cancelTransactionServiceResponded = false;
-        aircashPaymentAndPayoutService.cancelTransaction(transactionId, pointOFSaleId)
+        console.log($scope.cancelTransactionModel.partnerId, $scope.cancelTransactionModel.partnerTransactionID, $scope.cancelTransactionModel.locationID);
+        aircashPaymentAndPayoutService.cancelTransaction($scope.cancelTransactionModel.partnerId, $scope.cancelTransactionModel.partnerTransactionID, $scope.cancelTransactionModel.locationID)
             .then(function (response) {
                 if (response) {
                     $scope.cancelTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -248,6 +342,104 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
             });
     }
 
+    $scope.checkCodeCurrentErrorCode = 0;
+    $scope.errorCheckCodeResponded = false;
+    $scope.errorCheckCodeServiceBusy = false;
+    $scope.checkCodeSimulateError = (err) => {
+        $scope.errorCheckCodeResponded = false;
+        $scope.errorCheckCodeServiceBusy = true;
+        aircashPaymentAndPayoutService.checkCodeSimulateError(err)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorCheckRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorCheckResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorCheckSequence = response.sequence;
+                    $scope.errorCheckRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorCheckResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorCheckRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.errorCheckCodeResponded = true;
+                $scope.errorCheckCodeServiceBusy = false;
+                $scope.checkCodeCurrentErrorCode = err;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.confirmCurrentErrorCode = 0;
+    $scope.errorConfirmResponded = false;
+    $scope.errorConfirmServiceBusy = false;
+    $scope.confirmSimulateError = (errCode) => {
+        $scope.errorConfirmResponded = false;
+        $scope.errorConfirmServiceBusy = true;
+        aircashPaymentAndPayoutService.confirmSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorConfirmSequence = response.sequence;
+                    $scope.errorConfirmRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.confirmCurrentErrorCode = errCode;
+                $scope.errorConfirmResponded = true;
+                $scope.errorConfirmServiceBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.cancellCurrentErrorCode = 0;
+    $scope.errorCancelResponded = false;
+    $scope.errorCancelServiceBusy = false;
+    $scope.cancelSimulateError = (errCode) => {
+        $scope.errorCancelResponded = false;
+        $scope.errorCancelServiceBusy = true;
+        aircashPaymentAndPayoutService.cancelSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorCancellRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorCancellResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorCancellSequence = response.sequence;
+                    $scope.errorCancellRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorCancellResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorCancellRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.cancellCurrentErrorCode = errCode;
+                $scope.errorCancelResponded = true;
+                $scope.errorCancelServiceBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.errorCheckTransactionResponded = false;
+    $scope.errorCheckTransactionServiceBusy = false;
+    $scope.checkTransactionStatusSimulateError = () => {
+        $scope.errorCheckTransactionResponded = false;
+        $scope.errorCheckTransactionServiceBusy = true;
+        aircashPaymentAndPayoutService.checkTransactionStatusSimulateError()
+            .then(function (response) {
+                if (response) {
+                    $scope.errorCheckTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorCheckTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorCheckTransactionSequence = response.sequence;
+                    $scope.errorCheckTransactionRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorCheckTransactionResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorCheckTransactionRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.errorCheckTransactionResponded = true;
+                $scope.errorCheckTransactionServiceBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
     $scope.checkLoadMore = function (pageSize) {
         $scope.checkPageSize = pageSize;
         $scope.getCheckTransactions(false);
@@ -264,6 +456,152 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['$scope
 
     $scope.getCancelTransactions();
 
+    $scope.showVideoDeposit = function () {
+        $("#videoModalDeposit").modal("show");
+    }
+
+    $scope.showVideoWithdrawal = function () {
+        $("#videoModalWithdrawal").modal("show");
+    }
+
+    $scope.errorExamples = {
+        CheckCode: {
+            error1: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC95890684887483",
+                    "locationID": "123",
+                    "signature": "bEJ4wjEcax..."
+                },
+                response: {
+                    "errorCode": 1,
+                    "errorMessage": "Invalid bar code "
+                }
+            },
+            error2: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC15694794016276",
+                    "locationID": "123",
+                    "signature": "ShZjKjbLsZ..."
+                },
+                response: {
+                    "errorCode": 2,
+                    "errorMessage": "Bar code already used "
+                }
+            },
+            error3: {
+                request: {
+                },
+                response: {
+
+                }
+            },
+        },
+        ConfirmTransaction: {
+            error2: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC15694794016276",
+                    "partnerTransactionID": "d8b5649c-3001-4c12-bc45-f024d67585c6",
+                    "locationID": "123",
+                    "signature": "Nwo+VIViBN..."
+                },
+                response: {
+                    "errorCode": 2,
+                    "errorMessage": "Bar code already used "
+                }
+            },
+            error3: {
+                request: {
+                },
+                response: {
+
+                }
+            },
+            error4: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC16758848507711",
+                    "partnerTransactionID": "c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8",
+                    "locationID": "123",
+                    "signature": "EiCU4uxtTE..."
+                },
+                response: {
+                    "errorCode": 4,
+                    "errorMessage": "PartnerTransactionID is not unique"
+                }
+            },
+            error6: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "barCode": "AC16004150724597",
+                    "partnerTransactionID": "b9258777-26bd-4863-a9fd-4046e7e4df71",
+                    "locationID": "123",
+                    "signature": "PktsXrq/lp..."
+                },
+                response: {
+                    "errorCode": 6,
+                    "errorMessage": "Unable to confirm transaction without calling check bar code first"
+                }
+            }
+        },
+        CheckTransaction: {
+            error5: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "partnerTransactionID": "6fec1de6-c1c5-483d-9bfc-1b689c6d22ef",
+                    "signature": "SQY/a8b7Fr..."
+                },
+                response: {
+                    "errorCode": 5,
+                    "errorMessage": "Transaction doesn’t exist in partner system"
+                }
+            }
+        },
+        CancelTransaction: {
+            error7: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "partnerTransactionID": "289812f6-4f7b-4b43-b2df-77e6a803d946",
+                    "locationID": "123",
+                    "signature": "AMR8FuR0Ms..."
+                },
+                response: {
+                    "errorCode": 7,
+                    "errorMessage": "Unable to cancel payout"
+                }
+            },
+            error8: {
+                request: {
+                    "partnerID": "e747a837-85d9-4287-a412-ffbb5d1b0ad8",
+                    "partnerTransactionID": "a2853f63-2eeb-44a5-9440-8848f93f15da",
+                    "locationID": "123",
+                    "signature": "LMkB2B10Oa..."
+                },
+                response: {
+                    "errorCode": 8,
+                    "errorMessage": "Transaction already canceled"
+                }
+            },
+            error9: {
+                request: {
+
+                },
+                response: {
+
+                }
+            },
+            error10: {
+                request: {
+
+                },
+                response: {
+
+                }
+            }
+        }
+    }
 
     $scope.SalesPartner = {
         CheckCode: {

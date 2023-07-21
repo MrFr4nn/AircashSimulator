@@ -38,7 +38,7 @@ namespace AircashFrame
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == initiateRequestDTO.PartnerId).FirstOrDefault();
             var preparedTransaction = new PreparedAircashFrameTransactionEntity
             {
-                PartnerTransactionId = Guid.NewGuid(),
+                PartnerTransactionId = Guid.NewGuid().ToString(),
                 PartnerId = initiateRequestDTO.PartnerId,
                 UserId = initiateRequestDTO.UserId,
                 Amount = initiateRequestDTO.Amount,
@@ -97,7 +97,7 @@ namespace AircashFrame
 
         public async Task<int> Notification(string transactionId)
         {
-            var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == new Guid(transactionId)).FirstOrDefault();
+            var preparedAircashFrameTransaction = AircashSimulatorContext.PreparedAircashFrameTransactions.Where(x => x.PartnerTransactionId == transactionId).FirstOrDefault();
             if (preparedAircashFrameTransaction.TransactionSatus == AcFramePreparedTransactionStatusEnum.Confirmed)
             {
                 return 0;

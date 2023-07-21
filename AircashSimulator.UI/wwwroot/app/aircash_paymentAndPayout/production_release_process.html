@@ -1,0 +1,127 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Production release process</h1>
+
+    <p>
+        The production process consists of several steps:
+        <ol>
+            <li>
+                All acceptance criteria are checked and are performing in line with expectations
+            </li>
+            <li>
+                Aircash support will add partner in Aircash production system and allow access to Aircash production system from the partner IP addresses
+            </li>
+            <li>
+                The partner will test connection to production on a single location (if possible) in order to test integration in “silent” production
+            </li>
+            <li>After first 3 steps are in line with expectations, the partner will enable service on all locations</li>
+        </ol>
+    </p>
+
+    <h4>Acceptance criteria</h4>
+    <p>
+        To release the production service, several tests should be made to check if the integration is done correctly and it is ready for production.
+    </p>
+
+    <div class="table-responsive">
+        <table class="table table-active">
+            <thead>
+                <tr>
+                    <th>Scenario</th>
+                    <th>Test description</th>
+                    <th>Required</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <b>Checking the payment/payout barcode</b>
+                    </td>
+                    <td>
+                        The cashier scans the barcode. This test should verify that the amount and transaction type are correctly displayed to the cashier to confirm the transaction.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Stopping the payout in case of insufficient funds in the cash register</b>
+                    </td>
+                    <td>
+                        Sales partner system should be able to block the payout confirmation in case there is no sufficient funds in the cash register for the payout amount.
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Confirming the transaction</b>
+                    </td>
+                    <td>
+                        After scanning the barcode, the cashier confirms the transaction.<br />
+                        This test checks the validity of:
+                        <ul>
+                            <li>
+                                PartnerTransactionID – it has to be unique for each request to the Aircash system
+                            </li>
+                            <li>The receipt printout</li>
+                        </ul>
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Checking the transaction status</b>
+                    </td>
+                    <td>
+                        The sales partner system confirms the transaction, but receives an unknown error from Aircash system. This test checks:
+                        <ul>
+                            <li>
+                                That the sales partner system recovers by checking the transaction status
+                            </li>
+                            <li>
+                                That in case of the transaction existing in the Aircash system, sales partner system should act as if the transaction was successfully confirmed on the first call
+                            </li>
+                        </ul>
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Checking the appropriate messages to the cashier</b>
+                    </td>
+                    <td>
+                        This test validates the display of appropriate messages when errors happen:
+                        <ul>
+                            <li>Barcode already used</li>
+                            <li>Barcode doesn’t exist</li>
+                            <li>User has reached the limit</li>
+                        </ul>
+                    </td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>
+                        <b>Checking canceling the transaction</b>
+                    </td>
+                    <td>
+                        If the sales partner implemented cancellation, they should be able to cancel the transaction in a predefined time period using the PartnerTransactionID
+                        <ul>
+                            <li>Canceling a payment should succeed</li>
+                            <li>
+                                Canceling a payout should fail
+                            </li>
+                        </ul>
+                    </td>
+                    <td>
+                        YES (if used)
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+</body>
+</html>

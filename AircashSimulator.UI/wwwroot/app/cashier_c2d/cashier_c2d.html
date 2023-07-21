@@ -65,9 +65,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-end">
-                                    <button ng-click="confirmC2dPayment()" class="btn btn-danger w-100px me-5px" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">{{translationsCashier.c2dflow_cashier_button}}<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                                </div>
+                                <button ng-click="confirmC2dPayment()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="createPayoutServiceBusy || transactionForm1.$invalid">{{translationsCashier.c2dflow_cashier_button}}<i ng-if="createPayoutServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
                     </div>

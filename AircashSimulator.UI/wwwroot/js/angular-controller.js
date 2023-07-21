@@ -87,12 +87,21 @@ app.controller('appController', ['$rootScope', '$scope', function ($rootScope, $
 /* -------------------------------
    2.0 CONTROLLER - Sidebar
 ------------------------------- */
-app.controller('sidebarController', ['$scope', '$rootScope', '$state', 'JwtParser', '$localStorage', function ($scope, $rootScope, $state, JwtParser, $localStorage) {
-  angular.element(document).ready(function () {
-      $scope.pName = JwtParser.getProperty("pName");
-  });
+app.controller('sidebarController', ['$scope', '$rootScope', '$location', '$state', 'JwtParser', '$localStorage', function ($scope, $rootScope, $location, $state, JwtParser, $localStorage) {
+    angular.element(document).ready(function () {
+        $scope.pName = JwtParser.getProperty("pName");
+    });
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+
+    $scope.partnerName = $scope.decodedToken.partnerName;
+    $scope.enviroment = $scope.decodedToken.enviroment;
+
+    var subMenu = ['/app/logo', '/app/ac_business_site', '/app/ac_test_application', '/app/aircashRefund', '/app/signature'];
+    if (subMenu.find(el => el == $location.path())) {
+        $scope.submenu = true;
+    }
+
 }]);
 
 
@@ -109,11 +118,18 @@ app.controller('rightSidebarController', function ($scope, $rootScope, $state) {
 /* -------------------------------
    4.0 CONTROLLER - Header
 ------------------------------- */
-app.controller('headerController', ['$scope', '$rootScope', '$state', 'JwtParser', '$localStorage', function ($scope, $rootScope, $state, JwtParser,$localStorage) {
+app.controller('headerController', ['$scope', '$rootScope', '$state', 'JwtParser', '$window', '$localStorage', function ($scope, $rootScope, $state, JwtParser, $window, $localStorage) {
   angular.element(document).ready(function () {
       $scope.username = JwtParser.getProperty("unique_name");
       
   });
+
+    $scope.options = {};
+    $scope.options.toggleOptions = false;
+    if ($window.innerWidth > 575) {
+        $scope.options.toggleOptions = true;
+    }
+
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
 }]);

@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 using Services.AircashInAppPay;
 using AircashSimulator.Extensions;
 using System;
+using Services.User;
+using Domain.Entities.Enum;
+using Service.Settings;
 
 namespace AircashSimulator.Controllers
 {
@@ -13,18 +16,21 @@ namespace AircashSimulator.Controllers
     {
         private IAircashInAppPayService AircashInAppPayService;
         private UserContext UserContext;
-        private Guid CashierPartnerId = new Guid("d47af4a2-fdc4-44f5-a1d6-79ddca59f5dc");
-        public AircashInAppPayController(IAircashInAppPayService aircashInAppPayService, UserContext userContext) 
+        private IUserService UserService;
+        private ISettingsService SettingsService;
+        public AircashInAppPayController(IAircashInAppPayService aircashInAppPayService, UserContext userContext, IUserService userService, ISettingsService settingsService) 
         {
             AircashInAppPayService = aircashInAppPayService;
             UserContext = userContext;
+            UserService = userService;
+            SettingsService = settingsService;
         }
 
         [HttpPost]
         public async Task<IActionResult> GenerateTransaction(GenerateTransactionRequest generateTransactionRequest) 
         {
-            generateTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
-            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest);
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest, environment);
             return Ok(response);
         }
         [HttpPost]
@@ -32,23 +38,27 @@ namespace AircashSimulator.Controllers
         {
             return Ok();
         }
+
         [HttpPost]
-        public async Task<IActionResult> getTransactions(GetTransactionsRequest getTransactionsRequest)
+        public async Task<IActionResult> CheckTransactionStatus(CheckTransactionStatusRequest checkTransactionStatusRequest) 
         {
-            return Ok();
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = AircashInAppPayService.CheckTransactionStatus(checkTransactionStatusRequest.PartnerId, checkTransactionStatusRequest.PartnerTransactionId, environment);
+            return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> RefundTransaction(RefundTransactionRequest refundTransactionRequest)
         {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             refundTransactionRequest.PartnerID = UserContext.GetPartnerId(User);
-            var response = AircashInAppPayService.RefundTransaction(refundTransactionRequest);
+            var response = AircashInAppPayService.RefundTransaction(refundTransactionRequest, environment);
             return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> CashierGenerateTransaction(GenerateTransactionRequest generateTransactionRequest)
         {
-            generateTransactionRequest.PartnerID = CashierPartnerId;
-            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest);
+            generateTransactionRequest.PartnerID = SettingsService.InAppPayPartnerId;
+            var response = await AircashInAppPayService.GenerateTransaction(generateTransactionRequest, EnvironmentEnum.Staging);
             return Ok(response);
         }
         [HttpPost]

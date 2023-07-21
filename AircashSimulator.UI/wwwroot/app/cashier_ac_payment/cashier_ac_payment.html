@@ -4,7 +4,7 @@
     <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading bg-red text-white">
-                <h3 class="">Aircash Payment</h3>
+                <h3 class="">Aircash Marketplace Deposit</h3>
                 <div class="panel-heading-btn">
 
                 </div>
@@ -35,9 +35,9 @@
                                 </div>
                             </fieldset>
                         </form>
-                        <div class="d-flex justify-content-end">
-                            <button class="btn btn-danger w-100px me-5px" ng-click="Deposit()" ng-disabled="paymentServiceBusy|| paymentForm.$invalid">{{translationsCashier.ac_payment_cashier_deposit_button}}<i ng-if="paymentServiceBusy" class="fa fa-cog fa-spin"> </i></button>
-                        </div>
+
+                        <button class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-click="Deposit()" ng-disabled="paymentServiceBusy|| paymentForm.$invalid">{{translationsCashier.ac_payment_cashier_deposit_button}}<i ng-if="paymentServiceBusy" class="fa fa-cog fa-spin"> </i></button>
+
                         <div class="row row-cols-1 row-cols-sm-2 text-center align-items-center justify-content-center" style="margin-top: 20px; margin-bottom: 25px; margin-left: 20px; margin-right: 20px;">
                             <div class="iconGoogleMarket col-md-4 col-sm-12 p-0 align-items-center justify-content-center">
                                 <a target="_blank" href="https://play.google.com/store/apps/details?id=com.aircash.aircash"><img src="../../app/cashier/img/google-play-en.svg" style="max-width: 70%"></a>
@@ -52,7 +52,13 @@
                     </div>
                     <div class="col-md-1"></div>
                 </div>
-            </div>
+                <div>
+                    <center>
+                        <label class="form-label">Amount Paid:</label>
+                                <input class="form-control form-control-lg col-4" ng-model="amountPaidModel.AmountPaid" type="text" placeholder="0" readonly />                        
+                    </center>
+                        </div>
+                </div>
         </div>
     </div>
     <div class="col-md-3">

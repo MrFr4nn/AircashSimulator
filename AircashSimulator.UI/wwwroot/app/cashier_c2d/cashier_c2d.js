@@ -19,7 +19,6 @@ cashierC2dModule.service("cashierC2dService", ['$http', '$q', 'handleResponseSer
         });
 
         function confirmC2dPayment(c2dPaymentRequest) {
-            console.log(c2dPaymentRequest);
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashPosDeposit/ConfirmC2dPayment",
@@ -56,7 +55,8 @@ cashierC2dModule.controller("cashierC2dCtrl",
                     locationID: $scope.createPayoutModel.locationID,
                     parametersCreatePayout: [{ key: "email", value: $scope.createPayoutModel.email }, { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] },
                         { key: "LocationID", value: $scope.createPayoutModel.locationID.toString() }],
-                    parametersCheckUser: [ { key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] }]
+                    parametersCheckUser: [{ key: "PayerFirstName", value: $scope.createPayoutModel.firstName }, { key: "PayerLastName", value: $scope.createPayoutModel.lastName }, { key: "PayerBirthDate", value: new Date($scope.createPayoutModel.birthDate - ($scope.createPayoutModel.birthDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0] }],
+                    environment: $rootScope.environment
 
                 }
 

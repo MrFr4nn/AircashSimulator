@@ -40,7 +40,8 @@ namespace Services.User
                 UserId = x.UserId,
                 UserName = x.Username,
                 Email = x.Email,
-                Partner = new PartnerVM { Id = x.PartnerId, Name = null }
+                Partner = new PartnerVM { Id = x.PartnerId, Name = null },
+                Environment = x.Environment
             }).ToList();
 
             if (users != null)
@@ -60,15 +61,18 @@ namespace Services.User
         public async Task SaveUser(UserDetailVM request)
         {
             string hash = "";
-            using (SHA256 sha256Hash = SHA256.Create())
+            if (request.Password != null)
             {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
-                StringBuilder builder = new StringBuilder();
-                for (int i = 0; i < bytes.Length; i++)
+                using (SHA256 sha256Hash = SHA256.Create())
                 {
-                    builder.Append(bytes[i].ToString("x2"));
+                    byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(request.Password));
+                    StringBuilder builder = new StringBuilder();
+                    for (int i = 0; i < bytes.Length; i++)
+                    {
+                        builder.Append(bytes[i].ToString("x2"));
+                    }
+                    hash = builder.ToString();
                 }
-                hash = builder.ToString();
             }
             if (request.UserId != null)
             {
@@ -78,7 +82,8 @@ namespace Services.User
 
                 user.Email = request.Email;
                 user.PartnerId = request.Partner.Id;
-                user.PasswordHash = hash;
+                if(request.Password != null) user.PasswordHash = hash;
+                user.Environment = request.Environment;
                 AircashSimulatorContext.Users.Update(user);
             }
             else
@@ -88,20 +93,28 @@ namespace Services.User
 
                 await AircashSimulatorContext.Users.AddAsync(new UserEntity
                 {
-                    UserId = Guid.NewGuid(),
+                    UserId = Guid.NewGuid().ToString(),
                     Username = request.UserName,
                     Email = request.Email,
                     PartnerId = request.Partner.Id,
-                    PasswordHash = hash
-                });
+                    PasswordHash = hash,
+                    Environment = request.Environment
+            });
             }
             await AircashSimulatorContext.SaveChangesAsync();
         }
-        public async Task DeleteUser(Guid? userId)
+        public async Task DeleteUser(string? userId)
         {
             var findUser = await AircashSimulatorContext.Users.FirstOrDefaultAsync(x => x.UserId == userId);
             AircashSimulatorContext.Users.Remove(findUser);
             await AircashSimulatorContext.SaveChangesAsync();
+        }
+
+        public async Task<EnvironmentEnum> GetUserEnvironment(string userId) {
+            var environment = EnvironmentEnum.Staging;
+            var user = AircashSimulatorContext.Users.Where(x => x.UserId == userId).FirstOrDefault();
+            if(user != null) environment = user.Environment;
+            return environment;
         }
         public async Task<UserDTO> GetUserByIdentifier(string identifier) 
         {

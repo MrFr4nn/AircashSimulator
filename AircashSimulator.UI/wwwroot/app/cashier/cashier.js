@@ -9,6 +9,7 @@
     'cashier_acRedeemTicket',
     'cashier_acC2DPayout',
     'cashier_acPaymentAndPayout',
+    'cashier_abon_sp',
     'cashier_c2d'
 ]);
 
@@ -35,8 +36,15 @@ cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location', '$
 
         $scope.languages = [
             { language: "en", },
-            { language: "hr"  }
+            { language: "hr" },
+            { language: "es" },
+            { language: "ro" }
         ];
+
+        $rootScope.environment = 2;
+        $scope.setEnvironment = function(env){
+            $rootScope.environment = env;
+        }
         
         if (window.localStorage.getItem('selectedLanguage') != null) {
             angular.forEach($scope.languages, function (item, index) {

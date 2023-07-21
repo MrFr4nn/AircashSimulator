@@ -14,10 +14,4 @@ namespace Services.AircashPosDeposit
         public int CurrencyID { get; set; }
         public string Signature { get; set; }
     }
-
-    public class Parameter
-    {
-        public string Key { get; set; }
-        public string Value { get; set; }
-    }
 }

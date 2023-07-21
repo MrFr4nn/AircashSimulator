@@ -111,7 +111,7 @@ acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter',
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 partnerTransactionID: "ef52ca13-33b4-4564-8bca-0cbfc7c5a37d",
                 amount: 100,
-                currencyID: 191,
+                currencyID: 978,
                 aircashTransactionID: "122e5e33-b5fb-4398-b138-c60582b9fa2b",
                 signature: "Ff3oSWm20n...",
             }

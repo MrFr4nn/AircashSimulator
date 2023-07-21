@@ -7,7 +7,9 @@ using Domain.Entities.Enum;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Services.HttpRequest;
+using Services.Signature;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -27,70 +29,66 @@ namespace Services.AbonSalePartner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
 
         private readonly string CancelCouponEndpoint = "CashRegister/CancelCoupon";
         private readonly string CreateCouponEndpoint = "CashRegister/CreateCoupon";
 
-        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
+        public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
+            SignatureService = signatureService;
         }
 
-        public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId)
+        public async Task<object> CreateCoupon(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment, string contentType, int? contentWidth)
         {
-            Response returnResponse=new Response();
+            var returnResponse=new Response();
             var createCouponResponse=new object();
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
-            var transactionId = Guid.NewGuid();
             var createCouponRequest = new CreateCouponRequest()
             {
                 PartnerId = partnerId.ToString(),
                 Value = value,
                 PointOfSaleId = pointOfSaleId,
-                ISOCurrencySymbol = ((CurrencyEnum)partner.CurrencyId).ToString(),
-                PartnerTransactionId = transactionId.ToString(),
-                ContentType = null,
-                ContentWidth = null
+                ISOCurrencySymbol = isoCurrencySymbol,
+                PartnerTransactionId = partnerTransactionId.ToString(),
+                ContentType = contentType,
+                ContentWidth = contentWidth
             };
             returnResponse.ServiceRequest = createCouponRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(createCouponRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
+            string signature;
+            if (privateKeyPath != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            }
+            else 
+            {
+                signature = SignatureService.GenerateSignature(partnerId, sequence);
+            }
             createCouponRequest.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(createCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{CreateCouponEndpoint}");
-            if(response.ResponseCode == System.Net.HttpStatusCode.OK)
+            var response = await HttpRequestService.SendRequestAircash(createCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CreateCouponEndpoint}");
+            var responseDateTimeUTC = DateTime.UtcNow;
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<CreateCouponResponse>(response.ResponseContent);
-                var responseDateTimeUTC = DateTime.UtcNow;
                 returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+                Enum.TryParse(isoCurrencySymbol, out CurrencyEnum currencyId);
                 AircashSimulatorContext.Transactions.Add(new TransactionEntity
                 {
                     Amount = value,
-                    ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                    ISOCurrencyId = currencyId,
                     PartnerId = partnerId,
                     AircashTransactionId = successResponse.SerialNumber,
-                    TransactionId = transactionId,
+                    TransactionId = partnerTransactionId,
                     ServiceId = ServiceEnum.AbonIssued,
-                    UserId = Guid.NewGuid(),
-                    PointOfSaleId = createCouponRequest.PointOfSaleId,
+                    UserId = Guid.NewGuid().ToString(),
+                    PointOfSaleId = pointOfSaleId,
                     RequestDateTimeUTC = requestDateTimeUTC,
                     ResponseDateTimeUTC = responseDateTimeUTC
-                });
-
-                //spremanje kupona u Coupons tablicu
-                AircashSimulatorContext.Coupons.Add(new CouponEntity
-                {
-                    SerialNumber = successResponse.SerialNumber,
-                    PurchasedPartnerID = partner.Id,
-                    PurchasedAmount = value,
-                    PurchasedCurrency = (CurrencyEnum)partner.CurrencyId,
-                    PurchasedCountryIsoCode = partner.CountryCode,
-                    PurchasedOnUTC = requestDateTimeUTC,
-                    Content = successResponse.Content,
-                    CouponCode = successResponse.CouponCode
                 });
                 AircashSimulatorContext.SaveChanges();
                 createCouponResponse = successResponse;
@@ -99,56 +97,61 @@ namespace Services.AbonSalePartner
             {
                 createCouponResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
             }
+            returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
             returnResponse.ServiceResponse = createCouponResponse;
             return returnResponse;
         }
 
-        public async Task<object> CancelCoupon(string serialNumber, string pointOfSaleId, Guid partnerId)
+        public async Task<object> CancelCoupon(string serialNumber, string pointOfSaleId, Guid partnerId, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
         {
-            Response returnResponse = new Response();
+            var returnResponse = new Response();
             var cancelCouponResponse = new object();
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
-            var coupon = AircashSimulatorContext.Coupons.Where(x => x.SerialNumber == serialNumber).FirstOrDefault();
-            var transaction = AircashSimulatorContext.Transactions.Where(x => x.AircashTransactionId == serialNumber).FirstOrDefault();
             var requestDateTimeUTC = DateTime.UtcNow;
             returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
-            if (coupon == null)
-                throw new SimulatorException(SimulatorExceptionErrorEnum.CouponNotFound, "Coupon not found");
-            
             var cancelCouponRequest = new CancelCouponRequest()
             {
                 PartnerId = partnerId.ToString(),
                 SerialNumber = serialNumber,
-                PartnerTransactionId = transaction.TransactionId.ToString(),
+                PartnerTransactionId = partnerTransactionId,
                 PointOfSaleId = pointOfSaleId,
             };
             returnResponse.ServiceRequest = cancelCouponRequest;
             var sequence = AircashSignatureService.ConvertObjectToString(cancelCouponRequest);
             returnResponse.Sequence = sequence;
-            var signature = AircashSignatureService.GenerateSignature(sequence, partner.PrivateKey, partner.PrivateKeyPass);
+            string signature;
+            if (privateKeyPath != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            }
+            else
+            {
+                signature = SignatureService.GenerateSignature(partnerId, sequence);
+            }
             cancelCouponRequest.Signature = signature;
-            var response=await HttpRequestService.SendRequestAircash(cancelCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{CancelCouponEndpoint}");
+            var response=await HttpRequestService.SendRequestAircash(cancelCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CancelCouponEndpoint}");
             var responseDateTimeUTC = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
-            {   
-                   
-                coupon.CancelledOnUTC = responseDateTimeUTC;
-                
-                AircashSimulatorContext.Coupons.Update(coupon);
-                AircashSimulatorContext.Transactions.Add(new TransactionEntity
+            {
+                var transaction = AircashSimulatorContext.Transactions.Where(x => x.AircashTransactionId == serialNumber).FirstOrDefault();
+
+                if (transaction != null)
                 {
-                    Amount = coupon.PurchasedAmount,
-                    ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,                       
-                    PartnerId = partnerId,
-                    AircashTransactionId = $"CTX-{serialNumber}",
-                    TransactionId = transaction.TransactionId,
-                    ServiceId = ServiceEnum.AbonCancelled,
-                    UserId = Guid.NewGuid(),
-                    PointOfSaleId = pointOfSaleId,
-                    RequestDateTimeUTC = requestDateTimeUTC,
-                    ResponseDateTimeUTC = responseDateTimeUTC
-                });
-                AircashSimulatorContext.SaveChanges();
+                    AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                    {
+                        Amount = transaction.Amount,
+                        ISOCurrencyId = (CurrencyEnum)partner.CurrencyId,
+                        PartnerId = partnerId,
+                        AircashTransactionId = $"CTX-{serialNumber}",
+                        TransactionId = partnerTransactionId,
+                        ServiceId = ServiceEnum.AbonCancelled,
+                        UserId = Guid.NewGuid().ToString(),
+                        PointOfSaleId = pointOfSaleId,
+                        RequestDateTimeUTC = requestDateTimeUTC,
+                        ResponseDateTimeUTC = responseDateTimeUTC
+                    });
+                    AircashSimulatorContext.SaveChanges();
+                }
                 cancelCouponResponse = "HTTP 200 OK";
             }
             else
@@ -157,6 +160,54 @@ namespace Services.AbonSalePartner
             }
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
             returnResponse.ServiceResponse = cancelCouponResponse;
+            return returnResponse;
+        }
+
+        public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+        {
+            var returnResponse = "";
+            var requestDateTimeUTC = DateTime.UtcNow;
+            var createCouponRequest = new CreateCouponRequest()
+            {
+                PartnerId = partnerId.ToString(),
+                Value = value,
+                PointOfSaleId = pointOfSaleId,
+                ISOCurrencySymbol = isoCurrencySymbol,
+                PartnerTransactionId = partnerTransactionId.ToString(),
+                ContentType = null,
+                ContentWidth = null
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(createCouponRequest);
+            var signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+            createCouponRequest.Signature = signature;
+            var response = await HttpRequestService.SendRequestAircash(createCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CreateCouponEndpoint}");
+            var responseDateTimeUTC = DateTime.UtcNow;
+            
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                var successResponse = JsonConvert.DeserializeObject<CreateCouponResponse>(response.ResponseContent);
+                returnResponse = successResponse.CouponCode;
+                Enum.TryParse(isoCurrencySymbol, out CurrencyEnum currencyId);
+                AircashSimulatorContext.Transactions.Add(new TransactionEntity
+                {
+                    Amount = value,
+                    ISOCurrencyId = currencyId,
+                    PartnerId = partnerId,
+                    AircashTransactionId = successResponse.SerialNumber,
+                    TransactionId = partnerTransactionId,
+                    ServiceId = ServiceEnum.AbonIssued,
+                    UserId = Guid.NewGuid().ToString(),
+                    PointOfSaleId = pointOfSaleId,
+                    RequestDateTimeUTC = requestDateTimeUTC,
+                    ResponseDateTimeUTC = responseDateTimeUTC
+                });
+                AircashSimulatorContext.SaveChanges();
+            }
+            else
+            {
+                var createCouponResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+                throw new SimulatorException(SimulatorExceptionErrorEnum.Error, createCouponResponse.Message);
+            }
             return returnResponse;
         }
     }

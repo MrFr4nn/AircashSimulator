@@ -1,29 +1,29 @@
-﻿<div class="container" style="padding-left: 100px !important; padding-right: 100px !important; ">
+﻿<div class="container">
     <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-2 row-cols-xs-1 ">
-        <div ng-if="partnerRoles.indexOf('AbonDeposit') != -1" class="col mb-2 d-flex">
-            <a class="text-dark text-decoration-none d-flex col-12 p-0 " ui-sref="cashier.cashier_abon">
+        <div ng-if="partnerRoles.indexOf('AircashFrameV2') != -1" class="col mb-2 d-flex">
+            <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acFrameMenu">
                 <div class="card d-flex col-12 p-0">
-                    <img src="../../app/cashier/img/icon_AC_Abon.png"  style="width:auto;height:auto">
+                    <img src="../../app/cashier/img/icon_AC_Frame.png" />
                     <div class="card-body">
-                        <div class="d-flex justify-content-between col-12 p-0 ">
-                            <h3 class="card-title pt-2">Abon</h3>
-                            <img src="../../app/cashier/img/abon_logo.jpg" style="width:auto;height:40px" />
+                        <div class="d-flex justify-content-between col-12 p-0">
+                            <h3 class="card-title pt-2">Aircash Frame</h3>
+                            <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
                         </div>
-                        <p class="card-text">Make a deposit to your online account or to Aircash digital wallet via Abon voucher by entering a 16-digit coupon code or scanning the QR code on it.</p>
+                        <p class="card-text">Deposit to your online account by using the Abon voucher or by using the Aircash app. Withdraw your online funds to Aircash digital wallet.</p>
                     </div>
                 </div>
             </a>
         </div>
-        <div ng-if="partnerRoles.indexOf('AircashPosDeposit') != -1"  class="col mb-2 d-flex">
-            <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_c2d">
+        <div ng-if="partnerRoles.indexOf('AircashPayment') != -1" class="col mb-2  d-flex">
+            <a class="text-dark text-decoration-none  d-flex col-12 p-0" ui-sref="cashier.cashier_acPayment">
                 <div class="card d-flex col-12 p-0">
-                    <img src="../../app/cashier/img/icon_AC_C2Dflow.png" />
+                    <img src="../../app/cashier/img/icon_AC_payment.png" />
                     <div class="card-body">
                         <div class="d-flex justify-content-between col-12 p-0">
-                            <h3 class="card-title pt-2">C2D flow</h3>
+                            <h3 class="card-title pt-2">Aircash Marketplace Deposit</h3>
                             <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
                         </div>
-                        <p class="card-text">Make a deposit of your cash money to your online account.</p>
+                        <p class="card-text">Make a deposit to your online account directly from Aircash's Marketplace by entering the username or email address as an identifier as well as the amount you wish to deposit.</p>
                     </div>
                 </div>
             </a>
@@ -42,44 +42,16 @@
                 </div>
             </a>
         </div>
-        <div ng-if="partnerRoles.indexOf('AircashPay') != -1" class="col mb-2 d-flex">
-            <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acPay">
+        <div ng-if="partnerRoles.indexOf('AbonDeposit') != -1" class="col mb-2 d-flex">
+            <a class="text-dark text-decoration-none d-flex col-12 p-0 " ui-sref="cashier.cashier_abon">
                 <div class="card d-flex col-12 p-0">
-                    <img src="../../app/cashier/img/icon_AC_pay.png" />
+                    <img src="../../app/cashier/img/icon_AC_Abon.png" style="width:auto;height:auto">
                     <div class="card-body">
-                        <div class="d-flex justify-content-between col-12 p-0">
-                            <h3 class="card-title pt-2">Aircash Pay</h3>
-                            <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
+                        <div class="d-flex justify-content-between col-12 p-0 ">
+                            <h3 class="card-title pt-2">Abon</h3>
+                            <img src="../../app/cashier/img/abon_logo.jpg" style="width:auto;height:40px" />
                         </div>
-                        <p class="card-text">Make online purchases or top up your online account via Aircash Pay.</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div ng-if="partnerRoles.indexOf('AircashPayment') != -1" class="col mb-2  d-flex">
-            <a class="text-dark text-decoration-none  d-flex col-12 p-0" ui-sref="cashier.cashier_acPayment">
-                <div class="card d-flex col-12 p-0">
-                    <img src="../../app/cashier/img/icon_AC_payment.png" />
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between col-12 p-0">
-                            <h3 class="card-title pt-2">Aircash Payment</h3>
-                            <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
-                        </div>
-                        <p class="card-text">Make a deposit to your online account directly from Aircash's Marketplace by entering the username or email address as an identifier as well as the amount you wish to deposit.</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div ng-if="partnerRoles.indexOf('AircashFrameV2') != -1" class="col mb-2 d-flex">
-            <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acFrameMenu">
-                <div class="card d-flex col-12 p-0">
-                    <img src="../../app/cashier/img/icon_AC_Frame.png" />
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between col-12 p-0">
-                            <h3 class="card-title pt-2">Aircash Frame</h3>
-                            <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
-                        </div>
-                        <p class="card-text">Deposit to your online account by using the Abon voucher or by using the Aircash app. Withdraw your online funds to Aircash digital wallet.</p>
+                        <p class="card-text">Make a deposit to your online account or to Aircash digital wallet via Abon voucher by entering a 16-digit coupon code or scanning the QR code on it.</p>
                     </div>
                 </div>
             </a>
@@ -94,6 +66,34 @@
                             <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
                         </div>
                         <p class="card-text">Withdraw your online funds at point of sales.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div ng-if="partnerRoles.indexOf('AircashPosDeposit') != -1" class="col mb-2 d-flex">
+            <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_c2d">
+                <div class="card d-flex col-12 p-0">
+                    <img src="../../app/cashier/img/icon_AC_C2Dflow.png" />
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between col-12 p-0">
+                            <h3 class="card-title pt-2">C2D flow</h3>
+                            <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
+                        </div>
+                        <p class="card-text">Make a deposit of your cash money to your online account.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div ng-if="partnerRoles.indexOf('AircashPay') != -1" class="col mb-2 d-flex">
+            <a class="text-dark text-decoration-none d-flex col-12 p-0" ui-sref="cashier.cashier_acPay">
+                <div class="card d-flex col-12 p-0">
+                    <img src="../../app/cashier/img/icon_AC_pay.png" />
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between col-12 p-0">
+                            <h3 class="card-title pt-2">Aircash Pay</h3>
+                            <img src="../../app/cashier/img/aircash-red.svg" style="width:80px;height:40px" />
+                        </div>
+                        <p class="card-text">Make online purchases or top up your online account via Aircash Pay.</p>
                     </div>
                 </div>
             </a>

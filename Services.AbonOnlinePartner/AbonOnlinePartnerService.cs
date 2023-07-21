@@ -8,8 +8,8 @@ using AircashSignature;
 using Domain.Entities.Enum;
 using Services.HttpRequest;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Options;
-using AircashSimulator.Configuration;
+using Services.Signature;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Services.AbonOnlinePartner
 {
@@ -17,29 +17,24 @@ namespace Services.AbonOnlinePartner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
+        private ISignatureService SignatureService;
 
         private readonly string ValidateCouponEndpoint = "OnlineProvider/ValidateCoupon";
         private readonly string ConfirmTransactionEndpoint = "OnlineProvider/ConfirmTransaction";
 
-        public AbonOnlinePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService)
+        public AbonOnlinePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             HttpRequestService = httpRequestService;
+            SignatureService = signatureService;
         }
-        public async Task<object> ValidateCoupon(string couponCode, Guid providerId)
+        public async Task<object> ValidateCoupon(string couponCode, string providerId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
-            var validateCouponResponse = new object();            
-            var abonValidateCouponRequest = new AbonValidateCouponRequest
-            {
-                CouponCode = couponCode,
-                ProviderId = providerId
-            };
+            var validateCouponResponse = new object();
+            var abonValidateCouponRequest = GetValidateCouponRequest(couponCode, providerId, partnerPrivateKey, partnerPrivateKeyPass);
             var dataToSign = AircashSignatureService.ConvertObjectToString(abonValidateCouponRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
-            abonValidateCouponRequest.Signature = signature;
             DateTime requestDateTime = DateTime.UtcNow;
-            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(abonValidateCouponRequest, HttpMethod.Post, GetValidateCouponEndpoint(environment));
             DateTime responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -59,62 +54,58 @@ namespace Services.AbonOnlinePartner
             };
             return frontResponse;
         }
-
-        public async Task<object> ConfirmTransaction(string couponCode, Guid userId, Guid providerId)
+        public AbonValidateCouponRequest GetValidateCouponRequest(string couponCode, string providerId, string partnerPrivateKey, string partnerPrivateKeyPass)
         {
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == providerId).FirstOrDefault();
-            var coupon = AircashSimulatorContext.Coupons.Where(x => x.CouponCode == couponCode).FirstOrDefault();
-            var confirmTransactionResponse = new object();
-            var providerTransactionId = Guid.NewGuid();
-            var abonConfirmTransactionRequest = new AbonConfirmTransactionRequest
+            var abonValidateCouponRequest = new AbonValidateCouponRequest
             {
                 CouponCode = couponCode,
-                ProviderId = providerId,
-                ProviderTransactionId = providerTransactionId,
-                UserId = userId.ToString()
+                ProviderId = providerId
             };
-            var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, partner.PrivateKey, partner.PrivateKeyPass);
-            abonConfirmTransactionRequest.Signature = signature;
-            DateTime requestDateTime = DateTime.UtcNow;
-            if (coupon == null)
+
+            var dataToSign = AircashSignatureService.ConvertObjectToString(abonValidateCouponRequest);
+            string signature;
+            if (partnerPrivateKey != null)
             {
-                return new Response
-                {
-                    ServiceRequest = abonConfirmTransactionRequest,
-                    ServiceResponse = new ErrorResponse { Code = 3, Message = "Invalid coupon code." },
-                    Sequence = dataToSign,
-                    RequestDateTimeUTC = requestDateTime,
-                    ResponseDateTimeUTC = DateTime.UtcNow               
-                };
+                signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
             }
-            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Abon)}{ConfirmTransactionEndpoint}");
+            else
+            {
+                signature = SignatureService.GenerateSignature(new Guid(providerId), dataToSign);
+            }
+            abonValidateCouponRequest.Signature = signature;
+            return abonValidateCouponRequest;
+        }
+        public string GetValidateCouponEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
+        }
+        public async Task<object> ConfirmTransaction(string couponCode, string providerId, string providerTransactionId, string userId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
+        {
+            var confirmTransactionResponse = new object();
+            var abonConfirmTransactionRequest = GetConfirmTransactionRequest(couponCode, userId, providerId, providerTransactionId, partnerPrivateKey, partnerPrivateKeyPass);
+            var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
+            DateTime requestDateTime = DateTime.UtcNow;
+
+            var response = await HttpRequestService.SendRequestAircash(abonConfirmTransactionRequest, HttpMethod.Post, GetConfirmTransactionEndpoint(environment));
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 var successResponse = JsonConvert.DeserializeObject<AbonConfirmTransactionResponse>(response.ResponseContent);
                 var responseDateTimeUTC = DateTime.UtcNow;
-                coupon.UsedOnPartnerID = partner.Id;
-                coupon.UsedOnUTC = responseDateTimeUTC;
-                coupon.UsedAmount = successResponse.CouponValue;
-                coupon.UsedCountryIsoCode = partner.CountryCode;
-                coupon.UsedCurrency = successResponse.ISOCurrency;
-                coupon.UserId = userId.ToString();
-                AircashSimulatorContext.Coupons.Update(coupon);
                 var newTransaction = new TransactionEntity
                 {
                     Amount = successResponse.CouponValue,
                     ISOCurrencyId = successResponse.ISOCurrency,
-                    PartnerId = providerId,
-                    TransactionId = Guid.NewGuid(),
+                    PartnerId = new Guid(providerId),
+                    TransactionId = Guid.NewGuid().ToString(),
                     RequestDateTimeUTC = requestDateTime,
                     ResponseDateTimeUTC = DateTime.UtcNow,
                     UserId = userId,
                     ServiceId = ServiceEnum.AbonUsed
                 };
                 AircashSimulatorContext.Add(newTransaction);
-                AircashSimulatorContext.SaveChanges();
                 confirmTransactionResponse = successResponse;
+                AircashSimulatorContext.SaveChanges();
             }
             else
             {
@@ -132,5 +123,34 @@ namespace Services.AbonOnlinePartner
 
 
         }
+        public AbonConfirmTransactionRequest GetConfirmTransactionRequest(string couponCode, string userId, string providerId, string providerTransactionId, string partnerPrivateKey, string partnerPrivateKeyPass)
+        {
+            var abonConfirmTransactionRequest = new AbonConfirmTransactionRequest
+            {
+                CouponCode = couponCode,
+                ProviderId = providerId,
+                ProviderTransactionId = providerTransactionId,
+                UserId = userId.ToString()
+            };
+            var dataToSign = AircashSignatureService.ConvertObjectToString(abonConfirmTransactionRequest);
+            string signature;
+            if (partnerPrivateKey != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
+            }
+            else
+            {
+                signature = SignatureService.GenerateSignature(new Guid(providerId), dataToSign);
+            }
+            abonConfirmTransactionRequest.Signature = signature;
+            DateTime requestDateTime = DateTime.UtcNow;
+            return abonConfirmTransactionRequest;
+
+        }
+        public string GetConfirmTransactionEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ConfirmTransactionEndpoint}";
+        }
     }
 }
+

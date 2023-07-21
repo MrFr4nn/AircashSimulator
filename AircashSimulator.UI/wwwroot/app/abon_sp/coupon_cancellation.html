@@ -1,0 +1,500 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h4 style="text-align:justify">Coupon cancellation</h4>
+
+    <div class="table-responsive">
+        <table class="table table-active col-md-6">
+            <thead>
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><b>Test</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+                </tr>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://a-bon.aircash.eu/rest/api/CashRegister/CancelCoupon</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <p style="text-align:justify">
+        This method is called on the cash register in case you need to cancel the coupon (cashier's mistake, the print failed, unpaid purchase etc.). This method is intended for on-premise cancellation, and can be called in a limited time interval after issuing the coupon. (e.g. 5 minutes).
+        <br /> <br />
+        Besides cancelling the coupon via CancelCoupon request, partner’s support will be able to cancel coupons via the BS portal that the Aircash will give credentials for. BS portal cancellation will not have a time interval expiry.
+        <br /> <br />
+        Authentication is done by checking the digital signature (Signature).
+    </p>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <uib-tabset>
+                <uib-tab index="request1-tab-0" heading="Request parameters" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Parameters</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                    <th>Mandatory</th>
+                                    <th>Part of the sequence</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>PartnerId</b></td>
+                                    <td>string</td>
+                                    <td>Unique partner identifier (per currency) provided by Aircash</td>
+                                    <td>YES</td>
+                                    <td>YES</td>
+                                </tr>
+                                <tr>
+                                    <td><b>SerialNumber</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Coupon serial number, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
+                                    </td>
+                                    <td>YES, optional</td>
+                                    <td>YES</td>
+                                </tr>
+                                <tr>
+                                    <td><b>PartnerTransactionId</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Identifier of the transaction in partner's system, while calling this method it is required to either set the SerialNumber or PartnerTransactionId
+                                    </td>
+                                    <td>YES, optional</td>
+                                    <td>YES</td>
+                                </tr>
+                                <tr>
+                                    <td><b>PointOfSaleId</b></td>
+                                    <td>string</td>
+                                    <td>Identifier of the point of sale</td>
+                                    <td>YES</td>
+                                    <td>YES</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Signature</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        A sequence that has been digitally signed with the provider's private signature, used for authentication
+                                    </td>
+                                    <td>YES</td>
+                                    <td>NO</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request1-tab-1" heading="Request example" classes="nav-item">
+                    <jsonformatter data="aBonGenerate.couponCancellation.requestExample"></jsonformatter>
+                </uib-tab>
+                <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+<pre>
+Request example:
+</pre>
+                    <jsonformatter data="aBonGenerate.couponCancellation.requestExample"></jsonformatter>
+<pre>
+Sequence:
+PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=76b266ae-4d61-414b-baa9-44f9da1182e1&PointOfSaleId=test&SerialNumber=9889251688979846
+
+Signature:
+XwTgMtFG/KgILmbLvRYMXrAXbkc9BZ37PuLsNG5aNMLXOIB+Ck1xcwZeK/UOuRWndTRp5xswW4V8XI9UpwAgGM3i/63EAUJx7QkpVj0ho8kZmU9QhPzARLhDPYwsI9tDeSbvXBing3HtkYPV5QG1XIzKn1giAtYIZfBHS96+Gnpoa0ox+d3Z4XzNuApVCRbzy4/PoQ5M2uDoxal/qwUTMzlrh9KY3XizB2hmZK131fNqt1d7FL61uPv5IjPRMfmtIIEqqAh6vudttN8yk4VwQVEwqHJGC2WHcPQngfSfaLe5PrxvSMgSWaJaSqN/QYvDm+NRUPqnd/oTOWXpRoY7iWdWGpCIOmVjLnAs6oF3laSdBe/3wB1fLUsRq5YqMmXT1LzotR3xTxXJ3kRHNg3eVMfm9PZsiPCnPc3R+9VUwT6qpYJqKG6AnGxUdfn7gWOTFpbQwMwvx4mNTWiv8GT83VJBRhi5hv21roM28f+7qO4TtMT519IWirvVobvBlWw4Gr1gIxkjnJ4CjZZ7JEKUOP6Zy+P5AQKo+bUV6V5/5TvEraeZypPfoDxUrEMZx/GnhilEIWpXyeC9H18Rx/pbBCA32wnRgoTOiJ9eHd95O14KqFlmzq9HgxIqWEUlE5QeIv8ulBTdrEJ9sGD9ceoQHtCZbQW6INMUqFmeEaZvn4g=                
+</pre>
+                </uib-tab>
+                <uib-tab index="request1-tab-3" heading="Error response messages" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-consendent">
+                            <thead>
+                                <tr>
+                                    <th>Http response</th>
+                                    <th>Description</th>
+                                    <th>Error Code</th>
+                                    <th>Message</th>
+                                    <th>Aditional data</th>
+                                    <th>Solution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="11"><b>400</b></td>
+                                    <td rowspan="11">
+                                        An invalid request was made. The response will contain an error code, message and optionally additionalData.
+                                    </td>
+                                    <td><b>1</b></td>
+                                    <td>Invalid PartnerId</td>
+                                    <td>-</td>
+                                    <td rowspan="11">
+                                        The response will contain an error code,
+                                        message and optionally additionalData.
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>2</b></td>
+                                    <td>Invalid Signature</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>4</b></td>
+                                    <td>Invalid coupon serial number or partner transaction id</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>5</b></td>
+                                    <td>PartnerIds do not match</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>6</b></td>
+                                    <td>Point of sales Ids do not match</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>7</b></td>
+                                    <td>Coupon has been already canceled</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>8</b></td>
+                                    <td>Coupon has been already used</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>9</b></td>
+                                    <td>Coupon has already expired</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>10</b></td>
+                                    <td>Coupon cannot be cancelled (timeout expired)</td>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <td><b>500</b></td>
+                                    <td>An unknown error occured</td>
+                                    <td>-</td>
+                                    <td>Unknown error has occurred</td>
+                                    <td>-</td>
+                                    <td>
+                                        Contact Aircash support
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request1-tab-4" heading="Error response example" classes="nav-item">
+                    <uib-tabset class="row tabs-left">
+                        <uib-tab index="CancelTransactionError-tab-1" heading="1 - Invalid PartnerId" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 1)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error1.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=0b7ecd90-800a-4aa0-8cae-f3630b441608&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3521314447254926
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 1)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error1.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 1">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 1">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(1)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 2)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error2.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3521314447254926
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 2)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error2.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 2">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 2">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(2)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-4" heading="4 - Invalid coupon serial number or partner transaction id" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 4)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error4.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=0513316595342864
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 4)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error4.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 4">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 4">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(4)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-5" heading="5 - PartnerIds do not match" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 5)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error5.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3521314447254926
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 5)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error5.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 5">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 5">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(5)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-6" heading="6 - Point of sales Ids do not match" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 6)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error6.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=error&SerialNumber=3521314447254926
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 6)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error6.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 6">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 6">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(6)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-7" heading="7 - Coupon has been already canceled" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 7)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error7.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3448230981812314
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 7)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error7.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 7">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 7">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(7)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-8" heading="8 - Coupon has been already used" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 8)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error8.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=3844898791528058
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 8)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error8.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 8">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 8">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(8)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-9" heading="9 - Coupon has already expired" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 9)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error9.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=0573140441237604
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 9)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error9.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 9">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 9">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(9)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                        <uib-tab index="CancelTransactionError-tab-10" heading="10 - Coupon cannot be cancelled (timeout expired)" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 " ng-if="!(errorCancelResponded && currentErrorCode == 10)">
+                                    Request
+                                    <jsonformatter data="errorExamples.CancelTransaction.error10.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=&PointOfSaleId=test&SerialNumber=5036566273639964
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorCancelResponded && currentErrorCode == 10)">
+                                    Response
+                                    <jsonformatter data="errorExamples.CancelTransaction.error10.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 " ng-if="errorCancelResponded && currentErrorCode == 10">
+                                    Request ({{errorCancelRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelRequest"></jsonformatter>
+
+                                    Sequence: {{errorCancelSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorCancelResponded && currentErrorCode == 10">
+                                    Response ({{errorCancelResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorCancelResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="cancelSimulateError(10)" ng-disabled="errorCancelServiceBusy">Simulate <i ng-if="errorCancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        </uib-tab>
+                    </uib-tabset>
+                </uib-tab>
+                <uib-tab index="request1-tab-5" heading="Try it out" classes="nav-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <form action="/" method="POST" name="transactionForm1">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label">PartnerId</label>
+                                        <input ng-model="cancelCouponModel.cancelPartnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="cancelServiceBusy" ng-required="true">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">SerialNumber</label>
+                                        <input ng-model="cancelCouponModel.cancelSerialNumber" class="form-control" type="text" placeholder="Enter SerialNumber" ng-disabled="cancelServiceBusy" ng-required="false">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">PartnerTransactionId</label>
+                                        <input ng-model="cancelCouponModel.cancelPartnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="cancelServiceBusy" ng-required="false">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">PointOfSaleId</label>
+                                        <input ng-model="cancelCouponModel.cancelPointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="cancelServiceBusy" ng-required="true">
+                                    </div>
+                                    <button ng-click="cancelCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="cancelServiceBusy || transactionForm1.$invalid">Cancel coupon <i ng-if="cancelServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="col-md-4" ng-if="cancelServiceResponse">
+                            Request ({{cancelRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="cancelServiceRequest"></jsonformatter>
+                            Sequence: {{cancelSequence}}<br />
+                        </div>
+                        <div class="col-md-4" ng-if="cancelServiceResponse">
+                            Response ({{cancelResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})<br />
+                            <jsonformatter data="cancelResponse"></jsonformatter>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+
+    <p>
+        In case of successful cancellation, a HTTP 200 OK response message will be returned with an empty body.
+    </p>
+
+    <hr />
+
+</body>
+</html>

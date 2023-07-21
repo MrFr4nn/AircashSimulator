@@ -16,14 +16,14 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
     return ({
         generateTransaction: generateTransaction,
         cancelTransaction: cancelTransaction,
-        refundTransaction: refundTransaction,
-        getTransactions: getTransactions,
+        checkTransactionStatus: checkTransactionStatus,
     });
-    function generateTransaction(amount, description, locationID) {
+    function generateTransaction(amount, description, locationID, partnerId) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashInAppPay/GenerateTransaction",
             data: {
+                PartnerId: partnerId,
                 Amount: amount,
                 Description: description,
                 LocationID: locationID
@@ -42,35 +42,28 @@ acInAppPayModule.service("acInAppPayService", ['$http', '$q', 'handleResponseSer
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
-    function getTransactions(pageSize, pageNumber) {
-        var request = $http({
-            method: 'GET',
-            url: config.baseUrl + "Transaction/GetAircashPayPreparedTransactions",
-            params: {
-                PageSize: pageSize,
-                PageNumber: pageNumber
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-
-    function refundTransaction(transactionId, amount) {
+    function checkTransactionStatus(transactionModel) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashInAppPay/RefundTransaction",
+            url: config.baseUrl + "AircashInAppPay/CheckTransactionStatus",
             data: {
-                PartnerTransactionID: transactionId,
-                Amount: amount
+                PartnerTransactionId: transactionModel.partenrTransactionId,
+                PartnerId: transactionModel.partnerId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
 }
 ]);
 
-acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'acInAppPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', function ($scope, $state, $filter, acInAppPayService, $http, JwtParser, $uibModal, $rootScope) {
+acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'acInAppPayService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', function ($scope, $state, $filter, acInAppPayService, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+    $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
+    if ($scope.partnerRoles.indexOf("AircashInAppPay") == -1) {
+        $location.path('/forbidden');
+    }
+
     $scope.generateTransactionModel = {
         amount: null,
         description: null
@@ -79,9 +72,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     $scope.cancelTransactionModel = {
         partnerTransactionID: ""
     };
-    $scope.refundTransactionModel = {
-        amount: null
-    };
+
     $scope.setDefaults = function () {
         $scope.transactions = [];
         $scope.pageSize = 5;
@@ -99,7 +90,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
     $scope.generateTransaction = function () {
         $scope.generateBusy = true;
         $scope.generateResponded = false;
-        acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID)
+        acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID, $scope.partnerIds.InAppPayPartnerId)
             .then(function (response) {
                 if (response) {
                     $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -109,7 +100,6 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
                     $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                     $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                     $scope.codeLink = response.serviceResponse.url;
-                    $scope.getTransactions(true);
                 }
                 $scope.generateBusy = false;
                 $scope.generateResponded = true;
@@ -118,63 +108,42 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             });
     }
 
-    $scope.refundModel = {
-        transcationId: null,
-        amount: null
-    };
-
-    $scope.refundResponded = false;
-    $scope.refundBusy = false;
-    $scope.refundTransaction = function (transactionId) {
-        $scope.refundBusy = true;
-        $scope.refundResponded = false;
-        acInAppPayService.refundTransaction(transactionId, $scope.refundTransactionModel.amount)
+    $scope.transactionModel = {};
+    $scope.transactionModel.partnerId = $scope.partnerIds.InAppPayPartnerId;
+    $scope.statusResponded = false;
+    $scope.statusBusy = false;
+    $scope.checkTransactionStatus = function () {
+        $scope.statusBusy = true;
+        $scope.statusResponded = false;
+        acInAppPayService.checkTransactionStatus($scope.transactionModel)
             .then(function (response) {
                 if (response) {
-                    $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.refundSequence = response.sequence;
-
+                    $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceStatus = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.StatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.signature) {
+                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    }
+                    $scope.checkTransactionStatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                 }
-                $scope.refundBusy = false;
-                $scope.refundResponded = true;
+                $scope.statusBusy = false;
+                $scope.statusResponded = true;
             }, () => {
                 console.log("error");
             });
     }
-
-    $scope.getTransactions = function (reset) {
-        if (reset) $scope.setDefaults();
-        acInAppPayService.getTransactions($scope.pageSize, $scope.pageNumber)
-            .then(function (response) {
-                $scope.pageNumber += 1;
-                if (response) {
-                    $scope.totalLoaded = response.length;
-                    $scope.transactions = $scope.transactions.concat(response);
-                }
-            }, () => {
-                console.log("error");
-            });
-    }
-
-    $scope.loadMore = function (pageSize) {
-        $scope.pageSize = pageSize;
-        $scope.getTransactions();
-    };
 
     $scope.setDefaults();
 
-    $scope.getTransactions();
 
     $scope.inAppPay = {
         generateTransaction: {
             requestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 amount: 123.45,
-                currencyID: 191,
+                currencyID: 978,
                 partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
                 description: "Invoice 52",
                 signature: "12345....abc"
@@ -191,7 +160,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
         confirmTransaction: {
             requestExample: {
                 amount: 123.45,
-                currencyID: 191,
+                currencyID: 978,
                 aircashTransactionID: "Aircash transaction id,",
                 partnerTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
                 user: "user 232",
@@ -206,7 +175,7 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
             },
             responseExample: {
                 amount: 123.45,
-                currencyID: 191,
+                currencyID: 978,
                 aircashTransactionID: "92597e93-6050-4478-85d4-1956dea450ff",
                 user: "user 232",
                 signature: "12345....abc"
@@ -217,15 +186,6 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
                 additionalData: null,
             }
         },
-        refund: {
-            requestExample: {
-                PartnerID: "8f62c8f0- 7155 - 4c0e- 8ebe - cd9357cfd1bf",
-                PartnerTransactionID: "67cef954-7372-4a12-9250-98a42bcf0317",
-                RefundTransactionID: "9a90fcdc-572d-44b3-904d-1ff0629c7046",
-                Amount: "100",
-                Signature: "g/iZ .... KgY/6o="
-            }
-        }
     };
 
 }]);
