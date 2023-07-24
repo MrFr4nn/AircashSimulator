@@ -435,6 +435,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             requestExample: {
                 couponCode: "5460446045144493",
                 providerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                providerTransactionId: "4a4d9e48-77ca-4144-844b-cfe535af6a5c",
                 phoneNumber: "385981234567",
                 parameters: [
                     {
@@ -450,7 +451,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                         Value: "1990-01-01"
                     },
                 ],
-                signature: "in4sV7zjw..."
+                signature: "sf4+W/dbE/..."
             }
         },
         confirmTransaction: {
