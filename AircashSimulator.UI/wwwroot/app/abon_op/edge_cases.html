@@ -1,0 +1,39 @@
+﻿<hr />
+<div class="chapter">
+    <div class="technical-integration-aspects-container">
+        <h1>Edge cases</h1>
+        <br />
+        <h4>ConfirmTransaction method – invalid or no response</h4>
+        <p>
+            In the case of an unsuccessful ConfirmTransaction call, the following error recovery methods should be
+            applied:
+        </p>
+        <ol>
+            <li>Call ConfirmTransaction with same parameters</li>
+            <li>
+                If the response is error 400: 4 "Coupon Already Used", and the PartnerTransactionId (this is the
+                parameter that the Online Provider has to set in the ConfirmTransaction call in order to check
+                the transaction status later) in additional data matches the one that was sent – the coupon can
+                be confirmed on the Online Provider side and the transaction can be processed
+            </li>
+        </ol>
+        <p>
+            Alternatively:
+        </p>
+        <ol>
+            <li>Call method ValidateCoupon with required parameters</li>
+            <li>
+                If the coupon was used (IsValid == false) and ProviderTransactionId parameter matches the one
+                that was being currently sent in ConfirmTransaction, the coupon can be confirmed on the Online
+                Provider side and the transaction can be processed
+            </li>
+            <li>
+                If the coupon is valid (IsValid == true) and ProviderTransactionId is empty - the transaction was
+                not processed on the Abon side, and you should call ConfirmTransaction again
+            </li>
+        </ol>
+        <br />
+        <h4>ValidateCoupon method – invalid or no response</h4>
+        <p>In case the Online Provider doesn't get a response, the request can be retried.</p>
+    </div>
+</div>
