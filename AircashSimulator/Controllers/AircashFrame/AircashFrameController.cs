@@ -153,11 +153,25 @@ namespace AircashSimulator.Controllers.AircashFrame
             var response = await AircashFrameV2Service.CheckTransactionStatusFrame(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId, environment);
             return Ok(response);
         }
+        [HttpPost]
+        public async Task<IActionResult> TransactionStatusV2FrameV2(TransactionStatusRequest transactionStatusRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.CheckTransactionStatusV2Frame(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId, environment);
+            return Ok(response);
+        }
         public async Task<IActionResult> GetCurlTransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var request =  AircashFrameV2Service.GetCheckTransactionStatusFrameRequest(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId);
             var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCheckTransactionStatusEndpoint(environment));
+            return Ok(curl);
+        }
+        public async Task<IActionResult> GetCurlTransactionStatusV2FrameV2(TransactionStatusRequest transactionStatusRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request =  AircashFrameV2Service.GetCheckTransactionStatusFrameRequest(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId);
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCheckTransactionStatusV2Endpoint(environment));
             return Ok(curl);
         }
 
@@ -284,6 +298,40 @@ namespace AircashSimulator.Controllers.AircashFrame
                     return BadRequest();
             }
             var response = await AircashFrameV2Service.CheckTransactionStatusFrame(partnerId, partnerTransactionId.ToString(), EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> TransactionStatusV2SimulateError([FromBody] AcFrameTransactionStatusErrorCodeEnum errorCode)
+        {
+            var partnerId = SettingsService.AircashFramePartnerId;
+            var partnerTransactionId = Guid.NewGuid();
+            switch (errorCode)
+            {
+                case AcFrameTransactionStatusErrorCodeEnum.InvalidSignatureOrPartnerId:
+                    {
+                        partnerId = Guid.NewGuid();
+                        break;
+                    }
+                //case AcFrameTransactionStatusErrorCodeEnum.ValidationError:
+                //    {
+                //        break;
+                //    }
+                case AcFrameTransactionStatusErrorCodeEnum.TransactionDoesNotExist:
+                    {
+                        partnerTransactionId = Guid.NewGuid();
+                        break;
+                    }
+                case AcFrameTransactionStatusErrorCodeEnum.TransactionNotProcessed:
+                    {
+                        partnerTransactionId = SettingsService.AircashFrameTransactionNotProcessed;
+                        break;
+                    }
+
+                default:
+                    return BadRequest();
+            }
+            var response = await AircashFrameV2Service.CheckTransactionStatusV2Frame(partnerId, partnerTransactionId.ToString(), EnvironmentEnum.Staging);
             return Ok(response);
         }
     }
