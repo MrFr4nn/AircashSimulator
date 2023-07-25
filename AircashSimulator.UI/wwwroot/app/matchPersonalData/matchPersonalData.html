@@ -28,7 +28,7 @@
 <uib-tabset>
     <uib-tab index="MatchPersonalData-tab-1" heading="Try it out" classes="nav-item">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h6><b>Aircash user</b></h6>
                 <hr />
                 <form action="/" method="POST" name="matchPersonalDataModelFirstForm">
@@ -48,8 +48,7 @@
                     </fieldset>
                 </form>
             </div>
-            <div class="col-md-0.5"></div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <h6><b>Partner user</b></h6>
                 <hr />
                 <form action="/" method="POST" name="matchPersonalDataModelSecondForm">
@@ -69,6 +68,11 @@
                         <button ng-click="matchPersonalData()" class="btn btn-primary w-100px me-5px" ng-disabled="matchPersonalDataServiceBusy|| checkUserForm.$invalid">Compare users <i ng-if="matchPersonalDataServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
+            </div>
+            <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
+                Request ({{matchPersonalDataRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="matchPersonalDataRequest"></jsonformatter>
+                <br />
             </div>
             <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
                 Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
