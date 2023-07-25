@@ -284,8 +284,8 @@ namespace AircashSimulator.Controllers.AircashFrame
 		}
 
 		[HttpPost]
-		//[Authorize]
-		public async Task<IActionResult> RefundAcPayTransaction(RefundAcPayTransactionDTO refundRequestDTO)
+        [Authorize]
+        public async Task<IActionResult> RefundAcPayTransaction(RefundAcPayTransactionDTO refundRequestDTO)
 		{
 			var refundRequest = new AircashRefundTransactionRequest
 			{
