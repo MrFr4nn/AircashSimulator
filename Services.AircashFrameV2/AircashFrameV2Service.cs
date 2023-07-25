@@ -290,6 +290,36 @@ namespace AircashFrame
             returnResponse.ServiceResponse = aircashTransactionStatusResponse;
             return returnResponse;
         }
+        public async Task<object> CheckTransactionStatusV2Frame(Guid partnerId, string transactionId, EnvironmentEnum environment)
+        {
+            var returnResponse = new Response();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var aircashTransactionStatusRequest = GetCheckTransactionStatusFrameRequest(partnerId, transactionId);
+            returnResponse.ServiceRequest = aircashTransactionStatusRequest;
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashTransactionStatusRequest);
+            returnResponse.Sequence = dataToSign;
+            //Logger.LogInformation(partner.PrivateKey);
+            var signature = SignatureService.GenerateSignature(partnerId, dataToSign);
+            aircashTransactionStatusRequest.Signature = signature;
+            var aircashTransactionStatusResponse = new object();
+            var response = await HttpRequestService.SendRequestAircash(aircashTransactionStatusRequest, HttpMethod.Post, GetCheckTransactionStatusV2Endpoint(environment));
+            returnResponse.ResponseDateTimeUTC = DateTime.Now;
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusV2ResponseV2NoAmount>(response.ResponseContent);
+                var convertedResponse = JsonConvert.DeserializeObject<AircashTransactionStatusV2ResponseV2>(response.ResponseContent);
+                if (convertedResponse.Status == AcFrameTransactionStatusEnum.Success) {
+                    aircashTransactionStatusResponse = convertedResponse;
+                }
+            }
+            else
+            {
+                aircashTransactionStatusResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+            returnResponse.ServiceResponse = aircashTransactionStatusResponse;
+            return returnResponse;
+        }
         public AircashTransactionStatusRequestV2 GetCheckTransactionStatusFrameRequest(Guid partnerId, string transactionId)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
@@ -306,6 +336,11 @@ namespace AircashFrame
         public string GetCheckTransactionStatusEndpoint(EnvironmentEnum environment)
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Frame)}{TransactionStatusEndpoint}";
+            
+        }
+        public string GetCheckTransactionStatusV2Endpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{TransactionStatusEndpoint}";
             
         }
 
