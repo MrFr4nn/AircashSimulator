@@ -433,25 +433,36 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         },
         validateCouponWithAutorization: {
             requestExample: {
-                couponCode: "5460446045144493",
-                providerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                providerTransactionId: "4a4d9e48-77ca-4144-844b-cfe535af6a5c",
-                phoneNumber: "385981234567",
-                parameters: [
+                "couponCode": "5460446045144493",
+                "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                "providerTransactionId": "4a4d9e48-77ca-4144-844b-cfe535af6a5c",
+                "phoneNumber": "385981234567",
+                "userId": "123",  
+                "parameters": [
                     {
-                        Key: "PayerFirstName",
-                        Value: "John"
+                        "Key": "PayerFirstName",
+                        "Value": "John"
                     },
                     {
-                        Key: "PayerLastName",
-                        Value: "Doe"
+                        "Key": "PayerLastName",
+                        "Value": "Doe"
                     },
                     {
-                        Key: "PayerBirthDate",
-                        Value: "1990-01-01"
-                    },
+                        "Key": "PayerBirthDate",
+                        "Value": "1990-01-01"
+                    }
                 ],
-                signature: "sf4+W/dbE/..."
+                "signature": "jOpYNeeucE..."
+            },
+            responseExample: {
+                "couponValue": 50,
+                "status": 1,
+                "ISOCurrency": "HRK",
+                "providerTransactionId": "",
+                "originalISOCurrency": "EUR",
+                "originalCouponValue": 50,
+                "currentCouponValue": 50,
+                "aircashUserId": "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
             }
         },
         confirmTransaction: {

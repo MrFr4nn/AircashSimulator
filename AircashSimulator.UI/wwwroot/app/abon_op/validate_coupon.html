@@ -2,7 +2,7 @@
 <div class="row">
     <h4 class="col-auto">ValidateCoupon</h4>
     <div class="dropdown col-auto">
-        <select class="form-control" ng-model="select.validateCouponVersion" ng-init="select.validateCouponVersion = '1'">
+        <select class="form-control" ng-model="select.validateCouponVersion" ng-init="select.validateCouponVersion = '2'">
             <option value="1" selected>V1</option>
             <option value="2">V2</option>
         </select>
@@ -440,14 +440,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                     <td>
                         POST
                     </td>
-                    <td>https://staging-a-bon.aircash.eu/rest/api/OnlineProvider/ValidateCoupon</td>
+                    <td>https://staging-a-bon.aircash.eu/rest/api/OnlineProvider/CheckStatus</td>
                 </tr>
                 <tr>
                     <td><b>Production</b></td>
                     <td>
                         POST
                     </td>
-                    <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/ValidateCoupon</td>
+                    <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/CheckStatus</td>
                 </tr>
             </tbody>
         </table>
@@ -506,6 +506,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             <td>YES</td>
                         </tr>
                         <tr>
+                            <td colspan="2"><b>UserId</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique user identifier in partner system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
                             <td colspan="2"><b>Parameters</b></td>
                             <td>List&lt;Object&gt;</td>
                             <td>List of parameters</td>
@@ -551,10 +559,10 @@ Request example:
             <jsonformatter data="aBonDeposit.validateCouponWithAutorization.requestExample"></jsonformatter>
             <pre>
 Sequence:
-CouponCode=5460446045144493&Parametrs=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PhoneNumber=385981234567&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c
+CouponCode=5460446045144493&Parametrs=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PhoneNumber=385981234567&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&UserId=123
 
 Signature:
-sf4+W/dbE/l+D25GZmhG8X8q3dJLseoDvf/ACXxTNuIRkVQOuL/rVH7PGH1J7ZQBvc17w5Weuzkh/yM4OkOI6o8aNksToVvU7b+cGrgGdCeMR/ZaOurIh4qRGIScZ4c5T6oTAtGk1CiEQKeXeNHBIxLVgY+OqiNWrD0k/YYDkXkOhaUS1QMQ/lC+SbxAJWuKi/jxRBQZDH0Sioer0fhAgKiDfj9MfhZL434jbYqq4MlfT5/ScsuPK05yQF36VSHRahyd6TxvkYpU4Vthuzic7Ek1ankGVsSAcWODznrB6ktGL+UI1LJHy8XM03KNE0l31rmUgW32pe7+dc9iXFu4UCx/uTQrOqxF72U5XrGKIfjTIGIab2D7C8sgySMHisYfB/rxmNZbLokbcklY9px3NOiJg1QE5dQBI90rVeo4gmbcEdbv/xObJHDN1RanUfR8PJ+TO6k5qRuTJ+GcSC42ukMKBieBFlk1Ut/9XtJ+yCXybjcTUyig/JK8y3ptDiSrN7st1WzZe5QvjwXCUr4eyAuHsn1OQG7uzDsOV1CC2mhN72p1mqWPyTrirGBcSHCutbCdRLwSHWw49HvXrra96P208Kd+ypG6pZBCsu6tDljAwAdHKiHSH9/1KYBALRt+nDi6vFJemp8nb4vqoFArRJkwXVqFgiz2Y170+4y25tc=
+jOpYNeeucELbm6c0uNQdwerUrS6V0u1Ei9bpyHo/CLsqUYWgkg6oU3XIx2B6c+fguVhUspQYVY6XIbTydXRKUiKj5sBTCTWH645YFrAzVqRuIYPw5r4t5fjOIk3L8hq6Mds2N9tYP+amW0qvXiVwJaGR3CtzolYQbUqm7uQYieJ6DTNEa0Bym//tKMTnezNFs7HoZmX0ObrStp7Nd7D7t8j5KNK2qBn46HFpgF6AYfFMPZaWvszCJ34tkne1GGv2Kin4Q9N+CdIyPvtPJ3001xj3MV3uwZbUjg8GHg3Vh8Heu7TxhgQkqWdCOps2fvjK/Luf7HKAQBPT1O9XB6PiqSrYh5E5/H2HzaeGrzdLxVDrg69MKGn1eN8+oOm1EB/mjHVtZMJSNvDdUwoZp6RYcG39PaNPnEkfsTCbpomT1Jiw2q0+ptlOvd19Deuclnf67fOUHjfKWpYDWYOxKbp0kjxrmSZuEYxXasoiOcFYM/fQgEGplv8dcDYbf4GbL1MgohkvMx0CG5WmTCtXlc4u91MPhRZ68G4WFTYeZoqwyVGiDZ+rz+X2bGQaNMUbaLcM2+R+mIUhCil/BCV2sbJUXEjj/Xdzdw9TgdMDXxZf77YPhn3yhsf5I4xtH4EOrLIcN+OAyiDvsqQJovtPk1TFdla2d0OwD/Clk2AP2/iGSuI=
 </pre>
         </uib-tab>
         <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
@@ -576,10 +584,10 @@ sf4+W/dbE/l+D25GZmhG8X8q3dJLseoDvf/ACXxTNuIRkVQOuL/rVH7PGH1J7ZQBvc17w5Weuzkh/yM4
                             </td>
                         </tr>
                         <tr>
-                            <td><b>IsValid</b></td>
-                            <td>bool</td>
+                            <td><b>Status</b></td>
+                            <td>int</td>
                             <td>
-                                Status of the coupon's validity
+                                Status of the coupon. 1 - ok(Authorized, ready for confirm), 2 - pending, 3 - already used
                             </td>
                         </tr>
                         <tr>
@@ -598,20 +606,6 @@ sf4+W/dbE/l+D25GZmhG8X8q3dJLseoDvf/ACXxTNuIRkVQOuL/rVH7PGH1J7ZQBvc17w5Weuzkh/yM4
                             </td>
                         </tr>
                         <tr>
-                            <td><b>SalePartnerId</b></td>
-                            <td>string</td>
-                            <td>
-                                Id of the point of sale - where the coupon was bought
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>IsoCountryCode</b></td>
-                            <td>string</td>
-                            <td>
-                                ISO 3166 standard – Codes for the representation of names of countries and their subdivisions (e.g. HR, DE, RO ...)
-                            </td>
-                        </tr>
-                        <tr>
                             <td><b>OriginalISOCurrency</b></td>
                             <td>string</td>
                             <td>
@@ -627,6 +621,20 @@ sf4+W/dbE/l+D25GZmhG8X8q3dJLseoDvf/ACXxTNuIRkVQOuL/rVH7PGH1J7ZQBvc17w5Weuzkh/yM4
                                 bought in
                             </td>
                         </tr>
+                        <tr>
+                            <td><b>CurrentCouponValue</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Current coupon value
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>AircashUserId</b></td>
+                            <td>string</td>
+                            <td>
+                                Aircash user identifier (null if partner dosen't use authorization)
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -636,7 +644,7 @@ sf4+W/dbE/l+D25GZmhG8X8q3dJLseoDvf/ACXxTNuIRkVQOuL/rVH7PGH1J7ZQBvc17w5Weuzkh/yM4
             </p>
         </uib-tab>
         <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
-            <jsonformatter data="aBonDeposit.validateCoupon.responseExample"></jsonformatter>
+            <jsonformatter data="aBonDeposit.validateCouponWithAutorization.responseExample"></jsonformatter>
         </uib-tab>
         <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
             <div class="table-responsive">
@@ -653,14 +661,14 @@ sf4+W/dbE/l+D25GZmhG8X8q3dJLseoDvf/ACXxTNuIRkVQOuL/rVH7PGH1J7ZQBvc17w5Weuzkh/yM4
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="10"><b>400</b></td>
-                            <td rowspan="10">
+                            <td rowspan="7"><b>400</b></td>
+                            <td rowspan="7">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid ProviderId</td>
                             <td>-</td>
-                            <td rowspan="10">
+                            <td rowspan="7">
                                 The response will contain an error code,
                                 message and optionally additionalData.
 
@@ -688,35 +696,14 @@ sf4+W/dbE/l+D25GZmhG8X8q3dJLseoDvf/ACXxTNuIRkVQOuL/rVH7PGH1J7ZQBvc17w5Weuzkh/yM4
                         </tr>
                         <tr>
                             <td><b>8</b></td>
-                            <td>Invalid phone number</td>
+                            <td>Invalid phone number (User does not exist)</td>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <td><b>12</b></td>
-                            <td>Authorization pending</td>
+                            <td><b>16</b></td>
+                            <td>Invalid phone number (wrong phone number format)</td>
                             <td>
-                                ISOCurrency, CouponValue, ProviderTransactionId
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>13</b></td>
-                            <td>User data do not match</td>
-                            <td>
-                                ProviderTransactionId
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>14</b></td>
-                            <td>Authorization timed out</td>
-                            <td>
-                                ProviderTransactionId
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>15</b></td>
-                            <td>Authorization declined</td>
-                            <td>
-                                ProviderTransactionId
+                                -
                             </td>
                         </tr>
                         <tr>
