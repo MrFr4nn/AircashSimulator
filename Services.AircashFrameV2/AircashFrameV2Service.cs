@@ -15,6 +15,7 @@ using Services.AircashFrameV2;
 using Service.Settings;
 using Services.Signature;
 using System.Collections.Generic;
+using AircashSimulator;
 
 namespace AircashFrame
 {
@@ -41,7 +42,7 @@ namespace AircashFrame
             SettingsService = settingsService;
             SignatureService = signatureService;
         }
-      
+
         public async Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, string partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
@@ -146,7 +147,7 @@ namespace AircashFrame
                 TransactionSatus = AcFramePreparedTransactionStatusEnum.Pending
             };
             AircashSimulatorContext.Add(preparedTransaction);
-            AircashSimulatorContext.SaveChanges();            
+            AircashSimulatorContext.SaveChanges();
             var aircashInitiateSignature = new AircashInitiateV2Request
             {
                 PartnerId = preparedTransaction.PartnerId.ToString(),
@@ -235,7 +236,7 @@ namespace AircashFrame
                     ServiceId = serviceId,
                     UserId = preparedAircashFrameTransaction.UserId
                 });
-                AircashSimulatorContext.SaveChanges();                
+                AircashSimulatorContext.SaveChanges();
             }
             if (checkTransactionStatusResponse.Status == AcFrameTransactionStatusEnum.PayoutConfirmationPending)
             {
@@ -279,7 +280,8 @@ namespace AircashFrame
             {
                 aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2NoAmount>(response.ResponseContent);
                 var convertedResponse = JsonConvert.DeserializeObject<AircashTransactionStatusResponseV2>(response.ResponseContent);
-                if (convertedResponse.Status == AcFrameTransactionStatusEnum.Success) {
+                if (convertedResponse.Status == AcFrameTransactionStatusEnum.Success)
+                {
                     aircashTransactionStatusResponse = convertedResponse;
                 }
             }
@@ -309,9 +311,14 @@ namespace AircashFrame
             {
                 aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusV2ResponseV2NoAmount>(response.ResponseContent);
                 var convertedResponse = JsonConvert.DeserializeObject<AircashTransactionStatusV2ResponseV2>(response.ResponseContent);
-                if (convertedResponse.Status == AcFrameTransactionStatusEnum.Success) {
+                if (convertedResponse.Status == AcFrameTransactionStatusEnum.Success)
+                {
                     aircashTransactionStatusResponse = convertedResponse;
                 }
+                var responseSequence = AircashSignatureService.ConvertObjectToString(convertedResponse);
+                if (!AircashSignatureService.VerifySignature(responseSequence, convertedResponse.Signature, AircashConfiguration.AcFramePublicKey))
+                    throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidResponseSignature, "Invalid Response Signature");
+                aircashTransactionStatusResponse = new { ResponseObject = aircashTransactionStatusResponse, ResponseSequence = responseSequence };
             }
             else
             {
@@ -336,12 +343,12 @@ namespace AircashFrame
         public string GetCheckTransactionStatusEndpoint(EnvironmentEnum environment)
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Frame)}{TransactionStatusEndpoint}";
-            
+
         }
         public string GetCheckTransactionStatusV2Endpoint(EnvironmentEnum environment)
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{TransactionStatusEndpoint}";
-            
+
         }
 
         public async Task<object> ConfirmPayout(Guid partnerId, string transactionId, decimal amount, CurrencyEnum currency, EnvironmentEnum environment)
@@ -382,7 +389,7 @@ namespace AircashFrame
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashConfirmPayoutRequest);
             var signature = SignatureService.GenerateSignature(partnerId, dataToSign);
             aircashConfirmPayoutRequest.Signature = signature;
-       
+
             return aircashConfirmPayoutRequest;
         }
         public string GetConfirmPayoutEndpoint(EnvironmentEnum environment)
