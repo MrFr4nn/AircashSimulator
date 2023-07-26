@@ -15,6 +15,7 @@ using Services.AircashFrameV2;
 using Service.Settings;
 using Services.Signature;
 using System.Collections.Generic;
+using AircashSimulator;
 
 namespace AircashFrame
 {
@@ -315,6 +316,8 @@ namespace AircashFrame
                     aircashTransactionStatusResponse = convertedResponse;
                 }
                 var responseSequence = AircashSignatureService.ConvertObjectToString(convertedResponse);
+                if (!AircashSignatureService.VerifySignature(responseSequence, convertedResponse.Signature, AircashConfiguration.AcFramePublicKey))
+                    throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidResponseSignature, "Invalid Response Signature");
                 aircashTransactionStatusResponse = new { ResponseObject = aircashTransactionStatusResponse, ResponseSequence = responseSequence };
             }
             else
