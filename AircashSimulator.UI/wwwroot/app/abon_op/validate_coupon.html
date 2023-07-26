@@ -1,6 +1,7 @@
 ﻿<br />
 <div class="row">
-    <h4 class="col-auto">ValidateCoupon</h4>
+    <h4 ng-if="select.validateCouponVersion == 1" class="col-auto">ValidateCoupon</h4>
+    <h4 ng-if="select.validateCouponVersion == 2" class="col-auto">CheckStatus</h4>
     <div class="dropdown col-auto">
         <select class="form-control" ng-model="select.validateCouponVersion" ng-init="select.validateCouponVersion = '2'">
             <option value="1" selected>V1</option>
