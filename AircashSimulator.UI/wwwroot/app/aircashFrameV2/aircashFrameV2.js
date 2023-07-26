@@ -62,7 +62,7 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
                 PayMethod: payMethod,
                 Amount: amount,
                 Currency: currency,
-                OriginUrl:originUrl
+                OriginUrl: originUrl
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -254,7 +254,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         }
     ];
 
-    $scope.initiateModels =[
+    $scope.initiateModels = [
         {
             name: "Aircash Pay",
             payType: 0,
@@ -336,7 +336,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         countryISOCodeInput: "HR"
     }
 
-   
+
     $scope.initiateResponded = false;
     $scope.initiateBusy = false;
     $scope.initiateRedirectCheckout = function () {
@@ -402,7 +402,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     };
 
     $scope.onDecline = function (obj) {
-        
+
     };
 
     $scope.onCancel = function (obj) {
@@ -427,7 +427,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         });
     };
 
-    
+
     $scope.statusResponded = false;
     $scope.statusBusy = false;
     $scope.transactionStatus = function () {
@@ -471,6 +471,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     $scope.transactionStatusV2 = function () {
         $scope.statusV2Busy = true;
         $scope.statusV2Responded = false;
+        $scope.StatusV2ServiceResponseSequence = null;
         acFrameV2Service.transactionStatusV2($scope.transactionModelV2)
             .then(function (response) {
                 if (response) {
@@ -479,10 +480,14 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     $scope.sequenceStatusV2 = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                     $scope.StatusV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.signature) {
-                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    if (response.serviceResponse.responseObject && response.serviceResponse.responseObject.signature) {
+                        response.serviceResponse.responseObject.signature = response.serviceResponse.responseObject.signature.substring(0, 10) + "...";
+                        $scope.StatusV2ServiceResponse = JSON.stringify(response.serviceResponse.responseObject, null, 4);
+                        $scope.StatusV2ServiceResponseSequence = response.serviceResponse.responseSequence;
+                    } else {
+                        $scope.StatusV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);;
                     }
-                    $scope.StatusV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+
                 }
                 $scope.statusV2Busy = false;
                 $scope.statusV2Responded = true;
@@ -1006,7 +1011,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     Key: "AircashUserID",
                     Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
                 }],
-                "signature": "ljkUcvi4iM..."
+                "signature": "mGkC7OpmRf..."
             },
             errorResponseExample: {
                 code: 1003,
