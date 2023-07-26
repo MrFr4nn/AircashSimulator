@@ -487,10 +487,10 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2"><b>ProviderTransactionId</b></td>
+                            <td colspan="2"><b>PartnerTransactionId</b></td>
                             <td>string</td>
                             <td>
-                                Transaction identifier in the Online Provider system
+                                Transaction identifier in the Online Partner system
                             </td>
                             <td>
                                 YES,
@@ -498,7 +498,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2"><b>ProviderId</b></td>
+                            <td colspan="2"><b>PartnerId</b></td>
                             <td>string</td>
                             <td>
                                 Unique partner identifier (per currency) provided by Aircash
@@ -559,10 +559,10 @@ Request example:
             <jsonformatter data="aBonDeposit.validateCouponWithAutorization.requestExample"></jsonformatter>
             <pre>
 Sequence:
-CouponCode=5460446045144493&Parametrs=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PhoneNumber=385981234567&ProviderId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&ProviderTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&UserId=123
+CouponCode=5460446045144493&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&PhoneNumber=385981234567&UserId=123
 
 Signature:
-jOpYNeeucELbm6c0uNQdwerUrS6V0u1Ei9bpyHo/CLsqUYWgkg6oU3XIx2B6c+fguVhUspQYVY6XIbTydXRKUiKj5sBTCTWH645YFrAzVqRuIYPw5r4t5fjOIk3L8hq6Mds2N9tYP+amW0qvXiVwJaGR3CtzolYQbUqm7uQYieJ6DTNEa0Bym//tKMTnezNFs7HoZmX0ObrStp7Nd7D7t8j5KNK2qBn46HFpgF6AYfFMPZaWvszCJ34tkne1GGv2Kin4Q9N+CdIyPvtPJ3001xj3MV3uwZbUjg8GHg3Vh8Heu7TxhgQkqWdCOps2fvjK/Luf7HKAQBPT1O9XB6PiqSrYh5E5/H2HzaeGrzdLxVDrg69MKGn1eN8+oOm1EB/mjHVtZMJSNvDdUwoZp6RYcG39PaNPnEkfsTCbpomT1Jiw2q0+ptlOvd19Deuclnf67fOUHjfKWpYDWYOxKbp0kjxrmSZuEYxXasoiOcFYM/fQgEGplv8dcDYbf4GbL1MgohkvMx0CG5WmTCtXlc4u91MPhRZ68G4WFTYeZoqwyVGiDZ+rz+X2bGQaNMUbaLcM2+R+mIUhCil/BCV2sbJUXEjj/Xdzdw9TgdMDXxZf77YPhn3yhsf5I4xtH4EOrLIcN+OAyiDvsqQJovtPk1TFdla2d0OwD/Clk2AP2/iGSuI=
+NqV3kXbpxNHTq0w4HbLzG0h3cfiFQvtoHHzeSs4z9vviZbd5Xhnxomec1rMOuIMYDq4ITNntaGx//tlcGqKbxgKBZD0rUFlAAjWzRipdbMpEa7dLCtpKp2iJOTWgHxrH/eSgl1qPuF4GQ8AXj9s4F4e1t+6JWv70z8uSx5RDjzwqOUgTLnM0nWjVerQUspwBVKh+NMgqO//0o10otLcvY/LjFJjS0VPQuvH33qWuG38H54yt4cPVnX5l2Qkdy6XPnVnsx8WE2s1l/JIyzY6iOqLw8WVEafOsrZzComS8DlarkERfb9nEipZ545S/z+BMdZhbnUW1eOxPLKSLJ6JEsSpCXAvaMSTHb5dyUUiYR5ZINfzzDNLNxB5NfHVZXicYKjHt5SUA/6E8XiN/hnoWbznJ3awJnomE9aRopF3olIpAnGdm3foJ2n4RlhnEOSviffBUwOTy1F3uMLRr8oMcDlmvAITrijE1g+Vqxhz8Lx8KdXfNiy+L9OWzQdbWm3eY/Id+iyTUPNZvgaCaE3Yza3Q1UYmebzn51uNRrvZVD7TI9OXSZZO1tSTW4FYDgdM+CEyIcbD2BxHpxa6+SsYyag38VXhSkDDx61RDTQf30dzRZIqjQDSoNNFyWHA/etBffWxeq7rF5hFZnp8g49Ips6ATNuvME+XWD9jt0ZXCb3E=
 </pre>
         </uib-tab>
         <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
@@ -598,10 +598,10 @@ jOpYNeeucELbm6c0uNQdwerUrS6V0u1Ei9bpyHo/CLsqUYWgkg6oU3XIx2B6c+fguVhUspQYVY6XIbTy
                             </td>
                         </tr>
                         <tr>
-                            <td><b>ProviderTransactionId</b></td>
+                            <td><b>PartnerTransactionId</b></td>
                             <td>string</td>
                             <td>
-                                Transaction identifier in the Online Provider system (has value
+                                Transaction identifier in the Online Partner system (has value
                                 only if the coupon has been used)
                             </td>
                         </tr>
@@ -666,7 +666,7 @@ jOpYNeeucELbm6c0uNQdwerUrS6V0u1Ei9bpyHo/CLsqUYWgkg6oU3XIx2B6c+fguVhUspQYVY6XIbTy
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
-                            <td>Invalid ProviderId</td>
+                            <td>Invalid PartnerId</td>
                             <td>-</td>
                             <td rowspan="10">
                                 The response will contain an error code,

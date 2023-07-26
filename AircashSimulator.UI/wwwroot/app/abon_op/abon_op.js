@@ -434,8 +434,8 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         validateCouponWithAutorization: {
             requestExample: {
                 "couponCode": "5460446045144493",
-                "providerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                "providerTransactionId": "4a4d9e48-77ca-4144-844b-cfe535af6a5c",
+                "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                "partnerTransactionId": "4a4d9e48-77ca-4144-844b-cfe535af6a5c",
                 "phoneNumber": "385981234567",
                 "userId": "123",  
                 "parameters": [
@@ -452,13 +452,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                         "Value": "1990-01-01"
                     }
                 ],
-                "signature": "jOpYNeeucE..."
+                "signature": "NqV3kXbpxN..."
             },
             responseExample: {
                 "couponValue": 50,
                 "status": 1,
                 "ISOCurrency": "HRK",
-                "providerTransactionId": "",
+                "partnerTransactionId": "",
                 "originalISOCurrency": "EUR",
                 "originalCouponValue": 50,
                 "currentCouponValue": 50,
