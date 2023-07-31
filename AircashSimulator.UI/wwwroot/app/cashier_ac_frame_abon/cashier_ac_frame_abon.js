@@ -50,7 +50,7 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
                     $scope.abon.amount = 0;
                 }
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
-                cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value)
+                cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value, $scope.useAmountRadio)
                     .then(function (response) {    
                         console.log(response);                        
                         

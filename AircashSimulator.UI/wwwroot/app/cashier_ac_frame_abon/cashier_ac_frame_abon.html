@@ -82,9 +82,17 @@
                                             <input ng-checked="false" ng-model="useAmountCheckBox" class="form-check-input" type="checkbox" id="checkbox2" style=" width: 1.55rem; height: 1.55rem;" ng-init="useAmountCheckBox=false" />
                                             <label class="form-check-label" for="checkbox2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">{{translationsCashier.abon_cashier_configuration_checkbox}}</label>
                                         </div>
+                                        <div class="form-check" ng-if="useAmountCheckBox">
+                                            <input name = "radiobtn" ng-checked="false" ng-model="useAmountRadio" value="1" class="form-check-input" type="radio" id="radio1" style=" width: 1.55rem; height: 1.55rem;" ng-init="false" />
+                                            <label class="form-check-label" for="radio1" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Send exact amount with Abon</label>
+                                        </div>
+                                        <div class="form-check" ng-if="useAmountCheckBox">
+                                            <input name = "radiobtn" ng-checked="false" ng-model="useAmountRadio" value="2" class="form-check-input" type="radio" id="radio2" style=" width: 1.55rem; height: 1.55rem;" ng-init="false" />
+                                            <label class="form-check-label" for="radio2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Send maximum amount with Abon</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                             </div>
                         </div>
                         <div class="col-md-1"></div>
                     </div>
