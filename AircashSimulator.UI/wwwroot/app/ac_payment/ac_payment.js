@@ -113,11 +113,11 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                 value: generateSignatureModel.identificator
             },
             currency: {
-                key: "currencyID",
+                key: "currencyIsoCode",
                 value: generateSignatureModel.currency
             },
             countryCode: {
-                key: "countryCode",
+                key: "countryIsoCode",
                 value: generateSignatureModel.countryCode
             },
             aircashUserID: {
@@ -125,15 +125,15 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                 value: generateSignatureModel.aircashUserID
             },
             firstName: {
-                key: "FirstName",
+                key: "PayerFirstName",
                 value: generateSignatureModel.firstname
             },
             lastName: {
-                key: "LastName",
+                key: "PayerLastName",
                 value: generateSignatureModel.lastname
             },
             birthDate: {
-                key: "BirthDate",
+                key: "PayerBirthDate",
                 value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
             },
             merchantId: {
