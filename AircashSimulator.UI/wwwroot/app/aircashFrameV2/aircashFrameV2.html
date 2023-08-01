@@ -116,16 +116,16 @@
                         Aircash will check wheather the user exists in the Aircash system.
                     </li>
                     <li>
-                        If the user exists and all preriquiestes are met to receive the payout, Aircash will send a push notification to let the partner system know that the payout is ready to receive.
+                        If the user exists and all prerequisites are met to receive the payout, Aircash will send a push notification to let the partner system know that the payout is ready to receive.
                     </li>
                     <li>
                         Partner system needs to check the status within the Aircash system by sending status request. If Aircash system responds with pending status, partner system can reserve the funds.
                     </li>
                     <li>
-                        Once the reserved funds are ready to be confirmed (either mannualy, either automatically), partner system need to send final Confirmation request to Aircash system.
+                        Once the reserved funds are ready to be confirmed (either manually or automatically), partner system needs to send final Confirmation request to Aircash system.
                     </li>
                     <li>
-                        Upon recieving the confirmation request, Aircash system will top up the Aircash account.
+                        Upon receiving the confirmation request, Aircash system will top up the Aircash account.
                     </li>
                 </ol>
                 <p>Watch video example <a href="" ng-click="showVideoWithdrawal()">here</a>.</p>
@@ -2424,7 +2424,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </tr>
                 <tr>
                     <td>
-                        <b>A:</b>&nbsp;We suggest making a timestamp of 5min for the Aircash Frame timer. Once transaction time pass (5min) and transaction timeouts, we will
+                        <b>A:</b>&nbsp;We suggest making a timestamp of 5min for the Aircash Frame timer. Once transaction time passes (5min) and transaction timeouts, we will
                         call your NotificationUrl and the transaction will be in status 1 – declined. If for any reason (network problems etc.) the notification is not received,
                         you can call the Status method 30 seconds after the Aircash Frame timer expired to make sure there was not any network or other issues and make sure you
                         had the right transaction status in your system (the same as in the Aircash system)
