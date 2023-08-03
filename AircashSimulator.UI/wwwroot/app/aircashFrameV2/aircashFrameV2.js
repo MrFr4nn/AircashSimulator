@@ -296,6 +296,22 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     };
 
     $scope.setInititateModel();
+    
+    $scope.useMatchPersonalDataChanged = function () {
+        if ($scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerId) {
+            $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+            $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+            $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+            $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+            $rootScope.showGritter("", "PartnerId changed to PartnerId that uses match personal data");
+        } else if (!$scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData) {
+            $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+            $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+            $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+            $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerId;
+            $rootScope.showGritter("", "PartnerId changed to PartnerId that dosen't uses match personal data");
+        }
+    }
 
     $scope.setDefaultInitiateModel = function () {
         $scope.locale.languageInput = "en";
