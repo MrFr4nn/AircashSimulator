@@ -98,6 +98,11 @@ namespace AircashSimulator.Controllers.AircashFrame
             var partnerId = SettingsService.AircashFramePartnerId;
             if (initiateRequest.MatchParameters != null && initiateRequest.MatchParameters.Count != 0) partnerId = SettingsService.AircashFramePartnerIdWithMatchPersonalData;
 
+            if (initiateRequest.AmountRule != null && AmountRule.Default == initiateRequest.AmountRule) partnerId = SettingsService.AircashFramePartnerId;
+            else if (initiateRequest.AmountRule != null && AmountRule.EqualOrLessThanCouponValue == initiateRequest.AmountRule) partnerId = SettingsService.AircashFrameAmountEqualOrLessThanCouponValuePartnerId;
+            else if (initiateRequest.AmountRule != null && AmountRule.EqualAsCouponValue == initiateRequest.AmountRule) partnerId = SettingsService.AircashFrameAmountEqualAsCouponValuePartnerId;
+            else if (initiateRequest.AmountRule != null && AmountRule.LessThanCouponValue == initiateRequest.AmountRule) partnerId = SettingsService.AircashFrameAmountLessThanCouponValuePartnerId;
+
             var initiateRequestDTO = new InititateRequestV2Dto
             {
                 PartnerId = partnerId,

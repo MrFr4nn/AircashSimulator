@@ -65,6 +65,10 @@ namespace Service.Settings
         Guid UnableToCancelPayoutTransactionId { get; }
         Guid TransactionAlreadyCanceledId { get; }
         Guid AircashFramePartnerId { get; }
+        Guid AircashFrameAmountDefaultPartnerId { get; }
+        Guid AircashFrameAmountEqualOrLessThanCouponValuePartnerId { get; }
+        Guid AircashFrameAmountEqualAsCouponValuePartnerId { get; }
+        Guid AircashFrameAmountLessThanCouponValuePartnerId { get; }
         Guid AircashFramePartnerIdWithMatchPersonalData { get; }
     }
 }

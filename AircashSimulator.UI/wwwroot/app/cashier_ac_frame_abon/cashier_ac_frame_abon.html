@@ -33,7 +33,7 @@
                                     <input ng-checked="true" ng-model="confirmCheckBox" class="form-check-input" type="checkbox" id="checkbox1" style=" width: 1.55rem; height: 1.55rem;" ng-init="confirmCheckBox=true" ng-change="checkStatusBtnInitiateAcFrame(confirmCheckBox)" />
                                     <label ng-bind-html="translationsCashier.abon_cashier_deposit_terms_and_conditions" class="form-check-label" for="checkbox1" style=" padding-top: 4px; padding-left:10px; font-size:15px;">{{translationsCashier.abon_cashier_deposit_terms_and_conditions}}</label>
                                 </div>
-                                <div class="mt-3" ng-if="useAmountRadio==2 || useAmountRadio==3">
+                                <div class="mt-3" ng-if="setting.useAmountRule != 1">
                                     <label class="form-label">{{translationsCashier.cashier_amount_input_label}}</label>
                                     <input class="form-control form-control-lg" ng-model="abon.amount" type="text" placeholder="{{translationsCashier.cashier_amount_placeholder}}" ng-disabled="createCashierAcFrameAbonServiceBusy" ng-required="true">
                                 </div>
@@ -78,17 +78,9 @@
                                             <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
                                             </select>
                                         </div>
-                                        <div class="form-check">
-                                            <input name="radiobtn" ng-checked="true" ng-model="useAmountRadio" value="1" class="form-check-input" type="radio" id="radio1" style=" width: 1.55rem; height: 1.55rem;" ng-init="false" />
-                                            <label class="form-check-label" for="radio1" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Send 0 or NULL as amount with Abon</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input name="radiobtn" ng-checked="false" ng-model="useAmountRadio" value="2" class="form-check-input" type="radio" id="radio2" style=" width: 1.55rem; height: 1.55rem;" ng-init="false" />
-                                            <label class="form-check-label" for="radio2" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Send exact amount with Abon</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input name="radiobtn" ng-checked="false" ng-model="useAmountRadio" value="3" class="form-check-input" type="radio" id="radio3" style=" width: 1.55rem; height: 1.55rem;" ng-init="false" />
-                                            <label class="form-check-label" for="radio3" style=" padding-top: 4px; padding-left:10px; font-size:15px;">Send maximum amount with Abon</label>
+                                        <div class="form-check" ng-repeat="rule in amountRules">
+                                            <input name="radiobtn" ng-model="setting.useAmountRule" ng-value="rule.value" class="form-check-input" type="radio" id="radio1" style=" width: 1.55rem; height: 1.55rem;" />
+                                            <label class="form-check-label" for="radio1" style=" padding-top: 4px; padding-left:10px; font-size:15px;">{{rule.description}}</label>
                                         </div>
                                     </div>
                                 </div>

@@ -9,6 +9,7 @@ namespace AircashSimulator.Controllers.AircashFrame
     {
         public PayTypeEnum PayType { get; set; }
         public PayMethodEnum PayMethod { get; set; }
+        public AmountRule? AmountRule { get; set; }
         public decimal Amount { get; set; }
         public List<CustomParameterModel> MatchParameters { get; set; }
         public AcFrameIntegrationCheckoutTypeEnum AcFrameOption { get; set; }

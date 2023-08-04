@@ -71,6 +71,10 @@ namespace Service.Settings
         public string PartnerTransactionIdAlreadyExists { get { return GetSetting("PartnerTransactionIdAlreadyExists", string.Empty, throwExceptionIfMissing: true); } }
         public Guid BlockedUserId { get { return GetSetting("BlockedUserId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashFramePartnerId { get { return GetSetting("AircashFramePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AircashFrameAmountDefaultPartnerId { get { return GetSetting("AircashFrameAmountDefaultPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AircashFrameAmountLessThanCouponValuePartnerId { get { return GetSetting("AircashFrameAmountLessThanCouponValuePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AircashFrameAmountEqualOrLessThanCouponValuePartnerId { get { return GetSetting("AircashFrameAmountEqualOrLessThanCouponValuePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AircashFrameAmountEqualAsCouponValuePartnerId { get { return GetSetting("AircashFrameAmountEqualAsCouponValuePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashFramePartnerIdWithMatchPersonalData { get { return GetSetting("AircashFramePartnerIdWithMatchPersonalData", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid SalesPartnerId { get { return GetSetting("SalesPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid UnableToCancelPayoutTransactionId { get { return GetSetting("UnableToCancelPayoutTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }

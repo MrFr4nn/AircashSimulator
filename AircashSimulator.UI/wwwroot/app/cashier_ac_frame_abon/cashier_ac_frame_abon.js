@@ -18,7 +18,7 @@ cashierAcFrameModule.service("cashierAcFrameAbonService", ['$http', '$q', 'handl
             initiateAcFrameAbon: initiateAcFrameAbon
         });
 
-        function initiateAcFrameAbon(amount, payType, payMethod, acFrameOption) {
+        function initiateAcFrameAbon(amount, payType, payMethod, acFrameOption, amountRule) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
@@ -27,6 +27,7 @@ cashierAcFrameModule.service("cashierAcFrameAbonService", ['$http', '$q', 'handl
                     payType: payType,
                     payMethod: payMethod,
                     acFrameOption: acFrameOption,
+                    amountRule: amountRule,
                     environment: $rootScope.environment
                 }
             });
@@ -44,13 +45,38 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
 
             $scope.abon = {}
 
+            $scope.amountRules = [
+                {
+                    key: "Default",
+                    description: "Accept value of any Coupon code",
+                    value: 1
+                },
+                {
+                    key: "EqualAsCouponValue",
+                    description: "Accept value of Coupon code equal as sent Amount",
+                    value: 3
+                },
+                {
+                    key: "EqualOrLessThanCouponValue",
+                    description: "Accept value of Coupon code equal or less then sent Amount",
+                    value: 2
+                },
+                {
+                    key: "LessThanCouponValue",
+                    description: "Accept value less than sent Amount",
+                    value: 4
+                }
+            ];
+            $scope.setting = {};
+            $scope.setting.useAmountRule = $scope.amountRules[0].value;
+
             $scope.initiateAcFrameAbon = function () {                       
                 $scope.createCashierAcFrameAbonServiceBusy = true;
-                if (!$scope.useAmountCheckBox) {
+                if ($scope.abon.amount == undefined) {
                     $scope.abon.amount = 0;
                 }
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
-                cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value, $scope.useAmountRadio)
+                cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value, $scope.setting.useAmountRule)
                     .then(function (response) {    
                         console.log(response);                        
                         
@@ -102,11 +128,12 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
                         else {
                             console.log(response);
                         }
-                    }, () => {
+                    }, (error) => {
                         console.log("error");
+                        console.log(error);
                         $scope.createCashierAcFrameAbonServiceBusy = false;
                     });
-            }  
+            }
 
             $scope.disableClick = function (isDisabled) {
                 $scope.isDisabled = !isDisabled;
