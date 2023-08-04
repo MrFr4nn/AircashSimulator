@@ -52,7 +52,7 @@ namespace Services.AircashPayment
                 {
                     Key = "minAmount",
                     Type = "Decimal",
-                    Value = "5,00"
+                    Value = "10,00"
                 });
                 var response = new CheckPlayerResponse
                 {
