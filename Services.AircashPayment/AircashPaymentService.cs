@@ -38,6 +38,7 @@ namespace Services.AircashPayment
         public async Task<object> CheckPlayer(List<AircashPaymentParameters> checkPlayerParameters)
         {
             string UserId = ReturnUser(checkPlayerParameters);
+            decimal minAmount = 10;
 
             if (UserId != "")
             {
@@ -52,7 +53,7 @@ namespace Services.AircashPayment
                 {
                     Key = "minAmount",
                     Type = "Decimal",
-                    Value = "10,00"
+                    Value = minAmount.ToString()
                 });
                 var response = new CheckPlayerResponse
                 {
