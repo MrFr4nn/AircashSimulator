@@ -49,18 +49,6 @@ namespace Services.AircashPayment
                     Type = "String",
                     Value = UserId.ToString()
                 });
-                parameters.Add(new Parameters
-                {
-                    Key = "minAmount",
-                    Type = "Decimal",
-                    Value = minAmount.ToString()
-                });
-                parameters.Add(new Parameters
-                {
-                    Key = "balance",
-                    Type = "Decimal",
-                    Value = "100"
-                });
                 var response = new CheckPlayerResponse
                 {
                     IsPlayer = true,
