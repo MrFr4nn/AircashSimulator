@@ -462,6 +462,32 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                     }
                 ]
             },
+            responseExampleAircashMatchingPersonalData: {
+                isPlayer: true,
+                error: null,
+                parameters: [
+                    {
+                        "key": "partnerUserID",
+                        "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerFirstName",
+                        "value": "John",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerLastName",
+                        "value": "Doe",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerBirthDate",
+                        "value": "1990-01-01",
+                        "type": "Date"
+                    }
+                ]
+            },
             errorResponseExample: {
                 isPlayer: false,
                 error: {
