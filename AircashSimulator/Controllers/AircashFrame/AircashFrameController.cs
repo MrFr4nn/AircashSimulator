@@ -335,14 +335,14 @@ namespace AircashSimulator.Controllers.AircashFrame
         [Authorize]
         public async Task<IActionResult> RefundAcPayTransaction(RefundAcPayTransactionDTO refundRequestDTO)
 		{
-			var refundRequest = new AircashRefundTransactionRequest
+			var refundRequest = new AircashRefundTransactionRequestV2
 			{
 				PartnerId = refundRequestDTO.PartnerID,
                 PartnerTransactionId = refundRequestDTO.PartnerTransactionID,
                 RefundPartnerTransactionID = refundRequestDTO.RefundPartnerTransactionID,
                 Amount = refundRequestDTO.Amount
 			};
-			var response = await AircashFrameService.RefundTransaction(refundRequest);
+			var response = await AircashFrameV2Service.RefundTransaction(refundRequest);
 			return Ok(response);
 		}
 	}

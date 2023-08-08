@@ -189,12 +189,12 @@
 
             <br />
             <div ng-if="frameRefundResponded" class="col-md-4">
-                Request ({{RefundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                Request ({{frameRefundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="frameRefundServiceRequest"></jsonformatter>
                 Sequence: {{sequenceRefund}}
             </div>
             <div ng-if="frameRefundResponded" class="col-md-4">
-                Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                Response ({{frameRefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="frameRefundServiceResponse"></jsonformatter>
             </div>
         </div>

@@ -17,13 +17,15 @@ acRefundModule.service("acRefundModuleService", ['$http', 'handleResponseService
         refundTransaction: refundTransaction,
     });
 
-    function refundTransaction(partnerTransactionID, amount) {
+    function refundTransaction(partnerId, partnerTransactionId, refundPartnerTransactionId, amount) {
         var request = $http({
             method: 'POST',
             url: config.baseUrl + "AircashPay/RefundTransaction",
             data: {
-                partnerTransactionID: partnerTransactionID,
-                amount: amount,
+                partnerID: partnerId,
+                PartnerTransactionID: partnerTransactionId,
+                RefundTransactionID: refundPartnerTransactionId,
+                amount: amount
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -63,6 +65,11 @@ acRefundModule.controller("acRefundModuleCtrl", ['$scope', 'acRefundModuleServic
             $scope.refundModel = {};
             $scope.frameRefundModel = {};
 
+            $scope.refundModel.partnerId = $scope.partnerIds.AcPayPartnerId;
+            $scope.refundModel.partnerTransactionId = uuidv4();
+            $scope.refundModel.refundPartnerTransactionId = uuidv4();
+            $scope.refundModel.amount = 100;
+
             $scope.frameRefundModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
             $scope.frameRefundModel.partnerTransactionId = uuidv4();
             $scope.frameRefundModel.refundPartnerTransactionId = uuidv4();
@@ -78,7 +85,7 @@ acRefundModule.controller("acRefundModuleCtrl", ['$scope', 'acRefundModuleServic
         $scope.refundTransaction = function () {
             $scope.refundServiceBusy = true;
             $scope.refundResponded = false;
-            acRefundModuleService.refundTransaction($scope.refundModel.PartnerTransactionID, $scope.refundModel.amount)
+            acRefundModuleService.refundTransaction($scope.refundModel.partnerId, $scope.refundModel.partnerTransactionId, $scope.refundModel.refundPartnerTransactionId, $scope.refundModel.amount)
                 .then(function (response) {
                     if (response) {
                         $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;

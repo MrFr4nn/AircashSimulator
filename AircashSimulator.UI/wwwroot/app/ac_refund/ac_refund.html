@@ -156,15 +156,24 @@
     <uib-tab index="refund-tab-4" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-4">
+                <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
                 <form action="/" method="POST" name="refundForm">
                     <fieldset>
                         <div class="mb-3">
-                            <label class="form-label" for="exampleInputEmail1">Refund Amount</label>
-                            <input ng-model="refundModel.amount" placeholder="Amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
+                            <label class="form-label">Partner ID</label>
+                            <input ng-model="refundModel.partnerId" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="refundServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Partner Transaction ID</label>
-                            <input ng-model="refundModel.PartnerTransactionID" placeholder="Enter PartnerTransactionID" class="form-control" type="text" ng-disabled="refundServiceBusy" ng-required="true">
+                            <input ng-model="refundModel.partnerTransactionId" placeholder="Enter PartnerTransactionID" class="form-control" type="text" ng-disabled="refundServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Refund Partner Transaction ID</label>
+                            <input ng-model="refundModel.refundPartnerTransactionId" placeholder="Enter RefundPartnerTransactionID" class="form-control" type="text" ng-disabled="refundServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Refund Amount</label>
+                            <input ng-model="refundModel.amount" placeholder="Amount" type="number" class="form-control" ng-required="true" name="amount" min="0" step="0.01">
                         </div>
                         <button ng-click="refundTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="refundServiceBusy|| refundForm.$invalid">Refund Transaction <i ng-if="refundServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
@@ -178,11 +187,11 @@
                 Sequence: {{sequenceRefund}}
             </div>
             <div ng-if="refundResponded" class="col-md-4">
-                Response ({{RefundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                Response ({{refundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="refundServiceResponse"></jsonformatter>
             </div>
         </div>
     </uib-tab>
 </uib-tabset>
-
+<hr />
 <ng-include src="'app/ac_refund/frame_refund.html'"></ng-include>
