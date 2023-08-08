@@ -203,20 +203,6 @@ namespace Services.AircashPay
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
                 aircashRefundTransactionResponse = JsonConvert.DeserializeObject<AircashRefundTransactionResponse>(response.ResponseContent);
-                var transaction = AircashSimulatorContext.Transactions.FirstOrDefault(x => x.TransactionId.ToString() == refundTransactionDTO.PartnerTransactionId);
-
-                AircashSimulatorContext.Transactions.Add(new TransactionEntity
-                {
-                    Amount = refundTransactionDTO.Amount,
-                    ISOCurrencyId = transaction.ISOCurrencyId,
-                    AircashTransactionId = ((AircashRefundTransactionResponse)aircashRefundTransactionResponse).TransactionId,
-                    TransactionId = refundTransactionDTO.RefundPartnerTransactionId,
-                    ServiceId = ServiceEnum.AircashPayCancellation,
-                    RequestDateTimeUTC = requestDateTime,
-                    ResponseDateTimeUTC = responseDateTime,
-                    PointOfSaleId = transaction.PointOfSaleId
-                });
-                AircashSimulatorContext.SaveChanges();
             }
             else
             {
