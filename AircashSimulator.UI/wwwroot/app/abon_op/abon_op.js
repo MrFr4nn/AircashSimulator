@@ -431,6 +431,40 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 additionalData: null
             }
         },
+        validateCouponWithAutorization: {
+            requestExample: {
+                "couponCode": "5460446045144493",
+                "partnerId": "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                "partnerTransactionId": "4a4d9e48-77ca-4144-844b-cfe535af6a5c",
+                "phoneNumber": "385981234567",
+                "userId": "123",  
+                "parameters": [
+                    {
+                        "Key": "PayerFirstName",
+                        "Value": "John"
+                    },
+                    {
+                        "Key": "PayerLastName",
+                        "Value": "Doe"
+                    },
+                    {
+                        "Key": "PayerBirthDate",
+                        "Value": "1990-01-01"
+                    }
+                ],
+                "signature": "NqV3kXbpxN..."
+            },
+            responseExample: {
+                "couponValue": 50,
+                "status": 1,
+                "ISOCurrency": "HRK",
+                "partnerTransactionId": "",
+                "originalISOCurrency": "EUR",
+                "originalCouponValue": 50,
+                "currentCouponValue": 50,
+                "aircashUserId": "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+            }
+        },
         confirmTransaction: {
             requestExample: {
                 "couponCode": "2326186935891516",

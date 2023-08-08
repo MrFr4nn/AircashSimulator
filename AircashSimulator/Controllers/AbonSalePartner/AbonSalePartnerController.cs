@@ -50,7 +50,29 @@ namespace AircashSimulator
         public async Task<IActionResult> CreateCoupon(CreateCouponRequest createCouponRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
-            var response=await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, new Guid(createCouponRequest.PartnerId), createCouponRequest.IsoCurrencySymbol, createCouponRequest.PartnerTransactionId, null, null, environment, createCouponRequest.ContentType, (int?)createCouponRequest.ContentWidth);
+            var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, createCouponRequest.PointOfSaleId, new Guid(createCouponRequest.PartnerId), createCouponRequest.IsoCurrencySymbol, createCouponRequest.PartnerTransactionId, null, null, environment, createCouponRequest.ContentType, (int?)createCouponRequest.ContentWidth);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateMultipleCoupons(MultipleCouponRequest request)
+        {
+            var abonRq = new MultipleCouponABONRequest
+            {
+                PartnerId = request.PartnerId,
+                PointOfSaleId = request.PointOfSaleId,
+                ISOCurrencySymbol = request.ISOCurrencySymbol,
+                ContentType = request.ContentType,
+                ContentWidth = request.ContentWidth,
+                Denominations = request.Denominations.Select(x => new AbonDenomination
+                {
+                    Value = x.Value,
+                    PartnerTransactionId = x.PartnerTransactionId
+                }).ToList()
+            };
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AbonSalePartnerService.CreateMultipleCoupons(abonRq, null, null, environment);
             return Ok(response);
         }
 
@@ -61,6 +83,7 @@ namespace AircashSimulator
             var response = await AbonSalePartnerService.CreateCoupon(createCouponRequest.Value, SettingsService.PointOfSaleIdCashier, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging, null, null);
             return Ok(response);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateMultipleCashierCoupon(CreateCashierCouponRequest createCouponRequest)
         {
@@ -69,7 +92,7 @@ namespace AircashSimulator
             var coupons = new List<string>();
             foreach (decimal value in denominations)
             {
-                coupons.Add("Denomination: " + value.ToString() + " "+ ((CurrencyEnum)partner.CurrencyId).ToString());
+                coupons.Add("Denomination: " + value.ToString() + " " + ((CurrencyEnum)partner.CurrencyId).ToString());
                 for (int i = 0; i < SettingsService.AbonSPCashierNumberOfCouponCodesPerDenomination; i++)
                 {
                     var response = await AbonSalePartnerService.CreateCouponCashier(value, SettingsService.PointOfSaleIdCashier, partner.PartnerId, ((CurrencyEnum)partner.CurrencyId).ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
@@ -104,39 +127,93 @@ namespace AircashSimulator
             switch (errorCode)
             {
                 case AbonCreateCouponErrorCodeEnum.InvalidPartnerId:
-                {
-                    partnerId = Guid.NewGuid();
-                    break;
-                }
+                    {
+                        partnerId = Guid.NewGuid();
+                        break;
+                    }
                 case AbonCreateCouponErrorCodeEnum.InvalidSignature:
-                {
-                    privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
-                    break;
-                }
+                    {
+                        privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
+                        break;
+                    }
                 case AbonCreateCouponErrorCodeEnum.InvalidCouponValue:
-                {
-                    abonValue = SettingsService.AbonInvalidValue;
-                    break;
-                }
+                    {
+                        abonValue = SettingsService.AbonInvalidValue;
+                        break;
+                    }
                 case AbonCreateCouponErrorCodeEnum.InvalidCurrencySymbol:
-                {
-                    isoCurrencySymbol = SettingsService.AbonInvalidCurrencySymbol;
-                    break;
-                }
+                    {
+                        isoCurrencySymbol = SettingsService.AbonInvalidCurrencySymbol;
+                        break;
+                    }
                 case AbonCreateCouponErrorCodeEnum.CouponExistsForTheGivenPartnerTransactionId:
-                {
-                    partnerTransactionId = SettingsService.CouponExistsForTheGivenPartnerTransactionId;
-                    break;
-                }
+                    {
+                        partnerTransactionId = SettingsService.CouponExistsForTheGivenPartnerTransactionId;
+                        break;
+                    }
                 case AbonCreateCouponErrorCodeEnum.DailyLimitExceeded:
-                {
-                    partnerId = SettingsService.AbonGenerateBlockedPartnerId;
-                    break;
-                }
+                    {
+                        partnerId = SettingsService.AbonGenerateBlockedPartnerId;
+                        break;
+                    }
                 default:
                     return BadRequest();
             }
             var response = await AbonSalePartnerService.CreateCoupon(abonValue, pointOfSaleId, partnerId, isoCurrencySymbol, partnerTransactionId, privateKeyPath, privateKeyPass, EnvironmentEnum.Staging, null, null);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CreateMultipleCouponsSimulateError([FromBody] AbonCreateCouponErrorCodeEnum errorCode)
+        {
+            var privateKeyPass = SettingsService.AircashSimulatorPrivateKeyPass;
+            var privateKeyPath = SettingsService.AircashSimulatorPrivateKeyPath;
+            var request = new MultipleCouponABONRequest()
+            {
+                ContentType = "pdf",
+                ISOCurrencySymbol = CurrencyEnum.EUR.ToString(),
+                PartnerId = SettingsService.AbonGeneratePartnerId,
+                Denominations = new List<AbonDenomination>() { new AbonDenomination() { Value = SettingsService.AbonDefaultValue, PartnerTransactionId = Guid.NewGuid().ToString() } },
+                PointOfSaleId = SettingsService.PointOfSaleId
+            };
+
+            switch (errorCode)
+            {
+                case AbonCreateCouponErrorCodeEnum.InvalidPartnerId:
+                    {
+                        request.PartnerId = Guid.NewGuid();
+                        break;
+                    }
+                case AbonCreateCouponErrorCodeEnum.InvalidSignature:
+                    {
+                        privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
+                        break;
+                    }
+                case AbonCreateCouponErrorCodeEnum.InvalidCouponValue:
+                    {
+                        request.Denominations.First().Value = SettingsService.AbonInvalidValue;
+                        break;
+                    }
+                case AbonCreateCouponErrorCodeEnum.InvalidCurrencySymbol:
+                    {
+                        request.ISOCurrencySymbol = SettingsService.AbonInvalidCurrencySymbol;
+                        break;
+                    }
+                case AbonCreateCouponErrorCodeEnum.CouponExistsForTheGivenPartnerTransactionId:
+                    {
+                        request.Denominations.First().PartnerTransactionId = SettingsService.CouponExistsForTheGivenPartnerTransactionId;
+                        break;
+                    }
+                case AbonCreateCouponErrorCodeEnum.DailyLimitExceeded:
+                    {
+                        request.PartnerId = SettingsService.AbonGenerateBlockedPartnerId;
+                        break;
+                    }
+                default:
+                    return BadRequest();
+            }
+            var response = await AbonSalePartnerService.CreateMultipleCoupons(request, privateKeyPath, privateKeyPass, EnvironmentEnum.Staging);
             return Ok(response);
         }
 
@@ -154,50 +231,50 @@ namespace AircashSimulator
             switch (errorCode)
             {
                 case AbonCancelCouponErrorCodeEnum.InvalidPartnerId:
-                {
-                    partnerId = Guid.NewGuid();
-                    break;
-                }
+                    {
+                        partnerId = Guid.NewGuid();
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.InvalidSignature:
-                {
-                    privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
-                    break;
-                }
+                    {
+                        privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.InvalidCouponSerialNumberOrPartnerTransactionId:
-                {
-                    serialNumber = HelperService.RandomNumber(16);
-                    break;
-                }
+                    {
+                        serialNumber = HelperService.RandomNumber(16);
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.PartnerIdsDoNotMatch:
-                {
-                    partnerId = SettingsService.AbonGeneratePartnerIdsDoNotMatch;
-                    break;
-                }
+                    {
+                        partnerId = SettingsService.AbonGeneratePartnerIdsDoNotMatch;
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.PointOfSalesIdsDoNotMatch:
-                {
-                    pointOfSaleId = SettingsService.AbonPointOfSalesIdsDoNotMatch;
-                    break;
-                }
+                    {
+                        pointOfSaleId = SettingsService.AbonPointOfSalesIdsDoNotMatch;
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.CouponHasBeenAlreadyCanceled:
-                {
-                    serialNumber = SettingsService.AbonCanceledCouponSerialNumber;
-                    break;
-                }
+                    {
+                        serialNumber = SettingsService.AbonCanceledCouponSerialNumber;
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.CouponHasBeenAlreadyUsed:
-                {
-                    serialNumber = SettingsService.AbonAlradyUsedCouponSerialNumber;
-                    break;
-                }
+                    {
+                        serialNumber = SettingsService.AbonAlradyUsedCouponSerialNumber;
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.CouponHasAlreadyExpired:
-                {
-                    serialNumber = SettingsService.AbonExpiredCouponSerialNumber;
-                    break;
-                }
+                    {
+                        serialNumber = SettingsService.AbonExpiredCouponSerialNumber;
+                        break;
+                    }
                 case AbonCancelCouponErrorCodeEnum.CouponCannotBeCancelledTimeoutExpired:
-                {
-                    serialNumber = SettingsService.AbonTimedOutCouponSerialNumber;
-                    break;
-                }
+                    {
+                        serialNumber = SettingsService.AbonTimedOutCouponSerialNumber;
+                        break;
+                    }
                 default:
                     return BadRequest();
             }

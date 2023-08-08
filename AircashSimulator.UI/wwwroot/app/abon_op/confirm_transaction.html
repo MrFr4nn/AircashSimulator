@@ -1,0 +1,513 @@
+﻿<br />
+<h4>ConfirmTransaction</h4>
+<p>
+    Method that’s used to confirm the transfer of funds to the user’s online account.
+</p>
+<div class="table-responsive">
+    <table class="table table-active col-md-6">
+        <thead>
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://staging-a-bon.aircash.eu/rest/api/OnlineProvider/ConfirmTransaction</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/ConfirmTransaction</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />
+<uib-tabset>
+    <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Required</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>CouponCode</b></td>
+                        <td>string</td>
+                        <td>
+                            16 digit coupon code that the user enters in the Online
+                            Provider's web interface
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>ProviderId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier (per currency) provided by Aircash
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>ProviderTransactionId</b></td>
+                        <td>string</td>
+                        <td>
+                            Transaction identifier in the Online Provider system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>UserId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique user identifier in the Online Provider system
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            A sequence that has been digitally signed with the
+                            provider's private signature, used for authentication
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+        <jsonformatter data="aBonDeposit.confirmTransaction.requestExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+<pre>
+Request example:
+</pre>
+        <jsonformatter data="aBonDeposit.confirmTransaction.requestExample"></jsonformatter>
+        <pre>
+Sequence:
+CouponCode=2326186935891516&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=e126aa6b-0073-4e5f-bb3c-9eeefb6d392f&UserId=4149ba7d-e4f7-4c77-8393-d03e6691c03b
+
+Signature:
+eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQPNwctggadHHvQpGBOW1d7avb4oSPqQy1KEgeCBceZeN5ErZn4sNsKo1W7UkCIyhGfS7Fb6/b9cLXMqh5pOBD1L+YdFGiDlG439wE6rfvomrv0Qzl23R2OVTdFF9V6m/B7cHvwNrl6iL3dXXksmWkW/XP7fUx+zqDPFLlnkMrNseUScqL7wXBNxJEWUTRyon8KuoAl7tfUHCcjPEuJyLnEMuQ3eEwmNgSOZh4P+orpAw60A8OjzriPGCALAD/BBXlHe+dofm6oerVflZHFzAT9ev8mcsEMqx5K/jlc+kWLqO8O5PLKRKE2GEZH7t8sI12YUgk33VENJSAmiJFWVcOwpKjkpMZUsBk679uzQT0n9FOY1xMp/vUMTdIp9tf4L1cgJ7CRId5wq3Dl1GlU2r+2rW1xTR4W+ybZ0U6Mh6fyJcNCKtcVb40T5VDVoncbxyDJ0Wr8Kc8kpU3I7oNcMtABYW0iHhew2/uYBDpB5tekkXymWAuvSKMKnjY2dyoOWcCexb9aQEKmlwT1XNZM6dFU6G7b4kNYNrSvSA89DAOoRRw7vwP8HF2aJrPulgR3+dGMPeMW/+nTTD+YwXeedpa/hw8CPk=</pre>
+    </uib-tab>
+    <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>CouponValue</b></td>
+                        <td>decimal</td>
+                        <td>
+                            Coupon value
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>ISOCurrency</b></td>
+                        <td>string</td>
+                        <td>
+                            ISO 4217 code of the currency
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>ProviderTransactionId</b></td>
+                        <td>string</td>
+                        <td>
+                            Transaction identifier in the Online Provider system (has value
+                            only if the coupon has been used)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>SalePartnerId</b></td>
+                        <td>string</td>
+                        <td>
+                            Id of the point of sale - where the coupon was bought
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>IsoCountryCode</b></td>
+                        <td>string</td>
+                        <td>
+                            ISO 3166 standard – Codes for the representation of names of countries and their subdivisions (e.g. HR, DE, RO ...)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <p class="ml-3">
+            <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+        </p>
+    </uib-tab>
+    <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
+        <jsonformatter data="aBonDeposit.confirmTransaction.responseExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Error Code</th>
+                        <th>Message</th>
+                        <th>Aditional data</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="11"><b>400</b></td>
+                        <td rowspan="11">
+                            An invalid request was made. The response will contain an error code, message and optionally additionalData.
+                        </td>
+                        <td><b>1</b></td>
+                        <td>Invalid ProviderId</td>
+                        <td>-</td>
+                        <td rowspan="11">
+                            The response will contain an error code,
+                            message and optionally additionalData.
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>2</b></td>
+                        <td>Invalid Signature</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><b>3</b></td>
+                        <td>Invalid Coupon Code</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><b>4</b></td>
+                        <td>Coupon Already Used</td>
+                        <td>ISOCurrency, CouponValue, ProviderTransactionId</td>
+                    </tr>
+                    <tr>
+                        <td><b>5</b></td>
+                        <td>Conversion Module Error</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><b>7</b></td>
+                        <td>Coupon Country Not Allowed</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><b>9</b></td>
+                        <td>Limit exceeded</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><b>12</b></td>
+                        <td>Authorization pending</td>
+                        <td>
+                            ISOCurrency, CouponValue, ProviderTransactionId
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>13</b></td>
+                        <td>User data do not match</td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>14</b></td>
+                        <td>Authorization timed out</td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>15</b></td>
+                        <td>Authorization declined</td>
+                        <td>
+                            -
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>500</b></td>
+                        <td>An unknown error occured</td>
+                        <td>-</td>
+                        <td>Unknown error has occurred</td>
+                        <td>-</td>
+                        <td>
+                            Contact Aircash support
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="ConfirmTransactionError-tab-1" heading="1 - Invalid ProviderId" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error1.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=7562aad0-aa14-4095-b73e-48170d4191cf&ProviderTransactionId=13569d0e-8dfe-48a4-bd51-2d46b8968252&UserId=32789507-dac4-4a90-aaa2-98398bfc501a
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error1.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 2)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error2.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=9c75b26b-b600-4f02-93de-45f4b6fff057&UserId=940a81aa-5696-4c1b-bbb0-80698ccf092e
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 2)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error2.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=S4S152QJK6E83HC1&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=3c4c8d91-c8dd-43ae-835b-aca46eaa2a36&UserId=b8970b7a-22c6-4ba2-b866-bec9b8a2437f
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-4" heading="4 - Coupon Already Used" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 4)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error4.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=2981361437471469&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=ce44cff1-41f5-4610-be3d-5054293be353&UserId=750ce21e-7ce4-4ead-9e5b-5961e684e4c9
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 4)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error4.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-5" heading="5 - Conversion Module Error" classes="nav-item">
+                Simulation not available.
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-6" heading="7 - Coupon Country Not Allowed" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 7)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error7.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=1437861149152627&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=b6b215e6-379b-4b1f-8bad-0831be6489d3&UserId=32d2c793-a059-4743-89a4-7cefc00e4411
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 7)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error7.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(7)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-7" heading="9 - Limit exceeded" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 9)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error9.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=228d8b14-675a-4ca8-afb9-8a995ed4c591&UserId=1a2b8324-e8d4-496d-a119-b571583668c7
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 9)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error9.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(9)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
+    </uib-tab>
+    <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <form action="/" method="POST" name="confirmForm0">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Provider Id</label>
+                            <input ng-model="confirmTransactionModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">User Id</label>
+                            <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Provider Transaction Id</label>
+                            <input ng-model="confirmTransactionModel.providerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                            <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                        </div>
+                        <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy || confirmForm0.$invalid">Confirm transaction <i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <br />
+            <div ng-if="confirmResponded" class="col-md-4">
+                Request ({{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="ConfirmServiceRequest"></jsonformatter>
+                Sequence: {{sequenceConfirm}}
+            </div>
+            <div ng-if="confirmResponded" class="col-md-4">
+                Response ({{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="ConfirmServiceResponse"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <form action="/" method="POST" name="confirmForm1">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Provider Id</label>
+                            <input ng-model="confirmTransactionModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">User Id</label>
+                            <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Provider Transaction Id</label>
+                            <input ng-model="confirmTransactionModel.providerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                            <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                        </div>
+                        <button ng-click="getCurlConfirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="curlConfirmBusy || confirmForm1.$invalid">Get Curl <i ng-if="curlConfirmBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <br />
+
+            <div ng-if="curlConfirmResponded" class="col-md-9">
+                <pre>
+                <jsonformatter data="CurlResponseConfirmTransaction"></jsonformatter>
+                        </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseConfirmTransaction)">Copy</button>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

@@ -58,6 +58,10 @@
         </div>
     </div>
     <br />
+    <p>
+        <b>*NOTE: We do not check if the certificate is expired</b>
+    </p>
+    <br />
     <hr />
     <h1>Aircash Test Certificates</h1>
     <p>
@@ -221,6 +225,10 @@ function generate_signature($sequence)
 
 		return $signature;
 	}</pre>
+            <br />
+            <p>
+                <b>*NOTE: This is working example for the .pfx format of the private key</b>
+            </p>
         </uib-tab>
     </uib-tabset>
     <br />
@@ -393,7 +401,7 @@ function verify_signature($sequence, $signature)
             <button ng-click="validatePublicKey()" class="btn btn-primary w-100px me-5px" ng-disabled="ValidatePublicKeyServiceBusy">Validate public key <i ng-if="ValidatePublicKeyServiceBusy" class="fa fa-cog fa-spin"></i></button>
         </div>
     </div>
-  
+
     <uib-tabset>
         <uib-tab index="request-tab-0" heading="Generate Signature" classes="nav-item">
             <div class="row">
@@ -409,7 +417,7 @@ function verify_signature($sequence, $signature)
            </pre>
 
                 </div>
-                </div>
+            </div>
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Validate Signature" classes="nav-item">
             <div class="row">
@@ -427,7 +435,7 @@ function verify_signature($sequence, $signature)
                     <jsonformatter data="ValidateSignatureResponse"></jsonformatter>
                 </div>
             </div>
-                </uib-tab>
+        </uib-tab>
     </uib-tabset>
 </body>
 </html>

@@ -10,6 +10,7 @@ using System.Net.Http;
 using Services.HttpRequest;
 using Service.Settings;
 using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Services.AircashPayment
 {
@@ -37,7 +38,8 @@ namespace Services.AircashPayment
         public async Task<object> CheckPlayer(List<AircashPaymentParameters> checkPlayerParameters)
         {
             string UserId = ReturnUser(checkPlayerParameters);
-          
+            decimal minAmount = 10;
+
             if (UserId != "")
             {
                 var parameters = new List<Parameters>();
@@ -46,7 +48,7 @@ namespace Services.AircashPayment
                     Key = "partnerUserID",
                     Type = "String",
                     Value = UserId.ToString()
-                }) ;
+                });
                 var response = new CheckPlayerResponse
                 {
                     IsPlayer = true,

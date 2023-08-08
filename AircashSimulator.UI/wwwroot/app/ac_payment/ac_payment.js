@@ -113,11 +113,11 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                 value: generateSignatureModel.identificator
             },
             currency: {
-                key: "currencyID",
+                key: "currencyIsoCode",
                 value: generateSignatureModel.currency
             },
             countryCode: {
-                key: "countryCode",
+                key: "countryIsoCode",
                 value: generateSignatureModel.countryCode
             },
             aircashUserID: {
@@ -125,15 +125,15 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                 value: generateSignatureModel.aircashUserID
             },
             firstName: {
-                key: "FirstName",
+                key: "PayerFirstName",
                 value: generateSignatureModel.firstname
             },
             lastName: {
-                key: "LastName",
+                key: "PayerLastName",
                 value: generateSignatureModel.lastname
             },
             birthDate: {
-                key: "BirthDate",
+                key: "PayerBirthDate",
                 value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
             },
             merchantId: {
@@ -459,6 +459,32 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                         "key": "partnerUserID",
                         "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
                         "type": "String"
+                    }
+                ]
+            },
+            responseExampleAircashMatchingPersonalData: {
+                isPlayer: true,
+                error: null,
+                parameters: [
+                    {
+                        "key": "partnerUserID",
+                        "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerFirstName",
+                        "value": "John",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerLastName",
+                        "value": "Doe",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerBirthDate",
+                        "value": "1990-01-01",
+                        "type": "Date"
                     }
                 ]
             },

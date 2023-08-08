@@ -12,6 +12,7 @@ namespace Domain.Entities.Enum
         UsernameNotFound = 4,
         UsernameAlreadyTaken = 5,
         PartnerIdAlreadyTaken = 6,
+        InvalidResponseSignature = 7,
         Error = 100
     }
 }

@@ -49,7 +49,7 @@ app.component('phoneNumberInput', {
 
         this.countries = [{ country: "AT", code: "+43" }, { country: "BE", code: "+32" }, { country: "BG", code: "+359" }, { country: "HR", code: "+385" },
         { country: "CY", code: "+357" }, { country: "CZ", code: "+420" }, { country: "DK", code: "+45" }, { country: "EE", code: "+372" }, { country: "FI", code: "+358" },
-        { country: "FR", code: "+33" }, { country: "DE", code: "+49" }, { country: "GR", code: "+30" }, { country: "HU", code: "+36" }, { country: "IS", code: "+354" },
+        { country: "FR", code: "+33" }, { country: "DE", code: "+49" }, { country: "GR", code: "+30" }, { country: "HU", code: "+36" }, { country: "IN", code: "+91" }, { country: "IS", code: "+354" },
         { country: "IE", code: "+353" }, { country: "IT", code: "+39" }, { country: "LV", code: "+371" }, { country: "LI", code: "+423" }, { country: "LT", code: "+370" },
         { country: "LU", code: "+352" }, { country: "MT", code: "+356" }, { country: "NL", code: "+31" }, { country: "PL", code: "+48" }, { country: "PT", code: "+351" },
         { country: "RO", code: "+40" }, { country: "SK", code: "+421" }, { country: "SI", code: "+386" }, { country: "ES", code: "+34" }, { country: "SE", code: "+46" }];
@@ -156,6 +156,202 @@ app.component('currencyidPicker', {
             this.onChangedVal = function () {
                 this.defaultCurrency = 0;
             };
+        }
+
+    }
+});
+app.component('frameInitiateTable', {
+    template: `<div class="table-responsive">
+                    <table class="table  table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="2">Parameters</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="2"><b>PartnerId</b></td>
+                                <td>string</td>
+                                <td>
+                                    Unique partner identifier (per currency) provided by Aircash
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>PartnerUserId</b></td>
+                                <td>string</td>
+                                <td>
+                                    Unique user identifier in the merchant’s system
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>PartnerTransactionId</b></td>
+                                <td>string</td>
+                                <td>
+                                    Unique transaction id in partner’s system
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Amount</b></td>
+                                <td>decimal</td>
+                                <td>
+                                    Transaction amount
+                                </td>
+                                <td>
+                                    {{$ctrl.abonDescription}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>CurrencyId</b></td>
+                                <td>int</td>
+                                <td>
+                                    ISO-4217 currency code
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>PayType</b></tdcolspan="2">
+                                <td>int</td>
+                                <td>
+                                    {{$ctrl.payTypeString}}
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>PayMethod</b></td>
+                                <td>int</td>
+                                <td>
+                                    {{$ctrl.payMethodString}}
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>NotificationUrl</b></td>
+                                <td>string</td>
+                                <td>
+                                    URL to which notification after the authorization has been successfully completed.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>SuccessUrl</b></td>
+                                <td>string</td>
+                                <td>
+                                    Aircash frame redirects the customer back to the success URL if the payment is successful
+                                </td>
+                                <td>YES, conditonally</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>DeclineUrl</b></td>
+                                <td>string</td>
+                                <td>
+                                    Aircash frame redirects the customer back to the decline URL in case payment failed
+                                </td>
+                                <td>YES, conditonally</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>CancelUrl</b></td>
+                                <td>string</td>
+                                <td>
+                                    URL where the client will be redirected after manual transaction cancelation
+                                </td>
+                                <td>YES, conditonally</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>OriginUrl</b></td>
+                                <td>string</td>
+                                <td>
+                                    Domain where your web application runs
+                                </td>
+                                <td>YES, conditonally</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Locale</b></td>
+                                <td>string</td>
+                                <td>
+                                    Language Identifiers (RFC 3066)
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>Signature</b></td>
+                                <td>string</td>
+                                <td>
+                                    A sequence that has been digitally signed with the provider's private signature, used for authentication
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><b>CustomParameters</b></td>
+                                <td>List &lt;Object&gt;</td>
+                                <td>List of parameters</td>
+                                <td>NO, <b>CustomParameters are not part of Sequence</b></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>&nbsp;Key</b></td>
+                                <td>String</td>
+                                <td>
+                                    The name of the parameter to be sent
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><b>&nbsp;Value</b></td>
+                                <td>String</td>
+                                <td>
+                                    The value of the parameter to be sent
+                                </td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>`,
+    bindings: {
+        paytype: '=',
+        paymethod: '='
+    },
+    controller: function () {
+        $ctrl = this;
+        this.payMethodOptions = [
+            {
+                name: "Abon",
+                code: 0
+            },
+            {
+                name: "AcPay",
+                code: 2
+            },
+            {
+                name: "Payout",
+                code: 10
+            }
+        ];
+
+        this.payTypeOptions = [
+            {
+                name: "Payment",
+                code: 0
+            },
+            {
+                name: "Payout",
+                code: 1
+            }
+        ];
+        this.$onInit = function () {
+            this.payTypeString = "Pay type identifier (" + this.paytype + " - " + this.payTypeOptions.find(x => x.code == this.paytype).name + ")";
+            this.payMethodString = "Pay method identifier (" + this.paymethod + " - " + this.payMethodOptions.find(x => x.code == this.paymethod).name + ")";
+            if (this.paytype == 0 && this.paymethod == 0) {
+                this.abonDescription = "YES, in case of Abon method it is optional.<br /> If the initiate request amount is empty or NULL, amount will be sent in the Status response.Otherwise, the amount must match the value of the Abon voucher(validation will be done in the Aircash system) ";
+            } else {
+                this.abonDescription = "YES";
+            }
         }
 
     }
