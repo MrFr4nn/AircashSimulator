@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h2>Aircash marketplace deposit - match personal data implementation</h2>
+    <br />
+    <p>
+        There are two possible approaches for the personal data match for the Aircash marketplace deposit flow:
+        <ol>
+            <li>
+                Aircash will do the data match.
+            </li>
+            <li>
+                Partner will do the data match.
+            </li>
+        </ol>
+    </p>
+    <h3>Aircash does the data match</h3>
+    <div class="note note-gray-400">
+        <div class="note-content col">
+            <h6>POST for CheckPlayer method</h6>
+            <jsonformatter data="AircashMatchData.checkPlayerPost"></jsonformatter>
+        </div>
+    </div>
+    <br />
+    <div class="note note-gray-400">
+        <div class="note-content col">
+            <h6>RESPONSE for CheckPlayer method when there is a user within partner system</h6>
+            <jsonformatter data="AircashMatchData.checkPlayerResponse"></jsonformatter>
+        </div>
+    </div>
+    <p>
+        Once we receive a response that the user exists within the partner system,  we are then checking if the data for the user’s first name, last name and date of birth matches with the ones within our system.
+        If there is a positive match, CreateAndConfirm method is automatically called. Otherwise, CreateAndConfirm method will not be called and the user will get a proper error message within his app.
+    </p>
+    <h3>Partner does the data match</h3>
+    <div class="note note-gray-400">
+        <div class="note-content col">
+            <h6>POST for CheckPlayer method</h6>
+            <jsonformatter data="PartnerMatchData.checkPlayerPost"></jsonformatter>
+        </div>
+    </div>
+    <br />
+    <p>
+        If the user exists within partner system then they instantly need to call method CompareIdentity (Aircash Simulator) next.
+    </p>
+    <br />
+    <div class="note note-gray-400">
+        <div class="note-content col">
+            <h6>POST for CompareIdentity method</h6>
+            <jsonformatter data="PartnerMatchData.compareIdentityPost"></jsonformatter>
+        </div>
+    </div>
+    <br />
+    <div class="note note-gray-400">
+        <div class="note-content col">
+            <h6>RESPONSE for CompareIdentity method</h6>
+            <jsonformatter data="PartnerMatchData.compareIdentityResponse"></jsonformatter>
+        </div>
+    </div>
+    <br />
+    <p>
+        After the partner gets confirmation from Aircash system that there is a match for CompareIdentity method, partner needs to respond to us with response for CheckPlayer:
+    </p>
+    <br />
+    <div class="note note-gray-400">
+        <div class="note-content col">
+            <h6>RESPONSE for CheckPlayer method</h6>
+            <jsonformatter data="PartnerMatchData.checkPlayerResponse"></jsonformatter>
+        </div>
+    </div>
+    <br />
+    <p>
+        In case that there is no match, then partner returns the response for CheckPlayer with agreed error code:
+    </p>
+    <div class="note note-gray-400">
+        <div class="note-content col">
+            <jsonformatter data="PartnerMatchData.dataDoNotMatch"></jsonformatter>
+        </div>
+    </div>
+    <br />
+    <p>
+        In this case, CreateAndConfirm method will not be called and the user will get a proper error message within his app.
+    </p>
+</body>
+</html>
