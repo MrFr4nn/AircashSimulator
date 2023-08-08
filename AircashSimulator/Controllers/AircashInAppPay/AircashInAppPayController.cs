@@ -64,7 +64,7 @@ namespace AircashSimulator.Controllers
         [HttpPost]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
-            return Ok();
+            return BadRequest();
         }
     }
 }
