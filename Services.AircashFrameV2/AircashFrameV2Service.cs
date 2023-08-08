@@ -32,6 +32,7 @@ namespace AircashFrame
         private readonly string InitiateEndpoint = "initiate";
         private readonly string ConfirmPayoutEndpoint = "confirmPayout";
         private EnvironmentEnum cashierEnvironment = EnvironmentEnum.Staging;
+        private readonly string RefundTransactionEndpoint = "RefundTransaction";
 
         public AircashFrameV2Service(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService, IOptionsMonitor<AircashConfiguration> aircashConfiguration, ILogger<AircashFrameV2Service> logger, ISignatureService signatureService)
         {
@@ -396,6 +397,36 @@ namespace AircashFrame
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{ConfirmPayoutEndpoint}";
 
+        }
+        public async Task<Response> RefundTransaction(AircashRefundTransactionRequestV2 request)
+        {
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == request.PartnerId).FirstOrDefault();
+            var requestDateTime = DateTime.UtcNow;
+            var refundTransactionResponse = new object();
+
+            var dataToSign = AircashSignatureService.ConvertObjectToString(request);
+            var signature = SignatureService.GenerateSignature(partner.PartnerId, dataToSign);
+            request.Signature = signature;
+
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.Frame)}{RefundTransactionEndpoint}");
+            var responseDateTime = DateTime.UtcNow;
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                refundTransactionResponse = JsonConvert.DeserializeObject<AircashRefundTransactionResponseV2>(response.ResponseContent);           
+            }
+            else
+            {
+                refundTransactionResponse = JsonConvert.DeserializeObject<ErrorRefundResponseV2>(response.ResponseContent);
+            }
+            var frontResponse = new Response
+            {
+                ServiceRequest = request,
+                ServiceResponse = refundTransactionResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
         }
     }
 }

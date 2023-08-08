@@ -10,5 +10,7 @@ namespace Services.AircashFrame
         public Task<int> Notification(string transactionId);
         public Task<object> TransactionStatus(Guid partnerId, string transactionId);
         public Task<Response> CheckTransactionStatus(PartnerEntity partner, string transactionId);
-    }
+        Task<Response> RefundTransaction(AircashRefundTransactionRequest request);
+
+	}
 }

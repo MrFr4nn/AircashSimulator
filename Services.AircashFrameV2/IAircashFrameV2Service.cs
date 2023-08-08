@@ -23,5 +23,7 @@ namespace Services.AircashFrameV2
         string GetCheckTransactionStatusEndpoint(EnvironmentEnum environment);
         string GetCheckTransactionStatusV2Endpoint(EnvironmentEnum environment);
         string GetConfirmPayoutEndpoint(EnvironmentEnum environment);
+        Task<Response> RefundTransaction(AircashRefundTransactionRequestV2 request);
+
     }
 }

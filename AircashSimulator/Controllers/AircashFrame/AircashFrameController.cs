@@ -10,17 +10,13 @@ using Services.AircashFrameV2;
 using System;
 using AircashSimulator.Hubs;
 using Microsoft.AspNetCore.SignalR;
-using AircashSimulator.Controllers.AircashPayment;
 using Service.Settings;
-using AircashSimulator.UI.Pages;
-using Microsoft.Extensions.Hosting;
 using Services.User;
 using CrossCutting;
-using Services.AircashPayoutV2;
 
 namespace AircashSimulator.Controllers.AircashFrame
 {
-    [Route("api/[controller]/[action]")]
+	[Route("api/[controller]/[action]")]
     [ApiController]
     public class AircashFrameController : Controller
     {
@@ -339,5 +335,20 @@ namespace AircashSimulator.Controllers.AircashFrame
             var response = await AircashFrameV2Service.CheckTransactionStatusV2Frame(partnerId, partnerTransactionId.ToString(), EnvironmentEnum.Staging);
             return Ok(response);
         }
-    }
+
+		[HttpPost]
+        [Authorize]
+        public async Task<IActionResult> RefundAcPayTransaction(RefundAcPayTransactionDTO refundRequestDTO)
+		{
+			var refundRequest = new AircashRefundTransactionRequestV2
+			{
+				PartnerId = refundRequestDTO.PartnerID,
+                PartnerTransactionId = refundRequestDTO.PartnerTransactionID,
+                RefundPartnerTransactionID = refundRequestDTO.RefundPartnerTransactionID,
+                Amount = refundRequestDTO.Amount
+			};
+			var response = await AircashFrameV2Service.RefundTransaction(refundRequest);
+			return Ok(response);
+		}
+	}
 }
