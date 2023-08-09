@@ -44,6 +44,7 @@ using Service.Settings;
 using CrossCutting;
 using Services.Signature;
 using Services.AircashATM;
+using Services.AppVersion;
 
 namespace AircashSimulator
 {
@@ -120,6 +121,7 @@ namespace AircashSimulator
             services.AddTransient<IAircashATMService, AircashATMService>();
             services.AddTransient<IAircashPaymentService, AircashPaymentService>();
             services.AddTransient<IAircashInAppPayService, AircashInAppPayService>();
+            services.AddTransient<IAppVersionService, AppVersionService>();
             services.AddTransient<UserContext>();
             services.AddTransient<ICouponService, CouponService>();
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();

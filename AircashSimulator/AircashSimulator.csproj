@@ -36,6 +36,7 @@
     <ProjectReference Include="..\Services.AircashPay\Services.AircashPay.csproj" />
     <ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
     <ProjectReference Include="..\Services.AircashPosDeposit\Services.AircashPosDeposit.csproj" />
+    <ProjectReference Include="..\Services.AppVersion\Services.AppVersion.csproj" />
     <ProjectReference Include="..\Services.Authentication\Services.Authentication.csproj" />
     <ProjectReference Include="..\Services.Coupon\Services.Coupon.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
