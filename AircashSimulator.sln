@@ -77,8 +77,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Signature", "Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashATM", "Services.AircashATM\Services.AircashATM.csproj", "{562B5E93-7BA2-4A30-87C7-06C5A736E35F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.AppVersion", "Services.AppVersion\Services.AppVersion.csproj", "{C55395D0-A9CD-4C1D-8979-5C9DC31153CB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -209,10 +207,6 @@ Global
 		{562B5E93-7BA2-4A30-87C7-06C5A736E35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{562B5E93-7BA2-4A30-87C7-06C5A736E35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{562B5E93-7BA2-4A30-87C7-06C5A736E35F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C55395D0-A9CD-4C1D-8979-5C9DC31153CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C55395D0-A9CD-4C1D-8979-5C9DC31153CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C55395D0-A9CD-4C1D-8979-5C9DC31153CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C55395D0-A9CD-4C1D-8979-5C9DC31153CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -247,7 +241,6 @@ Global
 		{7B433633-59FF-48EF-AF10-F22E87BC992D} = {D195A165-103A-462E-AF6F-F19A8CB37F95}
 		{8767AAE9-380B-4DDD-A450-AD331CCD11E0} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{562B5E93-7BA2-4A30-87C7-06C5A736E35F} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
-		{C55395D0-A9CD-4C1D-8979-5C9DC31153CB} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7CF481FF-2B5A-4460-9F34-6A4EAED13029}

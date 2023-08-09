@@ -18,25 +18,12 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
         saveUser: saveUser,
         getPartners: getPartners,
         deleteUser: deleteUser,
-        getAppVersion: getAppVersion
     });
 
     function getUsers(pageNumber, pageSize, search) {
         var request = $http({
             method: 'GET',
             url: config.baseUrl + "User/GetUsers",
-            params: {
-                PageNumber: pageNumber,
-                PageSize: pageSize,
-                Search: search
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-    function getAppVersion(pageNumber, pageSize, search) {
-        var request = $http({
-            method: 'GET',
-            url: config.baseUrl + "AppVersion/GetAppVersion",
             params: {
                 PageNumber: pageNumber,
                 PageSize: pageSize,
@@ -113,17 +100,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
                 console.log("Error, could not fetch users.");
             });
     }
-    $scope.getAppVersion = function () {
-        userAdminService.getAppVersion()
-            .then(function (response) {
-                $scope.version = response;
-                console.log($scope.version);
-            }, () => {
-                console.log("Error, could not fetch users.");
-            });
-    }
-    $scope.getAppVersion();
-
+    
     $scope.loadMore = function (pageSize) {
         $scope.pageNumber += 1;
         $scope.pageSize = pageSize;

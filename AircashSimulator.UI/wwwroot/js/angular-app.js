@@ -42,7 +42,6 @@ var app = angular.module('app', [
 app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
 {
     $urlRouterProvider.otherwise('/app/dashboard');
-    
     $stateProvider
         .state('app', {
             url: '/app',
@@ -77,7 +76,7 @@ app.config(function ($httpProvider) {
 app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$localStorage', function ($rootScope, $state, setting, $http, config, $location, $localStorage) {
     $rootScope.$state = $state;
     $rootScope.setting = setting;
-
+    
     var locale = localStorage.getItem('selectedLanguage');
     if (!locale) {
         locale = "en";
