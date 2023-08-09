@@ -1,6 +1,6 @@
 ﻿var cashierAbonSpModule = angular.module('cashier_abon_sp', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_abon_sp', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/abon_sp",
             controller: 'cashierAbonSpCtrl',
-            templateUrl: 'app/cashier_abon_sp/cashier_abon_sp.html'
+            templateUrl: 'app/cashier_abon_sp/cashier_abon_sp.html?v=' + Global.appVersion
         });
 });
 

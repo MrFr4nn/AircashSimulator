@@ -1,6 +1,6 @@
 ﻿var cashierAcPayoutModule = angular.module('cashier_acPayout', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_acPayout', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashPayout",
             controller: 'cashierAcPayoutCtrl',
-            templateUrl: 'app/cashier_ac_payout/cashier_ac_payout.html'
+            templateUrl: 'app/cashier_ac_payout/cashier_ac_payout.html?v=' + Global.appVersion
         });
 });
 

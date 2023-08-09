@@ -1,6 +1,6 @@
 ﻿var distributorMenuModule = angular.module('distributorMenu', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.distributorMenu', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/distributormenu",
             controller: 'distributorMenuCtrl',
-            templateUrl: 'app/cashier/cashier_distributorMenu.html'
+            templateUrl: 'app/cashier/cashier_distributorMenu.html?v=' + Global.appVersion
         });
 });
 

@@ -1,6 +1,6 @@
 ﻿var cashierAcFrameModule = angular.module('cashier_acFrameWithdrawal', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_acFrameWithdrawal', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashFrameWithdrawal",
             controller: 'cashierAcFrameWithdrawalCtrl',
-            templateUrl: 'app/cashier_ac_frame_withdrawal/cashier_ac_frame_withdrawal.html'
+            templateUrl: 'app/cashier_ac_frame_withdrawal/cashier_ac_frame_withdrawal.html?v=' + Global.appVersion
         });    
 });
 

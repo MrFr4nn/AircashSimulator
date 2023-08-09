@@ -1,6 +1,6 @@
 ﻿var acPosDeposit = angular.module('acPosDeposit', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.acPosDeposit', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashPosDeposit",
             controller: 'acPosDepositCtrl',
-            templateUrl: 'app/ac_posDeposit/ac_posDeposit.html'
+            templateUrl: 'app/ac_posDeposit/ac_posDeposit.html?v=' + Global.appVersion
         });
 });
 

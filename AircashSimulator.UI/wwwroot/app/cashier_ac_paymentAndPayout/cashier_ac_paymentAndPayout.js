@@ -1,6 +1,6 @@
 ﻿var cashierAcPaymentAndPayoutModule = angular.module('cashier_acPaymentAndPayout', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_acPaymentAndPayout', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/SalesPartner",
             controller: 'cashieracPaymentAndPayoutCtrl',
-            templateUrl: 'app/cashier_ac_paymentAndPayout/cashier_ac_paymentAndPayout.html'
+            templateUrl: 'app/cashier_ac_paymentAndPayout/cashier_ac_paymentAndPayout.html?v=' + Global.appVersion
         });
 });
 

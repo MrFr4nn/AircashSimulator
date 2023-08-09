@@ -1,6 +1,6 @@
 ﻿var acRefundModule = angular.module('acRefund', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.acRefund', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashRefund",
             controller: 'acRefundModuleCtrl',
-            templateUrl: 'app/ac_refund/ac_refund.html'
+            templateUrl: 'app/ac_refund/ac_refund.html?v=' + Global.appVersion
         });
 });
 

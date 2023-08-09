@@ -13,7 +13,7 @@
     'cashier_c2d'
 ]);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier', {
             data: {
@@ -21,7 +21,7 @@ app.config(function ($stateProvider) {
             },
             url: "/cashier",
             controller: 'CashierCtrl',
-            templateUrl: 'app/cashier/cashier.html'
+            templateUrl: 'app/cashier/cashier.html?v=' + Global.appVersion
         });
 });
 

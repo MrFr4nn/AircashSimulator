@@ -1,6 +1,6 @@
 ﻿var signatureModule = angular.module('signature', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.signature', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/signature",
             controller: 'SignatureCtrl',
-            templateUrl: 'app/signature/signature.html'
+            templateUrl: 'app/signature/signature.html?v=' + Global.appVersion
         });
 });
 

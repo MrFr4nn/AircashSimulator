@@ -1,6 +1,6 @@
 ﻿var aircashRedeemTicketModule = angular.module('acRedeemTicket', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.acRedeemTicket', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/RedeemTicket",
             controller: 'aircashRedeemTicketCtrl',
-            templateUrl: 'app/ac_redeemTicket/ac_redeemTicket.html'
+            templateUrl: 'app/ac_redeemTicket/ac_redeemTicket.html?v=' + Global.appVersion
         });
 });
 

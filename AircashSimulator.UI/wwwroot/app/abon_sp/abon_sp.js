@@ -1,6 +1,6 @@
 ﻿var abonSpModule = angular.module('abonSp', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.abonSp', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/abonGenerator",
             controller: 'abonSpCtrl',
-            templateUrl: 'app/abon_sp/abon_sp.html'
+            templateUrl: 'app/abon_sp/abon_sp.html?v=' + Global.appVersion
         });
 });
 

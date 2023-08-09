@@ -102,10 +102,10 @@
         </ul>
         <hr />
         <h1>Aircash API</h1>
-        <ng-include src="'app/ac_pay/generate_partner_code.html'"></ng-include>
-        <ng-include src="'app/ac_pay/confirm_transaction.html'"></ng-include>
-        <ng-include src="'app/ac_pay/production_process.html'"></ng-include>
-        <ng-include src="'app/ac_pay/FAQ.html'"></ng-include>
+        <div ng-include src="'app/ac_pay/generate_partner_code.html?v=' + appVersion"></div>
+        <ng-include src="'app/ac_pay/confirm_transaction.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/ac_pay/production_process.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/ac_pay/FAQ.html?v=' + appVersion"></ng-include>
 </body>
 </html>
 

@@ -4,7 +4,7 @@
     'cashier_acFrameWithdrawal'
 ]);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_acFrameMenu', {
             data: {
@@ -12,7 +12,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashFrameMenu",
             controller: 'cashierAcFrameMenuCtrl',
-            templateUrl: 'app/cashier_ac_frame_menu/cashier_ac_frame_menu.html'
+            templateUrl: 'app/cashier_ac_frame_menu/cashier_ac_frame_menu.html?v=' + Global.appVersion
         });
 });
 

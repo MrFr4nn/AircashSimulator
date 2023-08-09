@@ -1,6 +1,6 @@
 var partnerPrivateKeyModule = angular.module('partnerPrivateKey', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.partnerPrivateKey', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/partnerPrivateKey",
             controller: 'partnerPrivateKeyCtrl',
-            templateUrl: 'app/partner_private_key/partner_private_key.html'
+            templateUrl: 'app/partner_private_key/partner_private_key.html?v=' + Global.appVersion
         });
 });
 

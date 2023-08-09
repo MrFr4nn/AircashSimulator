@@ -1,6 +1,6 @@
 ﻿var aircashPaymentAndPayoutModule = angular.module('aircashPaymentAndPayout', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.aircashPaymentAndPayout', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashPaymentAndPayout",                                                                                                                            
             controller: 'aircashPaymentAndPayoutCtrl',
-            templateUrl: 'app/aircash_paymentAndPayout/aircash_paymentAndPayout.html'
+            templateUrl: 'app/aircash_paymentAndPayout/aircash_paymentAndPayout.html?v=' + Global.appVersion
         });
 });
 

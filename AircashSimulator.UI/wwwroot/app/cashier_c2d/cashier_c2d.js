@@ -1,6 +1,6 @@
 ﻿var cashierC2dModule = angular.module('cashier_c2d', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_c2d', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/cashToDigital",
             controller: 'cashierC2dCtrl',
-            templateUrl: 'app/cashier_c2d/cashier_c2d.html'
+            templateUrl: 'app/cashier_c2d/cashier_c2d.html?v=' + Global.appVersion
         });
 });
 

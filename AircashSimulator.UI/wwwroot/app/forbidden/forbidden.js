@@ -1,6 +1,6 @@
 ﻿var forbiddenModule = angular.module('forbidden', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('forbidden', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/forbidden",
             controller: 'ForbiddenCtrl',
-            templateUrl: 'app/forbidden/forbidden.html'
+            templateUrl: 'app/forbidden/forbidden.html?v=' + Global.appVersion
         });
 });
 

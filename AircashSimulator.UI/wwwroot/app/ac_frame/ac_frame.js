@@ -1,6 +1,6 @@
 ﻿var acFrameModule = angular.module('acFrame', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.acFrame', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashFrame",
             controller: 'acFrameCtrl',
-            templateUrl: 'app/ac_frame/ac_frame.html'
+            templateUrl: 'app/ac_frame/ac_frame.html?v=' + Global.appVersion
         });
 });
 

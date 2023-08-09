@@ -1,6 +1,6 @@
 ﻿var abonOpModule = angular.module('abonOp', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.abonOp', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/abonDeposit",
             controller: 'abonOpCtrl',
-            templateUrl: 'app/abon_op/abon_op.html'
+            templateUrl: 'app/abon_op/abon_op.html?v=' + Global.appVersion
         });
 });
 

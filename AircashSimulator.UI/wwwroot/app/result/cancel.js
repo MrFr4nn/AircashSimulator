@@ -1,6 +1,6 @@
 var cancelModule = angular.module('cancel', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cancel', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/cancel",
             controller: 'cancelCtrl',
-            templateUrl: 'app/result/cancel.html'
+            templateUrl: 'app/result/cancel.html?v=' + Global.appVersion
         });
 });
 

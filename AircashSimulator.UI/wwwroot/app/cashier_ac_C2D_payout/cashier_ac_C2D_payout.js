@@ -1,6 +1,6 @@
 ﻿var cashierAcC2DPayoutModule = angular.module('cashier_acC2DPayout', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_acC2DPayout', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/PayoutC2D",
             controller: 'cashier_acC2DPayoutCtrl',
-            templateUrl: 'app/cashier_ac_C2D_payout/cashier_ac_C2D_payout.html'
+            templateUrl: 'app/cashier_ac_C2D_payout/cashier_ac_C2D_payout.html?v=' + Global.appVersion
         });
 });
 

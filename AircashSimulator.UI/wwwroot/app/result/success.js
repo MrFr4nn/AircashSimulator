@@ -1,6 +1,6 @@
 ﻿var successModule = angular.module('success', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('success', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/success",
             controller: 'SuccessCtrl',
-            templateUrl: 'app/result/success.html'
+            templateUrl: 'app/result/success.html?v=' + Global.appVersion
         });
 });
 

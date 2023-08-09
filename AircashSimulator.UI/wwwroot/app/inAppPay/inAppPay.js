@@ -1,6 +1,6 @@
 ﻿var inAppPayModule = angular.module('inAppPay', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('inAppPay', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/inAppPay",
             controller: 'InAppPayCtrl',
-            templateUrl: 'app/inAppPay/inAppPay.html'
+            templateUrl: 'app/inAppPay/inAppPay.html?v=' + Global.appVersion
         });
 });
 

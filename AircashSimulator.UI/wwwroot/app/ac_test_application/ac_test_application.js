@@ -1,7 +1,7 @@
 ﻿var ac_test_applicationModule = angular.module('ac_test_application', []);
 
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.ac_test_application', {
             data: {
@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
             },
             url: "/ac_test_application",
             controller: 'ac_test_applicationCtrl',
-            templateUrl: 'app/ac_test_application/ac_test_application.html'
+            templateUrl: 'app/ac_test_application/ac_test_application.html?v=' + Global.appVersion
         });
 });
 

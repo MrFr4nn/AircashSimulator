@@ -1,6 +1,6 @@
 ﻿var dashboardModule = angular.module('dashboard', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.dashboard', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/dashboard",
             controller: 'DashboardCtrl',
-            templateUrl: 'app/dashboard/dashboard.html'
+            templateUrl: 'app/dashboard/dashboard.html?v=' + Global.appVersion
         });
 });
 

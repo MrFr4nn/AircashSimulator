@@ -1,5 +1,5 @@
 ﻿var ac_business_siteModule = angular.module('ac_business_site', []);
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.ac_business_site', {
             data: {
@@ -7,7 +7,7 @@ app.config(function ($stateProvider) {
             },
             url: "/ac_business_site",
             controller: 'ac_business_siteCtrl',
-            templateUrl: 'app/ac_business_site/ac_business_site.html'
+            templateUrl: 'app/ac_business_site/ac_business_site.html?v=' + Global.appVersion
         });
 });
 ac_business_siteModule.service("ac_business_siteService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope',

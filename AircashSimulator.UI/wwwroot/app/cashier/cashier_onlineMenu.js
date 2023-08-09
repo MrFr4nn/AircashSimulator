@@ -1,6 +1,6 @@
 ﻿var onlineMenuModule = angular.module('onlineMenu', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.onlineMenu', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/onlinemenu",
             controller: 'onlineMenuCtrl',
-            templateUrl: 'app/cashier/cashier_onlineMenu.html'
+            templateUrl: 'app/cashier/cashier_onlineMenu.html?v=' + Global.appVersion
         });
 });
 

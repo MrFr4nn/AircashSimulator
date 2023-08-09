@@ -1,7 +1,7 @@
 var generalGuidlinesModule = angular.module('generalGuidlines', []);
 
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.generalGuidlines', {
             data: {
@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
             },
             url: "/generalGuidlines",
             controller: 'generalGuidlinesCtrl',
-            templateUrl: 'app/generalGuidlines/generalGuidlines.html'
+            templateUrl: 'app/generalGuidlines/generalGuidlines.html?v=' + Global.appVersion
         });
 });
 

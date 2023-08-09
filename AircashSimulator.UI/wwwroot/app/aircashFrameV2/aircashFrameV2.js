@@ -1,6 +1,6 @@
 ﻿var acFrameV2Module = angular.module('acFrameV2', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.aircashFrameV2', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashFrameV2",
             controller: 'acFrameV2Ctrl',
-            templateUrl: 'app/aircashFrameV2/aircashFrameV2.html'
+            templateUrl: 'app/aircashFrameV2/aircashFrameV2.html?v=' + Global.appVersion
         });
 });
 

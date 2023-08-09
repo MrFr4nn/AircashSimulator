@@ -1,6 +1,6 @@
 ﻿var jiraModule = angular.module('jira', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.jira', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/jira",
             controller: 'jiraCtrl',
-            templateUrl: 'app/Jira/Jira.html'
+            templateUrl: 'app/Jira/Jira.html?v=' + Global.appVersion
         });
 });
 

@@ -1,6 +1,6 @@
 ﻿var declineModule = angular.module('decline', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('decline', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/decline",
             controller: 'declineCtrl',
-            templateUrl: 'app/result/decline.html'
+            templateUrl: 'app/result/decline.html?v=' + Global.appVersion
         });
 });
 

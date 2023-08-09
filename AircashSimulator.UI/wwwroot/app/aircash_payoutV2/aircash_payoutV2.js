@@ -2,7 +2,7 @@
 
 
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.aircashPayoutV2', {
             data: {
@@ -10,7 +10,7 @@ app.config(function ($stateProvider) {
             },
             url: "/PayoutV2",
             controller: 'aircashPayoutV2Ctrl', 
-            templateUrl: 'app/aircash_payoutV2/aircash_payoutV2.html'
+            templateUrl: 'app/aircash_payoutV2/aircash_payoutV2.html?v=' + Global.appVersion
         });
 });
 

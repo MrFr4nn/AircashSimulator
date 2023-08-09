@@ -1,6 +1,6 @@
 ﻿var acATMModule = angular.module('aircash_ATM', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.aircash_ATM', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashATM",
             controller: 'acATMCtrl',
-            templateUrl: 'app/aircash_ATM/aircash_ATM.html'
+            templateUrl: 'app/aircash_ATM/aircash_ATM.html?v=' + Global.appVersion
         });
 });
 

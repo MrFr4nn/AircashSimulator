@@ -1,7 +1,7 @@
 ﻿var aircashPaymentSlotMachinesModule = angular.module('acPaymentSlotMachines', []);
 
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.acPaymentSlotMachines', {
             data: {
@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashPaymentSlotMachines",
             controller: 'aircashPaymentSlotMachinesCtrl',
-            templateUrl: 'app/aircash_paymentSlotMachines/aircash_paymentSlotMachines.html'
+            templateUrl: 'app/aircash_paymentSlotMachines/aircash_paymentSlotMachines.html?v=' + Global.appVersion
         });
 });
 

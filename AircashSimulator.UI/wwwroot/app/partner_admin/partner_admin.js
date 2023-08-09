@@ -1,6 +1,6 @@
 ﻿var partnerAdminModule = angular.module('partnerAdmin', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.partnerAdmin', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/partnerAdmin",
             controller: 'partnerAdminCtrl',
-            templateUrl: 'app/partner_admin/partner_admin.html'
+            templateUrl: 'app/partner_admin/partner_admin.html?v=' + Global.appVersion
         });
 });
 

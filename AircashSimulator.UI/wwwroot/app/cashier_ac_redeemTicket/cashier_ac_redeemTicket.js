@@ -1,6 +1,6 @@
 ﻿var cashierAcRedeemTicketModule = angular.module('cashier_acRedeemTicket', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('cashier.cashier_acRedeemTicket', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashRedeemTicket",
             controller: 'cashierAcRedeemTicketCtrl',
-            templateUrl: 'app/cashier_ac_redeemTicket/cashier_ac_redeemTicket.html'
+            templateUrl: 'app/cashier_ac_redeemTicket/cashier_ac_redeemTicket.html?v=' + Global.appVersion
         });
 });
 

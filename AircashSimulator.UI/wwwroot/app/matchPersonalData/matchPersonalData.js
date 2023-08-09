@@ -1,6 +1,6 @@
 ﻿var matchPersonalDataModule = angular.module('matchPersonalData', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.matchPersonalData', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/match",
             controller: 'matchPersonalDataCtrl',
-            templateUrl: 'app/matchPersonalData/matchPersonalData.html'
+            templateUrl: 'app/matchPersonalData/matchPersonalData.html?v=' + Global.appVersion
         });
 });
 

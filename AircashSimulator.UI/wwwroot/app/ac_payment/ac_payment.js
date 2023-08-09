@@ -1,6 +1,6 @@
 ﻿var acPaymentModule = angular.module('acPayment', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.acPayment', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/aircashPayment",
             controller: 'acPaymentCtrl',
-            templateUrl: 'app/ac_payment/ac_payment.html'
+            templateUrl: 'app/ac_payment/ac_payment.html?v=' + Global.appVersion
         });
 });
 

@@ -1,7 +1,7 @@
 ﻿var logoModule = angular.module('logo', []);
 
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.logo', {
             data: {
@@ -9,7 +9,7 @@ app.config(function ($stateProvider) {
             },
             url: "/logo",
             controller: 'LogoCtrl',
-            templateUrl: 'app/logo/logo.html'
+            templateUrl: 'app/logo/logo.html?v=' + Global.appVersion
         });
 });
 
