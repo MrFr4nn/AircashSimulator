@@ -6,7 +6,6 @@ app.config(function ($stateProvider) {
             data: {
                 pageTitle: 'Payout'
             },
-            cache: false,
             url: "/Payout",
             controller: 'aircashPayoutCtrl', 
             templateUrl: 'app/aircash_payout/aircash_payout.html'
