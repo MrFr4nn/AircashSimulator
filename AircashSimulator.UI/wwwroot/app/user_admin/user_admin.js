@@ -1,6 +1,6 @@
 ﻿var userAdminModule = angular.module('userAdmin', []);
 
-app.config(function ($stateProvider) {
+app.config(function ($stateProvider, Global) {
     $stateProvider
         .state('app.userAdmin', {
             data: {
@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
             },
             url: "/userAdmin",
             controller: 'userAdminCtrl',
-            templateUrl: 'app/user_admin/user_admin.html'
+            templateUrl: 'app/user_admin/user_admin.html?v=' + Global.appVersion
         });
 });
 

@@ -32,26 +32,29 @@ var app = angular.module('app', [
     'decline',
     'cancel',
     'partnerPrivateKey',
-    'jira', 
+    'jira',
     'generalGuidlines',
     'matchPersonalData',
     'aircash_ATM',
     'inAppPay'
 ]);
 
-app.config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider)
-{
+app.constant('Global', {
+    appVersion: String(new Date().getTime())
+});
+
+app.config(['$stateProvider', '$urlRouterProvider', 'Global', function ($stateProvider, $urlRouterProvider, Global) {
     $urlRouterProvider.otherwise('/app/dashboard');
     $stateProvider
         .state('app', {
             url: '/app',
-            templateUrl: 'template/app.html',
-          
+            templateUrl: 'template/app.html?v=' + Global.appVersion,
+
             abstract: true
         })
         .state('login', {
             url: '/login?username',
-            templateUrl: 'app/login/login.html',
+            templateUrl: 'app/login/login.html?v=' + Global.appVersion,
             controller: 'Login.IndexController',
             controllerAs: 'vm',
             params: {
@@ -73,10 +76,11 @@ app.config(function ($httpProvider) {
     $httpProvider.interceptors.push('interceptorService');
 });
 
-app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$localStorage', function ($rootScope, $state, setting, $http, config, $location, $localStorage) {
+app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$localStorage', 'Global', '$templateCache', function ($rootScope, $state, setting, $http, config, $location, $localStorage, Global, $templateCache) {
     $rootScope.$state = $state;
     $rootScope.setting = setting;
-    
+    $rootScope.appVersion = Global.appVersion;
+
     var locale = localStorage.getItem('selectedLanguage');
     if (!locale) {
         locale = "en";
@@ -89,27 +93,27 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
         //console.log(response);
         var responseObj = JSON.parse(response.data.responseContent);
         $rootScope.translationsCashier = responseObj;
-    },() => {
-       console.log("error");
-    });  
+    }, () => {
+        console.log("error");
+    });
 
     if ($localStorage.currentUser) {
         $http.defaults.headers.common.Authorization = 'Bearer ' + $localStorage.currentUser.token;
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay','/cashier/abon', '/cashier/aircashPay',
+        var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay', '/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu',
             '/cashier/aircashFrameAcPay', '/cashier/aircashFrameAbon', '/cashier/aircashFrameWithdrawal', '/cashier/PayoutC2D', '/cashier/SalesPartner',
             '/cashier/abon_sp', '/cashier/onlinemenu', '/cashier/distributormenu'];
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if ($location.path().indexOf('cashier') > -1 && restrictedPage) {
             $location.path('/cashier/menu');
-        }else if (restrictedPage && !$localStorage.currentUser) {
+        } else if (restrictedPage && !$localStorage.currentUser) {
             $location.path('/login');
         }
-    }); 
-}]); 
+    });
+}]);
 
 app.filter('trusted', ['$sce', function ($sce) {
     return function (url) {
