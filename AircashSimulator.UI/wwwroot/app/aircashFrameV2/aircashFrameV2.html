@@ -116,16 +116,16 @@
                         Aircash will check wheather the user exists in the Aircash system.
                     </li>
                     <li>
-                        If the user exists and all preriquiestes are met to receive the payout, Aircash will send a push notification to let the partner system know that the payout is ready to receive.
+                        If the user exists and all prerequisites are met to receive the payout, Aircash will send a push notification to let the partner system know that the payout is ready to receive.
                     </li>
                     <li>
                         Partner system needs to check the status within the Aircash system by sending status request. If Aircash system responds with pending status, partner system can reserve the funds.
                     </li>
                     <li>
-                        Once the reserved funds are ready to be confirmed (either mannualy, either automatically), partner system need to send final Confirmation request to Aircash system.
+                        Once the reserved funds are ready to be confirmed (either manually or automatically), partner system needs to send final Confirmation request to Aircash system.
                     </li>
                     <li>
-                        Upon recieving the confirmation request, Aircash system will top up the Aircash account.
+                        Upon receiving the confirmation request, Aircash system will top up the Aircash account.
                     </li>
                 </ol>
                 <p>Watch video example <a href="" ng-click="showVideoWithdrawal()">here</a>.</p>
@@ -141,7 +141,7 @@
                 Status – POST method to validate the status of the transaction
             </li>
             <li>
-                Confirm – POST method to confirm the transaction (only for the witdhrawal flow)
+                Confirm – POST method to confirm the transaction (only for the withdrawal flow)
             </li>
         </ul>
         <p>Methods called by Aircash on the partner system</p>
@@ -712,6 +712,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
             </uib-tab>
         </uib-tabset>
         <br />
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2AbonAmountConfiguration.html'"></ng-include>
         <h4>Notification</h4>
         <p>
             After transaction is processed, Aircash system will send notification to the NotificationUrl provided within the initiate request.
@@ -723,7 +724,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                         <th>Environment</th>
                         <th>Method</th>
                         <th>URL</th>
-                        <th>IP addresse to whitelist</th>
+                        <th>IP addresses to whitelist</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -786,7 +787,7 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
         </div>
         <div ng-if="select.statusVersion == 1">
             <p>
-                Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
+                Method that’s used to check the transaction status in Aircash system. Using this method partner needs to check the status of the transaction before completing the payment.
             </p>
             <i>Endpoints:</i>
             <div class="table-responsive">
@@ -1044,31 +1045,31 @@ SsRvc7uHsLjXxPfMNhSgqpvcRBg6GjG+YXw+CX3nYoHS9Pl2BNNpTzbfUTDVmrdczXUuBtz2yHTuKVs/
                         <uib-tab index="TransactionStatusError-tab-2" heading="3 - Validation Error" classes="nav-item">
                             Simulation not available.
                             <!--<div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
-                                    Request
-                                    <jsonformatter data="errorExamples.TransactionStatus.error3.request"></jsonformatter>
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.TransactionStatus.error3.request"></jsonformatter>
 
-                                    Sequence:
-                                    Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
-                                    Response
-                                    <jsonformatter data="errorExamples.TransactionStatus.error3.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
-                                    Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
-
-                                    Sequence: {{errorTransactionStatusSequence}}<br />
-
-                                </div>
-                                <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
-                                    Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
-                                </div>
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
                             </div>
-                            <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(3)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">Copy Request</button>-->
+                            <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.TransactionStatus.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+                                Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                Sequence: {{errorTransactionStatusSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+                                Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(3)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">Copy Request</button>-->
                         </uib-tab>
                         <uib-tab index="TransactionStatusError-tab-3" heading="1002 - Transaction does not exist" classes="nav-item">
                             <div class="row col-12">
@@ -1464,31 +1465,31 @@ mGkC7OpmRf3UX/E79UoXl0iYYGaleGBtZbdcHMsbL1Nty9MJY3SYWZO9I3d6vQb2EVRomH89qmGIrlTz
                         <uib-tab index="TransactionStatusV2Error-tab-2" heading="3 - Validation Error" classes="nav-item">
                             Simulation not available.
                             <!--<div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3)">
-                                    Request
-                                    <jsonformatter data="errorExamples.TransactionStatusV2.error3.request"></jsonformatter>
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.TransactionStatusV2.error3.request"></jsonformatter>
 
-                                    Sequence:
-                                    Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3)">
-                                    Response
-                                    <jsonformatter data="errorExamples.TransactionStatusV2.error3.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">
-                                    Request ({{errorTransactionStatusV2RequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorTransactionStatusV2Request"></jsonformatter>
-
-                                    Sequence: {{errorTransactionStatusV2Sequence}}<br />
-
-                                </div>
-                                <div class="col-sm-6" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">
-                                    Response ({{errorTransactionStatusV2ResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorTransactionStatusV2Response"></jsonformatter>
-                                </div>
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
                             </div>
-                            <button class="btn btn-primary mt-2" ng-click="transactionStatusV2SimulateError(3)" ng-disabled="errorTransactionStatusV2ServiceBusy">Simulate <i ng-if="errorTransactionStatusV2ServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusV2RequestCopy)" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">Copy Request</button>-->
+                            <div class="col-sm-6" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.TransactionStatusV2.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">
+                                Request ({{errorTransactionStatusV2RequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusV2Request"></jsonformatter>
+
+                                Sequence: {{errorTransactionStatusV2Sequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">
+                                Response ({{errorTransactionStatusV2ResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorTransactionStatusV2Response"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="transactionStatusV2SimulateError(3)" ng-disabled="errorTransactionStatusV2ServiceBusy">Simulate <i ng-if="errorTransactionStatusV2ServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusV2RequestCopy)" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">Copy Request</button>-->
                         </uib-tab>
                         <uib-tab index="TransactionStatusV2Error-tab-3" heading="1002 - Transaction does not exist" classes="nav-item">
                             <div class="row col-12">
@@ -1588,7 +1589,7 @@ mGkC7OpmRf3UX/E79UoXl0iYYGaleGBtZbdcHMsbL1Nty9MJY3SYWZO9I3d6vQb2EVRomH89qmGIrlTz
 
         <h4>Confirm payout</h4>
         <p>
-            Method that’s used only in the withdrawal/payout flow. Once the funds are ready to be withdrawn from the user's account, partner system need to send confirmation request.
+            Method that’s used only in the withdrawal/payout flow. Once the funds are ready to be withdrawn from the user's account, partner system needs to send confirmation request.
         </p>
         <i>Endpoints:</i>
         <div class="table-responsive">
@@ -2236,8 +2237,8 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
         <p>
             This is your custom implementation of Aircash Frame integration. You can display Aircash Frame on any possible way that seems the best for your
             requirements. For example, you can open new web browser’s window (blank or with your origin URL or any other URL) and use custom redirect to
-            Aircash Frame URL which you will receive in the Initiate method response body. In this case you have complete control over window where is Aircash
-            Frame displayed, you can implement your scripts to handle window open, window close and window redirect to your success URL.
+            Aircash Frame URL which you will receive in the Initiate method response body. In this case you have complete control over window where Aircash
+            Frame is displayed, you can implement your scripts to handle window open, window close and window redirect to your success URL.
         </p>
 
         <hr />
@@ -2423,7 +2424,7 @@ dUrE4gtau5lkvElOK+yHIWToEQ3U8sYjdf472f7IIjiPZ/EOSC1EJw/p/IKRXVyJ/+6vPqzVpyg6lxzU
                 </tr>
                 <tr>
                     <td>
-                        <b>A:</b>&nbsp;We suggest making a timestamp of 5min for the Aircash Frame timer. Once transaction time pass (5min) and transaction timeouts, we will
+                        <b>A:</b>&nbsp;We suggest making a timestamp of 5min for the Aircash Frame timer. Once transaction time passes (5min) and transaction timeouts, we will
                         call your NotificationUrl and the transaction will be in status 1 – declined. If for any reason (network problems etc.) the notification is not received,
                         you can call the Status method 30 seconds after the Aircash Frame timer expired to make sure there was not any network or other issues and make sure you
                         had the right transaction status in your system (the same as in the Aircash system)
