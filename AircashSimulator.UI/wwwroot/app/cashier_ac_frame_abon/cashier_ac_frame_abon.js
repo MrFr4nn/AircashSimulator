@@ -61,11 +61,11 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
                     description: "Accept value of Coupon code equal or less then sent Amount",
                     value: 2
                 },
-                {
-                    key: "LessThanCouponValue",
-                    description: "Accept value less than sent Amount",
-                    value: 4
-                }
+                //{
+                //    key: "LessThanCouponValue",
+                //    description: "Accept value less than sent Amount",
+                //    value: 4
+                //}
             ];
             $scope.setting = {};
             $scope.setting.useAmountRule = $scope.amountRules[0].value;
