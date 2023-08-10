@@ -278,7 +278,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3"><b>Parameters</td>
+                                    <td colspan="3"><b>Parameters</b></td>
                                     <td>List &lt;Object&gt;</td>
                                     <td>
                                         This parameter can be ignored if the user does not
@@ -329,12 +329,25 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                     Aircash matching personal data
                 </label>
             </div>
+            <hr/>
+            <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                <input class="form-check-input" type="checkbox" ng-model="maxAmount">
+                <label class="form-check-label mt-1">
+                    Max amount
+                </label>
+            </div>
             <hr />
-            <div ng-if="aircashMatchingPersonalData">
+            <div ng-if="!aircashMatchingPersonalData && !maxAmount">
+                <jsonformatter data="aircashPayment.checkPlayer.responseExample"></jsonformatter>
+            </div>
+            <div ng-if="aircashMatchingPersonalData && !maxAmount">
                 <jsonformatter data="aircashPayment.checkPlayer.responseExampleAircashMatchingPersonalData"></jsonformatter>
             </div>
-            <div ng-if="!aircashMatchingPersonalData">
-                <jsonformatter data="aircashPayment.checkPlayer.responseExample"></jsonformatter>
+            <div ng-if="!aircashMatchingPersonalData && maxAmount">
+                <jsonformatter data="aircashPayment.checkPlayer.responseExampleMaxAmount"></jsonformatter>
+            </div>
+            <div ng-if="aircashMatchingPersonalData && maxAmount">
+                <jsonformatter data="aircashPayment.checkPlayer.responseExampleAircashMatchingPersonalDataAndMaxAmount"></jsonformatter>
             </div>
         </uib-tab>
         <uib-tab index="checkUser1-tab-6" heading="Error response example" classes="nav-item">

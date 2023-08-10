@@ -90,6 +90,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         firstname: "John",
         lastname: "Doe",
         birthDate: new Date('1990-01-01'),
+        partnerUserId: "25d54174-b146-4a2f-8504-dd580ce54bf9",
     }
     $scope.createAndConfirmGenerateSignatureModel = {
         identificator: "aircash",
@@ -99,7 +100,9 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         firstname: "John",
         lastname: "Doe",
         birthDate: new Date('1990-01-01'),
-        amount: 123.45
+        amount: 123.45,
+        partnerUserId: "25d54174-b146-4a2f-8504-dd580ce54bf9",
+
     }
     function setRequestExamples(generateSignatureModel) {
         ;
@@ -139,6 +142,11 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
             merchantId: {
                 key: "merchantId",
                 Value: generateSignatureModel.merchantId
+            },
+            partnerUserId:
+            {
+                key: "PartnerUserId",
+                value: generateSignatureModel.partnerUserId
             }
         }
     }
@@ -149,14 +157,16 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         currency: false,
         countryCode: false,
         match: false,
-        merchant: false
+        merchant: false,
+        partnerUser : false
     }
 
     $scope.checkboxCreateAndConfirmModel = {
         currency: false,
         countryCode: false,
         match: false,
-        merchant: false
+        merchant: false,
+        partnerUser: false,
     }
 
     $scope.showVideoMarketplaceDeposit = function () {
@@ -242,6 +252,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCreateAndConfirmModel.countryCode) $scope.createAndConfirmParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCreateAndConfirmModel.merchant) $scope.createAndConfirmParameters.push($scope.requestExample.merchantId);
         if ($scope.checkboxCreateAndConfirmModel.aircashUserID) $scope.createAndConfirmParameters.push($scope.requestExample.aircashUserID);
+        if ($scope.checkboxCreateAndConfirmModel.partnerUser) $scope.createAndConfirmParameters.push($scope.requestExample.partnerUserId);
         if ($scope.checkboxCreateAndConfirmModel.match)
             $scope.createAndConfirmParameters.push(
                 $scope.requestExample.firstName,
@@ -405,6 +416,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCreateAndConfirm.countryCode) $scope.createAndConfirmParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCreateAndConfirm.merchant) $scope.createAndConfirmParameters.push($scope.requestExample.merchantId);
         if ($scope.checkboxCreateAndConfirm.aircashUserID) $scope.createAndConfirmParameters.push($scope.requestExample.aircashUserID);
+        if ($scope.checkboxCreateAndConfirmModel.partnerUser) $scope.createAndConfirmParameters.push($scope.requestExample.partnerUserId);
         if ($scope.checkboxCreateAndConfirm.match)
             $scope.createAndConfirmParameters.push(
                 $scope.requestExample.firstName,
@@ -435,6 +447,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCheckPlayer.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCheckPlayer.merchant) $scope.checkPlayerParameters.push($scope.requestExample.merchantId);
         if ($scope.checkboxCheckPlayer.aircashUserID) $scope.checkPlayerParameters.push($scope.requestExample.aircashUserID);
+        if ($scope.checkboxCreateAndConfirmModel.partnerUser) $scope.createAndConfirmParameters.push($scope.requestExample.partnerUserId);
         if ($scope.checkboxCheckPlayer.match)
             $scope.checkPlayerParameters.push(
                 $scope.requestExample.firstName,
@@ -488,6 +501,54 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                     }
                 ]
             },
+            responseExampleAircashMatchingPersonalDataAndMaxAmount: {
+                isPlayer: true,
+                error: null,
+                parameters: [
+                    {
+                        "key": "partnerUserID",
+                        "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerFirstName",
+                        "value": "John",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerLastName",
+                        "value": "Doe",
+                        "type": "String"
+                    },
+                    {
+                        "key": "PayerBirthDate",
+                        "value": "1990-01-01",
+                        "type": "Date"
+                    },
+                    {
+                        "key": "maxAmount",
+                        "type": "Decimal",
+                        "value": 123.45
+                    },
+                ]
+            },
+            responseExampleMaxAmount: {
+                isPlayer: true,
+                error: null,
+                parameters: [
+                    {
+                        "key": "partnerUserID",
+                        "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                        "type": "String"
+                    },
+                    {
+                        "key": "maxAmount",
+                        "type": "Decimal",
+                        "value": "123.45"
+                    },
+                ]
+            },
+
             errorResponseExample: {
                 isPlayer: false,
                 error: {
