@@ -528,7 +528,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                     {
                         "key": "maxAmount",
                         "type": "Decimal",
-                        "value": 123.45
+                        "value": "123.45"
                     },
                 ]
             },
