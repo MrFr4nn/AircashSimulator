@@ -173,6 +173,18 @@
                         </div>
                     </div>
                     <hr />
+                    <div class="row">
+                        <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                            <input class="form-check-input" type="checkbox" ng-change="requestCreateAndConfirmChanged()" ng-model="checkboxCreateAndConfirmModel.partnerUser">
+                            <label class="form-check-label">
+                                PartnerUserId
+                            </label>
+                        </div>
+                        <div class="col-lg-9 mt-2">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.partnerUserId" ng-init="createAndConfirmGenerateSignatureModel.partnerUserId='25d54174-b146-4a2f-8504-dd580ce54bf9'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.partnerUser" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter partnerUserId" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                        </div>
+                    </div>
+                    <hr />
                 </div>
                 <div class="col-6">
                    
