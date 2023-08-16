@@ -16,6 +16,7 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
     return ({
         checkCode: checkCode,
         checkCodeV2: checkCodeV2,
+        checkDigitsV2: checkDigitsV2,
         confirmTransaction: confirmTransaction,
         getTransactions: getTransactions,
         checkTransactionStatus: checkTransactionStatus,
@@ -45,6 +46,19 @@ aircashPaymentAndPayoutModule.service("aircashPaymentAndPayoutService", ['$http'
                 PartnerId:partnerId,
                 BarCode: barCode,
                 LocationID: locationID
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function checkDigitsV2(partnerID, digitCode, locationID, currencyID) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPaymentAndPayout/CheckDigitsV2",
+            data: {
+                PartnerID: partnerID,
+                DigitCode: digitCode,
+                LocationID: locationID,
+                CurrencyID: currencyID
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -155,6 +169,13 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
         locationID: 'TestLocation'
     };
 
+    $scope.checkDigitsModel = {
+        partnerId: $scope.partnerIds.SalesPartnerId,
+        digitCode: '',
+        currencyID: '',
+        locationID: 'TestLocation'
+    };
+
     $scope.confirmTransactionModel = {
         partnerId: $scope.partnerIds.SalesPartnerId,
         barCode: '',
@@ -245,6 +266,30 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
                 $scope.checkCodeV2ServiceBusy = false;
                 $scope.checkCodeV2ServiceResponded = true;
                
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.checkDigits = function () {
+        $scope.checkDigitsServiceResponded = false;
+        $scope.checkDigitsServiceBusy = true;
+        aircashPaymentAndPayoutService.checkDigitsV2($scope.checkDigitsModel.partnerId, $scope.checkDigitsModel.digitCode, $scope.checkDigitsModel.locationID, $scope.checkDigitsModel.currencyID)
+            .then(function (response) {
+
+                if (response) {
+                    $scope.checkDigitsRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.checkDigitsResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.checkDigitsSequence = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkDigitsServiceResponse = response.serviceResponse;
+                    $scope.checkDigitsServiceRequest = response.serviceRequest;
+                    $scope.checkCodeV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.checkCodeV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.checkDigitsServiceBusy = false;
+                $scope.checkDigitsServiceResponded = true;
+
             }, () => {
                 console.log("error");
             });
@@ -626,6 +671,28 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
                 firstName: "John",
                 lastName: "Doe",
                 dateOfBirth: "1990-01-01"
+            }
+        },
+        CheckDigits: {
+            RequestExample: {
+                partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                digitCode: "687502",
+                locationID: "123",
+                currencyID: "978",
+                signature: "Ycc...K6s="
+            },
+            ResponseExampleV2: {
+                digitCode: "687502",
+                barCode: "AC23436263654000",
+                amount: -100.00,
+                currencyId: 978,
+                firstName: "John",
+                lastName: "Doe",
+                dateOfBirth: "1990-01-01"
+            },
+            ErrorResponseExample: {
+                errorCode: 1,
+                errorMessage: "Invalid bar code "
             }
         },
         ConfirmTransaction: {
