@@ -4,8 +4,8 @@
     <h4 ng-if="select.validateCouponVersion == 2" class="col-auto">CheckStatus</h4>
     <div class="dropdown col-auto">
         <select class="form-control" ng-model="select.validateCouponVersion" ng-init="select.validateCouponVersion = '2'">
-            <option value="1" selected>V1</option>
-            <option value="2">V2</option>
+            <option value="1">V1</option>
+            <option value="2" selected>V2</option>
         </select>
     </div>
     <div class="col">
@@ -446,14 +446,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                     <td>
                         POST
                     </td>
-                    <td>https://staging-a-bon.aircash.eu/rest/api/OnlineProvider/CheckStatus</td>
+                    <td>https://staging-a-bon.aircash.eu/rest/api/ConsumeBon/CheckStatus</td>
                 </tr>
                 <tr>
                     <td><b>Production</b></td>
                     <td>
                         POST
                     </td>
-                    <td>https://a-bon.aircash.eu/rest/api/OnlineProvider/CheckStatus</td>
+                    <td>https://a-bon.aircash.eu/rest/api/ConsumeBon/CheckStatus</td>
                 </tr>
             </tbody>
         </table>
@@ -543,6 +543,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             <td>YES</td>
                         </tr>
                         <tr>
+                            <td colspan="2"><b>NotificationUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                URL that is called when status is changed. When request is received on this URL partner must call CheckStatus again.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
                             <td colspan="2"><b>Signature</b></td>
                             <td>string</td>
                             <td>
@@ -565,10 +573,10 @@ Request example:
             <jsonformatter data="aBonDeposit.validateCouponWithAutorization.requestExample"></jsonformatter>
             <pre>
 Sequence:
-CouponCode=5460446045144493&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&PhoneNumber=385981234567&UserId=123
+CouponCode=5460446045144493&NotificationUrl=http://call-me.com/abon_notification&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&PhoneNumber=385981234567&UserId=123
 
 Signature:
-NqV3kXbpxNHTq0w4HbLzG0h3cfiFQvtoHHzeSs4z9vviZbd5Xhnxomec1rMOuIMYDq4ITNntaGx//tlcGqKbxgKBZD0rUFlAAjWzRipdbMpEa7dLCtpKp2iJOTWgHxrH/eSgl1qPuF4GQ8AXj9s4F4e1t+6JWv70z8uSx5RDjzwqOUgTLnM0nWjVerQUspwBVKh+NMgqO//0o10otLcvY/LjFJjS0VPQuvH33qWuG38H54yt4cPVnX5l2Qkdy6XPnVnsx8WE2s1l/JIyzY6iOqLw8WVEafOsrZzComS8DlarkERfb9nEipZ545S/z+BMdZhbnUW1eOxPLKSLJ6JEsSpCXAvaMSTHb5dyUUiYR5ZINfzzDNLNxB5NfHVZXicYKjHt5SUA/6E8XiN/hnoWbznJ3awJnomE9aRopF3olIpAnGdm3foJ2n4RlhnEOSviffBUwOTy1F3uMLRr8oMcDlmvAITrijE1g+Vqxhz8Lx8KdXfNiy+L9OWzQdbWm3eY/Id+iyTUPNZvgaCaE3Yza3Q1UYmebzn51uNRrvZVD7TI9OXSZZO1tSTW4FYDgdM+CEyIcbD2BxHpxa6+SsYyag38VXhSkDDx61RDTQf30dzRZIqjQDSoNNFyWHA/etBffWxeq7rF5hFZnp8g49Ips6ATNuvME+XWD9jt0ZXCb3E=
+AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVffvn8Qk61/FcyJHyo/2FS2CytUrqjsGYKnJUmq3n2aAECzT1wtd+yiAuPBbiAA05NDtLnaCMw0atOj8XU/nhu8ETsml2gKGI9woz/4Wf3WU+baUJM5+yCWnQkWVQoKzk9mtSl+qPqTvCvuxuC0V0TQcUJFGLLiOiNFE6hDpbDgOp45nlcjkq0gFHE7seNcUW8GDa9bew+HEvTKa4r9fIiz5xfvwoEZj821JdhUDiLuQAbkjBa91uWultE3KiOcUJryBhAYllWG/HR0OzGh8vwAgxazV+sy1lsb5RiltQYP9c+5e2jgkwuRf6OFgam0yClse1ErGsX8F2RSNAlnt2/hsIyjthyeJxTmyZhO7eMcMGwMC/RUA7FY9WMhipFQOSUHw/zBkx2CXd0oFa1AKQZTixJ/ynvOrdQlT1tz/R4bPEJKXKongZ0JqAK1le+s+PeQvPh8e45FovBfX9TlIZLHmU6mI5xMwgcSCiYUksqc6sPsGTveN+Qbz1BkC1LZwj8HAmSy+0zBFvUK/HEEdvWLVMMIRfzLDAspWvDx3MZQZgDOMWCzLl4jwqSH6F40IQmEAqDph/Cbg2VvnWZcTFBkuiCvig=
 </pre>
         </uib-tab>
         <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
@@ -593,7 +601,7 @@ NqV3kXbpxNHTq0w4HbLzG0h3cfiFQvtoHHzeSs4z9vviZbd5Xhnxomec1rMOuIMYDq4ITNntaGx//tlc
                             <td><b>Status</b></td>
                             <td>int</td>
                             <td>
-                                Status of the coupon. 1 - ok(Authorized, ready for confirm), 2 - pending, 3 - already used
+                                Status of the coupon. 1 - Initiated, 2 - Pending, 3 - Accepted (ready for confirmTransaction)
                             </td>
                         </tr>
                         <tr>
@@ -668,17 +676,16 @@ NqV3kXbpxNHTq0w4HbLzG0h3cfiFQvtoHHzeSs4z9vviZbd5Xhnxomec1rMOuIMYDq4ITNntaGx//tlc
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="10"><b>400</b></td>
-                            <td rowspan="10">
+                            <td rowspan="12"><b>400</b></td>
+                            <td rowspan="12">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid PartnerId</td>
                             <td>-</td>
-                            <td rowspan="10">
+                            <td rowspan="12">
                                 The response will contain an error code,
                                 message and optionally additionalData.
-
                             </td>
                         </tr>
                         <tr>
@@ -693,43 +700,55 @@ NqV3kXbpxNHTq0w4HbLzG0h3cfiFQvtoHHzeSs4z9vviZbd5Xhnxomec1rMOuIMYDq4ITNntaGx//tlc
                         </tr>
                         <tr>
                             <td><b>4</b></td>
+                            <td>Coupon Already Used</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><b>5</b></td>
                             <td>Conversion Module Error</td>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <td><b>7</b></td>
+                            <td><b>6</b></td>
                             <td>Coupon Country Not Allowed</td>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <td><b>8</b></td>
-                            <td>Invalid phone number (User does not exist)</td>
+                            <td><b>10</b></td>
+                            <td>Invalid notification URL</td>
                             <td>-</td>
                         </tr>
                         <tr>
                             <td><b>13</b></td>
-                            <td>User data do not match</td>
+                            <td>Invalid phone number (wrong phone number format)</td>
                             <td>
                                 -
                             </td>
                         </tr>
                         <tr>
                             <td><b>14</b></td>
-                            <td>Authorization timed out</td>
+                            <td>Invalid phone number (User does not exist)</td>
                             <td>
                                 -
                             </td>
                         </tr>
                         <tr>
                             <td><b>15</b></td>
-                            <td>Authorization declined</td>
+                            <td>User data does not match</td>
                             <td>
                                 -
                             </td>
                         </tr>
                         <tr>
                             <td><b>16</b></td>
-                            <td>Invalid phone number (wrong phone number format)</td>
+                            <td>Authorization declined</td>
+                            <td>
+                                -
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>17</b></td>
+                            <td>Authorization timed out</td>
                             <td>
                                 -
                             </td>

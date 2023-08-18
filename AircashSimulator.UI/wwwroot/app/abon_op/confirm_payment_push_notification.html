@@ -1,83 +1,111 @@
 ﻿<br />
-<h4>Confirm payment - push notification</h4>
-<p>
-    In case when the customer needs to authorize a voucher by entering his phone number, Abon
-    service will send push notification towards the agreed URL. The method is used to let the Aircash
-    platform notify the partner system that the Abon payment has been authorized and approved from the
-    end-user
-</p>
-<p>
-    The notification will be sent after the user authorizes the Abon coupon using the Aircash
-    application. During the authorization, the Abon deposit screen should display a message and further
-    instructions to the user (message and instructions will be provided by Aircash). 
-</p>
-<div class="note note-gray-400 col-md-6">
-    <div class="note-content">
-        <p>
-            Example of the request (partner will provide correct endpoint):
-        </p>
-        <code>GET ~/api/Authorize?providerTransactionId={providerTransactionId}</code>
+<div class="row">
+    <h4 ng-if="select.pushNotificationVersion == 2" class="col-auto">Confirm payment - push notification</h4>
+    <div class="dropdown col-auto">
+        <select class="form-control" ng-model="select.pushNotificationVersion" ng-init="select.pushNotificationVersion = '2'">
+            <option value="2" selected>V2</option>
+        </select>
+    </div>
+    <div class="col">
     </div>
 </div>
-<br />
-<uib-tabset>
-    <uib-tab index="confimrNotification-tab-0" heading="Request parameters" classes="nav-item">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Parameters</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Required</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><b>ProviderTransactionId</b></td>
-                        <td>string</td>
-                        <td>
-                            Transaction identifier in the Online Provider system
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                </tbody>
-            </table>
+
+<div ng-if="select.pushNotificationVersion == 2">
+    <p>
+        In case when the customer needs to authorize a voucher by entering his phone number, Abon
+        service will send push notification towards the agreed URL. The method is used to let the Aircash
+        platform notify the partner system that the Abon payment has been authorized and approved from the
+        end-user
+    </p>
+    <p>
+        The notification will be sent after the user authorizes the Abon coupon using the Aircash
+        application. During the authorization, the Abon deposit screen should display a message and further
+        instructions to the user (message and instructions will be provided by Aircash).
+    </p>
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content">
+            <p>
+                Example of the request (partner will provide correct endpoint):
+            </p>
+            <code>GET ~/api/Authorize?providerTransactionId={providerTransactionId}&couponCode={couponCode}&couponSerialNumber={couponSerialNumber}</code>
         </div>
-    </uib-tab>
-    <uib-tab index="confimrNotification-tab-1" heading="Response example" classes="nav-item">
-        <p>
-            Partner system should respond with HTTP response 200 OK in case of success.
-        </p>
-    </uib-tab>
-</uib-tabset>
-<p>
-    Aircash will not repeat the notification in case of HTTP 200 OK response. After receiving the notification,
-    the partner's system can proceed with the deposit process by sending the
-    ValidateCoupon/ConfirmTransaction requests
-</p>
-<p>
-    If the partner’s system isn’t able to receive the push notification request because of any
-    technical errors, the request will be resubmitted at a regular interval until the payment notification is
-    successfully delivered (200 OK response) or the maximum number of retry attempts has been reached.
-</p>
-<p>
-    User’s behavior during the payment authorization (i.e. user has closed the Abon deposit
-    window, user’s session has expired, user has logged out) may affect total amount of time, in case there is
-    a time window defined on the partner's cashier within which user's payment needs to be captured after
-    initiating deposit. Aircash will not decline any Abon deposit request that came after expiring the time
-    window (if any) and Aircash doesn't need to be aware of it. If the push notification is sent outside time
-    frame boundaries, the transaction still can be processed by sending a
-    ValidateCoupon/ConfirmTransactions request, if conditions are met on the partner's cashiers
-</p>
-<h5>Edge cases</h5>
-<p>
-    The notification will not be sent if the coupon is already in status of pending authorization. Partner’s
-    system can expect that the notification will be sent as soon as the user authorizes the coupon.
-</p>
-<p>
-    The notification will not be sent if the coupon is already authorized. Abon will remain in the authorized
-    status if the ValidateCoupon/ConfirmTransaction requests are not being sent due to technical errors. In
-    this scenario, the partner's system will receive valid status (IsValid parameter from the ValidateCoupon
-    method will be set to true) and the ConfirmTransaction request can be sent towards the Aircash system.
-</p>
+    </div>
+    <br />
+    <uib-tabset>
+        <uib-tab index="confimrNotification-tab-0" heading="Request parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameters</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Required</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerTransactionId</b></td>
+                            <td>string</td>
+                            <td>
+                                Transaction identifier in the Online Provider system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>CouponCode</b></td>
+                            <td>string</td>
+                            <td>
+                                16 digit coupon code that the user enters in the Online Provider's web interface
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>CouponSerialNumber</b></td>
+                            <td>string</td>
+                            <td>
+                                16 digit Aircash transaction id (voucher serial number)
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="confimrNotification-tab-1" heading="Response example" classes="nav-item">
+            <p>
+                Partner system should respond with HTTP response 200 OK in case of success.
+            </p>
+        </uib-tab>
+    </uib-tabset>
+    <p>
+        Aircash will not repeat the notification in case of HTTP 200 OK response. After receiving the notification,
+        the partner's system can proceed with the deposit process by sending the
+        ValidateCoupon/ConfirmTransaction requests
+    </p>
+    <p>
+        If the partner’s system isn’t able to receive the push notification request because of any
+        technical errors, the request will be resubmitted at a regular interval until the payment notification is
+        successfully delivered (200 OK response) or the maximum number of retry attempts has been reached.
+    </p>
+    <p>
+        User’s behavior during the payment authorization (i.e. user has closed the Abon deposit
+        window, user’s session has expired, user has logged out) may affect total amount of time, in case there is
+        a time window defined on the partner's cashier within which user's payment needs to be captured after
+        initiating deposit. Aircash will not decline any Abon deposit request that came after expiring the time
+        window (if any) and Aircash doesn't need to be aware of it. If the push notification is sent outside time
+        frame boundaries, the transaction still can be processed by sending a
+        ValidateCoupon/ConfirmTransactions request, if conditions are met on the partner's cashiers
+    </p>
+    <h5>Edge cases</h5>
+    <p>
+        The notification will not be sent if the coupon is already in status of pending authorization. Partner’s
+        system can expect that the notification will be sent as soon as the user authorizes the coupon.
+    </p>
+    <p>
+        The notification will not be sent if the coupon is already authorized. Abon will remain in the authorized
+        status if the ValidateCoupon/ConfirmTransaction requests are not being sent due to technical errors. In
+        this scenario, the partner's system will receive valid status (IsValid parameter from the ValidateCoupon
+        method will be set to true) and the ConfirmTransaction request can be sent towards the Aircash system.
+    </p>
+</div>

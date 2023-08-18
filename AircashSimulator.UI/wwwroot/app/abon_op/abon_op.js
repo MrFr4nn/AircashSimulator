@@ -452,7 +452,8 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                         "Value": "1990-01-01"
                     }
                 ],
-                "signature": "NqV3kXbpxN..."
+                "notificationUrl": "http://call-me.com/abon_notification",
+                "signature": "AtztaUw2Mj..."
             },
             responseExample: {
                 "couponValue": 50,
@@ -487,6 +488,32 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     couponValue: 50.0,
                     ISOCurrency: "HRK",
                     providerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+                }
+            }
+        },
+        confirmTransactionWithAutorization: {
+            requestExample: {
+                "couponCode": "2326186935891516",
+                "partnerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                "partnerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "userId": "4149ba7d-e4f7-4c77-8393-d03e6691c03b",
+                "signature": "XJAit8JDaJ..."
+            },
+            responseExample: {
+                "couponValue": 50,
+                "isoCurrency": 978,
+                "partnerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "salePartnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                "couponCode": "2326186935891516",
+                "couponSerialNumber": "9874772993339010"
+            },
+            errorResponseExample: {
+                code: 4,
+                message: "Coupon Already Used",
+                additionalData: {
+                    couponValue: 50.0,
+                    ISOCurrency: "HRK",
+                    partnerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
                 }
             }
         }
