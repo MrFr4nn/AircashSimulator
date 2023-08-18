@@ -677,7 +677,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
             RequestExample: {
                 partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
                 digitCode: "687502",
-                locationID: "123",
+                locationID: "TestLocation",
                 currencyID: "978",
                 signature: "Ycc...K6s="
             },
@@ -689,10 +689,6 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
                 firstName: "John",
                 lastName: "Doe",
                 dateOfBirth: "1990-01-01"
-            },
-            ErrorResponseExample: {
-                errorCode: 1,
-                errorMessage: "Invalid bar code "
             }
         },
         ConfirmTransaction: {

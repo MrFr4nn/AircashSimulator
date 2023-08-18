@@ -80,7 +80,7 @@
                             <td><b>Signature</b></td>
                             <td>String</td>
                             <td>
-                                Signature to confirm that the partner is indeed making the request. Data to sign is ????????????????
+                                Signature to confirm that the partner is indeed making the request. Data to sign is CurrencyID={0}&DigitCode={1}&LocationID={2}&PartnerID={3}
                             </td>
                             <td>YES</td>
                         </tr>
@@ -128,7 +128,7 @@ YccoFlj+81FWWO2KrR88xVOHiCs95wQLvA/PkNSIEemtyBbbJZZs/1JJ67JvCJl3o1ULxjYADNGLA5Ck
                         <tr>
                             <td><b>BarCode</b></td>
                             <td>String</td>
-                            <td></td>
+                            <td>Barcode assigned to the same transaction as the digit code from the request. This is later used in ConfirmTransaction.</td>
                             <td>YES</td>
                         </tr>
                         <tr>
@@ -163,7 +163,7 @@ YccoFlj+81FWWO2KrR88xVOHiCs95wQLvA/PkNSIEemtyBbbJZZs/1JJ67JvCJl3o1ULxjYADNGLA5Ck
                             <td>Aircash user date of birth</td>
                             <td>YES</td>
                         </tr>
-</table>
+                </table>
             </div>
             <hr />
             <p class="ml-3">
@@ -198,35 +198,42 @@ YccoFlj+81FWWO2KrR88xVOHiCs95wQLvA/PkNSIEemtyBbbJZZs/1JJ67JvCJl3o1ULxjYADNGLA5Ck
                             </td>
                         </tr>
                         <tr>
-                            <td rowspan="4"><b>400</b></td>
-                            <td rowspan="4">
+                            <td rowspan="5"><b>400</b></td>
+                            <td rowspan="5">
                                 An invalid request was made. The response will contain an error code and message
                             </td>
                             <td><b>2</b></td>
                             <td>Bar code already used</td>
                             <td>
-                                The barcode was already used.
+                                Barcode assigned to the digit code is already used.
                             </td>
                         </tr>
                         <tr>
                             <td><b>3</b></td>
                             <td>Transaction limit</td>
                             <td>
-                                The user has reached one or more Aircash system limits, and the transaction was refused. The exact reason of the refusal will be visible to the user in the Aircash app. In case of withdrawal if there are not enough funds on the wallet, this error will appear and the bar code will be used.
+                                User reached transaction limit. User can see exact limit and solution in his mobile application.
                             </td>
                         </tr>
                         <tr>
-                            <td><b>4</b></td>
-                            <td>PartnerTransactionID is not unique</td>
+                            <td><b>12</b></td>
+                            <td>Digit code expired</td>
                             <td>
-                                Partner transaction ID is not unique for this sales partner. Aircash suggests using Guid for PartnerTransactionIDs to avoid this.
+                                The digit code exists in the Aircash system, but it is not valid because it expired. User should generate new digit code.
                             </td>
                         </tr>
                         <tr>
-                            <td><b>6</b></td>
-                            <td>Unable to confirm transaction without calling check bar code first</td>
+                            <td><b>13</b></td>
+                            <td>Currency from the request does not match partner currency</td>
                             <td>
-                                First you have to call check code in order to confirm the transaction
+                                Currency from the request must be the same as partner currency.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>14</b></td>
+                            <td>Invalid digit code</td>
+                            <td>
+                                The digit code that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
                             </td>
                         </tr>
                         <tr>
@@ -242,129 +249,6 @@ YccoFlj+81FWWO2KrR88xVOHiCs95wQLvA/PkNSIEemtyBbbJZZs/1JJ67JvCJl3o1ULxjYADNGLA5Ck
                         </tr>
                 </table>
             </div>
-            <p>
-                Corner cases<br />
-                In case of Aircash system not returning a response to a ConfirmTransaction call, or
-                responding with an error 500, the sales partner system should check the transaction status in
-                Aircash system by calling the CheckTransactionStatus method.
-            </p>
-        </uib-tab>
-        <uib-tab index="CheckDigits-tab-6" heading="Error response example" classes="nav-item">
-            <uib-tabset class="row tabs-left">
-                <uib-tab index="CheckDigitsError-tab-1" heading="2 - Bar code already used" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 2)">
-                            Request
-                            <jsonformatter data="errorExamples.CheckDigits.error2.request"></jsonformatter>
-
-                            Sequence:
-                            BarCode=AC15694794016276&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8&PartnerTransactionID=d8b5649c-3001-4c12-bc45-f024d67585c6
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 2)">
-                            Response
-                            <jsonformatter data="errorExamples.CheckDigits.error2.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 2">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="CheckDigitsError-tab-2" heading="3 - Transaction limit" classes="nav-item">
-                    Simulation not available.
-                    <!--<div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
-                            Request
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
-
-                            Sequence:
-
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 3)">
-                            Response
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
-                    </div>-->
-                    <!--<button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>-->
-                    <!--<button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 3">Copy Request</button>-->
-                </uib-tab>
-                <uib-tab index="CheckDigitsError-tab-3" heading="4 - Partner Transaction ID is not unique" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 4)">
-                            Request
-                            <jsonformatter data="errorExamples.CheckDigits.error4.request"></jsonformatter>
-
-                            Sequence:
-                            BarCode=AC16758848507711&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8&PartnerTransactionID=c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 4)">
-                            Response
-                            <jsonformatter data="errorExamples.CheckDigits.error4.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 4">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="CheckDigitsError-tab-4" heading="6 - Unable to confirm transaction without calling check bar code first" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 6)">
-                            Request
-                            <jsonformatter data="errorExamples.CheckDigits.error6.request"></jsonformatter>
-
-                            Sequence:
-                            BarCode=AC16004150724597&LocationID=123&PartnerID=e747a837-85d9-4287-a412-ffbb5d1b0ad8&PartnerTransactionID=b9258777-26bd-4863-a9fd-4046e7e4df71
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && confirmCurrentErrorCode == 6)">
-                            Response
-                            <jsonformatter data="errorExamples.CheckDigits.error6.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(6)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && confirmCurrentErrorCode == 6">Copy Request</button>
-                </uib-tab>
-            </uib-tabset>
         </uib-tab>
         <uib-tab index="CheckDigits-tab-7" heading="Try it out" classes="nav-item">
             <div class="row">
@@ -403,6 +287,5 @@ YccoFlj+81FWWO2KrR88xVOHiCs95wQLvA/PkNSIEemtyBbbJZZs/1JJ67JvCJl3o1ULxjYADNGLA5Ck
             </div>
         </uib-tab>
     </uib-tabset>
-
 </body>
 </html>
