@@ -10,6 +10,7 @@ using Services.HttpRequest;
 using System.Threading.Tasks;
 using Services.Signature;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Collections.Generic;
 
 namespace Services.AbonOnlinePartner
 {
@@ -20,6 +21,7 @@ namespace Services.AbonOnlinePartner
         private ISignatureService SignatureService;
 
         private readonly string ValidateCouponEndpoint = "OnlineProvider/ValidateCoupon";
+        private readonly string CheckStatusCouponEndpoint = "ConsumeBon/CheckStatus";
         private readonly string ConfirmTransactionEndpoint = "OnlineProvider/ConfirmTransaction";
 
         public AbonOnlinePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
@@ -78,6 +80,62 @@ namespace Services.AbonOnlinePartner
         public string GetValidateCouponEndpoint(EnvironmentEnum environment)
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ValidateCouponEndpoint}";
+        }
+        public async Task<object> CheckStatusCoupon(string partnerId, string couponCode, string partnerTransactionId, string notificationUrl, string userId, string userPhoneNumber, List<AbonCheckStatusCouponParameters> parameters, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
+        {
+            var checkStausCouponResponse = new object();
+            var abonCheckStatusCouponRequest = GetCheckStatusCouponRequest(partnerId, couponCode, partnerTransactionId, notificationUrl, userId, userPhoneNumber, parameters, partnerPrivateKey, partnerPrivateKeyPass);
+            var dataToSign = AircashSignatureService.ConvertObjectToString(abonCheckStatusCouponRequest);
+            DateTime requestDateTime = DateTime.UtcNow;
+            var response = await HttpRequestService.SendRequestAircash(abonCheckStatusCouponRequest, HttpMethod.Post, GetCheckStatusCouponEndpoint(environment));
+            DateTime responseDateTime = DateTime.UtcNow;
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                checkStausCouponResponse = JsonConvert.DeserializeObject<AbonCheckStatusCouponResponse>(response.ResponseContent);
+            }
+            else
+            {
+                checkStausCouponResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+            var frontResponse = new Response
+            {
+                ServiceRequest = abonCheckStatusCouponRequest,
+                ServiceResponse = checkStausCouponResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };
+            return frontResponse;
+        }
+        public AbonCheckStatusCouponRequest GetCheckStatusCouponRequest(string partnerId, string couponCode, string partnerTransactionId, string notificationUrl, string userId, string userPhoneNumber, List<AbonCheckStatusCouponParameters> parameters, string partnerPrivateKey, string partnerPrivateKeyPass)
+        {
+            var abonChekStatusCouponRequest = new AbonCheckStatusCouponRequest
+            {
+                PartnerId = partnerId,
+                CouponCode = couponCode,
+                PartnerTransactionId = partnerTransactionId,
+                NotificationUrl = notificationUrl,
+                PhoneNumber = userPhoneNumber,
+                Parameters = parameters,
+                UserId = userId
+            };
+
+            var dataToSign = AircashSignatureService.ConvertObjectToString(abonChekStatusCouponRequest);
+            string signature;
+            if (partnerPrivateKey != null)
+            {
+                signature = AircashSignatureService.GenerateSignature(dataToSign, partnerPrivateKey, partnerPrivateKeyPass);
+            }
+            else
+            {
+                signature = SignatureService.GenerateSignature(new Guid(partnerId), dataToSign);
+            }
+            abonChekStatusCouponRequest.Signature = signature;
+            return abonChekStatusCouponRequest;
+        }
+        public string GetCheckStatusCouponEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CheckStatusCouponEndpoint}";
         }
         public async Task<object> ConfirmTransaction(string couponCode, string providerId, string providerTransactionId, string userId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
         {
