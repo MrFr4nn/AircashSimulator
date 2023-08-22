@@ -508,7 +508,6 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 "couponValue": 50,
                 "status": 1,
                 "ISOCurrency": "HRK",
-                "partnerTransactionId": "",
                 "originalISOCurrency": "EUR",
                 "originalCouponValue": 50,
                 "currentCouponValue": 50,
@@ -525,7 +524,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             responseExample: {
                 "couponValue": 50,
-                "isoCurrency": 978,
+                "isoCurrency": "EUR",
                 "providerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
                 "salePartnerId": "52f46879-294d-4904-be7e-368ab0161771",
                 "isoCountryCode": null
@@ -550,7 +549,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             responseExample: {
                 "couponValue": 50,
-                "isoCurrency": 978,
+                "isoCurrency": "EUR",
                 "partnerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
                 "salePartnerId": "52f46879-294d-4904-be7e-368ab0161771",
                 "couponCode": "2326186935891516",
