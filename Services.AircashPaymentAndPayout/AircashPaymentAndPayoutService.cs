@@ -31,6 +31,7 @@ namespace Services.AircashPaymentAndPayout
 
         private readonly string CheckCodeEndpoint = "SalesPartner/CheckCode";
         private readonly string CheckCodeV2Endpoint = "SalesPartnerV2/CheckCode";
+        private readonly string CheckDigitsV2Endpoint = "SalesPartnerV2/CheckDigits";
         private readonly string ConfirmTransactionEndpoint = "SalesPartner/ConfirmTransaction";
         private readonly string PaymentCancelTransactionEndpoint = "SalesPartner/CancelTransaction";
         private readonly string PaymentCheckTransactionStatusEndpoint = "SalesPartner/CheckTransactionStatus";
@@ -113,6 +114,43 @@ namespace Services.AircashPaymentAndPayout
             returnResponse.ServiceResponse = checkCodeResponse;
             return returnResponse;
 
+        }
+
+
+        public async Task<object> CheckDigitsV2(string digitCode, string locationID, string partnerID, int currencyID, EnvironmentEnum environment)
+        {
+            Response returnResponse = new Response();
+            var checkDigitsResponse = new object();
+            var partnerGuid = new Guid(partnerID);
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerGuid).FirstOrDefault();
+            var requestDateTimeUTC = DateTime.UtcNow;
+            returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
+            var checkDigitsRequest = new CheckDigitsRequest()
+            {
+                PartnerID = partnerID.ToString(),
+                DigitCode = digitCode,
+                LocationID = locationID,
+                CurrencyID = currencyID
+            };
+            var sequence = AircashSignatureService.ConvertObjectToString(checkDigitsRequest);
+            returnResponse.Sequence = sequence;
+            checkDigitsRequest.Signature = SignatureService.GenerateSignature(partnerGuid, sequence);
+            returnResponse.ServiceRequest = checkDigitsRequest;
+            var response = await HttpRequestService.SendRequestAircash(checkDigitsRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.SalesV2)}" + $"{CheckDigitsV2Endpoint}");
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                checkDigitsResponse = JsonConvert.DeserializeObject<CheckDigitsV2Response>(response.ResponseContent);
+                var responseDateTimeUTC = DateTime.UtcNow;
+                returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+            }
+            else
+            {
+                checkDigitsResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+                var responseDateTimeUTC = DateTime.UtcNow;
+                returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+            }
+            returnResponse.ServiceResponse = checkDigitsResponse;
+            return returnResponse;
         }
 
         public async Task<object> ConfirmTransaction(string barCode, string locationID, Guid partnerId, string userId, string partnerTransactionID, EnvironmentEnum environment)
