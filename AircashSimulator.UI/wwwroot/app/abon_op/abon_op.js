@@ -15,6 +15,7 @@ app.config(function ($stateProvider, Global) {
 abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         validateCoupon: validateCoupon,
+        checkStatusCoupon: checkStatusCoupon,
         getCurlValidateCoupon: getCurlValidateCoupon,
         getCurlConfirmTransaction:getCurlConfirmTransaction,
         confirmTransaction: confirmTransaction,
@@ -31,7 +32,7 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
+    }    
     function getCurlValidateCoupon(couponCode, providerId) {
         var request = $http({
             method: 'POST',
@@ -43,7 +44,22 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
+    function checkStatusCoupon(partnerId, couponCode, partnerTransactionId, notificationUrl, userId, userPhoneNumber, parameters) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonOnlinePartner/CheckStatusCoupon",
+            data: {
+                PartnerId: partnerId,
+                CouponCode: couponCode,
+                PartnerTransactionId: partnerTransactionId,
+                NotificationUrl: notificationUrl,
+                UserId: userId,
+                UserPhoneNumber: userPhoneNumber,
+                Parameters: parameters
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     function confirmTransaction(confirmTransactionModel) {
         var request = $http({
             method: 'POST',
@@ -106,10 +122,20 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.copyToClipboard = function (data) {
         navigator.clipboard.writeText(data);
     }
-
     $scope.validateCouponModel = {
         couponCode: null,
         providerId: $scope.partnerIds.AbonOnlinePartnerId
+    };
+    $scope.checkStatusCouponModel = {
+        partnerId: $scope.partnerIds.AbonOnlinePartnerId,
+        couponCode: null,
+        partnerTransactionId: HelperService.NewGuid(),
+        notificationUrl: "http://call-me.com/abon_notification",
+        userId: HelperService.NewGuid(),
+        userPhoneNumber: $scope.decodedToken.userPhoneNumber,
+        userFirstName: $scope.decodedToken.userFirstName,
+        userLastName: $scope.decodedToken.userLastName,
+        userBirthDate: new Date($scope.decodedToken.userBirthDate)
     };
     $scope.confirmTransactionModel = {
         couponCode: null,
@@ -160,6 +186,29 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 }
                 $scope.validateBusy = false;
                 $scope.validateResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.checkStatusCouponResponded = false;
+    $scope.checkStatusCouponBusy = false;
+    $scope.checkStatusCoupon = function () {
+        $scope.checkStatusCouponBusy = true;
+        $scope.checkStatusCouponResponded = false;
+        abonOpService.checkStatusCoupon($scope.checkStatusCouponModel.partnerId, $scope.checkStatusCouponModel.couponCode, $scope.checkStatusCouponModel.partnerTransactionId, $scope.checkStatusCouponModel.notificationUrl, $scope.checkStatusCouponModel.userId, $scope.checkStatusCouponModel.userPhoneNumber, [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate }])
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+                    $scope.checkStatusCouponRequestDateTimeUTC = response.requestDateTimeUTC;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkStatusCouponServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkStatusCouponSequence = response.sequence;
+                    $scope.checkStatusCouponResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.checkStatusCouponServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.checkStatusCouponBusy = false;
+                $scope.checkStatusCouponResponded = true;
             }, () => {
                 console.log("error");
             });

@@ -592,7 +592,7 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                     <tbody>
                         <tr>
                             <td><b>CouponValue</b></td>
-                            <td>decimal</td> 
+                            <td>decimal</td>
                             <td>
                                 Coupon value that will be added to the customer account in the currency of the partnerId
                             </td>
@@ -609,14 +609,6 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                             <td>string</td>
                             <td>
                                 ISO 4217 code of currency
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>PartnerTransactionId</b></td>
-                            <td>string</td>
-                            <td>
-                                Transaction identifier in the Online Partner system (has value
-                                only if the coupon has been used)
                             </td>
                         </tr>
                         <tr>
@@ -701,7 +693,7 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                         <tr>
                             <td><b>4</b></td>
                             <td>Coupon Already Used</td>
-                            <td>-</td>
+                            <td>ISOCurrency, CouponValue, PartnerTransactionId</td>
                         </tr>
                         <tr>
                             <td><b>5</b></td>
@@ -772,154 +764,182 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
             </div>
         </uib-tab>
         <!--<uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-            <uib-tabset class="row tabs-left">
-                <uib-tab index="ValidateTransactionError-tab-1" heading="1 - Invalid ProviderId" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 1)">
-                            Request
-                            <jsonformatter data="errorExamples.ValidateTransaction.error1.request"></jsonformatter>
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="ValidateTransactionError-tab-1" heading="1 - Invalid ProviderId" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 1)">
+                        Request
+                        <jsonformatter data="errorExamples.ValidateTransaction.error1.request"></jsonformatter>
 
-                            Sequence:
-                            CouponCode=6377944739582437&ProviderId=5d2f43e4-c9b6-4a46-b08e-28037d027e0c
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 1)">
-                            Response
-                            <jsonformatter data="errorExamples.ValidateTransaction.error1.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 1">
-                            Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorRequest"></jsonformatter>
-
-                            Sequence: {{errorSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 1">
-                            Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorResponse"></jsonformatter>
-                        </div>
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=5d2f43e4-c9b6-4a46-b08e-28037d027e0c
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="validateSimulateError(1)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 1">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ValidateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 2)">
-                            Request
-                            <jsonformatter data="errorExamples.ValidateTransaction.error2.request"></jsonformatter>
-
-                            Sequence:
-                            CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 2)">
-                            Response
-                            <jsonformatter data="errorExamples.ValidateTransaction.error2.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 2">
-                            Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorRequest"></jsonformatter>
-
-                            Sequence: {{errorSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 2">
-                            Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorResponse"></jsonformatter>
-                        </div>
+                    <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 1)">
+                        Response
+                        <jsonformatter data="errorExamples.ValidateTransaction.error1.response"></jsonformatter>
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="validateSimulateError(2)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 2">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ValidateTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 3)">
-                            Request
-                            <jsonformatter data="errorExamples.ValidateTransaction.error3.request"></jsonformatter>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 1">
+                        Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorRequest"></jsonformatter>
 
-                            Sequence:
-                            CouponCode=OQ4VTTXHO15QD621&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 3)">
-                            Response
-                            <jsonformatter data="errorExamples.ValidateTransaction.error3.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 3">
-                            Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorRequest"></jsonformatter>
+                        Sequence: {{errorSequence}}<br />
 
-                            Sequence: {{errorSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 3">
-                            Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorResponse"></jsonformatter>
-                        </div>
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="validateSimulateError(3)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 3">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ValidateTransactionError-tab-4" heading="4 - Conversion Module Error" classes="nav-item">
-                    Simulation not available.
-                </uib-tab>
-                <uib-tab index="ValidateTransactionError-tab-5" heading="7 - Coupon Country Not Allowed" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 7)">
-                            Request
-                            <jsonformatter data="errorExamples.ValidateTransaction.error7.request"></jsonformatter>
-
-                            Sequence:
-                            CouponCode=1437861149152627&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 7)">
-                            Response
-                            <jsonformatter data="errorExamples.ValidateTransaction.error7.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 7">
-                            Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorRequest"></jsonformatter>
-
-                            Sequence: {{errorSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 7">
-                            Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorResponse"></jsonformatter>
-                        </div>
+                    <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 1">
+                        Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorResponse"></jsonformatter>
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="validateSimulateError(7)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 7">Copy Request</button>
-                </uib-tab>
-            </uib-tabset>
-        </uib-tab>-->
-        <!--<uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="validateSimulateError(1)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 1">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ValidateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 2)">
+                        Request
+                        <jsonformatter data="errorExamples.ValidateTransaction.error2.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 2)">
+                        Response
+                        <jsonformatter data="errorExamples.ValidateTransaction.error2.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 2">
+                        Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorRequest"></jsonformatter>
+
+                        Sequence: {{errorSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 2">
+                        Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="validateSimulateError(2)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 2">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ValidateTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 3)">
+                        Request
+                        <jsonformatter data="errorExamples.ValidateTransaction.error3.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=OQ4VTTXHO15QD621&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 3)">
+                        Response
+                        <jsonformatter data="errorExamples.ValidateTransaction.error3.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 3">
+                        Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorRequest"></jsonformatter>
+
+                        Sequence: {{errorSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 3">
+                        Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="validateSimulateError(3)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 3">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ValidateTransactionError-tab-4" heading="4 - Conversion Module Error" classes="nav-item">
+                Simulation not available.
+            </uib-tab>
+            <uib-tab index="ValidateTransactionError-tab-5" heading="7 - Coupon Country Not Allowed" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 7)">
+                        Request
+                        <jsonformatter data="errorExamples.ValidateTransaction.error7.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=1437861149152627&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorValidateResponded && currentErrorCode == 7)">
+                        Response
+                        <jsonformatter data="errorExamples.ValidateTransaction.error7.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorValidateResponded && currentErrorCode == 7">
+                        Request ({{errorRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorRequest"></jsonformatter>
+
+                        Sequence: {{errorSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorValidateResponded && currentErrorCode == 7">
+                        Response ({{errorResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="validateSimulateError(7)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 7">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
+    </uib-tab>-->
+        <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-3">
                     <form action="/" method="POST" name="validateForm0">
                         <fieldset>
                             <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Provider Id</label>
-                                <input ng-model="validateCouponModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                                <label class="form-label">Partner Id</label>
+                                <input ng-model="checkStatusCouponModel.partnerId" class="form-control" type="text" placeholder="Enter Partner Id" ng-required="true">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                                <label class="form-label">Coupon Code</label>
+                                <input ng-model="checkStatusCouponModel.couponCode" class="form-control" type="text" placeholder="Enter Coupon Code" ng-required="true">
                             </div>
-                            <button ng-click="validateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="validateBusy || validateForm0.$invalid">Validate <i ng-if="validateBusy" class="fa fa-cog fa-spin"></i></button>
+                            <div class="mb-3">
+                                <label class="form-label">Partner Transaction Id</label>
+                                <input ng-model="checkStatusCouponModel.partnerTransactionId" class="form-control" type="text" placeholder="Enter Partner Transaction Id" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Notification URL</label>
+                                <input ng-model="checkStatusCouponModel.notificationUrl" class="form-control" type="text" placeholder="Enter Notification URL" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">User Id</label>
+                                <input ng-model="checkStatusCouponModel.userId" class="form-control" type="text" placeholder="Enter User Id" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">User's Phone Number</label>
+                                <input ng-model="checkStatusCouponModel.userPhoneNumber" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">User's First Name</label>
+                                <input ng-model="checkStatusCouponModel.userFirstName" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">User's Last Name</label>
+                                <input ng-model="checkStatusCouponModel.userLastName" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">User's Birth Date</label>
+                                <input ng-model="checkStatusCouponModel.userBirthDate" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
+                            </div>
+                            <button ng-click="checkStatusCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="checkStatusCouponBusy || validateForm0.$invalid">Validate <i ng-if="checkStatusCouponBusy" class="fa fa-cog fa-spin"></i></button>
                         </fieldset>
                     </form>
                 </div>
                 <br />
-                <div ng-if="validateResponded" class="col-md-4">
-                    Request ({{ValidateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                    <jsonformatter data="ValidateServiceRequest"></jsonformatter>
-                    Sequence: {{sequenceValidate}}
+                <div ng-if="checkStatusCouponResponded" class="col-md-4">
+                    Request ({{checkStatusCouponRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="checkStatusCouponServiceRequest"></jsonformatter>
+                    Sequence: {{checkStatusCouponSequence}}
                 </div>
-                <div ng-if="validateResponded" class="col-md-4">
-                    Response ({{ValidateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                    <jsonformatter data="ValidateServiceResponse"></jsonformatter>
+                <div ng-if="checkStatusCouponResponded" class="col-md-4">
+                    Response ({{checkStatusCouponResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="checkStatusCouponServiceResponse"></jsonformatter>
                 </div>
             </div>
         </uib-tab>
-        <uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
+        <!--<uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
             <div class="row">
                 <div class="col-md-3">
                     <form action="/" method="POST" name="validateForm1">

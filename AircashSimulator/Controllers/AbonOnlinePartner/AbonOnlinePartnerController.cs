@@ -47,6 +47,14 @@ namespace AircashSimulator
         }
         [HttpPost]
         [Authorize]
+        public async Task<IActionResult> CheckStatusCoupon(CheckStatusCouponRequest checkStatusCouponRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AbonOnlinePartnerService.CheckStatusCoupon(checkStatusCouponRequest.PartnerId, checkStatusCouponRequest.CouponCode, checkStatusCouponRequest.PartnerTransactionId, checkStatusCouponRequest.NotificationUrl, checkStatusCouponRequest.UserId, checkStatusCouponRequest.UserPhoneNumber, checkStatusCouponRequest.Parameters, null, null, environment);
+            return Ok(response);
+        }
+        [HttpPost]
+        [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
