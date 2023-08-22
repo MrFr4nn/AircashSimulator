@@ -15,9 +15,11 @@ app.config(function ($stateProvider, Global) {
 abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', 'config', '$rootScope', function ($http, $q, handleResponseService, config, $rootScope) {
     return ({
         validateCoupon: validateCoupon,
+        checkStatusCoupon: checkStatusCoupon,
         getCurlValidateCoupon: getCurlValidateCoupon,
         getCurlConfirmTransaction:getCurlConfirmTransaction,
         confirmTransaction: confirmTransaction,
+        confirmTransactionV2: confirmTransactionV2,
         validateSimulateError: validateSimulateError,
         confirmSimulateError: confirmSimulateError,
     });
@@ -31,7 +33,7 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
+    }    
     function getCurlValidateCoupon(couponCode, providerId) {
         var request = $http({
             method: 'POST',
@@ -43,7 +45,22 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-
+    function checkStatusCoupon(partnerId, couponCode, partnerTransactionId, notificationUrl, userId, userPhoneNumber, parameters) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonOnlinePartner/CheckStatusCoupon",
+            data: {
+                PartnerId: partnerId,
+                CouponCode: couponCode,
+                PartnerTransactionId: partnerTransactionId,
+                NotificationUrl: notificationUrl,
+                UserId: userId,
+                UserPhoneNumber: userPhoneNumber,
+                Parameters: parameters
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     function confirmTransaction(confirmTransactionModel) {
         var request = $http({
             method: 'POST',
@@ -54,6 +71,19 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
                 ProviderTransactionId: confirmTransactionModel.providerTransactionId,
                 UserId: confirmTransactionModel.userId
 
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function confirmTransactionV2(confirmTransactionV2Model) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonOnlinePartner/ConfirmTransactionV2",
+            data: {
+                CouponCode: confirmTransactionV2Model.couponCode,
+                PartnerId: confirmTransactionV2Model.partnerId,
+                PartnerTransactionId: confirmTransactionV2Model.partnerTransactionId,
+                UserId: confirmTransactionV2Model.userId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -106,10 +136,20 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.copyToClipboard = function (data) {
         navigator.clipboard.writeText(data);
     }
-
     $scope.validateCouponModel = {
         couponCode: null,
         providerId: $scope.partnerIds.AbonOnlinePartnerId
+    };
+    $scope.checkStatusCouponModel = {
+        partnerId: $scope.partnerIds.AbonOnlinePartnerId,
+        couponCode: null,
+        partnerTransactionId: HelperService.NewGuid(),
+        notificationUrl: "http://call-me.com/abon_notification",
+        userId: HelperService.NewGuid(),
+        userPhoneNumber: $scope.decodedToken.userPhoneNumber,
+        userFirstName: $scope.decodedToken.userFirstName,
+        userLastName: $scope.decodedToken.userLastName,
+        userBirthDate: new Date($scope.decodedToken.userBirthDate)
     };
     $scope.confirmTransactionModel = {
         couponCode: null,
@@ -117,6 +157,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         providerTransactionId: HelperService.NewGuid(),
         userId: HelperService.NewGuid()
     };
+    $scope.confirmTransactionV2Model = {
+        couponCode: null,
+        partnerId: $scope.partnerIds.AbonOnlinePartnerId,
+        partnerTransactionId: HelperService.NewGuid(),
+        userId: HelperService.NewGuid()
+    };    
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
     }
@@ -165,6 +211,29 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             });
     }
 
+    $scope.checkStatusCouponResponded = false;
+    $scope.checkStatusCouponBusy = false;
+    $scope.checkStatusCoupon = function () {
+        $scope.checkStatusCouponBusy = true;
+        $scope.checkStatusCouponResponded = false;
+        abonOpService.checkStatusCoupon($scope.checkStatusCouponModel.partnerId, $scope.checkStatusCouponModel.couponCode, $scope.checkStatusCouponModel.partnerTransactionId, $scope.checkStatusCouponModel.notificationUrl, $scope.checkStatusCouponModel.userId, $scope.checkStatusCouponModel.userPhoneNumber, [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate }])
+            .then(function (response) {
+                console.log(response);
+                if (response) {
+                    $scope.checkStatusCouponRequestDateTimeUTC = response.requestDateTimeUTC;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.checkStatusCouponServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkStatusCouponSequence = response.sequence;
+                    $scope.checkStatusCouponResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.checkStatusCouponServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.checkStatusCouponBusy = false;
+                $scope.checkStatusCouponResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
     $scope.confirmResponded = false;
     $scope.confirmBusy = false;
     $scope.confirmTransaction = function () {
@@ -183,6 +252,28 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 }
                 $scope.confirmBusy = false;
                 $scope.confirmResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.confirmV2Responded = false;
+    $scope.confirmV2Busy = false;
+    $scope.confirmTransactionV2 = function () {
+        $scope.confirmV2Busy = true;
+        $scope.confirmV2Responded = false;
+        abonOpService.confirmTransactionV2($scope.confirmTransactionV2Model)
+            .then(function (response) {
+                if (response) {
+                    $scope.ConfirmV2RequestDateTimeUTC = response.requestDateTimeUTC;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.ConfirmV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.sequenceConfirmV2 = response.sequence;
+                    $scope.ConfirmV2ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.ConfirmV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.confirmV2Busy = false;
+                $scope.confirmV2Responded = true;
             }, () => {
                 console.log("error");
             });
@@ -452,13 +543,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                         "Value": "1990-01-01"
                     }
                 ],
-                "signature": "NqV3kXbpxN..."
+                "notificationUrl": "http://call-me.com/abon_notification",
+                "signature": "AtztaUw2Mj..."
             },
             responseExample: {
                 "couponValue": 50,
                 "status": 1,
                 "ISOCurrency": "HRK",
-                "partnerTransactionId": "",
                 "originalISOCurrency": "EUR",
                 "originalCouponValue": 50,
                 "currentCouponValue": 50,
@@ -475,7 +566,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             },
             responseExample: {
                 "couponValue": 50,
-                "isoCurrency": 978,
+                "isoCurrency": "EUR",
                 "providerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
                 "salePartnerId": "52f46879-294d-4904-be7e-368ab0161771",
                 "isoCountryCode": null
@@ -487,6 +578,32 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     couponValue: 50.0,
                     ISOCurrency: "HRK",
                     providerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+                }
+            }
+        },
+        confirmTransactionWithAutorization: {
+            requestExample: {
+                "couponCode": "2326186935891516",
+                "partnerId": "e9fb671b-154e-4918-9788-84b6758fb082",
+                "partnerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "userId": "4149ba7d-e4f7-4c77-8393-d03e6691c03b",
+                "signature": "XJAit8JDaJ..."
+            },
+            responseExample: {
+                "couponValue": 50,
+                "isoCurrency": "EUR",
+                "partnerTransactionId": "e126aa6b-0073-4e5f-bb3c-9eeefb6d392f",
+                "salePartnerId": "52f46879-294d-4904-be7e-368ab0161771",
+                "couponCode": "2326186935891516",
+                "couponSerialNumber": "9874772993339010"
+            },
+            errorResponseExample: {
+                code: 4,
+                message: "Coupon Already Used",
+                additionalData: {
+                    couponValue: 50.0,
+                    ISOCurrency: "HRK",
+                    partnerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
                 }
             }
         }
