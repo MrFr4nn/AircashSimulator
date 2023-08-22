@@ -14,6 +14,6 @@ namespace Services.AbonOnlinePartner
     {
         public decimal CouponValue { get; set; }
         public string ISOCurrency { get; set; }
-        public string ProviderTransactionId { get; set; }
+        public string PartnerTransactionId { get; set; }
     }
 }

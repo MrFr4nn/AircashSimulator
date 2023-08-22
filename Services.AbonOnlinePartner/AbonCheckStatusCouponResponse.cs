@@ -7,7 +7,6 @@ namespace Services.AbonOnlinePartner
         public decimal CouponValue { get; set; }
         public bool IsValid { get; set; }
         public CurrencyEnum ISOCurrency { get; set; }
-        public string PartnerTransactionId { get; set; }
         public string IsoCountryCode { get; set; }
         public decimal OriginalCouponValue { get; set; }
         public CurrencyEnum OriginalISOCurrency { get; set; }
