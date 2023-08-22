@@ -16,4 +16,18 @@ namespace Services.AbonOnlinePartner
         public string ISOCurrency { get; set; }
         public string ProviderTransactionId { get; set; }
     }
+
+    public class ErrorResponseV2
+    {
+        public int Code { get; set; }
+        public string Message { get; set; }
+        public DataV2 AdditionalData { get; set; }
+    }
+
+    public class DataV2
+    {
+        public decimal CouponValue { get; set; }
+        public string ISOCurrency { get; set; }
+        public string PartnerTransactionId { get; set; }
+    }
 }

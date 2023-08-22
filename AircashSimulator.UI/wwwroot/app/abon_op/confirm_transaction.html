@@ -575,7 +575,7 @@ eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQ
                             <td>string</td>
                             <td>
                                 16 digit coupon code that the user enters in the Online
-                                Provider's web interface
+                                Partner's web interface
                             </td>
                             <td>YES</td>
                         </tr>
@@ -1004,45 +1004,45 @@ XJAit8JDaJyp7dUhwER8AFcU2ShGmBOA3v8Q0wwytXyBXgScRuC2dDFDTnXjBLNL2kd/PuJE/seghs36
                     <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">Copy Request</button>
                 </uib-tab>
             </uib-tabset>
-        </uib-tab>
-        <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
+        </uib-tab>-->
+        <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-3">
                     <form action="/" method="POST" name="confirmForm0">
                         <fieldset>
                             <div class="mb-3">
                                 <label class="form-label" for="exampleInputEmail1">Partner Id</label>
-                                <input ng-model="confirmTransactionModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                                <input ng-model="confirmTransactionV2Model.partnerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="exampleInputEmail1">User Id</label>
-                                <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
+                                <input ng-model="confirmTransactionV2Model.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label" for="exampleInputEmail1">Partner Transaction Id</label>
-                                <input ng-model="confirmTransactionModel.providerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
+                                <input ng-model="confirmTransactionV2Model.partnerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
                             </div>
                             <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                                <label class="form-label" for="exampleInputEmail1">Coupon Code</label>
+                                <input ng-model="confirmTransactionV2Model.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
                             </div>
-                            <button ng-click="confirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmBusy || confirmForm0.$invalid">Confirm transaction <i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button ng-click="confirmTransactionV2()" class="btn btn-primary w-100px me-5px" ng-disabled="confirmV2Busy || confirmForm0.$invalid">Confirm transaction <i ng-if="confirmV2Busy" class="fa fa-cog fa-spin"></i></button>
                         </fieldset>
                     </form>
                 </div>
                 <br />
-                <div ng-if="confirmResponded" class="col-md-4">
-                    Request ({{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                    <jsonformatter data="ConfirmServiceRequest"></jsonformatter>
-                    Sequence: {{sequenceConfirm}}
+                <div ng-if="confirmV2Responded" class="col-md-4">
+                    Request ({{ConfirmV2RequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="ConfirmV2ServiceRequest"></jsonformatter>
+                    Sequence: {{sequenceConfirmV2}}
                 </div>
-                <div ng-if="confirmResponded" class="col-md-4">
-                    Response ({{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                    <jsonformatter data="ConfirmServiceResponse"></jsonformatter>
+                <div ng-if="confirmV2Responded" class="col-md-4">
+                    Response ({{ConfirmV2ResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                    <jsonformatter data="ConfirmV2ServiceResponse"></jsonformatter>
                 </div>
             </div>
         </uib-tab>
-        <uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
+        <!--<uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
             <div class="row">
                 <div class="col-md-3">
                     <form action="/" method="POST" name="confirmForm1">
