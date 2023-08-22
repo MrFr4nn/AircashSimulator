@@ -238,7 +238,6 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             $scope.checkStatusSetAuthorizationValuesToNull();
             parameters = null;
         } 
-        console.log($scope.checkStatusCouponModel);
         abonOpService.checkStatusCoupon($scope.checkStatusCouponModel.partnerId, $scope.checkStatusCouponModel.couponCode, $scope.checkStatusCouponModel.partnerTransactionId, $scope.checkStatusCouponModel.notificationUrl, $scope.checkStatusCouponModel.userId, $scope.checkStatusCouponModel.userPhoneNumber, parameters)
             .then(function (response) {
                 console.log(response);
@@ -251,13 +250,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     $scope.checkStatusCouponServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                 }
                 if ($scope.select.CheckStatusUseAuthorization == 1) $scope.checkStatusSetDefaultAuthorizationValues();
-                console.log($scope.checkStatusCouponModel);
                 $scope.checkStatusCouponBusy = false;
                 $scope.checkStatusCouponResponded = true;
             }, () => {
                 console.log("error");
                 if ($scope.select.CheckStatusUseAuthorization == 1) $scope.checkStatusSetDefaultAuthorizationValues();
-                console.log($scope.checkStatusCouponModel);
             });
     }
 
