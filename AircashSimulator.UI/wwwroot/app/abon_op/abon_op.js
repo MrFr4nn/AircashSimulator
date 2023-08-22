@@ -210,13 +210,35 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 console.log("error");
             });
     }
-
+    $scope.select = {};
+    $scope.checkStatusSetDefaultAuthorizationValues = function () {
+        $scope.checkStatusCouponModel.partnerTransactionId = HelperService.NewGuid();
+        $scope.checkStatusCouponModel.notificationUrl = "http://call-me.com/abon_notification";
+        $scope.checkStatusCouponModel.userPhoneNumber = $scope.decodedToken.userPhoneNumber;
+        $scope.checkStatusCouponModel.userFirstName = $scope.decodedToken.userFirstName;
+        $scope.checkStatusCouponModel.userLastName = $scope.decodedToken.userLastName;
+        $scope.checkStatusCouponModel.userBirthDate = new Date($scope.decodedToken.userBirthDate);
+    }
+    $scope.checkStatusSetAuthorizationValuesToNull = function () {
+        $scope.checkStatusCouponModel.partnerTransactionId = null;
+        $scope.checkStatusCouponModel.partnerTransactionId = null;
+        $scope.checkStatusCouponModel.notificationUrl = null;
+        $scope.checkStatusCouponModel.userPhoneNumber = null;
+        $scope.checkStatusCouponModel.userFirstName = null;
+        $scope.checkStatusCouponModel.userLastName = null;
+        $scope.checkStatusCouponModel.userBirthDate = null;
+    }
     $scope.checkStatusCouponResponded = false;
     $scope.checkStatusCouponBusy = false;
     $scope.checkStatusCoupon = function () {
         $scope.checkStatusCouponBusy = true;
         $scope.checkStatusCouponResponded = false;
-        abonOpService.checkStatusCoupon($scope.checkStatusCouponModel.partnerId, $scope.checkStatusCouponModel.couponCode, $scope.checkStatusCouponModel.partnerTransactionId, $scope.checkStatusCouponModel.notificationUrl, $scope.checkStatusCouponModel.userId, $scope.checkStatusCouponModel.userPhoneNumber, [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate }])
+        var parameters = [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate }];
+        if ($scope.select.CheckStatusUseAuthorization == 1) {
+            $scope.checkStatusSetAuthorizationValuesToNull();
+            parameters = null;
+        } 
+        abonOpService.checkStatusCoupon($scope.checkStatusCouponModel.partnerId, $scope.checkStatusCouponModel.couponCode, $scope.checkStatusCouponModel.partnerTransactionId, $scope.checkStatusCouponModel.notificationUrl, $scope.checkStatusCouponModel.userId, $scope.checkStatusCouponModel.userPhoneNumber, parameters)
             .then(function (response) {
                 console.log(response);
                 if (response) {
@@ -227,10 +249,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     $scope.checkStatusCouponResponseDateTimeUTC = response.responseDateTimeUTC;
                     $scope.checkStatusCouponServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                 }
+                if ($scope.select.CheckStatusUseAuthorization == 1) $scope.checkStatusSetDefaultAuthorizationValues();
                 $scope.checkStatusCouponBusy = false;
                 $scope.checkStatusCouponResponded = true;
             }, () => {
                 console.log("error");
+                if ($scope.select.CheckStatusUseAuthorization == 1) $scope.checkStatusSetDefaultAuthorizationValues();
             });
     }
 

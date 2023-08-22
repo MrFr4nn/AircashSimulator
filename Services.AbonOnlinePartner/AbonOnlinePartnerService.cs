@@ -96,7 +96,7 @@ namespace Services.AbonOnlinePartner
             }
             else
             {
-                checkStausCouponResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+                checkStausCouponResponse = JsonConvert.DeserializeObject<ErrorResponseV2>(response.ResponseContent);
             }
             var frontResponse = new Response
             {

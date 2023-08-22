@@ -548,7 +548,10 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                             <td>
                                 URL that is called when status is changed. When request is received on this URL partner must call CheckStatus again.
                             </td>
-                            <td>YES</td>
+                            <td>
+                                YES,
+                                conditionally
+                            </td>
                         </tr>
                         <tr>
                             <td colspan="2"><b>Signature</b></td>
@@ -887,6 +890,12 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                 <div class="col-md-3">
                     <form action="/" method="POST" name="validateForm0">
                         <fieldset>
+                            <div class="dropdown mb-3">
+                                <select class="form-control" ng-model="select.CheckStatusUseAuthorization" ng-init="select.CheckStatusUseAuthorization = '1'">
+                                    <option value="1">Abon without authorization</option>
+                                    <option value="2" selected>Abon with authorization</option>
+                                </select>
+                            </div>
                             <div class="mb-3">
                                 <label class="form-label">Partner Id</label>
                                 <input ng-model="checkStatusCouponModel.partnerId" class="form-control" type="text" placeholder="Enter Partner Id" ng-required="true">
@@ -895,11 +904,11 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                                 <label class="form-label">Coupon Code</label>
                                 <input ng-model="checkStatusCouponModel.couponCode" class="form-control" type="text" placeholder="Enter Coupon Code" ng-required="true">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
                                 <label class="form-label">Partner Transaction Id</label>
                                 <input ng-model="checkStatusCouponModel.partnerTransactionId" class="form-control" type="text" placeholder="Enter Partner Transaction Id" ng-required="true">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
                                 <label class="form-label">Notification URL</label>
                                 <input ng-model="checkStatusCouponModel.notificationUrl" class="form-control" type="text" placeholder="Enter Notification URL" ng-required="true">
                             </div>
@@ -907,19 +916,19 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                                 <label class="form-label">User Id</label>
                                 <input ng-model="checkStatusCouponModel.userId" class="form-control" type="text" placeholder="Enter User Id" ng-required="true">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
                                 <label class="form-label">User's Phone Number</label>
                                 <input ng-model="checkStatusCouponModel.userPhoneNumber" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
                                 <label class="form-label">User's First Name</label>
                                 <input ng-model="checkStatusCouponModel.userFirstName" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2"v>
                                 <label class="form-label">User's Last Name</label>
                                 <input ng-model="checkStatusCouponModel.userLastName" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
                             </div>
-                            <div class="mb-3">
+                            <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
                                 <label class="form-label">User's Birth Date</label>
                                 <input ng-model="checkStatusCouponModel.userBirthDate" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
                             </div>
