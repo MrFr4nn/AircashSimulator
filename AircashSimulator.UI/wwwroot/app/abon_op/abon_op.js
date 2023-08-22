@@ -19,6 +19,7 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         getCurlValidateCoupon: getCurlValidateCoupon,
         getCurlConfirmTransaction:getCurlConfirmTransaction,
         confirmTransaction: confirmTransaction,
+        confirmTransactionV2: confirmTransactionV2,
         validateSimulateError: validateSimulateError,
         confirmSimulateError: confirmSimulateError,
     });
@@ -70,6 +71,19 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
                 ProviderTransactionId: confirmTransactionModel.providerTransactionId,
                 UserId: confirmTransactionModel.userId
 
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function confirmTransactionV2(confirmTransactionV2Model) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonOnlinePartner/ConfirmTransactionV2",
+            data: {
+                CouponCode: confirmTransactionV2Model.couponCode,
+                PartnerId: confirmTransactionV2Model.partnerId,
+                PartnerTransactionId: confirmTransactionV2Model.partnerTransactionId,
+                UserId: confirmTransactionV2Model.userId
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -143,6 +157,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         providerTransactionId: HelperService.NewGuid(),
         userId: HelperService.NewGuid()
     };
+    $scope.confirmTransactionV2Model = {
+        couponCode: null,
+        partnerId: $scope.partnerIds.AbonOnlinePartnerId,
+        partnerTransactionId: HelperService.NewGuid(),
+        userId: HelperService.NewGuid()
+    };    
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
     }
@@ -232,6 +252,28 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 }
                 $scope.confirmBusy = false;
                 $scope.confirmResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.confirmV2Responded = false;
+    $scope.confirmV2Busy = false;
+    $scope.confirmTransactionV2 = function () {
+        $scope.confirmV2Busy = true;
+        $scope.confirmV2Responded = false;
+        abonOpService.confirmTransactionV2($scope.confirmTransactionV2Model)
+            .then(function (response) {
+                if (response) {
+                    $scope.ConfirmV2RequestDateTimeUTC = response.requestDateTimeUTC;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.ConfirmV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.sequenceConfirmV2 = response.sequence;
+                    $scope.ConfirmV2ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.ConfirmV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                }
+                $scope.confirmV2Busy = false;
+                $scope.confirmV2Responded = true;
             }, () => {
                 console.log("error");
             });
