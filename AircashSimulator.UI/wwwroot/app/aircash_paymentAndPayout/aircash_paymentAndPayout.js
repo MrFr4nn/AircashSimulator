@@ -679,7 +679,7 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
                 digitCode: "687502",
                 locationID: "TestLocation",
                 currencyID: "978",
-                signature: "Ycc...K6s="
+                signature: "aTg...3FY="
             },
             ResponseExampleV2: {
                 digitCode: "687502",
