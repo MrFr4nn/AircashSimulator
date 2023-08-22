@@ -233,7 +233,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     $scope.checkStatusCoupon = function () {
         $scope.checkStatusCouponBusy = true;
         $scope.checkStatusCouponResponded = false;
-        var parameters = [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate }];
+        var parameters = [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate.toLocaleDateString('en-CA') }];
         if ($scope.select.CheckStatusUseAuthorization == 1) {
             $scope.checkStatusSetAuthorizationValuesToNull();
             parameters = null;
@@ -257,6 +257,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 if ($scope.select.CheckStatusUseAuthorization == 1) $scope.checkStatusSetDefaultAuthorizationValues();
             });
     }
+
+    $scope.setCheckStatusDate = function (date) {
+        $scope.checkStatusCouponModel.userBirthDate = date;
+    }
+
 
     $scope.confirmResponded = false;
     $scope.confirmBusy = false;
