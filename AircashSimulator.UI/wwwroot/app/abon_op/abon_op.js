@@ -138,7 +138,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     }
     $scope.validateCouponModel = {
         couponCode: null,
-        providerId: $scope.partnerIds.AbonOnlinePartnerId
+        providerId: $scope.partnerIds.AbonOnlinePartnerIdWithoutAuthorization
     };
     $scope.checkStatusCouponModel = {
         partnerId: $scope.partnerIds.AbonOnlinePartnerId,
@@ -153,7 +153,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     };
     $scope.confirmTransactionModel = {
         couponCode: null,
-        providerId: $scope.partnerIds.AbonOnlinePartnerId,
+        providerId: $scope.partnerIds.AbonOnlinePartnerIdWithoutAuthorization,
         providerTransactionId: HelperService.NewGuid(),
         userId: HelperService.NewGuid()
     };
@@ -375,6 +375,18 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             }, () => {
                 console.log("error");
             });
+    }
+
+    $scope.checkStatusAuthorizationOptionChanged = function () {
+        if ($scope.select.CheckStatusUseAuthorization == 1 && $scope.checkStatusCouponModel.partnerId == $scope.partnerIds.AbonOnlinePartnerId) {
+            $scope.checkStatusCouponModel.partnerId = $scope.partnerIds.AbonOnlinePartnerIdWithoutAuthorization;
+            $scope.confirmTransactionV2Model.partnerId = $scope.partnerIds.AbonOnlinePartnerIdWithoutAuthorization;
+            $rootScope.showGritter("", "PartnerId changed in CheckStatus and ConfirmTransaction to PartnerId that uses abon authorization");
+        } else if ($scope.select.CheckStatusUseAuthorization == 2 && $scope.checkStatusCouponModel.partnerId == $scope.partnerIds.AbonOnlinePartnerIdWithoutAuthorization) {
+            $scope.checkStatusCouponModel.partnerId = $scope.partnerIds.AbonOnlinePartnerId;
+            $scope.confirmTransactionV2Model.partnerId = $scope.partnerIds.AbonOnlinePartnerId;
+            $rootScope.showGritter("", "PartnerId changed in CheckStatus and ConfirmTransaction to PartnerId that dosen't use abon authorization");
+        }
     }
 
     $scope.errorExamples = {

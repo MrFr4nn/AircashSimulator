@@ -891,7 +891,7 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                     <form action="/" method="POST" name="validateForm0">
                         <fieldset>
                             <div class="dropdown mb-3">
-                                <select class="form-control" ng-model="select.CheckStatusUseAuthorization" ng-init="select.CheckStatusUseAuthorization = '1'">
+                                <select class="form-control" ng-model="select.CheckStatusUseAuthorization" ng-change="checkStatusAuthorizationOptionChanged()" ng-init="select.CheckStatusUseAuthorization = '2'">
                                     <option value="1">Abon without authorization</option>
                                     <option value="2" selected>Abon with authorization</option>
                                 </select>
