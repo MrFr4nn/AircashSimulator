@@ -126,12 +126,20 @@ acRefundModule.controller("acRefundModuleCtrl", ['$scope', 'acRefundModuleServic
                 });
         }
 
-        $scope.requestExample = {
-            PartnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-            PartnerTransactionID: "67cef954-7372-4a12-9250-98a42bcf0317",
-            RefundPartnerTransactionID: "9a90fcdc-572d-44b3-904d-1ff0629c7046",
-            Amount: "100",
-            Signature: "g/iZ .... KgY/6o="
+        $scope.refundRequestExample = {
+            "partnerID": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+            "partnerTransactionID": "e4fdbead-9169-4789-ba72-36d0f43ed3e2",
+            "refundPartnerTransactionID": "2ce22c99-4b45-4616-9924-9f9510e38cc6",
+            "amount": 100,
+            "signature": "uCFkuzpqZI..."
+        }
+
+        $scope.frameRefundRequestExample = {
+            "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+            "partnerTransactionId": "0eb3ab4b-8d27-4ce2-97ce-b6fe4109e16d",
+            "refundPartnerTransactionID": "97084b07-9ef8-4b51-80f8-1f29334d4101",
+            "amount": 100,
+            "signature": "G5BXxhp9W7..."
         }
 
         $scope.setDefaults();
