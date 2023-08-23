@@ -76,6 +76,8 @@
     </uib-tab>
     <uib-tab index="refund-tab-1" heading="Request example" classes="nav-item">
         <jsonformatter data="requestExample"></jsonformatter>
+        <br />
+        Sequence: Amount=100&PartnerID=8db69a48-7d61-48e7-9be8-3160549c7f17&PartnerTransactionID=e16d620e-089d-42b0-9881-fdea3cc3b26a&RefundPartnerTransactionID=ab5e767e-8fce-43da-a0f7-28df7481bee8
     </uib-tab>
     <uib-tab index="refund-tab-2" heading="HTTP 200 OK output parameters" classes="nav-item">
         <table class="table table-hover">
@@ -184,7 +186,7 @@
             <div ng-if="refundResponded" class="col-md-4">
                 Request ({{refundRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="refundServiceRequest"></jsonformatter>
-                Sequence: {{sequenceRefund}}
+                Sequence: {{refundSequence}}
             </div>
             <div ng-if="refundResponded" class="col-md-4">
                 Response ({{refundResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
