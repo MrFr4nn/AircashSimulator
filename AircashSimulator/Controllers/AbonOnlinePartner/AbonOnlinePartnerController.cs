@@ -53,6 +53,11 @@ namespace AircashSimulator
             var response = await AbonOnlinePartnerService.CheckStatusCoupon(checkStatusCouponRequest.PartnerId, checkStatusCouponRequest.CouponCode, checkStatusCouponRequest.PartnerTransactionId, checkStatusCouponRequest.NotificationUrl, checkStatusCouponRequest.UserId, checkStatusCouponRequest.UserPhoneNumber, checkStatusCouponRequest.Parameters, null, null, environment);
             return Ok(response);
         }
+        [HttpGet]
+        public async Task<IActionResult> AuthorizationNotification([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        {
+            return Ok();
+        }
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> ConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)

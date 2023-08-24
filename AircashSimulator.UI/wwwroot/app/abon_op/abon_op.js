@@ -125,7 +125,7 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
 }
 ]);
 
-abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', 'HelperService', '$localStorage', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope, HelperService, $localStorage) {
+abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpService', '$http', 'JwtParser', '$uibModal', '$rootScope', 'HelperService', 'config', '$localStorage', function ($scope, $state, $filter, abonOpService, $http, JwtParser, $uibModal, $rootScope, HelperService, config, $localStorage) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
@@ -140,11 +140,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         couponCode: null,
         providerId: $scope.partnerIds.AbonOnlinePartnerIdWithoutAuthorization
     };
+    var newPartnerTrxId = HelperService.NewGuid()
     $scope.checkStatusCouponModel = {
         partnerId: $scope.partnerIds.AbonOnlinePartnerId,
         couponCode: null,
-        partnerTransactionId: HelperService.NewGuid(),
-        notificationUrl: "http://call-me.com/abon_notification",
+        partnerTransactionId: newPartnerTrxId,
+        notificationUrl: config.baseUrl + "AbonOnlinePartner/AuthorizationNotification?partnerTransactionId=" + newPartnerTrxId,
         userId: HelperService.NewGuid(),
         userPhoneNumber: $scope.decodedToken.userPhoneNumber,
         userFirstName: $scope.decodedToken.userFirstName,
