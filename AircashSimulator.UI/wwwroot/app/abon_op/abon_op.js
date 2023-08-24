@@ -213,15 +213,15 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     }
     $scope.select = {};
     $scope.checkStatusSetDefaultAuthorizationValues = function () {
-        $scope.checkStatusCouponModel.partnerTransactionId = HelperService.NewGuid();
-        $scope.checkStatusCouponModel.notificationUrl = "http://call-me.com/abon_notification";
+        var newPartnerTrxId = HelperService.NewGuid()
+        $scope.checkStatusCouponModel.partnerTransactionId = newPartnerTrxId;
+        $scope.checkStatusCouponModel.notificationUrl = config.baseUrl + "AbonOnlinePartner/AuthorizationNotification?partnerTransactionId=" + newPartnerTrxId;
         $scope.checkStatusCouponModel.userPhoneNumber = $scope.decodedToken.userPhoneNumber;
         $scope.checkStatusCouponModel.userFirstName = $scope.decodedToken.userFirstName;
         $scope.checkStatusCouponModel.userLastName = $scope.decodedToken.userLastName;
         $scope.checkStatusCouponModel.userBirthDate = new Date($scope.decodedToken.userBirthDate);
     }
     $scope.checkStatusSetAuthorizationValuesToNull = function () {
-        $scope.checkStatusCouponModel.partnerTransactionId = null;
         $scope.checkStatusCouponModel.partnerTransactionId = null;
         $scope.checkStatusCouponModel.notificationUrl = null;
         $scope.checkStatusCouponModel.userPhoneNumber = null;
