@@ -45,6 +45,7 @@ namespace Service.Settings
         string BarcodeOverLimit { get; }
         string NotCheckedBarcode { get; }
         Guid AbonOnlinePartnerId { get; }
+        Guid AbonOnlinePartnerIdWithoutAuthorization { get; }
         Guid AircashPayoutV4PartnerId { get; }
         Guid C2DPayoutPartnerId { get; }
         Guid C2DDepositPartnerId { get; }

@@ -10,6 +10,7 @@ namespace Services.Authentication
     public class PartnerIdDTO
     {
         public string AbonOnlinePartnerId { get; set; }
+        public string AbonOnlinePartnerIdWithoutAuthorization { get; set; }
         public string AbonGeneratePartnerId { get; set; }
         public string AircashFramePartnerId { get; set; }
         public string AircashFramePartnerIdWithMatchPersonalData { get; set; }

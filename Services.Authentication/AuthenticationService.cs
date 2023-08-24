@@ -64,6 +64,7 @@ namespace Services.Authentication
             var partnerIds = new PartnerIdDTO
             {
                 AbonOnlinePartnerId = SettingsService.AbonOnlinePartnerId.ToString(),
+                AbonOnlinePartnerIdWithoutAuthorization = SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(),
                 AbonGeneratePartnerId = SettingsService.AbonGeneratePartnerId.ToString(),
                 AircashFramePartnerId = SettingsService.AircashFramePartnerId.ToString(),
                 AircashFramePartnerIdWithMatchPersonalData = SettingsService.AircashFramePartnerIdWithMatchPersonalData.ToString(),
@@ -80,6 +81,7 @@ namespace Services.Authentication
             if (partner.PrivateKey != null && partner.PrivateKey != "")
             {
                 partnerIds.AbonOnlinePartnerId = partnerId.ToString();
+                partnerIds.AbonOnlinePartnerIdWithoutAuthorization = partnerId.ToString();
                 partnerIds.AbonGeneratePartnerId = partnerId.ToString();
                 partnerIds.AircashFramePartnerId = partnerId.ToString();
                 partnerIds.AircashFramePartnerIdWithMatchPersonalData = partnerId.ToString();
