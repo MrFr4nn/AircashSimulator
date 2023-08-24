@@ -23,7 +23,7 @@ namespace Services.AbonOnlinePartner
         private readonly string ValidateCouponEndpoint = "OnlineProvider/ValidateCoupon";
         private readonly string CheckStatusCouponEndpoint = "ConsumeBon/CheckStatus";
         private readonly string ConfirmTransactionEndpoint = "OnlineProvider/ConfirmTransaction";
-        private readonly string ConfirmTransactionV2Endpoint = "ConsumeAbon/ConfirmTransaction";
+        private readonly string ConfirmTransactionV2Endpoint = "ConsumeBon/ConfirmTransaction";
 
         public AbonOnlinePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
         {
