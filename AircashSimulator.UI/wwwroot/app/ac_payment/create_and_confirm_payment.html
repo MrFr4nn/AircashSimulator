@@ -321,8 +321,8 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
             <jsonformatter data="aircashPayment.createAndConfirmPayment.errorResponseExample"></jsonformatter>
         </uib-tab>
         <uib-tab index="CreateAndConfirmPayment1-tab-6" heading="Try it out" classes="nav-item">
-            <div class="row">
-                <div class="col-4">
+            <div class="form-group row mx-2">
+                <div class="col-5">
                     <form action="/" method="POST" name="createAndConfrimForm">
                         <fieldset>
                             <div class="row">
@@ -378,7 +378,7 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
                                     </label>
                                 </div>
                                 <div class="col-lg-9 mt-2">
-                                    <input ng-model="createAndConfirmModel.aircashUserID"  ng-if="checkboxCreateAndConfirm.aircashUserID"  class="form-control" type="text" placeholder="Enter aircashUserID" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                    <input ng-model="createAndConfirmModel.aircashUserID" ng-if="checkboxCreateAndConfirm.aircashUserID" class="form-control" type="text" placeholder="Enter aircashUserID" ng-disabled="createAndConfirmBusy" ng-required="true">
                                 </div>
                             </div>
                             <hr />
@@ -438,19 +438,31 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
                                 </div>
                             </div>
                             <hr />
+                            <div class="row">
+                                <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
+                                    <input class="form-check-input" type="checkbox"  ng-model="checkboxCreateAndConfirm.partnerUser">
+                                    <label class="form-check-label">
+                                        PartnerUserId
+                                    </label>
+                                </div>
+                                <div class="col-lg-9 mt-2">
+                                    <input ng-model="createAndConfirmModel.partnerUserId" ng-if="checkboxCreateAndConfirm.partnerUser" class="form-control" type="text" placeholder="Enter partnerUserId" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                </div>
+                            </div>
+                            <hr />
                         </fieldset>
                     </form>
                     <button ng-click="createAndConfirm()" class="btn btn-primary w-100px me-5px" ng-disabled="createAndConfirmBusy|| createAndConfrimForm.$invalid">Send POST <i ng-if="createAndConfirmBusy" class="fa fa-cog fa-spin"></i></button>
 
                 </div>
-                <div class="col-4" ng-if="createAndConfirmResponded">
+                <div class="col-3" ng-if="createAndConfirmResponded">
                     Request ({{createAndConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="createAndConfirmRequest"></jsonformatter>
                     <div class="overflow-auto">
                         Sequence: {{createAndConfirmSequence}}<br />
                     </div>
                 </div>
-                <div class="col-4" ng-if="createAndConfirmResponded">
+                <div class="col-3" ng-if="createAndConfirmResponded">
                     Response ({{createAndConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                     <jsonformatter data="createAndConfirmResponse"></jsonformatter>
                 </div>
