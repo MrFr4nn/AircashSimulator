@@ -148,11 +148,11 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                 key: "PartnerUserId",
                 value: generateSignatureModel.partnerUserId
             },
-            phoneNumber:
-            {
-                key: "AircashUserPhoneNumber",
-                value: generateSignatureModel.phoneNumber
-            }
+            //phoneNumber:
+            //{
+            //    key: "AircashUserPhoneNumber",
+            //    value: generateSignatureModel.phoneNumber
+            //}
         }
     }
 
@@ -214,7 +214,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCheckPlayerModel.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCheckPlayerModel.merchant) $scope.checkPlayerParameters.push($scope.requestExample.merchantId);
         if ($scope.checkboxCheckPlayerModel.aircashUserID) $scope.checkPlayerParameters.push($scope.requestExample.aircashUserID);
-        if ($scope.checkboxCheckPlayerModel.phoneNumber) $scope.checkPlayerParameters.push($scope.requestExample.phoneNumber);
+        //if ($scope.checkboxCheckPlayerModel.phoneNumber) $scope.checkPlayerParameters.push($scope.requestExample.phoneNumber);
         if ($scope.checkboxCheckPlayerModel.match)
             $scope.checkPlayerParameters.push(
                 $scope.requestExample.firstName,
@@ -453,7 +453,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         if ($scope.checkboxCheckPlayer.countryCode) $scope.checkPlayerParameters.push($scope.requestExample.countryCode);
         if ($scope.checkboxCheckPlayer.merchant) $scope.checkPlayerParameters.push($scope.requestExample.merchantId);
         if ($scope.checkboxCheckPlayer.aircashUserID) $scope.checkPlayerParameters.push($scope.requestExample.aircashUserID);
-        if ($scope.checkboxCheckPlayer.phoneNumber) $scope.checkPlayerParameters.push($scope.requestExample.phoneNumber);
+        /*if ($scope.checkboxCheckPlayer.phoneNumber) $scope.checkPlayerParameters.push($scope.requestExample.phoneNumber);*/
         if ($scope.checkboxCheckPlayer.match)
             $scope.checkPlayerParameters.push(
                 $scope.requestExample.firstName,
