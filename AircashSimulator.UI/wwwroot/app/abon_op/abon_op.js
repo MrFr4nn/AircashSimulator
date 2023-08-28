@@ -140,12 +140,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         couponCode: null,
         providerId: $scope.partnerIds.AbonOnlinePartnerIdWithoutAuthorization
     };
-    var newPartnerTrxId = HelperService.NewGuid()
     $scope.checkStatusCouponModel = {
         partnerId: $scope.partnerIds.AbonOnlinePartnerId,
         couponCode: null,
-        partnerTransactionId: newPartnerTrxId,
-        notificationUrl: config.baseUrl + "AbonOnlinePartner/AuthorizationNotification?partnerTransactionId=" + newPartnerTrxId,
+        partnerTransactionId: HelperService.NewGuid(),
+        notificationUrl: config.baseUrl + "AbonOnlinePartner/AuthorizationNotification",
         userId: HelperService.NewGuid(),
         userPhoneNumber: $scope.decodedToken.userPhoneNumber,
         userFirstName: $scope.decodedToken.userFirstName,
@@ -213,9 +212,8 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     }
     $scope.select = {};
     $scope.checkStatusSetDefaultAuthorizationValues = function () {
-        var newPartnerTrxId = HelperService.NewGuid()
-        $scope.checkStatusCouponModel.partnerTransactionId = newPartnerTrxId;
-        $scope.checkStatusCouponModel.notificationUrl = config.baseUrl + "AbonOnlinePartner/AuthorizationNotification?partnerTransactionId=" + newPartnerTrxId;
+        $scope.checkStatusCouponModel.partnerTransactionId = HelperService.NewGuid();
+        $scope.checkStatusCouponModel.notificationUrl = config.baseUrl + "AbonOnlinePartner/AuthorizationNotification";
         $scope.checkStatusCouponModel.userPhoneNumber = $scope.decodedToken.userPhoneNumber;
         $scope.checkStatusCouponModel.userFirstName = $scope.decodedToken.userFirstName;
         $scope.checkStatusCouponModel.userLastName = $scope.decodedToken.userLastName;
@@ -585,7 +583,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                         "Value": "1990-01-01"
                     }
                 ],
-                "notificationUrl": "http://call-me.com/abon_notification",
+                "notificationUrl": "https://dev-simulator-api.aircash.eu/api/AbonOnlinePartner/AuthorizationNotification",
                 "signature": "AtztaUw2Mj..."
             },
             responseExample: {
