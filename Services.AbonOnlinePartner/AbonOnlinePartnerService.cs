@@ -154,7 +154,7 @@ namespace Services.AbonOnlinePartner
                 var newTransaction = new TransactionEntity
                 {
                     Amount = successResponse.CouponValue,
-                    ISOCurrencyId = successResponse.ISOCurrency,
+                    ISOCurrencyId = (CurrencyEnum)Enum.Parse(typeof(CurrencyEnum), successResponse.ISOCurrency),
                     PartnerId = new Guid(providerId),
                     TransactionId = Guid.NewGuid().ToString(),
                     RequestDateTimeUTC = requestDateTime,
@@ -226,7 +226,7 @@ namespace Services.AbonOnlinePartner
                 var newTransaction = new TransactionEntity
                 {
                     Amount = successResponse.CouponValue,
-                    ISOCurrencyId = successResponse.ISOCurrency,
+                    ISOCurrencyId = (CurrencyEnum)Enum.Parse(typeof(CurrencyEnum), successResponse.ISOCurrency),
                     PartnerId = new Guid(partnerId),
                     TransactionId = Guid.NewGuid().ToString(),
                     RequestDateTimeUTC = requestDateTime,
