@@ -1,0 +1,80 @@
+﻿<h1>Mastercard</h1>
+
+<div class="table-responsive">
+    <table class="table  table-active col-md-6">
+        <thead>
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<uib-tabset>
+    <uib-tab index="Mastercard-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>SerialNumber</b></td>
+                        <td>String</td>
+                        <td>Card identifier</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><b>EAN</b></td>
+                        <td>String</td>
+                        <td>
+                            ??
+                        </td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>Decimal</td>
+                        <td>
+                            ??
+                        </td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><b>DateOfSelling</b></td>
+                        <td>Date</td>
+                        <td>Date of the card sale</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="Mastercard-tab-1" heading="Response" classes="nav-item">
+        <p>
+            System should respond with HTTP response 200 OK in case of success.
+        </p>
+    </uib-tab>
+</uib-tabset>
