@@ -1049,6 +1049,39 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 additionalData: null
             }
         },
+        transactionStatusV3: {
+            responseExample:
+            {
+                "aircashTransactionId": "11da2e60-f35e-43a9-be63-26cf34b12e3b",
+                "amount": 10,
+                "currencyId": 978,
+                "events": [
+                    {
+                        "dateTimeUTC": "2023-07-15 12:00:00",
+                        "description": "Initated",
+                        "eventCode": 100
+                    },
+                    {
+                        "dateTimeUTC": "2023-07-15 12:00:15",
+                        "description": "Invalid phone number entered",
+                        "eventCode": 101
+                    },
+                    {
+                        "dateTimeUTC": "2023-07-15 12:00:50",
+                        "description": "Deposit confirmed via 3DS",
+                        "eventCode": 102
+                    }
+                ],
+                "parameters": [
+                    {
+                         "Key": "AircashUserID",
+                         "Value": "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                    }
+                ],
+                "signature": "kwSXAevhOB...",
+                "status": 2    
+    }
+        },
         confirm: {
             requestExample: {
                 partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
