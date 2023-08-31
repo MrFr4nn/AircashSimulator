@@ -59,7 +59,7 @@ namespace Services.Partner
             Expression<Func<PartnerEntity, bool>> predicate = x => true;
 
             if (!String.IsNullOrEmpty(search))
-                predicate = predicate.AndAlso(x => x.PartnerName.Contains(search));
+                predicate = predicate.AndAlso(x => x.PartnerName.Contains(search) || x.PartnerId.ToString().Equals(search));
 
             var partners = await AircashSimulatorContext.Partners
                     .Where(predicate).OrderBy(t => t.PartnerName)
