@@ -11,6 +11,7 @@ namespace Domain.Entities.Enum
         M3 = 3,
         Frame = 4,
         FrameV2 = 5,
-        SalesV2 = 6
+        SalesV2 = 6,
+        FrameV3 = 7,
     }
 }
