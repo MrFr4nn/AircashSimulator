@@ -89,6 +89,23 @@ namespace AircashSimulator.Controllers.AircashFrame
         }
 
         [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CancelPayoutFrameV2(CancelPayoutDTO cancelPayoutDTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.CancelPayout(cancelPayoutDTO.PartnerId, cancelPayoutDTO.PartnerTransactionId.ToString(), environment);
+            return Ok(response);
+        }
+        public async Task<IActionResult> GetCurlCancelPayoutFrameV2(CancelPayoutDTO cancelPayoutDTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashFrameV2Service.GetCancelPayoutRequest(cancelPayoutDTO.PartnerId, cancelPayoutDTO.PartnerTransactionId.ToString());
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetConfirmPayoutEndpoint(environment));
+            return Ok(curl);
+
+        }
+
+        [HttpPost]
         public async Task<IActionResult> InitiateCashierFrameV2(InitiateRequestAircashFrameV2 initiateRequest)
         {
             var partnerId = SettingsService.AircashFramePartnerId;
