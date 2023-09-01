@@ -549,8 +549,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                                 URL that is called when status is changed. When request is received on this URL partner must call CheckStatus again.
                             </td>
                             <td>
-                                YES,
-                                conditionally
+                                NO
                             </td>
                         </tr>
                         <tr>
@@ -671,14 +670,14 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="12"><b>400</b></td>
-                            <td rowspan="12">
+                            <td rowspan="11"><b>400</b></td>
+                            <td rowspan="11">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid PartnerId</td>
                             <td>-</td>
-                            <td rowspan="12">
+                            <td rowspan="11">
                                 The response will contain an error code,
                                 message and optionally additionalData.
                             </td>
@@ -696,7 +695,7 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                         <tr>
                             <td><b>4</b></td>
                             <td>Coupon Already Used</td>
-                            <td>ISOCurrency, CouponValue, PartnerTransactionId</td>
+                            <td>ISOCurrency, CouponValue, PartnerTransactionId, CouponSerialNumber</td>
                         </tr>
                         <tr>
                             <td><b>5</b></td>
@@ -706,11 +705,6 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                         <tr>
                             <td><b>6</b></td>
                             <td>Coupon Country Not Allowed</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><b>10</b></td>
-                            <td>Invalid notification URL</td>
                             <td>-</td>
                         </tr>
                         <tr>
