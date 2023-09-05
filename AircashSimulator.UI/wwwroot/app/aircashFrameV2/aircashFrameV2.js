@@ -1127,37 +1127,29 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         transactionStatusV3: {
             responseExample:
             {
-                "status": 2,
-                "amount": 10,
+
+                "status": 1,
                 "currencyId": 978,
-                "aircashTransactionId": "e05e93d1-2b74-44e6-937f-964ea53be477",
-                "parameters": [
-                    {
-                        "key": "AircashUserID",
-                        "value": "54659028-e115-4b83-85ea-f8304b5c3000"
-                    },
-                    {
-                        "key": "PayerFirstName",
-                        "value": "John"
-                    },
-                    {
-                        "key": "PayerLastName",
-                        "value": "Doe"
-                    }
-                ],
+                "aircashTransactionId": "95ff5846-f10c-4870-bcf1-e5a0014d0e37",
+                "parameters": [],
                 "events": [
                     {
-                        "dateTimeUC": "2023-09-01T07:23:00.4154004",
+                        "dateTimeUTC": "2023-09-01T06:07:38",
                         "description": "Frame is initiated by user.",
                         "code": 100
                     },
                     {
-                        "dateTimeUC": "2023-09-01T07:23:04.4943993",
+                        "dateTimeUTC": "2023-09-01T06:07:43",
                         "description": "QR code is generated and displayed to user.",
                         "code": 101
+                    },
+                    {
+                        "dateTimeUTC": "2023-09-01T06:07:59",
+                        "description": "The user is not active with phone number: 385*******00",
+                        "code": 103
                     }
                 ],
-                "signature": "deJlzL4kqQ..."
+                "signature": "B6IpRypxmI...",
             }
         },
         confirm: {
