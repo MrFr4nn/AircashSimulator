@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -37,6 +37,7 @@
     <ProjectReference Include="..\Services.AircashPayout\Services.AircashPayout.csproj" />
     <ProjectReference Include="..\Services.AircashPosDeposit\Services.AircashPosDeposit.csproj" />
     <ProjectReference Include="..\Services.Authentication\Services.Authentication.csproj" />
+    <ProjectReference Include="..\Services.CobrandedCard\Services.CobrandedCard.csproj" />
     <ProjectReference Include="..\Services.Coupon\Services.Coupon.csproj" />
     <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
     <ProjectReference Include="..\Services.PartnerAbonDenominations\Services.PartnerAbonDenominations.csproj" />
