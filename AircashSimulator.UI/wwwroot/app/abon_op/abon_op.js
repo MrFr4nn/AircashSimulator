@@ -685,6 +685,16 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 "originalCouponValue": 50,
                 "currentCouponValue": 50,
                 "aircashUserId": "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+            },
+            errorResponseExample: {
+                "code": 4,
+                "message": "coupon_already_used",
+                "additionalData": {
+                    "couponSerialNumber": "8088767004276952",
+                    "couponValue": 50,
+                    "isoCurrency": "EUR",
+                    "partnerTransactionId": "b7159ef2-edfd-44b4-9c35-ee5b1079f132"
+                }
             }
         },
         confirmTransaction: {
@@ -729,12 +739,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 "couponSerialNumber": "9874772993339010"
             },
             errorResponseExample: {
-                code: 4,
-                message: "Coupon Already Used",
-                additionalData: {
-                    couponValue: 50.0,
-                    isoCurrency: "HRK",
-                    partnerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+                "code": 4,
+                "message": "coupon_already_used",
+                "additionalData": {
+                    "couponSerialNumber": "8088767004276952",
+                    "couponValue": 50,
+                    "isoCurrency": "EUR",
+                    "partnerTransactionId": "b7159ef2-edfd-44b4-9c35-ee5b1079f132"
                 }
             }
         }

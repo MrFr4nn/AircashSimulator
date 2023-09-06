@@ -760,6 +760,9 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                 </table>
             </div>
         </uib-tab>
+        <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
+            <jsonformatter data="aBonDeposit.validateCouponWithAutorization.errorResponseExample"></jsonformatter>
+        </uib-tab>
         <!--<uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
         <uib-tabset class="row tabs-left">
             <uib-tab index="ValidateTransactionError-tab-1" heading="1 - Invalid ProviderId" classes="nav-item">
@@ -879,7 +882,7 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
             </uib-tab>
         </uib-tabset>
     </uib-tab>-->
-        <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
+        <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-3">
                     <form action="/" method="POST" name="validateForm0">
@@ -943,32 +946,32 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
             </div>
         </uib-tab>
         <!--<uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
-            <div class="row">
-                <div class="col-md-3">
-                    <form action="/" method="POST" name="validateForm1">
-                        <fieldset>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Provider Id</label>
-                                <input ng-model="validateCouponModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
-                            </div>
-                            <button ng-click="getCurlValidateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="curlValidateBusy || validateForm1.$invalid">Get Curl <i ng-if="curlValidateBusy" class="fa fa-cog fa-spin"></i></button>
+        <div class="row">
+            <div class="col-md-3">
+                <form action="/" method="POST" name="validateForm1">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Provider Id</label>
+                            <input ng-model="validateCouponModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                            <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                        </div>
+                        <button ng-click="getCurlValidateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="curlValidateBusy || validateForm1.$invalid">Get Curl <i ng-if="curlValidateBusy" class="fa fa-cog fa-spin"></i></button>
 
-                        </fieldset>
-                    </form>
-                </div>
-                <br />
-
-                <div ng-if="curlValidateResponded" class="col-md-9">
-                    <pre>
-                    <jsonformatter data="CurlResponse"></jsonformatter>
-                </pre>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponse)">Copy</button>
-                </div>
+                    </fieldset>
+                </form>
             </div>
-        </uib-tab>-->
+            <br />
+
+            <div ng-if="curlValidateResponded" class="col-md-9">
+                <pre>
+                <jsonformatter data="CurlResponse"></jsonformatter>
+            </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponse)">Copy</button>
+            </div>
+        </div>
+    </uib-tab>-->
     </uib-tabset>
 </div>

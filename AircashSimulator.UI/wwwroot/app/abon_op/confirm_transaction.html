@@ -829,181 +829,184 @@ XJAit8JDaJyp7dUhwER8AFcU2ShGmBOA3v8Q0wwytXyBXgScRuC2dDFDTnXjBLNL2kd/PuJE/seghs36
                 </table>
             </div>
         </uib-tab>
+        <uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
+            <jsonformatter data="aBonDeposit.confirmTransactionWithAutorization.errorResponseExample"></jsonformatter>
+        </uib-tab>
         <!--<uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
-            <uib-tabset class="row tabs-left">
-                <uib-tab index="ConfirmTransactionError-tab-1" heading="1 - Invalid ProviderId" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
-                            Request
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error1.request"></jsonformatter>
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="ConfirmTransactionError-tab-1" heading="1 - Invalid ProviderId" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error1.request"></jsonformatter>
 
-                            Sequence:
-                            CouponCode=6377944739582437&ProviderId=7562aad0-aa14-4095-b73e-48170d4191cf&ProviderTransactionId=13569d0e-8dfe-48a4-bd51-2d46b8968252&UserId=32789507-dac4-4a90-aaa2-98398bfc501a
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
-                            Response
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error1.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=7562aad0-aa14-4095-b73e-48170d4191cf&ProviderTransactionId=13569d0e-8dfe-48a4-bd51-2d46b8968252&UserId=32789507-dac4-4a90-aaa2-98398bfc501a
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ConfirmTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 2)">
-                            Request
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error2.request"></jsonformatter>
-
-                            Sequence:
-                            CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=9c75b26b-b600-4f02-93de-45f4b6fff057&UserId=940a81aa-5696-4c1b-bbb0-80698ccf092e
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 2)">
-                            Response
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error2.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error1.response"></jsonformatter>
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ConfirmTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3)">
-                            Request
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
 
-                            Sequence:
-                            CouponCode=S4S152QJK6E83HC1&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=3c4c8d91-c8dd-43ae-835b-aca46eaa2a36&UserId=b8970b7a-22c6-4ba2-b866-bec9b8a2437f
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3)">
-                            Response
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
+                        Sequence: {{errorConfirmSequence}}<br />
 
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ConfirmTransactionError-tab-4" heading="4 - Coupon Already Used" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 4)">
-                            Request
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error4.request"></jsonformatter>
-
-                            Sequence:
-                            CouponCode=2981361437471469&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=ce44cff1-41f5-4610-be3d-5054293be353&UserId=750ce21e-7ce4-4ead-9e5b-5961e684e4c9
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 4)">
-                            Response
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error4.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ConfirmTransactionError-tab-5" heading="5 - Conversion Module Error" classes="nav-item">
-                    Simulation not available.
-                </uib-tab>
-                <uib-tab index="ConfirmTransactionError-tab-6" heading="7 - Coupon Country Not Allowed" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 7)">
-                            Request
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error7.request"></jsonformatter>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 2)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error2.request"></jsonformatter>
 
-                            Sequence:
-                            CouponCode=1437861149152627&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=b6b215e6-379b-4b1f-8bad-0831be6489d3&UserId=32d2c793-a059-4743-89a4-7cefc00e4411
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 7)">
-                            Response
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error7.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=9c75b26b-b600-4f02-93de-45f4b6fff057&UserId=940a81aa-5696-4c1b-bbb0-80698ccf092e
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(7)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">Copy Request</button>
-                </uib-tab>
-                <uib-tab index="ConfirmTransactionError-tab-7" heading="9 - Limit exceeded" classes="nav-item">
-                    <div class="row col-12">
-                        <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 9)">
-                            Request
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error9.request"></jsonformatter>
-
-                            Sequence:
-                            CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=228d8b14-675a-4ca8-afb9-8a995ed4c591&UserId=1a2b8324-e8d4-496d-a119-b571583668c7
-                        </div>
-                        <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 9)">
-                            Response
-                            <jsonformatter data="errorExamples.ConfirmTransaction.error9.response"></jsonformatter>
-                        </div>
-                        <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">
-                            Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmRequest"></jsonformatter>
-
-                            Sequence: {{errorConfirmSequence}}<br />
-
-                        </div>
-                        <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">
-                            Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="errorConfirmResponse"></jsonformatter>
-                        </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 2)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error2.response"></jsonformatter>
                     </div>
-                    <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(9)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">Copy Request</button>
-                </uib-tab>
-            </uib-tabset>
-        </uib-tab>-->
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(2)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 2">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-3" heading="3 - Invalid Coupon Code" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=S4S152QJK6E83HC1&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=3c4c8d91-c8dd-43ae-835b-aca46eaa2a36&UserId=b8970b7a-22c6-4ba2-b866-bec9b8a2437f
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error3.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-4" heading="4 - Coupon Already Used" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 4)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error4.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=2981361437471469&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=ce44cff1-41f5-4610-be3d-5054293be353&UserId=750ce21e-7ce4-4ead-9e5b-5961e684e4c9
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 4)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error4.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-5" heading="5 - Conversion Module Error" classes="nav-item">
+                Simulation not available.
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-6" heading="7 - Coupon Country Not Allowed" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 7)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error7.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=1437861149152627&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=b6b215e6-379b-4b1f-8bad-0831be6489d3&UserId=32d2c793-a059-4743-89a4-7cefc00e4411
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 7)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error7.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(7)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 7">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmTransactionError-tab-7" heading="9 - Limit exceeded" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 9)">
+                        Request
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error9.request"></jsonformatter>
+
+                        Sequence:
+                        CouponCode=6377944739582437&ProviderId=e9fb671b-154e-4918-9788-84b6758fb082&ProviderTransactionId=228d8b14-675a-4ca8-afb9-8a995ed4c591&UserId=1a2b8324-e8d4-496d-a119-b571583668c7
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 9)">
+                        Response
+                        <jsonformatter data="errorExamples.ConfirmTransaction.error9.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(9)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequest)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 9">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
+    </uib-tab>-->
         <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-3">
@@ -1042,39 +1045,39 @@ XJAit8JDaJyp7dUhwER8AFcU2ShGmBOA3v8Q0wwytXyBXgScRuC2dDFDTnXjBLNL2kd/PuJE/seghs36
             </div>
         </uib-tab>
         <!--<uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
-            <div class="row">
-                <div class="col-md-3">
-                    <form action="/" method="POST" name="confirmForm1">
-                        <fieldset>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Partner Id</label>
-                                <input ng-model="confirmTransactionModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">User Id</label>
-                                <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Partner Transaction Id</label>
-                                <input ng-model="confirmTransactionModel.providerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
-                            </div>
-                            <button ng-click="getCurlConfirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="curlConfirmBusy || confirmForm1.$invalid">Get Curl <i ng-if="curlConfirmBusy" class="fa fa-cog fa-spin"></i></button>
-                        </fieldset>
-                    </form>
-                </div>
-                <br />
-
-                <div ng-if="curlConfirmResponded" class="col-md-9">
-                    <pre>
-                    <jsonformatter data="CurlResponseConfirmTransaction"></jsonformatter>
-                        </pre>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseConfirmTransaction)">Copy</button>
-                </div>
+        <div class="row">
+            <div class="col-md-3">
+                <form action="/" method="POST" name="confirmForm1">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Partner Id</label>
+                            <input ng-model="confirmTransactionModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">User Id</label>
+                            <input ng-model="confirmTransactionModel.userId" class="form-control" type="text" placeholder="Enter user id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Partner Transaction Id</label>
+                            <input ng-model="confirmTransactionModel.providerTransactionId" class="form-control" type="text" placeholder="Enter provider transaction id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                            <input ng-model="confirmTransactionModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                        </div>
+                        <button ng-click="getCurlConfirmTransaction()" class="btn btn-primary w-100px me-5px" ng-disabled="curlConfirmBusy || confirmForm1.$invalid">Get Curl <i ng-if="curlConfirmBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
             </div>
-        </uib-tab>-->
+            <br />
+
+            <div ng-if="curlConfirmResponded" class="col-md-9">
+                <pre>
+                <jsonformatter data="CurlResponseConfirmTransaction"></jsonformatter>
+                    </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponseConfirmTransaction)">Copy</button>
+            </div>
+        </div>
+    </uib-tab>-->
     </uib-tabset>
 </div>
