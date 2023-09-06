@@ -14,6 +14,7 @@ cobrandedCardModule.service("cobrandedCardService", ['$http', '$q', 'handleRespo
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
             orderCard: orderCard,
+            updateCardStatus: updateCardStatus,
         });
         function orderCard(phoneNumber, partnerId, partnerCardId, partnerUserId, cardTypeId, personalId, firstName, lastName, nameOnCard, deliveryTypeId, street, city, postalCode, country) {
             var request = $http({
@@ -34,6 +35,17 @@ cobrandedCardModule.service("cobrandedCardService", ['$http', '$q', 'handleRespo
                     city: city,
                     postalCode: postalCode,
                     country: country
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
+        function updateCardStatus(partnerId, partnerCardId) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "CobrandedCard/UpdateCardStatus",
+                data: {
+                    partnerId: partnerId,
+                    partnerCardId: partnerCardId,                  
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -68,7 +80,24 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 $scope.orderCardResponded = false;
                 $scope.orderCardServiceBusy = false;
             };
+            $scope.setDefaultUpdateStatusCard=function (){
+                $scope.updateStatusCardModel = {}
 
+                $scope.updateStatusCardModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+                $scope.updateStatusCardModel.partnerCardId = "";
+
+                $scope.updateStatusCardResponded = false;
+                $scope.updateStatusCardServiceBusy = false;
+            }
+            $scope.setDefaultUpdateCardOrderStatus = function () {
+                $scope.updateCardOrderStatusModel = {}
+
+                $scope.updateCardOrderStatusModel.cardId = "";
+                $scope.updateCardOrderStatusModel.newUser = "";
+
+                $scope.updateCardOrderStatusResponded = false;
+                $scope.updateCardOrderStatusServiceBusy = false;
+            }
             $scope.orderCard = function () {
                 $scope.orderCardResponded = false;
                 $scope.orderCardServiceBusy = true;
@@ -102,7 +131,29 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                         console.log("error");
                     });
             }
-
+            $scope.updateCardStatus = function () {
+                $scope.updateStatusCardResponded = false;
+                $scope.updateStatusCardServiceBusy = true;
+                cobrandedCardService.updateCardStatus($scope.cobrandedCardModel.partnerId,
+                    $scope.cobrandedCardModel.partnerCardId)
+                    .then(function (response) {
+                        if (response) {
+                            $scope.updateStatusCardRequestDateTimeUTC = response.requestDateTimeUTC;
+                            $scope.updateStatusCardResponseDateTimeUTC = response.responseDateTimeUTC;
+                            $scope.updateStatusCardSequence = response.sequence;
+                            console.log($scope.orderCardServiceRequest);
+                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                            $scope.updateStatusCardServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.updateStatusCardServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                        }
+                        $scope.updateStatusCardResponded = true;
+                        $scope.updateStatusCardServiceBusy = false;
+                    }, () => {
+                        console.log("error");
+                    });
+            }
             $scope.setDefaults();
+            $scope.setDefaultUpdateStatusCard();
+            $scope.setDefaultUpdateCardOrderStatus();
         }
     ]);

@@ -1,8 +1,8 @@
 ﻿<h1>Cobranded card</h1>
 <hr />
-
+<h2>Order new card</h2>
 <uib-tabset>
-    <uib-tab index="CobrandedCard-tab-0" heading="Try it out" classes="nav-item">
+    <uib-tab index="orderNew-tab-0" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-3">
                 <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
@@ -79,5 +79,95 @@
                 <jsonformatter data="orderCardServiceResponse"></jsonformatter>
             </div>
         </div>
-    </uib-tab>  
+    </uib-tab>
 </uib-tabset>
+<br />
+<h2>Update card order status</h2>
+<br/>
+<uib-tabset>
+    <uib-tab index="CobrandedCardUpdateCardOrderStatus-tab-0" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <form action="/" method="POST" name="updateCardOrderStatusForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Card ID</label>
+                            <input ng-model="updateCardOrderStatusModel.cardId" placeholder="Enter CardID" class="form-control" type="text" ng-disabled="updateCardOrderStatusServiceBusy" ng-required="true">
+                        </div>
+                        <div>
+                            <label class="form-label">New User</label>
+                            <div class="dropdown mb-3">
+                                <select class="form-control" ng-model="select.updateOrderCardNewUser" ng-change="" ng-init="select.updateOrderCardNewUser = '1'">
+                                    <option value="1" selected>Yes</option>
+                                    <option value="2">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <button ng-click=";" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardOrderStatusServiceBusy || updateCardOrderStatusForm.$invalid">Update card order status<i ng-if="" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <br />
+
+        </div>
+    </uib-tab>
+</uib-tabset>
+<br/>
+<h2>Update card status</h2>
+<br/>
+<uib-tabset>
+    <uib-tab index="CobrandedCardUpdateStatus-tab-0" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <button ng-click="setDefaultUpdateStatusCard()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                <form action="/" method="POST" name="updateStatusCardForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Partner ID</label>
+                            <input ng-model="updateStatusCardModel.partnerId" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Partner Card ID</label>
+                            <input ng-model="updateStatusCardModel.partnerCardId" placeholder="Enter PartnerCardID" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="true">
+                        </div>
+                        <div>
+                            <label class="form-label">Old Status</label>
+                            <div class="dropdown mb-3">
+                                <select class="form-control" ng-model="select.updateStatusOldStatus" ng-change="" ng-init="select.updateStatusOldStatus='2'">
+                                    <option value="1">Old Status 1</option>
+                                    <option value="2" selected>Old Status 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="form-label">New Status</label>
+                            <div class="dropdown mb-3">
+                                <select class="form-control" ng-model="select.updateStatusNewStatus" ng-change="" ng-init="select.updateStatusNewStatus = '1'">
+                                    <option value="1" selected>New status 1</option>
+                                    <option value="2">New status 2</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Denial Status Details</label>
+                            <input ng-model="updateStatusCardModel.denialStatusDetails" placeholder="I dont know" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="true">
+                        </div>
+                        <button ng-click="updateCardStatus();" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardStatusServiceBusy || updateStatusCardForm.$invalid">Update status <i ng-if="" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <br />
+            <div ng-if="updateStatusCardResponded" class="col-md-4">
+                Request ({{updateStatusCardRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateStatusCardServiceRequest"></jsonformatter>
+                Sequence: {{updateStatusCardSequence}}
+            </div>
+            <div ng-if="updateStatusCardResponded" class="col-md-5">
+                Response ({{updateStatusCardResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateStatusCardServiceResponse"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+
