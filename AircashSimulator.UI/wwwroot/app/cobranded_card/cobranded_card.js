@@ -56,6 +56,13 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 $scope.cobrandedCardModel.partnerCardId = HelperService.NewGuid();
                 $scope.cobrandedCardModel.partnerUserId = HelperService.NewGuid();
                 $scope.cobrandedCardModel.cardTypeId = "ed6375c1-8f8c-458a-a1c5-a92642ec708b";
+                $scope.cobrandedCardModel.firstName = "John";
+                $scope.cobrandedCardModel.lastName = "Doe";
+                $scope.cobrandedCardModel.nameOnCard = "John Doe";
+                $scope.cobrandedCardModel.street = "Address";
+                $scope.cobrandedCardModel.city = "City";
+                $scope.cobrandedCardModel.postalCode = "10000";
+                $scope.cobrandedCardModel.country = "Croatia";
                 $scope.cobrandedCardModel.deliveryTypeId = "2";
 
                 $scope.orderCardResponded = false;

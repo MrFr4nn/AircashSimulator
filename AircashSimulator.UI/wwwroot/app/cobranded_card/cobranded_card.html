@@ -4,7 +4,7 @@
 <uib-tabset>
     <uib-tab index="CobrandedCard-tab-0" heading="Try it out" classes="nav-item">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
                 <form action="/" method="POST" name="orderCardForm">
                     <fieldset>
@@ -74,7 +74,7 @@
                 <jsonformatter data="orderCardServiceRequest"></jsonformatter>
                 Sequence: {{orderCardSequence}}
             </div>
-            <div ng-if="orderCardResponded" class="col-md-4">
+            <div ng-if="orderCardResponded" class="col-md-5">
                 Response ({{orderCardResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="orderCardServiceResponse"></jsonformatter>
             </div>
