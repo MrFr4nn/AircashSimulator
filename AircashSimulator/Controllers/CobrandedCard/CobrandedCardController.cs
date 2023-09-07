@@ -47,8 +47,11 @@ namespace AircashSimulator.Controllers.CobrandedCard
         {
             var updateCardStatusRequest = new UpdateStatusCardRQ
             {
-               PartnerID=request.PartnerID,
-               PartnerCardID=request.PartnerCardID,
+                PartnerID = request.PartnerID,
+                PartnerCardID = request.PartnerCardID,
+                OldStatus = request.OldStatus,
+                NewStatus=request.NewStatus,
+                DenialStatusDetails=request.DenialStatusDetails
             };
             var response = await CobrandedCardService.UpadateCardStatus(updateCardStatusRequest);
             return Ok(response);

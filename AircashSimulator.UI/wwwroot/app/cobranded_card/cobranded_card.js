@@ -15,26 +15,28 @@ cobrandedCardModule.service("cobrandedCardService", ['$http', '$q', 'handleRespo
         return ({
             orderCard: orderCard,
             updateCardStatus: updateCardStatus,
+            updateCardOrderStatus: updateCardOrderStatus,
         });
-        function orderCard(phoneNumber, partnerId, partnerCardId, partnerUserId, cardTypeId, personalId, firstName, lastName, nameOnCard, deliveryTypeId, street, city, postalCode, country) {
+        function orderCard(cobrandedCardModel) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "CobrandedCard/OrderCard",
                 data: {
-                    phoneNumber: phoneNumber,
-                    partnerId: partnerId,
-                    partnerCardId: partnerCardId,
-                    partnerUserId: partnerUserId,
-                    cardTypeId: cardTypeId,
-                    personalId: personalId,
-                    firstName: firstName,
-                    lastName: lastName,
-                    nameOnCard: nameOnCard,
-                    deliveryTypeId: deliveryTypeId,
-                    street: street,
-                    city: city,
-                    postalCode: postalCode,
-                    country: country
+
+                    phoneNumber: cobrandedCardModel.phoneNumber,
+                    partnerId: cobrandedCardModel.partnerId,
+                    partnerCardId: cobrandedCardModel.partnerCardId,
+                    partnerUserId: cobrandedCardModel.partnerUserId,
+                    cardTypeId: cobrandedCardModel.cardTypeId,
+                    personalId: cobrandedCardModel.personalId,
+                    firstName: cobrandedCardModel.firstName,
+                    lastName: cobrandedCardModel.lastName,
+                    nameOnCard: cobrandedCardModel.nameOnCard,
+                    deliveryTypeId: cobrandedCardModel.deliveryTypeId,
+                    street: cobrandedCardModel.street,
+                    city: cobrandedCardModel.city,
+                    postalCode: cobrandedCardModel.postalCode,
+                    country: cobrandedCardModel.country
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -50,6 +52,17 @@ cobrandedCardModule.service("cobrandedCardService", ['$http', '$q', 'handleRespo
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
+        function updateCardOrderStatus(cardId, newUser) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "CobrandedCard/UpdateCardOrderStatus",
+                data: {
+                    cardId: cardId,
+                    newUser: newUser,
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
     }
 ]);
 cobrandedCardModule.controller("CobrandedCardCtrl",
@@ -60,9 +73,9 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
             if ($scope.partnerRoles.indexOf("CobrandedCard") == -1) {
                 $location.path('/forbidden');
             }
+            $scope.cobrandedCardModel = {};
 
-            $scope.setDefaults = function () {
-                $scope.cobrandedCardModel = {};
+            $scope.setDefaultsOrderCard = function () {
 
                 $scope.cobrandedCardModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
                 $scope.cobrandedCardModel.partnerCardId = HelperService.NewGuid();
@@ -80,20 +93,45 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 $scope.orderCardResponded = false;
                 $scope.orderCardServiceBusy = false;
             };
+            $scope.newUserOptions = [
+                {
+                    name: "Yes",
+                    code: true,
+                },
+                {
+                    name: "No",
+                    code: false,
+                }
+            ];
+            $scope.statusOptions = [
+                {
+                    name: "stolen",
+                    code: 0,
+                },
+                {
+                    name: "broken",
+                    code: 1,
+                }
+            ];
             $scope.setDefaultUpdateStatusCard=function (){
                 $scope.updateStatusCardModel = {}
 
                 $scope.updateStatusCardModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
                 $scope.updateStatusCardModel.partnerCardId = "";
+                $scope.updateStatusCardModel.oldStatus = 1;
+                $scope.updateStatusCardModel.newStatus = 0;
+                $scope.updateStatusCardModel.denialStatusDetails = "";
 
                 $scope.updateStatusCardResponded = false;
                 $scope.updateStatusCardServiceBusy = false;
+
             }
+
             $scope.setDefaultUpdateCardOrderStatus = function () {
                 $scope.updateCardOrderStatusModel = {}
 
                 $scope.updateCardOrderStatusModel.cardId = "";
-                $scope.updateCardOrderStatusModel.newUser = "";
+                $scope.updateCardOrderStatusModel.newUser = true;
 
                 $scope.updateCardOrderStatusResponded = false;
                 $scope.updateCardOrderStatusServiceBusy = false;
@@ -101,20 +139,7 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
             $scope.orderCard = function () {
                 $scope.orderCardResponded = false;
                 $scope.orderCardServiceBusy = true;
-                cobrandedCardService.orderCard($scope.cobrandedCardModel.phoneNumber,
-                    $scope.cobrandedCardModel.partnerId,
-                    $scope.cobrandedCardModel.partnerCardId,
-                    $scope.cobrandedCardModel.partnerUserId,
-                    $scope.cobrandedCardModel.cardTypeId,
-                    $scope.cobrandedCardModel.personalId,
-                    $scope.cobrandedCardModel.firstName,
-                    $scope.cobrandedCardModel.lastName,
-                    $scope.cobrandedCardModel.nameOnCard,
-                    $scope.cobrandedCardModel.deliveryTypeId,
-                    $scope.cobrandedCardModel.street,
-                    $scope.cobrandedCardModel.city,
-                    $scope.cobrandedCardModel.postalCode,
-                    $scope.cobrandedCardModel.country)
+                cobrandedCardService.orderCard($scope.cobrandedCardModel)
                     .then(function (response) {
                         if (response) {
                             $scope.orderCardRequestDateTimeUTC = response.requestDateTimeUTC;
@@ -152,7 +177,8 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                         console.log("error");
                     });
             }
-            $scope.setDefaults();
+            
+            $scope.setDefaultsOrderCard();
             $scope.setDefaultUpdateStatusCard();
             $scope.setDefaultUpdateCardOrderStatus();
         }
