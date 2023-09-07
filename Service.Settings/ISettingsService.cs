@@ -71,5 +71,8 @@ namespace Service.Settings
         Guid AircashFrameAmountEqualAsCouponValuePartnerId { get; }
         Guid AircashFrameAmountLessThanCouponValuePartnerId { get; }
         Guid AircashFramePartnerIdWithMatchPersonalData { get; }
+
+        public string TestAdminPrivateKeyPath { get; }
+        public string TestAdminPrivateKeyPass { get; }
     }
 }
