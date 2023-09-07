@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services.AircashATM;
 using Services.AircashFrameV2;
 using Services.CobrandedCard;
+using System;
 using System.Threading.Tasks;
 
 namespace AircashSimulator.Controllers.CobrandedCard
@@ -59,12 +60,12 @@ namespace AircashSimulator.Controllers.CobrandedCard
         [HttpPost]
         public async Task<IActionResult> UpdateCardOrderStatus(UpdateCardOrderStatusDTO request)
         {
-            var updateCardStatusRequest = new UpdateCardOrderStatusRQ
+            var updateCardOrderStatusRequest = new UpdateCardOrderStatusRQ
             {
                 CardID = request.CardID,
                 NewUser=request.NewUser,
             };
-            var response = await CobrandedCardService.UpdateCardOrderStatus(updateCardStatusRequest);
+            var response = await CobrandedCardService.UpdateCardOrderStatus(updateCardOrderStatusRequest);
             return Ok(response);
         }
     }

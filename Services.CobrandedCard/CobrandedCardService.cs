@@ -69,7 +69,7 @@ namespace Services.CobrandedCard
             var updateCardStatusResponse = new object();
 
             var dataToSign = AircashSignatureService.ConvertObjectToString(request);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.TestAdminPrivateKeyPath, SettingsService.TestAircashPaymentPass);
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.TestAdminPrivateKeyPath, SettingsService.TestAdminPrivateKeyPass);
             request.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.M3)}{UpdateCardStatusEndpoint}");
             var responseDateTime = DateTime.UtcNow;
@@ -110,14 +110,14 @@ namespace Services.CobrandedCard
                 //orderCardResponse = JsonConvert.DeserializeObject<ErrorOrderCardResponse>(response.ResponseContent);
             }
             var frontResponse = new Response
-            {
-                ServiceRequest = request,
-                ServiceResponse = updateCardOrderStatusResponse,
-                Sequence = dataToSign,
-                RequestDateTimeUTC = requestDateTime,
-                ResponseDateTimeUTC = responseDateTime
-            };
-            return frontResponse;
+             {
+                 ServiceRequest = request,
+                 ServiceResponse = updateCardOrderStatusResponse,
+                 Sequence = dataToSign,
+                 RequestDateTimeUTC = requestDateTime,
+                 ResponseDateTimeUTC = responseDateTime
+             };
+             return frontResponse;
         }
     }
 }

@@ -64,7 +64,7 @@
                             <label class="form-label">Country</label>
                             <input ng-model="cobrandedCardModel.country" placeholder="Enter Country" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
                         </div>
-                        <button ng-click="orderCard();" class="btn btn-primary w-100px me-5px" ng-disabled="orderCardServiceBusy|| orderCardForm.$invalid">Order card <i ng-if="" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="orderCard();" class="btn btn-primary w-100px me-5px" ng-disabled="orderCardServiceBusy|| orderCardForm.$invalid">Order card <i ng-if="orderCardServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
@@ -93,18 +93,18 @@
                         <div class="mb-3">
                             <label class="form-label">Card ID</label>
                             <input ng-model="updateCardOrderStatusModel.cardId" placeholder="Enter CardID" class="form-control" type="text" ng-disabled="updateCardOrderStatusServiceBusy" ng-required="true">
+                           
                         </div>
                         <div>
                             <label class="form-label">New User</label>
                             <div class="dropdown mb-3">
                                 <select class="form-control" ng-model="updateCardOrderStatusModel.newUser">
-                                    <option ng-repeat="newUser in newUserOptions" ng-value="newUser.code">{{newUser.name}}</option>
-
+                                    <option ng-repeat="newUser in newUserOptions" ng-value="newUser.value">{{newUser.name}}</option>
                                 </select>
                             </div>
                         </div>
                         <br />
-                        <button ng-click="updateCardOrderStatus;" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardOrderStatusServiceBusy || updateCardOrderStatusForm.$invalid">Update card order status<i ng-if="" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="updateCardOrderStatus();" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardOrderStatusServiceBusy || updateCardOrderStatusForm.$invalid">Update card order status<i ng-if="updateCardOrderStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
@@ -133,16 +133,16 @@
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">Partner ID</label>
-                            <input ng-model="updateStatusCardModel.partnerId" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="true">
+                            <input ng-model="updateStatusCardModel.partnerId" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Partner Card ID</label>
-                            <input ng-model="updateStatusCardModel.partnerCardId" placeholder="Enter PartnerCardID" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="true">
+                            <input ng-model="updateStatusCardModel.partnerCardId" placeholder="Enter PartnerCardID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
                         </div>
                         <div>
                             <label class="form-label">Old Status</label>
                             <div class="dropdown mb-3">
-                                <select class="form-control" ng-model="updateStatusCardModel.oldStatus">
+                                <select class="form-control" ng-model="updateStatusCardModel.oldStatus" ng-disabled="updateStatusCardServiceBusy">
                                     <option ng-repeat="status in statusOptions" ng-value="status.code">{{status.name}}</option>
                                 </select>
                             </div>
@@ -150,18 +150,20 @@
                         <div>
                             <label class="form-label">New Status</label>
                             <div class="dropdown mb-3">
-                                <select class="form-control" ng-model="updateStatusCardModel.newStatus">
+                                <select class="form-control" ng-model="updateStatusCardModel.newStatus" ng-disabled="updateStatusCardServiceBusy">
                                     <option ng-repeat="status in statusOptions" ng-value="status.code">{{status.name}}</option>
+
                                 </select>
                             </div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Denial Status Details</label>
-                            <input ng-model="updateStatusCardModel.denialStatusDetails" placeholder="I dont know" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="true">
+                            <input ng-model="updateStatusCardModel.denialStatusDetails" placeholder="I dont know" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="false">
                         </div>
-                        <button ng-click="updateCardStatus();" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardStatusServiceBusy || updateStatusCardForm.$invalid">Update status <i ng-if="" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
+                <button ng-click="updateCardStatus();" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardStatusServiceBusy || updateStatusCardForm.$invalid">Update status<i ng-if="updateCardStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+
             </div>
             <br />
             <div ng-if="updateStatusCardResponded" class="col-md-4">
