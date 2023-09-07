@@ -5,7 +5,7 @@
     <uib-tab index="orderNew-tab-0" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-3">
-                <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                <button ng-click="setDefaultsOrderCard()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
                 <form action="/" method="POST" name="orderCardForm">
                     <fieldset>
                         <div class="mb-3">
@@ -112,9 +112,9 @@
             <div ng-if="updateCardOrderStatusResponded" class="col-md-4">
                 Request ({{updateCardOrderStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="updateCardOrderStatusServiceRequest"></jsonformatter>
-                Sequence: {{updateStatusCardSequence}}
+                Sequence: {{updateCardOrderStatusSequence}}
             </div>
-            <div ng-if="updateCardOrderStatusResponded" class="col-md-5">
+            <div ng-if="updateCardOrderStatusResponded" class="col-md-4">
                 Response ({{updateCardOrderStatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="updateCardOrderStatusServiceResponse"></jsonformatter>
             </div>
@@ -133,32 +133,23 @@
                     <fieldset>
                         <div class="mb-3">
                             <label class="form-label">Partner ID</label>
-                            <input ng-model="updateStatusCardModel.partnerId" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
+                            <input ng-model="updateStatusCardModel.partnerID" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Partner Card ID</label>
-                            <input ng-model="updateStatusCardModel.partnerCardId" placeholder="Enter PartnerCardID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
+                            <input ng-model="updateStatusCardModel.partnerCardID" placeholder="Enter PartnerCardID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
                         </div>
-                        <div>
+                        <div class="mb-3">
                             <label class="form-label">Old Status</label>
-                            <div class="dropdown mb-3">
-                                <select class="form-control" ng-model="updateStatusCardModel.oldStatus" ng-disabled="updateStatusCardServiceBusy">
-                                    <option ng-repeat="status in statusOptions" ng-value="status.code">{{status.name}}</option>
-                                </select>
-                            </div>
+                            <input ng-model="updateStatusCardModel.oldStatus" placeholder="Enter OldStatus" class="form-control" type="number" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
                         </div>
-                        <div>
+                        <div class="mb-3">
                             <label class="form-label">New Status</label>
-                            <div class="dropdown mb-3">
-                                <select class="form-control" ng-model="updateStatusCardModel.newStatus" ng-disabled="updateStatusCardServiceBusy">
-                                    <option ng-repeat="status in statusOptions" ng-value="status.code">{{status.name}}</option>
-
-                                </select>
-                            </div>
+                            <input ng-model="updateStatusCardModel.newStatus" placeholder="Enter NewStatus" class="form-control" type="number" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Denial Status Details</label>
-                            <input ng-model="updateStatusCardModel.denialStatusDetails" placeholder="I dont know" class="form-control" type="text" ng-disabled="updateCardStatusServiceBusy" ng-required="false">
+                            <input ng-model="updateStatusCardModel.denialStatusDetails" placeholder="Enter DenialStatusDetails" class="form-control" type="number" ng-disabled="updateStatusCardServiceBusy" ng-required="false"">
                         </div>
                     </fieldset>
                 </form>
@@ -171,7 +162,7 @@
                 <jsonformatter data="updateStatusCardServiceRequest"></jsonformatter>
                 Sequence: {{updateStatusCardSequence}}
             </div>
-            <div ng-if="updateStatusCardResponded" class="col-md-5">
+            <div ng-if="updateStatusCardResponded" class="col-md-4">
                 Response ({{updateStatusCardResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
                 <jsonformatter data="updateStatusCardServiceResponse"></jsonformatter>
             </div>

@@ -9,7 +9,7 @@ namespace Services.CobrandedCard
 {
     public class UpdateStatusCardRQ : ISignature
     {
-        public Guid PartnerID { get; set; }
+        public string PartnerID { get; set; }
         public string PartnerCardID { get; set; }
         public DateTime DateTimeUTC { get; set; }
         public int OldStatus { get; set; }

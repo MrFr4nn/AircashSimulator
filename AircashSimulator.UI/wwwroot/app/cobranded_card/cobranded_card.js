@@ -46,8 +46,8 @@ cobrandedCardModule.service("cobrandedCardService", ['$http', '$q', 'handleRespo
                 method: 'POST',
                 url: config.baseUrl + "CobrandedCard/UpdateCardStatus",
                 data: {
-                    partnerID: updateStatusCardModel.partnerId,
-                    partnerCardID: updateStatusCardModel.partnerCardId,
+                    partnerID: updateStatusCardModel.partnerID,
+                    partnerCardID: updateStatusCardModel.partnerCardID,
                     oldStatus: updateStatusCardModel.oldStatus,
                     newStatus: updateStatusCardModel.newStatus,
                     denialStatusDetails: updateStatusCardModel.denialStatusDetails
@@ -114,36 +114,14 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                     value: false,
                 }
             ];
-            $scope.statusOptions = [
-                {
-                    name: "0",
-                    code: 0,
-                },
-                {
-                    name: "1",
-                    code: 1,
-                },
-                 {
-                    name: "2",
-                    code: 2,
-                },
-                 {
-                    name: "3",
-                    code: 3,
-                }, 
-                {
-                    name: "9",
-                    code: 9,
-                }
-            ];
+
             $scope.setDefaultUpdateStatusCard=function (){
                 $scope.updateStatusCardModel = {}
 
-                $scope.updateStatusCardModel.partnerId = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
-                $scope.updateStatusCardModel.partnerCardId = HelperService.NewGuid();
-                $scope.updateStatusCardModel.oldStatus = 1;
-                $scope.updateStatusCardModel.newStatus = 0;
-                $scope.updateStatusCardModel.denialStatusDetails =1;
+                $scope.updateStatusCardModel.partnerID = "0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6";
+                $scope.updateStatusCardModel.partnerCardID = HelperService.NewGuid();
+                $scope.updateStatusCardModel.oldStatus = 0;
+                $scope.updateStatusCardModel.newStatus = 1;
 
                 $scope.updateStatusCardResponded = false;
                 $scope.updateStatusCardServiceBusy = false;
@@ -166,12 +144,13 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                         $scope.updateStatusCardServiceBusy = false;
                     }, () => {
                         console.log("error");
+
                     });
             }
             $scope.setDefaultUpdateCardOrderStatus = function () {
                 $scope.updateCardOrderStatusModel = {}
 
-                $scope.updateCardOrderStatusModel.cardId = "111111";
+                $scope.updateCardOrderStatusModel.cardId = "a184a771-e517-4dd2-a7a5-139d88f35409";
                 $scope.updateCardOrderStatusModel.newUser = true;
 
                 $scope.updateCardOrderStatusResponded = false;
@@ -194,8 +173,6 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                         $scope.updateCardOrderStatusServiceBusy = false;
                     }, () => {
                         console.log("error");
-                        console.log($scope.updateCardOrderStatusModel.cardId);
-                        console.log($scope.updateCardOrderStatusModel.newUser);
 
                     });
             }
