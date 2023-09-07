@@ -41,24 +41,24 @@ cobrandedCardModule.service("cobrandedCardService", ['$http', '$q', 'handleRespo
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
-        function updateCardStatus(partnerId, partnerCardId) {
+        function updateCardStatus(updateStatusCardModel) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "CobrandedCard/UpdateCardStatus",
                 data: {
-                    partnerId: partnerId,
-                    partnerCardId: partnerCardId,                  
+                    partnerId: updateStatusCardModel.partnerId,
+                    partnerCardId:updateStatusCardModel.partnerCardId,                  
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
-        function updateCardOrderStatus(cardId, newUser) {
+        function updateCardOrderStatus(updateCardOrderStatusModel) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "CobrandedCard/UpdateCardOrderStatus",
                 data: {
-                    cardId: cardId,
-                    newUser: newUser,
+                    cardId: updateCardOrderStatusModel.cardId,
+                    newUser: updateCardOrderStatusModel.newUser,
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -74,6 +74,8 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 $location.path('/forbidden');
             }
             $scope.cobrandedCardModel = {};
+            $scope.updateStatusCardModel = {}
+            $scope.updateCardOrderStatusModel = {}
 
             $scope.setDefaultsOrderCard = function () {
 
@@ -92,6 +94,12 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
 
                 $scope.orderCardResponded = false;
                 $scope.orderCardServiceBusy = false;
+
+                $scope.updateStatusCardResponded = false;
+                $scope.updateStatusCardServiceBusy = false;
+
+                $scope.updateCardOrderStatusResponded = false;
+                $scope.updateCardOrderStatusServiceBusy = false;
             };
             $scope.newUserOptions = [
                 {
@@ -126,7 +134,25 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 $scope.updateStatusCardServiceBusy = false;
 
             }
-
+            $scope.updateCardStatus = function () {
+                $scope.updateStatusCardResponded = false;
+                $scope.updateStatusCardServiceBusy = true;
+                cobrandedCardService.updateCardStatus($scope.updateStatusCardModel)
+                    .then(function (response) {
+                        if (response) {
+                            $scope.updateStatusCardRequestDateTimeUTC = response.requestDateTimeUTC;
+                            $scope.updateStatusCardResponseDateTimeUTC = response.responseDateTimeUTC;
+                            $scope.updateStatusCardSequence = response.sequence;
+                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                            $scope.updateStatusCardServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.updateStatusCardServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                        }
+                        $scope.updateStatusCardResponded = true;
+                        $scope.updateStatusCardServiceBusy = false;
+                    }, () => {
+                        console.log("error");
+                    });
+            }
             $scope.setDefaultUpdateCardOrderStatus = function () {
                 $scope.updateCardOrderStatusModel = {}
 
@@ -136,6 +162,26 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 $scope.updateCardOrderStatusResponded = false;
                 $scope.updateCardOrderStatusServiceBusy = false;
             }
+            $scope.updateCardOrderStatus = function () {
+                $scope.updateCardOrderStatusResponded = false;
+                $scope.updateCardOrderStatusServiceBusy = true;
+                cobrandedCardService.updateCardOrderStatus($scope.updateCardOrderStatusModel)
+                    .then(function (response) {
+                        if (response) {
+                            $scope.updateCardOrderStatusRequestDateTimeUTC = response.requestDateTimeUTC;
+                            $scope.updateCardOrderStatusResponseDateTimeUTC = response.responseDateTimeUTC;
+                            $scope.updateCardOrderStatusSequence = response.sequence;
+                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                            $scope.updateCardOrderStatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.updateCardOrderStatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                        }
+                        $scope.updateCardOrderStatusResponded = true;
+                        $scope.updateCardOrderStatusServiceBusy = false;
+                    }, () => {
+                        console.log("error");
+                    });
+            }
+
             $scope.orderCard = function () {
                 $scope.orderCardResponded = false;
                 $scope.orderCardServiceBusy = true;
@@ -145,34 +191,12 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                             $scope.orderCardRequestDateTimeUTC = response.requestDateTimeUTC;
                             $scope.orderCardResponseDateTimeUTC = response.responseDateTimeUTC;
                             $scope.orderCardSequence = response.sequence;
-                            console.log($scope.orderCardServiceRequest);
                             response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
                             $scope.orderCardServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
                             $scope.orderCardServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                         }
                         $scope.orderCardResponded = true;
                         $scope.orderCardServiceBusy = false;
-                    }, () => {
-                        console.log("error");
-                    });
-            }
-            $scope.updateCardStatus = function () {
-                $scope.updateStatusCardResponded = false;
-                $scope.updateStatusCardServiceBusy = true;
-                cobrandedCardService.updateCardStatus($scope.cobrandedCardModel.partnerId,
-                    $scope.cobrandedCardModel.partnerCardId)
-                    .then(function (response) {
-                        if (response) {
-                            $scope.updateStatusCardRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.updateStatusCardResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.updateStatusCardSequence = response.sequence;
-                            console.log($scope.orderCardServiceRequest);
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.updateStatusCardServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                            $scope.updateStatusCardServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                        }
-                        $scope.updateStatusCardResponded = true;
-                        $scope.updateStatusCardServiceBusy = false;
                     }, () => {
                         console.log("error");
                     });

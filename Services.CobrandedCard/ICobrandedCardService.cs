@@ -10,6 +10,6 @@ namespace Services.CobrandedCard
     {
        Task<Response> OrderNewCard(OrderCardRequest request);
         Task<Response> UpadateCardStatus(UpdateStatusCardRQ request);
-       // Task<Response> UpdateCardOrderStatus(UpdateCardOrderStatusRQ request);
+        Task<Response> UpdateCardOrderStatus(UpdateCardOrderStatusRQ request);
     }
 }

@@ -42,7 +42,7 @@ namespace Services.CobrandedCard
             var dataToSign = AircashSignatureService.ConvertObjectToString(request);
             var signature = SignatureService.GenerateSignature(partner.PartnerId, dataToSign);
             request.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.SalesV2)}{CobrandedCardEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.SalesV2)}{CobrandedCardEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
@@ -64,19 +64,18 @@ namespace Services.CobrandedCard
         }
         public async Task<Response> UpadateCardStatus(UpdateStatusCardRQ request)
         {
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == request.PartnerID).FirstOrDefault();
 
             var requestDateTime = DateTime.UtcNow;
-            var orderCardResponse = new object();
+            var updateCardStatusResponse = new object();
 
             var dataToSign = AircashSignatureService.ConvertObjectToString(request);
-            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.TestAdminPrivateKeyPath, SettingsService.TestAdminPrivateKeyPass);
+            var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.TestAdminPrivateKeyPath, SettingsService.TestAircashPaymentPass);
             request.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.M3)}{UpdateCardStatusEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.M3)}{UpdateCardStatusEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                orderCardResponse = JsonConvert.DeserializeObject<UpdateStatusCardRQ>(response.ResponseContent);
+                updateCardStatusResponse = JsonConvert.DeserializeObject<UpdateStatusCardRQ>(response.ResponseContent);
             }
             else
             {
@@ -85,26 +84,26 @@ namespace Services.CobrandedCard
             var frontResponse = new Response
             {
                 ServiceRequest = request,
-                ServiceResponse = orderCardResponse,
+                ServiceResponse = updateCardStatusResponse,
                 Sequence = dataToSign,
                 RequestDateTimeUTC = requestDateTime,
                 ResponseDateTimeUTC = responseDateTime
             };
             return frontResponse;
         }
-        /*public async Task<Response> UpdateCardOrderStatus(UpdateCardOrderStatusRQ request)
+        public async Task<Response> UpdateCardOrderStatus(UpdateCardOrderStatusRQ request)
         {
             var requestDateTime = DateTime.UtcNow;
-            var orderCardResponse = new object();
+            var updateCardOrderStatusResponse = new object();
 
             var dataToSign = AircashSignatureService.ConvertObjectToString(request);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.TestAdminPrivateKeyPath, SettingsService.TestAdminPrivateKeyPass);
             request.Signature = signature;
-            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(partner.Environment, EndpointEnum.SalesV2)}{CobrandedCardEndpoint}");
+            var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(EnvironmentEnum.Staging, EndpointEnum.M3)}{UpdateCardOrderStatusEndpoint}");
             var responseDateTime = DateTime.UtcNow;
             if (response.ResponseCode == System.Net.HttpStatusCode.OK)
             {
-                orderCardResponse = JsonConvert.DeserializeObject<UpdateCardOrderStatusRQ>(response.ResponseContent);
+                updateCardOrderStatusResponse = JsonConvert.DeserializeObject<UpdateCardOrderStatusRQ>(response.ResponseContent);
             }
             else
             {
@@ -113,12 +112,12 @@ namespace Services.CobrandedCard
             var frontResponse = new Response
             {
                 ServiceRequest = request,
-                ServiceResponse = orderCardResponse,
+                ServiceResponse = updateCardOrderStatusResponse,
                 Sequence = dataToSign,
                 RequestDateTimeUTC = requestDateTime,
                 ResponseDateTimeUTC = responseDateTime
             };
             return frontResponse;
-        }*/
+        }
     }
 }

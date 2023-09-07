@@ -2,131 +2,7 @@
 <hr />
 <h2>Order new card</h2>
 <uib-tabset>
-    <uib-tab index="orderNew-tab-0" heading="Request parameters" classes="nav-item">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th colspan="2">Parameters</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Required</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2"><b>PhoneNumber</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>PartnerID</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique partner identifier (per currency) provided by Aircash
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>PartnerCardID</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>PartnerUserID</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique user identifier in the merchant’s system
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>CardTypeID</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>PersonalID</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>FirstName</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>LastName</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>NameOnCard</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>DeliveryTypeID</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Street</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>City</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>PostalCode</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Country</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Signature</b></td>
-                        <td>string</td>
-                        <td>
-                            A sequence that has been digitally signed with the provider's private signature, used for authentication
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </uib-tab>
-    <uib-tab index="orderNew-tab-1" heading="Try it out" classes="nav-item">
+    <uib-tab index="orderNew-tab-0" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-3">
                 <button ng-click="setDefaults()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
@@ -209,46 +85,7 @@
 <h2>Update card order status</h2>
 <br/>
 <uib-tabset>
-    <uib-tab index="CobrandedCardUpdateCardOrderStatus-tab-0" heading="Request parameters" classes="nav-item">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th colspan="2">Parameters</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Required</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2"><b>CardID</b></td>
-                        <td>string</td>
-                        <td>
-                        </td>
-                        <td>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>NewUser</b></td>
-                        <td>bool</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Signature</b></td>
-                        <td>string</td>
-                        <td>
-                            A sequence that has been digitally signed with the provider's private signature, used for authentication
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </uib-tab>
-    <uib-tab index="CobrandedCardUpdateCardOrderStatus-tab-1" heading="Try it out" classes="nav-item">
+    <uib-tab index="CobrandedCardUpdateCardOrderStatus-tab-0" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-3">
                 <form action="/" method="POST" name="updateCardOrderStatusForm">
@@ -267,12 +104,20 @@
                             </div>
                         </div>
                         <br />
-                        <button ng-click=";" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardOrderStatusServiceBusy || updateCardOrderStatusForm.$invalid">Update card order status<i ng-if="" class="fa fa-cog fa-spin"></i></button>
+                        <button ng-click="updateCardOrderStatus;" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardOrderStatusServiceBusy || updateCardOrderStatusForm.$invalid">Update card order status<i ng-if="" class="fa fa-cog fa-spin"></i></button>
                     </fieldset>
                 </form>
             </div>
             <br />
-
+            <div ng-if="updateCardOrderStatusResponded" class="col-md-4">
+                Request ({{updateCardOrderStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateCardOrderStatusServiceRequest"></jsonformatter>
+                Sequence: {{updateStatusCardSequence}}
+            </div>
+            <div ng-if="updateCardOrderStatusResponded" class="col-md-5">
+                Response ({{updateCardOrderStatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateCardOrderStatusServiceResponse"></jsonformatter>
+            </div>
         </div>
     </uib-tab>
 </uib-tabset>
@@ -280,67 +125,7 @@
 <h2>Update card status</h2>
 <br/>
 <uib-tabset>
-    <uib-tab index="CobrandedCardUpdateStatus-tab-0" heading="Request parameters" classes="nav-item">
-        <div class="table-responsive">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th colspan="2">Parameters</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Required</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td colspan="2"><b>PartnerID</b></td>
-                        <td>string</td>
-                        <td>
-                            Unique partner identifier (per currency) provided by Aircash
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>PartnerCardID</b></td>
-                        <td>dateTime</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>OldStatus</b></td>
-                        <td>int</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>NewStatus</b></td>
-                        <td>int</td>
-                        <td>
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>DenialStatusDetails</b></td>
-                        <td>int</td>
-                        <td>
-                        </td>
-                        <td>NO</td>
-                    </tr>
-                    <tr>
-                        <td colspan="2"><b>Signature</b></td>
-                        <td>string</td>
-                        <td>
-                            A sequence that has been digitally signed with the provider's private signature, used for authentication
-                        </td>
-                        <td>YES</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </uib-tab>
-    <uib-tab index="CobrandedCardUpdateStatus-tab-1" heading="Try it out" classes="nav-item">
+    <uib-tab index="CobrandedCardUpdateStatus-tab-0" heading="Try it out" classes="nav-item">
         <div class="row">
             <div class="col-md-3">
                 <button ng-click="setDefaultUpdateStatusCard()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>

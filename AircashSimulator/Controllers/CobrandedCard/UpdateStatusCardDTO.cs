@@ -2,7 +2,7 @@
 
 namespace AircashSimulator.Controllers.CobrandedCard
 {
-    public class UpdateStatusCardRQRequest
+    public class UpdateStatusCardDTO
     {
         public Guid PartnerID { get; set; }
         public string PartnerCardID { get; set; }

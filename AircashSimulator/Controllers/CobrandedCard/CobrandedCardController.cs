@@ -43,7 +43,7 @@ namespace AircashSimulator.Controllers.CobrandedCard
             return Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> UpdateCardStatus(UpdateStatusCardRQRequest request)
+        public async Task<IActionResult> UpdateCardStatus(UpdateStatusCardDTO request)
         {
             var updateCardStatusRequest = new UpdateStatusCardRQ
             {
@@ -54,6 +54,17 @@ namespace AircashSimulator.Controllers.CobrandedCard
                 DenialStatusDetails=request.DenialStatusDetails
             };
             var response = await CobrandedCardService.UpadateCardStatus(updateCardStatusRequest);
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> UpdateCardOrderStatus(UpdateCardOrderStatusDTO request)
+        {
+            var updateCardStatusRequest = new UpdateCardOrderStatusRQ
+            {
+                CardID = request.CardID,
+                NewUser=request.NewUser,
+            };
+            var response = await CobrandedCardService.UpdateCardOrderStatus(updateCardStatusRequest);
             return Ok(response);
         }
     }
