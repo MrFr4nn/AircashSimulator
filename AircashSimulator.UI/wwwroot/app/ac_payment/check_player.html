@@ -120,7 +120,7 @@
                 <div class="col-6">
                     <div class="row">
                         <div class="col-lg-3 mt-2 ">
-                            <select class="form-control" id="select" ng-change="requestCheckPlayerChanged()" ng-model="checkPlayerUsernameEmailSelected" ng-init="checkPlayerUsernameEmailSelected = 'username'">
+                            <select class="form-control" id="select" ng-change="requestCheckPlayerChanged()" ng-model="config.checkPlayerUsernameEmailSelected" ng-init="config.checkPlayerUsernameEmailSelected = 'username'">
                                 <option value="email">Email</option>
                                 <option value="username">Username</option>
                             </select>
@@ -216,7 +216,7 @@
                         <pre>
                         <jsonformatter data="generateCheckPlayerSignatureResponse"></jsonformatter>  
 Sequence: 
-{{RequestExampleSequence}}
+{{CheckPlayerRequestExampleSequence}}
 </pre>
                     </div>
                 </div>

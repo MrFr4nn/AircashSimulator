@@ -95,7 +95,7 @@
                     <hr />
                     <div class="row">
                         <div class="col-lg-3 mt-2 ">
-                            <select class="form-control" id="select2" ng-change="requestCreateAndConfirmChanged()" ng-model="createAndConfirmUsernameEmailSelected" ng-init="createAndConfirmUsernameEmailSelected = 'username'">
+                            <select class="form-control" id="select2" ng-change="requestCreateAndConfirmChanged()" ng-model="config.createAndConfirmUsernameEmailSelected" ng-init="config.createAndConfirmUsernameEmailSelected = 'username'">
                                 <option value="email">Email</option>
                                 <option value="username">Username</option>
                             </select>
@@ -191,8 +191,8 @@
                     <div ng-if="generateCreateAndConfirmSignatureResponded">
 
                         <jsonformatter data="generateCreateAndConfirmSignatureResponse"></jsonformatter>
-<pre>
-Sequence: {{RequestExampleSequence}}<br />
+                        <pre>
+Sequence: {{CreateAndConfirmRequestExampleSequence}}<br />
                     </pre>
                     </div>
 
