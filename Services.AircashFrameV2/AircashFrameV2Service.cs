@@ -352,11 +352,10 @@ namespace AircashFrame
                 {
                     aircashTransactionStatusResponse = convertedResponse;
                 }
-                var responseSequence = AircashSignatureService.ConvertObjectToString(convertedResponse);
-                var responseSQ = AircashSignatureService.ConvertObjectToString(convertedResponseSequence);
+                var responseSequence = AircashSignatureService.ConvertObjectToString(convertedResponseSequence);
                 if (!AircashSignatureService.VerifySignature(responseSequence, convertedResponse.Signature, AircashConfiguration.AcFramePublicKey))
                     throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidResponseSignature, "Invalid Response Signature");
-                aircashTransactionStatusResponse = new { ResponseObject = aircashTransactionStatusResponse, ResponseSequence = responseSQ };
+                aircashTransactionStatusResponse = new { ResponseObject = aircashTransactionStatusResponse, ResponseSequence = responseSequence };
             }
             else
             {
