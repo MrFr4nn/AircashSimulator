@@ -55,6 +55,7 @@ namespace Service.Settings
         public string NotCheckedBarcode { get { return GetSetting("NotCheckedBarcode", string.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerIdWithoutAuthorization { get { return GetSetting("AbonOnlinePartnerIdWithoutAuthorization", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AbonOnlinePartnerIdWithAuthorization { get { return GetSetting("AbonOnlinePartnerIdWithAuthorization", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AircashPayoutV4PartnerId { get { return GetSetting("AircashPayoutV4PartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid C2DPayoutPartnerId { get { return GetSetting("C2DPayoutPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid C2DDepositPartnerId { get { return GetSetting("C2DDepositPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }

@@ -280,6 +280,11 @@ namespace Services.AbonOnlinePartner
         {            
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{ConfirmTransactionV2Endpoint}";
         }
+
+        public Task<object> ConfirmTransactionV2(string couponCode, string userFirstName, string userLastName, string partnerId, string partnerTransactionId, string userId, string partnerPrivateKey, string partnerPrivateKeyPass, EnvironmentEnum environment)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 

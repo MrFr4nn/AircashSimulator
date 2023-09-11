@@ -10,5 +10,6 @@ namespace AircashSimulator
         public string UserId { get; set; }
         public EnvironmentEnum Environment { get; set; }
         public string PhoneNumber { get; set; }
-    }
+
+    } 
 }

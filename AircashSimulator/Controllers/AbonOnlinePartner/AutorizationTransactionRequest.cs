@@ -1,11 +1,11 @@
-﻿
-using Domain.Entities.Enum;
+﻿using Domain.Entities.Enum;
+using Services.AbonOnlinePartner;
 using System;
 using System.Collections.Generic;
 
 namespace AircashSimulator.Controllers.AbonOnlinePartner
 {
-    public class ConfirmTransactionRequest
+    public class AutorizationTransactionRequest
     {
         public string CouponCode { get; set; }
         public string ProviderId { get; set; }
@@ -13,7 +13,9 @@ namespace AircashSimulator.Controllers.AbonOnlinePartner
         public string UserId { get; set; }
         public EnvironmentEnum Environment { get; set; }
         public string PhoneNumber { get; set; }
-        public List<Parameter> Parameters { get; set; }
+        public List<AbonCheckStatusCouponParameters> Parameters { get; set; }
+
+
 
     }
 }
