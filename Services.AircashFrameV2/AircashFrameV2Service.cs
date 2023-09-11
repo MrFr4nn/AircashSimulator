@@ -31,6 +31,7 @@ namespace AircashFrame
         private readonly string TransactionStatusEndpoint = "status";
         private readonly string InitiateEndpoint = "initiate";
         private readonly string ConfirmPayoutEndpoint = "confirmPayout";
+        private readonly string CancelPayoutEndpoint = "cancelPayout";
         private EnvironmentEnum cashierEnvironment = EnvironmentEnum.Staging;
         private readonly string RefundTransactionEndpoint = "RefundTransaction";
 
@@ -436,6 +437,50 @@ namespace AircashFrame
         public string GetConfirmPayoutEndpoint(EnvironmentEnum environment)
         {
             return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{ConfirmPayoutEndpoint}";
+
+        }
+        public async Task<object> CancelPayout(Guid partnerId, string transactionId, EnvironmentEnum environment)
+        {
+            var returnResponse = new Response();
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            returnResponse.RequestDateTimeUTC = DateTime.UtcNow;
+            var aircashCancelPayoutRequest = GetCancelPayoutRequest(partnerId, transactionId);
+            returnResponse.ServiceRequest = aircashCancelPayoutRequest;
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashCancelPayoutRequest);
+            returnResponse.Sequence = dataToSign;
+            var signature = aircashCancelPayoutRequest.Signature;
+            aircashCancelPayoutRequest.Signature = signature;
+            var aircashCreatePayoutResponse = new object();
+            var response = await HttpRequestService.SendRequestAircash(aircashCancelPayoutRequest, HttpMethod.Post, GetCancelPayoutEndpoint(environment));
+            returnResponse.ResponseDateTimeUTC = DateTime.Now;
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                aircashCreatePayoutResponse = JsonConvert.DeserializeObject<CancelPayoutResponse>(response.ResponseContent);
+            }
+            else
+            {
+                aircashCreatePayoutResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+            returnResponse.ServiceResponse = aircashCreatePayoutResponse;
+            return returnResponse;
+        }
+        public CancelPayoutRequest GetCancelPayoutRequest(Guid partnerId, string transactionId)
+        {
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == partnerId).FirstOrDefault();
+            var aircashCancelPayoutRequest = new CancelPayoutRequest
+            {
+                PartnerId = partnerId.ToString(),
+                PartnerTransactionId = transactionId
+            };
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashCancelPayoutRequest);
+            var signature = SignatureService.GenerateSignature(partnerId, dataToSign);
+            aircashCancelPayoutRequest.Signature = signature;
+
+            return aircashCancelPayoutRequest;
+        }
+        public string GetCancelPayoutEndpoint(EnvironmentEnum environment)
+        {
+            return $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.FrameV2)}{CancelPayoutEndpoint}";
 
         }
         public async Task<Response> RefundTransaction(AircashRefundTransactionRequestV2 request)

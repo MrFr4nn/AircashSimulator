@@ -26,6 +26,8 @@ namespace Services.AircashFrameV2
         string GetCheckTransactionStatusV3Endpoint(EnvironmentEnum environment);
         string GetConfirmPayoutEndpoint(EnvironmentEnum environment);
         Task<Response> RefundTransaction(AircashRefundTransactionRequestV2 request);
-
+        Task<object> CancelPayout(Guid partnerId, string transactionId, EnvironmentEnum environment);
+        CancelPayoutRequest GetCancelPayoutRequest(Guid partnerId, string transactionId);
+        string GetCancelPayoutEndpoint(EnvironmentEnum environment);
     }
 }
