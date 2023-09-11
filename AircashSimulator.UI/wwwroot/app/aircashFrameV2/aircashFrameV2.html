@@ -2534,11 +2534,11 @@ lpF2sp9RmJ9BXOlBhWUepvgHL2tE4GjBG1igf9dCnFQsSlJK/QhuJxidWqicMcjgBhO8Uqa6IHpHt48K
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td rowspan="4"><b>400</b></td>
-                                        <td rowspan="4">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                        <td rowspan="6"><b>400</b></td>
+                                        <td rowspan="6">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
                                         <td>1</td>
                                         <td>Invalid signature or partner id.</td>
-                                        <td rowspan="4">
+                                        <td rowspan="6">
                                             Contact Aircash support
                                         </td>
                                     </tr>
@@ -2547,13 +2547,21 @@ lpF2sp9RmJ9BXOlBhWUepvgHL2tE4GjBG1igf9dCnFQsSlJK/QhuJxidWqicMcjgBhO8Uqa6IHpHt48K
                                         <td>Validation error.</td>
                                     </tr>
                                     <tr>
-                                        <td>4002</td>
+                                        <td>1002</td>
                                         <td>Transaction doesn't exist.</td>
                                     </tr>
                                     <tr>
-                                        <td>4003</td>
+                                        <td>1008</td>
                                         <td>Transaction already processed.</td>
-                                    </tr>                                    
+                                    </tr>
+                                    <tr>
+                                        <td>1009</td>
+                                        <td>Transaction cancellation not allowed. Wrong PayType/PayMethod or status not allowed.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4002</td>
+                                        <td>Cancel payout is not possible when transaction is not processed (status 0).</td>
+                                    </tr>
                                     <tr>
                                         <td><b>401</b></td>
                                         <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
@@ -2611,12 +2619,18 @@ lpF2sp9RmJ9BXOlBhWUepvgHL2tE4GjBG1igf9dCnFQsSlJK/QhuJxidWqicMcjgBhO8Uqa6IHpHt48K
                     <uib-tab index="CancelError-tab-2" heading="3 - Validation Error" classes="nav-item">
                         Simulation not available.
                     </uib-tab>
-                    <uib-tab index="CancelError-tab-3" heading="4002 - Transaction doesn't exist." classes="nav-item">
+                    <uib-tab index="CancelError-tab-3" heading="1002 - Transaction doesn't exist." classes="nav-item">
                         Simulation not available.
                     </uib-tab>
-                    <uib-tab index="CancelError-tab-4" heading="4003 - Transaction already processed." classes="nav-item">
+                    <uib-tab index="CancelError-tab-4" heading="1008 - Transaction already processed." classes="nav-item">
                         Simulation not available.
-                    </uib-tab>                                        
+                    </uib-tab>
+                    <uib-tab index="CancelError-tab-5" heading="1009 - Transaction cancellation not allowed. Wrong PayType/PayMethod or status not allowed." classes="nav-item">
+                        Simulation not available.
+                    </uib-tab>
+                    <uib-tab index="CancelError-tab-6" heading="4002 - Cancel payout is not possible when transaction is not processed (status 0)." classes="nav-item">
+                        Simulation not available.
+                    </uib-tab>
                 </uib-tabset>
             </uib-tab>
             <uib-tab index="request-tab-104" heading="Try it out" classes="nav-item">
@@ -2624,7 +2638,7 @@ lpF2sp9RmJ9BXOlBhWUepvgHL2tE4GjBG1igf9dCnFQsSlJK/QhuJxidWqicMcjgBhO8Uqa6IHpHt48K
                     <div class="col-md-4">
                         <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
                         <br />
-                        <form action="/" method="POST" name="statusForm">
+                        <form action="/" method="POST" name="cancelForm">
                             <fieldset>
                                 <div class="mb-3">
                                     <label class="form-label" for="PartnerId">PartnerId</label>
