@@ -135,7 +135,7 @@ cashierAbonModule.controller("cashierAbonCtrl",
                 }
                 cashierAbonService.confirmCashierTransactionV2($scope.confirmTransactionModel.couponCode.replaceAll('-', ''), $scope.confirmTransactionModel.phoneNumber, $scope.matchParameters)
                     .then(function (response) {
-                        if (response.serviceResponse.code) {
+                        if (response.serviceResponse && response.serviceResponse.code) {
                             $rootScope.showGritter("Error", response.serviceResponse.message);
                         }
                         else {

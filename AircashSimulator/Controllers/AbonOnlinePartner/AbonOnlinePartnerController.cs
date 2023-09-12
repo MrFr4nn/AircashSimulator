@@ -86,18 +86,25 @@ namespace AircashSimulator.Controllers.AbonOnlinePartner
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, confirmTransactionRequest.Environment);
             return Ok(response);
         }
+        public async Task<IActionResult> ConfirmCashierTransactionV2(ConfirmTransactionRequest confirmTransactionRequest)
+        {
+            var response = await AbonOnlinePartnerService.ConfirmTransactionV2(confirmTransactionRequest.CouponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, confirmTransactionRequest.Environment);
+            return Ok();
+        }
 
         public async Task<IActionResult> AutorizationTransactionRequest(AutorizationTransactionRequest autorizationTransactionRequest)
         {
 
             //var notifitaionUrl= "https://dev-simulator-api.aircash.eu/api/AbonOnlinePartner/AuthorizationNotification";
-            var notifitaionUrl= "https://localhost:44374/api/AbonOnlinePartner/ConfirmPushNotificationCashier";
+            var notifitaionUrl = "https://localhost:44374/api/AbonOnlinePartner/ConfirmPushNotificationCashier?CouponCode="+ autorizationTransactionRequest.CouponCode;
             var response = await AbonOnlinePartnerService.CheckStatusCoupon(SettingsService.AbonOnlinePartnerId.ToString(), autorizationTransactionRequest.CouponCode, Guid.NewGuid().ToString(), notifitaionUrl, Guid.NewGuid().ToString(), autorizationTransactionRequest.PhoneNumber, autorizationTransactionRequest.Parameters, null, null, EnvironmentEnum.Staging);
             return Ok();
         }
         [HttpGet]
-        public async Task<IActionResult> ConfirmPushNotificationCashier([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        public async Task<IActionResult> ConfirmPushNotificationCashier([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId, [FromQuery(Name = "CouponCode")] string CuponCode)
         {
+     
+            var response = await AbonOnlinePartnerService.ConfirmTransactionV2(CuponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), partnerTransactionId, Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
             return Ok();
         }
 
