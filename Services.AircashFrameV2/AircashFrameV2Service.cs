@@ -348,11 +348,12 @@ namespace AircashFrame
             {
                 aircashTransactionStatusResponse = JsonConvert.DeserializeObject<AircashTransactionStatusV3ResponseFrameV2NoAmount>(response.ResponseContent);
                 var convertedResponse = JsonConvert.DeserializeObject<AircashTransactionStatusV3ResponseFrameV2>(response.ResponseContent);
+                var convertedResponseSequence =JsonConvert.DeserializeObject<AircashTransactionStatusV3ResponseSequence>(response.ResponseContent);
                 if (convertedResponse.Status == AcFrameTransactionStatusEnum.Success)
                 {
                     aircashTransactionStatusResponse = convertedResponse;
                 }
-                var responseSequence = AircashSignatureService.ConvertObjectToString(convertedResponse);
+                var responseSequence = AircashSignatureService.ConvertObjectToString(convertedResponseSequence);
                 if (!AircashSignatureService.VerifySignature(responseSequence, convertedResponse.Signature, AircashConfiguration.AcFramePublicKey))
                     throw new SimulatorException(SimulatorExceptionErrorEnum.InvalidResponseSignature, "Invalid Response Signature");
                 aircashTransactionStatusResponse = new { ResponseObject = aircashTransactionStatusResponse, ResponseSequence = responseSequence };
