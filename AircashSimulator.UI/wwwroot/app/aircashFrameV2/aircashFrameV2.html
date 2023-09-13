@@ -2066,11 +2066,11 @@ EVNRQanJ9sJdTLSiRcwUyfsITPwXNVCvVtQ8UY4Ro2ejEPGGh7DjGbJfNgrqQyreFhvlxp+GcAgcKPmB
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td rowspan="14"><b>400</b></td>
-                                        <td rowspan="14">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                        <td rowspan="6"><b>400</b></td>
+                                        <td rowspan="6">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
                                         <td>1</td>
                                         <td>Invalid signature or partner id.</td>
-                                        <td rowspan="14">
+                                        <td rowspan="6">
                                             Contact Aircash support
                                         </td>
                                     </tr>
@@ -2089,39 +2089,7 @@ EVNRQanJ9sJdTLSiRcwUyfsITPwXNVCvVtQ8UY4Ro2ejEPGGh7DjGbJfNgrqQyreFhvlxp+GcAgcKPmB
                                     <tr>
                                         <td>3000</td>
                                         <td>Invalid currency</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3001</td>
-                                        <td>Invalid or unknown phone number</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3006</td>
-                                        <td>Amount too small</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3007</td>
-                                        <td>Amount too big</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3008</td>
-                                        <td>User reached transaction limit or user is blocked</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3009</td>
-                                        <td>Currencies mismatch</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3013</td>
-                                        <td>User data mismatch</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3014</td>
-                                        <td>User exists no verified data</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3015</td>
-                                        <td>User exists verification is pending</td>
-                                    </tr>
+                                    </tr>                                    
                                     <tr>
                                         <td>3016</td>
                                         <td>Amount mismatch.</td>
@@ -2266,31 +2234,7 @@ EVNRQanJ9sJdTLSiRcwUyfsITPwXNVCvVtQ8UY4Ro2ejEPGGh7DjGbJfNgrqQyreFhvlxp+GcAgcKPmB
                         </div>
                         <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3000)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
                         <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3000">Copy Request</button>
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-7" heading="3001 - Invalid or unknown phone number" classes="nav-item">
-                        Simulation not available.
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-8" heading="3006 - Amount too small" classes="nav-item">
-                        Simulation not available. One time error, afterwards you will get error 1000 - Transaction doesn't exist or it is already processed.
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-9" heading="3007 - Amount too big" classes="nav-item">
-                        Simulation not available. One time error, afterwards you will get error 1000 - Transaction doesn't exist or it is already processed.
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-10" heading="3008 - User reached transaction limit or user is blocked" classes="nav-item">
-                        Simulation not available. One time error, afterwards you will get error 1000 - Transaction doesn't exist or it is already processed.
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-11" heading="3009 - Currencies mismatch" classes="nav-item">
-                        Simulation not available.
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-12" heading="3013 - User data mismatch" classes="nav-item">
-                        Simulation not available.
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-13" heading="3014 - User User exists no verified data" classes="nav-item">
-                        Simulation not available.
-                    </uib-tab>
-                    <uib-tab index="ConfirmError-tab-14" heading="3015 - User exists verification is pending" classes="nav-item">
-                        Simulation not available.
-                    </uib-tab>
+                    </uib-tab>                    
                     <uib-tab index="ConfirmError-tab-15" heading="3016 - Amount mismatch." classes="nav-item">
                         <div class="row col-12">
                             <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3016)">
