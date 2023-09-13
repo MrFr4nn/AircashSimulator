@@ -95,9 +95,8 @@ namespace AircashSimulator.Controllers.AbonOnlinePartner
         public async Task<IActionResult> AutorizationTransactionRequest(AutorizationTransactionRequest autorizationTransactionRequest)
         {
 
-            //var notifitaionUrl= "https://dev-simulator-api.aircash.eu/api/AbonOnlinePartner/AuthorizationNotification";
-            var notifitaionUrl = "https://localhost:44374/api/AbonOnlinePartner/ConfirmPushNotificationCashier?CouponCode="+ autorizationTransactionRequest.CouponCode;
-            var response = await AbonOnlinePartnerService.CheckStatusCoupon(SettingsService.AbonOnlinePartnerId.ToString(), autorizationTransactionRequest.CouponCode, Guid.NewGuid().ToString(), notifitaionUrl, Guid.NewGuid().ToString(), autorizationTransactionRequest.PhoneNumber, autorizationTransactionRequest.Parameters, null, null, EnvironmentEnum.Staging);
+            var notifitaionUrl = "https://dev-simulator-api.aircash.eu/api/AbonOnlinePartner/ConfirmPushNotificationCashier?CouponCode=" + autorizationTransactionRequest.CouponCode;
+            await AbonOnlinePartnerService.CheckStatusCoupon(SettingsService.AbonOnlinePartnerId.ToString(), autorizationTransactionRequest.CouponCode, Guid.NewGuid().ToString(), notifitaionUrl, Guid.NewGuid().ToString(), autorizationTransactionRequest.PhoneNumber, autorizationTransactionRequest.Parameters, null, null, EnvironmentEnum.Staging);
             return Ok();
         }
         [HttpGet]
