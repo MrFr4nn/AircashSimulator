@@ -47,6 +47,10 @@ namespace AircashFrame
 
         public async Task<object> Initiate(InititateRequestV2Dto initiateRequestDTO, string partnerTransactionId, CurrencyEnum currency, EnvironmentEnum environment)
         {
+            var successUrl = initiateRequestDTO.SuccessUrl == "" ? null : initiateRequestDTO.SuccessUrl;
+            var declineUrl = initiateRequestDTO.DeclineUrl == "" ? null : initiateRequestDTO.DeclineUrl;
+            var originUrl = initiateRequestDTO.OriginUrl == "" ? null : initiateRequestDTO.OriginUrl;
+            var cancelUrl = initiateRequestDTO.CancelUrl == "" ? null : initiateRequestDTO.CancelUrl;
             var requestDateTime = DateTime.UtcNow;
             var preparedTransaction = new PreparedAircashFrameTransactionEntity
             {
@@ -58,8 +62,8 @@ namespace AircashFrame
                 PayType = initiateRequestDTO.PayType,
                 PayMethod = initiateRequestDTO.PayMethod,
                 NotificationUrl = initiateRequestDTO.NotificationUrl,
-                SuccessUrl = initiateRequestDTO.SuccessUrl,
-                DeclineUrl = initiateRequestDTO.DeclineUrl,
+                SuccessUrl = successUrl,
+                DeclineUrl = declineUrl,
                 RequestDateTimeUTC = requestDateTime,
                 TransactionSatus = AcFramePreparedTransactionStatusEnum.Pending
             };
@@ -76,10 +80,10 @@ namespace AircashFrame
                 PayType = (int)preparedTransaction.PayType,
                 PayMethod = (int)preparedTransaction.PayMethod,
                 NotificationUrl = preparedTransaction.NotificationUrl,
-                SuccessUrl = initiateRequestDTO.SuccessUrl,
-                DeclineUrl = initiateRequestDTO.DeclineUrl,
-                OriginUrl = initiateRequestDTO.OriginUrl,
-                CancelUrl = initiateRequestDTO.CancelUrl,
+                SuccessUrl = successUrl,
+                DeclineUrl = declineUrl,
+                OriginUrl = originUrl,
+                CancelUrl = cancelUrl,
                 Locale = initiateRequestDTO.Locale
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateSignature);
@@ -96,10 +100,10 @@ namespace AircashFrame
                 PayType = (int)preparedTransaction.PayType,
                 PayMethod = (int)preparedTransaction.PayMethod,
                 NotificationUrl = preparedTransaction.NotificationUrl,
-                SuccessUrl = initiateRequestDTO.SuccessUrl,
-                DeclineUrl = initiateRequestDTO.DeclineUrl,
-                OriginUrl = initiateRequestDTO.OriginUrl,
-                CancelUrl = initiateRequestDTO.CancelUrl,
+                SuccessUrl = successUrl,
+                DeclineUrl = declineUrl,
+                OriginUrl = originUrl,
+                CancelUrl = cancelUrl,
                 Locale = initiateRequestDTO.Locale,
                 CustomParameters = initiateRequestDTO.MatchParameters
             };
