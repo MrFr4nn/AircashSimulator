@@ -159,10 +159,9 @@ namespace AircashSimulator.Controllers.AircashFrame
         [HttpGet]
         public async Task<IActionResult> NotificationCashierFrameV2([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId )
         {
-            //await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
-            //await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);
-            //return Ok();            
-            return BadRequest();
+            await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
+            await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);
+            return Ok();
         }
 
         [HttpPost]
