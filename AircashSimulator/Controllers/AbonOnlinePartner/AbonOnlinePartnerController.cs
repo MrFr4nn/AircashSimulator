@@ -86,11 +86,6 @@ namespace AircashSimulator.Controllers.AbonOnlinePartner
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, confirmTransactionRequest.Environment);
             return Ok(response);
         }
-        public async Task<IActionResult> ConfirmCashierTransactionV2(ConfirmTransactionRequest confirmTransactionRequest)
-        {
-            var response = await AbonOnlinePartnerService.ConfirmTransactionV2(confirmTransactionRequest.CouponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, confirmTransactionRequest.Environment);
-            return Ok();
-        }
 
         public async Task<IActionResult> AutorizationTransactionRequest(AutorizationTransactionRequest autorizationTransactionRequest)
         {

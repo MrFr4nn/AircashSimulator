@@ -1,6 +1,5 @@
 ﻿
 using Domain.Entities.Enum;
-using System;
 using System.Collections.Generic;
 
 namespace AircashSimulator.Controllers.AbonOnlinePartner
@@ -14,6 +13,5 @@ namespace AircashSimulator.Controllers.AbonOnlinePartner
         public EnvironmentEnum Environment { get; set; }
         public string PhoneNumber { get; set; }
         public List<Parameter> Parameters { get; set; }
-
     }
 }
