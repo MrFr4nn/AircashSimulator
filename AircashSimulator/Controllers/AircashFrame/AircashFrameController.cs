@@ -102,7 +102,6 @@ namespace AircashSimulator.Controllers.AircashFrame
             var request = AircashFrameV2Service.GetCancelPayoutRequest(cancelPayoutDTO.PartnerId, cancelPayoutDTO.PartnerTransactionId.ToString());
             var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetConfirmPayoutEndpoint(environment));
             return Ok(curl);
-
         }
 
         [HttpPost]
