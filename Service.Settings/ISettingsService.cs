@@ -30,6 +30,7 @@ namespace Service.Settings
         decimal AbonInvalidValue { get; }
         string TestAircashPaymentPath { get; }
         string TestAircashPaymentPass { get; }
+        string AbonCashierNotificationUrl { get; }
         string TestPhoneNumber { get; }
         string BlockedPhoneNumber { get; }
         decimal PayoutDefaultAmount { get; }

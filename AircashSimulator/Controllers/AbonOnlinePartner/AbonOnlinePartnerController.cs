@@ -90,15 +90,15 @@ namespace AircashSimulator.Controllers.AbonOnlinePartner
         public async Task<IActionResult> AutorizationTransactionRequest(AutorizationTransactionRequest autorizationTransactionRequest)
         {
 
-            var notifitaionUrl = "https://dev-simulator-api.aircash.eu/api/AbonOnlinePartner/ConfirmPushNotificationCashier?CouponCode=" + autorizationTransactionRequest.CouponCode;
-            await AbonOnlinePartnerService.CheckStatusCoupon(SettingsService.AbonOnlinePartnerId.ToString(), autorizationTransactionRequest.CouponCode, Guid.NewGuid().ToString(), notifitaionUrl, Guid.NewGuid().ToString(), autorizationTransactionRequest.PhoneNumber, autorizationTransactionRequest.Parameters, null, null, EnvironmentEnum.Staging);
-            return Ok();
+            var notificationUrl = SettingsService.AbonCashierNotificationUrl + autorizationTransactionRequest.CouponCode;
+            var response = await AbonOnlinePartnerService.CheckStatusCoupon(SettingsService.AbonOnlinePartnerId.ToString(), autorizationTransactionRequest.CouponCode, Guid.NewGuid().ToString(), notificationUrl, Guid.NewGuid().ToString(), autorizationTransactionRequest.PhoneNumber, autorizationTransactionRequest.Parameters, null, null, EnvironmentEnum.Staging);
+            return Ok(response);
         }
         [HttpGet]
-        public async Task<IActionResult> ConfirmPushNotificationCashier([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId, [FromQuery(Name = "CouponCode")] string CuponCode)
+        public async Task<IActionResult> ConfirmPushNotificationCashier([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId, [FromQuery(Name = "CouponCode")] string CouponCode)
         {
      
-            var response = await AbonOnlinePartnerService.ConfirmTransactionV2(CuponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), partnerTransactionId, Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+            var response = await AbonOnlinePartnerService.ConfirmTransactionV2(CouponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), partnerTransactionId, Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
             return Ok();
         }
 
