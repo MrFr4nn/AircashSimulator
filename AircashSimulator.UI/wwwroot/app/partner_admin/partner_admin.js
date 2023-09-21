@@ -299,6 +299,12 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         partnerAdminService.getRoles()
             .then(function (response) {
                 $scope.roles = response;
+                $scope.roles = $scope.roles.sort(function (a, b) {
+                    var textA = a.roleName.toUpperCase();
+                    var textB = b.roleName.toUpperCase();
+                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                });
+                console.log($scope.roles);
                 $scope.setCheckBoxSelected;
             },
                 () => { console.log("Error, could not get roles!"); })
