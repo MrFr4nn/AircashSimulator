@@ -14,14 +14,16 @@ namespace Domain.Entities.Enum
         AbonDeposit = 5,
         AircashPayment = 6,
         AircashRedeemTicket = 7,
-        AircashFrameV2 = 8,
+        AircashFrameV2Withdrawal = 8,
         AircashPayStaticCode = 9,
         AircashPosDeposit = 10,
         AircashInAppPay = 11,
         AircashPayoutV2 = 12,
         AircashATM = 13,
         SlotMachines = 15,
-        CobrandedCard=20,
+        AircashFrameV2AcPay = 16,
+        AircashFrameV2Abon = 17,
+        CobrandedCard =20,
         Admin = 100
     }
 }

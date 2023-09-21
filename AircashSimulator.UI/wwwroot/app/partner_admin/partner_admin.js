@@ -391,8 +391,12 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 return "Aircash marketplace deposit";
             case "AircashRedeemTicket":
                 return "Payouts of winning tickets to Aircash app";
-            case "AircashFrameV2":
-                return "Current version of Frame, contains Aircash Pay, Abon deposit and Witdhrawals";
+            case "AircashFrameV2AcPay":
+                return "Aircash Frame Aircash Pay";
+            case "AircashFrameV2Abon":
+                return "Aircash Frame Abon";
+            case "AircashFrameV2Withdrawal":
+                return "Aircash Frame Withdrawal";
             case "AircashPayStaticCode":
                 return "Aircash Pay for static QR codes";
             case "AircashPosDeposit":

@@ -349,7 +349,7 @@ app.component('frameInitiateTable', {
             this.payTypeString = "Pay type identifier (" + this.paytype + " - " + this.payTypeOptions.find(x => x.code == this.paytype).name + ")";
             this.payMethodString = "Pay method identifier (" + this.paymethod + " - " + this.payMethodOptions.find(x => x.code == this.paymethod).name + ")";
             if (this.paytype == 0 && this.paymethod == 0) {
-                this.abonDescription = "YES, in case of Abon method it is optional.<br /> If the initiate request amount is empty or NULL, amount will be sent in the Status response.Otherwise, the amount must match the value of the Abon voucher(validation will be done in the Aircash system) ";
+                this.abonDescription = "NO, in case of Abon method it is optional.If the initiate request amount is empty or NULL, amount will be sent in the Status response.Otherwise, the amount must match the value of the Abon voucher(validation will be done in the Aircash system) ";
             } else {
                 this.abonDescription = "YES";
             }
