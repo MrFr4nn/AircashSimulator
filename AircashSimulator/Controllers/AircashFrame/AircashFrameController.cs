@@ -100,7 +100,7 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var request = AircashFrameV2Service.GetCancelPayoutRequest(cancelPayoutDTO.PartnerId, cancelPayoutDTO.PartnerTransactionId.ToString());
-            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetConfirmPayoutEndpoint(environment));
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCancelPayoutEndpoint(environment));
             return Ok(curl);
         }
 

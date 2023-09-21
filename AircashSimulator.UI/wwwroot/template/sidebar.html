@@ -80,10 +80,30 @@
             </li>
 
             <li ui-sref-active="active">
-                <a ui-sref="app.aircashFrameV2" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1">
+                <a ui-sref="app.aircashFrameV2" ng-if="partnerRoles.indexOf('AircashFrameV2AcPay') != -1 || partnerRoles.indexOf('AircashFrameV2Abon') != -1 || partnerRoles.indexOf('AircashFrameV2Withdrawal') != -1">
                     <i class="fa fa-desktop"></i>
                     <span>{{translations.ac_frameV2_label}}</span>
                 </a>
+                <ul class="nav ml-3">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acFrameV2Pay" ng-if="partnerRoles.indexOf('AircashFrameV2AcPay') != -1">
+                            <i class="fa fa-qrcode" aria-hidden="true"></i>
+                            <span>{{translations.ac_frameV2_AcPay_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acFrameV2Abon" ng-if="partnerRoles.indexOf('AircashFrameV2Abon') != -1">
+                            <i class="fa fa-gamepad" aria-hidden="true"></i>
+                            <span>{{translations.ac_frameV2_Abon_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acFrameV2Withdrawal" ng-if="partnerRoles.indexOf('AircashFrameV2Withdrawal') != -1">
+                            <i class="fa fa-mobile"></i>
+                            <span>{{translations.ac_frameV2_Withrawal_label}}</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.acPayment" ng-if="partnerRoles.indexOf('AircashPayment') != -1">
