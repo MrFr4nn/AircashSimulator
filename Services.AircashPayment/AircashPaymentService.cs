@@ -92,18 +92,19 @@ namespace Services.AircashPayment
                 AircashSimulatorContext.Transactions.Add(transactionEntity);
                 await AircashSimulatorContext.SaveChangesAsync();
 
+                var parameters = new List<Parameters>();
+                parameters.Add(new Parameters
+                {
+                    Key = "partnerUserID",
+                    Type = "String",
+                    Value = UserId.ToString()
+                });
+
                 var response = new CreateAndConfirmRS
                 {
                     Success = true,
                     PartnerTransactionID = transactionEntity.TransactionId.ToString(),
-                    Parameters = {
-                    new Parameters
-                    {
-                      Key = "partnerUserId",
-                      Type = "string",
-                      Value = UserId.ToString()
-                    }
-                }
+                    Parameters = parameters
                 };
                 return response;
             }
