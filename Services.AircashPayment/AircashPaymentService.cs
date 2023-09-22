@@ -77,39 +77,33 @@ namespace Services.AircashPayment
             string UserId = ReturnUser(ReceiveData.Parameters);
             if (UserId != "")
             {
-                //TransactionEntity transactionEntity = new TransactionEntity
-                //{
-                //    Amount = ReceiveData.Amount,
-                //    TransactionId = Guid.NewGuid().ToString(),
-                //    PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"),
-                //    UserId = UserId,
-                //    AircashTransactionId = ReceiveData.AircashTransactionId,
-                //    ISOCurrencyId = (CurrencyEnum)978,
-                //    ServiceId = ServiceEnum.AircashPayment,
-                //    RequestDateTimeUTC = DateTime.Today,
-                //    ResponseDateTimeUTC = DateTime.Now,
-                //};
-                //AircashSimulatorContext.Transactions.Add(transactionEntity);
-                //await AircashSimulatorContext.SaveChangesAsync();
+                TransactionEntity transactionEntity = new TransactionEntity
+                {
+                    Amount = ReceiveData.Amount,
+                    TransactionId = Guid.NewGuid().ToString(),
+                    PartnerId = new Guid("8F62C8F0-7155-4C0E-8EBE-CD9357CFD1BF"),
+                    UserId = UserId,
+                    AircashTransactionId = ReceiveData.AircashTransactionId,
+                    ISOCurrencyId = (CurrencyEnum)978,
+                    ServiceId = ServiceEnum.AircashPayment,
+                    RequestDateTimeUTC = DateTime.Today,
+                    ResponseDateTimeUTC = DateTime.Now,
+                };
+                AircashSimulatorContext.Transactions.Add(transactionEntity);
+                await AircashSimulatorContext.SaveChangesAsync();
 
                 var response = new CreateAndConfirmRS
                 {
-                    Success = false, //true
-                    //PartnerTransactionID = transactionEntity.TransactionId.ToString(),
-                    Error = new ResponseError {
-                        ErrorCode = 777,
-                        ErrorMessage = "transaction already processed"
-                    },
-                    Parameters = null
-
-                //{
-                //    new Parameters
-                //    {
-                //      Key = "partnerUserId",
-                //      Type = "string",
-                //      Value = UserId.ToString()
-                //    }
-                //}
+                    Success = true,
+                    PartnerTransactionID = transactionEntity.TransactionId.ToString(),
+                    Parameters = {
+                    new Parameters
+                    {
+                      Key = "partnerUserId",
+                      Type = "string",
+                      Value = UserId.ToString()
+                    }
+                }
                 };
                 return response;
             }

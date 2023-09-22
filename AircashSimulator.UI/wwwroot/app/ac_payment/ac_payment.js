@@ -591,6 +591,30 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         }
     };
 
+    $scope.transactionAlreadyProcessed = {
+        successExample: {
+            "success": true,
+            "partnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
+            "parameters": [
+                {
+                    "key": "partnerUserID",
+                    "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                    "type": "string"
+                }
+            ]
+        },
+        errorExample: {
+            "success": false,
+            "partnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
+            "error": {
+                "errorCode": 501,
+                "errorMessage": "Transaction already processed"
+            },
+            "parameters": null
+        }
+
+    }
+
     
     $scope.requestCheckPlayerChanged();
     $scope.requestCreateAndConfirmChanged();

@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+    <h2>Transaction Already Processed</h2>
+    <h5>Option A</h5>
+    <p>When receiving a CreateAndConfirmPayment request with the same TransactionID (this is Aircash transaction id) you can return the same successful response.</p>
+    <p>Response example:</p>
+
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content col">
+            Response HTTP 200 OK
+            <jsonformatter data="transactionAlreadyProcessed.successExample"></jsonformatter>
+        </div>
+    </div>
+
+    <h5>Option B</h5>
+    <p>
+        When receiving a CreateAndConfirmPayment request with the same TransactionID (this is Aircash transaction id) you can return the error code for the already processed transaction.<br /> You need to provide us with error code you will use for the already processed transaction.
+        We will configure error code: e.g. error code 501 means transaction already processed, mark the transaction as a succesfull.
+    </p>
+    <p>Response example:</p>
+
+    <div class="note note-gray-400 col-md-6">
+        <div class="note-content col">
+            Response HTTP 200 OK
+            <jsonformatter data="transactionAlreadyProcessed.errorExample"></jsonformatter>
+        </div>
+    </div>
+
+</body>
+</html>
