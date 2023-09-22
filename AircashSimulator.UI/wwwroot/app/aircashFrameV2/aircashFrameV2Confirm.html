@@ -1,0 +1,424 @@
+﻿<h4>Confirm payout</h4>
+<p>
+    Method that’s used only in the withdrawal/payout flow. Once the funds are ready to be withdrawn from the user's account, partner system needs to send confirmation request.
+</p>
+<i>Endpoints:</i>
+<div class="table-responsive">
+    <table class="table  table-active col-md-6">
+        <thead>
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://stage-frame-api.aircash.eu/api/v2/confirmPayout</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    POST
+                </td>
+                <td>https://frame-api.aircash.eu/api/v2/confirmPayout</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />
+<uib-tabset>
+    <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>PartnerId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identifier provided by Aircash
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique transaction id in partner’s system
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>decimal</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>CurrencyId</b></td>
+                        <td>int</td>
+                        <td>
+                            ISO-4217 currency code
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>
+                            A sequence that has been digitally signed with the provider's private signature, used for authentication
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+        <jsonformatter data="aircashFrameV2.confirm.requestExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+        <pre>
+Request example:
+</pre>
+        <jsonformatter data="aircashFrameV2.confirm.requestExample"></jsonformatter>
+        <pre>
+
+Sequence: 
+Amount=100&CurrencyId=978&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=f9858a70-2efd-40d9-920f-338b6294ddb9
+
+Signature:
+EVNRQanJ9sJdTLSiRcwUyfsITPwXNVCvVtQ8UY4Ro2ejEPGGh7DjGbJfNgrqQyreFhvlxp+GcAgcKPmBFA0hOCEBEJLW2u+asE/ieC89z8XTnVizCYPlEdKAMAP+3FH6RU+y0ogRGFIflK2NuL8c+ZZJTcpAkUUBwH8Gw4CcKO1Kx4qHGmoHCdBYOXIf3hA7NpnGesNBiL8FtW1h8NQwx2YuBqVCoQGijdM2fpxHGv4vzZb8WSOVXE5+T9lEm8T54EUTirhjetIKomlSav5UCfMSX8bYARZsNNWXNquGGKEItef7Q9O3jbEjzeOAumva5eFIGFu7y/JWdron+w+qwrmowDtMyFLw7jZF2XWsPmIao/kk+hpOMdYcXxaDzJbrKh175nZ0fibALX8e525Dy8qcGqKtgqgtYkgO+KOZ/woShF4arQj3SpBhOjbUacm/MwCbXx3gIkjhUTmMjT8BZv31wkXElIi4xzqrC4G0akxZ1u+e802yMfcIrnczLCwbEA8MzY0YPC+YnZamF0Xw/RtFC+XGbkzi40sNFSWmBEbRYyLD3uUkEGyRuhAQP9CFXb+4MHEAGlVOeaWHXLWp23ugxuovG7ueoxGVG0s6Hfrdt7KHPxfKSEKy3/yvOVDWYHvAUpOBRGd7OD5K7d3bn3qMbSNVZURsJNC/TIWaIg4=
+                </pre>
+    </uib-tab>
+    <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table  table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>AircashTransactionId</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique transaction id in the Aircash system
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <p class="ml-3">
+            <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+        </p>
+    </uib-tab>
+    <uib-tab index="request-tab-4" heading="200 OK response example" classes="nav-item">
+        <jsonformatter data="aircashFrameV2.confirm.responseExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Error Code</th>
+                                <th>Message</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="6"><b>400</b></td>
+                                <td rowspan="6">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                <td>1</td>
+                                <td>Invalid signature or partner id.</td>
+                                <td rowspan="6">
+                                    Contact Aircash support
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Validation error.</td>
+                            </tr>
+                            <tr>
+                                <td>1000</td>
+                                <td>Transaction doesn't exist or it is already processed.</td>
+                            </tr>
+                            <tr>
+                                <td>1005</td>
+                                <td>Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed.</td>
+                            </tr>
+                            <tr>
+                                <td>3000</td>
+                                <td>Invalid currency</td>
+                            </tr>
+                            <tr>
+                                <td>3016</td>
+                                <td>Amount mismatch.</td>
+                            </tr>
+                            <tr>
+                                <td><b>401</b></td>
+                                <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>500</b></td>
+                                <td>An unknown error occured</td>
+                                <td>-</td>
+                                <td>An error has occurred.</td>
+                                <td>
+                                    Contact Aircash support
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="request-tab-106" heading="Error response example" classes="nav-item">
+        <uib-tabset class="row tabs-left">
+            <uib-tab index="ConfirmError-tab-1" heading="1 - Invalid signature or partner id." classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
+                        Request
+                        <jsonformatter data="errorExamples.Confirm.error1.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=10&CurrencyId=978&PartnerId=8db69a48-7d61-48e7-9be8-3160549c7f17&PartnerTransactionId=0fea9fbc-939f-4010-88c2-44a6ef0ac9f4
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1)">
+                        Response
+                        <jsonformatter data="errorExamples.Confirm.error1.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmError-tab-2" heading="3 - Validation Error" classes="nav-item">
+                Simulation not available.
+            </uib-tab>
+            <uib-tab index="ConfirmError-tab-3" heading="1000 - Transaction doesn't exist or it is already processed." classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1000)">
+                        Request
+                        <jsonformatter data="errorExamples.Confirm.error1000.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=10&CurrencyId=978&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=60526f94-9d61-482f-b577-8c92a551da5d
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1000)">
+                        Response
+                        <jsonformatter data="errorExamples.Confirm.error1000.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1000">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1000">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1000)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1000">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmError-tab-5" heading="1005 - Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1005)">
+                        Request
+                        <jsonformatter data="errorExamples.Confirm.error1005.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=10&CurrencyId=978&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=6f68fa9f-065e-43a0-b8d2-4760f94f9ea3
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 1005)">
+                        Response
+                        <jsonformatter data="errorExamples.Confirm.error1005.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1005">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1005">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(1005)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 1005">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmError-tab-6" heading="3000 - Invalid currency" classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3000)">
+                        Request
+                        <jsonformatter data="errorExamples.Confirm.error3000.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=10&CurrencyId=977&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=0fea9fbc-939f-4010-88c2-44a6ef0ac9f4
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3000)">
+                        Response
+                        <jsonformatter data="errorExamples.Confirm.error3000.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3000">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3000">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3000)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3000">Copy Request</button>
+            </uib-tab>
+            <uib-tab index="ConfirmError-tab-15" heading="3016 - Amount mismatch." classes="nav-item">
+                <div class="row col-12">
+                    <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3016)">
+                        Request
+                        <jsonformatter data="errorExamples.Confirm.error3016.request"></jsonformatter>
+
+                        Sequence:
+                        Amount=12&CurrencyId=978&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=0fea9fbc-939f-4010-88c2-44a6ef0ac9f4
+                    </div>
+                    <div class="col-sm-6" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 3016)">
+                        Response
+                        <jsonformatter data="errorExamples.Confirm.error3016.response"></jsonformatter>
+                    </div>
+                    <div class="col-sm-6 overflow-auto" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3016">
+                        Request ({{errorConfirmRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmRequest"></jsonformatter>
+
+                        Sequence: {{errorConfirmSequence}}<br />
+
+                    </div>
+                    <div class="col-sm-6" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3016">
+                        Response ({{errorConfirmResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="errorConfirmResponse"></jsonformatter>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(3016)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 3016">Copy Request</button>
+            </uib-tab>
+        </uib-tabset>
+    </uib-tab>
+    <uib-tab index="request-tab-104" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                <br />
+                <form action="/" method="POST" name="statusForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="PartnerId">PartnerId</label>
+                            <input ng-model="confirmModel.partnerId" type="text" class="form-control" ng-required="true" name="PartnerId">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="CurrencyId">CurrencyId</label>
+                            <input ng-model="confirmModel.currencyId" type="text" class="form-control" ng-required="true" name="CurrencyId">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="partnerTransactionId">Partner Transaction ID</label>
+                            <input ng-model="confirmModel.transactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="amount">Amount</label>
+                            <input ng-model="confirmModel.amount" type="number" class="form-control" ng-required="true" name="amount">
+                        </div>
+                        <button class="btn btn-primary" ng-click="confirmPayout()" ng-disabled="confirmBusy || confirmForm.$invalid">Confirm payout<i ng-if="confirmBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <br />
+            <div ng-if="confirmResponded" class="col-md-4">
+                Request ({{ConfirmRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="ConfirmServiceRequest"></jsonformatter>
+                Sequence: {{sequenceConfirm}}
+            </div>
+            <div ng-if="confirmResponded" class="col-md-4">
+                Response ({{ConfirmResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="ConfirmServiceResponse"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="request-tab-8" heading="Curl" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                <br />
+                <form action="/" method="POST" name="statusForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="PartnerId">PartnerId</label>
+                            <input ng-model="confirmModel.partnerId" type="text" class="form-control" ng-required="true" name="PartnerId">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="CurrencyId">CurrencyId</label>
+                            <input ng-model="confirmModel.currencyId" type="text" class="form-control" ng-required="true" name="CurrencyId">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="partnerTransactionId">Partner Transaction ID</label>
+                            <input ng-model="confirmModel.transactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="amount">Amount</label>
+                            <input ng-model="confirmModel.amount" type="number" class="form-control" ng-required="true" name="amount">
+                        </div>
+                        <button class="btn btn-primary" ng-click="getCurlConfirmPayout()" ng-disabled="curlConfirmBusy || confirmForm.$invalid">Confirm payout<i ng-if="curlConfirmBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+
+                </form>
+            </div>
+            <br />
+            <div ng-if="curlConfirmResponded" class="col-md-8">
+                <pre>
+                <jsonformatter data="CurlConfirmPayoutResponse"></jsonformatter>
+                        </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlConfirmPayoutResponse)">Copy</button>
+
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>

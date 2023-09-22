@@ -1,0 +1,388 @@
+﻿ <h4>Initiate</h4>
+        <p>
+            Method used to generate the link of the Aircash frame panel, using which the customer will proceed with the required steps of the payment process. In the tables below you can find additional information important for the correct integration of Aircash frame hosted payment page.
+        </p>
+
+        <i>Endpoints:</i>
+        <div class="table-responsive">
+            <table class="table  table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://stage-frame-api.aircash.eu/api/v2/initiate</td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://frame-api.aircash.eu/api/v2/initiate</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <p>
+            To receive the frame link, partner needs to send a POST request to the URL of a desired environment using parameters in the table below within the JSON request body.
+        </p>
+        <br />
+<uib-tabset active="active">
+            <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+                <frame-initiate-table paytype="initiateModel.payType" paymethod="initiateModel.payMethod"></frame-initiate-table>
+            </uib-tab>
+            <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                <pre>
+Request example:
+</pre>
+                <jsonformatter data="aircashFrameV2.initiate.requestExample"></jsonformatter>
+<pre>
+
+Sequence:
+Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=
+
+Signaure:
+tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJPS5SsKaCyPNRxQudthErgwzNCNPM1BD7Wwrf2obrmTzNNgRbC1sfU0HXjP7lTRS8HblzNGjksiUG0wED/QJBmZiQyTUAaO60tg1f4BpeFPAwqsOA/URKB8A72MAzIrsm6w3LOIWzAtiXBwzqkKQ2ChBMsDUx+ba8R2JdU6N1X//65KcXEAHUGOIFberWNDVIcHbZHXDNVFVlFjXtl2VR0VxASioSyh7ZrLl+pyd6BkuK0ee9z6IibAZk0xIfW6TIC4VuHxnwKLmnjxZcXesQjiz+E3xg8V00g1QX23//973WFDMFDfAqOX/1kqlTcPY+Ih8wgTeVVfLXpE7nveTn7vBMLiJE2ONxYNdp2v+ba79ro5ifAkUHcXtEaPLJxpw3d+kvO7J/uDkyc6Re2GotY1Q1leY/qp0qAPjmFvDE5wOnLJp3yDkQv34i8P591xFcLf297jaoAGrn4d2fjGszPC14TxP8VqNdhE0HO8qP3IZWVw6+QnoYMCZy+GkH8uV8Wp7P+eZWGoinJTR4nodU7H8vuWfjiJzhfSKUfYAEotxfcsNKanClrmCrvY4iRlp/BqnR/PETmqVR7bJafKNhyZ6rtb00=
+</pre>
+            </uib-tab>
+            <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table  table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>URL</b></td>
+                                <td>string</td>
+                                <td>
+                                    Url that needs to be opened within merchant's web
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Transaction ID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Id of the transaction in the Aircash system
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <p class="ml-3">
+                    <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+                </p>
+            </uib-tab>
+            <uib-tab index="request-tab-4" heading="200 OK response example" classes="nav-item">
+                <jsonformatter data="aircashFrameV2.initiate.responseExample"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table  table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Error Code</th>
+                                <th>Message</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td rowspan="4"><b>400</b></td>
+                                <td rowspan="4">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                <td><b>1</b></td>
+                                <td>Invalid signature or partner id</td>
+                                <td rowspan="4">
+                                    Contact Aircash support
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>3</b></td>
+                                <td>Validation error</td>
+                            </tr>
+                            <tr>
+                                <td><b>1004</b></td>
+                                <td>Partner transaction already exists</td>
+                            </tr>
+                            <tr>
+                                <td><b>3000</b></td>
+                                <td>Invalid currency</td>
+                            </tr>
+                            <tr>
+                                <td><b>401</b></td>
+                                <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>500</b></td>
+                                <td>An unknown error occured</td>
+                                <td>-</td>
+                                <td>Unknown error has occurred</td>
+                                <td>
+                                    Contact Aircash support
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
+                <uib-tabset class="row tabs-left">
+                    <uib-tab index="InitiateError-tab-1" heading="1 - Invalid signature or partner id" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error1.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=c02142bb-b5d4-4c40-9c85-ca90bd0f1fba&PartnerTransactionId=622e7787-afa8-4ae0-adad-d356e8f91164&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error1.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(1)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="InitiateError-tab-2" heading="3 - Validation Error" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error3.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error3.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(3)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="InitiateError-tab-3" heading="1004 - Partner transaction Already Exists" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1004)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error1004.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 1004)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error1004.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1004">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1004">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(1004)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 1004">Copy Request</button>
+                    </uib-tab>
+                    <uib-tab index="InitiateError-tab-4" heading="3000 - Invalid currency" classes="nav-item">
+                        <div class="row col-12">
+                            <div class="col-sm-6 overflow-auto" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3000)">
+                                Request
+                                <jsonformatter data="errorExamples.Initiate.error3000.request"></jsonformatter>
+
+                                Sequence:
+                                Amount=10&CancelUrl=&CurrencyId=191&DeclineUrl=&Locale=en-HR&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=21f2098d-471f-4d5c-a68b-a855dc52d5b4&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                            </div>
+                            <div class="col-sm-6" ng-if="!(errorInitiateResponded && currentInitiateErrorCode == 3000)">
+                                Response
+                                <jsonformatter data="errorExamples.Initiate.error3000.response"></jsonformatter>
+                            </div>
+                            <div class="col-sm-6 overflow-auto" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3000">
+                                Request ({{errorInitiateRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateRequest"></jsonformatter>
+
+                                Sequence: {{errorInitiateSequence}}<br />
+
+                            </div>
+                            <div class="col-sm-6" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3000">
+                                Response ({{errorInitiateResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="errorInitiateResponse"></jsonformatter>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" ng-click="initiateSimulateError(3000)" ng-disabled="errorInitiateServiceBusy">Simulate <i ng-if="errorInitiateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                        <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorInitiateRequestCopy)" ng-if="errorInitiateResponded && currentInitiateErrorCode == 3000">Copy Request</button>
+                    </uib-tab>
+                </uib-tabset>
+            </uib-tab>
+            <uib-tab index="request-tab-8" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-3" style="border:1px; border-color: #6c757d;  border-radius: 8px; padding:10px">
+                        <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                        <br />
+                        <select class="form-control mb-3" ng-model="initiateModelSelected.data" ng-change="setInititateModel()" ng-disabled="true">
+                            <option ng-repeat="option in initiateModels" ng-value="option">{{option.name}}</option>
+                        </select>
+                        <form action="/" method="POST" name="initiateForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label" for="partnerId">PartnerId(Guid)</label>
+                                    <input ng-model="initiateModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="partnerUserId">PartnerUserId</label>
+                                    <input ng-model="initiateModel.partnerUserId" type="text" class="form-control" ng-required="true" name="partnerUserId">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="partnerTransactionId">PartnerTransactionId</label>
+                                    <input ng-model="initiateModel.partnerTransactionId" type="text" class="form-control" ng-required="true" name="partnerTransactionId">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="amount">Amount</label>
+                                    <input ng-model="initiateModel.amount" type="number" min="0" step="0.01" class="form-control" ng-required="true" name="amount">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="currencyId">CurrencyId</label>
+                                    <select class="form-control" ng-model="initiateModel.currency">
+                                        <option ng-repeat="currency in currencyOptions" ng-value="currency.currencyId">{{currency.currencyIsoCode}}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="payType">PayType</label>
+                                    <select class="form-control" ng-model="initiateModel.payType" ng-disabled="true">
+                                        <option ng-repeat="payType in payTypeOptions" ng-value="payType.code">{{payType.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="payMethod">PayMethod</label>
+                                    <select class="form-control" ng-model="initiateModel.payMethod" ng-disabled="true">
+                                        <option ng-repeat="payMethod in payMethodOptions" ng-value="payMethod.code">{{payMethod.name}}</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="notificationUrl">NotificationUrl</label>
+                                    <input ng-model="initiateModel.notificationUrl" type="text" class="form-control" ng-required="true" name="notificationUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="successUrl">SuccessUrl</label>
+                                    <input ng-model="initiateModel.successUrl" type="text" class="form-control" name="successUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="declineUrl">DeclineUrl</label>
+                                    <input ng-model="initiateModel.declineUrl" type="text" class="form-control" name="declineUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="cancelUrl">CancelUrl</label>
+                                    <input ng-model="initiateModel.cancelUrl" type="text" class="form-control" name="cancelUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="originUrl">OriginUrl</label>
+                                    <input ng-model="initiateModel.originUrl" type="text" class="form-control" name="originUrl">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="locale">Locale</label>
+                                    <div>
+                                        <div class="row px-2 align-items-center">
+                                            <div class="w-25">
+                                                <input class="form-control" ng-model="locale.languageInput" type="text" ng-required="true" name="languageInput">
+                                            </div>
+                                            &nbsp; -&nbsp;
+                                            <div class="w-25">
+                                                <input class="form-control" ng-model="locale.countryISOCodeInput" type="text" ng-required="true" name="countryISOCodeInput">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="initiateModel.payMethod != 0">
+                                    <hr />
+                                    <div class="form-group align-items-center">
+                                        <input ng-model="config.useMatchPersonalData" style=" width: 1.0rem; height: 1.0rem;" type="checkbox" id="checkbox2" ng-change="useMatchPersonalDataChanged()" />
+                                        <label style=" font-size: 1.0em;" for="checkbox2">Match personal data</label>
+                                    </div>
+                                    <div ng-if="config.useMatchPersonalData">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="firstName">FirstName</label>
+                                            <input ng-model="initiateModel.firstName" type="text" class="form-control" ng-required="true" name="FirstName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label" for="lastName">LastName</label>
+                                            <input ng-model="initiateModel.lastName" type="text" class="form-control" ng-required="true" name="LastName">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Birth date</label>
+                                            <date-picker ng-model="initiateModel.birthDate" date="" isOptional="false" out="setDate"></date-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button ng-click="initiateRedirectCheckout()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">
+                                    Initiate
+                                    <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i>
+                                </button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <br />
+                    <div ng-if="initiateResponded" class="col-md-4">
+                        Request ({{InitiateRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="InitiateServiceRequest"></jsonformatter>
+                        Sequence: {{sequenceInitiate}}
+                    </div>
+                    <div ng-if="initiateResponded" class="col-md-5">
+                        Response ({{InitiateResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="InitiateServiceResponse"></jsonformatter>
+                        <br />
+                        <button class="btn btn-primary w-100px ms-auto" ng-if="showButtonCopyUrl" ng-click="copyToClipboard(InitiateServiceResponseObject.url)">Copy url</button>
+                    </div>
+                </div>
+            </uib-tab>
+        </uib-tabset>
