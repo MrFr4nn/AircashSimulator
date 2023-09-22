@@ -11,6 +11,7 @@ namespace Domain.Entities.Enum
         BAM=977,
         RON=946,
         CHF=756,
+        PLN=978,
         CZK=203
     }
 }

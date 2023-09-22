@@ -149,6 +149,7 @@ app.component('currencyidPicker', {
                 { name: "BAM", code: 977 },
                 { name: "CHF", code: 756 },
                 { name: "RON", code: 946 },
+                { name: "PLN", code: 978 },
                 { name: "CZK", code: 203 }
             ];
 
