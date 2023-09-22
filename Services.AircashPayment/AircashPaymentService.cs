@@ -97,7 +97,7 @@ namespace Services.AircashPayment
                     Success = false, //true
                     PartnerTransactionID =  Guid.NewGuid().ToString(), //transactionEntity.TransactionId.ToString(),
                     Error = new ResponseError {
-                        ErrorCode = 7082,
+                        ErrorCode = 777,
                         ErrorMessage = "transaction already processed"
                     },
                     Parameters = null
