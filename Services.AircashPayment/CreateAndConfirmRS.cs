@@ -12,7 +12,7 @@ namespace Services.AircashPayment
         public bool Success { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-        public string PartnerTransactionId { get; set; }
+        public string PartnerTransactionID { get; set; }
 
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public ResponseError Error { get; set; }
