@@ -5,30 +5,35 @@
     <title></title>
 </head>
 <body>
-
     <h2>Transaction Already Processed</h2>
-    <h5>Option A</h5>
-    <p>When receiving a CreateAndConfirmPayment request with the same TransactionID (this is Aircash transaction id) you can return the same successful response.</p>
-    <p>Response example:</p>
+    <div class="row row-cols-lg-2 row-cols-1">
+        <div class="col">
+            <h5>Option A</h5>
+            <p>When receiving a CreateAndConfirmPayment request with the same TransactionID (this is Aircash transaction id) partner can return the same successful response.</p>
+            <p>Response example:</p>
 
-    <div class="note note-gray-400 col-md-6">
-        <div class="note-content col">
-            Response HTTP 200 OK
-            <jsonformatter data="transactionAlreadyProcessed.successExample"></jsonformatter>
+            <div class="note note-gray-400">
+                <div class="note-content col">
+                    Response HTTP 200 OK
+                    <jsonformatter data="transactionAlreadyProcessed.successExample"></jsonformatter>
+                </div>
+            </div>
         </div>
-    </div>
+        <div class="col">
+            <h5>Option B</h5>
+            <p>
+                When receiving a CreateAndConfirmPayment request with the same TransactionID (this is Aircash transaction id) partner can return the error code for the already processed transaction.
+                <br /> Partner needs to provide Aircash with correct error code for the transaction that is already processed.
+                After that transaction will be mark as a succesfull/finished.
+            </p>
+            <p>Response example:</p>
 
-    <h5>Option B</h5>
-    <p>
-        When receiving a CreateAndConfirmPayment request with the same TransactionID (this is Aircash transaction id) you can return the error code for the already processed transaction.<br /> You need to provide us with error code you will use for the already processed transaction.
-        We will configure error code: e.g. error code 501 means transaction already processed, mark the transaction as a succesfull.
-    </p>
-    <p>Response example:</p>
-
-    <div class="note note-gray-400 col-md-6">
-        <div class="note-content col">
-            Response HTTP 200 OK
-            <jsonformatter data="transactionAlreadyProcessed.errorExample"></jsonformatter>
+            <div class="note note-gray-400">
+                <div class="note-content col">
+                    Response HTTP 200 OK
+                    <jsonformatter data="transactionAlreadyProcessed.errorExample"></jsonformatter>
+                </div>
+            </div>
         </div>
     </div>
 
