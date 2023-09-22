@@ -64,14 +64,7 @@ namespace AircashSimulator.Controllers
 
                 var response = await AircashPaymentService.CheckPlayer(findUser);
 
-                if(((CheckPlayerResponse)response).IsPlayer)
-                {
-                    return Ok(response);
-                }
-                else
-                {
-                    return BadRequest(response);
-                }
+                return Ok(response);
             }
             else
             {
