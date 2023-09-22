@@ -95,7 +95,7 @@ namespace Services.AircashPayment
                 var response = new CreateAndConfirmRS
                 {
                     Success = false, //true
-                    PartnerTransactionID =  Guid.NewGuid().ToString(), //transactionEntity.TransactionId.ToString(),
+                    //PartnerTransactionID = transactionEntity.TransactionId.ToString(),
                     Error = new ResponseError {
                         ErrorCode = 777,
                         ErrorMessage = "transaction already processed"
