@@ -11,8 +11,6 @@ using Services.HttpRequest;
 using Service.Settings;
 using Newtonsoft.Json;
 using System.Globalization;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Newtonsoft.Json.Linq;
 
 namespace Services.AircashPayment
 {
@@ -42,7 +40,7 @@ namespace Services.AircashPayment
         {            
             var user = ReturnUserFullData(checkPlayerParameters);
 
-            if (user.UserId != "")
+            if(user.UserId != "")
             {
                 var parameters = new List<Parameters>();
                 parameters.Add(new Parameters
@@ -99,7 +97,7 @@ namespace Services.AircashPayment
         public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
         {
             string UserId = ReturnUser(ReceiveData.Parameters);
-            if (UserId != "")
+            if(UserId != "")
             {
                 TransactionEntity transactionEntity = new TransactionEntity
                 {
@@ -186,9 +184,7 @@ namespace Services.AircashPayment
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<CreateAndConfirmRS>(response.ResponseContent);
             return returnResponse;
-        }
-
-        
+        }        
 
         public string ReturnUser(List<AircashPaymentParameters> checkPlayerParameters)
         {
@@ -217,6 +213,5 @@ namespace Services.AircashPayment
             }
             return user;
         }
-
     }
 }

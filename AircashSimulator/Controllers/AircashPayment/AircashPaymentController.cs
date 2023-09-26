@@ -56,7 +56,7 @@ namespace AircashSimulator.Controllers
             var signature = aircashPaymentCheckPlayer.Signature;
             bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPaymentPublicKey}");
 
-            if (valid == true)
+            if(valid == true)
             {
                 var findUser = new List<AircashPaymentParameters>();
              
