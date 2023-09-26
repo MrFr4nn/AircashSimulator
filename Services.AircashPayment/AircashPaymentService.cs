@@ -20,13 +20,14 @@ namespace Services.AircashPayment
         public object ServiceResponse { get; set; }
         public string Sequence { get; set; }
         public DateTime RequestDateTimeUTC { get; set; }
-        public DateTime ResponseDateTimeUTC { get; set; }
+        public DateTime ResponseDateTimeUTC { get; set; }        
     }
     public class AircashPaymentService : IAircashPaymentService
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IHttpRequestService HttpRequestService;
         private ISettingsService SettingsService;
+        private string _defaultDateTimeFormat = "yyyy-MM-dd";
 
         public AircashPaymentService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISettingsService settingsService)
         {
@@ -36,18 +37,39 @@ namespace Services.AircashPayment
         }
 
         public async Task<object> CheckPlayer(List<AircashPaymentParameters> checkPlayerParameters)
-        {
-            string UserId = ReturnUser(checkPlayerParameters);
+        {            
+            var user = ReturnUserFullData(checkPlayerParameters);
 
-            if (UserId != "")
+            if(user.UserId != "")
             {
                 var parameters = new List<Parameters>();
                 parameters.Add(new Parameters
                 {
                     Key = "partnerUserID",
                     Type = "String",
-                    Value = UserId.ToString()
+                    Value = user.UserId.ToString()
                 });
+                if(!String.IsNullOrEmpty(user.FirstName) && !String.IsNullOrEmpty(user.LastName) && !String.IsNullOrEmpty(user.BirthDate.ToString()))
+                {
+                    parameters.Add(new Parameters
+                    {
+                        Key = "PayerFirstName",
+                        Type = "String",
+                        Value = user.FirstName.ToString()
+                    });
+                    parameters.Add(new Parameters
+                    {
+                        Key = "PayerLastName",
+                        Type = "String",
+                        Value = user.LastName.ToString()
+                    });
+                    parameters.Add(new Parameters
+                    {
+                        Key = "PayerBirthDate",
+                        Type = "String",
+                        Value = user.BirthDate?.ToString(_defaultDateTimeFormat)
+                    });
+                }
                 var response = new CheckPlayerResponse
                 {
                     IsPlayer = true,
@@ -75,7 +97,7 @@ namespace Services.AircashPayment
         public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
         {
             string UserId = ReturnUser(ReceiveData.Parameters);
-            if (UserId != "")
+            if(UserId != "")
             {
                 TransactionEntity transactionEntity = new TransactionEntity
                 {
@@ -162,9 +184,7 @@ namespace Services.AircashPayment
             returnResponse.ResponseDateTimeUTC = DateTime.UtcNow;
             returnResponse.ServiceResponse = JsonConvert.DeserializeObject<CreateAndConfirmRS>(response.ResponseContent);
             return returnResponse;
-        }
-
-        
+        }        
 
         public string ReturnUser(List<AircashPaymentParameters> checkPlayerParameters)
         {
@@ -180,5 +200,18 @@ namespace Services.AircashPayment
             return user != null ? user.UserId : "";
         }
 
+        public UserEntity ReturnUserFullData(List<AircashPaymentParameters> checkPlayerParameters)
+        {
+            UserEntity user = null;
+            if (checkPlayerParameters.Select(attribute => attribute.Key).Contains("username"))
+            {
+                user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayerParameters.Select(attribute => attribute.Value).Contains(v.Username));
+            }
+            else if (checkPlayerParameters.Select(attribute => attribute.Key).Contains("email"))
+            {
+                user = AircashSimulatorContext.Users.FirstOrDefault(v => checkPlayerParameters.Select(attribute => attribute.Value).Contains(v.Email));
+            }
+            return user;
+        }
     }
 }
