@@ -331,8 +331,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     $scope.checkboxCheckPlayer = {};
     $scope.checkPlayerModel = {
         endpoint: config.baseUrl + "AircashPayment/CheckPlayer",
-        birthDate: new Date('1990-01-01'),
-        identificator: "aircah"
+        birthDate: new Date('2000-01-01'),
+        identificator: "johndoe"
     };
     $scope.checkPlayerBusy = false;
     $scope.checkPlayerResponded = false;
