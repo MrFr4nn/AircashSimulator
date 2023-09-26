@@ -5,470 +5,836 @@
     <title></title>
 </head>
 <body>
-    <h4 style="text-align:justify">Multiple coupon creation</h4>
-    <p style="text-align:justify">
-        The method used to let the sales partner request a creation of multiple new Aircash Abons at once. Aircash Abons are created using the CreateCouponMultiple method that creates the coupons and immediately activates them.
-    </p>
-
-    <div class="table-responsive">
-        <table class="table table-active col-md-6">
-            <tr>
-                <th>Environment</th>
-                <th>Method</th>
-                <th>URL</th>
-            </tr>
-            <tr>
-                <td><b>Test</b></td>
-                <td>
-                    POST
-                </td>
-                <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CreateMultipleCoupons</td>
-            </tr>
-            <tr>
-                <td><b>Production</b></td>
-                <td>
-                    POST
-                </td>
-                <td>https://a-bon.aircash.eu/rest/api/CashRegister/CreateMultipleCoupons</td>
-        </table>
-    </div>
-    <br />
     <div class="row">
-        <div class="col-md-12">
-            <uib-tabset>
-                <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Parameter</th>
-                                    <th>Type</th>
-                                    <th>Description</th>
-                                    <th>Mandatory</th>
-                                    <th>Part of the sequence</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><b>PartnerId</b></td>
-                                    <td>string</td>
-                                    <td>Unique partner identifier (per currency) provided by Aircash</td>
-                                    <td>YES</td>
-                                    <td>YES</td>
-                                </tr>
-                                <tr>
-                                    <td><b>PointOfSaleId</b></td>
-                                    <td>string</td>
-                                    <td>Identifier of the point of sale</td>
-                                    <td>YES</td>
-                                    <td>YES</td>
-                                </tr>
-                                <tr>
-                                    <td><b>ISOCurrencySymbol</b></td>
-                                    <td>string</td>
-                                    <td>Currency code by ISO 4217 (e.g. for EUR)</td>
-                                    <td>YES</td>
-                                    <td>YES</td>
-                                </tr>
-                                <tr>
-                                    <td><b>ContentType</b></td>
-                                    <td>string</td>
-                                    <td>
-                                        Coupon format – „pdf“, „txt“ or „xml“. If the parameter is invalid or missing, default partner settings are used
-                                    </td>
-                                    <td>NO</td>
-                                    <td>YES</td>
-                                </tr>
-                                <tr>
-                                    <td><b>ContentWidth</b></td>
-                                    <td>int</td>
-                                    <td>
-                                        Width of the coupon (in mm for pdf, or character number for txt) Minimal value is 20. If the parameter is invalid or missing, default partner settings are used
-                                    </td>
-                                    <td>NO</td>
-                                    <td>YES</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Denominations</b></td>
-                                    <td>List</td>
-                                    <td>
-                                        List of objects containing info specific for each coupon to be created
-                                    </td>
-                                    <td>YES</td>
-                                    <td>YES</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-angle-right"></i><b> Value</b></td>
-                                    <td>decimal</td>
-                                    <td>
-                                        Coupon value, contained in denominations list
-                                    </td>
-                                    <td>YES</td>
-                                    <td>YES</td>
-                                </tr>
-                                <tr>
-                                    <td><i class="fas fa-angle-right"></i><b> PartnerTransactionId</b></td>
-                                    <td>string</td>
-                                    <td>
-                                        Unique identifier of the transaction in partner's system, contained in denominations list
-                                    </td>
-                                    <td>YES</td>
-                                    <td>YES</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </uib-tab>
-                <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
-                    <jsonformatter data="aBonGenerate.multipleCouponsCreation.requestExample"></jsonformatter>
-                </uib-tab>
-                <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+        <h4 ng-if="select.multipleCouponCreationVersion == 1" class="col-auto">Multiple coupon creation</h4>
+        <h4 ng-if="select.multipleCouponCreationVersion == 2" class="col-auto">Multiple coupon creation</h4>
+        <div class="dropdown col-auto">
+            <select class="form-control" ng-model="select.multipleCouponCreationVersion" ng-init="select.multipleCouponCreationVersion = '1'">
+                <option value="1">V1</option>
+                <option value="2">V2</option>
+            </select>
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <div ng-if="select.multipleCouponCreationVersion == 1">
+        <p style="text-align:justify">
+            The method used to let the sales partner request a creation of multiple new Aircash Abons at once. Aircash Abons are created using the CreateCouponMultiple method that creates the coupons and immediately activates them.
+        </p>
+
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                </tr>
+                <tr>
+                    <td><b>Test</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://staging-a-bon.aircash.eu/rest/api/CashRegister/CreateMultipleCoupons</td>
+                </tr>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://a-bon.aircash.eu/rest/api/CashRegister/CreateMultipleCoupons</td>
+            </table>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <uib-tabset>
+                    <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Parameter</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Mandatory</th>
+                                        <th>Part of the sequence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>PartnerId</b></td>
+                                        <td>string</td>
+                                        <td>Unique partner identifier (per currency) provided by Aircash</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>PointOfSaleId</b></td>
+                                        <td>string</td>
+                                        <td>Identifier of the point of sale</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>ISOCurrencySymbol</b></td>
+                                        <td>string</td>
+                                        <td>Currency code by ISO 4217 (e.g. for EUR)</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>ContentType</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Coupon format – „pdf“, „txt“ or „xml“. If the parameter is invalid or missing, default partner settings are used
+                                        </td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>ContentWidth</b></td>
+                                        <td>int</td>
+                                        <td>
+                                            Width of the coupon (in mm for pdf, or character number for txt) Minimal value is 20. If the parameter is invalid or missing, default partner settings are used
+                                        </td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Denominations</b></td>
+                                        <td>List</td>
+                                        <td>
+                                            List of objects containing info specific for each coupon to be created
+                                        </td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-angle-right"></i><b> Value</b></td>
+                                        <td>decimal</td>
+                                        <td>
+                                            Coupon value, contained in denominations list
+                                        </td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-angle-right"></i><b> PartnerTransactionId</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Unique identifier of the transaction in partner's system, contained in denominations list
+                                        </td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                        <jsonformatter data="aBonGenerate.multipleCouponsCreation.requestExample"></jsonformatter>
+                    </uib-tab>
+                    <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
 <pre>
 Request example:
 </pre>
-                    <jsonformatter data="aBonGenerate.multipleCouponsCreation.requestExample"></jsonformatter>
-                    <pre>
+                        <jsonformatter data="aBonGenerate.multipleCouponsCreation.requestExample"></jsonformatter>
+                        <pre>
 Sequence:
 ContentType=pdf&ContentWidth=50&Denominations=PartnerTransactionId=192502a3-97b8-4477-foma-1338das1abbe&Value=50,PartnerTransactionId=512122a3-97b8-4477-fasf-1338dga1abbe&Value=25&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PointOfSaleId=TestLocation
 
 Signature:
 jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuLNsgK7fRI7VxG7pG32ZJQzNqh4/yTX+R11FPJm+oGnyvGkF7HkPjvPQWW+1NFZIry06CNvcIc6zoOgQKJP/gtq1/wYWYJ74kgNahoItqKjOtOn673LMrtfNpa4chhvHd9azX5Zft1zMD0kBqPaOhbrbmgybZlUzcE2HX5zPrzqJ+DJ7qS0vCaP490hjVhdFJZCnBqzB7pptY19GJHSedsj+6DwdFPW87KcRxJE6aw+DL1oAlAjiJdPi4loNhKta6GtLQ7JQhQA3hVBEM/aiIujoL8CxqoFbe8hNYRSWXRfzZFdRAAFxQW61ojkFyUQcducKa4tPSXWczbNshxHQ60F+UitVwWY7AbDgwQkDOgz6FCQ/20sHxR+V6zzqF9wdmccwukrOYeGFJqBxvlwZozg7EuPMbcMNvSzpVCG8T/kC0u2n/RfNu6na/rBN15nd5hC8Rv03WMIm6sNbIoAO+ybhvQSTP7PinDpPsSIhIdCsFU/SP1ZtAYJnOgnO0MRn4xVGxKlJSH1iS24BWQ0Rr4Fbk4z01IEJNKdtT/W8ZXIBenlamWsJYX1IVA7IzlYfnrKTICRKQ+r66o2gZePzURU1AI+FE=
                 </pre>
-                </uib-tab>
-                <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
-                    <b>Response contains a list of objects with following parameters:</b>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th><b>Parameter</b></th>
-                                    <th>Type</th>
-                                    <th>Description</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><b>SerialNumber</b></td>
-                                    <td>string</td>
-                                    <td>Coupon serial number</td>
-                                </tr>
-                                <tr>
-                                    <td><b>CouponCode</b></td>
-                                    <td>string</td>
-                                    <td>16-digit coupon code</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Value</b></td>
-                                    <td>decimal</td>
-                                    <td>Coupon value</td>
-                                </tr>
-                                <tr>
-                                    <td><b>ISOCurrencySymbol</b></td>
-                                    <td>string</td>
-                                    <td>Currency code by ISO 4217 (e.g. EUR)</td>
-                                </tr>
-                                <tr>
-                                    <td><b>Content</b></td>
-                                    <td>string</td>
-                                    <td>
-                                        Base64 content in the format which was requested
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><b>PartnerTransactionId</b></td>
-                                    <td>string</td>
-                                    <td>
-                                        Identifier of the transaction in partner's system
-                                    </td>
-                            </tbody>
-                        </table>
-                    </div>
-                </uib-tab>
-                <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
-                    <jsonformatter data="aBonGenerate.multipleCouponsCreation.responseExample"></jsonformatter>
-                </uib-tab>
-                <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
-                    <div class="table-responsive">
-                        <table class="table table-hover table-consendent">
-                            <thead>
-                                <tr>
-                                    <th>Http response</th>
-                                    <th>Description</th>
-                                    <th>Error Code</th>
-                                    <th>Message</th>
-                                    <th>Aditional data</th>
-                                    <th>Solution</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td rowspan="6"><b>400</b></td>
-                                    <td rowspan="5">
-                                        An invalid request was made. The response will contain an error code, message and optionally additionalData.
-                                    </td>
-                                    <td><b>1</b></td>
-                                    <td>Invalid PartnerId</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td><b>2</b></td>
-                                    <td>Invalid Signature</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td><b>3</b></td>
-                                    <td>Invalid CouponValue</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td><b>5</b></td>
-                                    <td>Invalid CurrencySymbol</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td><b>6</b></td>
-                                    <td>Coupon exists for the given PartnerTransactionId</td>
-                                    <td>SerialNumber, Value, IsoCurrencySymbol, PartnerTransactionId</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        Partner or location has exceeded the daily limit or creation of more than 20 coupons is ordered
-                                    </td>
-                                    <td><b>8</b></td>
-                                    <td>Limit exceeded</td>
-                                    <td>-</td>
-                                </tr>
-                                <tr>
-                                    <td><b>500</b></td>
-                                    <td>An unknown error occured</td>
-                                    <td>-</td>
-                                    <td>Unknown error has occurred</td>
-                                    <td>-</td>
-                                    <td>
-                                        Contact Aircash support
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </uib-tab>
-                <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
-                    <uib-tabset class="row tabs-left">
-                        <uib-tab index="CreateTransactionError-tab-1" heading="1 - Invalid PartnerId" classes="nav-item">
-                            <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1)">
-                                    Request
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error1.request"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1)">
-                                    Response
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error1.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1">
-                                    Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
-
-                                    Sequence: {{errorCreateSequenceMultiple}}<br />
-
-                                </div>
-                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1">
-                                    Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(1)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </uib-tab>
-                        <uib-tab index="CreateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
-                            <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2)">
-                                    Request
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error2.request"></jsonformatter>
-
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2)">
-                                    Response
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error2.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2">
-                                    Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
-
-                                    Sequence: {{errorCreateSequenceMultiple}}<br />
-
-                                </div>
-                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2">
-                                    Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(2)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </uib-tab>
-                        <uib-tab index="CreateTransactionError-tab-3" heading="3 - Invalid CouponValue" classes="nav-item">
-                            <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3)">
-                                    Request
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error3.request"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3)">
-                                    Response
-                                    <jsonformatter data="errorExamples.CreateTransaction.error3.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3">
-                                    Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
-
-                                    Sequence: {{errorCreateSequenceMultiple}}<br />
-
-                                </div>
-                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3">
-                                    Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(3)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </uib-tab>
-                        <uib-tab index="CreateTransactionError-tab-4" heading="5 - Invalid CurrencySymbol" classes="nav-item">
-                            <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5)">
-                                    Request
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error5.request"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5)">
-                                    Response
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error5.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5">
-                                    Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
-
-                                    Sequence: {{errorCreateSequenceMultiple}}<br />
-
-                                </div>
-                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5">
-                                    Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(5)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </uib-tab>
-                        <uib-tab index="CreateTransactionError-tab-5" heading="6 - Coupon exists for the given PartnerTransactionId" classes="nav-item">
-                            <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6)">
-                                    Request
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error6.request"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6)">
-                                    Response
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error6.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6">
-                                    Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
-
-                                    Sequence: {{errorCreateSequenceMultiple}}<br />
-
-                                </div>
-                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6">
-                                    Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(6)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </uib-tab>
-                        <uib-tab index="CreateTransactionError-tab-6" heading="8 - Limit exceeded" classes="nav-item">
-                            <div class="row col-12">
-                                <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8)">
-                                    Request
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error8.request"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8)">
-                                    Response
-                                    <jsonformatter data="errorExamples.CreateMultipleTransactions.error8.response"></jsonformatter>
-                                </div>
-                                <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8">
-                                    Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
-                                    Sequence: {{errorCreateSequenceMultiple}}<br />
-                                </div>
-                                <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8">
-                                    Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                                    <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
-                                </div>
-                            </div>
-                            <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(8)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </uib-tab>
-                    </uib-tabset>
-                </uib-tab>
-
-                <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <form action="/" method="POST" name="transactionForm0">
-                                <fieldset>
-                                    <div class="mb-3">
-                                        <label class="form-label">PointOfSaleId</label>
-                                        <input ng-model="createMultipleCouponsModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
+                    </uib-tab>
+                    <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+                        <b>Response contains a list of objects with following parameters:</b>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><b>Parameter</b></th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>SerialNumber</b></td>
+                                        <td>string</td>
+                                        <td>Coupon serial number</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>CouponCode</b></td>
+                                        <td>string</td>
+                                        <td>16-digit coupon code</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Value</b></td>
+                                        <td>decimal</td>
+                                        <td>Coupon value</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>ISOCurrencySymbol</b></td>
+                                        <td>string</td>
+                                        <td>Currency code by ISO 4217 (e.g. EUR)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Content</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Base64 content in the format which was requested
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>PartnerTransactionId</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Identifier of the transaction in partner's system
+                                        </td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
+                        <jsonformatter data="aBonGenerate.multipleCouponsCreation.responseExample"></jsonformatter>
+                    </uib-tab>
+                    <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-consendent">
+                                <thead>
+                                    <tr>
+                                        <th>Http response</th>
+                                        <th>Description</th>
+                                        <th>Error Code</th>
+                                        <th>Message</th>
+                                        <th>Aditional data</th>
+                                        <th>Solution</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="6"><b>400</b></td>
+                                        <td rowspan="5">
+                                            An invalid request was made. The response will contain an error code, message and optionally additionalData.
+                                        </td>
+                                        <td><b>1</b></td>
+                                        <td>Invalid PartnerId</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>2</b></td>
+                                        <td>Invalid Signature</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>3</b></td>
+                                        <td>Invalid CouponValue</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>5</b></td>
+                                        <td>Invalid CurrencySymbol</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>6</b></td>
+                                        <td>Coupon exists for the given PartnerTransactionId</td>
+                                        <td>SerialNumber, Value, IsoCurrencySymbol, PartnerTransactionId</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Partner or location has exceeded the daily limit or creation of more than 20 coupons is ordered
+                                        </td>
+                                        <td><b>8</b></td>
+                                        <td>Limit exceeded</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>500</b></td>
+                                        <td>An unknown error occured</td>
+                                        <td>-</td>
+                                        <td>Unknown error has occurred</td>
+                                        <td>-</td>
+                                        <td>
+                                            Contact Aircash support
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
+                        <uib-tabset class="row tabs-left">
+                            <uib-tab index="CreateTransactionError-tab-1" heading="1 - Invalid PartnerId" classes="nav-item">
+                                <div class="row col-12">
+                                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1)">
+                                        Request
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error1.request"></jsonformatter>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">PartnerId</label>
-                                        <input ng-model="createMultipleCouponsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
+                                    <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1)">
+                                        Response
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error1.response"></jsonformatter>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">IsoCurrencySymbol</label>
-                                        <input ng-model="createMultipleCouponsModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
+                                    <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1">
+                                        Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
+
+                                        Sequence: {{errorCreateSequenceMultiple}}<br />
+
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">ContentType</label>
-                                        <input ng-model="createMultipleCouponsModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
+                                    <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 1">
+                                        Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
                                     </div>
-                                    <div class="mb-3">
-                                        <label class="form-label">ContentWidth</label>
-                                        <input ng-model="createMultipleCouponsModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
+                                </div>
+                                <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(1)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </uib-tab>
+                            <uib-tab index="CreateTransactionError-tab-2" heading="2 - Invalid Signature" classes="nav-item">
+                                <div class="row col-12">
+                                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2)">
+                                        Request
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error2.request"></jsonformatter>
+
                                     </div>
-                                    <hr />
-                                    <div class="row">
-                                        <div class="col-3"><b>Denominations </b></div>
-                                        <div class="col-5"></div>
-                                        <div class="col-4"><button type="button" ng-click="addDenomination()" class="btn btn-primary">Add denomination</button></div>
+                                    <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2)">
+                                        Response
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error2.response"></jsonformatter>
                                     </div>
-                                    <div ng-repeat="denomination in createMultipleCouponsModel.denominations">
+                                    <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2">
+                                        Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
+
+                                        Sequence: {{errorCreateSequenceMultiple}}<br />
+
+                                    </div>
+                                    <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 2">
+                                        Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(2)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </uib-tab>
+                            <uib-tab index="CreateTransactionError-tab-3" heading="3 - Invalid CouponValue" classes="nav-item">
+                                <div class="row col-12">
+                                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3)">
+                                        Request
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error3.request"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3)">
+                                        Response
+                                        <jsonformatter data="errorExamples.CreateTransaction.error3.response"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3">
+                                        Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
+
+                                        Sequence: {{errorCreateSequenceMultiple}}<br />
+
+                                    </div>
+                                    <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 3">
+                                        Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(3)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </uib-tab>
+                            <uib-tab index="CreateTransactionError-tab-4" heading="5 - Invalid CurrencySymbol" classes="nav-item">
+                                <div class="row col-12">
+                                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5)">
+                                        Request
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error5.request"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5)">
+                                        Response
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error5.response"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5">
+                                        Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
+
+                                        Sequence: {{errorCreateSequenceMultiple}}<br />
+
+                                    </div>
+                                    <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 5">
+                                        Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(5)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </uib-tab>
+                            <uib-tab index="CreateTransactionError-tab-5" heading="6 - Coupon exists for the given PartnerTransactionId" classes="nav-item">
+                                <div class="row col-12">
+                                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6)">
+                                        Request
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error6.request"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6)">
+                                        Response
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error6.response"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6">
+                                        Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
+
+                                        Sequence: {{errorCreateSequenceMultiple}}<br />
+
+                                    </div>
+                                    <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 6">
+                                        Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(6)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </uib-tab>
+                            <uib-tab index="CreateTransactionError-tab-6" heading="8 - Limit exceeded" classes="nav-item">
+                                <div class="row col-12">
+                                    <div class="col-sm-6 overflow-auto" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8)">
+                                        Request
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error8.request"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6" ng-if="!(errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8)">
+                                        Response
+                                        <jsonformatter data="errorExamples.CreateMultipleTransactions.error8.response"></jsonformatter>
+                                    </div>
+                                    <div class="col-sm-6 overflow-auto" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8">
+                                        Request ({{errorCreateRequestMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateRequestMultiple"></jsonformatter>
+                                        Sequence: {{errorCreateSequenceMultiple}}<br />
+                                    </div>
+                                    <div class="col-sm-6" ng-if="errorCreateRespondedMultiple && currentCreateErrorCodeMultiple == 8">
+                                        Response ({{errorCreateResponseMultipleDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                        <jsonformatter data="errorCreateResponseMultiple"></jsonformatter>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary mt-2" ng-click="createSimulateErrorMultiple(8)" ng-disabled="errorCreateServiceBusy">Simulate <i ng-if="errorCreateServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </uib-tab>
+                        </uib-tabset>
+                    </uib-tab>
+
+                    <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <form action="/" method="POST" name="transactionForm0">
+                                    <fieldset>
                                         <div class="mb-3">
-                                            <label class="form-label">Value</label>
-                                            <input class="form-control"
-                                                   ng-model="denomination.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
+                                            <label class="form-label">PointOfSaleId</label>
+                                            <input ng-model="createMultipleCouponsModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
                                         </div>
                                         <div class="mb-3">
-                                            <label class="form-label">PartnerTransactionId</label>
-                                            <input ng-model="denomination.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="createServiceBusy" ng-required="true">
+                                            <label class="form-label">PartnerId</label>
+                                            <input ng-model="createMultipleCouponsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
                                         </div>
-                                    </div>
-                                    <button type="submit" ng-click="createMultipleCoupons()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                                </fieldset>
-                            </form>
+                                        <div class="mb-3">
+                                            <label class="form-label">IsoCurrencySymbol</label>
+                                            <input ng-model="createMultipleCouponsModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">ContentType</label>
+                                            <input ng-model="createMultipleCouponsModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">ContentWidth</label>
+                                            <input ng-model="createMultipleCouponsModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-3"><b>Denominations </b></div>
+                                            <div class="col-5"></div>
+                                            <div class="col-4"><button type="button" ng-click="addDenomination()" class="btn btn-primary">Add denomination</button></div>
+                                        </div>
+                                        <div ng-repeat="denomination in createMultipleCouponsModel.denominations">
+                                            <div class="mb-3">
+                                                <label class="form-label">Value</label>
+                                                <input class="form-control"
+                                                       ng-model="denomination.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">PartnerTransactionId</label>
+                                                <input ng-model="denomination.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="createServiceBusy" ng-required="true">
+                                            </div>
+                                        </div>
+                                        <button type="submit" ng-click="createMultipleCoupons()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div class="col-md-4" ng-if="createServiceResponseMultiple">
+                                Request ({{requestMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="serviceRequestMultiple"></jsonformatter>
+                                Sequence: {{sequenceMultiple}}<br />
+                            </div>
+                            <div class="col-md-4" ng-if="createServiceResponseMultiple">
+                                Response ({{responseMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="serviceResponseMultiple"></jsonformatter>
+                            </div>
                         </div>
-                        <div class="col-md-4" ng-if="createServiceResponseMultiple">
-                            Request ({{requestMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="serviceRequestMultiple"></jsonformatter>
-                            Sequence: {{sequenceMultiple}}<br />
+                    </uib-tab>
+                    <uib-tab index="request-tab-8" heading="QR code" classes="nav-item">
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label class="form-label">CouponCode (16-digit number)</label>
+                                <input ng-model="QRcodeMultiple.couponCode" ng-keyup="generateQRcodeMultiple($event)" class="form-control" type="text" placeholder="Enter CouponCode" ng-required="true">
+                            </div>
+                            <div class="col-md-8 mt-2 d-flex justify-content-center" id="qrcodeDivMultiple"></div>
                         </div>
-                        <div class="col-md-4" ng-if="createServiceResponseMultiple">
-                            Response ({{responseMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="serviceResponseMultiple"></jsonformatter>
-                        </div>
-                    </div>
-                </uib-tab>
-                <uib-tab index="request-tab-8" heading="QR code" classes="nav-item">
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <label class="form-label">CouponCode (16-digit number)</label>
-                            <input ng-model="QRcodeMultiple.couponCode" ng-keyup="generateQRcodeMultiple($event)" class="form-control" type="text" placeholder="Enter CouponCode" ng-required="true">
-                        </div>
-                        <div class="col-md-8 mt-2 d-flex justify-content-center" id="qrcodeDivMultiple"></div>
-                    </div>
-                </uib-tab>
-            </uib-tabset>
+                    </uib-tab>
+                </uib-tabset>
+            </div>
         </div>
     </div>
+    <div ng-if="select.multipleCouponCreationVersion == 2">
+        <p style="text-align:justify">
+            The method used to let the sales partner request a creation of multiple new Aircash Abons at once. Aircash Abons are created using the CreateCouponMultiple method that creates the coupons and immediately activates them.
+        </p>
 
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <tr>
+                    <th>Environment</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                </tr>
+                <tr>
+                    <td><b>Test</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://staging-a-bon.aircash.eu/rest/api/v2/CashRegister/CreateMultipleCoupons</td>
+                </tr>
+                <tr>
+                    <td><b>Production</b></td>
+                    <td>
+                        POST
+                    </td>
+                    <td>https://a-bon.aircash.eu/rest/api/v2/CashRegister/CreateMultipleCoupons</td>
+            </table>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <uib-tabset>
+                    <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th colspan="2">Parameter</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Mandatory</th>
+                                        <th>Part of the sequence</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="2"><b>PartnerId</b></td>
+                                        <td>string</td>
+                                        <td>Unique partner identifier (per currency) provided by Aircash</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>PointOfSaleId</b></td>
+                                        <td>string</td>
+                                        <td>Identifier of the point of sale</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>ISOCurrencySymbol</b></td>
+                                        <td>string</td>
+                                        <td>Currency code by ISO 4217 (e.g. for EUR)</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>ContentType</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Coupon format – „pdf“, „txt“ or „xml“. If the parameter is invalid or missing, default partner settings are used
+                                        </td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>ContentWidth</b></td>
+                                        <td>int</td>
+                                        <td>
+                                            Width of the coupon (in mm for pdf, or character number for txt) Minimal value is 20. If the parameter is invalid or missing, default partner settings are used
+                                        </td>
+                                        <td>NO</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>Denominations</b></td>
+                                        <td>List</td>
+                                        <td>
+                                            List of objects containing info specific for each coupon to be created
+                                        </td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><i class="fas fa-angle-right"></i><b> Value</b></td>
+                                        <td>decimal</td>
+                                        <td>
+                                            Coupon value, contained in denominations list
+                                        </td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><i class="fas fa-angle-right"></i><b> PartnerTransactionId</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Unique identifier of the transaction in partner's system, contained in denominations list
+                                        </td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"><b>CustomParameters</b></td>
+                                        <td>List&lt;object&gt;</td>
+                                        <td>
+                                            List of objects containing custom parameters for each request
+                                        </td>
+                                        <td>YES, conditionally</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><b>Key</b></td>
+                                        <td>String</td>
+                                        <td>The name of the parameter to be sent</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><b>Value</b></td>
+                                        <td>String</td>
+                                        <td>The value of the parameter to be sent</td>
+                                        <td>YES</td>
+                                        <td>YES</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                        <jsonformatter data="aBonGenerate.multipleCouponsCreationV2.requestExample"></jsonformatter>
+                    </uib-tab>
+                    <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+<pre>
+Request example:
+</pre>
+                        <jsonformatter data="aBonGenerate.multipleCouponsCreationV2.requestExample"></jsonformatter>
+                        <pre>
+Sequence:
+ContentType=pdf&ContentWidth=50&CustomParameters=Key=fiscalCode&Value=RSSMRAURTMLAR6NZDenominations=PartnerTransactionId=192502a3-97b8-4477-foma-1338das1abbe&Value=50,PartnerTransactionId=512122a3-97b8-4477-fasf-1338dga1abbe&Value=25&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PointOfSaleId=TestLocation
+
+Signature:
+jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuLNsgK7fRI7VxG7pG32ZJQzNqh4/yTX+R11FPJm+oGnyvGkF7HkPjvPQWW+1NFZIry06CNvcIc6zoOgQKJP/gtq1/wYWYJ74kgNahoItqKjOtOn673LMrtfNpa4chhvHd9azX5Zft1zMD0kBqPaOhbrbmgybZlUzcE2HX5zPrzqJ+DJ7qS0vCaP490hjVhdFJZCnBqzB7pptY19GJHSedsj+6DwdFPW87KcRxJE6aw+DL1oAlAjiJdPi4loNhKta6GtLQ7JQhQA3hVBEM/aiIujoL8CxqoFbe8hNYRSWXRfzZFdRAAFxQW61ojkFyUQcducKa4tPSXWczbNshxHQ60F+UitVwWY7AbDgwQkDOgz6FCQ/20sHxR+V6zzqF9wdmccwukrOYeGFJqBxvlwZozg7EuPMbcMNvSzpVCG8T/kC0u2n/RfNu6na/rBN15nd5hC8Rv03WMIm6sNbIoAO+ybhvQSTP7PinDpPsSIhIdCsFU/SP1ZtAYJnOgnO0MRn4xVGxKlJSH1iS24BWQ0Rr4Fbk4z01IEJNKdtT/W8ZXIBenlamWsJYX1IVA7IzlYfnrKTICRKQ+r66o2gZePzURU1AI+FE=
+                </pre>
+                    </uib-tab>
+                    <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+                        <b>Response contains a list of objects with following parameters:</b>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th><b>Parameter</b></th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>SerialNumber</b></td>
+                                        <td>string</td>
+                                        <td>Coupon serial number</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>CouponCode</b></td>
+                                        <td>string</td>
+                                        <td>16-digit coupon code</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Value</b></td>
+                                        <td>decimal</td>
+                                        <td>Coupon value</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>ISOCurrencySymbol</b></td>
+                                        <td>string</td>
+                                        <td>Currency code by ISO 4217 (e.g. EUR)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>Content</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Base64 content in the format which was requested
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>PartnerTransactionId</b></td>
+                                        <td>string</td>
+                                        <td>
+                                            Identifier of the transaction in partner's system
+                                        </td>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="request-tab-4" heading="200 OK Response example" classes="nav-item">
+                        <jsonformatter data="aBonGenerate.multipleCouponsCreationV2.responseExample"></jsonformatter>
+                    </uib-tab>
+                    <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+                        <div class="table-responsive">
+                            <table class="table table-hover table-consendent">
+                                <thead>
+                                    <tr>
+                                        <th>Http response</th>
+                                        <th>Description</th>
+                                        <th>Error Code</th>
+                                        <th>Message</th>
+                                        <th>Aditional data</th>
+                                        <th>Solution</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td rowspan="7"><b>400</b></td>
+                                        <td rowspan="5">
+                                            An invalid request was made. The response will contain an error code, message and optionally additionalData.
+                                        </td>
+                                        <td><b>1</b></td>
+                                        <td>Invalid PartnerId</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>2</b></td>
+                                        <td>Invalid Signature</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>3</b></td>
+                                        <td>Invalid CouponValue</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>5</b></td>
+                                        <td>Invalid CurrencySymbol</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>6</b></td>
+                                        <td>Coupon exists for the given PartnerTransactionId</td>
+                                        <td>SerialNumber, Value, IsoCurrencySymbol, PartnerTransactionId</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Partner or location has exceeded the daily limit or creation of more than 20 coupons is ordered
+                                        </td>
+                                        <td><b>8</b></td>
+                                        <td>Limit exceeded</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Invalid fiscal code was sent
+                                        </td>
+                                        <td><b>9</b></td>
+                                        <td>Invalid fiscal code</td>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>500</b></td>
+                                        <td>An unknown error occured</td>
+                                        <td>-</td>
+                                        <td>Unknown error has occurred</td>
+                                        <td>-</td>
+                                        <td>
+                                            Contact Aircash support
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </uib-tab>
+                    <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
+                        <jsonformatter data="aBonGenerate.multipleCouponsCreationV2.errorResponseExample"></jsonformatter>
+                    </uib-tab>
+                    <!--
+    <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="/" method="POST" name="transactionForm0">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">PointOfSaleId</label>
+                            <input ng-model="createMultipleCouponsModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">PartnerId</label>
+                            <input ng-model="createMultipleCouponsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">IsoCurrencySymbol</label>
+                            <input ng-model="createMultipleCouponsModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">ContentType</label>
+                            <input ng-model="createMultipleCouponsModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">ContentWidth</label>
+                            <input ng-model="createMultipleCouponsModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-3"><b>Denominations </b></div>
+                            <div class="col-5"></div>
+                            <div class="col-4"><button type="button" ng-click="addDenomination()" class="btn btn-primary">Add denomination</button></div>
+                        </div>
+                        <div ng-repeat="denomination in createMultipleCouponsModel.denominations">
+                            <div class="mb-3">
+                                <label class="form-label">Value</label>
+                                <input class="form-control"
+                                       ng-model="denomination.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">PartnerTransactionId</label>
+                                <input ng-model="denomination.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="createServiceBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <button type="submit" ng-click="createMultipleCoupons()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="col-md-4" ng-if="createServiceResponseMultiple">
+                Request ({{requestMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="serviceRequestMultiple"></jsonformatter>
+                Sequence: {{sequenceMultiple}}<br />
+            </div>
+            <div class="col-md-4" ng-if="createServiceResponseMultiple">
+                Response ({{responseMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="serviceResponseMultiple"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+                    <uib-tab index="request-tab-8" heading="QR code" classes="nav-item">
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label class="form-label">CouponCode (16-digit number)</label>
+                                <input ng-model="QRcodeMultiple.couponCode" ng-keyup="generateQRcodeMultiple($event)" class="form-control" type="text" placeholder="Enter CouponCode" ng-required="true">
+                            </div>
+                            <div class="col-md-8 mt-2 d-flex justify-content-center" id="qrcodeDivMultiple"></div>
+                        </div>
+                    </uib-tab>-->
+                </uib-tabset>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
