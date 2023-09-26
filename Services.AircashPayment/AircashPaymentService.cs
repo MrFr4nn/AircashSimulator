@@ -40,7 +40,7 @@ namespace Services.AircashPayment
         {            
             var user = ReturnUserFullData(checkPlayerParameters);
 
-            if(user.UserId != "")
+            if(user != null)
             {
                 var parameters = new List<Parameters>();
                 parameters.Add(new Parameters
