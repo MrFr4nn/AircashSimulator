@@ -53,7 +53,7 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>Parameter</th>
+                                        <th colspan="2">Parameter</th>
                                         <th>Type</th>
                                         <th>Description</th>
                                         <th>Mandatory</th>
@@ -62,28 +62,28 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td><b>PartnerId</b></td>
+                                        <td colspan="2"><b>PartnerId</b></td>
                                         <td>string</td>
                                         <td>Unique partner identifier (per currency) provided by Aircash</td>
                                         <td>YES</td>
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td><b>PointOfSaleId</b></td>
+                                        <td colspan="2"><b>PointOfSaleId</b></td>
                                         <td>string</td>
                                         <td>Identifier of the point of sale</td>
                                         <td>YES</td>
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td><b>ISOCurrencySymbol</b></td>
+                                        <td colspan="2"><b>ISOCurrencySymbol</b></td>
                                         <td>string</td>
                                         <td>Currency code by ISO 4217 (e.g. for EUR)</td>
                                         <td>YES</td>
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td><b>ContentType</b></td>
+                                        <td colspan="2"><b>ContentType</b></td>
                                         <td>string</td>
                                         <td>
                                             Coupon format – „pdf“, „txt“ or „xml“. If the parameter is invalid or missing, default partner settings are used
@@ -92,7 +92,7 @@
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td><b>ContentWidth</b></td>
+                                        <td colspan="2"><b>ContentWidth</b></td>
                                         <td>int</td>
                                         <td>
                                             Width of the coupon (in mm for pdf, or character number for txt) Minimal value is 20. If the parameter is invalid or missing, default partner settings are used
@@ -101,8 +101,8 @@
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td><b>Denominations</b></td>
-                                        <td>List</td>
+                                        <td colspan="2"><b>Denominations</b></td>
+                                        <td>List&lt;object&gt;</td>
                                         <td>
                                             List of objects containing info specific for each coupon to be created
                                         </td>
@@ -110,7 +110,8 @@
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td><i class="fas fa-angle-right"></i><b> Value</b></td>
+                                        <td></td>
+                                        <td><b> Value</b></td>
                                         <td>decimal</td>
                                         <td>
                                             Coupon value, contained in denominations list
@@ -119,7 +120,8 @@
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td><i class="fas fa-angle-right"></i><b> PartnerTransactionId</b></td>
+                                        <td></td>
+                                        <td><b> PartnerTransactionId</b></td>
                                         <td>string</td>
                                         <td>
                                             Unique identifier of the transaction in partner's system, contained in denominations list
@@ -567,7 +569,7 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                                     </tr>
                                     <tr>
                                         <td colspan="2"><b>Denominations</b></td>
-                                        <td>List</td>
+                                        <td>List&lt;object&gt;</td>
                                         <td>
                                             List of objects containing info specific for each coupon to be created
                                         </td>
@@ -575,7 +577,8 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><i class="fas fa-angle-right"></i><b> Value</b></td>
+                                        <td></td>
+                                        <td><b> Value</b></td>
                                         <td>decimal</td>
                                         <td>
                                             Coupon value, contained in denominations list
@@ -584,7 +587,8 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                                         <td>YES</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="2"><i class="fas fa-angle-right"></i><b> PartnerTransactionId</b></td>
+                                        <td></td>
+                                        <td><b> PartnerTransactionId</b></td>
                                         <td>string</td>
                                         <td>
                                             Unique identifier of the transaction in partner's system, contained in denominations list
