@@ -21,6 +21,7 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         createSimulateError: createSimulateError,
         createSimulateErrorMultiple: createSimulateErrorMultiple,
         cancelSimulateError: cancelSimulateError,
+        createMultipleCouponsV2: createMultipleCouponsV2
     });
     function createCoupon(value, pointOfSaleId, partnerId, partnerTransactionId, isoCurrencySymbol, contentType, contentWidth) {
         var request = $http({
@@ -54,6 +55,24 @@ abonSpModule.service("abonSpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function createMultipleCouponsV2(createMultipleCouponsV2Model) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonSalePartner/CreateMultipleCouponsV2",
+            data: {
+                PartnerId: createMultipleCouponsV2Model.partnerId,
+                PointOfSaleId: createMultipleCouponsV2Model.pointOfSaleId,
+                IsoCurrencySymbol: createMultipleCouponsV2Model.isoCurrencySymbol,
+                ContentType: createMultipleCouponsV2Model.contentType,
+                ContentWidth: createMultipleCouponsV2Model.contentWidth,
+                Denominations: createMultipleCouponsV2Model.denominations,
+                CustomParameters: createMultipleCouponsV2Model.customParameters
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
     function cancelCoupon(partnerId, serialNumber, partnerTransactionId, cancelPointOfSaleId) {
         var request = $http({
             method: 'POST',
@@ -136,6 +155,16 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         denominations: [{ value: 50, partnerTransactionId: HelperService.NewGuid() }]
     };
 
+    $scope.createMultipleCouponsV2Model = {
+        pointOfSaleId: 'TestLocation',
+        partnerId: $scope.partnerIds.AbonGeneratePartnerId,
+        isoCurrencySymbol: 'EUR',
+        contentType: null,
+        contentWidth: null,
+        denominations: [{ value: 50, partnerTransactionId: HelperService.NewGuid() }],
+        customParameters: [{ key: "FiscalCode", value: "RSSMRAURTMLARSNL" }]
+    };
+
     $scope.cancelCouponModel = {
         cancelSerialNumber: '',
         cancelPointOfSaleId: 'TestLocation',
@@ -196,6 +225,23 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     }
     $scope.generateQRcode();
 
+    $scope.QRcodeMultipleV2 = {};
+    $scope.generateQRcodeMultipleV2 = function (event) {
+        if (event) {
+            if ('0123456789'.indexOf(event.keyCode) < 0) {
+                $scope.QRcodeMultipleV2.couponCode = $scope.QRcodeMultipleV2.couponCode.replaceAll(/[^0-9]/g, '');;
+            }
+            if ($scope.QRcodeMultipleV2.couponCode.length > 16) {
+                $scope.QRcodeMultipleV2.couponCode = $scope.QRcodeMultipleV2.couponCode.substring(0, 16);
+            }
+            if (document.getElementById("qrcodeDivMultipleV2") && $scope.QRcodeMultipleV2.couponCode.length == 16) {
+                $("#qrcodeDivMultipleV2").empty();
+                new QRCode(document.getElementById("qrcodeDivMultipleV2"), $scope.QRcodeMultipleV2.couponCode);
+            }
+        }
+    }
+    $scope.generateQRcodeMultipleV2();
+
     $scope.createCoupon = function () {
         $scope.createServiceBusy = true;
         $scope.createServiceResponse = false;
@@ -251,6 +297,32 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
             });
     }
 
+    $scope.createMultipleCouponsV2 = function () {
+        $scope.createServiceBusy = true;
+        $scope.createServiceResponseMultipleV2 = false;
+        abonSpService.createMultipleCouponsV2($scope.createMultipleCouponsV2Model)
+            .then(function (response) {
+                if (response) {
+                    $scope.requestMultipleV2DateTimeUTC = response.requestDateTimeUTC;
+                    $scope.responseMultipleV2DateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceMultipleV2 = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature?.substring(0, 10) + "...";
+                    $scope.serviceResponseMultipleV2 = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.serviceRequestMultipleV2 = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.content) {
+                        $scope.contentMultipleV2 = response.serviceResponse.content;
+                        $scope.decodedContentMultipleV2 = decodeURIComponent($scope.contentMultipleV2);
+                        document.querySelector('#content1').innerHTML = $scope.decodedContentMultipleV2;
+                    }
+                }
+                $scope.createServiceBusy = false;
+                $scope.createServiceResponseMultipleV2 = true;
+            }, () => {
+                console.log("error");
+                $scope.createServiceBusy = false;
+            });
+    }
+
     $scope.cancelCoupon = function () {
         $scope.cancelServiceBusy = true;
         $scope.cancelServiceResponse = false;
@@ -284,6 +356,14 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
 
     $scope.addDenomination = function () {
         $scope.createMultipleCouponsModel.denominations.push({ value: 50, partnerTransactionId: HelperService.NewGuid() });
+    }
+
+    $scope.addDenominationV2 = function () {
+        $scope.createMultipleCouponsV2Model.denominations.push({ value: 50, partnerTransactionId: HelperService.NewGuid() });
+    }
+
+    $scope.addCustomParameterV2 = function () {
+        $scope.createMultipleCouponsV2Model.customParameters.push({ key: "", value: "" });
     }
 
     $scope.currentCreateErrorCode = 0;
@@ -856,7 +936,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                 ],
                 "customParameters": [
                     {
-                        "key": "fiscalCode",
+                        "key": "FiscalCode",
                         "value": "RSSMRAURTMLAR6NZ"
                     }
                 ]
