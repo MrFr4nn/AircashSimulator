@@ -34,6 +34,7 @@ namespace Services.AbonSalePartner
         private readonly string CancelCouponEndpoint = "CashRegister/CancelCoupon";
         private readonly string CreateCouponEndpoint = "CashRegister/CreateCoupon";
         private readonly string CreateMultipleCouponsEndpoint = "CashRegister/CreateMultipleCoupons";
+        private readonly string CreateMultipleCouponsV2Endpoint = "v2/CashRegister/CreateMultipleCoupons";
 
         public AbonSalePartnerService(AircashSimulatorContext aircashSimulatorContext, IHttpRequestService httpRequestService, ISignatureService signatureService)
         {
@@ -219,8 +220,66 @@ namespace Services.AbonSalePartner
             returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
             returnResponse.ServiceResponse = creationResponses.Count == 0 ? errorResponse : creationResponses;
             return returnResponse;
-        }
-        public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+		}
+
+		public async Task<object> CreateMultipleCouponsV2(MultipleCouponABONV2Request request, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
+		{
+			var returnResponse = new Response();
+			var creationResponses = new List<object>();
+			var errorResponse = new object();
+			var requestDateTimeUTC = DateTime.UtcNow;
+			returnResponse.RequestDateTimeUTC = requestDateTimeUTC;
+
+			returnResponse.ServiceRequest = request;
+			var sequence = AircashSignatureService.ConvertObjectToString(request);
+			returnResponse.Sequence = sequence;
+			string signature;
+			if (privateKeyPath != null)
+			{
+				signature = AircashSignatureService.GenerateSignature(sequence, privateKeyPath, privateKeyPass);
+			}
+			else
+			{
+				signature = SignatureService.GenerateSignature(request.PartnerId, sequence);
+			}
+			request.Signature = signature;
+			var response = await HttpRequestService.SendRequestAircash(request, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.Abon)}{CreateMultipleCouponsV2Endpoint}");
+			var responseDateTimeUTC = DateTime.UtcNow;
+			if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+			{
+				var successResponses = JsonConvert.DeserializeObject<List<CreateCouponResponse>>(response.ResponseContent);
+				foreach (var successResponse in successResponses)
+				{
+					returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+					Enum.TryParse(request.ISOCurrencySymbol, out CurrencyEnum currencyId);
+					AircashSimulatorContext.Transactions.Add(new TransactionEntity
+					{
+						Amount = successResponse.Value,
+						ISOCurrencyId = currencyId,
+						PartnerId = request.PartnerId,
+						AircashTransactionId = successResponse.SerialNumber,
+						TransactionId = successResponse.PartnerTransactionId,
+						ServiceId = ServiceEnum.AbonIssued,
+						UserId = Guid.NewGuid().ToString(),
+						PointOfSaleId = request.PointOfSaleId,
+						RequestDateTimeUTC = requestDateTimeUTC,
+						ResponseDateTimeUTC = responseDateTimeUTC
+					});
+					creationResponses.Add(successResponse);
+				}
+				await AircashSimulatorContext.SaveChangesAsync();
+			}
+			else
+			{
+				errorResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+			}
+
+			returnResponse.ResponseDateTimeUTC = responseDateTimeUTC;
+			returnResponse.ServiceResponse = creationResponses.Count == 0 ? errorResponse : creationResponses;
+			return returnResponse;
+		}
+
+		public async Task<string> CreateCouponCashier(decimal value, string pointOfSaleId, Guid partnerId, string isoCurrencySymbol, string partnerTransactionId, string privateKeyPath, string privateKeyPass, EnvironmentEnum environment)
         {
             var returnResponse = "";
             var requestDateTimeUTC = DateTime.UtcNow;

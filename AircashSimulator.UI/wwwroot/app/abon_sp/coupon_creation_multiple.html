@@ -635,7 +635,7 @@ Request example:
                         <jsonformatter data="aBonGenerate.multipleCouponsCreationV2.requestExample"></jsonformatter>
                         <pre>
 Sequence:
-ContentType=pdf&ContentWidth=50&CustomParameters=Key=fiscalCode&Value=RSSMRAURTMLAR6NZDenominations=PartnerTransactionId=192502a3-97b8-4477-foma-1338das1abbe&Value=50,PartnerTransactionId=512122a3-97b8-4477-fasf-1338dga1abbe&Value=25&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PointOfSaleId=TestLocation
+ContentType=pdf&ContentWidth=50&CustomParameters=Key=FiscalCode&Value=RSSMRAURTMLAR6NZDenominations=PartnerTransactionId=192502a3-97b8-4477-foma-1338das1abbe&Value=50,PartnerTransactionId=512122a3-97b8-4477-fasf-1338dga1abbe&Value=25&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PointOfSaleId=TestLocation
 
 Signature:
 jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuLNsgK7fRI7VxG7pG32ZJQzNqh4/yTX+R11FPJm+oGnyvGkF7HkPjvPQWW+1NFZIry06CNvcIc6zoOgQKJP/gtq1/wYWYJ74kgNahoItqKjOtOn673LMrtfNpa4chhvHd9azX5Zft1zMD0kBqPaOhbrbmgybZlUzcE2HX5zPrzqJ+DJ7qS0vCaP490hjVhdFJZCnBqzB7pptY19GJHSedsj+6DwdFPW87KcRxJE6aw+DL1oAlAjiJdPi4loNhKta6GtLQ7JQhQA3hVBEM/aiIujoL8CxqoFbe8hNYRSWXRfzZFdRAAFxQW61ojkFyUQcducKa4tPSXWczbNshxHQ60F+UitVwWY7AbDgwQkDOgz6FCQ/20sHxR+V6zzqF9wdmccwukrOYeGFJqBxvlwZozg7EuPMbcMNvSzpVCG8T/kC0u2n/RfNu6na/rBN15nd5hC8Rv03WMIm6sNbIoAO+ybhvQSTP7PinDpPsSIhIdCsFU/SP1ZtAYJnOgnO0MRn4xVGxKlJSH1iS24BWQ0Rr4Fbk4z01IEJNKdtT/W8ZXIBenlamWsJYX1IVA7IzlYfnrKTICRKQ+r66o2gZePzURU1AI+FE=
@@ -769,73 +769,88 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
                     <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
                         <jsonformatter data="aBonGenerate.multipleCouponsCreationV2.errorResponseExample"></jsonformatter>
                     </uib-tab>
-                    <!--
-    <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
-        <div class="row">
-            <div class="col-md-4">
-                <form action="/" method="POST" name="transactionForm0">
-                    <fieldset>
-                        <div class="mb-3">
-                            <label class="form-label">PointOfSaleId</label>
-                            <input ng-model="createMultipleCouponsModel.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">PartnerId</label>
-                            <input ng-model="createMultipleCouponsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">IsoCurrencySymbol</label>
-                            <input ng-model="createMultipleCouponsModel.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">ContentType</label>
-                            <input ng-model="createMultipleCouponsModel.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">ContentWidth</label>
-                            <input ng-model="createMultipleCouponsModel.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
-                        </div>
-                        <hr />
+                    <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                         <div class="row">
-                            <div class="col-3"><b>Denominations </b></div>
-                            <div class="col-5"></div>
-                            <div class="col-4"><button type="button" ng-click="addDenomination()" class="btn btn-primary">Add denomination</button></div>
-                        </div>
-                        <div ng-repeat="denomination in createMultipleCouponsModel.denominations">
-                            <div class="mb-3">
-                                <label class="form-label">Value</label>
-                                <input class="form-control"
-                                       ng-model="denomination.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
+                            <div class="col-md-4">
+                                <form action="/" method="POST" name="transactionForm1">
+                                    <fieldset>
+                                        <div class="mb-3">
+                                            <label class="form-label">PointOfSaleId</label>
+                                            <input ng-model="createMultipleCouponsV2Model.pointOfSaleId" class="form-control" type="text" placeholder="Enter PointOfSaleId" ng-disabled="createServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">PartnerId</label>
+                                            <input ng-model="createMultipleCouponsV2Model.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">IsoCurrencySymbol</label>
+                                            <input ng-model="createMultipleCouponsV2Model.isoCurrencySymbol" class="form-control" type="text" placeholder="Enter isoCurrencySymbol" ng-disabled="createServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">ContentType</label>
+                                            <input ng-model="createMultipleCouponsV2Model.contentType" class="form-control" type="text" placeholder="Enter contentType" ng-disabled="createServiceBusy" ng-required="false">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">ContentWidth</label>
+                                            <input ng-model="createMultipleCouponsV2Model.contentWidth" class="form-control" type="number" placeholder="Enter contentWidth" ng-disabled="createServiceBusy" ng-required="false">
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-3"><b>Denominations </b></div>
+                                            <div class="col-5"></div>
+                                            <div class="col-4"><button type="button" ng-click="addDenominationV2()" class="btn btn-primary">Add denomination</button></div>
+                                        </div>
+                                        <div ng-repeat="denomination in createMultipleCouponsV2Model.denominations">
+                                            <div class="mb-3">
+                                                <label class="form-label">Value</label>
+                                                <input class="form-control"
+                                                       ng-model="denomination.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">PartnerTransactionId</label>
+                                                <input ng-model="denomination.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="createServiceBusy" ng-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-3"><b>Custom parameters </b></div>
+                                            <div class="col-5"></div>
+                                            <div class="col-4"><button type="button" ng-click="addCustomParameterV2()" class="btn btn-primary">Add custom parameter</button></div>
+                                        </div>
+                                        <div ng-repeat="cp in createMultipleCouponsV2Model.customParameters">
+                                            <div class="mb-3">
+                                                <label class="form-label">Key</label>
+                                                <input class="form-control"
+                                                       ng-model="cp.key" type="text" placeholder="Enter key" ng-disabled="createServiceBusy" ng-required="true" />
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="form-label">Value</label>
+                                                <input ng-model="cp.value" class="form-control" type="text" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true">
+                                            </div>
+                                        </div>
+                                        <button type="submit" ng-click="createMultipleCouponsV2()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm1.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                                    </fieldset>
+                                </form>
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">PartnerTransactionId</label>
-                                <input ng-model="denomination.partnerTransactionId" class="form-control" type="text" placeholder="Enter PartnerTransactionId" ng-disabled="createServiceBusy" ng-required="true">
+                            <div class="col-md-4" ng-if="createServiceResponseMultipleV2">
+                                Request ({{requestMultipleV2DateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="serviceRequestMultipleV2"></jsonformatter>
+                                Sequence: {{sequenceMultipleV2}}<br />
+                            </div>
+                            <div class="col-md-4" ng-if="createServiceResponseMultipleV2">
+                                Response ({{responseMultipleV2DateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                <jsonformatter data="serviceResponseMultipleV2"></jsonformatter>
                             </div>
                         </div>
-                        <button type="submit" ng-click="createMultipleCoupons()" class="btn btn-primary w-100px me-5px" ng-disabled="createServiceBusy || transactionForm0.$invalid">Create <i ng-if="createServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="col-md-4" ng-if="createServiceResponseMultiple">
-                Request ({{requestMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <jsonformatter data="serviceRequestMultiple"></jsonformatter>
-                Sequence: {{sequenceMultiple}}<br />
-            </div>
-            <div class="col-md-4" ng-if="createServiceResponseMultiple">
-                Response ({{responseMultipleDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <jsonformatter data="serviceResponseMultiple"></jsonformatter>
-            </div>
-        </div>
-    </uib-tab>
+                    </uib-tab>
                     <uib-tab index="request-tab-8" heading="QR code" classes="nav-item">
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label class="form-label">CouponCode (16-digit number)</label>
-                                <input ng-model="QRcodeMultiple.couponCode" ng-keyup="generateQRcodeMultiple($event)" class="form-control" type="text" placeholder="Enter CouponCode" ng-required="true">
+                                <input ng-model="QRcodeMultipleV2.couponCode" ng-keyup="generateQRcodeMultipleV2($event)" class="form-control" type="text" placeholder="Enter CouponCode" ng-required="true">
                             </div>
-                            <div class="col-md-8 mt-2 d-flex justify-content-center" id="qrcodeDivMultiple"></div>
+                            <div class="col-md-8 mt-2 d-flex justify-content-center" id="qrcodeDivMultipleV2"></div>
                         </div>
-                    </uib-tab>-->
+                    </uib-tab>
                 </uib-tabset>
             </div>
         </div>
