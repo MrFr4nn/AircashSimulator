@@ -331,8 +331,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     $scope.checkboxCheckPlayer = {};
     $scope.checkPlayerModel = {
         endpoint: config.baseUrl + "AircashPayment/CheckPlayer",
-        birthDate: new Date('1990-01-01'),
-        identificator: "aircah"
+        birthDate: new Date('2000-01-01'),
+        identificator: "johndoe"
     };
     $scope.checkPlayerBusy = false;
     $scope.checkPlayerResponded = false;
@@ -362,9 +362,9 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     $scope.createAndConfirmModel = {
         transactionId: HelperService.NewGuid(),
         endpoint: config.baseUrl + "AircashPayment/CreateAndConfirmPayment",
-        birthDate: new Date('1990-01-01'),
+        birthDate: new Date('2000-01-01'),
         amount: 10,
-        identificator: "aircash"
+        identificator: "johndoe"
     };
     $scope.createAndConfirmBusy = false;
     $scope.createAndConfirmResponded = false;

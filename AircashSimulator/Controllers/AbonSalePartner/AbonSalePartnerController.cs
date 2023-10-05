@@ -76,7 +76,34 @@ namespace AircashSimulator
             return Ok(response);
         }
 
-        [HttpPost]
+		[HttpPost]
+		[Authorize]
+		public async Task<IActionResult> CreateMultipleCouponsV2(MultipleCouponV2Request request)
+		{
+			var abonRq = new MultipleCouponABONV2Request
+			{
+				PartnerId = request.PartnerId,
+				PointOfSaleId = request.PointOfSaleId,
+				ISOCurrencySymbol = request.ISOCurrencySymbol,
+				ContentType = request.ContentType,
+				ContentWidth = request.ContentWidth,
+				Denominations = request.Denominations.Select(x => new AbonDenomination
+				{
+					Value = x.Value,
+					PartnerTransactionId = x.PartnerTransactionId
+				}).ToList(),
+                CustomParameters = request.CustomParameters.Select(x => new Services.AbonSalePartner.CustomParameter
+                {
+                    Key = x.Key,
+                    Value = x.Value
+                }).ToList()
+			};
+			var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+			var response = await AbonSalePartnerService.CreateMultipleCouponsV2(abonRq, null, null, environment);
+			return Ok(response);
+		}
+
+		[HttpPost]
         public async Task<IActionResult> CreateCashierCoupon(CreateCashierCouponRequest createCouponRequest)
         {
             var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == new Guid(createCouponRequest.PartnerId)).FirstOrDefault();
