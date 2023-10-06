@@ -49,23 +49,29 @@ namespace Services.AircashPayment
                     Type = "String",
                     Value = user.UserId.ToString()
                 });
-                if(!String.IsNullOrEmpty(user.FirstName) && !String.IsNullOrEmpty(user.LastName) && !String.IsNullOrEmpty(user.BirthDate.ToString()))
+                parameters.Add(new Parameters
+                {
+                    Key = "payerMaxAllowedAmount",
+                    Type = "Decimal",
+                    Value = "123.45"
+                });
+                if (!String.IsNullOrEmpty(user.FirstName) && !String.IsNullOrEmpty(user.LastName) && !String.IsNullOrEmpty(user.BirthDate.ToString()))
                 {
                     parameters.Add(new Parameters
                     {
-                        Key = "PayerFirstName",
+                        Key = "payerFirstName",
                         Type = "String",
                         Value = user.FirstName.ToString()
                     });
                     parameters.Add(new Parameters
                     {
-                        Key = "PayerLastName",
+                        Key = "payerLastName",
                         Type = "String",
                         Value = user.LastName.ToString()
                     });
                     parameters.Add(new Parameters
                     {
-                        Key = "PayerBirthDate",
+                        Key = "payerBirthDate",
                         Type = "String",
                         Value = user.BirthDate?.ToString(_defaultDateTimeFormat)
                     });

@@ -517,22 +517,22 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                         "type": "String"
                     },
                     {
-                        "key": "PayerFirstName",
+                        "key": "payerFirstName",
                         "value": "John",
                         "type": "String"
                     },
                     {
-                        "key": "PayerLastName",
+                        "key": "payerLastName",
                         "value": "Doe",
                         "type": "String"
                     },
                     {
-                        "key": "PayerBirthDate",
+                        "key": "payerBirthDate",
                         "value": "1990-01-01",
                         "type": "Date"
                     },
                     {
-                        "key": "maxAmount",
+                        "key": "payerMaxAllowedAmount",
                         "type": "Decimal",
                         "value": "123.45"
                     },
@@ -548,7 +548,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                         "type": "String"
                     },
                     {
-                        "key": "maxAmount",
+                        "key": "payerMaxAllowedAmount",
                         "type": "Decimal",
                         "value": "123.45"
                     },
