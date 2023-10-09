@@ -59,19 +59,19 @@ namespace Services.AircashPayment
                 {
                     parameters.Add(new Parameters
                     {
-                        Key = "payerFirstName",
+                        Key = "PayerFirstName",
                         Type = "String",
                         Value = user.FirstName.ToString()
                     });
                     parameters.Add(new Parameters
                     {
-                        Key = "payerLastName",
+                        Key = "PayerLastName",
                         Type = "String",
                         Value = user.LastName.ToString()
                     });
                     parameters.Add(new Parameters
                     {
-                        Key = "payerBirthDate",
+                        Key = "PayerBirthDate",
                         Type = "String",
                         Value = user.BirthDate?.ToString(_defaultDateTimeFormat)
                     });
