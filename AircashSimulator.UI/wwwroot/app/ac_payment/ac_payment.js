@@ -491,17 +491,17 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                         "type": "String"
                     },
                     {
-                        "key": "PayerFirstName",
+                        "key": "payerFirstName",
                         "value": "John",
                         "type": "String"
                     },
                     {
-                        "key": "PayerLastName",
+                        "key": "payerLastName",
                         "value": "Doe",
                         "type": "String"
                     },
                     {
-                        "key": "PayerBirthDate",
+                        "key": "payerBirthDate",
                         "value": "1990-01-01",
                         "type": "Date"
                     }
