@@ -84,7 +84,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
 
     $scope.checkPlayerGenerateSignatureModel = {
         identificator: "aircash",
-        currency: "978",
+        currency: "EUR",
         countryCode: "HR",
         merchantId: "100",
         firstname: "John",
@@ -94,7 +94,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
     }
     $scope.createAndConfirmGenerateSignatureModel = {
         identificator: "aircash",
-        currency: "978",
+        currency: "EUR",
         countryCode: "HR",
         merchantId: "100",
         firstname: "John",

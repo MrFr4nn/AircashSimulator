@@ -125,7 +125,7 @@
                             </label>
                         </div>
                         <div class="col-lg-9 mt-2">
-                            <input ng-model="createAndConfirmGenerateSignatureModel.currency" ng-init="createAndConfirmGenerateSignatureModel.currency='978'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.currency" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
+                            <input ng-model="createAndConfirmGenerateSignatureModel.currency" ng-init="createAndConfirmGenerateSignatureModel.currency='EUR'; requestCreateAndConfirmChanged();" ng-if="checkboxCreateAndConfirmModel.currency" ng-change="requestCreateAndConfirmChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. EUR" ng-disabled="generateCreateAndConfirmSignatureBusy" ng-required="true">
                         </div>
                     </div>
                     <hr />
@@ -391,7 +391,7 @@ Gng+D6+3v5dPCIXMJFcO7TAjfstMS8d9YFjCSDvDtGyu3DG7tlmKxJkFYWnKthNAAKi5OwnLRLK4Hwdi
                                     </label>
                                 </div>
                                 <div class="col-lg-9 mt-2">
-                                    <input ng-model="createAndConfirmModel.currency" ng-if="checkboxCreateAndConfirm.currency" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="createAndConfirmBusy" ng-required="true">
+                                    <input ng-model="createAndConfirmModel.currency" ng-if="checkboxCreateAndConfirm.currency" ng-init="createAndConfirmModel.currency = 'EUR'" class="form-control" type="text" placeholder="Enter currencyId e.g. EUR" ng-disabled="createAndConfirmBusy" ng-required="true">
                                 </div>
                             </div>
                             <hr />
