@@ -575,7 +575,7 @@ Request example:
             <jsonformatter data="aBonDeposit.validateCouponWithAutorization.requestExample"></jsonformatter>
             <pre>
 Sequence:
-CouponCode=5460446045144493&NotificationUrl=http://call-me.com/abon_notification&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=FiscalCode&Value=RSSMRAURTMLARSNL&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&PhoneNumber=385981234567&UserId=123
+CouponCode=5460446045144493&NotificationUrl=http://call-me.com/abon_notification&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=PersonalIdentificationCode&Value=RSSMRAURTMLARSNL&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&PhoneNumber=385981234567&UserId=123
 
 Signature:
 AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVffvn8Qk61/FcyJHyo/2FS2CytUrqjsGYKnJUmq3n2aAECzT1wtd+yiAuPBbiAA05NDtLnaCMw0atOj8XU/nhu8ETsml2gKGI9woz/4Wf3WU+baUJM5+yCWnQkWVQoKzk9mtSl+qPqTvCvuxuC0V0TQcUJFGLLiOiNFE6hDpbDgOp45nlcjkq0gFHE7seNcUW8GDa9bew+HEvTKa4r9fIiz5xfvwoEZj821JdhUDiLuQAbkjBa91uWultE3KiOcUJryBhAYllWG/HR0OzGh8vwAgxazV+sy1lsb5RiltQYP9c+5e2jgkwuRf6OFgam0yClse1ErGsX8F2RSNAlnt2/hsIyjthyeJxTmyZhO7eMcMGwMC/RUA7FY9WMhipFQOSUHw/zBkx2CXd0oFa1AKQZTixJ/ynvOrdQlT1tz/R4bPEJKXKongZ0JqAK1le+s+PeQvPh8e45FovBfX9TlIZLHmU6mI5xMwgcSCiYUksqc6sPsGTveN+Qbz1BkC1LZwj8HAmSy+0zBFvUK/HEEdvWLVMMIRfzLDAspWvDx3MZQZgDOMWCzLl4jwqSH6F40IQmEAqDph/Cbg2VvnWZcTFBkuiCvig=
@@ -930,8 +930,8 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                                 <date-picker date="checkStatusCouponModel.userBirthDate" isOptional="false" out="setCheckStatusDate"></date-picker>
                             </div>
                             <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
-                                <label class="form-label">User's Fiscal Code</label>
-                                <input ng-model="checkStatusCouponModel.fiscalCode" class="form-control" type="text" placeholder="Enter Fiscal Code" ng-required="false">
+                                <label class="form-label">User's Personal Identification Code</label>
+                                <input ng-model="checkStatusCouponModel.personalIdentificationCode" class="form-control" type="text" placeholder="Enter Personal Identification Code" ng-required="false">
                             </div>
                             <button ng-click="checkStatusCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="checkStatusCouponBusy || validateForm0.$invalid">Validate <i ng-if="checkStatusCouponBusy" class="fa fa-cog fa-spin"></i></button>
                         </fieldset>
