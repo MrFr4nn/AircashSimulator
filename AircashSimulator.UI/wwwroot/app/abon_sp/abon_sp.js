@@ -162,7 +162,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         contentType: null,
         contentWidth: null,
         denominations: [{ value: 50, partnerTransactionId: HelperService.NewGuid() }],
-        customParameters: [{ key: "FiscalCode", value: "RSSMRAURTMLARSNL" }]
+        customParameters: [{ key: "PersonalIdentificationCode", value: "RSSMRAURTMLARSNL" }]
     };
 
     $scope.cancelCouponModel = {
@@ -935,7 +935,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
                 ],
                 "customParameters": [
                     {
-                        "key": "FiscalCode",
+                        "key": "PersonalIdentificationCode",
                         "value": "RSSMRAURTMLAR6NZ"
                     }
                 ]
@@ -952,7 +952,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
             ],
             errorResponseExample: {
                 code: 9,
-                message: "Invalid fiscal code",
+                message: "Invalid personal identification code",
                 additionalData: null
             }
         },

@@ -240,7 +240,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         $scope.checkStatusCouponModel.userFirstName = $scope.decodedToken.userFirstName;
         $scope.checkStatusCouponModel.userLastName = $scope.decodedToken.userLastName;
         $scope.checkStatusCouponModel.userBirthDate = new Date($scope.decodedToken.userBirthDate);
-        $scope.checkStatusCouponModel.fiscalCode = "RSSMRAURTMLARSNL";
+        $scope.checkStatusCouponModel.personalIdentificationCode = "RSSMRAURTMLARSNL";
     }
     $scope.checkStatusSetAuthorizationValuesToNull = function () {
         $scope.checkStatusCouponModel.partnerTransactionId = null;
@@ -249,14 +249,14 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         $scope.checkStatusCouponModel.userFirstName = null;
         $scope.checkStatusCouponModel.userLastName = null;
         $scope.checkStatusCouponModel.userBirthDate = null;
-        $scope.checkStatusCouponModel.fiscalCode = null;
+        $scope.checkStatusCouponModel.personalIdentificationCode = null;
     }
     $scope.checkStatusCouponResponded = false;
     $scope.checkStatusCouponBusy = false;
     $scope.checkStatusCoupon = function () {
         $scope.checkStatusCouponBusy = true;
         $scope.checkStatusCouponResponded = false;
-        var parameters = [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate.toLocaleDateString('en-CA') }, { key: "FiscalCode", value: $scope.checkStatusCouponModel.fiscalCode }];
+        var parameters = [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate.toLocaleDateString('en-CA') }, { key: "PersonalIdentificationCode", value: $scope.checkStatusCouponModel.personalIdentificationCode }];
         if ($scope.select.CheckStatusUseAuthorization == 1) {
             $scope.checkStatusSetAuthorizationValuesToNull();
             parameters = null;
@@ -676,7 +676,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                         "Value": "1990-01-01"
                     },
                     {
-                        "Key": "FiscalCode",
+                        "Key": "PersonalIdentificationCode",
                         "Value": "RSSMRAURTMLARSNL"
                     }
                 ],
