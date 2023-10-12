@@ -377,7 +377,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
         $scope.initiateModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.initiateModel.partnerUserId = HelperService.NewGuid();
-        $scope.initiateModel.notificationUrl = $location.absUrl();
+        $scope.initiateModel.notificationUrl = config.baseUrl +"AircashFrame/NotificationCashierFrameV2";
         $scope.initiateModel.partnerTransactionId = HelperService.NewGuid();
         $scope.initiateModel.currency = 978;
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
