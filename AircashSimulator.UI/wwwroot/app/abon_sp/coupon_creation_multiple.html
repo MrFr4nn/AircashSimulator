@@ -9,7 +9,7 @@
         <h4 ng-if="select.multipleCouponCreationVersion == 1" class="col-auto">Multiple coupon creation</h4>
         <h4 ng-if="select.multipleCouponCreationVersion == 2" class="col-auto">Multiple coupon creation</h4>
         <div class="dropdown col-auto">
-            <select class="form-control" ng-model="select.multipleCouponCreationVersion" ng-init="select.multipleCouponCreationVersion = '1'">
+            <select class="form-control" ng-model="select.multipleCouponCreationVersion" ng-init="select.multipleCouponCreationVersion = '2'">
                 <option value="1">V1</option>
                 <option value="2">V2</option>
             </select>
@@ -855,5 +855,8 @@ jsi4AfsR9YNMrOmy6FPt1F7dh9Gh+J4qX2QhjcB1SQiI45rSh2uyTEAi40rn14e9u416UvOn74/NPOuL
             </div>
         </div>
     </div>
+    <p>
+        <b>*NOTE: For Italian distributors fiscal code is required. Fiscal code needs to be implemented in method <i>Multiple coupon creation</i> under <i>CustomParameters</i> with key <i>PersonalIdentificationCode</i></b> 
+    </p>
 </body>
 </html>
