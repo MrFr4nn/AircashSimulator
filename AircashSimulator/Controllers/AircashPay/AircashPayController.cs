@@ -60,6 +60,13 @@ namespace AircashSimulator.Controllers
             bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
             if (valid == true)
             {
+                if (aircashConfirmTransactionRequest.Amount > 1000) {
+                    return BadRequest(new ConfirmTransactionErrorResponse {
+                        Decision = false,
+                        ErrorCode = 4001,
+                        ErrorMessage = "Amount over the limit"
+                    });
+                }
                 var transactionDTO = new TransactionDTO
                 {
                     Amount = aircashConfirmTransactionRequest.Amount,
