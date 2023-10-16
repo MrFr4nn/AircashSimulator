@@ -62,7 +62,7 @@ namespace AircashSimulator.Controllers
             {
                 if (aircashConfirmTransactionRequest.Amount > 1000) {
                     return BadRequest(new ConfirmTransactionErrorResponse {
-                        ExitTransaction = false,
+                        ExitTransaction = true,
                         ErrorCode = 4001,
                         ErrorMessage = "Amount over the limit"
                     });
