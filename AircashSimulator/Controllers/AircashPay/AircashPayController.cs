@@ -62,9 +62,9 @@ namespace AircashSimulator.Controllers
             {
                 if (aircashConfirmTransactionRequest.Amount > 1000) {
                     return BadRequest(new ConfirmTransactionErrorResponse {
-                        Decision = false,
-                        ErrorCode = 4001,
-                        ErrorMessage = "Amount over the limit"
+                        decision = false,
+                        errorCode = 4001,
+                        errorMessage = "Amount over the limit"
                     });
                 }
                 var transactionDTO = new TransactionDTO
