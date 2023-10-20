@@ -172,6 +172,37 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         cancelPartnerTransactionId: ''
     };
 
+    $scope.abon = {};
+    $scope.abon.partners = [
+        { country: "Custom", partnerId: "52f46879-294d-4904-be7e-368ab0161771", isoCurrencySymbol: "EUR" },
+        { country: "HR", partnerId: "261d648d-6bd8-4f5c-baf6-d3fcd336f985", isoCurrencySymbol: "EUR" },
+        { country: "HR", partnerId: "261d648d-6bd8-4f5c-baf6-d3fcd336f985", isoCurrencySymbol: "EUR" },
+        { country: "CZ", partnerId: "15246f56-53a8-446c-855a-39b427ba1e3d", isoCurrencySymbol: "CZK" },
+        /*{ country: "GB", partnerId: "12d6dd08-ae11-4dc3-80bd-14b2ac71bbc9", isoCurrencySymbol: "GBP" },*/
+        { country: "FR", partnerId: "9ed97bd7-dbc8-4839-ae9b-5c13cf5afb0f", isoCurrencySymbol: "EUR" },
+        { country: "DE", partnerId: "c3678f7c-dda3-4044-90c6-71f9dbdbbd7b", isoCurrencySymbol: "EUR" },
+        { country: "GR", partnerId: "5daed4c7-0667-451d-b870-3fddd4217935", isoCurrencySymbol: "EUR" },
+        { country: "IT", partnerId: "842fe19a-426b-4507-95e4-933a6a367164", isoCurrencySymbol: "EUR" },
+        { country: "PL", partnerId: "1eda4d60-4113-40bf-a20e-031bc290fc36", isoCurrencySymbol: "PLN" },
+        { country: "RO", partnerId: "9be565cb-762a-403b-bb77-420ffdf46c61", isoCurrencySymbol: "RON" },
+        { country: "SK", partnerId: "78d6d87b-ff1d-41a7-af2b-f46a5df0e0d3", isoCurrencySymbol: "EUR" },
+        { country: "SI", partnerId: "a0686939-f4e9-4fe7-8e1e-7896b67f08a6", isoCurrencySymbol: "EUR" },
+        { country: "ES", partnerId: "e982453d-9280-4a3a-8244-fb44027a9007", isoCurrencySymbol: "EUR" },
+    ];
+    $scope.abon.selectedAbonPartner = $scope.abon.partners[1];
+
+    $scope.createCouponChangePartnerId = function () {
+        $scope.createCouponModel.partnerId = $scope.abon.selectedAbonPartner.partnerId;
+        $scope.createCouponModel.isoCurrencySymbol = $scope.abon.selectedAbonPartner.isoCurrencySymbol;
+    }
+    $scope.createCouponChangePartnerId();
+
+    $scope.createCouponInputPartnerIdChanged = function () {
+        var searchAbonPartners = $scope.abon.partners.find(x => x.partnerId == $scope.createCouponModel.partnerId);
+        if (searchAbonPartners == undefined) $scope.abon.selectedAbonPartner = $scope.abon.partners[0];
+        else $scope.abon.selectedAbonPartner = $scope.abon.partners[$scope.abon.partners.indexOf(searchAbonPartners)];
+    }
+
     $scope.createServiceBusy = false;
     $scope.createServiceResponse = false;
 

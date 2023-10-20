@@ -436,6 +436,12 @@ CO+V+iwbc5AlKPzJkkQARoDv+uA6WDCt8Rs6d1OA6g5Fdh1XoeA+XWgztqzqor3vsMi3rs94DhNGIa2c
                             <form action="/" method="POST" name="transactionForm0">
                                 <fieldset>
                                     <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">Select country</label>
+                                        <select class="form-control" ng-model="abon.selectedAbonPartner" ng-change="createCouponChangePartnerId()">
+                                            <option ng-repeat="abonPartner in abon.partners" ng-value="abonPartner">{{abonPartner.country}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">Value</label>
                                         <input class="form-control"
                                                ng-model="createCouponModel.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
@@ -446,7 +452,7 @@ CO+V+iwbc5AlKPzJkkQARoDv+uA6WDCt8Rs6d1OA6g5Fdh1XoeA+XWgztqzqor3vsMi3rs94DhNGIa2c
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PartnerId</label>
-                                        <input ng-model="createCouponModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
+                                        <input ng-model="createCouponModel.partnerId" ng-keyup="createCouponInputPartnerIdChanged()" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PartnerTransactionId</label>
