@@ -9,7 +9,7 @@
     <div class="row">
         <h4 class="col-auto">CreatePayout</h4>
         <div class="dropdown col-auto">
-            <select class="form-control" ng-model="select.CreatePayoutVersion" ng-init="select.CreatePayoutVersion = '3'">
+            <select class="form-control" ng-model="select.CreatePayoutVersion" ng-init="select.CreatePayoutVersion = '4'">
                 <option value="3" selected>V3</option>
                 <option value="4">V4</option>
             </select>
@@ -645,9 +645,11 @@ Request example:
                 <pre>
         
 Sequence:
-Amount=123.45&CurrencyID=978&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerID=0a13af2f-9d8e-4afd-b3e0-8f4c24095cd6&PartnerTransactionID=e631a091-f239-40ce-9f5d-bd9a443b2f55&PartnerUserID=db0c97e7-2029-44c0-97b6-6d3faee3ab34&PhoneNumber=385981234567
+Amount=123.45&CurrencyID=978&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=PersonalIdentificationCode&Value=RSSMRAURTMLARSNL&PartnerID=290a2fe9-b1e0-4627-8a43-3f7ba472a4a0&PartnerTransactionID=e631a091-f239-40ce-9f5d-bd9a443b2f55&PartnerUserID=db0c97e7-2029-44c0-97b6-6d3faee3ab34&PhoneNumber=385981234567
+
 Signature:
-XNqywSLWevPrLAQwhePcpdbX7HUe4kQFKQQgUXiPA/YbrPz/kUTECe6Z/rAz9K3Q8j1eBcZDed58pv2hsubOG2bImsSeqVWLovch22fSCXLY/YHmpGp+7pYHEBgJTpVjk16T53wwrtSih6CFVU1fJfUzLRDZ2yalVyj7ZxZppdLPfhY0f1fcP3d9Y5NcG6fa112kXfBNjV3C42HxpV0kVapTi1LOsga91Gpnvnm4hi+PPCTtsawGSy9KTX6QSRRtyBgy58C9i7lO1x6JmKOVUISqtrzdGMHtkKBoNmmtYGtXtg0fim88Sq/UGhG+I4X6S/TJvgzBoMuD5Vy1oxHy51EdqJSgO8fbjEPUvGtvrWZ7/DohXyR/GqUkeAj8UFdm0F3Hy4gzF6ynbnrvUqbeeS4IYRK7ZpWnh1jUfhLO84/aiZ5uhEOU6mi2ywVBJ/hUmPiY2/9cXZ3mLxpHDBCMITs0jaJyj8+l4I+iCk/kbZMqQOHQdZeqgGwnC+EqTvhxb1/2Nfbvii5yrfTsemEjhJAXmHWWaH10vO6iq62mouf/WLEtEHOgKQ6iuWzf3FUwrTnZWcoy3kQvgfVl+tsQDFwbe6lzRVqRbAVUb7LJoEceyMG/KetOfZSKUKHh2h6YCZSyz1UWn+gSXdINr4M/eDzeijkYR14ZedeaiRKZSQk=</pre>
+KGXKKl/pjNlOcxHaHXTzDRoUhEHSPUA6N5j5yyhZLG0teZhXau54u+3SWLiDqwmYT5VA0JB2IUTtAP9fy8q5tKWTnKF7NvO7L+NAzMuj90l8KIPsg6SQ8vPfK9g7WLYC8J45ED15P2RjCbWIrsIBx5E0qeIbK+T48ZlxU001FEuVJwt1+D6wsXh859TnNQiaXyVlcoti0i623wLdN1v2hO0KWW4gLbEvvOOujSX2Y9v9HccaOFmisZnvNrEem7ipKb2nHfM/0lUfDIkoVYes21hS9G41b9QIy1tZ8EaDCiIhR1fKCEmk/OGJX9EViGBZEdixqKJqeN2Cz+/eGMYeReCE/ZKIdynUjolUZOX0rbHjqLhpwLSc1rkRFgIfn//hIxeYp/S2NyN7lNT6mPiP2Ov+EXd7ihcmCXbNowx+Ow8dbyQd0L2Kue799gRM9brCcdAriDQjSgJoDsWvpEcRrCMf0xHmYa2JABqOmHAWjP22TgRU63NXVP9mYpJj1JBbJX4mtdYWREUly5UaRr9EZRNrP82RdRx1kJD/MYnRsX1P//xi3PAmPFVfowsYrH0l4Y2bTUAB7Hba8FRupjT9oe0s48tcxenywuJEeYIFUpGs5wJmfiyeAoKRWK57DI6oA+37s6sLLwtvXbXk5tB1dcDodBmx9Fdvin/0CY7MqVo=
+</pre>
             </uib-tab>
             <uib-tab index="createPayoutv4-tab-3" heading="Response parameters" classes="nav-item">
                 <div class="table-responsive">

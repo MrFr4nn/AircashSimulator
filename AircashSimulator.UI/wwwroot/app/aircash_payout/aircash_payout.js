@@ -689,9 +689,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     {
                         Key: "PayerBirthDate",
                         Value: "1990-01-01"
+                    },
+                    {
+                        "Key": "PersonalIdentificationCode",
+                        "Value": "RSSMRAURTMLARSNL"
                     }
                 ],
-                Signature: "ldzZxe....I8="
+                Signature: "IW8kFZrS4W...."
             },
             responseExample: {
                 first: {
@@ -748,10 +752,14 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     {
                         "Key": "PayerBirthDate",
                         "Value": "1990-01-01"
+                    },
+                    {
+                        "Key": "PersonalIdentificationCode",
+                        "Value": "RSSMRAURTMLARSNL"
                     }
                 ],
                 "CurrencyID": 978,
-                "Signature": "XNqywSLWev..."
+                "Signature": "KGXKKl/pjN..."
             },
             responseExample: {
                 AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
