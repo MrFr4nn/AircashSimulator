@@ -437,12 +437,12 @@ CO+V+iwbc5AlKPzJkkQARoDv+uA6WDCt8Rs6d1OA6g5Fdh1XoeA+XWgztqzqor3vsMi3rs94DhNGIa2c
                                 <fieldset>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">Select country</label>
-                                        <select class="form-control" ng-model="abon.selectedAbonPartner" ng-change="createCouponChangePartnerId()">
+                                        <select class="form-control" ng-model="abon.selectedAbonPartner" ng-change="createCouponChangePartnerId(true)">
                                             <option ng-repeat="abonPartner in abon.partners" ng-value="abonPartner">{{abonPartner.country}}</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">Value</label>
+                                        <label class="form-label" for="exampleInputPassword1">Value <span ng-if="abon.selectedAbonPartner.denominations">({{abon.selectedAbonPartner.denominations}})</span></label>
                                         <input class="form-control"
                                                ng-model="createCouponModel.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
                                     </div>
