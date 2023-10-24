@@ -58,7 +58,7 @@ namespace AircashSimulator.Controllers.AircashPosDeposit
         [HttpPost]
         public async Task<IActionResult> MatchPersonalData(AircashMatchPersonalData aircashMatchPersonalDataRQ)
         {
-            aircashMatchPersonalDataRQ.PartnerID = UserContext.GetPartnerId(User);
+            aircashMatchPersonalDataRQ.PartnerID = SettingsService.C2DPayoutPartnerId;
             var response = await MatchService.CompareIdentity(aircashMatchPersonalDataRQ);
             return Ok(response);
         }
