@@ -107,6 +107,9 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
     }
 
     $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        if (Date.now() >= jwt_decode($localStorage.currentUser.token).exp*1000) {
+            $location.path('/login');
+        }
         var publicPages = ['/login', '/success', '/decline', '/forbidden', '/inAppPay','/cashier/abon', '/cashier/aircashPay',
             '/cashier/aircashPayment', '/cashier/aircashPayout', '/cashier/aircashRedeemTicket', '/cashier/cashToDigital', '/cashier/aircashFrameMenu',
             '/cashier/aircashFrameAcPay', '/cashier/aircashFrameAbon', '/cashier/aircashFrameWithdrawal', '/cashier/PayoutC2D', '/cashier/SalesPartner',
