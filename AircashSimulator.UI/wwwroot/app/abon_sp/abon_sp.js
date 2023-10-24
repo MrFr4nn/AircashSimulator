@@ -185,7 +185,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
 
     $scope.abon = {};
     $scope.abon.partners = [
-        { country: "Custom", partnerId: "52f46879-294d-4904-be7e-368ab0161771", isoCurrencySymbol: "EUR"},
+        { country: "Custom", partnerId: $scope.partnerIds.AbonGeneratePartnerId, isoCurrencySymbol: "EUR"},
         { country: "HR", partnerId: "261d648d-6bd8-4f5c-baf6-d3fcd336f985", isoCurrencySymbol: "EUR" },
         { country: "CZ", partnerId: "15246f56-53a8-446c-855a-39b427ba1e3d", isoCurrencySymbol: "CZK" },
         /*{ country: "GB", partnerId: "12d6dd08-ae11-4dc3-80bd-14b2ac71bbc9", isoCurrencySymbol: "GBP" },*/
@@ -201,7 +201,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     ];
     $scope.loadDenominations = function () {
         $scope.abon.partners.forEach(x => {
-            if (x.partnerId != "52f46879-294d-4904-be7e-368ab0161771") {
+            if (x.partnerId != $scope.partnerIds.AbonGeneratePartnerId) {
                 abonSpService.getCashierDenominations(x.partnerId)
                     .then(function (response) {
                         if (response) {
