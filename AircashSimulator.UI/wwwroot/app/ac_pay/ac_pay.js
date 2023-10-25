@@ -201,6 +201,11 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
                 currencyID: 978,
                 aircashTransactionID: "122e5e33-b5fb-4398-b138-c60582b9fa2b",
                 signature: "Ff3oSWm20n...",
+            },
+            errorResponseExample: {
+                "exitTransaction": true,
+                "errorCode": 100, 
+                "errorMessage": "Reason why error happend provided by partner"
             }
         }
     };

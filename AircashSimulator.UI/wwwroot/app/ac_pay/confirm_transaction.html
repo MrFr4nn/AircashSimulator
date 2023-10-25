@@ -122,7 +122,47 @@
                 code that isn’t 200 OK.
             </p>
         </uib-tab>
+        <uib-tab index="request-tab-3" heading="Error response parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>exitTransaction</b></td>
+                            <td>bool</td>
+                            <td>
+                                If exitTransaction is set to true transaction won't be processed.
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>errorCode</b></td>
+                            <td>int</td>
+                            <td>
+                                Error code sent by partner, <b>0 must not be used!</b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>errorMessage</b></td>
+                            <td>string</td>
+                            <td>
+                                Error message sent by partner (Optional)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <uib-tab index="request-tab-4" heading="Error response example" classes="nav-item">
+            <jsonformatter data="aircashPay.confirmTransaction.errorResponseExample"></jsonformatter>
+        </uib-tab>
     </uib-tabset>
+    <p>Aircash system will need a list of negative responses from partner system in order to map them in the system. In case the partner system responds negatively to this request, partner will need to send some unique error code. Those error codes need mapping in the Aircash system in order to display correct messages to the end user. Check Error response parameters and Error response example to see how it needs to be implemented.</p>
     <br />
     <hr />
 
