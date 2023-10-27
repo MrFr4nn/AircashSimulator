@@ -127,18 +127,18 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
                 key: "AircashUserID",
                 value: generateSignatureModel.aircashUserID
             },
-            firstName: {
-                key: "PayerFirstName",
-                value: generateSignatureModel.firstname
-            },
-            lastName: {
-                key: "PayerLastName",
-                value: generateSignatureModel.lastname
-            },
-            birthDate: {
-                key: "PayerBirthDate",
-                value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
-            },
+            //firstName: {
+            //    key: "PayerFirstName",
+            //    value: generateSignatureModel.firstname
+            //},
+            //lastName: {
+            //    key: "PayerLastName",
+            //    value: generateSignatureModel.lastname
+            //},
+            //birthDate: {
+            //    key: "PayerBirthDate",
+            //    value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
+            //},
             merchantId: {
                 key: "merchantId",
                 Value: generateSignatureModel.merchantId
