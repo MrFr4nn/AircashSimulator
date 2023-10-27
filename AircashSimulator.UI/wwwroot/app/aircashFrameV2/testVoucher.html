@@ -9,7 +9,7 @@
                 <label class="d-inline-block" for="abon_lang">Select country for your Abon voucher:</label>&nbsp;&nbsp;
                 <select name="abon_lang" class="form-control form-control-sm d-inline-block" style="width: auto;" id="abon_lang"
                         ng-options="item.country for item in abon_countries"
-                        ng-model="abon.selectedAbonCountry" ng-init="abon.selectedAbonCountry = abon_countries[0]" ng-disabled="createServiceBusy" ng-change="getDenominations()" ng-required="true">
+                        ng-model="abon.selectedAbonCountry" ng-disabled="createServiceBusy" ng-change="getDenominations()" ng-required="true">
                 </select>
             </div>
             <div class="form-group">
