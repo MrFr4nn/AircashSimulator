@@ -1,7 +1,7 @@
 ﻿<div class="row">
             <h4>Transaction status</h4>
             <div class="dropdown col-auto">
-                <select class="form-control" ng-model="select.statusVersion" ng-init="select.statusVersion = '1'">
+                <select class="form-control" ng-model="select.statusVersion" ng-init="select.statusVersion = '3'">
                     <option value="1" selected>V1</option>
                     <option value="2">V2</option>
                     <option value="3">V3</option>
@@ -1075,7 +1075,65 @@ Y7hXZ90VSuJJN2xxTuOckl7Taid9JgCw6Q2JrdLx51AvbnZ+klNXUHOHVPl42VuUw4xhnuFoR2p5q7yN
                         </table>
                     </div>
                 </uib-tab>
-                <uib-tab index="request-tab-6" ng-hide="true" heading="Error response example" classes="nav-item">
+                <uib-tab index="request-tab-6" heading="Events" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Event code</th>
+                                    <th>Message</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>10001</b></td>
+                                    <td>Frame is opened by user.</td>
+                                    <td>When user opens the Frame window.</td>
+                                </tr>
+                                <tr ng-if="initiateModelSelected.data.payType == 0 && initiateModelSelected.data.payMethod == 2">
+                                    <td><b>10002</b></td>
+                                    <td>QR code is generated and displayed to user.</td>
+                                    <td>When QR code is generated.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>10003</b></td>
+                                    <td>The user sent an invalid phone number for validation.</td>
+                                    <td>When the user enters a wrong phone number format</td>
+                                </tr>
+                                <tr>
+                                    <td><b>10004</b></td>
+                                    <td>The transaction has expired.</td>
+                                    <td>When user doesn't complete transaction in given time.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>20001</b></td>
+                                    <td>The user is not active with phone number:</td>
+                                    <td>When there is no user with entered phone number in Aircash system.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>20002</b></td>
+                                    <td>User data does not match - transaction rejected. Users can top up their partner account only with an Aircash account that has same owner.</td>
+                                    <td>When entered user data doesn't match with user data in Aircash system</td>
+                                </tr>
+                                <tr>
+                                    <td><b>20003</b></td>
+                                    <td>User is blocked or over the limit - contact Aircash support</td>
+                                    <td>When the user has reached limit or when user is blocked by Aircash system</td>
+                                </tr>
+                                <tr ng-if="initiateModelSelected.data.payType == 0 && initiateModelSelected.data.payMethod == 2">
+                                    <td><b>20004</b></td>
+                                    <td>The user rejected the transaction</td>
+                                    <td>When the user on phone clicks "Cancel transaction"</td>
+                                </tr>
+                                <tr ng-if="initiateModelSelected.data.payType == 0 && initiateModelSelected.data.payMethod == 2">
+                                    <td><b>20005</b></td>
+                                    <td>The user has insufficient funds in their account.</td>
+                                    <td>When user doesn't have enough funds to pay</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </uib-tab>
                 <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
                     <div class="row">
