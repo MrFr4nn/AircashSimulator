@@ -105,7 +105,6 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
 
     }
     function setRequestExamples(generateSignatureModel) {
-        ;
         $scope.requestExample = {
             username: {
                 key: "username",
@@ -464,6 +463,44 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         return $scope.checkPlayerParameters;
     }
 
+    $scope.responseParametersExample = {
+        payerMaxAllowedAmount: {
+            "key": "payerMaxAllowedAmount",
+            "type": "Decimal",
+            "value": "123.45"
+        },
+        payerPhoneNumber: {
+            "key": "payerPhoneNumber",
+            "type": "String",
+            "value": "385981234567"
+        },
+        personalIdentificationCode: {
+            "key": "payerPersonalIdentificationCode",
+            "type": "String",
+            "value": "RSSMRAURTMLARSNL"
+        },
+        payerFirstName: {
+            "key": "payerFirstName",
+            "value": "John",
+            "type": "String"
+        },
+        payerLastName: {
+            "key": "payerLastName",
+            "value": "Doe",
+            "type": "String"
+        },
+        payerBirthDate: {
+            "key": "payerBirthDate",
+            "value": "1990-01-01",
+            "type": "Date"
+        },
+        partnerUserID: {
+            "key": "partnerUserID",
+            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+            "type": "String"
+        }
+    }
+
     $scope.aircashPayment = {
         checkPlayer: {
             requestExample: {
@@ -614,7 +651,31 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentServi
         }
 
     }
-
+    $scope.checkPlayerResponseCheckbox = {};
+    $scope.responseGenerated = false;
+    $scope.updateCheckPlayerResponse = function () {
+        $scope.responseGenerated = false;
+        $scope.aircashPayment.checkPlayer.responseParameters = [$scope.responseParametersExample.partnerUserID];
+        if ($scope.checkPlayerResponseCheckbox.aircashMatchingPersonalData) {
+            $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.payerFirstName);
+            $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.payerLastName);
+            $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.payerBirthDate);
+        }
+        if ($scope.checkPlayerResponseCheckbox.maxAmount) $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.payerMaxAllowedAmount);
+        if ($scope.checkPlayerResponseCheckbox.phoneNumber) $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.payerPhoneNumber);
+        if ($scope.checkPlayerResponseCheckbox.personalIdentificationCode) $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.personalIdentificationCode);
+        $scope.aircashPayment.checkPlayer.responseExample = {
+            isPlayer: true,
+            error: null,
+            parameters: $scope.aircashPayment.checkPlayer.responseParameters
+        };
+        $timeout(function () {
+            $scope.text =
+                $scope.responseGenerated = true;
+        }, 100); 
+    }
+    $scope.updateCheckPlayerResponse();
+    
     
     $scope.requestCheckPlayerChanged();
     $scope.requestCreateAndConfirmChanged();
