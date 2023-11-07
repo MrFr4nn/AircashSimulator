@@ -24,6 +24,7 @@ namespace Domain.Entities.Enum
         AircashFrameV2AcPay = 16,
         AircashFrameV2Abon = 17,
         CobrandedCard =20,
+        AMDDeepLink =21,
         Admin = 100
     }
 }

@@ -68,7 +68,11 @@ acPaymentModule.service("acPaymentService", ['$http', '$q', 'handleResponseServi
     }
 ]);
 
-acPaymentModule.controller("acPaymentCtrl", ['$scope', '$state', 'acPaymentService', '$filter', '$timeout', '$http', 'JwtParser', '$uibModal', 'config', 'HelperService', '$rootScope', function ($scope, $state, acPaymentService, $filter, $timeout, $http, JwtParser, $uibModal, config, HelperService, $rootScope) {
+acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state', 'acPaymentService', '$filter', '$timeout', '$http', 'JwtParser', '$uibModal', 'config', 'HelperService', '$rootScope', function ($scope, $localStorage,  $state, acPaymentService, $filter, $timeout, $http, JwtParser, $uibModal, config, HelperService, $rootScope) {
+    $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+    $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
+
+    $scope.showDeepLink = $scope.partnerRoles.indexOf("AMDDeepLink") == -1 ? false : true;
 
     $scope.copyToClipboard = function (isProduction) {
         if (isProduction) {
