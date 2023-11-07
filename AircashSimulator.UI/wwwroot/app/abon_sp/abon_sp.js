@@ -216,8 +216,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
     };
     $scope.loadDenominations();
     $scope.abon.partners[0].denominations = false;
-    console.log($scope.abon.partners);
-    $scope.abon.selectedAbonPartner = $scope.abon.partners[1];
+    $scope.abon.selectedAbonPartner = $scope.abon.partners[0];
 
     $scope.createCouponChangePartnerId = function (showMesssage) {
         $scope.createCouponModel.partnerId = $scope.abon.selectedAbonPartner.partnerId;
@@ -232,7 +231,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         else $scope.abon.selectedAbonPartner = $scope.abon.partners[$scope.abon.partners.indexOf(searchAbonPartners)];
     }
 
-    $scope.abon.selectedAbonPartnerCreateMultipleV1 = $scope.abon.partners[1];
+    $scope.abon.selectedAbonPartnerCreateMultipleV1 = $scope.abon.partners[0];
     $scope.createMultipleCouponChangePartnerIdV1 = function (showMesssage) {
         $scope.createMultipleCouponsModel.partnerId = $scope.abon.selectedAbonPartnerCreateMultipleV1.partnerId;
         $scope.createMultipleCouponsModel.isoCurrencySymbol = $scope.abon.selectedAbonPartnerCreateMultipleV1.isoCurrencySymbol;
@@ -245,7 +244,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         else $scope.abon.selectedAbonPartnerCreateMultipleV1 = $scope.abon.partners[$scope.abon.partners.indexOf(searchAbonPartners)];
     }
 
-    $scope.abon.selectedAbonPartnerCreateMultipleV2 = $scope.abon.partners[1];
+    $scope.abon.selectedAbonPartnerCreateMultipleV2 = $scope.abon.partners[0];
     $scope.createMultipleCouponChangePartnerIdV2 = function (showMesssage) {
         $scope.createMultipleCouponsV2Model.partnerId = $scope.abon.selectedAbonPartnerCreateMultipleV2.partnerId;
         $scope.createMultipleCouponsV2Model.isoCurrencySymbol = $scope.abon.selectedAbonPartnerCreateMultipleV2.isoCurrencySymbol;
@@ -549,23 +548,14 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
             },
             error2: {
                 request: {
-                    "contentType": "pdf",
-                    "contentWidth": 50,
-                    "isoCurrencySymbol": "EUR",
                     "partnerId": "52f46879-294d-4904-be7e-368ab0161771",
-                    "pointOfSaleId": "TestLocation",
-                    "denominations": [
-                        {
-                            "value": 50,
-                            "partnerTransactionId": "ae132377-03d9-4bf9-91ce-0b43f1ef6af5"
-                        },
-                        {
-                            "value": 25,
-                            "partnerTransactionId": "eb418b62-98e4-467e-b6d0-a9af2554d232"
-                        }
-                    ],
-                    "signature": "Iww1xTuZm+g2dq1ka6TM2FXnDnPm47KkVpjHhhTt2OxH+cnlZ2KCdA6ovVff5qgRnMssFgEjDPeOyGdPEOzxMfqDS43OaBDPTOVEX2O6cHyUdhTxP09tqfRR40T0FduYgbrDc3hnDY60v4VjOaHRmnWeJ0hymPMTHMtH4XhJt2tZMfXNNLuoEWftF6GQ626O6AHZwYqH3zDcidd/O7gmPU+t3A5TnxSE1cb4SfdvPAMzPG9m9kZjd7FF8oD2AljrByVRbs4KDg7WxSZhLA4g8ienekBvhKRNwMK7LESCZX5zOieE24wBIJtyfmzYKsIZnnAyI2Jd7ib8t8LukWeHJpxXGW31xnobRuWQQb+OIgfxVum33IR5SX/uABVErHicEbcBU/qDvtWM326PdbHVSVdVetZ/OBouvXydD2AmsV3nm2OcL/+BnuuDJ4Kzjyu8QAwejbhsBf8Mt+P8ubjbFCS8edOVJDEjYY4+vhdMDHSaJWEVuy6i0S8BuJbWo9bAe3WbyaD+so0/vbwBrUXVCiLsQVrr+3/61WirgEtMb7I0gC8Sihx75mvQyjROZBHggVqfHeFWHrrN1bSFNdIm0GgOjrdqasofvDXi4PW5DrUhT3EaTjW+nZ3Q+gHdZQ/QMdKh1YkIhGASzprgYpkLZPdvbTCyFzIKjPrcS9aAG1s=",
-                    "additionalParameter": 10
+                    "value": 25,
+                    "pointOfSaleId": "test",
+                    "isoCurrencySymbol": "EUR",
+                    "partnerTransactionId": "80684973-6f8d-4b37-b7a0-3bc164b6e68f",
+                    "contentType": null,
+                    "contentWidth": null,
+                    "signature": "P1qrIXBNu8..."
                 },
                 response: {
                     "code": 2,
@@ -975,7 +965,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         },
         multipleCouponsCreation: {
             requestExample: {
-                "contentType": "pdf",
+                "contentType": null,
                 "contentWidth": 50,
                 "isoCurrencySymbol": "EUR",
                 "partnerId": "52F46879-294D-4904-BE7E-368AB0161771",
@@ -1004,7 +994,7 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         },
         multipleCouponsCreationV2: {
             requestExample: {
-                "contentType": "pdf",
+                "contentType": null,
                 "contentWidth": 50,
                 "isoCurrencySymbol": "EUR",
                 "partnerId": "52F46879-294D-4904-BE7E-368AB0161771",
