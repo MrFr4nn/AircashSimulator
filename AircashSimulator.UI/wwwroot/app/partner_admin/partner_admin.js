@@ -395,6 +395,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 return "Documentation for online/merchant";
             case "AircashPayment":
                 return "Aircash marketplace deposit";
+            case "AMDDeepLink":
+                return "Aircash marketplace Deep link";
             case "AircashRedeemTicket":
                 return "Payouts of winning tickets to Aircash app";
             case "AircashFrameV2AcPay":
