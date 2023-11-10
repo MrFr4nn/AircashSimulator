@@ -768,6 +768,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
                 }]
             },
+            errorResponseExample: {
+                "code": 4000,
+                "message": "Unknown phone number"
+            }
         },
         checkTransactionStatus: {
             requestExample: {
