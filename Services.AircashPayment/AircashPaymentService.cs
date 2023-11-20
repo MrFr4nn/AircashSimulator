@@ -76,6 +76,23 @@ namespace Services.AircashPayment
                         Value = user.BirthDate?.ToString(_defaultDateTimeFormat)
                     });
                 }
+                if (!String.IsNullOrEmpty(user.PhoneNumber))
+                {
+                    parameters.Add(new Parameters
+                    {
+                        Key = "payerPhoneNumber",
+                        Type = "String",
+                        Value = user.PhoneNumber
+                    });
+                }
+                else {
+                    parameters.Add(new Parameters
+                    {
+                        Key = "payerPhoneNumber",
+                        Type = "String",
+                        Value = "385981234567"
+                    });
+                }
                 var response = new CheckPlayerResponse
                 {
                     IsPlayer = true,
