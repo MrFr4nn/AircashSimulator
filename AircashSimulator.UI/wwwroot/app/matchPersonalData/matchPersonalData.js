@@ -164,27 +164,7 @@ matchPersonalDataModule.controller("matchPersonalDataCtrl",
                         }
                     ]
                 },
-                compareIdentityPost:
-                {
-                    partnerID: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                    aircashUser: {
-                        firstName: "John",
-                        lastName: "Doe",
-                        birthDate: "1990-01-01"
-                    },
-                    partnerUser: {
-                        firstName: "John",
-                        lastName: "Doe",
-                        birthDate: "1990-01-01"
-                    }
-                },
-                compareIdentityResponse:
-                {
-                    matchResult: true,
-                    score: 1,
-                    birthDateMatch: true
-                },
-                dataDoNotMatch:
+                checkPlayerErrorResponse:
                 {
                     isPlayer: false,
                     error: {
