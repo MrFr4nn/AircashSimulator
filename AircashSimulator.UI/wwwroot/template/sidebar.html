@@ -69,6 +69,12 @@
                             <span>{{translations.signature_label}}</span>
                         </a>
                     </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acReconciliationAPI" ng-if="partnerRoles.indexOf('Admin') != -1">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>{{translations.Reconciliation_API_label}}</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-header" ng-if="partnerRoles.indexOf('AircashFrameV2')!= -1 || partnerRoles.indexOf('AircashPayment') != -1||partnerRoles.indexOf('AircashPayout') != -1 || partnerRoles.indexOf('AbonDeposit') != -1 || partnerRoles.indexOf('AircashPosDeposit') != -1 || partnerRoles.indexOf('AircashPayoutV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1 || partnerRoles.indexOf('AircashPayStaticCode') != -1">{{translations.online_label}}</li>
