@@ -1,0 +1,169 @@
+﻿<h1>Reconciliation API</h1>
+<p>Method used to get transaction in selected period. Partner choses start and end dates and gets transactions that happend in selected period.</p>
+<p>Partner can get transaction for only 14 days, if he tries to get transaction for longer period he will get error</p>
+<div class="table-responsive">
+    <table class="table  table-active col-md-6">
+        <thead>
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    GET
+                </td>
+                <td>https://dev-aircash.eu/api/</td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    GET
+                </td>
+                <td>https://aircash.eu/api/</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<br />
+<uib-tabset>
+    <uib-tab index="reconciliation-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameters</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>PartnerId</b></td>
+                        <td>String</td>
+                        <td>Partner identifier</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>StartDateUTC</b></td>
+                        <td>Date</td>
+                        <td>
+                            Date from witch partner wants transactions
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>EndDateUTC</b></td>
+                        <td>Date</td>
+                        <td>
+                            Date too witch partner wants transactions
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="reconciliation-tab-1" heading="Request example" classes="nav-item">
+        <jsonformatter data="reconciliationApi.requestExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="reconciliation-tab-2" heading="Response parameters" classes="nav-item">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameters</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>AircashTransactionId</b></td>
+                                <td>String</td>
+                                <td>Transaction id in Aircash system</td>
+                            </tr>
+                            <tr>
+                                <td><b>partnerTransactionId</b></td>
+                                <td>String</td>
+                                <td>Transaction id in Partner system</td>
+                            </tr>
+                            <tr>
+                                <td><b>DateTimeUTC</b></td>
+                                <td>DateTime</td>
+                                <td>Date and time when transaction was made</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>decimal</td>
+                                <td>Transaction amount</td>
+                            </tr>
+                            <tr>
+                                <td><b>currencyId</b></td>
+                                <td>int</td>
+                                <td>ISO-4217 currency code</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr />
+                <p class="ml-3">
+                    <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+                </p>
+            </div>
+        </div>
+    </uib-tab>
+    <uib-tab index="reconciliation-tab-3" heading="200 OK Response example" classes="nav-item">
+        HTTP 200
+        <jsonformatter data="reconciliationApi.responseExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="reconciliation-tab-4" heading="Error response messages" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Error Code</th>
+                        <th>Message</th>
+                        <th>Solution</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2"><b>400</b></td>
+                        <td rowspan="2">An invalid request was made. The response will contain an error code and message.</td>
+                        <td><b>1</b></td>
+                        <td>Invalid partner id</td>
+                        <td rowspan="2">
+                            Contact Aircash support
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>2</b></td>
+                        <td>Selected period too long</td>
+                    </tr>
+                    <tr>
+                        <td><b>500</b></td>
+                        <td>An unknown error occured</td>
+                        <td>-</td>
+                        <td>Unknown error has occurred</td>
+                        <td>
+                            Contact Aircash support
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="CheckTransactionStatus-tab-5" heading="Error response example" classes="nav-item">
+        HTTP 400
+        <jsonformatter data="reconciliationApi.errorResponseExample"></jsonformatter>
+    </uib-tab>
+</uib-tabset>
