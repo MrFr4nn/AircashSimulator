@@ -24,8 +24,8 @@ acReconciliationAPIModule.controller("acReconciliationAPICtrl",
             $scope.reconciliationApi = {
                 requestExample: {
                     partnerId: "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    startDate: "2023-11-01",
-                    endDate: "2023-11-30"
+                    startDateUTC: "2023-11-01",
+                    endDateUTC: "2023-11-30"
                 },
                 responseExample: [
                     {
