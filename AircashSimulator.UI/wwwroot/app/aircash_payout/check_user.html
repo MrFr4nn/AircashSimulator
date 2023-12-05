@@ -363,7 +363,88 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
                 </div>
             </uib-tab>
             <uib-tab index="CheckUserV4-tab-1" heading="Request example" classes="nav-item">
-                <jsonformatter data="aircashPayout.checkUserV4.requestExample"></jsonformatter>
+                <div class="form-group row mx-2">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    PartnerID (Guid)
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="checkUserGenerateSignatureModel.partnerID" ng-init="checkUserGenerateSignatureModel.partnerID = '290a2fe9-b1e0-4627-8a43-3f7ba472a4a0'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter partnerID" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    PartnerUserId
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="checkUserGenerateSignatureModel.partnerUserID" ng-init="checkUserGenerateSignatureModel.partnerUserID = '12345'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter PartnerUserId" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    Phone number
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="checkUserGenerateSignatureModel.phoneNumber" ng-init="checkUserGenerateSignatureModel.phoneNumber = '385981234567'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <input class="form-check-input" type="checkbox" ng-change="requestCheckUserChanged()" ng-model="checkboxCheckUserModel.personalIdentificationCode">
+                                <label class="form-check-label">
+                                    Personal Identification Code
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2" ng-if="checkboxCheckUserModel.personalIdentificationCode">
+                                <input ng-model="checkUserGenerateSignatureModel.personalIdentificationCode" ng-init="checkUserGenerateSignatureModel.personalIdentificationCode = 'RSSMRAURTMLARSNL'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter personal Identification Code" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <input class="form-check-input" type="checkbox" ng-change="requestCheckUserChanged()" ng-model="checkboxCheckUserModel.match">
+                                <label class="form-check-label">
+                                    Match personal data
+                                </label>
+                            </div>
+                            <div ng-if="checkboxCheckUserModel.match" class="col-lg-9 mt-2">
+                                <div>
+                                    <input ng-model="checkUserGenerateSignatureModel.firstname" ng-init="checkUserGenerateSignatureModel.firstname = 'John'; requestCheckUserChanged();" ng-change="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                                </div>
+                                <div class="mt-2">
+                                    <input ng-model="checkUserGenerateSignatureModel.lastname" ng-init="checkUserGenerateSignatureModel.lastname = 'Doe'; requestCheckUserChanged();" ng-change="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                                </div>
+                                <div class="mt-2">
+                                    <date-picker date="checkUserGenerateSignatureModel.birthDate" isOptional="false" out="checkUserModelSetDate"></date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="col-6">
+                        <div ng-if="generateCheckUserSignatureResponded">
+                            <pre>
+                            <jsonformatter data="generateCheckUserSignatureResponse"></jsonformatter>  
+Sequence: 
+{{checkUserRequestExampleSequence}}
+</pre>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-white ml-2 mt-2" ng-if="generateCheckUserSignatureResponded" ng-click="copyToClipboard(generateCheckUserSignatureResponse)">Copy</button>
+                </div>
             </uib-tab>
             <uib-tab index="CheckUserV4-tab-2" heading="Signature" classes="nav-item">
 <pre>

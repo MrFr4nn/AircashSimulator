@@ -1,4 +1,6 @@
-﻿using AircashSimulator.Controllers.AircashPayout;
+﻿using AircashSignature;
+using AircashSimulator.Controllers.AircashPayment;
+using AircashSimulator.Controllers.AircashPayout;
 using AircashSimulator.Extensions;
 using CrossCutting;
 using Domain.Entities.Enum;
@@ -161,6 +163,15 @@ namespace AircashSimulator.Controllers
             var curl = HelperService.GetCurl(request, AircashPayoutService.GetCheckTransactionStatusEndpoint(environment));
             return Ok(curl);
         }
+
+        public async Task<object> GenerateCheckUserSignature(CheckUserv4DTO checkUserV4Request) {
+            var checkUserRequest = AircashPayoutService.GetCheckUserV4Request(checkUserV4Request.PhoneNumber, checkUserV4Request.PartnerUserID, checkUserV4Request.PartnerID, checkUserV4Request.Parameters);
+            var sequence = AircashSignatureService.ConvertObjectToString(checkUserRequest);
+            checkUserRequest.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
+
+            return new { AircashPayoutCheckUser = checkUserRequest, Sequence = sequence };
+        }
+        //public async Task<object> GenerateCreatePayoutSignature(CreatePayoutV4DTO createPayoutV4DTO) { }
     }
 
 }

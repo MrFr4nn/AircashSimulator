@@ -26,6 +26,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         checkTransactionStatus: checkTransactionStatus,
         getCurlCheckTransactionStatus: getCurlCheckTransactionStatus,
         simulatePayoutError: simulatePayoutError,
+        generateCheckUserSignature: generateCheckUserSignature,
     }
     );
     function checkUser(checkUserRequest) {
@@ -137,6 +138,15 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
             method: 'POST',
             url: config.baseUrl + "AircashPayout/CreatePayoutSimulateError",
             data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function generateCheckUserSignature(checkUserModel) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/GenerateCheckUserSignature",
+            data: checkUserModel
 
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -542,11 +552,105 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             });
     }
 
+    function setRequestExamples(generateSignatureModel) {
+        $scope.requestExample = {
+            personalIdentificationCode: {
+                key: "PersonalIdentificationCode",
+                value: generateSignatureModel.personalIdentificationCode
+            },
+            firstName: {
+                key: "PayerFirstName",
+                value: generateSignatureModel.firstname
+            },
+            lastName: {
+                key: "PayerLastName",
+                value: generateSignatureModel.lastname
+            },
+            birthDate: {
+                key: "PayerBirthDate",
+                value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
+            }
+        }
+    }
+
+
+    /*
+     * START: CheckUser Response Example
+     */
+ 
+    $scope.checkUserGenerateSignatureModel = {
+        firstname: "John",
+        lastname: "Doe",
+        birthDate: new Date('1990-01-01'),
+        personalIdentificationCode: "RSSMRAURTMLARSNL",
+        phoneNumber: "385981234567",
+        partnerUserID: "12345",
+        partnerID: "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0"
+    }
+    $scope.checkboxCheckUserModel = {
+        personalIdentificationCode: false,
+        match: false
+    }
+    var typingTimerCheckUser;
+    $scope.requestCheckUserChanged = function () {
+        $scope.checkUserParameters = [];
+
+        setRequestExamples($scope.checkUserGenerateSignatureModel);
+
+        if ($scope.checkboxCheckUserModel.match)
+            $scope.checkUserParameters.push(
+                $scope.requestExample.firstName,
+                $scope.requestExample.lastName,
+                $scope.requestExample.birthDate,
+            );
+        if ($scope.checkboxCheckUserModel.personalIdentificationCode) $scope.checkUserParameters.push($scope.requestExample.personalIdentificationCode);
+        
+        clearTimeout(typingTimerCheckUser);
+        typingTimerCheckUser = setTimeout(() => {
+            $scope.generateCheckUserSignature();
+        }, 1000);
+    }
+
+    $scope.generateCheckUserSignatureBusy = false;
+    $scope.generateCheckUserSignatureResponded = false;
+    $scope.generateCheckUserSignature  = function () {
+        $scope.generateCheckUserSignatureBusy = true;
+        $scope.generateCheckUserSignatureResponded = false;
+        $scope.checkUserRequestExample = {
+            partnerUserID: $scope.checkUserGenerateSignatureModel.partnerUserID,
+            partnerID: $scope.checkUserGenerateSignatureModel.partnerID,
+            phoneNumber: $scope.checkUserGenerateSignatureModel.phoneNumber,
+            parameters: $scope.checkUserParameters
+        }
+        aircashPayoutService.generateCheckUserSignature($scope.checkUserRequestExample)
+            .then(function (response) {
+                if (response) {
+                    $scope.generateCheckUserSignatureResponse = JSON.stringify(response.aircashPayoutCheckUser, null, 4);
+                    $scope.checkUserRequestExampleSequence = response.sequence;
+                }
+                $scope.generateCheckUserSignatureBusy = false;
+                $scope.generateCheckUserSignatureResponded = true;
+            }, () => {
+                $rootScope.showGritter("Error");
+                $scope.generateCheckUserSignatureBusy = false;
+            });
+    }
+
+    $scope.requestCheckUserChanged();
+
+    /*
+     * END: CheckUser Response Example
+     */
+
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
         $scope.getTransactions(false);
     };
 
+    $scope.checkUserModelSetDate = function (date) {
+        $scope.checkUserGenerateSignatureModel.birthDate = date;
+        $scope.requestCheckUserChanged();
+    }
     $scope.setCheckUserDate = function (date) {
         $scope.checkUserV4Model.birthDate = date;
     }
