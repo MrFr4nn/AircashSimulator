@@ -363,7 +363,88 @@ VA514erV6V4ew7Pu0/ThKQ/KQhjjiD0+mK3ZUPiL2EZErctocj6aFClyEintOqpHjO7TYyFxSzwvS52S
                 </div>
             </uib-tab>
             <uib-tab index="CheckUserV4-tab-1" heading="Request example" classes="nav-item">
-                <jsonformatter data="aircashPayout.checkUserV4.requestExample"></jsonformatter>
+                <div class="form-group row mx-2">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    PartnerID (Guid)
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="checkUserGenerateSignatureModel.partnerID" ng-init="checkUserGenerateSignatureModel.partnerID = '290a2fe9-b1e0-4627-8a43-3f7ba472a4a0'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter partnerID" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    PartnerUserId
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="checkUserGenerateSignatureModel.partnerUserID" ng-init="checkUserGenerateSignatureModel.partnerUserID = '12345'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter PartnerUserId" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    Phone number
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="checkUserGenerateSignatureModel.phoneNumber" ng-init="checkUserGenerateSignatureModel.phoneNumber = '385981234567'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <input class="form-check-input" type="checkbox" ng-change="requestCheckUserChanged()" ng-model="checkboxCheckUserModel.personalIdentificationCode">
+                                <label class="form-check-label">
+                                    Personal Identification Code
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2" ng-if="checkboxCheckUserModel.personalIdentificationCode">
+                                <input ng-model="checkUserGenerateSignatureModel.personalIdentificationCode" ng-init="checkUserGenerateSignatureModel.personalIdentificationCode = 'RSSMRAURTMLARSNL'" ng-keyup="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter personal Identification Code" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <input class="form-check-input" type="checkbox" ng-change="requestCheckUserChanged()" ng-model="checkboxCheckUserModel.match">
+                                <label class="form-check-label">
+                                    Match personal data
+                                </label>
+                            </div>
+                            <div ng-if="checkboxCheckUserModel.match" class="col-lg-9 mt-2">
+                                <div>
+                                    <input ng-model="checkUserGenerateSignatureModel.firstname" ng-init="checkUserGenerateSignatureModel.firstname = 'John'; requestCheckUserChanged();" ng-change="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                                </div>
+                                <div class="mt-2">
+                                    <input ng-model="checkUserGenerateSignatureModel.lastname" ng-init="checkUserGenerateSignatureModel.lastname = 'Doe'; requestCheckUserChanged();" ng-change="requestCheckUserChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateCheckUserSignatureBusy" ng-required="true">
+                                </div>
+                                <div class="mt-2">
+                                    <date-picker date="checkUserGenerateSignatureModel.birthDate" isOptional="false" out="checkUserModelSetDate"></date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="col-6">
+                        <div ng-if="generateCheckUserSignatureResponded">
+                            <pre>
+                            <jsonformatter data="generateCheckUserSignatureResponse"></jsonformatter>  
+Sequence: 
+{{checkUserRequestExampleSequence}}
+</pre>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-white ml-2 mt-2" ng-if="generateCheckUserSignatureResponded" ng-click="copyToClipboard(generateCheckUserSignatureResponse)">Copy</button>
+                </div>
             </uib-tab>
             <uib-tab index="CheckUserV4-tab-2" heading="Signature" classes="nav-item">
 <pre>
@@ -483,18 +564,38 @@ IW8kFZrS4W5smazHyY4k9uv/RZ1Ud5jvBCUm2Z0YX0Ia5oypnWcQ1f4vz4ZTPJZrXOIzIJgnk53PwV2X
                                     <label class="form-label">Phone number</label>
                                     <input ng-model="checkUserV4Model.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="checkUserV4ServiceBusy" ng-required="true">
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">First name</label>
-                                    <input ng-model="checkUserV4Model.firstName" class="form-control" type="text" placeholder="Enter first name" ng-disabled="checkUserV4ServiceBusy" ng-required="true">
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-model="checkboxCheckUser.personalIdentificationCode">
+                                        <label class="form-check-label">
+                                            Personal Identification Code
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 mt-2" ng-if="checkboxCheckUser.personalIdentificationCode">
+                                        <input ng-model="checkUserV4Model.personalIdentificationCode" class="form-control" type="text" placeholder="Enter personal Identification Code" ng-disabled="checkUserV4ServiceBusy" ng-required="true">
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Last name</label>
-                                    <input ng-model="checkUserV4Model.lastName" class="form-control" type="text" placeholder="Enter last name" ng-disabled="checkUserV4ServiceBusy" ng-required="true">
+                                <hr />
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-change="changePartnerId()" ng-model="checkboxCheckUser.match">
+                                        <label class="form-check-label">
+                                            Match personal data
+                                        </label>
+                                    </div>
+                                    <div ng-if="checkboxCheckUser.match" class="col-lg-9 mt-2">
+                                        <div>
+                                            <input ng-model="checkUserV4Model.firstName" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="checkUserV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <input ng-model="checkUserV4Model.lastName" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="checkUserV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <date-picker date="checkUserV4Model.birthDate" isOptional="false" out="setCheckUserDate"></date-picker>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Birth date</label>
-                                    <date-picker date="checkUserV4Model.birthDate" isOptional="false" out="setCheckUserDate"></date-picker>
-                                </div>
+                                <hr />
                                 <button ng-click="checkUserV4()" class="btn btn-primary w-100px me-5px" ng-disabled="checkUserV4ServiceBusy|| checkUserV4Form.$invalid">Check user <i ng-if="checkUserV4ServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
@@ -531,18 +632,38 @@ IW8kFZrS4W5smazHyY4k9uv/RZ1Ud5jvBCUm2Z0YX0Ia5oypnWcQ1f4vz4ZTPJZrXOIzIJgnk53PwV2X
                                     <label class="form-label">Phone number</label>
                                     <input ng-model="checkUserV4Model.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">First name</label>
-                                    <input ng-model="checkUserV4Model.firstName" class="form-control" type="text" placeholder="Enter first name" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-model="checkboxCheckUser.personalIdentificationCode">
+                                        <label class="form-check-label">
+                                            Personal Identification Code
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 mt-2" ng-if="checkboxCheckUser.personalIdentificationCode">
+                                        <input ng-model="checkUserV4Model.personalIdentificationCode" class="form-control" type="text" placeholder="Enter personal Identification Code" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Last name</label>
-                                    <input ng-model="checkUserV4Model.lastName" class="form-control" type="text" placeholder="Enter last name" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                <hr />
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-change="changePartnerId()" ng-model="checkboxCheckUser.match">
+                                        <label class="form-check-label">
+                                            Match personal data
+                                        </label>
+                                    </div>
+                                    <div ng-if="checkboxCheckUser.match" class="col-lg-9 mt-2">
+                                        <div>
+                                            <input ng-model="checkUserV4Model.firstName" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <input ng-model="checkUserV4Model.lastName" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="curlCheckUserV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <date-picker date="checkUserV4Model.birthDate" isOptional="false" out="setCheckUserDate"></date-picker>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Birth date</label>
-                                    <date-picker date="checkUserV4Model.birthDate" isOptional="false" out="setCheckUserDate"></date-picker>
-                                </div>
+                                <hr />
                                 <button ng-click="getCurlCheckUserV4()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCheckUserV4ServiceBusy|| checkUserV4Form.$invalid">Check user <i ng-if="curlCheckUserV4ServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>

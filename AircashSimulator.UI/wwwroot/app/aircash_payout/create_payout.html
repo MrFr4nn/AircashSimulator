@@ -635,7 +635,121 @@ Hm38lRCyOPDEN8z+8bqWUAOxUhfbqYGYSW8/OWhGctphojxlnFxbz/SdHE6yblYz0f8GCyozKG2Gy9QA
                 </div>
             </uib-tab>
             <uib-tab index="createPayoutv4-tab-1" heading="Request example" classes="nav-item">
-                <jsonformatter data="aircashPayout.createPayoutV4.requestExample"></jsonformatter>
+                <div class="form-group row mx-2">
+                    <div class="col-6">
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    PartnerID (Guid)
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="createPayoutGenerateSignatureModel.partnerID" ng-init="createPayoutGenerateSignatureModel.partnerID = '290a2fe9-b1e0-4627-8a43-3f7ba472a4a0'" ng-keyup="requestCreatePayoutChanged()" class="form-control" type="text" placeholder="Enter partnerID" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    partnerTransactionID
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="createPayoutGenerateSignatureModel.partnerTransactionID" ng-init="createPayoutGenerateSignatureModel.partnerTransactionID = 'e631a091-f239-40ce-9f5d-bd9a443b2f55'" ng-keyup="requestCreatePayoutChanged()" class="form-control" type="text" placeholder="Enter partnerTransactionID" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    Amount
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="createPayoutGenerateSignatureModel.amount" ng-init="createPayoutGenerateSignatureModel.amount = 123.45" ng-keyup="requestCreatePayoutChanged()" class="form-control" type="number" min="0" step="0.01" placeholder="Enter amount" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    CurrencyID
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="createPayoutGenerateSignatureModel.currencyID" ng-init="createPayoutGenerateSignatureModel.currencyID = 978" ng-keyup="requestCreatePayoutChanged()" class="form-control" type="number" min="0" step="1" placeholder="Enter currencyID" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    PartnerUserId
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="createPayoutGenerateSignatureModel.partnerUserID" ng-init="createPayoutGenerateSignatureModel.partnerUserID = '12345'" ng-keyup="requestCreatePayoutChanged()" class="form-control" type="text" placeholder="Enter PartnerUserId" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <label class="form-check-label">
+                                    Phone number
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2">
+                                <input ng-model="createPayoutGenerateSignatureModel.phoneNumber" ng-init="createPayoutGenerateSignatureModel.phoneNumber = '385981234567'" ng-keyup="requestCreatePayoutChanged()" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <input class="form-check-input" type="checkbox" ng-change="requestCreatePayoutChanged()" ng-model="checkboxCreatePayoutModel.personalIdentificationCode">
+                                <label class="form-check-label">
+                                    Personal Identification Code
+                                </label>
+                            </div>
+                            <div class="col-lg-9 mt-2" ng-if="checkboxCreatePayoutModel.personalIdentificationCode">
+                                <input ng-model="createPayoutGenerateSignatureModel.personalIdentificationCode" ng-init="createPayoutGenerateSignatureModel.personalIdentificationCode = 'RSSMRAURTMLARSNL'" ng-keyup="requestCreatePayoutChanged()" class="form-control" type="text" placeholder="Enter personal Identification Code" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-lg-3 mt-2">
+                                <input class="form-check-input" type="checkbox" ng-change="requestCreatePayoutChanged()" ng-model="checkboxCreatePayoutModel.match">
+                                <label class="form-check-label">
+                                    Match personal data
+                                </label>
+                            </div>
+                            <div ng-if="checkboxCreatePayoutModel.match" class="col-lg-9 mt-2">
+                                <div>
+                                    <input ng-model="createPayoutGenerateSignatureModel.firstname" ng-init="createPayoutGenerateSignatureModel.firstname = 'John'; requestCreatePayoutChanged();" ng-change="requestCreatePayoutChanged()" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                                </div>
+                                <div class="mt-2">
+                                    <input ng-model="createPayoutGenerateSignatureModel.lastname" ng-init="createPayoutGenerateSignatureModel.lastname = 'Doe'; requestCreatePayoutChanged();" ng-change="requestCreatePayoutChanged()" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="generateCreatePayoutSignatureBusy" ng-required="true">
+                                </div>
+                                <div class="mt-2">
+                                    <date-picker date="createPayoutGenerateSignatureModel.birthDate" isOptional="false" out="createPayoutModelSetDate"></date-picker>
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="col-6">
+                        <div ng-if="generateCreatePayoutSignatureResponded">
+                            <pre>
+                            <jsonformatter data="generateCreatePayoutSignatureResponse"></jsonformatter>  
+Sequence: 
+{{createPayoutRequestExampleSequence}}
+</pre>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 d-flex justify-content-end">
+                    <button class="btn btn-white ml-2 mt-2" ng-if="generateCreatePayoutSignatureResponded" ng-click="copyToClipboard(generateCreatePayoutSignatureResponse)">Copy</button>
+                </div>
             </uib-tab>
             <uib-tab index="createPayoutv4-tab-2" heading="Signature" classes="nav-item">
 <pre>
@@ -765,28 +879,48 @@ KGXKKl/pjNlOcxHaHXTzDRoUhEHSPUA6N5j5yyhZLG0teZhXau54u+3SWLiDqwmYT5VA0JB2IUTtAP9f
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">currencyId</label>
-                                    <input ng-model="createPayoutV4Model.currencyId" class="form-control" type="number" placeholder="Enter currencyId" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
+                                    <input ng-model="createPayoutV4Model.currencyId" class="form-control" type="number" min="0" step="1" placeholder="Enter currencyId" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Phone number</label>
                                     <input ng-model="createPayoutV4Model.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">First name</label>
-                                    <input ng-model="createPayoutV4Model.firstName" class="form-control" type="text" placeholder="Enter username" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Last name</label>
-                                    <input ng-model="createPayoutV4Model.lastName" class="form-control" type="text" placeholder="Enter username" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
-                                </div>
-                                <div class="mb-3">
                                     <label class="form-label">Amount</label>
-                                    <input ng-model="createPayoutV4Model.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
+                                    <input ng-model="createPayoutV4Model.amount" class="form-control" type="number" min="0" step="0.01" placeholder="Enter amount" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Birth date</label>
-                                    <date-picker date="createPayoutV4Model.birthDate" isOptional="false" out="setCreatePayoutDate"></date-picker>
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-model="checkboxCreatePayout.personalIdentificationCode">
+                                        <label class="form-check-label">
+                                            Personal Identification Code
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 mt-2" ng-if="checkboxCreatePayout.personalIdentificationCode">
+                                        <input ng-model="createPayoutV4Model.personalIdentificationCode" class="form-control" type="text" placeholder="Enter personal Identification Code" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
+                                    </div>
                                 </div>
+                                <hr />
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-change="changePartnerId()" ng-model="checkboxCreatePayout.match">
+                                        <label class="form-check-label">
+                                            Match personal data
+                                        </label>
+                                    </div>
+                                    <div ng-if="checkboxCreatePayout.match" class="col-lg-9 mt-2">
+                                        <div>
+                                            <input ng-model="createPayoutV4Model.firstName" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <input ng-model="createPayoutV4Model.lastName" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="createPayoutV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <date-picker date="createPayoutV4Model.birthDate" isOptional="false" out="setCreatePayoutDate"></date-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
                                 <button ng-click="createPayoutV4()" class="btn btn-primary w-100px me-5px" ng-disabled="createPayoutV4ServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="createPayoutV4ServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
@@ -833,21 +967,41 @@ KGXKKl/pjNlOcxHaHXTzDRoUhEHSPUA6N5j5yyhZLG0teZhXau54u+3SWLiDqwmYT5VA0JB2IUTtAP9f
                                     <input ng-model="createPayoutV4Model.phoneNumber" class="form-control" type="text" placeholder="Enter phone number" ng-disabled="curlCreatePayoutV4ServiceBusy" ng-required="true">
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">First name</label>
-                                    <input ng-model="createPayoutV4Model.firstName" class="form-control" type="text" placeholder="Enter username" ng-disabled="curlCreatePayoutV4ServiceBusy" ng-required="true">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Last name</label>
-                                    <input ng-model="createPayoutV4Model.lastName" class="form-control" type="text" placeholder="Enter username" ng-disabled="curlCreatePayoutV4ServiceBusy" ng-required="true">
-                                </div>
-                                <div class="mb-3">
                                     <label class="form-label">Amount</label>
                                     <input ng-model="createPayoutV4Model.amount" class="form-control" type="text" placeholder="Enter amount" ng-disabled="curlCreatePayoutV4ServiceBusy" ng-required="true">
                                 </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Birth date</label>
-                                    <date-picker date="createPayoutV4Model.birthDate" isOptional="false" out="setCreatePayoutDate"></date-picker>
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-model="checkboxCreatePayout.personalIdentificationCode">
+                                        <label class="form-check-label">
+                                            Personal Identification Code
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-9 mt-2" ng-if="checkboxCreatePayout.personalIdentificationCode">
+                                        <input ng-model="createPayoutV4Model.personalIdentificationCode" class="form-control" type="text" placeholder="Enter personal Identification Code" ng-disabled="curlCreatePayoutV4ServiceBusy" ng-required="true">
+                                    </div>
                                 </div>
+                                <hr />
+                                <div class="row ml-3">
+                                    <div class="col-lg-3 mt-2">
+                                        <input class="form-check-input" type="checkbox" ng-change="changePartnerId()" ng-model="checkboxCreatePayout.match">
+                                        <label class="form-check-label">
+                                            Match personal data
+                                        </label>
+                                    </div>
+                                    <div ng-if="checkboxCreatePayout.match" class="col-lg-9 mt-2">
+                                        <div>
+                                            <input ng-model="createPayoutV4Model.firstName" class="form-control" type="text" placeholder="Enter firstname" ng-disabled="curlCreatePayoutV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <input ng-model="createPayoutV4Model.lastName" class="form-control" type="text" placeholder="Enter lastname" ng-disabled="curlCreatePayoutV4ServiceBusy" ng-required="true">
+                                        </div>
+                                        <div class="mt-2">
+                                            <date-picker date="createPayoutV4Model.birthDate" isOptional="false" out="setCreatePayoutDate"></date-picker>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr />
                                 <button ng-click="getCurlCreatePayoutV4()" class="btn btn-primary w-100px me-5px" ng-disabled="curlCreatePayoutV4ServiceBusy || transactionForm1.$invalid">Create payout <i ng-if="curlCreatePayoutV4ServiceBusy" class="fa fa-cog fa-spin"></i></button>
                             </fieldset>
                         </form>
