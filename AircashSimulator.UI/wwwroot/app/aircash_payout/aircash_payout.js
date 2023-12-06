@@ -27,6 +27,7 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         getCurlCheckTransactionStatus: getCurlCheckTransactionStatus,
         simulatePayoutError: simulatePayoutError,
         generateCheckUserSignature: generateCheckUserSignature,
+        generateCreatePayoutSignature: generateCreatePayoutSignature,
     }
     );
     function checkUser(checkUserRequest) {
@@ -147,6 +148,15 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
             method: 'POST',
             url: config.baseUrl + "AircashPayout/GenerateCheckUserSignature",
             data: checkUserModel
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function generateCreatePayoutSignature(createPayoutModel) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/GenerateCreatePayoutSignature",
+            data: createPayoutModel
 
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -642,6 +652,80 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
      * END: CheckUser Response Example
      */
 
+    /*
+    * START: CreatePayout Response Example
+    */
+
+    $scope.createPayoutGenerateSignatureModel = {
+        firstname: "John",
+        lastname: "Doe",
+        birthDate: new Date('1990-01-01'),
+        personalIdentificationCode: "RSSMRAURTMLARSNL",
+        phoneNumber: "385981234567",
+        partnerUserID: "12345",
+        partnerID: "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0",
+        partnerTransactionID: "e631a091-f239-40ce-9f5d-bd9a443b2f55",
+        amount: 123.45,
+        currencyID: 978
+    }
+    $scope.checkboxCreatePayoutModel = {
+        personalIdentificationCode: false,
+        match: false
+    }
+    var typingTimerCreatePayout;
+    $scope.requestCreatePayoutChanged = function () {
+        $scope.createPayoutParameters = [];
+
+        setRequestExamples($scope.createPayoutGenerateSignatureModel);
+
+        if ($scope.checkboxCreatePayoutModel.match)
+            $scope.createPayoutParameters.push(
+                $scope.requestExample.firstName,
+                $scope.requestExample.lastName,
+                $scope.requestExample.birthDate,
+            );
+        if ($scope.checkboxCreatePayoutModel.personalIdentificationCode) $scope.createPayoutParameters.push($scope.requestExample.personalIdentificationCode);
+
+        clearTimeout(typingTimerCreatePayout);
+        typingTimerCreatePayout = setTimeout(() => {
+            $scope.generateCreatePayoutSignature();
+        }, 1000);
+    }
+
+    $scope.generateCreatePayoutSignatureBusy = false;
+    $scope.generateCreatePayoutSignatureResponded = false;
+    $scope.generateCreatePayoutSignature = function () {
+        $scope.generateCreatePayoutSignatureBusy = true;
+        $scope.generateCreatePayoutSignatureResponded = false;
+        $scope.createPayoutRequestExample = {
+            partnerUserID: $scope.createPayoutGenerateSignatureModel.partnerUserID,
+            partnerID: $scope.createPayoutGenerateSignatureModel.partnerID,
+            phoneNumber: $scope.createPayoutGenerateSignatureModel.phoneNumber,
+            partnerTransactionID: $scope.createPayoutGenerateSignatureModel.partnerTransactionID,
+            amount: $scope.createPayoutGenerateSignatureModel.amount,
+            currencyID: $scope.createPayoutGenerateSignatureModel.currencyID,
+            parameters: $scope.createPayoutParameters
+        }
+        aircashPayoutService.generateCreatePayoutSignature($scope.createPayoutRequestExample)
+            .then(function (response) {
+                if (response) {
+                    $scope.generateCreatePayoutSignatureResponse = JSON.stringify(response.aircashPayoutCreatePayout, null, 4);
+                    $scope.createPayoutRequestExampleSequence = response.sequence;
+                }
+                $scope.generateCreatePayoutSignatureBusy = false;
+                $scope.generateCreatePayoutSignatureResponded = true;
+            }, () => {
+                $rootScope.showGritter("Error");
+                $scope.generateCreatePayoutSignatureBusy = false;
+            });
+    }
+
+    $scope.requestCreatePayoutChanged();
+
+    /*
+     * END: CreatePayout Response Example
+     */
+
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
         $scope.getTransactions(false);
@@ -650,6 +734,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     $scope.checkUserModelSetDate = function (date) {
         $scope.checkUserGenerateSignatureModel.birthDate = date;
         $scope.requestCheckUserChanged();
+    }
+    $scope.createPayoutModelSetDate = function (date) {
+        $scope.createPayoutGenerateSignatureModel.birthDate = date;
+        $scope.requestCreatePayoutChanged();
     }
     $scope.setCheckUserDate = function (date) {
         $scope.checkUserV4Model.birthDate = date;

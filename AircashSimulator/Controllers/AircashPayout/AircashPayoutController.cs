@@ -171,7 +171,13 @@ namespace AircashSimulator.Controllers
 
             return new { AircashPayoutCheckUser = checkUserRequest, Sequence = sequence };
         }
-        //public async Task<object> GenerateCreatePayoutSignature(CreatePayoutV4DTO createPayoutV4DTO) { }
+        public async Task<object> GenerateCreatePayoutSignature(CreatePayoutV4DTO createPayoutV4DTO) {
+            var createPayoutRequest = AircashPayoutService.GetCreatePayoutV4Request(createPayoutV4DTO.PhoneNumber, createPayoutV4DTO.PartnerTransactionID, createPayoutV4DTO.Amount, createPayoutV4DTO.CurrencyID, createPayoutV4DTO.PartnerUserID, createPayoutV4DTO.PartnerID, createPayoutV4DTO.Parameters);
+            var sequence = AircashSignatureService.ConvertObjectToString(createPayoutRequest);
+            createPayoutRequest.Signature = AircashSignatureService.GenerateSignature(sequence, SettingsService.TestAircashPaymentPath, SettingsService.TestAircashPaymentPass);
+
+            return new { AircashPayoutCreatePayout = createPayoutRequest, Sequence = sequence };
+        }
     }
 
 }
