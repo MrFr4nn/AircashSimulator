@@ -163,6 +163,13 @@ namespace AircashSimulator.Controllers.AircashFrame
             return Ok();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> NotificationCashierFrameV2Unprocessable([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        {
+            return UnprocessableEntity();
+        }
+
+
         [HttpPost]
         public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
