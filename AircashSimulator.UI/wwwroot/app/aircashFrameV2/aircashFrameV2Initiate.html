@@ -35,6 +35,17 @@
         <p>
             To receive the frame link, partner needs to send a POST request to the URL of a desired environment using parameters in the table below within the JSON request body.
         </p>
+        <p>
+            Please don't encode url from request parameters (NotificationUrl, SuccessUrl, DeclineUrl, CancelUrl, OriginUrl)
+        </p>
+        <ul>
+            <li>
+                An example of a encoded NotificationUrl: https%3A%2F%2Fdev-simulator-api.aircash.eu%2Fapi%2FAircashFrame%2FNotificationCashierFrameV2
+            </li>
+            <li>
+                An example of the NotificationUrl that Aircash system expects in a request: https://dev-simulator-api.aircash.eu/api/AircashFrame/NotificationCashierFrameV2
+            </li>
+        </ul>
         <br />
 <uib-tabset active="active">
             <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
