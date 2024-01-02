@@ -1308,7 +1308,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 "status": 1,
                 "currencyId": 978,
                 "aircashTransactionId": "95ff5846-f10c-4870-bcf1-e5a0014d0e37",
-                "parameters": [],
+                "parameters": [{
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }],
                 "events": [
                     {
                         "dateTimeUTC": "2023-09-01T06:07:38",
