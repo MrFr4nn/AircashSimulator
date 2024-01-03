@@ -61,7 +61,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Birth date</label>
-                        <date-picker date="matchPersonalDataModel.birthDateAircashUser" isOptional="false" out="setPersonalDataDateAircashUser"></date-picker>
+                        <date-picker date="matchPersonalDataModel.birthDateAircashUser" isoptional="false" out="setPersonalDataDateAircashUser"></date-picker>
                     </div>
                 </fieldset>
             </form>
@@ -81,7 +81,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Birth date</label>
-                        <date-picker date="matchPersonalDataModel.birthDatePartnerUser" isOptional="false" out="setPersonalDataDatePartnerUser"></date-picker>
+                        <date-picker date="matchPersonalDataModel.birthDatePartnerUser" isoptional="false" out="setPersonalDataDatePartnerUser"></date-picker>
                     </div>
                     <button ng-click="matchPersonalData()" class="btn btn-primary w-100px me-5px" ng-disabled="matchPersonalDataServiceBusy|| checkUserForm.$invalid">Compare users <i ng-if="matchPersonalDataServiceBusy" class="fa fa-cog fa-spin"></i></button>
                 </fieldset>
