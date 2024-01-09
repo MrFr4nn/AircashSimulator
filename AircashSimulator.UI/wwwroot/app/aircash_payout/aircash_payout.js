@@ -223,20 +223,23 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
         personalIdentificationCode: false
     }
     $scope.changePartnerId = function () {
-        if ($scope.checkboxCreatePayout.match && $scope.createPayoutV4Model.partnerId == $scope.partnerIds.AircashPayoutPartnerId) {
-            $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
-            $rootScope.showGritter("CreatePayout PartnerID changed");
-        } else if (!$scope.checkboxCreatePayout.match && $scope.createPayoutV4Model.partnerId == $scope.partnerIds.AircashPayoutV4PartnerId) {
-            $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
-            $rootScope.showGritter("CreatePayout PartnerID changed");
+        if ($scope.partnerIds.AircashPayoutPartnerId != $scope.partnerIds.AircashPayoutV4PartnerId) {
+            if ($scope.checkboxCreatePayout.match && $scope.createPayoutV4Model.partnerId == $scope.partnerIds.AircashPayoutPartnerId) {
+                $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
+                $rootScope.showGritter("CreatePayout PartnerID changed");
+            } else if (!$scope.checkboxCreatePayout.match && $scope.createPayoutV4Model.partnerId == $scope.partnerIds.AircashPayoutV4PartnerId) {
+                $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
+                $rootScope.showGritter("CreatePayout PartnerID changed");
+            }
+            if ($scope.checkboxCheckUser.match && $scope.checkUserV4Model.partnerId == $scope.partnerIds.AircashPayoutPartnerId) {
+                $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
+                $rootScope.showGritter("CheckUser PartnerID changed");
+            } else if (!$scope.checkboxCheckUser.match && $scope.checkUserV4Model.partnerId == $scope.partnerIds.AircashPayoutV4PartnerId) {
+                $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
+                $rootScope.showGritter("CheckUser PartnerID changed");
+            }
         }
-        if ($scope.checkboxCheckUser.match && $scope.checkUserV4Model.partnerId == $scope.partnerIds.AircashPayoutPartnerId) {
-            $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
-            $rootScope.showGritter("CheckUser PartnerID changed");
-        } else if (!$scope.checkboxCheckUser.match && $scope.checkUserV4Model.partnerId == $scope.partnerIds.AircashPayoutV4PartnerId) {
-            $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
-            $rootScope.showGritter("CheckUser PartnerID changed");
-        }
+
     }
     $scope.setDefaults = function () {
         $scope.changePartnerId();
