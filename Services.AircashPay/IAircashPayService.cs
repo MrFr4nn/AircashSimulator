@@ -10,5 +10,6 @@ namespace Services.AircashPay
         Task<object> ConfirmTransaction(TransactionDTO transactionDTO);
         Task<object> CancelTransaction(CancelTransactionDTO cancelTransactionDTO, EnvironmentEnum environment);
         Task<object> RefundTransaction(RefundTransactionDTO refundTransactionDTO, EnvironmentEnum environment);
+        Task<object> GeneratePartnerCodeCashRegister(GeneratePartnerCodeDTO generatePartnerCodeDTO, EnvironmentEnum environment);
     }
 }

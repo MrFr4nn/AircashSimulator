@@ -218,5 +218,62 @@ namespace Services.AircashPay
             };
             return frontResponse;
         }
+
+        public async Task<object> GeneratePartnerCodeCashRegister(GeneratePartnerCodeDTO generatePartnerCodeDTO, EnvironmentEnum environment)
+        {
+            var requestDateTime = DateTime.UtcNow;
+            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == generatePartnerCodeDTO.PartnerId).FirstOrDefault();
+            var aircashGeneratePartnerCodeResponse = new object();
+            var aircashGeneratePartnerCodeRequestForSignature = new AircashGeneratePartnerCodeRequestForSignature
+            {
+                PartnerID = generatePartnerCodeDTO.PartnerId,
+                Amount = generatePartnerCodeDTO.Amount,
+                CurrencyID = (CurrencyEnum)generatePartnerCodeDTO.CurrencyId,
+                PartnerTransactionID = generatePartnerCodeDTO.PartnerTransactionId,
+                Description = generatePartnerCodeDTO.Description,
+                LocationID = generatePartnerCodeDTO.LocationId,
+            };
+            var aircashGeneratePartnerCodeRequest = new AircashGeneratePartnerCodeRequest
+            {
+                PartnerID = generatePartnerCodeDTO.PartnerId,
+                Amount = generatePartnerCodeDTO.Amount,
+                CurrencyID = (CurrencyEnum)generatePartnerCodeDTO.CurrencyId,
+                PartnerTransactionID = generatePartnerCodeDTO.PartnerTransactionId,
+                Description = generatePartnerCodeDTO.Description,
+                LocationID = generatePartnerCodeDTO.LocationId,
+                ValidForPeriod = generatePartnerCodeDTO.ValidForPeriod
+            };
+            var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequestForSignature);
+            Logger.LogInformation(partner.PrivateKey);
+            var signature = SignatureService.GenerateSignature(generatePartnerCodeDTO.PartnerId, dataToSign);
+            aircashGeneratePartnerCodeRequest.Signature = signature;
+            var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
+            var responseDateTime = DateTime.UtcNow;
+                       
+
+            if (response.ResponseCode == System.Net.HttpStatusCode.OK)
+            {
+                aircashGeneratePartnerCodeResponse = JsonConvert.DeserializeObject<AircashGeneratePartnerCodeResponse>(response.ResponseContent);
+            }
+            else
+            {
+                aircashGeneratePartnerCodeResponse = JsonConvert.DeserializeObject<ErrorResponse>(response.ResponseContent);
+            }
+
+            var codeLinkResponse = new ResponseCashRegister
+            {
+                ServiceResponse = aircashGeneratePartnerCodeResponse
+            };
+            /*var frontResponse = new Response
+            {
+                ServiceRequest = aircashGeneratePartnerCodeRequest,
+                ServiceResponse = aircashGeneratePartnerCodeResponse,
+                Sequence = dataToSign,
+                RequestDateTimeUTC = requestDateTime,
+                ResponseDateTimeUTC = responseDateTime
+            };*/
+            return codeLinkResponse;
+        }
+
     }
 }
