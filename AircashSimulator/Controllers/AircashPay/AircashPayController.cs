@@ -133,7 +133,7 @@ namespace AircashSimulator.Controllers
                 LocationId = generatePartnerCodeRequest.LocationID,
                 CurrencyId = 978,
                 UserId = Guid.NewGuid().ToString(),
-                PartnerTransactionId = Guid.NewGuid().ToString(),
+                PartnerTransactionId = generatePartnerCodeRequest.PartnerTransactionId != null? generatePartnerCodeRequest.PartnerTransactionId: Guid.NewGuid().ToString(),
             };
 
             var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, generatePartnerCodeRequest.Environment);
