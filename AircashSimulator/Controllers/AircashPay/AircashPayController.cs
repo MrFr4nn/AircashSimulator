@@ -147,7 +147,6 @@ namespace AircashSimulator.Controllers
             var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
             {
                 PartnerId = SettingsService.AcPayCashRegisterId,
-                //PartnerId = new Guid("3b2cb2e1-509f-49d3-a35c-9ad38823a9f3"),
                 Amount = generatePartnerCodeRequest.Amount,
                 Description = generatePartnerCodeRequest.Description,
                 LocationId = generatePartnerCodeRequest.LocationID,
