@@ -66,6 +66,8 @@ namespace Services.HttpRequest
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashFrameTestUrl : AircashConfiguration.AircashFrameDevTestUrl;
                 case EndpointEnum.FrameV2:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashFrameBaseUrl : AircashConfiguration.AircashFrameDevBaseUrl;
+                case EndpointEnum.FrameV3:
+                    return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashFrameV3BaseUrl : AircashConfiguration.AircashFrameV3DevBaseUrl;
                 case EndpointEnum.SalesV2:
                     return environment == EnvironmentEnum.Staging ? AircashConfiguration.AircashSalesBaseUrl : AircashConfiguration.AircashSalesDevBaseUrl;
                 default:

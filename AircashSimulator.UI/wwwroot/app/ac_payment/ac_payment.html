@@ -58,6 +58,8 @@
         </li>
     </ol>
 </p>
+<p>Check the Diagram flow <a href="../../images/AMD_Diagram_flow.svg" download rel="noopener noreferrer">here</a></p>
+<p>Check the HTTP network flow diagram <a href="../../images/AMD_HTTP_network_diagram.svg" download rel="noopener noreferrer">here</a></p>
 <p>Watch video examples <a href="" ng-click="showVideoMarketplaceDeposit()">here</a>.</p>
 <hr />
 <h1 style="text-align:justify">Methods called by Aircash on the partner system</h1>
@@ -71,7 +73,8 @@
 <ng-include src="'app/ac_payment/signature.html?v=' + appVersion"></ng-include>
 <ng-include src="'app/ac_payment/error_code_examples.html?v=' + appVersion"></ng-include>
 <ng-include src="'app/ac_payment/technical_integration_flow.html?v=' + appVersion"></ng-include>
-<ng-include src="'app/ac_payment/deep_link.html?v=' + appVersion"></ng-include>
+<ng-include src="'app/ac_payment/transaction_already_processed.html?v=' + appVersion"></ng-include>
+<ng-include ng-if="showDeepLink" src="'app/ac_payment/deep_link.html?v=' + appVersion"></ng-include>
 <ng-include src="'app/ac_payment/production_process.html?v=' + appVersion"></ng-include>
 <ng-include src="'app/ac_payment/FAQ.html?v=' + appVersion"></ng-include>
 <ng-include src="'app/ac_payment/aircash_app_deposit.html?v=' + appVersion"></ng-include>

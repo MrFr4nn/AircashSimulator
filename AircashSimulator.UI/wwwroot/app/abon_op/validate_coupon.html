@@ -549,8 +549,7 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                                 URL that is called when status is changed. When request is received on this URL partner must call CheckStatus again.
                             </td>
                             <td>
-                                YES,
-                                conditionally
+                                NO
                             </td>
                         </tr>
                         <tr>
@@ -576,7 +575,7 @@ Request example:
             <jsonformatter data="aBonDeposit.validateCouponWithAutorization.requestExample"></jsonformatter>
             <pre>
 Sequence:
-CouponCode=5460446045144493&NotificationUrl=http://call-me.com/abon_notification&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&PhoneNumber=385981234567&UserId=123
+CouponCode=5460446045144493&NotificationUrl=http://call-me.com/abon_notification&Parameters=Key=PayerFirstName&Value=John,Key=PayerLastName&Value=Doe,Key=PayerBirthDate&Value=1990-01-01,Key=PersonalIdentificationCode&Value=RSSMRAURTMLARSNL&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=4a4d9e48-77ca-4144-844b-cfe535af6a5c&PhoneNumber=385981234567&UserId=123
 
 Signature:
 AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVffvn8Qk61/FcyJHyo/2FS2CytUrqjsGYKnJUmq3n2aAECzT1wtd+yiAuPBbiAA05NDtLnaCMw0atOj8XU/nhu8ETsml2gKGI9woz/4Wf3WU+baUJM5+yCWnQkWVQoKzk9mtSl+qPqTvCvuxuC0V0TQcUJFGLLiOiNFE6hDpbDgOp45nlcjkq0gFHE7seNcUW8GDa9bew+HEvTKa4r9fIiz5xfvwoEZj821JdhUDiLuQAbkjBa91uWultE3KiOcUJryBhAYllWG/HR0OzGh8vwAgxazV+sy1lsb5RiltQYP9c+5e2jgkwuRf6OFgam0yClse1ErGsX8F2RSNAlnt2/hsIyjthyeJxTmyZhO7eMcMGwMC/RUA7FY9WMhipFQOSUHw/zBkx2CXd0oFa1AKQZTixJ/ynvOrdQlT1tz/R4bPEJKXKongZ0JqAK1le+s+PeQvPh8e45FovBfX9TlIZLHmU6mI5xMwgcSCiYUksqc6sPsGTveN+Qbz1BkC1LZwj8HAmSy+0zBFvUK/HEEdvWLVMMIRfzLDAspWvDx3MZQZgDOMWCzLl4jwqSH6F40IQmEAqDph/Cbg2VvnWZcTFBkuiCvig=
@@ -671,14 +670,14 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="12"><b>400</b></td>
-                            <td rowspan="12">
+                            <td rowspan="11"><b>400</b></td>
+                            <td rowspan="11">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid PartnerId</td>
                             <td>-</td>
-                            <td rowspan="12">
+                            <td rowspan="11">
                                 The response will contain an error code,
                                 message and optionally additionalData.
                             </td>
@@ -696,7 +695,7 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                         <tr>
                             <td><b>4</b></td>
                             <td>Coupon Already Used</td>
-                            <td>ISOCurrency, CouponValue, PartnerTransactionId</td>
+                            <td>ISOCurrency, CouponValue, PartnerTransactionId, CouponSerialNumber</td>
                         </tr>
                         <tr>
                             <td><b>5</b></td>
@@ -706,11 +705,6 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                         <tr>
                             <td><b>6</b></td>
                             <td>Coupon Country Not Allowed</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><b>10</b></td>
-                            <td>Invalid notification URL</td>
                             <td>-</td>
                         </tr>
                         <tr>
@@ -765,6 +759,9 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                     </tbody>
                 </table>
             </div>
+        </uib-tab>
+        <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
+            <jsonformatter data="aBonDeposit.validateCouponWithAutorization.errorResponseExample"></jsonformatter>
         </uib-tab>
         <!--<uib-tab index="request-tab-7" heading="Error response example" classes="nav-item">
         <uib-tabset class="row tabs-left">
@@ -885,7 +882,7 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
             </uib-tab>
         </uib-tabset>
     </uib-tab>-->
-        <uib-tab index="request-tab-6" heading="Try it out" classes="nav-item">
+        <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
             <div class="row">
                 <div class="col-md-3">
                     <form action="/" method="POST" name="validateForm0">
@@ -922,15 +919,19 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                             </div>
                             <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
                                 <label class="form-label">User's First Name</label>
-                                <input ng-model="checkStatusCouponModel.userFirstName" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
+                                <input ng-model="checkStatusCouponModel.userFirstName" class="form-control" type="text" placeholder="Enter First Name" ng-required="true">
                             </div>
                             <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2" v>
                                 <label class="form-label">User's Last Name</label>
-                                <input ng-model="checkStatusCouponModel.userLastName" class="form-control" type="text" placeholder="Enter Phone Number" ng-required="true">
+                                <input ng-model="checkStatusCouponModel.userLastName" class="form-control" type="text" placeholder="Enter Last Name" ng-required="true">
                             </div>
                             <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
                                 <label class="form-label">User's Birth date</label>
                                 <date-picker date="checkStatusCouponModel.userBirthDate" isOptional="false" out="setCheckStatusDate"></date-picker>
+                            </div>
+                            <div class="mb-3" ng-if="select.CheckStatusUseAuthorization == 2">
+                                <label class="form-label">User's Personal Identification Code</label>
+                                <input ng-model="checkStatusCouponModel.personalIdentificationCode" class="form-control" type="text" placeholder="Enter Personal Identification Code" ng-required="false">
                             </div>
                             <button ng-click="checkStatusCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="checkStatusCouponBusy || validateForm0.$invalid">Validate <i ng-if="checkStatusCouponBusy" class="fa fa-cog fa-spin"></i></button>
                         </fieldset>
@@ -949,32 +950,32 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
             </div>
         </uib-tab>
         <!--<uib-tab index="request-tab-9" heading="Curl" classes="nav-item">
-            <div class="row">
-                <div class="col-md-3">
-                    <form action="/" method="POST" name="validateForm1">
-                        <fieldset>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Provider Id</label>
-                                <input ng-model="validateCouponModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label" for="exampleInputEmail1">Coupon code</label>
-                                <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
-                            </div>
-                            <button ng-click="getCurlValidateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="curlValidateBusy || validateForm1.$invalid">Get Curl <i ng-if="curlValidateBusy" class="fa fa-cog fa-spin"></i></button>
+        <div class="row">
+            <div class="col-md-3">
+                <form action="/" method="POST" name="validateForm1">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Provider Id</label>
+                            <input ng-model="validateCouponModel.providerId" class="form-control" type="text" placeholder="Enter provider id" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="exampleInputEmail1">Coupon code</label>
+                            <input ng-model="validateCouponModel.couponCode" class="form-control" type="text" placeholder="Enter coupon code" ng-required="true">
+                        </div>
+                        <button ng-click="getCurlValidateCoupon()" class="btn btn-primary w-100px me-5px" ng-disabled="curlValidateBusy || validateForm1.$invalid">Get Curl <i ng-if="curlValidateBusy" class="fa fa-cog fa-spin"></i></button>
 
-                        </fieldset>
-                    </form>
-                </div>
-                <br />
-
-                <div ng-if="curlValidateResponded" class="col-md-9">
-                    <pre>
-                    <jsonformatter data="CurlResponse"></jsonformatter>
-                </pre>
-                    <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponse)">Copy</button>
-                </div>
+                    </fieldset>
+                </form>
             </div>
-        </uib-tab>-->
+            <br />
+
+            <div ng-if="curlValidateResponded" class="col-md-9">
+                <pre>
+                <jsonformatter data="CurlResponse"></jsonformatter>
+            </pre>
+                <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlResponse)">Copy</button>
+            </div>
+        </div>
+    </uib-tab>-->
     </uib-tabset>
 </div>

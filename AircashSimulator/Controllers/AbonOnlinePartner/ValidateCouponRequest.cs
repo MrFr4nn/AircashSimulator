@@ -1,5 +1,5 @@
 ﻿
-namespace AircashSimulator
+namespace AircashSimulator.Controllers.AbonOnlinePartner
 {
     public class ValidateCouponRequest
     {

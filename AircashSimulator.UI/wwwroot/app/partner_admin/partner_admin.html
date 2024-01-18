@@ -33,12 +33,12 @@
                             </button>
                         </div>
                         <div class=" mb-3 mr-2">
-                            <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [8]);">
+                            <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [16]);">
                                 <i class="fas fa-plus-square" aria-hidden="true" style="margin-right:3px;"></i> AC Pay Partner
                             </button>
                         </div>
                         <div class=" mb-3 mr-2">
-                            <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [6,5,3,8]);">
+                            <button class="btn btn-primary" ng-click="toggePartnerNewModal(true, [6,8,16,17]);">
                                 <i class="fas fa-plus-square" aria-hidden="true" style="margin-right:3px;"></i> AC Gaming Merchant
                             </button>
                         </div>
@@ -75,6 +75,7 @@
                         <table id="table" class="table table-bordered table-hover table-condensed table-striped" style="font-size:12px">
                             <thead>
                                 <tr>
+                                    <th>Partner Id</th>
                                     <th>Partner name</th>
                                     <th>Private Key Path</th>
                                     <th>Private Key Pass</th>
@@ -89,6 +90,7 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="p in partners">
+                                    <td>{{p.partnerId}}</td>
                                     <td>{{p.partnerName}}</td>
                                     <td>{{p.privateKey}}</td>
                                     <td>{{p.privateKeyPass}}</td>

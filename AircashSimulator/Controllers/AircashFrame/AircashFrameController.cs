@@ -89,6 +89,22 @@ namespace AircashSimulator.Controllers.AircashFrame
         }
 
         [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> CancelPayoutFrameV2(CancelPayoutDTO cancelPayoutDTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.CancelPayout(cancelPayoutDTO.PartnerId, cancelPayoutDTO.PartnerTransactionId.ToString(), environment);
+            return Ok(response);
+        }
+        public async Task<IActionResult> GetCurlCancelPayoutFrameV2(CancelPayoutDTO cancelPayoutDTO)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request = AircashFrameV2Service.GetCancelPayoutRequest(cancelPayoutDTO.PartnerId, cancelPayoutDTO.PartnerTransactionId.ToString());
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCancelPayoutEndpoint(environment));
+            return Ok(curl);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> InitiateCashierFrameV2(InitiateRequestAircashFrameV2 initiateRequest)
         {
             var partnerId = SettingsService.AircashFramePartnerId;
@@ -144,8 +160,15 @@ namespace AircashSimulator.Controllers.AircashFrame
         {
             await AircashFrameV2Service.NotificationCashierFrameV2(partnerTransactionId);
             await SendHubMessage("TransactionConfirmedMessage", "Payment received, </br>transactionId: " + partnerTransactionId + " , </br>time: " + DateTime.Now, 1);
-            return Ok();            
+            return Ok();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> NotificationCashierFrameV2Unprocessable([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId)
+        {
+            return UnprocessableEntity();
+        }
+
 
         [HttpPost]
         public async Task<IActionResult> TransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
@@ -161,6 +184,14 @@ namespace AircashSimulator.Controllers.AircashFrame
             var response = await AircashFrameV2Service.CheckTransactionStatusV2Frame(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId, environment);
             return Ok(response);
         }
+        [HttpPost]
+        public async Task<IActionResult> TransactionStatusV3FrameV2(TransactionStatusRequest transactionStatusRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var response = await AircashFrameV2Service.CheckTransactionStatusV3Frame(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId, environment);
+            return Ok(response);
+        }
+        [HttpPost]
         public async Task<IActionResult> GetCurlTransactionStatusFrameV2(TransactionStatusRequest transactionStatusRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
@@ -168,11 +199,20 @@ namespace AircashSimulator.Controllers.AircashFrame
             var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCheckTransactionStatusEndpoint(environment));
             return Ok(curl);
         }
+        [HttpPost]
         public async Task<IActionResult> GetCurlTransactionStatusV2FrameV2(TransactionStatusRequest transactionStatusRequest)
         {
             var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
             var request =  AircashFrameV2Service.GetCheckTransactionStatusFrameRequest(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId);
             var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCheckTransactionStatusV2Endpoint(environment));
+            return Ok(curl);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetCurlTransactionStatusV3FrameV2(TransactionStatusRequest transactionStatusRequest)
+        {
+            var environment = await UserService.GetUserEnvironment(UserContext.GetUserId(User));
+            var request =  AircashFrameV2Service.GetCheckTransactionStatusFrameRequest(transactionStatusRequest.PartnerId, transactionStatusRequest.TransactionId);
+            var curl = HelperService.GetCurl(request, AircashFrameV2Service.GetCheckTransactionStatusV3Endpoint(environment));
             return Ok(curl);
         }
 

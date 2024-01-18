@@ -33,7 +33,6 @@ namespace AircashSimulator.Controllers
         }
         
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> GeneratePartnerCode(GeneratePartnerCodeRequest generatePartnerCodeRequest)
         {
             var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
@@ -60,6 +59,13 @@ namespace AircashSimulator.Controllers
             bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPayPublicKey}");
             if (valid == true)
             {
+                if (aircashConfirmTransactionRequest.Amount > 1000) {
+                    return BadRequest(new ConfirmTransactionErrorResponse {
+                        ExitTransaction = true,
+                        ErrorCode = 4001,
+                        ErrorMessage = "Amount over the limit"
+                    });
+                }
                 var transactionDTO = new TransactionDTO
                 {
                     Amount = aircashConfirmTransactionRequest.Amount,
@@ -127,7 +133,7 @@ namespace AircashSimulator.Controllers
                 LocationId = generatePartnerCodeRequest.LocationID,
                 CurrencyId = 978,
                 UserId = Guid.NewGuid().ToString(),
-                PartnerTransactionId = Guid.NewGuid().ToString(),
+                PartnerTransactionId = generatePartnerCodeRequest.PartnerTransactionId != null? generatePartnerCodeRequest.PartnerTransactionId: Guid.NewGuid().ToString(),
             };
 
             var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, generatePartnerCodeRequest.Environment);

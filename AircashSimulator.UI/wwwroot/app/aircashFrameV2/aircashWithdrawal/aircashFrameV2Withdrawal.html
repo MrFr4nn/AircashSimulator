@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="width: 100%">
+                <h2>Aircash Withdrawal</h2>
+                <p style="text-align:justify">
+                    This chapter describes the withdrawal process. The described process explains how the user can transfer assets from the Partner's system to the Aircash system.<br />
+                </p>
+                <p>
+                    The process consists of the following steps:
+                </p>
+                <ol>
+                    <li>
+                        The user selects Aircash as the payout option and enters the amount he wants to withdraw.
+                    </li>
+                    <li>
+                        Partner’s system initiates the payout with the amount, currency, transaction id and other
+                        mandatory parameters.
+                    </li>
+                    <li>
+                        Aircash system responds with a URL to which user needs to be redirected.
+                    </li>
+                    <li>
+                        Aircash withdrawal form is displayed to the user.
+                    </li>
+                    <li>
+                        A user enters mobile phone number to which he wants to make payout
+                    </li>
+                    <li>
+                        Aircash will check wheather the user exists in the Aircash system.
+                    </li>
+                    <li>
+                        If the user exists and all prerequisites are met to receive the payout, Aircash will send a push notification to let the partner system know that the payout is ready to receive.
+                    </li>
+                    <li>
+                        Partner system needs to check the status within the Aircash system by sending status request. If Aircash system responds with pending status, partner system can reserve the funds.
+                    </li>
+                    <li>
+                        Once the reserved funds are ready to be confirmed (either manually or automatically), partner system needs to send final Confirmation request to Aircash system.
+                    </li>
+                    <li>
+                        Upon receiving the confirmation request, Aircash system will top up the Aircash account.
+                    </li>
+                </ol>
+                <p>Watch video example <a href="" ng-click="showVideoWithdrawal()">here</a>.</p>
+        <hr />
+        <p>Methods called by partner system on the Aircash system:</p>
+        <ul>
+            <li>
+                Initiate – POST method used to generate Aircash frame URL
+            </li>
+            <li>
+                Status – POST method to validate the status of the transaction
+            </li>
+            <li>
+                Confirm – POST method to confirm the transaction (only for the withdrawal flow)
+            </li>
+        </ul>
+        <p>Methods called by Aircash on the partner system</p>
+        <ul>
+            <li>
+                The Partner should open one GET method to which Aircash will send notification about transaction status change.
+            </li>
+        </ul>
+        <br />
+        <p>In each method partner should send header Content-Type with value application/json</p>
+        <br />
+        <p>All Aircash methods have common behaviour in case of responses:</p>
+        <ul>
+            <li>
+                In case of successful response Aircash system will return HTTP response 200 OK with JSON content
+                in response.
+            </li>
+            <li>
+                In case of server error Aircash system will return HTTP response 500 Server error
+            </li>
+            <li>
+                In case of bad request Aircash system will return HTTP response 400 Bad request with json content
+                about error
+            </li>
+            <li>
+                In case of invalid partner ID or invalid signature, Aircash system will return 401 Unauthorized
+            </li>
+        </ul>
+
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Initiate.html?v=' + appVersion" ng-init="initiateModelSelected.data = initiateModels[2]; setInititateModel();"></ng-include>
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Notification.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Status.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Confirm.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Cancel.html?v=' + appVersion"></ng-include>
+
+
+        <!-- #modal-dialog -->
+        <div class="modal fade" id="frameModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Aircash Frame</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <iframe src="{{frameUrl | trusted}}" title="Aircash Frame" width="450px" height="700px" frameborder="0"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="videoModalWithdrawal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Withdrawal</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <video width="600" controls muted>
+                            <source src="../../videos/frame_withdrawal.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

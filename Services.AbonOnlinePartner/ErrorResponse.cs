@@ -26,6 +26,7 @@ namespace Services.AbonOnlinePartner
 
     public class DataV2
     {
+        public string couponSerialNumber { get; set; }
         public decimal CouponValue { get; set; }
         public string ISOCurrency { get; set; }
         public string PartnerTransactionId { get; set; }

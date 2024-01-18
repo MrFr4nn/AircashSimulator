@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="width: 100%">
+        <h2>Aircash Abon deposit</h2>
+        <p>
+            Aircash Abon deposit is a topup payment method via paper voucher. User needs to enter 16-digit code of the voucher and funds are instantly visible on the user account.
+        </p>
+        <p>
+            The process consists of the following steps:
+        </p>
+
+        <ol>
+            <li>
+                The user selects Abon as the deposit option.
+            </li>
+            <li>
+                Merchant’s system initiates the payment.
+            </li>
+            <li>
+                Aircash system responds with a URL to which user needs to be redirected.
+            </li>
+            <li>
+                User enters the 16-digit code from the voucher and confirms the transaction.
+            </li>
+            <li>
+                Aircash system notifies merchant’s system by sending notification to designated URL
+            </li>
+            <li>
+                Confirmation message is displayed to the user and the redirection back to cashier happens.
+            </li>
+        </ol>
+        <p>Check the Diagram flow <a href="../../app/ac_frame/img/frame_abon.svg" download rel="noopener noreferrer">here</a> or try to make a payment via <a href="https://dev-simulator.aircash.eu/#!/cashier/aircashFrameAbon" target="_blank">cashier simulator</a></p>
+        <p>Watch video example <a href="" ng-click="showVideoAbon()">here</a>.</p>
+
+        <hr />
+        <p>Methods called by partner system on the Aircash system:</p>
+        <ul>
+            <li>
+                Initiate – POST method used to generate Aircash frame URL
+            </li>
+            <li>
+                Status – POST method to validate the status of the transaction
+            </li>
+        </ul>
+        <p>Methods called by Aircash on the partner system</p>
+        <ul>
+            <li>
+                The Partner should open one GET method to which Aircash will send notification about transaction status change.
+            </li>
+        </ul>
+        <br />
+        <p>In each method partner should send header Content-Type with value application/json</p>
+        <br />
+        <p>All Aircash methods have common behaviour in case of responses:</p>
+        <ul>
+            <li>
+                In case of successful response Aircash system will return HTTP response 200 OK with JSON content
+                in response.
+            </li>
+            <li>
+                In case of server error Aircash system will return HTTP response 500 Server error
+            </li>
+            <li>
+                In case of bad request Aircash system will return HTTP response 400 Bad request with json content
+                about error
+            </li>
+            <li>
+                In case of invalid partner ID or invalid signature, Aircash system will return 401 Unauthorized
+            </li>
+        </ul>
+
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Initiate.html?v=' + appVersion" ng-init="initiateModelSelected.data = initiateModels[1]; setInititateModel();"></ng-include>
+        <br />
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2AbonAmountConfiguration.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Notification.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashFrameV2/aircashFrameV2Status.html?v=' + appVersion"></ng-include>
+
+
+        <!-- #modal-dialog -->
+        <div class="modal fade" id="frameModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Aircash Frame</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <iframe src="{{frameUrl | trusted}}" title="Aircash Frame" width="450px" height="700px" frameborder="0"></iframe>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="videoModalAbon">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Abon</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <video width="600" controls muted>
+                            <source src="../../videos/frame_abon.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-include src="'app/aircashFrameV2/testVoucher.html?v=' + appVersion"></ng-include>
+    </div>
+</body>
+</html>

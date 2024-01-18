@@ -16,16 +16,32 @@ cashierAbonModule.service("cashierAbonService", ['$http', '$q', 'handleResponseS
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
             generateCashierAbon: generateCashierAbon,
-            confirmCashierTransaction: confirmCashierTransaction
+            confirmCashierTransaction: confirmCashierTransaction,
+            confirmCashierTransactionV2: confirmCashierTransactionV2
         });
-        function confirmCashierTransaction(couponCode, phoneNumber) {
+        function confirmCashierTransaction(couponCode, phoneNumber, parameters) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AbonOnlinePartner/ConfirmCashierTransaction",
                 data: {
                     CouponCode: couponCode,
                     PhoneNumber: phoneNumber,
+                    Parameters: parameters,
                     Environment: $rootScope.environment
+                }
+            });
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        }
+        function confirmCashierTransactionV2(couponCode, phoneNumber, parameters) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "AbonOnlinePartner/AutorizationTransactionRequest",
+                data: {
+                    CouponCode: couponCode,
+                    PhoneNumber: phoneNumber,
+                    Parameters: parameters,
+                    Environment: $rootScope.environment,
+     
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -53,11 +69,73 @@ cashierAbonModule.controller("cashierAbonCtrl",
             }
 
             $scope.confirmBusy = false;
+            $scope.matchParameters = [];
             $scope.confirmCashierTransaction = function () {
                 $scope.confirmBusy = true;
-                cashierAbonService.confirmCashierTransaction($scope.confirmTransactionModel.couponCode.replaceAll('-', ''), $scope.confirmTransactionModel.phoneNumber)
+                if ($scope.useAuthorizationCheckBox) {
+                    $scope.matchParameters = [
+                        {
+                            key: "PayerFirstName",
+                            value: $scope.confirmTransactionModel.firstName
+                        },
+                        {
+                            key: "PayerLastName",
+                            value: $scope.confirmTransactionModel.lastName
+                        },
+                        {
+                            key: "PayerBirthDate",
+                            value: $scope.confirmTransactionModel.birthDate.toLocaleDateString('en-CA')
+                        }
+                    ];
+                } else {
+                    $scope.matchParameters = [];
+                    $scope.confirmTransactionModel.firstName = "";
+                    $scope.confirmTransactionModel.lastName = "";
+                    $scope.confirmTransactionModel.birthDate = "";
+                    $scope.confirmTransactionModel.phoneNumber = "";
+                }
+                cashierAbonService.confirmCashierTransaction($scope.confirmTransactionModel.couponCode.replaceAll('-', ''), $scope.confirmTransactionModel.phoneNumber, $scope.matchParameters)
                     .then(function (response) {
                         if (response.serviceResponse.code) {
+                            $rootScope.showGritter("Error", response.serviceResponse.message);
+                        }
+                        else {
+                            $rootScope.showGritter("Success");
+                        }
+                        $scope.confirmBusy = false;
+                    }, () => {
+                        $rootScope.showGritter("Error");
+                        $scope.confirmBusy = false;
+                    });
+            }
+
+            $scope.confirmCashierTransactionV2 = function () {
+                $scope.confirmBusy = true;
+                if ($scope.useAuthorizationCheckBox) {
+                    $scope.matchParameters = [
+                        {
+                            key: "PayerFirstName",
+                            value: $scope.confirmTransactionModel.firstName
+                        },
+                        {
+                            key: "PayerLastName",
+                            value: $scope.confirmTransactionModel.lastName
+                        },
+                        {
+                            key: "PayerBirthDate",
+                            value: $scope.confirmTransactionModel.birthDate.toLocaleDateString('en-CA')
+                        }
+                    ];
+                } else {
+                    $scope.matchParameters = [];
+                    $scope.confirmTransactionModel.firstName = "";
+                    $scope.confirmTransactionModel.lastName = "";
+                    $scope.confirmTransactionModel.birthDate = "";
+                    $scope.confirmTransactionModel.phoneNumber = "";
+                }
+                cashierAbonService.confirmCashierTransactionV2($scope.confirmTransactionModel.couponCode.replaceAll('-', ''), $scope.confirmTransactionModel.phoneNumber, $scope.matchParameters)
+                    .then(function (response) {
+                        if (response.serviceResponse && response.serviceResponse.code) {
                             $rootScope.showGritter("Error", response.serviceResponse.message);
                         }
                         else {
@@ -109,5 +187,8 @@ cashierAbonModule.controller("cashierAbonCtrl",
                     }
                 }
             };
+            $scope.setDate = function (date) {
+                $scope.confirmTransactionModel.birthDate = date;
+            }
         }
     ]);

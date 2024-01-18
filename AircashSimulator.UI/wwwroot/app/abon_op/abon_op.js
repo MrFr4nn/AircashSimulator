@@ -22,6 +22,8 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         confirmTransactionV2: confirmTransactionV2,
         validateSimulateError: validateSimulateError,
         confirmSimulateError: confirmSimulateError,
+        createAndSaveCoupons: createAndSaveCoupons,
+        getDenominations: getDenominations,
     });
     function validateCoupon(couponCode, providerId) {
         var request = $http({
@@ -122,6 +124,25 @@ abonOpModule.service("abonOpService", ['$http', '$q', 'handleResponseService', '
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+
+    function createAndSaveCoupons(partnerId) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonSalePartner/CreateMultipleCashierCoupon",
+            data: {
+                PartnerId: partnerId,
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function getDenominations(partnerId) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "Denominations/GetCashierDenominations",
+            data: { partnerId: partnerId }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 }
 ]);
 
@@ -132,7 +153,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
     if ($scope.partnerRoles.indexOf("AbonDeposit") == -1) {
         $location.path('/forbidden');
     }
-
+    $scope.abons = [];
     $scope.copyToClipboard = function (data) {
         navigator.clipboard.writeText(data);
     }
@@ -163,6 +184,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         partnerTransactionId: HelperService.NewGuid(),
         userId: HelperService.NewGuid()
     };    
+
     $scope.showCoupon = function () {
         $("#couponModal").modal("show");
     }
@@ -218,6 +240,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         $scope.checkStatusCouponModel.userFirstName = $scope.decodedToken.userFirstName;
         $scope.checkStatusCouponModel.userLastName = $scope.decodedToken.userLastName;
         $scope.checkStatusCouponModel.userBirthDate = new Date($scope.decodedToken.userBirthDate);
+        $scope.checkStatusCouponModel.personalIdentificationCode = "RSSMRAURTMLARSNL";
     }
     $scope.checkStatusSetAuthorizationValuesToNull = function () {
         $scope.checkStatusCouponModel.partnerTransactionId = null;
@@ -226,13 +249,14 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         $scope.checkStatusCouponModel.userFirstName = null;
         $scope.checkStatusCouponModel.userLastName = null;
         $scope.checkStatusCouponModel.userBirthDate = null;
+        $scope.checkStatusCouponModel.personalIdentificationCode = null;
     }
     $scope.checkStatusCouponResponded = false;
     $scope.checkStatusCouponBusy = false;
     $scope.checkStatusCoupon = function () {
         $scope.checkStatusCouponBusy = true;
         $scope.checkStatusCouponResponded = false;
-        var parameters = [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate.toLocaleDateString('en-CA') }];
+        var parameters = [{ key: "PayerFirstName", value: $scope.checkStatusCouponModel.userFirstName }, { key: "PayerLastName", value: $scope.checkStatusCouponModel.userLastName }, { key: "PayerBirthDate", value: $scope.checkStatusCouponModel.userBirthDate.toLocaleDateString('en-CA') }, { key: "PersonalIdentificationCode", value: $scope.checkStatusCouponModel.personalIdentificationCode }];
         if ($scope.select.CheckStatusUseAuthorization == 1) {
             $scope.checkStatusSetAuthorizationValuesToNull();
             parameters = null;
@@ -387,6 +411,75 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             $rootScope.showGritter("", "PartnerId changed in CheckStatus and ConfirmTransaction to PartnerId that dosen't use abon authorization");
         }
     }
+   
+
+    $scope.createMultipleServiceBusy = false;
+    $scope.abon = {};
+    $scope.createAndSaveCoupons = function () {
+        $scope.createMultipleServiceBusy = true;
+        abonOpService.createAndSaveCoupons($scope.abon.selectedAbonCountry.partnerId)
+            .then(function (response) {
+                var denominations = "";
+                response.forEach(x => denominations += x + "\n");
+                $scope.saveDonominations(denominations);
+            }, () => {
+                console.log("error");
+                $scope.createMultipleServiceBusy = false;
+            });
+    }
+
+    $scope.getDenominations = function () {
+        abonOpService.getDenominations($scope.abon.selectedAbonCountry.partnerId)
+            .then(function (response) {
+                if (response) {
+                    $scope.abons = response;
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.saveDonominations = function (textToWrite) {
+        let denominationsAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+        let downloadLink = document.createElement('a');
+        downloadLink.download = "Denominations.txt";
+        downloadLink.innerHTML = 'Download File';
+
+        if (window.webkitURL != null) {
+            downloadLink.href = window.webkitURL.createObjectURL(
+                denominationsAsBlob
+            );
+        } else {
+            downloadLink.href = window.URL.createObjectURL(denominationsAsBlob);
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+        }
+
+        downloadLink.click();
+        $scope.createMultipleServiceBusy = false;
+    }
+
+    $scope.setDefaults = function () {
+        $scope.abon_countries = [
+            { country: "HR", partnerId: "261d648d-6bd8-4f5c-baf6-d3fcd336f985", isoCurrencySymbol: "EUR" },
+            { country: "CZ", partnerId: "15246f56-53a8-446c-855a-39b427ba1e3d", isoCurrencySymbol: "CZK" },
+            /*{ country: "GB", partnerId: "12d6dd08-ae11-4dc3-80bd-14b2ac71bbc9", isoCurrencySymbol: "GBP" },*/
+            { country: "FR", partnerId: "9ed97bd7-dbc8-4839-ae9b-5c13cf5afb0f", isoCurrencySymbol: "EUR" },
+            { country: "DE", partnerId: "c3678f7c-dda3-4044-90c6-71f9dbdbbd7b", isoCurrencySymbol: "EUR" },
+            { country: "GR", partnerId: "5daed4c7-0667-451d-b870-3fddd4217935", isoCurrencySymbol: "EUR" },
+            { country: "IT", partnerId: "842fe19a-426b-4507-95e4-933a6a367164", isoCurrencySymbol: "EUR" },
+            { country: "PL", partnerId: "1eda4d60-4113-40bf-a20e-031bc290fc36", isoCurrencySymbol: "PLN" },
+            { country: "RO", partnerId: "9be565cb-762a-403b-bb77-420ffdf46c61", isoCurrencySymbol: "RON" },
+            { country: "SK", partnerId: "78d6d87b-ff1d-41a7-af2b-f46a5df0e0d3", isoCurrencySymbol: "EUR" },
+            { country: "SI", partnerId: "a0686939-f4e9-4fe7-8e1e-7896b67f08a6", isoCurrencySymbol: "EUR" },
+            { country: "ES", partnerId: "e982453d-9280-4a3a-8244-fb44027a9007", isoCurrencySymbol: "EUR" },
+        ];
+
+        $scope.abon.selectedAbonCountry = $scope.abon_countries[0];
+    }
+
+    $scope.setDefaults();
+    $scope.getDenominations();
 
     $scope.errorExamples = {
         ValidateTransaction: {
@@ -581,6 +674,10 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                     {
                         "Key": "PayerBirthDate",
                         "Value": "1990-01-01"
+                    },
+                    {
+                        "Key": "PersonalIdentificationCode",
+                        "Value": "RSSMRAURTMLARSNL"
                     }
                 ],
                 "notificationUrl": "https://dev-simulator-api.aircash.eu/api/AbonOnlinePartner/AuthorizationNotification",
@@ -594,6 +691,16 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 "originalCouponValue": 50,
                 "currentCouponValue": 50,
                 "aircashUserId": "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+            },
+            errorResponseExample: {
+                "code": 4,
+                "message": "coupon_already_used",
+                "additionalData": {
+                    "couponSerialNumber": "8088767004276952",
+                    "couponValue": 50,
+                    "isoCurrency": "EUR",
+                    "partnerTransactionId": "b7159ef2-edfd-44b4-9c35-ee5b1079f132"
+                }
             }
         },
         confirmTransaction: {
@@ -638,12 +745,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 "couponSerialNumber": "9874772993339010"
             },
             errorResponseExample: {
-                code: 4,
-                message: "Coupon Already Used",
-                additionalData: {
-                    couponValue: 50.0,
-                    isoCurrency: "HRK",
-                    partnerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
+                "code": 4,
+                "message": "coupon_already_used",
+                "additionalData": {
+                    "couponSerialNumber": "8088767004276952",
+                    "couponValue": 50,
+                    "isoCurrency": "EUR",
+                    "partnerTransactionId": "b7159ef2-edfd-44b4-9c35-ee5b1079f132"
                 }
             }
         }

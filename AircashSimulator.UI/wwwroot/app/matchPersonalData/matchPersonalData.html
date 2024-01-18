@@ -1,6 +1,25 @@
 ﻿
 <h1>Match Personal Data</h1>
 <br />
+<p>To meet legal obligations that are requesting identity validation and verification Aircash system provides services that ensure that the person who holds the Aircash account is the same person who owns an <br />account:</p>
+<ul>
+    <li>that is targeted to be credited (deposit flow)</li>
+    <li>from which funds are being deducted (withdrawal flow)</li>
+</ul>
+<p>Briefly, when making a transaction we need to ensure that the person on the merchant side is the same one on the Aircash side which can be achieved by comparing the following parameters: First name, Last name, and Birth date. That would mean that the prerequisite for integration including name comparison is to have verified data of the customer on both sides.</p>
+<p>Algorithm</p>
+<ul>
+    <li>Date of birth from Aircash user and partner user must be identical</li>
+    <li>Name matching must be at least 85 % similar</li>
+    <li>
+        Aircash uses Jaro-Winkler algorithm
+        <ul>
+            <li>The Jaro-Winkler algorithm is a string similarity measure that quantifies the similarity between two strings. The Jaro-Winkler algorithm is effective for comparing strings that might have typos, misspellings, or slight variations. The algorithm produces a similarity score between 0 and 1, where 1 indicates a perfect match and 0 indicates no similarity.</li>
+        </ul>
+    </li>
+</ul>
+<h4 class="col-12">Try it out</h4>
+<br />
 <div class="table-responsive">
     <table class="table  table-active col-md-6">
         <tr>
@@ -25,61 +44,99 @@
     </table>
 </div>
 <br />
-<uib-tabset>
-    <uib-tab index="MatchPersonalData-tab-1" heading="Try it out" classes="nav-item">
-        <div class="row">
-            <div class="col-md-3">
-                <h6><b>Aircash user</b></h6>
-                <hr />
-                <form action="/" method="POST" name="matchPersonalDataModelFirstForm">
-                    <fieldset>
-                        <div class="mb-3">
-                            <label class="form-label">First name</label>
-                            <input ng-model="matchPersonalDataModel.firstNameAircashUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Last name</label>
-                            <input ng-model="matchPersonalDataModel.lastNameAircashUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Birth date</label>
-                            <date-picker date="matchPersonalDataModel.birthDateAircashUser" isOptional="false" out="setPersonalDataDateAircashUser"></date-picker>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="col-md-3">
-                <h6><b>Partner user</b></h6>
-                <hr />
-                <form action="/" method="POST" name="matchPersonalDataModelSecondForm">
-                    <fieldset>
-                        <div class="mb-3">
-                            <label class="form-label">First name</label>
-                            <input ng-model="matchPersonalDataModel.firstNamePartnerUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Last name</label>
-                            <input ng-model="matchPersonalDataModel.lastNamePartnerUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Birth date</label>
-                            <date-picker date="matchPersonalDataModel.birthDatePartnerUser" isOptional="false" out="setPersonalDataDatePartnerUser"></date-picker>
-                        </div>
-                        <button ng-click="matchPersonalData()" class="btn btn-primary w-100px me-5px" ng-disabled="matchPersonalDataServiceBusy|| checkUserForm.$invalid">Compare users <i ng-if="matchPersonalDataServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
-                Request ({{matchPersonalDataRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <jsonformatter data="matchPersonalDataRequest"></jsonformatter>
-                <br />
-            </div>
-            <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
-                Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                <jsonformatter data="matchPersonalDataResponse"></jsonformatter>
-                <br />
-            </div>
+<div class="note note-gray-400 col-12 px-2 py-3">
+    <div class="row col-12">
+        <div class="col-md-3">
+            <h6><b>Aircash user</b></h6>
+            <hr />
+            <form action="/" method="POST" name="matchPersonalDataModelFirstForm">
+                <fieldset>
+                    <div class="mb-3">
+                        <label class="form-label">First name</label>
+                        <input ng-model="matchPersonalDataModel.firstNameAircashUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Last name</label>
+                        <input ng-model="matchPersonalDataModel.lastNameAircashUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Birth date</label>
+                        <date-picker date="matchPersonalDataModel.birthDateAircashUser" isOptional="false" out="setPersonalDataDateAircashUser"></date-picker>
+                    </div>
+                </fieldset>
+            </form>
         </div>
-    </uib-tab>
-</uib-tabset>
-<ng-include src="'app/matchPersonalData/matchPersonalDataExamples.html?v=' + appVersion"></ng-include>
+        <div class="col-md-3">
+            <h6><b>Partner user</b></h6>
+            <hr />
+            <form action="/" method="POST" name="matchPersonalDataModelSecondForm">
+                <fieldset>
+                    <div class="mb-3">
+                        <label class="form-label">First name</label>
+                        <input ng-model="matchPersonalDataModel.firstNamePartnerUser" class="form-control" type="text" placeholder="Enter first name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Last name</label>
+                        <input ng-model="matchPersonalDataModel.lastNamePartnerUser" class="form-control" type="text" placeholder="Enter last name" ng-disabled="matchPersonalDataServiceBusy" ng-required="true">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Birth date</label>
+                        <date-picker date="matchPersonalDataModel.birthDatePartnerUser" isOptional="false" out="setPersonalDataDatePartnerUser"></date-picker>
+                    </div>
+                    <button ng-click="matchPersonalData()" class="btn btn-primary w-100px me-5px" ng-disabled="matchPersonalDataServiceBusy|| checkUserForm.$invalid">Compare users <i ng-if="matchPersonalDataServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                </fieldset>
+            </form>
+        </div>
+        <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
+            Request ({{matchPersonalDataRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="matchPersonalDataRequest"></jsonformatter>
+            <br />
+        </div>
+        <div class="col-md-3" ng-if="matchPersonalDataServiceResponse && !matchPersonalDataServiceBusy">
+            Response ({{matchPersonalDataResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+            <jsonformatter data="matchPersonalDataResponse"></jsonformatter>
+            <br />
+        </div>
+    </div>
+</div>
+<h3>Name comparison in Aircash methods</h3>
+<p>Name comparison can be used in the following Aircash methods:</p>
+<ol>
+    <li>
+        Aircash marketplace deposit
+        <ol type="a">
+            <li>User selects merchant brand in the Aircash marketplace deposit sections</li>
+            <li>The user enters the identifier of his online account (email or username)</li>
+            <li>Aircash system triggers requests towards the merchant system (CheckPlayer in the API)</li>
+            <li>The merchant system responds with the first name, last name, and birth date of the customer (along with other mandatory CheckPlayer response parameters)</li>
+            <li>Upon receiving the response, the Aircash system will validate/compare user data and based on the result, the deposit process will continue (if the comparison is successful) or terminate (if the comparison has failed)</li>
+        </ol>
+    </li>
+    <li>
+        Aircash Pay deposit
+        <ol type="a">
+            <li>The user selects the Aircash logo in the merchant cashier</li>
+            <li>Merchant system initiates transaction in the Aircash system with the first name, last name, and birthdate of the customer (along with other mandatory initiate parameters)</li>
+            <li>The user inputs their phone number or scans the QR code</li>
+            <li>After the user confirms the transaction in the Aircash app, the Aircash system will validate/compare user data and based on the result, the deposit process will continue (if the comparison is successful) or terminate (if the comparison has failed)</li>
+        </ol>
+    </li>
+    <li>
+        Aircash withdrawal
+        <ol type="a">
+            <li>The user selects the Aircash logo in the merchant cashier</li>
+            <li>The merchant system initiates transaction in the Aircash system with the first name, last name, and birthdate of the customer (along with other mandatory initiate parameters)</li>
+            <li>The user inputs their phone number.</li>
+            <li>The Aircash system will validate/compare user data and based on the result, the withdrawal process will continue (if the comparison is successful) or terminate (if the comparison has failed)</li>
+        </ol>
+    </li>
+    <li>
+        Abon deposit
+        <ol type="a">
+            <li>The user selects the Abon logo in the merchant cashier</li>
+            <li>The merchant system triggers API request towards the Aircash system with the first name, last name, and birthdate of the customer (along with other mandatory API request parameters)</li>
+            <li>The user gets notification on phone to authorize Abon deposit</li>
+            <li>After the user confirms the transaction, the Aircash system will validate/compare user data and based on the result, the deposit process will continue (if the comparison is successful) or terminate (if the comparison has failed)</li>
+        </ol>
+    </li>
+</ol>

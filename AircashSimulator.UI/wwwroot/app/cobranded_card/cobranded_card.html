@@ -1,0 +1,172 @@
+﻿<h1>Cobranded card</h1>
+<hr />
+<h2>Order new card</h2>
+<uib-tabset>
+    <uib-tab index="orderNew-tab-0" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <button ng-click="setDefaultsOrderCard()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                <form action="/" method="POST" name="orderCardForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Phone number</label>
+                            <input ng-model="cobrandedCardModel.phoneNumber" placeholder="Enter PhoneNumber" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Partner ID</label>
+                            <input ng-model="cobrandedCardModel.partnerId" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Partner Card ID</label>
+                            <input ng-model="cobrandedCardModel.partnerCardId" placeholder="Enter PartnerCardID" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Partner User ID</label>
+                            <input ng-model="cobrandedCardModel.partnerUserId" placeholder="Enter PartnerUserID" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Card Type ID</label>
+                            <input ng-model="cobrandedCardModel.cardTypeId" placeholder="Enter CardTypeID" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Pesonal ID</label>
+                            <input ng-model="cobrandedCardModel.personalId" placeholder="Enter PersonalID" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">First Name</label>
+                            <input ng-model="cobrandedCardModel.firstName" placeholder="Enter FirstName" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Last Name</label>
+                            <input ng-model="cobrandedCardModel.lastName" placeholder="Enter LastName" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name On Card</label>
+                            <input ng-model="cobrandedCardModel.nameOnCard" placeholder="Enter NameOnCard" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Delivery Type ID</label>
+                            <input ng-model="cobrandedCardModel.deliveryTypeId" placeholder="Enter DeliveryTypeID" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Street</label>
+                            <input ng-model="cobrandedCardModel.street" placeholder="Enter Street" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">City</label>
+                            <input ng-model="cobrandedCardModel.city" placeholder="Enter City" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Postal Code</label>
+                            <input ng-model="cobrandedCardModel.postalCode" placeholder="Enter PostalCode" class="form-control" ng-disabled="orderCardServiceBusy" type="text" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Country</label>
+                            <input ng-model="cobrandedCardModel.country" placeholder="Enter Country" class="form-control" type="text" ng-disabled="orderCardServiceBusy" ng-required="true">
+                        </div>
+                        <button ng-click="orderCard();" class="btn btn-primary w-100px me-5px" ng-disabled="orderCardServiceBusy|| orderCardForm.$invalid">Order card <i ng-if="orderCardServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <br />
+            <div ng-if="orderCardResponded" class="col-md-4">
+                Request ({{orderCardRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="orderCardServiceRequest"></jsonformatter>
+                Sequence: {{orderCardSequence}}
+            </div>
+            <div ng-if="orderCardResponded" class="col-md-5">
+                Response ({{orderCardResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="orderCardServiceResponse"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+<br />
+<h2>Update card order status</h2>
+<br/>
+<uib-tabset>
+    <uib-tab index="CobrandedCardUpdateCardOrderStatus-tab-0" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <form action="/" method="POST" name="updateCardOrderStatusForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Card ID</label>
+                            <input ng-model="updateCardOrderStatusModel.cardId" placeholder="Enter CardID" class="form-control" type="text" ng-disabled="updateCardOrderStatusServiceBusy" ng-required="true">
+                           
+                        </div>
+                        <div>
+                            <label class="form-label">New User</label>
+                            <div class="dropdown mb-3">
+                                <select class="form-control" ng-model="updateCardOrderStatusModel.newUser">
+                                    <option ng-repeat="newUser in newUserOptions" ng-value="newUser.value">{{newUser.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <button ng-click="updateCardOrderStatus();" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardOrderStatusServiceBusy || updateCardOrderStatusForm.$invalid">Update card order status<i ng-if="updateCardOrderStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                    </fieldset>
+                </form>
+            </div>
+            <br />
+            <div ng-if="updateCardOrderStatusResponded" class="col-md-4">
+                Request ({{updateCardOrderStatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateCardOrderStatusServiceRequest"></jsonformatter>
+                Sequence: {{updateCardOrderStatusSequence}}
+            </div>
+            <div ng-if="updateCardOrderStatusResponded" class="col-md-4">
+                Response ({{updateCardOrderStatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateCardOrderStatusServiceResponse"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+<br/>
+<h2>Update card status</h2>
+<br/>
+<uib-tabset>
+    <uib-tab index="CobrandedCardUpdateStatus-tab-0" heading="Try it out" classes="nav-item">
+        <div class="row">
+            <div class="col-md-3">
+                <button ng-click="setDefaultUpdateStatusCard()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                <form action="/" method="POST" name="updateStatusCardForm">
+                    <fieldset>
+                        <div class="mb-3">
+                            <label class="form-label">Partner ID</label>
+                            <input ng-model="updateStatusCardModel.partnerID" placeholder="Enter PartnerID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Partner Card ID</label>
+                            <input ng-model="updateStatusCardModel.partnerCardID" placeholder="Enter PartnerCardID" class="form-control" type="text" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Old Status</label>
+                            <input ng-model="updateStatusCardModel.oldStatus" placeholder="Enter OldStatus" class="form-control" type="number" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">New Status</label>
+                            <input ng-model="updateStatusCardModel.newStatus" placeholder="Enter NewStatus" class="form-control" type="number" ng-disabled="updateStatusCardServiceBusy" ng-required="true">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Denial Status Details</label>
+                            <input ng-model="updateStatusCardModel.denialStatusDetails" placeholder="Enter DenialStatusDetails" class="form-control" type="number" ng-disabled="updateStatusCardServiceBusy" ng-required="false"">
+                        </div>
+                    </fieldset>
+                </form>
+                <button ng-click="updateCardStatus();" class="btn btn-primary w-100px me-5px" ng-disabled="updateCardStatusServiceBusy || updateStatusCardForm.$invalid">Update status<i ng-if="updateCardStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+
+            </div>
+            <br />
+            <div ng-if="updateStatusCardResponded" class="col-md-4">
+                Request ({{updateStatusCardRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateStatusCardServiceRequest"></jsonformatter>
+                Sequence: {{updateStatusCardSequence}}
+            </div>
+            <div ng-if="updateStatusCardResponded" class="col-md-4">
+                Response ({{updateStatusCardResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                <jsonformatter data="updateStatusCardServiceResponse"></jsonformatter>
+            </div>
+        </div>
+    </uib-tab>
+</uib-tabset>
+

@@ -132,12 +132,12 @@
 Request example:
 </pre>
                     <jsonformatter data="aBonGenerate.couponCreation.requestExample"></jsonformatter>
-<pre>
+                    <pre>
 Sequence:
-ContentType=&ContentWidth=&ISOCurrencySymbol=HRK&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=76b266ae-4d61-414b-baa9-44f9da1182e1&PointOfSaleId=test&Value=100
+ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=086b9ada-f1af-4213-b5fb-f788efab546a&PointOfSaleId=TestLocation&Value=50
 
 Signature:
-eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJm2H4LNDkHKyAoiN2YcTISP7eWBXszjsNQKOfG8JoFmFFQOOHy1TUr0G4Fb2hz5OIh+cE3XYNnP0T9OEdxRidNKpvz0XMm6WsJxFnOnVWY0Xi6Hf1gyw8556D1/SOP61THvOnS+iCdDfx0MGPi22CMpAyz020eD8fZ11A0FdC9MHmz/G0LDsf7AALFf7dkgHhO7peTlI1ik8rSJzfifnxsnTmovUBUmU8/2E5CmWHOzmgIg/JVrcTKBXQen+gXcIPuwuQxUnyCM+8dLcxmqORLwVqjP0X3csVLTQ1Gwom+NXUBt2IVyct0PtN/s414IlbbXHNvGhE+0Vc4du2ofI+qyrdMzWKTGIWHi7qyVnqi3WLJcbvCY4hLGmH7fW4knx0kprclssKRhpVEWU4y8iB/f/VeA6LWUUUZtuU2KSCL+/68HyhMttk1whx74RbhrF54vrgLojxaNxlmkbw5FPWL/kMAfdF1IwtlxTRHuwqtvJba3VRw6YE0B4okSWJYe8982k7rcj+vnuuyvSxV95w50Wcn4Cc44J/0AiSkfDpp0kwlmSJTlQTMwKsy1zXFzcYbtVmemOCxG/Wzk4Hc5wrKMC6Q8U=
+CO+V+iwbc5AlKPzJkkQARoDv+uA6WDCt8Rs6d1OA6g5Fdh1XoeA+XWgztqzqor3vsMi3rs94DhNGIa2cV58PkI2rXUFCcINSg4+ZElrLgJwPKCjQMTBmtC18WtYXlYvHQlRa310FziyGDY0+0C2H6GRknF6+UYJJqT/aPWz/KTzIM/ahgpn82VMEqG+V6f46A/GMonLI1hRvTfJFbJ3raKoxbQj3MqZ+fYNtgjP4p4fsN/LxfW/M8hD8C5sOA+HtjEZ088MpyIgwOSMbgY0U75zuLeWwytZufokMlWEB2oTe2cKRAtC0prj/l17+KSL3O3+ZBail6aWIScQbOa3PshidMhw2lFXMM6idO75g4/ZUNxdymx8oJzbY+g2dfW3ACnRgzKxy5ODznR6qBdTxJ0XvOF6hIkZvYgY3pTCf40F00ttCYaGBOIXwQio+7yheb81BeA9veOjCwtXhqyKlatmWi3B9afbhGQ/jE+aBt6RNZG0ZcMK4V7kHiXx4BrlT2BwiYEuzNS+XYCxitCqbKsohPcCGeGSq/lBRJq40NT+XHWZeywPxzZGPOunaPlqHGoZRarKqnOKF1RnvQv9W5WlmQjvh4y63d2Buh+Gjyhhi6ckDagjwNH6/+hTB+wA9gKZFo5wepNEHCSPWtcJiNxqVBtiRRz/8yZ96So6twpo=
                 </pre>
                 </uib-tab>
                 <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
@@ -298,7 +298,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                                     <jsonformatter data="errorExamples.CreateTransaction.error2.request"></jsonformatter>
 
                                     Sequence:
-                                    ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=09054b3c-1862-43af-b6a6-3fb65f80b170&PointOfSaleId=test&Value=25
+                                    ContentType=&ContentWidth=&ISOCurrencySymbol=EUR&PartnerId=52f46879-294d-4904-be7e-368ab0161771&PartnerTransactionId=80684973-6f8d-4b37-b7a0-3bc164b6e68f&PointOfSaleId=test&Value=25
                                 </div>
                                 <div class="col-sm-6" ng-if="!(errorCreateResponded && currentCreateErrorCode == 2)">
                                     Response
@@ -436,7 +436,13 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                             <form action="/" method="POST" name="transactionForm0">
                                 <fieldset>
                                     <div class="mb-3">
-                                        <label class="form-label" for="exampleInputPassword1">Value</label>
+                                        <label class="form-label" for="exampleInputPassword1">Select country</label>
+                                        <select class="form-control" ng-model="abon.selectedAbonPartner" ng-change="createCouponChangePartnerId(true)">
+                                            <option ng-repeat="abonPartner in abon.partners" ng-value="abonPartner">{{abonPartner.country}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="exampleInputPassword1">Value <span ng-if="abon.selectedAbonPartner.denominations">({{abon.selectedAbonPartner.denominations}})</span></label>
                                         <input class="form-control"
                                                ng-model="createCouponModel.value" type="number" placeholder="Enter value" ng-disabled="createServiceBusy" ng-required="true" />
                                     </div>
@@ -446,7 +452,7 @@ eqWplW0MZ/LGKYbif6yKN0bD+fi18d1OOUPqJy1lq08/EsQeEuAF+CAhQAskfA5UzsnHOp4qr54mreGJ
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PartnerId</label>
-                                        <input ng-model="createCouponModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
+                                        <input ng-model="createCouponModel.partnerId" ng-keyup="createCouponInputPartnerIdChanged()" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="createServiceBusy" ng-required="true">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label" for="exampleInputPassword1">PartnerTransactionId</label>

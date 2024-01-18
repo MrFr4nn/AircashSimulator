@@ -1,7 +1,8 @@
 ﻿
 using Domain.Entities.Enum;
+using System.Collections.Generic;
 
-namespace AircashSimulator
+namespace AircashSimulator.Controllers.AbonOnlinePartner
 {
     public class ConfirmTransactionRequest
     {
@@ -11,5 +12,6 @@ namespace AircashSimulator
         public string UserId { get; set; }
         public EnvironmentEnum Environment { get; set; }
         public string PhoneNumber { get; set; }
+        public List<Parameter> Parameters { get; set; }
     }
 }

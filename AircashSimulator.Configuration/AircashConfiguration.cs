@@ -10,6 +10,8 @@ namespace AircashSimulator.Configuration
         public string M3DevBaseUrl { get; set; }
         public string M2StagingBaseUrl { get; set; }
         public string M2DevBaseUrl { get; set; }
+        public string AircashFrameV3BaseUrl { get; set; }
+        public string AircashFrameV3DevBaseUrl { get; set; }
         public string AircashAbonBaseUrl { get; set; }
         public string AircashSalesBaseUrl { get; set; }
         public string ValidForPeriod { get; set; }

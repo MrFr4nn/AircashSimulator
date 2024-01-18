@@ -54,7 +54,7 @@ namespace AircashSimulator.Controllers
         {
             var dataToVerify = AircashSignatureService.ConvertObjectToString(aircashPaymentCheckPlayer);
             var signature = aircashPaymentCheckPlayer.Signature;
-            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPaymentPublicKey}");
+            bool valid = AircashSignatureService.VerifySignature(dataToVerify, signature, $"{AircashConfiguration.AcPaymentPublicKey}");            
 
             if(valid == true)
             {
@@ -64,14 +64,7 @@ namespace AircashSimulator.Controllers
 
                 var response = await AircashPaymentService.CheckPlayer(findUser);
 
-                if(((CheckPlayerResponse)response).IsPlayer)
-                {
-                    return Ok(response);
-                }
-                else
-                {
-                    return BadRequest(response);
-                }
+                return Ok(response);
             }
             else
             {
@@ -89,7 +82,7 @@ namespace AircashSimulator.Controllers
             if (valid == true)
             {
                 var parameters = new List<AircashPaymentParameters>();
-              
+
                 aircashPaymentCreateAndConfirmPayment.Parameters.ForEach(v => parameters.Add(new AircashPaymentParameters { Key = v.Key, Value = v.Value }));
 
                 var send = new CreateAndConfirmPaymentReceive
@@ -98,17 +91,13 @@ namespace AircashSimulator.Controllers
                     Amount = aircashPaymentCreateAndConfirmPayment.Amount,
                     Parameters = parameters
                 };
-                var response = await AircashPaymentService.CreateAndConfirmPayment(send); 
+                var response = await AircashPaymentService.CreateAndConfirmPayment(send);
                 if (((CreateAndConfirmRS)response).Success == true)
                 {
                     await SendHubMessage("TransactionConfirmedMessagePayment", "Deposited: " + aircashPaymentCreateAndConfirmPayment.Amount + "€, time: " + DateTime.Now, 1);
-                    return Ok(response);
                 }
-                else
-                {
-                    return BadRequest(response);
-                } 
-;            }
+                return Ok(response);
+            }
             else
             {
                 return BadRequest("Invalid signature");

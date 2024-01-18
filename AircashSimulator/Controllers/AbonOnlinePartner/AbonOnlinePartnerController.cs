@@ -1,16 +1,15 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Services.AbonOnlinePartner;
-using AircashSimulator.Extensions;
-using Microsoft.AspNetCore.Authorization;
-using System;
-using Service.Settings;
-using Domain.Entities.Enum;
+﻿using AircashSimulator.Extensions;
 using CrossCutting;
-using Newtonsoft.Json;
+using Domain.Entities.Enum;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Service.Settings;
+using Services.AbonOnlinePartner;
 using Services.User;
+using System;
+using System.Threading.Tasks;
 
-namespace AircashSimulator
+namespace AircashSimulator.Controllers.AbonOnlinePartner
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
@@ -81,11 +80,28 @@ namespace AircashSimulator
             var curl = HelperService.GetCurl(request, AbonOnlinePartnerService.GetConfirmTransactionEndpoint(environment));
             return Ok(curl);
         }
+
         public async Task<IActionResult> ConfirmCashierTransaction(ConfirmTransactionRequest confirmTransactionRequest)
         {
             var response = await AbonOnlinePartnerService.ConfirmTransaction(confirmTransactionRequest.CouponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, confirmTransactionRequest.Environment);
             return Ok(response);
         }
+
+        public async Task<IActionResult> AutorizationTransactionRequest(AutorizationTransactionRequest autorizationTransactionRequest)
+        {
+
+            var notificationUrl = SettingsService.AbonCashierNotificationUrl + autorizationTransactionRequest.CouponCode;
+            var response = await AbonOnlinePartnerService.CheckStatusCoupon(SettingsService.AbonOnlinePartnerId.ToString(), autorizationTransactionRequest.CouponCode, Guid.NewGuid().ToString(), notificationUrl, Guid.NewGuid().ToString(), autorizationTransactionRequest.PhoneNumber, autorizationTransactionRequest.Parameters, null, null, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ConfirmPushNotificationCashier([FromQuery(Name = "partnerTransactionId")] string partnerTransactionId, [FromQuery(Name = "CouponCode")] string CouponCode)
+        {
+     
+            var response = await AbonOnlinePartnerService.ConfirmTransactionV2(CouponCode, SettingsService.AbonOnlinePartnerIdWithoutAuthorization.ToString(), partnerTransactionId, Guid.NewGuid().ToString(), SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass, EnvironmentEnum.Staging);
+            return Ok();
+        }
+
 
         [HttpPost]
         [Authorize]
@@ -97,25 +113,25 @@ namespace AircashSimulator
             switch (errorCode)
             {
                 case AbonValidateCouponErrorCodeEnum.InvalidProviderId:
-                {
-                    partnerId = Guid.NewGuid();
-                    break;
-                }
+                    {
+                        partnerId = Guid.NewGuid();
+                        break;
+                    }
                 case AbonValidateCouponErrorCodeEnum.InvalidSignature:
-                {
-                    privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
-                    break;
-                }
+                    {
+                        privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
+                        break;
+                    }
                 case AbonValidateCouponErrorCodeEnum.InvalidCouponeCode:
-                {
-                    couponCode = HelperService.RandomNumber(16);
-                    break;
-                }
+                    {
+                        couponCode = HelperService.RandomNumber(16);
+                        break;
+                    }
                 case AbonValidateCouponErrorCodeEnum.CouponCountryNotAllowed:
-                {
-                    couponCode = SettingsService.SixteenDigitCodeBA;
-                    break;
-                }
+                    {
+                        couponCode = SettingsService.SixteenDigitCodeBA;
+                        break;
+                    }
                 //case AbonValidateCouponErrorCodeEnum.ConversionModuleError:
                 //    {
                 //        //CouponCodeSimulateError = "0000000000000000";
@@ -139,35 +155,35 @@ namespace AircashSimulator
             switch (errorCode)
             {
                 case AbonConfirmTransactionErrorCodeEnum.InvalidProviderId:
-                {
-                    partnerId = Guid.NewGuid();
-                    break;
-                }
+                    {
+                        partnerId = Guid.NewGuid();
+                        break;
+                    }
                 case AbonConfirmTransactionErrorCodeEnum.InvalidSignature:
-                {
-                    privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
-                    break;
-                }
+                    {
+                        privateKeyPath = SettingsService.PrivateKeyForInvalidSignature;
+                        break;
+                    }
                 case AbonConfirmTransactionErrorCodeEnum.InvalidCouponeCode:
-                {
-                    couponCode = HelperService.RandomNumber(16);
-                    break;
-                }
+                    {
+                        couponCode = HelperService.RandomNumber(16);
+                        break;
+                    }
                 case AbonConfirmTransactionErrorCodeEnum.CouponAleradyUsed:
-                {
-                    couponCode = SettingsService.UsedCuponCodeForSimulatingError;
-                    break;
-                }
+                    {
+                        couponCode = SettingsService.UsedCuponCodeForSimulatingError;
+                        break;
+                    }
                 case AbonConfirmTransactionErrorCodeEnum.CouponCountryNotAllowed:
-                {
-                    couponCode = SettingsService.SixteenDigitCodeBA;
-                    break;
-                }
+                    {
+                        couponCode = SettingsService.SixteenDigitCodeBA;
+                        break;
+                    }
                 case AbonConfirmTransactionErrorCodeEnum.LimitExceeded:
-                {
-                    userId = SettingsService.BlockedUserId;
-                    break;
-                }
+                    {
+                        userId = SettingsService.BlockedUserId;
+                        break;
+                    }
                 //case ConfirmTransactionErrorCodeEnum.ConversionModuleError:
                 //    {
                 //        //PartnerIDSimulateError = new Guid("8db69a48-7d61-48e7-9be8-3160549c7f17");

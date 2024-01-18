@@ -1,0 +1,63 @@
+﻿<br />
+        <h4>Notification</h4>
+        <p>
+            After transaction is processed, Aircash system will send notification to the NotificationUrl provided within the initiate request.
+        </p>
+        <div class="table-responsive">
+            <table class="table  table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                        <th>IP addresses to whitelist</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            GET
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.83.162.239
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            GET
+                        </td>
+                        <td>URL defined by partner</td>
+                        <td>
+                            212.129.44.205
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br />
+        <p>
+            Notification example (HTTP GET):
+        </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>{NotificationUrl}?partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
+        <br />
+        <p>
+            If NotificationUrl already contains query parameters, Aircash system will add partnerTransactionId paramter at the end of the URL:
+        </p>
+        <div class="note note-gray-400 col-md-6">
+            <div class="note-content">
+                <code>https://api.partner.com?param=true&partnerTransactionId={partnerTransactionId}</code>
+            </div>
+        </div>
+        <p>
+            Aircash System expects response with <b>HTTP CODE 200 OK</b> without body. If NotificationUrl responds with different HTTP CODE for any reason Aircash System will call NotificationUrl two more times.
+        </p>
+        <br />

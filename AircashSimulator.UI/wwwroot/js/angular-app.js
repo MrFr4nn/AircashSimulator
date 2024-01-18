@@ -33,8 +33,13 @@ var app = angular.module('app', [
     'cancel',
     'partnerPrivateKey',
     'jira', 
+    'acFrameV2Pay',
+    'acReconciliationAPI',
+    'acFrameV2Withdrawal', 
+    'acFrameV2Abon', 
     'generalGuidlines',
     'matchPersonalData',
+    'cobranded_card',
     'mastercard',
     'aircash_ATM',
     'inAppPay'
@@ -111,7 +116,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
         var restrictedPage = publicPages.indexOf($location.path()) === -1;
         if ($location.path().indexOf('cashier') > -1 && restrictedPage) {
             $location.path('/cashier/menu');
-        }else if (restrictedPage && !$localStorage.currentUser) {
+        } else if (restrictedPage && !$localStorage.currentUser || restrictedPage && $localStorage.currentUser && Date.now() >= jwt_decode($localStorage.currentUser.token).exp * 1000) {
             $location.path('/login');
         }
     }); 

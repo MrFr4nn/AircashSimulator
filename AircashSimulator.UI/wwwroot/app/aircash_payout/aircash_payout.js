@@ -26,6 +26,8 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         checkTransactionStatus: checkTransactionStatus,
         getCurlCheckTransactionStatus: getCurlCheckTransactionStatus,
         simulatePayoutError: simulatePayoutError,
+        generateCheckUserSignature: generateCheckUserSignature,
+        generateCreatePayoutSignature: generateCreatePayoutSignature,
     }
     );
     function checkUser(checkUserRequest) {
@@ -141,6 +143,24 @@ aircashPayoutModule.service("aircashPayoutService", ['$http', '$q', 'handleRespo
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function generateCheckUserSignature(checkUserModel) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/GenerateCheckUserSignature",
+            data: checkUserModel
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function generateCreatePayoutSignature(createPayoutModel) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashPayout/GenerateCreatePayoutSignature",
+            data: createPayoutModel
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 }
 ]);
 
@@ -163,9 +183,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     };
 
     $scope.checkUserV4Model = {
-        partnerId: $scope.partnerIds.AircashPayoutV4PartnerId,
+        partnerId: $scope.partnerIds.AircashPayoutPartnerId,
         partnerUserId: uuidv4(),
         phoneNumber: $scope.decodedToken.userPhoneNumber,
+        personalIdentificationCode: "RSSMRAURTMLARSNL",
         firstName: $scope.decodedToken.userFirstName,
         lastName: $scope.decodedToken.userLastName,
         birthDate: new Date($scope.decodedToken.userBirthDate),
@@ -181,25 +202,53 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
     };
 
     $scope.createPayoutV4Model = {
-        partnerId: $scope.partnerIds.AircashPayoutV4PartnerId,
+        partnerId: $scope.partnerIds.AircashPayoutPartnerId,
         userId: uuidv4(),
         partnerTransactionId: uuidv4(),
         currencyId: 978,
         phoneNumber: $scope.decodedToken.userPhoneNumber,
         firstName: $scope.decodedToken.userFirstName,
         lastName: $scope.decodedToken.userLastName,
+        personalIdentificationCode: "RSSMRAURTMLARSNL",
         birthDate: new Date($scope.decodedToken.userBirthDate),
         amount: 100,
     }
 
+    $scope.checkboxCreatePayout = {
+        match: false,
+        personalIdentificationCode: false
+    }
+    $scope.checkboxCheckUser = {
+        match: false,
+        personalIdentificationCode: false
+    }
+    $scope.changePartnerId = function () {
+        if ($scope.partnerIds.AircashPayoutPartnerId != $scope.partnerIds.AircashPayoutV4PartnerId) {
+            if ($scope.checkboxCreatePayout.match && $scope.createPayoutV4Model.partnerId == $scope.partnerIds.AircashPayoutPartnerId) {
+                $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
+                $rootScope.showGritter("CreatePayout PartnerID changed");
+            } else if (!$scope.checkboxCreatePayout.match && $scope.createPayoutV4Model.partnerId == $scope.partnerIds.AircashPayoutV4PartnerId) {
+                $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
+                $rootScope.showGritter("CreatePayout PartnerID changed");
+            }
+            if ($scope.checkboxCheckUser.match && $scope.checkUserV4Model.partnerId == $scope.partnerIds.AircashPayoutPartnerId) {
+                $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
+                $rootScope.showGritter("CheckUser PartnerID changed");
+            } else if (!$scope.checkboxCheckUser.match && $scope.checkUserV4Model.partnerId == $scope.partnerIds.AircashPayoutV4PartnerId) {
+                $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
+                $rootScope.showGritter("CheckUser PartnerID changed");
+            }
+        }
+
+    }
     $scope.setDefaults = function () {
-        $scope.createPayoutV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
+        $scope.changePartnerId();
+        
         $scope.createPayoutV4Model.userId = uuidv4();
         $scope.createPayoutV4Model.partnerTransactionId = uuidv4();
         $scope.createPayoutV4Model.currencyId = 978;
 
         $scope.checkUserV4Model.partnerUserId = uuidv4();
-        $scope.checkUserV4Model.partnerId = $scope.partnerIds.AircashPayoutV4PartnerId;
 
         $scope.checkUserModel.partnerUserId = uuidv4();
         $scope.checkUserModel.partnerId = $scope.partnerIds.AircashPayoutPartnerId;
@@ -286,8 +335,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             partnerUserID: $scope.checkUserV4Model.partnerUserId,
             partnerID: $scope.checkUserV4Model.partnerId,
             phoneNumber: $scope.checkUserV4Model.phoneNumber,
-            parameters: [{ key: "PayerFirstName", value: $scope.checkUserV4Model.firstName }, { key: "PayerLastName", value: $scope.checkUserV4Model.lastName }, { key: "PayerBirthDate", value: $scope.checkUserV4Model.birthDate.toLocaleDateString('en-CA') }]
+            parameters: []
         }
+        if ($scope.checkboxCheckUser.personalIdentificationCode) $scope.checkUserV4Request.parameters.push({ key: "PersonalIdentificationCode", value: $scope.checkUserV4Model.personalIdentificationCode })
+        if ($scope.checkboxCheckUser.match) $scope.checkUserV4Request.parameters.push({ key: "PayerFirstName", value: $scope.checkUserV4Model.firstName }, { key: "PayerLastName", value: $scope.checkUserV4Model.lastName }, { key: "PayerBirthDate", value: $scope.checkUserV4Model.birthDate.toLocaleDateString('en-CA') });
         aircashPayoutService.checkUserV4($scope.checkUserV4Request)
             .then(function (response) {
 
@@ -314,8 +365,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             partnerUserID: $scope.checkUserV4Model.partnerUserId,
             partnerID: $scope.checkUserV4Model.partnerId,
             phoneNumber: $scope.checkUserV4Model.phoneNumber,
-            parameters: [{ key: "PayerFirstName", value: $scope.checkUserV4Model.firstName }, { key: "PayerLastName", value: $scope.checkUserV4Model.lastName }, { key: "PayerBirthDate", value: $scope.checkUserV4Model.birthDate.toLocaleDateString('en-CA') }]
+            parameters: []
         }
+        if ($scope.checkboxCheckUser.personalIdentificationCode) $scope.checkUserV4Request.parameters.push({ key: "PersonalIdentificationCode", value: $scope.checkUserV4Model.personalIdentificationCode })
+        if ($scope.checkboxCheckUser.match) $scope.checkUserV4Request.parameters.push({ key: "PayerFirstName", value: $scope.checkUserV4Model.firstName }, { key: "PayerLastName", value: $scope.checkUserV4Model.lastName }, { key: "PayerBirthDate", value: $scope.checkUserV4Model.birthDate.toLocaleDateString('en-CA') });
         aircashPayoutService.getCurlCheckUserV4($scope.checkUserV4Request)
             .then(function (response) {
 
@@ -376,7 +429,6 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                 $scope.createPayoutServiceResponse = false;
             });
     }
-
     $scope.createPayoutV4 = function () {
         $scope.createPayoutV4ServiceBusy = true;
         $scope.createPayoutV4ServiceResponse = false;
@@ -387,8 +439,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             CurrencyID: $scope.createPayoutV4Model.currencyId,
             phoneNumber: $scope.createPayoutV4Model.phoneNumber,
             amount: $scope.createPayoutV4Model.amount,
-            parameters: [{ key: "PayerFirstName", value: $scope.createPayoutV4Model.firstName }, { key: "PayerLastName", value: $scope.createPayoutV4Model.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutV4Model.birthDate.toLocaleDateString('en-CA') }]
+            parameters: []                        
         }
+        if ($scope.checkboxCreatePayout.personalIdentificationCode) $scope.createPayoutV4Request.parameters.push({ key: "PersonalIdentificationCode", value: $scope.createPayoutV4Model.personalIdentificationCode })
+        if ($scope.checkboxCreatePayout.match) $scope.createPayoutV4Request.parameters.push({ key: "PayerFirstName", value: $scope.createPayoutV4Model.firstName }, { key: "PayerLastName", value: $scope.createPayoutV4Model.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutV4Model.birthDate.toLocaleDateString('en-CA') });
         aircashPayoutService.createPayoutV4($scope.createPayoutV4Request)
             .then(function (response) {
 
@@ -419,8 +473,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             CurrencyID: $scope.createPayoutV4Model.currencyId,
             phoneNumber: $scope.createPayoutV4Model.phoneNumber,
             amount: $scope.createPayoutV4Model.amount,
-            parameters: [{ key: "PayerFirstName", value: $scope.createPayoutV4Model.firstName }, { key: "PayerLastName", value: $scope.createPayoutV4Model.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutV4Model.birthDate.toLocaleDateString('en-CA') }]
+            parameters: []
         }
+        if ($scope.checkboxCreatePayout.personalIdentificationCode) $scope.createPayoutV4Request.parameters.push({ key: "PersonalIdentificationCode", value: $scope.createPayoutV4Model.personalIdentificationCode })
+        if ($scope.checkboxCreatePayout.match) $scope.createPayoutV4Request.parameters.push({ key: "PayerFirstName", value: $scope.createPayoutV4Model.firstName }, { key: "PayerLastName", value: $scope.createPayoutV4Model.lastName }, { key: "PayerBirthDate", value: $scope.createPayoutV4Model.birthDate.toLocaleDateString('en-CA') });
         aircashPayoutService.getCurlCreatePayoutV4($scope.createPayoutV4Request)
             .then(function (response) {
 
@@ -542,11 +598,183 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
             });
     }
 
+    function setRequestExamples(generateSignatureModel) {
+        $scope.requestExample = {
+            personalIdentificationCode: {
+                key: "PersonalIdentificationCode",
+                value: generateSignatureModel.personalIdentificationCode
+            },
+            firstName: {
+                key: "PayerFirstName",
+                value: generateSignatureModel.firstname
+            },
+            lastName: {
+                key: "PayerLastName",
+                value: generateSignatureModel.lastname
+            },
+            birthDate: {
+                key: "PayerBirthDate",
+                value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
+            }
+        }
+    }
+
+
+    /*
+     * START: CheckUser Response Example
+     */
+ 
+    $scope.checkUserGenerateSignatureModel = {
+        firstname: "John",
+        lastname: "Doe",
+        birthDate: new Date('1990-01-01'),
+        personalIdentificationCode: "RSSMRAURTMLARSNL",
+        phoneNumber: "385981234567",
+        partnerUserID: "12345",
+        partnerID: "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0"
+    }
+    $scope.checkboxCheckUserModel = {
+        personalIdentificationCode: false,
+        match: false
+    }
+    var typingTimerCheckUser;
+    $scope.requestCheckUserChanged = function () {
+        $scope.checkUserParameters = [];
+
+        setRequestExamples($scope.checkUserGenerateSignatureModel);
+
+        if ($scope.checkboxCheckUserModel.match)
+            $scope.checkUserParameters.push(
+                $scope.requestExample.firstName,
+                $scope.requestExample.lastName,
+                $scope.requestExample.birthDate,
+            );
+        if ($scope.checkboxCheckUserModel.personalIdentificationCode) $scope.checkUserParameters.push($scope.requestExample.personalIdentificationCode);
+        
+        clearTimeout(typingTimerCheckUser);
+        typingTimerCheckUser = setTimeout(() => {
+            $scope.generateCheckUserSignature();
+        }, 1000);
+    }
+
+    $scope.generateCheckUserSignatureBusy = false;
+    $scope.generateCheckUserSignatureResponded = false;
+    $scope.generateCheckUserSignature  = function () {
+        $scope.generateCheckUserSignatureBusy = true;
+        $scope.generateCheckUserSignatureResponded = false;
+        $scope.checkUserRequestExample = {
+            partnerUserID: $scope.checkUserGenerateSignatureModel.partnerUserID,
+            partnerID: $scope.checkUserGenerateSignatureModel.partnerID,
+            phoneNumber: $scope.checkUserGenerateSignatureModel.phoneNumber,
+            parameters: $scope.checkUserParameters
+        }
+        aircashPayoutService.generateCheckUserSignature($scope.checkUserRequestExample)
+            .then(function (response) {
+                if (response) {
+                    $scope.generateCheckUserSignatureResponse = JSON.stringify(response.aircashPayoutCheckUser, null, 4);
+                    $scope.checkUserRequestExampleSequence = response.sequence;
+                }
+                $scope.generateCheckUserSignatureBusy = false;
+                $scope.generateCheckUserSignatureResponded = true;
+            }, () => {
+                $rootScope.showGritter("Error");
+                $scope.generateCheckUserSignatureBusy = false;
+            });
+    }
+
+    $scope.requestCheckUserChanged();
+
+    /*
+     * END: CheckUser Response Example
+     */
+
+    /*
+    * START: CreatePayout Response Example
+    */
+
+    $scope.createPayoutGenerateSignatureModel = {
+        firstname: "John",
+        lastname: "Doe",
+        birthDate: new Date('1990-01-01'),
+        personalIdentificationCode: "RSSMRAURTMLARSNL",
+        phoneNumber: "385981234567",
+        partnerUserID: "12345",
+        partnerID: "290a2fe9-b1e0-4627-8a43-3f7ba472a4a0",
+        partnerTransactionID: "e631a091-f239-40ce-9f5d-bd9a443b2f55",
+        amount: 123.45,
+        currencyID: 978
+    }
+    $scope.checkboxCreatePayoutModel = {
+        personalIdentificationCode: false,
+        match: false
+    }
+    var typingTimerCreatePayout;
+    $scope.requestCreatePayoutChanged = function () {
+        $scope.createPayoutParameters = [];
+
+        setRequestExamples($scope.createPayoutGenerateSignatureModel);
+
+        if ($scope.checkboxCreatePayoutModel.match)
+            $scope.createPayoutParameters.push(
+                $scope.requestExample.firstName,
+                $scope.requestExample.lastName,
+                $scope.requestExample.birthDate,
+            );
+        if ($scope.checkboxCreatePayoutModel.personalIdentificationCode) $scope.createPayoutParameters.push($scope.requestExample.personalIdentificationCode);
+
+        clearTimeout(typingTimerCreatePayout);
+        typingTimerCreatePayout = setTimeout(() => {
+            $scope.generateCreatePayoutSignature();
+        }, 1000);
+    }
+
+    $scope.generateCreatePayoutSignatureBusy = false;
+    $scope.generateCreatePayoutSignatureResponded = false;
+    $scope.generateCreatePayoutSignature = function () {
+        $scope.generateCreatePayoutSignatureBusy = true;
+        $scope.generateCreatePayoutSignatureResponded = false;
+        $scope.createPayoutRequestExample = {
+            partnerUserID: $scope.createPayoutGenerateSignatureModel.partnerUserID,
+            partnerID: $scope.createPayoutGenerateSignatureModel.partnerID,
+            phoneNumber: $scope.createPayoutGenerateSignatureModel.phoneNumber,
+            partnerTransactionID: $scope.createPayoutGenerateSignatureModel.partnerTransactionID,
+            amount: $scope.createPayoutGenerateSignatureModel.amount,
+            currencyID: $scope.createPayoutGenerateSignatureModel.currencyID,
+            parameters: $scope.createPayoutParameters
+        }
+        aircashPayoutService.generateCreatePayoutSignature($scope.createPayoutRequestExample)
+            .then(function (response) {
+                if (response) {
+                    $scope.generateCreatePayoutSignatureResponse = JSON.stringify(response.aircashPayoutCreatePayout, null, 4);
+                    $scope.createPayoutRequestExampleSequence = response.sequence;
+                }
+                $scope.generateCreatePayoutSignatureBusy = false;
+                $scope.generateCreatePayoutSignatureResponded = true;
+            }, () => {
+                $rootScope.showGritter("Error");
+                $scope.generateCreatePayoutSignatureBusy = false;
+            });
+    }
+
+    $scope.requestCreatePayoutChanged();
+
+    /*
+     * END: CreatePayout Response Example
+     */
+
     $scope.loadMore = function (pageSize) {
         $scope.pageSize = pageSize;
         $scope.getTransactions(false);
     };
 
+    $scope.checkUserModelSetDate = function (date) {
+        $scope.checkUserGenerateSignatureModel.birthDate = date;
+        $scope.requestCheckUserChanged();
+    }
+    $scope.createPayoutModelSetDate = function (date) {
+        $scope.createPayoutGenerateSignatureModel.birthDate = date;
+        $scope.requestCreatePayoutChanged();
+    }
     $scope.setCheckUserDate = function (date) {
         $scope.checkUserV4Model.birthDate = date;
     }
@@ -689,9 +917,13 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     {
                         Key: "PayerBirthDate",
                         Value: "1990-01-01"
+                    },
+                    {
+                        "Key": "PersonalIdentificationCode",
+                        "Value": "RSSMRAURTMLARSNL"
                     }
                 ],
-                Signature: "ldzZxe....I8="
+                Signature: "IW8kFZrS4W...."
             },
             responseExample: {
                 first: {
@@ -748,10 +980,14 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     {
                         "Key": "PayerBirthDate",
                         "Value": "1990-01-01"
+                    },
+                    {
+                        "Key": "PersonalIdentificationCode",
+                        "Value": "RSSMRAURTMLARSNL"
                     }
                 ],
                 "CurrencyID": 978,
-                "Signature": "XNqywSLWev..."
+                "Signature": "KGXKKl/pjN..."
             },
             responseExample: {
                 AircashTransactionID: "760aed25-b409-450b-937d-ba4f0ffa33cc",
@@ -760,6 +996,10 @@ aircashPayoutModule.controller("aircashPayoutCtrl", ['$scope', '$state', 'aircas
                     Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
                 }]
             },
+            errorResponseExample: {
+                "code": 4000,
+                "message": "Unknown phone number"
+            }
         },
         checkTransactionStatus: {
             requestExample: {

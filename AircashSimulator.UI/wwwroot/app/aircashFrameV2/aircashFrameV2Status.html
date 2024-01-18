@@ -1,0 +1,1202 @@
+﻿<div class="row">
+            <h4>Transaction status</h4>
+            <div class="dropdown col-auto">
+                <select class="form-control" ng-model="select.statusVersion" ng-init="select.statusVersion = '3'">
+                    <option value="1" selected>V1</option>
+                    <option value="2">V2</option>
+                    <option value="3">V3</option>
+                </select>
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div ng-if="select.statusVersion == 1">
+            <p>
+                Method that’s used to check the transaction status in Aircash system. Using this method partner needs to check the status of the transaction before completing the payment.
+            </p>
+            <i>Endpoints:</i>
+            <div class="table-responsive">
+                <table class="table  table-active col-md-6">
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Method</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Test</b></td>
+                            <td>
+                                POST
+                            </td>
+                            <td>https://stage-frame-api.aircash.eu/api/v1/status</td>
+                        </tr>
+                        <tr>
+                            <td><b>Production</b></td>
+                            <td>
+                                POST
+                            </td>
+                            <td>https://frame-api.aircash.eu/api/v1/status</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <i>Aircash public keys:</i>
+            <div class="table-responsive">
+                <table class="table  table-active col-md-2">
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td><a href="/files/AircashFramePublicKeyTest.zip" download>Link</a></td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td><a href="/files/AircashFramePublicKeyProd.zip" download>Link</a></td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <uib-tabset>
+                <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>PartnerID</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique partner identifier (per currency) provided by Aircash
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>PartnerTransactionId</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique transaction id in partner’s system
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Signature</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        A sequence that has been digitally signed with the provider's private signature, used for authentication
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                    <jsonformatter data="aircashFrameV2.transactionStatus.requestExample"></jsonformatter>
+                </uib-tab>
+                <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                    <pre>
+Request example:
+</pre>
+                    <jsonformatter data="aircashFrameV2.transactionStatus.requestExample"></jsonformatter>
+                    <pre>
+
+Sequence: 
+PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=571fd959-fe70-412b-90d5-e6db6df953ea
+
+
+Signature:
+JmdPLkrzTZAR+ol3V3F5z/CAUfEV2kZ1VvLGBc/u1kGfWliEwZVjh9LCfsUJIrjlWOQpsbZ8BSlGdIWzO3cvCdBrRproEm9PH/INzQvA2K9s+A4IQSN3SRb/yny9mrPlQ4v9JW5FkUr3P8pAwvoISy9o/nv5Gq8WfibVLJYe6C+jMCugfrycYC7sAo3z5zEr7cuThhDE/TPhzMAXjjKo8qamDnuITixNtwA78HXwEGxDrfK/GVwdvQ8XiVEBW6WAi9/OTzeoGC4HXDYwDaHrMlDDTehnz9fWNV+prpY3omUw7zvfgCKdh0axPcLo/mSNZidJQ8K6X1znvIguVKIg6WFgYpNG7k9OhKKz4Dgt+Nvs6m0Mruoq4NR1ZmUsZf9TLlKG1NmrndYHJFmCkzGXHvBAN2Vdjw9wRvLl8DWtXZM+xPsqcZtp2QSfss3LF5U1V0QuHRH8BRnEvxq9frTjR/T8gOYpYIDkjz8Ia2bf5x6m88IMfr9y6JNfCRNClzui1A8PoNsCfHmUw9aDBN8vquY2Fc0j2d9TDP0t/4BOI0QjAxuZw7FTTzPK5p6tE7CZ94d6lk6ruOuEkz4oFSaFzZzBmr2u8Y9+C+c+T7rSgaji138XDE72/MtjIaeCQ8hcEXtiMoiSrp0gBex6OcQo9vrIyNOFyDpGSfZLH43SDIc=                </pre>
+                </uib-tab>
+                <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>Status</b></td>
+                                    <td>int</td>
+                                    <td>
+                                        Transaction status, 0 - transaction not processed, 1 – declined, 2 - success, 3 - cancelled, 4 - payoutConfirmationPending
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Amount</b></td>
+                                    <td>decimal</td>
+                                    <td>
+                                        Transaction amount, Amount is sent only if Status is 2.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Currency</b></td>
+                                    <td>int</td>
+                                    <td>
+                                        ISO-4217 currency code
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>AircashTransactionId</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique transaction id in the Aircash system
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Signature</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        A sequence that has been digitally signed with the Aircash private key.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <p class="ml-3">
+                        <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+                    </p>
+                </uib-tab>
+                <uib-tab index="request-tab-4" heading="200 OK response example" classes="nav-item">
+                    <jsonformatter data="aircashFrameV2.transactionStatus.responseExample"></jsonformatter>
+                    <pre>
+Sequence:
+AircashTransactionId=11da2e60-f35e-43a9-be63-26cf34b12e3b&Amount=10&CurrencyId=978&Status=2
+
+Signature:
+SsRvc7uHsLjXxPfMNhSgqpvcRBg6GjG+YXw+CX3nYoHS9Pl2BNNpTzbfUTDVmrdczXUuBtz2yHTuKVs/jZGmBwnyjBTsicUoRarBmNy5z2VavM2q0nEGVCeeT3xcgbFhMr6OmwU+PlxEXiGKfF4gtxt4pIUb8KA2/IKox+lLCPSKiEA1b64lGy7cr7GwJV29CrWgM1bEgJqJxfN4ZOmhkdrNa956yrO+EImLPMBgea0yzcP9BltQVF9WKab0WH9wQt5i8NrWcuAe01b8XmgAAGwL7YM8LnMXA90gi4Tu8J8n4fSuQf4HEwcJhNKeV6otMRxzbGV79VyI1PxQczupU49GSdvutAKqbc3+T++/B6sJwLIZeKFh9UsmNODReYVvnZILyvoJMnYsX1coaWARTu0TeLcAJDCN1PNizGxypBsx6yBTuQ4hadoKbS1J7GT+a0ecUOwrLe33MOhUbtvz9Gygq9bsVoitcQK+xaxx/V/fGdW9mhfg/NuFHFquQ1Q6bT1QI3B7VORdF+T6L80ETIHcSMhHPC5EUBmwQEExFKw6ZKiW3Wl9bHxwgLhd1+BLHmq8ktAngYXfQJZn2P85Tv94emcIu745GGr6JOVM0j+yJPSr1sSozlQfTGwj6cy3QCJey0NYshgRycdX87jfR1cy+MP53HLAfkoQ+LW40Ps=
+</pre>
+                </uib-tab>
+                <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Http response</th>
+                                    <th>Description</th>
+                                    <th>Error Code</th>
+                                    <th>Message</th>
+                                    <th>Solution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="4"><b>400</b></td>
+                                    <td rowspan="4">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                    <td><b>1</b></td>
+                                    <td>Invalid signature or partner id</td>
+                                    <td rowspan="4">
+                                        Contact Aircash support
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>3</b></td>
+                                    <td>Validation error</td>
+                                </tr>
+                                <tr>
+                                    <td><b>1002</b></td>
+                                    <td>Transaction does not exist</td>
+                                </tr>
+                                <tr>
+                                    <td><b>1003</b></td>
+                                    <td>Transaction not processed</td>
+                                </tr>
+                                <tr>
+                                    <td><b>401</b></td>
+                                    <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>
+                                        Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>500</b></td>
+                                    <td>An unknown error occured</td>
+                                    <td>-</td>
+                                    <td>Unknown error has occurred</td>
+                                    <td>
+                                        Contact Aircash support
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
+                    <uib-tabset class="row tabs-left">
+                        <uib-tab index="TransactionStatusError-tab-1" heading="1 - Invalid signature or partner id" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1)">
+                                    Request
+                                    <jsonformatter data="errorExamples.TransactionStatus.error1.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=fbea7431-e796-4472-8689-afddc013e723&PartnerTransactionId=fd9d8fce-6548-4cb1-839b-57a599984b8f
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1)">
+                                    Response
+                                    <jsonformatter data="errorExamples.TransactionStatus.error1.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1">
+                                    Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                    Sequence: {{errorTransactionStatusSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1">
+                                    Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(1)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1">Copy Request</button>
+                        </uib-tab>
+                        <uib-tab index="TransactionStatusError-tab-2" heading="3 - Validation Error" classes="nav-item">
+                            Simulation not available.
+                            <!--<div class="row col-12">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+                                    Request
+                                    <jsonformatter data="errorExamples.TransactionStatus.error3.request"></jsonformatter>
+
+                                    Sequence:
+                                    Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3)">
+                                    Response
+                                    <jsonformatter data="errorExamples.TransactionStatus.error3.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+                                    Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                    Sequence: {{errorTransactionStatusSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">
+                                    Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(3)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 3">Copy Request</button>-->
+                        </uib-tab>
+                        <uib-tab index="TransactionStatusError-tab-3" heading="1002 - Transaction does not exist" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002)">
+                                    Request
+                                    <jsonformatter data="errorExamples.TransactionStatus.error1002.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=c6935dce-1e91-434f-93b6-bbaa2a270b29
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002)">
+                                    Response
+                                    <jsonformatter data="errorExamples.TransactionStatus.error1002.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002">
+                                    Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                    Sequence: {{errorTransactionStatusSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002">
+                                    Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(1002)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1002">Copy Request</button>
+                        </uib-tab>
+                        <uib-tab index="TransactionStatusError-tab-4" heading="1003 - Transaction not processed" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003)">
+                                    Request
+                                    <jsonformatter data="errorExamples.TransactionStatus.error1003.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=fad535bd-c413-4434-851f-fb2ebce7da06
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003)">
+                                    Response
+                                    <jsonformatter data="errorExamples.TransactionStatus.error1003.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003">
+                                    Request ({{errorTransactionStatusRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusRequest"></jsonformatter>
+
+                                    Sequence: {{errorTransactionStatusSequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003">
+                                    Response ({{errorTransactionStatusResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusResponse"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="transactionStatusSimulateError(1003)" ng-disabled="errorTransactionStatusServiceBusy">Simulate <i ng-if="errorTransactionStatusServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusRequestCopy)" ng-if="errorTransactionStatusResponded && currentTransactionStatusErrorCode == 1003">Copy Request</button>
+                        </uib-tab>
+                    </uib-tabset>
+                </uib-tab>
+                <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                            <br />
+                            <form action="/" method="POST" name="statusForm">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="partnerId">PartnerId</label>
+                                        <input ng-model="transactionModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
+                                        <input ng-model="transactionModel.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    </div>
+                                    <button class="btn btn-primary" ng-click="transactionStatus()" ng-disabled="statusBusy || statusForm.$invalid">Check status<i ng-if="statusBusy" class="fa fa-cog fa-spin"></i></button>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <br />
+                        <div ng-if="statusResponded" class="col-md-4">
+                            Request ({{StatusRequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="StatusServiceRequest"></jsonformatter>
+                            Sequence: {{sequenceStatus}}
+                        </div>
+                        <div ng-if="statusResponded" class="col-md-4">
+                            Response ({{StatusResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="StatusServiceResponse"></jsonformatter>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-8" heading="Curl" classes="nav-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                            <br />
+                            <form action="/" method="POST" name="statusForm">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="partnerId">PartnerId</label>
+                                        <input ng-model="transactionModel.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
+                                        <input ng-model="transactionModel.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <button class="btn btn-primary" ng-click="getCurlTransactionStatus(transactionId)" ng-disabled="curlStatusBusy || statusForm.$invalid">Check status<i ng-if="curlStatusBusy" class="fa fa-cog fa-spin"></i></button>
+                        </div>
+                        <br />
+                        <div ng-if="curlStatusResponded" class="col-md-8">
+                            <pre>
+                            <jsonformatter data="CurlStatusServiceResponse"></jsonformatter>
+                        </pre>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlStatusServiceResponse)">Copy</button>
+
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+
+        <div ng-if="select.statusVersion == 2">
+            <p>
+                Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
+            </p>
+            <i>Endpoints:</i>
+            <div class="table-responsive">
+                <table class="table  table-active col-md-6">
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Method</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Test</b></td>
+                            <td>
+                                POST
+                            </td>
+                            <td>https://stage-frame-api.aircash.eu/api/v2/status</td>
+                        </tr>
+                        <tr>
+                            <td><b>Production</b></td>
+                            <td>
+                                POST
+                            </td>
+                            <td>https://frame-api.aircash.eu/api/v2/status</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <i>Aircash public keys:</i>
+            <div class="table-responsive">
+                <table class="table  table-active col-md-2">
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td><a href="/files/AircashFramePublicKeyTest.zip" download>Link</a></td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td><a href="/files/AircashFramePublicKeyProd.zip" download>Link</a></td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <uib-tabset>
+                <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>PartnerID</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique partner identifier (per currency) provided by Aircash
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>PartnerTransactionId</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique transaction id in partner’s system
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Signature</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        A sequence that has been digitally signed with the provider's private signature, used for authentication
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                    <jsonformatter data="aircashFrameV2.transactionStatusV2.requestExample"></jsonformatter>
+                </uib-tab>
+                <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                    <pre>
+Request example:
+</pre>
+                    <jsonformatter data="aircashFrameV2.transactionStatusV2.requestExample"></jsonformatter>
+                    <pre>
+
+Sequence: 
+PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=571fd959-fe70-412b-90d5-e6db6df953ea
+
+
+Signature:
+JmdPLkrzTZAR+ol3V3F5z/CAUfEV2kZ1VvLGBc/u1kGfWliEwZVjh9LCfsUJIrjlWOQpsbZ8BSlGdIWzO3cvCdBrRproEm9PH/INzQvA2K9s+A4IQSN3SRb/yny9mrPlQ4v9JW5FkUr3P8pAwvoISy9o/nv5Gq8WfibVLJYe6C+jMCugfrycYC7sAo3z5zEr7cuThhDE/TPhzMAXjjKo8qamDnuITixNtwA78HXwEGxDrfK/GVwdvQ8XiVEBW6WAi9/OTzeoGC4HXDYwDaHrMlDDTehnz9fWNV+prpY3omUw7zvfgCKdh0axPcLo/mSNZidJQ8K6X1znvIguVKIg6WFgYpNG7k9OhKKz4Dgt+Nvs6m0Mruoq4NR1ZmUsZf9TLlKG1NmrndYHJFmCkzGXHvBAN2Vdjw9wRvLl8DWtXZM+xPsqcZtp2QSfss3LF5U1V0QuHRH8BRnEvxq9frTjR/T8gOYpYIDkjz8Ia2bf5x6m88IMfr9y6JNfCRNClzui1A8PoNsCfHmUw9aDBN8vquY2Fc0j2d9TDP0t/4BOI0QjAxuZw7FTTzPK5p6tE7CZ94d6lk6ruOuEkz4oFSaFzZzBmr2u8Y9+C+c+T7rSgaji138XDE72/MtjIaeCQ8hcEXtiMoiSrp0gBex6OcQo9vrIyNOFyDpGSfZLH43SDIc=                </pre>
+                </uib-tab>
+                <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Parameter</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><b>Status</b></td>
+                                    <td>int</td>
+                                    <td>
+                                        Transaction status, 0 - transaction not processed,  1 – declined, 2 - success, 3 - cancelled, 4 - payoutConfirmationPending
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Amount</b></td>
+                                    <td>decimal</td>
+                                    <td>
+                                        Transaction amount, Amount is sent only if Status is 2.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Currency</b></td>
+                                    <td>int</td>
+                                    <td>
+                                        ISO-4217 currency code
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>AircashTransactionId</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique transaction id in the Aircash system
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Parameters</b></td>
+                                    <td>List&lt;Object&gt;</td>
+                                    <td>List of parameters</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Key</b></td>
+                                    <td>String</td>
+                                    <td>The name of the parameter to be sent</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Value</b></td>
+                                    <td>String</td>
+                                    <td>The value of the parameter to be sent</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Signature</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        A sequence that has been digitally signed with the Aircash private key.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <p class="ml-3">
+                        <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+                    </p>
+                </uib-tab>
+                <uib-tab index="request-tab-4" heading="200 OK response example" classes="nav-item">
+                    <jsonformatter data="aircashFrameV2.transactionStatusV2.responseExample"></jsonformatter>
+                    <pre>
+Sequence:
+AircashTransactionId=11da2e60-f35e-43a9-be63-26cf34b12e3b&Amount=10&CurrencyId=978&Parameters=Key=AircashUserID&Value=ccc1b67f-c871-45ff-9226-81b9e84d07a0&Status=4
+
+Signature:
+mGkC7OpmRf3UX/E79UoXl0iYYGaleGBtZbdcHMsbL1Nty9MJY3SYWZO9I3d6vQb2EVRomH89qmGIrlTz9ehjPpMljVtyeLwzbV015AIbUz5PT1mDMLktOVjnqWEXA+uy6o0HsJV0UxJ33o489Nwzpm4ebEmvmfnqubbYE7OTRyPT8qbmMJJGs2mowp8EX9M2Pd1c8Of1g5B4rj6fDKDOpXXS3+dcWsxwVWwRnlxMuiC0joIwJMajlDg7DHDn11BC3XT/z+BO9Wac5boyuflDoDJGO2igGaHvY+Nb1De2PBugzJ/DTvMoVI1B2fgJekbzjSMvzC6vZkgX7XQkWiUlo6Zj/sT4VfsywTNNkyK/PHN50WFACj5vooUeLt4dugQRqUfKHk6CJJ42XkI6cqWilibO0XbwPqQxN8PZE7EK/Ufp2LgLOk56870ZLSAerncaR4a6KLDzgrzDlYVajaRmkCU+H7osExLnfgCifsl1CIq+HBe0CeQm3q79bugUxGhF3YwcU+ih8VeJcI9Vo5//5yxWQhSF0KBHCY6ADiVMChaTTwIpZOpWbW0VtP/CBAqzomBIq/UAjCQ1ssWsGEeJd+A49pZdu6CmpaIaAEad9RThWtK6PPvfMoFsdh189AaZqi5pO5pvL+IqaaB7FzAFmihGlyaPTPRImY63bMdGiA8=
+</pre>
+                </uib-tab>
+                <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Http response</th>
+                                    <th>Description</th>
+                                    <th>Error Code</th>
+                                    <th>Message</th>
+                                    <th>Solution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3"><b>400</b></td>
+                                    <td rowspan="3">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                    <td><b>1</b></td>
+                                    <td>Invalid signature or partner id</td>
+                                    <td rowspan="3">
+                                        Contact Aircash support
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>3</b></td>
+                                    <td>Validation error</td>
+                                </tr>
+                                <tr>
+                                    <td><b>1002</b></td>
+                                    <td>Transaction does not exist</td>
+                                </tr>
+                                <tr>
+                                    <td><b>401</b></td>
+                                    <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>
+                                        Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>500</b></td>
+                                    <td>An unknown error occured</td>
+                                    <td>-</td>
+                                    <td>Unknown error has occurred</td>
+                                    <td>
+                                        Contact Aircash support
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-6" heading="Error response example" classes="nav-item">
+                    <uib-tabset class="row tabs-left">
+                        <uib-tab index="TransactionStatusV2Error-tab-1" heading="1 - Invalid signature or partner id" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1)">
+                                    Request
+                                    <jsonformatter data="errorExamples.TransactionStatusV2.error1.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=fbea7431-e796-4472-8689-afddc013e723&PartnerTransactionId=fd9d8fce-6548-4cb1-839b-57a599984b8f
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1)">
+                                    Response
+                                    <jsonformatter data="errorExamples.TransactionStatusV2.error1.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1">
+                                    Request ({{errorTransactionStatusV2RequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusV2Request"></jsonformatter>
+
+                                    Sequence: {{errorTransactionStatusV2Sequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1">
+                                    Response ({{errorTransactionStatusV2ResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusV2Response"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="transactionStatusV2SimulateError(1)" ng-disabled="errorTransactionStatusV2ServiceBusy">Simulate <i ng-if="errorTransactionStatusV2ServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusV2RequestCopy)" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1">Copy Request</button>
+                        </uib-tab>
+                        <uib-tab index="TransactionStatusV2Error-tab-2" heading="3 - Validation Error" classes="nav-item">
+                            Simulation not available.
+                            <!--<div class="row col-12">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3)">
+                                    Request
+                                    <jsonformatter data="errorExamples.TransactionStatusV2.error3.request"></jsonformatter>
+
+                                    Sequence:
+                                    Amount=10&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=&NotificationUrl=https://aircash.eu&OriginUrl=https://aircash.eu&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=aa1ccf34-cd9c-4f31-84c6-10e9130ad231&PartnerUserId=a3876902-b3e4-4557-aace-a57a506e38ca&PayMethod=10&PayType=1&SuccessUrl=
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3)">
+                                    Response
+                                    <jsonformatter data="errorExamples.TransactionStatusV2.error3.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">
+                                    Request ({{errorTransactionStatusV2RequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusV2Request"></jsonformatter>
+
+                                    Sequence: {{errorTransactionStatusV2Sequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">
+                                    Response ({{errorTransactionStatusV2ResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusV2Response"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="transactionStatusV2SimulateError(3)" ng-disabled="errorTransactionStatusV2ServiceBusy">Simulate <i ng-if="errorTransactionStatusV2ServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusV2RequestCopy)" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 3">Copy Request</button>-->
+                        </uib-tab>
+                        <uib-tab index="TransactionStatusV2Error-tab-3" heading="1002 - Transaction does not exist" classes="nav-item">
+                            <div class="row col-12">
+                                <div class="col-sm-6 overflow-auto" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1002)">
+                                    Request
+                                    <jsonformatter data="errorExamples.TransactionStatusV2.error1002.request"></jsonformatter>
+
+                                    Sequence:
+                                    PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=c6935dce-1e91-434f-93b6-bbaa2a270b29
+                                </div>
+                                <div class="col-sm-6" ng-if="!(errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1002)">
+                                    Response
+                                    <jsonformatter data="errorExamples.TransactionStatusV2.error1002.response"></jsonformatter>
+                                </div>
+                                <div class="col-sm-6 overflow-auto" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1002">
+                                    Request ({{errorTransactionStatusV2RequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusV2Request"></jsonformatter>
+
+                                    Sequence: {{errorTransactionStatusV2Sequence}}<br />
+
+                                </div>
+                                <div class="col-sm-6" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1002">
+                                    Response ({{errorTransactionStatusV2ResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                                    <jsonformatter data="errorTransactionStatusV2Response"></jsonformatter>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary mt-2" ng-click="transactionStatusV2SimulateError(1002)" ng-disabled="errorTransactionStatusV2ServiceBusy">Simulate <i ng-if="errorTransactionStatusV2ServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorTransactionStatusV2RequestCopy)" ng-if="errorTransactionStatusV2Responded && currentTransactionStatusV2ErrorCode == 1002">Copy Request</button>
+                        </uib-tab>
+                    </uib-tabset>
+                </uib-tab>
+                <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                            <br />
+                            <form action="/" method="POST" name="statusV2Form">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="partnerId">PartnerId</label>
+                                        <input ng-model="transactionModelV2.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
+                                        <input ng-model="transactionModelV2.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    </div>
+                                    <button class="btn btn-primary" ng-click="transactionStatusV2()" ng-disabled="statusV2Busy || statusV2Form.$invalid">Check status<i ng-if="statusV2Busy" class="fa fa-cog fa-spin"></i></button>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <br />
+                        <div ng-if="statusV2Responded" class="col-md-4">
+                            Request ({{StatusV2RequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="StatusV2ServiceRequest"></jsonformatter>
+                            Sequence: {{sequenceStatusV2}}
+                        </div>
+                        <div ng-if="statusV2Responded" class="col-md-4">
+                            Response ({{StatusV2ResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="StatusV2ServiceResponse"></jsonformatter>
+                            <div ng-if="StatusV2ServiceResponseSequence != null" style="word-break: break-all;">
+                                Sequence:
+                                {{StatusV2ServiceResponseSequence}}
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-8" heading="Curl" classes="nav-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                            <br />
+                            <form action="/" method="POST" name="statusV2Form">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="partnerId">PartnerId</label>
+                                        <input ng-model="transactionModelV2.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
+                                        <input ng-model="transactionModelV2.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <button class="btn btn-primary" ng-click="getCurlTransactionStatusV2(transactionId)" ng-disabled="curlStatusV2Busy || statusV2Form.$invalid">Check status<i ng-if="curlStatusBusy" class="fa fa-cog fa-spin"></i></button>
+                        </div>
+                        <br />
+                        <div ng-if="curlStatusV2Responded" class="col-md-8">
+                            <pre>
+                            <jsonformatter data="CurlStatusV2ServiceResponse"></jsonformatter>
+                        </pre>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlStatusV2ServiceResponse)">Copy</button>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+        <div ng-if="select.statusVersion == 3">
+            <p>
+                Method that’s used to check the transaction status in Aircash system. Using this method partner needs check the status of the transaction before completing the payment.
+            </p>
+            <i>Endpoints:</i>
+            <div class="table-responsive">
+                <table class="table  table-active col-md-6">
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Method</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Test</b></td>
+                            <td>
+                                POST
+                            </td>
+                            <td>https://stage-frame-api.aircash.eu/api/v3/status</td>
+                        </tr>
+                        <tr>
+                            <td><b>Production</b></td>
+                            <td>
+                                POST
+                            </td>
+                            <td>https://frame-api.aircash.eu/api/v3/status</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br />
+            <i>Aircash public keys:</i>
+            <div class="table-responsive">
+                <table class="table  table-active col-md-2">
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Download</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td><a href="/files/AircashFramePublicKeyTest.zip" download>Link</a></td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td><a href="/files/AircashFramePublicKeyProd.zip" download>Link</a></td>
+                    </tr>
+                </table>
+            </div>
+            <br />
+            <uib-tabset>
+                <uib-tab index="request-tab-0" heading="Request parameters" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>PartnerID</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique partner identifier (per currency) provided by Aircash
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>PartnerTransactionId</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique transaction id in partner’s system
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Signature</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        A sequence that has been digitally signed with the provider's private signature, used for authentication
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
+                    <jsonformatter data="aircashFrameV2.transactionStatusV2.requestExample"></jsonformatter>
+                </uib-tab>
+                <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+                    <pre>
+Request example:
+</pre>
+                    <jsonformatter data="aircashFrameV2.transactionStatusV2.requestExample"></jsonformatter>
+                    <pre>
+
+Sequence: 
+PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=571fd959-fe70-412b-90d5-e6db6df953ea
+
+
+Signature:
+JmdPLkrzTZAR+ol3V3F5z/CAUfEV2kZ1VvLGBc/u1kGfWliEwZVjh9LCfsUJIrjlWOQpsbZ8BSlGdIWzO3cvCdBrRproEm9PH/INzQvA2K9s+A4IQSN3SRb/yny9mrPlQ4v9JW5FkUr3P8pAwvoISy9o/nv5Gq8WfibVLJYe6C+jMCugfrycYC7sAo3z5zEr7cuThhDE/TPhzMAXjjKo8qamDnuITixNtwA78HXwEGxDrfK/GVwdvQ8XiVEBW6WAi9/OTzeoGC4HXDYwDaHrMlDDTehnz9fWNV+prpY3omUw7zvfgCKdh0axPcLo/mSNZidJQ8K6X1znvIguVKIg6WFgYpNG7k9OhKKz4Dgt+Nvs6m0Mruoq4NR1ZmUsZf9TLlKG1NmrndYHJFmCkzGXHvBAN2Vdjw9wRvLl8DWtXZM+xPsqcZtp2QSfss3LF5U1V0QuHRH8BRnEvxq9frTjR/T8gOYpYIDkjz8Ia2bf5x6m88IMfr9y6JNfCRNClzui1A8PoNsCfHmUw9aDBN8vquY2Fc0j2d9TDP0t/4BOI0QjAxuZw7FTTzPK5p6tE7CZ94d6lk6ruOuEkz4oFSaFzZzBmr2u8Y9+C+c+T7rSgaji138XDE72/MtjIaeCQ8hcEXtiMoiSrp0gBex6OcQo9vrIyNOFyDpGSfZLH43SDIc=                </pre>
+                </uib-tab>
+                <uib-tab index="request-tab-3" heading="Response parameters" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Parameter</th>
+                                    <th>Type</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="2"><b>Status</b></td>
+                                    <td>int</td>
+                                    <td>
+                                        Transaction status, 0 - transaction not processed,  1 – declined, 2 - success, 3 - cancelled, 4 - payoutConfirmationPending
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Amount</b></td>
+                                    <td>decimal</td>
+                                    <td>
+                                        Transaction amount, Amount is sent only if Status is 2.
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Currency</b></td>
+                                    <td>int</td>
+                                    <td>
+                                        ISO-4217 currency code
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>AircashTransactionId</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        Unique transaction id in the Aircash system
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Events</b></td>
+                                    <td>List&lt;Object&gt;</td>
+                                    <td>List of events</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>DateTimeUTC</b></td>
+                                    <td>DateTime</td>
+                                    <td>Date and time when the event occured</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Description</b></td>
+                                    <td>String</td>
+                                    <td>Description of the event</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>EventCode</b></td>
+                                    <td>Int</td>
+                                    <td>Code of the event</td>
+                                </tr>
+                                <tr>
+                                <tr>
+                                    <td colspan="2"><b>Parameters</b></td>
+                                    <td>List&lt;Object&gt;</td>
+                                    <td>List of parameters</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Key</b></td>
+                                    <td>String</td>
+                                    <td>The name of the parameter to be sent</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td><b>Value</b></td>
+                                    <td>String</td>
+                                    <td>The value of the parameter to be sent</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><b>Signature</b></td>
+                                    <td>string</td>
+                                    <td>
+                                        A sequence that has been digitally signed with the Aircash private key.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <p class="ml-3">
+                        <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+                    </p>
+                </uib-tab>
+                <uib-tab index="request-tab-4" heading="200 OK response example" classes="nav-item">
+                    <jsonformatter data="aircashFrameV2.transactionStatusV3.responseExample"></jsonformatter>
+                    <pre>
+Sequence:
+AircashTransactionId=95ff5846-f10c-4870-bcf1-e5a0014d0e37&Amount=&CurrencyId=978&Parameters=&Status=1
+
+Signature:
+Y7hXZ90VSuJJN2xxTuOckl7Taid9JgCw6Q2JrdLx51AvbnZ+klNXUHOHVPl42VuUw4xhnuFoR2p5q7yNpSqaORxw8/SGMMd3n6d+MgGOYbF5eTtAKCG8eYYM7Lt3jAafi1lYYFrOMRv9FHRllsLbn7bNUeI1U48mQvD9+hn7SwlbYQ7HK9Xv5eBRClHrPsIRc/QLBUweykjilRDq3C2cPGK4fwpGxUecxfAQEDc39cAneeyRcUTBTJt/CsH4u7zf9gG5aSjcMosWPJN1GnqTzPY/Ihq+5j9BncvHCUQbclQc84PTfUAkjl2p2A/qwmGNCZnxoQC5Lr2FLZsTWcBAHmA43W76BTlUGd3PscT71ENcdcaj7WpcbdWYygwVsmzD7kq0bAVde/+RaBRqTbcEjd5nTdt630V76o5R4c2QPryT8aXcSmFTD5Zd+nqNaDFEcvj4H+H0P5DHMMCykbsmERww+VVBImIy5QsDKt7vS/ZLawgt+3IdCqnpfE/U/j56DEqnCthvJZLV5VtZmKH1kYxHEFi9f85GNCsEGUFUqUCEoZQr48SsfJpd/uls2KfTEx8DOM4SsJKNbffvhy97sazAghj2+G3SS+m5Cu5FJvr8NtRbQLATpRL0Xkqbn8m9sJj5KFQKPYeOpwNK8zJTkmEfgMfHjL+Y6XtItbUarQA=
+</pre>
+                </uib-tab>
+                <uib-tab index="request-tab-5" heading="Error response messages" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Http response</th>
+                                    <th>Description</th>
+                                    <th>Error Code</th>
+                                    <th>Message</th>
+                                    <th>Solution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td rowspan="3"><b>400</b></td>
+                                    <td rowspan="3">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                                    <td><b>1</b></td>
+                                    <td>Invalid signature or partner id</td>
+                                    <td rowspan="3">
+                                        Contact Aircash support
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>3</b></td>
+                                    <td>Validation error</td>
+                                </tr>
+                                <tr>
+                                    <td><b>1002</b></td>
+                                    <td>Transaction does not exist</td>
+                                </tr>
+                                <tr>
+                                    <td><b>401</b></td>
+                                    <td>In case the partner sends an unknown partner ID or invalid signature Aircash system will return this response</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>
+                                        Check the parameters that are being sent according to the Aircash system. If they are all according to documentation please contact Aircash support
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>500</b></td>
+                                    <td>An unknown error occured</td>
+                                    <td>-</td>
+                                    <td>Unknown error has occurred</td>
+                                    <td>
+                                        Contact Aircash support
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-6" heading="Events" classes="nav-item">
+                    <div class="table-responsive">
+                        <table class="table  table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Event code</th>
+                                    <th>Message</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>10001</b></td>
+                                    <td>Frame is opened by user.</td>
+                                    <td>When user opens the Frame window.</td>
+                                </tr>
+                                <tr ng-if="initiateModelSelected.data.payType == 0 && initiateModelSelected.data.payMethod == 2">
+                                    <td><b>10002</b></td>
+                                    <td>QR code is generated and displayed to user.</td>
+                                    <td>When QR code is generated.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>10003</b></td>
+                                    <td>The user sent an invalid phone number for validation.</td>
+                                    <td>When the user enters a wrong phone number format</td>
+                                </tr>
+                                <tr>
+                                    <td><b>10004</b></td>
+                                    <td>The transaction has expired.</td>
+                                    <td>When user doesn't complete transaction in given time.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>20001</b></td>
+                                    <td>The user is not active with phone number:</td>
+                                    <td>When there is no user with entered phone number in Aircash system.</td>
+                                </tr>
+                                <tr>
+                                    <td><b>20002</b></td>
+                                    <td>User data does not match - transaction rejected. Users can top up their partner account only with an Aircash account that has same owner.</td>
+                                    <td>When entered user data doesn't match with user data in Aircash system</td>
+                                </tr>
+                                <tr>
+                                    <td><b>20003</b></td>
+                                    <td>User is blocked or over the limit - contact Aircash support</td>
+                                    <td>When the user has reached limit or when user is blocked by Aircash system</td>
+                                </tr>
+                                <tr ng-if="initiateModelSelected.data.payType == 0 && initiateModelSelected.data.payMethod == 2">
+                                    <td><b>20004</b></td>
+                                    <td>The user rejected the transaction</td>
+                                    <td>When the user on phone clicks "Cancel transaction"</td>
+                                </tr>
+                                <tr ng-if="initiateModelSelected.data.payType == 0 && initiateModelSelected.data.payMethod == 2">
+                                    <td><b>20005</b></td>
+                                    <td>The user has insufficient funds in their account.</td>
+                                    <td>When user doesn't have enough funds to pay</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-7" heading="Try it out" classes="nav-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                            <br />
+                            <form action="/" method="POST" name="statusV3Form">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="partnerId">PartnerId</label>
+                                        <input ng-model="transactionModelV3.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
+                                        <input ng-model="transactionModelV3.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    </div>
+                                    <button class="btn btn-primary" ng-click="transactionStatusV3()" ng-disabled="statusV3Busy || statusV3Form.$invalid">Check status<i ng-if="statusV3Busy" class="fa fa-cog fa-spin"></i></button>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <br />
+                        <div ng-if="statusV3Responded" class="col-md-4">
+                            Request ({{StatusV3RequestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="StatusV3ServiceRequest"></jsonformatter>
+                            Sequence: {{sequenceStatusV3}}
+                        </div>
+                        <div ng-if="statusV3Responded" class="col-md-4">
+                            Response ({{StatusV3ResponseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                            <jsonformatter data="StatusV3ServiceResponse"></jsonformatter>
+                            <div ng-if="StatusV3ServiceResponseSequence != null" style="word-break: break-all;">
+                                Sequence:
+                                {{StatusV3ServiceResponseSequence}}
+                            </div>
+                        </div>
+                    </div>
+                </uib-tab>
+                <uib-tab index="request-tab-8" heading="Curl" classes="nav-item">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button ng-click="setDefaultInitiateModel()" class="btn btn-primary w-100px me-5px mb-3">Set default values</button>
+                            <br />
+                            <form action="/" method="POST" name="statusV3Form">
+                                <fieldset>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="partnerId">PartnerId</label>
+                                        <input ng-model="transactionModelV3.partnerId" type="text" class="form-control" ng-required="true" name="partnerId">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label" for="transactionId">Partner Transaction ID</label>
+                                        <input ng-model="transactionModelV3.transactionId" type="text" class="form-control" ng-required="true" name="transactionId">
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <button class="btn btn-primary" ng-click="getCurlTransactionStatusV3(transactionId)" ng-disabled="curlStatusV3Busy || statusV3Form.$invalid">Check status<i ng-if="curlStatusBusy" class="fa fa-cog fa-spin"></i></button>
+                        </div>
+                        <br />
+                        <div ng-if="curlStatusV3Responded" class="col-md-8">
+                            <pre>
+                            <jsonformatter data="CurlStatusV3ServiceResponse"></jsonformatter>
+                        </pre>
+                            <button class="btn btn-white mt-2" ng-click="copyToClipboard(CurlStatusV3ServiceResponse)">Copy</button>
+                        </div>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>

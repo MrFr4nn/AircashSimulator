@@ -22,7 +22,9 @@ cashierAcFrameModule.service("cashierAcFrameMenuService", ['$http', '$q', 'handl
 ]);
 
 cashierAcFrameModule.controller("cashierAcFrameMenuCtrl",
-    ['$scope', '$state', 'cashierAcFrameMenuService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, $state, cashierAcFrameMenuService, $filter, $http, JwtParser, $uibModal, $rootScope) {            
+    ['$scope', '$state', 'cashierAcFrameMenuService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage',
+        function ($scope, $state, cashierAcFrameMenuService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) { 
+            $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+            $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
         }
     ]);

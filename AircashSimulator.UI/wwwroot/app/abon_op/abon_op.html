@@ -39,44 +39,45 @@
 
         <ng-include src="'app/abon_op/prerequisite.html?v=' + appVersion"></ng-include>
         <ng-include src="'app/abon_op/edge_cases.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/abon_op/testVoucher.html?v=' + appVersion"></ng-include>
         <ng-include src="'app/abon_op/FAQ.html?v=' + appVersion"></ng-include>
         <ng-include src="'app/abon_op/abon_deposit_app.html?v=' + appVersion"></ng-include>
 
-    <!-- #modal-dialog -->
-    <div class="modal fade" id="couponModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Abon example</h4>
+        <!-- #modal-dialog -->
+        <div class="modal fade" id="couponModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Abon example</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <img src="../../images/abon.png" alt="Abon">
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                    </div>
                 </div>
-                <div class="modal-body" align="center">
-                    <img src="../../images/abon.png" alt="Abon">
-                </div>
-                <div class="modal-footer">
-                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+            </div>
+        </div>
+
+        <div class="modal fade" id="videoModalAbon">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Abon</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <video width="600" controls muted>
+                            <source src="../../videos/ac_abon.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="videoModalAbon">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Abon</h4>
-                </div>
-                <div class="modal-body" align="center">
-                    <video width="600" controls muted>
-                        <source src="../../videos/ac_abon.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="modal-footer">
-                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </body>
 </html>

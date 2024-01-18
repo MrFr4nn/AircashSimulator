@@ -299,6 +299,12 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         partnerAdminService.getRoles()
             .then(function (response) {
                 $scope.roles = response;
+                $scope.roles = $scope.roles.sort(function (a, b) {
+                    var textA = a.roleName.toUpperCase();
+                    var textB = b.roleName.toUpperCase();
+                    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+                });
+                console.log($scope.roles);
                 $scope.setCheckBoxSelected;
             },
                 () => { console.log("Error, could not get roles!"); })
@@ -389,10 +395,16 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 return "Documentation for online/merchant";
             case "AircashPayment":
                 return "Aircash marketplace deposit";
+            case "AMDDeepLink":
+                return "Aircash marketplace Deep link";
             case "AircashRedeemTicket":
                 return "Payouts of winning tickets to Aircash app";
-            case "AircashFrameV2":
-                return "Current version of Frame, contains Aircash Pay, Abon deposit and Witdhrawals";
+            case "AircashFrameV2AcPay":
+                return "Aircash Frame Aircash Pay";
+            case "AircashFrameV2Abon":
+                return "Aircash Frame Abon";
+            case "AircashFrameV2Withdrawal":
+                return "Aircash Frame Withdrawal";
             case "AircashPayStaticCode":
                 return "Aircash Pay for static QR codes";
             case "AircashPosDeposit":

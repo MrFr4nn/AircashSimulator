@@ -30,6 +30,7 @@ namespace Service.Settings
         decimal AbonInvalidValue { get; }
         string TestAircashPaymentPath { get; }
         string TestAircashPaymentPass { get; }
+        string AbonCashierNotificationUrl { get; }
         string TestPhoneNumber { get; }
         string BlockedPhoneNumber { get; }
         decimal PayoutDefaultAmount { get; }
@@ -71,5 +72,8 @@ namespace Service.Settings
         Guid AircashFrameAmountEqualAsCouponValuePartnerId { get; }
         Guid AircashFrameAmountLessThanCouponValuePartnerId { get; }
         Guid AircashFramePartnerIdWithMatchPersonalData { get; }
+
+        public string TestAdminPrivateKeyPath { get; }
+        public string TestAdminPrivateKeyPass { get; }
     }
 }

@@ -51,6 +51,8 @@ namespace Service.Settings
         public string SalesPartnerLocation { get { return GetSetting("SalesPartnerLocation", string.Empty, throwExceptionIfMissing: true); } }
         public string ValidBarcode { get { return GetSetting("ValidBarcode", string.Empty, throwExceptionIfMissing: true); } }
         public string UsedBarcode { get { return GetSetting("UsedBarcode", string.Empty, throwExceptionIfMissing: true); } }
+        public string AbonCashierNotificationUrl { get { return GetSetting("AbonCashierNotificationUrl", string.Empty, throwExceptionIfMissing: true); } }
+
         public string BarcodeOverLimit { get { return GetSetting("BarcodeOverLimit", string.Empty, throwExceptionIfMissing: true); } }
         public string NotCheckedBarcode { get { return GetSetting("NotCheckedBarcode", string.Empty, throwExceptionIfMissing: true); } }
         public Guid AbonOnlinePartnerId { get { return GetSetting("AbonOnlinePartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
@@ -80,6 +82,8 @@ namespace Service.Settings
         public Guid SalesPartnerId { get { return GetSetting("SalesPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid UnableToCancelPayoutTransactionId { get { return GetSetting("UnableToCancelPayoutTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid TransactionAlreadyCanceledId { get { return GetSetting("TransactionAlreadyCanceledId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public string TestAdminPrivateKeyPath { get { return GetSetting("TestAdminPrivateKeyPath", string.Empty, throwExceptionIfMissing: true); } }
+        public string TestAdminPrivateKeyPass { get { return GetSetting("TestAdminPrivateKeyPass", string.Empty, throwExceptionIfMissing: true); } }
 
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)
         {

@@ -115,12 +115,12 @@
                 </table>
             </div>
         </uib-tab>
-        <uib-tab index="checkUser1-tab-1" heading="Request example" classes="nav-item">
+        <uib-tab index="checkUser1-tab-1" heading="Request example " classes="nav-item">
             <div class="form-group row mx-2">
                 <div class="col-6">
                     <div class="row">
                         <div class="col-lg-3 mt-2 ">
-                            <select class="form-control" id="select" ng-change="requestCheckPlayerChanged()" ng-model="checkPlayerUsernameEmailSelected" ng-init="checkPlayerUsernameEmailSelected = 'username'">
+                            <select class="form-control" id="select" ng-change="requestCheckPlayerChanged()" ng-model="config.checkPlayerUsernameEmailSelected" ng-init="config.checkPlayerUsernameEmailSelected = 'username'">
                                 <option value="email">Email</option>
                                 <option value="username">Username</option>
                             </select>
@@ -150,7 +150,7 @@
                             </label>
                         </div>
                         <div class="col-lg-9 mt-2">
-                            <input ng-model="checkPlayerGenerateSignatureModel.currency" ng-init="checkPlayerGenerateSignatureModel.currency = '978'; requestCheckPlayerChanged();" ng-if="checkboxCheckPlayerModel.currency" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="generateCheckPlayerSignatureBusy" ng-required="true">
+                            <input ng-model="checkPlayerGenerateSignatureModel.currency" ng-init="checkPlayerGenerateSignatureModel.currency = 'EUR'; requestCheckPlayerChanged();" ng-if="checkboxCheckPlayerModel.currency" ng-change="requestCheckPlayerChanged()" class="form-control" type="text" placeholder="Enter currencyId e.g. EUR" ng-disabled="generateCheckPlayerSignatureBusy" ng-required="true">
                         </div>
                     </div>
                     <hr />
@@ -190,7 +190,7 @@
                         </div>
                     </div>
                     <hr />-->
-                    <div class="row">
+                    <!--<div class="row">
                         <div class="col-lg-3 form-check mt-2 pl-4">
                             <input class="form-check-input" type="checkbox" ng-change="requestCheckPlayerChanged()" ng-model="checkboxCheckPlayerModel.match">
                             <label class="form-check-label">
@@ -209,14 +209,14 @@
                             </div>
                         </div>
                     </div>
-                    <hr />
+                    <hr />-->
                 </div>
                 <div class="col-6">
                     <div ng-if="generateCheckPlayerSignatureResponded">
                         <pre>
                         <jsonformatter data="generateCheckPlayerSignatureResponse"></jsonformatter>  
 Sequence: 
-{{RequestExampleSequence}}
+{{CheckPlayerRequestExampleSequence}}
 </pre>
                     </div>
                 </div>
@@ -334,32 +334,43 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
             </div>
         </uib-tab>
         <uib-tab index="checkUser1-tab-4" heading="200 OK response example" classes="nav-item">
-            <hr />
-            <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
-                <input class="form-check-input" type="checkbox" ng-model="aircashMatchingPersonalData">
-                <label class="form-check-label mt-1">
-                    Aircash matching personal data
-                </label>
-            </div>
-            <hr/>
-            <div class="col-lg-3 form-check align-self-center mt-2 pl-4">
-                <input class="form-check-input" type="checkbox" ng-model="maxAmount">
-                <label class="form-check-label mt-1">
-                    Max amount
-                </label>
-            </div>
-            <hr />
-            <div ng-if="!aircashMatchingPersonalData && !maxAmount">
-                <jsonformatter data="aircashPayment.checkPlayer.responseExample"></jsonformatter>
-            </div>
-            <div ng-if="aircashMatchingPersonalData && !maxAmount">
-                <jsonformatter data="aircashPayment.checkPlayer.responseExampleAircashMatchingPersonalData"></jsonformatter>
-            </div>
-            <div ng-if="!aircashMatchingPersonalData && maxAmount">
-                <jsonformatter data="aircashPayment.checkPlayer.responseExampleMaxAmount"></jsonformatter>
-            </div>
-            <div ng-if="aircashMatchingPersonalData && maxAmount">
-                <jsonformatter data="aircashPayment.checkPlayer.responseExampleAircashMatchingPersonalDataAndMaxAmount"></jsonformatter>
+            <div class="row row-cols-1 row-cols-md-2">
+                <div class="col">
+                    <hr />
+                    <div class="form-check align-self-center mt-2 pl-4">
+                        <input class="form-check-input" type="checkbox" ng-change="updateCheckPlayerResponse()" ng-model="checkPlayerResponseCheckbox.aircashMatchingPersonalData">
+                        <label class="form-check-label mt-1">
+                            Aircash matching personal data
+                        </label>
+                    </div>
+                    <hr />
+                    <div class="form-check align-self-center mt-2 pl-4">
+                        <input class="form-check-input" type="checkbox" ng-change="updateCheckPlayerResponse()" ng-model="checkPlayerResponseCheckbox.maxAmount">
+                        <label class="form-check-label mt-1">
+                            Payer max allowed amount
+                        </label>
+                    </div>
+                    <hr />
+                    <div class="form-check align-self-center mt-2 pl-4">
+                        <input class="form-check-input" type="checkbox" ng-change="updateCheckPlayerResponse()" ng-model="checkPlayerResponseCheckbox.phoneNumber">
+                        <label class="form-check-label mt-1">
+                            Payer phone number
+                        </label>
+                    </div>
+                    <hr />
+                    <div class="form-check align-self-center mt-2 pl-4">
+                        <input class="form-check-input" type="checkbox" ng-change="updateCheckPlayerResponse()" ng-model="checkPlayerResponseCheckbox.personalIdentificationCode">
+                        <label class="form-check-label mt-1">
+                            Personal identification code
+                        </label>
+                    </div>
+                    <hr />
+                </div>
+                <div class="col">
+                    <div ng-if="responseGenerated">
+                        <jsonformatter data="aircashPayment.checkPlayer.responseExample"></jsonformatter>
+                    </div>
+                </div>
             </div>
         </uib-tab>
         <uib-tab index="checkUser1-tab-6" heading="Error response example" classes="nav-item">
@@ -414,7 +425,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                                     </label>
                                 </div>
                                 <div class="col-lg-9 mt-2">
-                                    <input ng-model="checkPlayerModel.currency" ng-if="checkboxCheckPlayer.currency" class="form-control" type="text" placeholder="Enter currencyId e.g. 978" ng-disabled="checkPlayerBusy" ng-required="true">
+                                    <input ng-model="checkPlayerModel.currency" ng-if="checkboxCheckPlayer.currency" class="form-control" type="text" ng-init="checkPlayerModel.currency = 'EUR'" placeholder="Enter currencyId e.g. EUR" ng-disabled="checkPlayerBusy" ng-required="true">
                                 </div>
                             </div>
                             <hr />
@@ -454,7 +465,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                                 </div>
                             </div>
                             <hr />-->
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-lg-3 form-check mt-2 pl-4">
                                     <input class="form-check-input" type="checkbox" ng-model="checkboxCheckPlayer.match">
                                     <label class="form-check-label">
@@ -473,7 +484,7 @@ HrlYnqqrhCJJuqnGtkLE03IDp0mPTzW4otIrFlIRg3tXIQXgTJJiy61vYQuWzV8AqBQoDiQlQvLVKvJQ
                                     </div>
                                 </div>
                             </div>
-                            <hr />
+                            <hr />-->
                         </fieldset>
                     </form>
                     <button ng-click="checkPlayer()" class="btn btn-primary w-100px me-5px" ng-disabled="checkPlayerBusy|| checkPlayerForm.$invalid">Send POST <i ng-if="checkPlayerBusy" class="fa fa-cog fa-spin"></i></button>

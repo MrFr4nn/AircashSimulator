@@ -16,17 +16,25 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
     return ({
         initiateRedirectCheckout: initiateRedirectCheckout,
         initiateWindowCheckout: initiateWindowCheckout,
-        getTransactions: getTransactions,
         transactionStatus: transactionStatus,
         transactionStatusV2: transactionStatusV2,
+        transactionStatusV3: transactionStatusV3,
         getCurlTransactionStatus: getCurlTransactionStatus,
         getCurlTransactionStatusV2: getCurlTransactionStatusV2,
-        getCurlConfirmPayout: getCurlConfirmPayout,
-        confirmPayout: confirmPayout,
+        getCurlTransactionStatusV3: getCurlTransactionStatusV3,
         initiateSimulateError: initiateSimulateError,
-        confirmSimulateError: confirmSimulateError,
         transactionStatusSimulateError: transactionStatusSimulateError,
         transactionStatusV2SimulateError: transactionStatusV2SimulateError,
+
+        cancelPayoutSimulateError: cancelPayoutSimulateError,
+        cancelPayout: cancelPayout,
+        getCurlCancelPayout: getCurlCancelPayout,
+        getCurlConfirmPayout: getCurlConfirmPayout,
+        confirmPayout: confirmPayout,
+        confirmSimulateError: confirmSimulateError,
+
+        createAndSaveCoupons: createAndSaveCoupons,
+        getDenominations: getDenominations,
     });
 
     function initiateRedirectCheckout(initiateModel, matchParameters) {
@@ -90,6 +98,17 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
+    function transactionStatusV3(transactionModel) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/TransactionStatusV3FrameV2",
+            data: {
+                TransactionId: transactionModel.transactionId,
+                PartnerId: transactionModel.partnerId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
     function getCurlTransactionStatus(transactionModel) {
         var request = $http({
             method: 'POST',
@@ -109,6 +128,46 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
                 TransactionId: transactionModel.transactionId,
                 PartnerId: transactionModel.partnerId
             }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function getCurlTransactionStatusV3(transactionModel) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/GetCurlTransactionStatusV3FrameV2",
+            data: {
+                TransactionId: transactionModel.transactionId,
+                PartnerId: transactionModel.partnerId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function initiateSimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/InitiateSimulateError",
+            data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function transactionStatusSimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/TransactionStatusSimulateError",
+            data: errorCode
+
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function transactionStatusV2SimulateError(errorCode) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/TransactionStatusV2SimulateError",
+            data: errorCode
+
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -139,27 +198,6 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function getTransactions(pageSize, pageNumber) {
-        var request = $http({
-            method: 'GET',
-            url: config.baseUrl + "Transaction/GetAircashFramePreparedTransactions",
-            params: {
-                PageSize: pageSize,
-                PageNumber: pageNumber
-            }
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
-
-    function initiateSimulateError(errorCode) {
-        var request = $http({
-            method: 'POST',
-            url: config.baseUrl + "AircashFrame/InitiateSimulateError",
-            data: errorCode
-
-        });
-        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-    }
 
     function confirmSimulateError(errorCode) {
         var request = $http({
@@ -171,21 +209,55 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
 
-    function transactionStatusSimulateError(errorCode) {
+    function cancelPayoutSimulateError(errorCode) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashFrame/TransactionStatusSimulateError",
+            url: config.baseUrl + "AircashFrame/CancelPayoutSimulateError",
             data: errorCode
 
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
-    function transactionStatusV2SimulateError(errorCode) {
+
+    function cancelPayout(cancelModel) {
         var request = $http({
             method: 'POST',
-            url: config.baseUrl + "AircashFrame/TransactionStatusV2SimulateError",
-            data: errorCode
+            url: config.baseUrl + "AircashFrame/CancelPayoutFrameV2",
+            data: {
+                PartnerId: cancelModel.partnerId,
+                PartnerTransactionId: cancelModel.transactionId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
 
+    function getCurlCancelPayout(cancelModel) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AircashFrame/GetCurlCancelPayoutFrameV2",
+            data: {
+                PartnerId: cancelModel.partnerId,
+                PartnerTransactionId: cancelModel.transactionId
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+
+    function createAndSaveCoupons(partnerId) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "AbonSalePartner/CreateMultipleCashierCoupon",
+            data: {
+                PartnerId: partnerId,
+            }
+        });
+        return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+    }
+    function getDenominations(partnerId) {
+        var request = $http({
+            method: 'POST',
+            url: config.baseUrl + "Denominations/GetCashierDenominations",
+            data: { partnerId: partnerId }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
     }
@@ -193,14 +265,13 @@ acFrameV2Module.service("acFrameV2Service", ['$http', '$q', 'handleResponseServi
 ]);
 
 acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$filter', 'HelperService', 'acFrameV2Service', '$http', 'JwtParser', '$uibModal', '$rootScope', '$window', '$localStorage', 'config', function ($scope, $location, $state, $filter, HelperService, acFrameV2Service, $http, JwtParser, $uibModal, $rootScope, $window, $localStorage, config) {
+    
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
-    if ($scope.partnerRoles.indexOf("AircashFrameV2") == -1) {
+    if ($scope.partnerRoles.indexOf("AircashFrameV2Withdrawal") == -1 && $scope.partnerRoles.indexOf("AircashFrameV2Abon") == -1 && $scope.partnerRoles.indexOf("AircashFrameV2AcPay") == -1) {
         $location.path('/forbidden');
     }
-
-    console.log($scope.partnerIds);
     $scope.copyToClipboard = function (data) {
         navigator.clipboard.writeText(data);
     }
@@ -254,6 +325,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         }
     ];
 
+    //dont change------------
     $scope.initiateModels = [
         {
             name: "Aircash Pay",
@@ -274,6 +346,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             amount: 10,
         }
     ];
+    //-----------------------------
 
     $scope.config = {};
     $scope.config.useMatchPersonalData = false;
@@ -284,7 +357,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.transactionModel = {};
     $scope.transactionModelV2 = {};
+    $scope.transactionModelV3 = {};
+
     $scope.confirmModel = {};
+    $scope.cancelModel = {};
 
     $scope.setInititateModel = function () {
         $scope.initiateModel.payType = $scope.initiateModelSelected.data.payType;
@@ -296,20 +372,26 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     };
 
     $scope.setInititateModel();
-    
+
     $scope.useMatchPersonalDataChanged = function () {
-        if ($scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerId) {
-            $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $rootScope.showGritter("", "PartnerId changed to PartnerId that uses match personal data");
-        } else if (!$scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData) {
-            $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $rootScope.showGritter("", "PartnerId changed to PartnerId that dosen't uses match personal data");
+        if ($scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData != $scope.partnerIds.AircashFramePartnerId) {
+            if ($scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerId) {
+                $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.cancelModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.transactionModelV3.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $rootScope.showGritter("", "PartnerId changed to PartnerId that uses match personal data");
+            } else if (!$scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData) {
+                $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.cancelModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.transactionModelV3.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $rootScope.showGritter("", "PartnerId changed to PartnerId that dosen't uses match personal data");
+            }
         }
     }
 
@@ -319,7 +401,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
         $scope.initiateModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.initiateModel.partnerUserId = HelperService.NewGuid();
-        $scope.initiateModel.notificationUrl = $location.absUrl();
+        $scope.initiateModel.notificationUrl = config.baseUrl +"AircashFrame/NotificationCashierFrameV2";
         $scope.initiateModel.partnerTransactionId = HelperService.NewGuid();
         $scope.initiateModel.currency = 978;
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
@@ -330,8 +412,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
         $scope.confirmModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.confirmModel.currencyId = 978;
+        $scope.cancelModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.transactionModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.transactionModelV2.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
+        $scope.transactionModelV3.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
     }
 
     $scope.transactionId;
@@ -341,10 +425,6 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     }
 
     $scope.setDefaults = function () {
-        $scope.transactions = [];
-        $scope.pageSize = 5;
-        $scope.pageNumber = 1;
-        $scope.totalLoaded = 0;
         $scope.busy = false;
     };
     $scope.locale = {
@@ -402,7 +482,6 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                         debug: true
                     });*/
 
-                    $scope.getTransactions(true);
                 }
                 $scope.initiateBusy = false;
                 $scope.initiateResponded = true;
@@ -424,6 +503,34 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
     $scope.onCancel = function (obj) {
 
     };
+
+    $scope.currentInitiateErrorCode = 0;
+    $scope.errorInitiateResponded = false;
+    $scope.errorInitiateServiceBusy = false;
+    $scope.initiateSimulateError = (errCode) => {
+        $scope.currentInitiateErrorCode = 0;
+        $scope.errorInitiateResponded = false;
+        $scope.errorInitiateServiceBusy = true;
+        acFrameV2Service.initiateSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorInitiateRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorInitiateResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorInitiateSequence = response.sequence;
+                    $scope.errorInitiateRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorInitiateResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorInitiateRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentInitiateErrorCode = errCode;
+                $scope.errorInitiateResponded = true;
+                $scope.errorInitiateServiceBusy = false;
+            }, (err) => {
+
+                console.log(err);
+                console.log("error");
+            });
+    }
 
 
     $scope.getRedirectModal = function (transactionId) {
@@ -511,6 +618,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 console.log("error");
             });
     }
+
     $scope.curlStatusV2Responded = false;
     $scope.curlStatusV2Busy = false;
     $scope.getCurlTransactionStatusV2 = function () {
@@ -528,6 +636,108 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             });
     }
 
+    $scope.statusV3Busy = false;
+    $scope.statusV3Responded = false;
+    $scope.transactionStatusV3 = function () {
+        $scope.statusV3Busy = true;
+        $scope.statusV3Responded = false;
+        $scope.StatusV3ServiceResponseSequence = null;
+        acFrameV2Service.transactionStatusV3($scope.transactionModelV3)
+            .then(function (response) {
+                if (response) {
+                    $scope.StatusV3RequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.StatusV3ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceStatusV3 = response.sequence;
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.StatusV3ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.responseObject && response.serviceResponse.responseObject.signature) {
+                        response.serviceResponse.responseObject.signature = response.serviceResponse.responseObject.signature.substring(0, 10) + "...";
+                        $scope.StatusV3ServiceResponse = JSON.stringify(response.serviceResponse.responseObject, null, 4);
+                        $scope.StatusV3ServiceResponseSequence = response.serviceResponse.responseSequence;
+                    } else {
+                        $scope.StatusV3ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);;
+                    }
+
+                }
+                $scope.statusV3Busy = false;
+                $scope.statusV3Responded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.curlStatusV3Responded = false;
+    $scope.curlStatusV3Busy = false;
+    $scope.getCurlTransactionStatusV3 = function () {
+        $scope.curlStatusV3Busy = true;
+        $scope.curlStatusV3Responded = false;
+        acFrameV2Service.getCurlTransactionStatusV3($scope.transactionModelV3)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlStatusV3ServiceResponse = response;
+                }
+                $scope.curlStatusV3Busy = false;
+                $scope.curlStatusV3Responded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.currentTransactionStatusErrorCode = 0;
+    $scope.errorTransactionStatusResponded = false;
+    $scope.errorTransactionStatusServiceBusy = false;
+    $scope.transactionStatusSimulateError = (errCode) => {
+        $scope.currentTransactionStatusErrorCode = 0;
+        $scope.errorTransactionStatusResponded = false;
+        $scope.errorTransactionStatusServiceBusy = true;
+        acFrameV2Service.transactionStatusSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorTransactionStatusSequence = response.sequence;
+                    $scope.errorTransactionStatusRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorTransactionStatusResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorTransactionStatusRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentTransactionStatusErrorCode = errCode;
+                $scope.errorTransactionStatusResponded = true;
+                $scope.errorTransactionStatusServiceBusy = false;
+            }, (err) => {
+
+                console.log(err);
+                console.log("error");
+            });
+    }
+
+    $scope.currentTransactionStatusV2V2ErrorCode = 0;
+    $scope.errorTransactionStatusV2Responded = false;
+    $scope.errorTransactionStatusV2ServiceBusy = false;
+    $scope.transactionStatusV2SimulateError = (errCode) => {
+        $scope.currentTransactionStatusV2ErrorCode = 0;
+        $scope.errorTransactionStatusV2Responded = false;
+        $scope.errorTransactionStatusV2ServiceBusy = true;
+        acFrameV2Service.transactionStatusV2SimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorTransactionStatusV2RequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorTransactionStatusV2ResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorTransactionStatusV2Sequence = response.sequence;
+                    $scope.errorTransactionStatusV2RequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorTransactionStatusV2Response = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorTransactionStatusV2Request = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentTransactionStatusV2ErrorCode = errCode;
+                $scope.errorTransactionStatusV2Responded = true;
+                $scope.errorTransactionStatusV2ServiceBusy = false;
+            }, (err) => {
+
+                console.log(err);
+                console.log("error");
+            });
+    }
 
     $scope.confirmResponded = false;
     $scope.confirmBusy = false;
@@ -571,50 +781,6 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             });
     }
 
-
-    $scope.getTransactions = function (reset) {
-        if (reset) $scope.setDefaults();
-        acFrameV2Service.getTransactions($scope.pageSize, $scope.pageNumber)
-            .then(function (response) {
-                $scope.pageNumber += 1;
-                if (response) {
-                    $scope.totalLoaded = response.length;
-                    $scope.transactions = $scope.transactions.concat(response);
-                }
-            }, () => {
-                console.log("error");
-            });
-    }
-
-
-    $scope.currentInitiateErrorCode = 0;
-    $scope.errorInitiateResponded = false;
-    $scope.errorInitiateServiceBusy = false;
-    $scope.initiateSimulateError = (errCode) => {
-        $scope.currentInitiateErrorCode = 0;
-        $scope.errorInitiateResponded = false;
-        $scope.errorInitiateServiceBusy = true;
-        acFrameV2Service.initiateSimulateError(errCode)
-            .then(function (response) {
-                if (response) {
-                    $scope.errorInitiateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorInitiateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorInitiateSequence = response.sequence;
-                    $scope.errorInitiateRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorInitiateResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorInitiateRequest = JSON.stringify(response.serviceRequest, null, 4);
-                }
-                $scope.currentInitiateErrorCode = errCode;
-                $scope.errorInitiateResponded = true;
-                $scope.errorInitiateServiceBusy = false;
-            }, (err) => {
-
-                console.log(err);
-                console.log("error");
-            });
-    }
-
     $scope.currentConfirmErrorCode = 0;
     $scope.errorConfirmResponded = false;
     $scope.errorConfirmServiceBusy = false;
@@ -643,65 +809,75 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             });
     }
 
-    $scope.currentTransactionStatusErrorCode = 0;
-    $scope.errorTransactionStatusResponded = false;
-    $scope.errorTransactionStatusServiceBusy = false;
-    $scope.transactionStatusSimulateError = (errCode) => {
-        $scope.currentTransactionStatusErrorCode = 0;
-        $scope.errorTransactionStatusResponded = false;
-        $scope.errorTransactionStatusServiceBusy = true;
-        acFrameV2Service.transactionStatusSimulateError(errCode)
+    $scope.cancelBusy = false;
+    $scope.cancelResponded = false;
+    $scope.cancelPayout = function () {
+        $scope.cancelBusy = true;
+        $scope.cancelResponded = false;
+        acFrameV2Service.cancelPayout($scope.cancelModel)
             .then(function (response) {
                 if (response) {
-                    $scope.errorTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorTransactionStatusSequence = response.sequence;
-                    $scope.errorTransactionStatusRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.CancelResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.sequenceCancel = response.sequence;
                     response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorTransactionStatusResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorTransactionStatusRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.CancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    if (response.serviceResponse.signature) {
+                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    }
+                    $scope.CancelServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
                 }
-                $scope.currentTransactionStatusErrorCode = errCode;
-                $scope.errorTransactionStatusResponded = true;
-                $scope.errorTransactionStatusServiceBusy = false;
+                $scope.cancelBusy = false;
+                $scope.cancelResponded = true;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.curlCancelBusy = false;
+    $scope.curlCancelResponded = false;
+    $scope.getCurlCancelPayout = function () {
+        $scope.curlCancelBusy = true;
+        $scope.curlCancelResponded = false;
+        acFrameV2Service.getCurlCancelPayout($scope.cancelModel)
+            .then(function (response) {
+                if (response) {
+                    $scope.CurlCancelPayoutResponse = response;
+                }
+                $scope.curlCancelResponded = true;
+                $scope.curlCancelBusy = false;
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.currentCancelErrorCode = 0;
+    $scope.errorCancelResponded = false;
+    $scope.errorCancelServiceBusy = false;
+    $scope.cancelPayoutSimulateError = (errCode) => {
+        $scope.currentCancelErrorCode = 0;
+        $scope.errorCancelResponded = false;
+        $scope.errorCancelServiceBusy = true;
+        acFrameV2Service.cancelPayoutSimulateError(errCode)
+            .then(function (response) {
+                if (response) {
+                    $scope.errorCancelRequestDateTimeUTC = response.requestDateTimeUTC;
+                    $scope.errorCancelResponseDateTimeUTC = response.responseDateTimeUTC;
+                    $scope.errorCancelSequence = response.sequence;
+                    $scope.errorCancelRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
+                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
+                    $scope.errorCancelResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.errorCancelRequest = JSON.stringify(response.serviceRequest, null, 4);
+                }
+                $scope.currentCancelErrorCode = errCode;
+                $scope.errorCancelResponded = true;
+                $scope.errorCancelServiceBusy = false;
             }, (err) => {
 
                 console.log(err);
                 console.log("error");
             });
     }
-    $scope.currentTransactionStatusV2V2ErrorCode = 0;
-    $scope.errorTransactionStatusV2Responded = false;
-    $scope.errorTransactionStatusV2ServiceBusy = false;
-    $scope.transactionStatusV2SimulateError = (errCode) => {
-        $scope.currentTransactionStatusV2ErrorCode = 0;
-        $scope.errorTransactionStatusV2Responded = false;
-        $scope.errorTransactionStatusV2ServiceBusy = true;
-        acFrameV2Service.transactionStatusV2SimulateError(errCode)
-            .then(function (response) {
-                if (response) {
-                    $scope.errorTransactionStatusV2RequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorTransactionStatusV2ResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorTransactionStatusV2Sequence = response.sequence;
-                    $scope.errorTransactionStatusV2RequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorTransactionStatusV2Response = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorTransactionStatusV2Request = JSON.stringify(response.serviceRequest, null, 4);
-                }
-                $scope.currentTransactionStatusV2ErrorCode = errCode;
-                $scope.errorTransactionStatusV2Responded = true;
-                $scope.errorTransactionStatusV2ServiceBusy = false;
-            }, (err) => {
-
-                console.log(err);
-                console.log("error");
-            });
-    }
-
-    $scope.loadMore = function (pageSize) {
-        $scope.pageSize = pageSize;
-        $scope.getTransactions();
-    };
 
     $scope.setDate = function (date) {
         $scope.initiateModel.birthDate = date;
@@ -711,19 +887,74 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.setDefaults();
 
-    $scope.getTransactions();
-
-    $scope.showVideoAcPay = function () {
-        $("#videoModalAcPay").modal("show");
-    }
-
-    $scope.showVideoAbon = function () {
-        $("#videoModalAbon").modal("show");
-    }
-
     $scope.showVideoWithdrawal = function () {
         $("#videoModalWithdrawal").modal("show");
     }
+
+    $scope.createMultipleServiceBusy = false;
+    $scope.abon = {};
+    $scope.createAndSaveCoupons = function () {
+        $scope.createMultipleServiceBusy = true;
+        acFrameV2Service.createAndSaveCoupons($scope.abon.selectedAbonCountry.partnerId)
+            .then(function (response) {
+                var denominations = "";
+                response.forEach(x => denominations += x + "\n");
+                $scope.saveDonominations(denominations);
+            }, () => {
+                console.log("error");
+                $scope.createMultipleServiceBusy = false;
+            });
+    }
+
+    $scope.getDenominations = function () {
+        acFrameV2Service.getDenominations($scope.abon.selectedAbonCountry.partnerId)
+            .then(function (response) {
+                if (response) {
+                    $scope.abons = response;
+                    console.log(response)
+                }
+            }, () => {
+                console.log("error");
+            });
+    }
+
+    $scope.saveDonominations = function (textToWrite) {
+        let denominationsAsBlob = new Blob([textToWrite], { type: 'text/plain' });
+        let downloadLink = document.createElement('a');
+        downloadLink.download = "Denominations.txt";
+        downloadLink.innerHTML = 'Download File';
+
+        if (window.webkitURL != null) {
+            downloadLink.href = window.webkitURL.createObjectURL(
+                denominationsAsBlob
+            );
+        } else {
+            downloadLink.href = window.URL.createObjectURL(denominationsAsBlob);
+            downloadLink.style.display = 'none';
+            document.body.appendChild(downloadLink);
+        }
+
+        downloadLink.click();
+        $scope.createMultipleServiceBusy = false;
+    }
+
+        $scope.abon_countries = [
+            { country: "HR", partnerId: "261d648d-6bd8-4f5c-baf6-d3fcd336f985", isoCurrencySymbol: "EUR" },
+            { country: "CZ", partnerId: "15246f56-53a8-446c-855a-39b427ba1e3d", isoCurrencySymbol: "CZK" },
+            /*{ country: "GB", partnerId: "12d6dd08-ae11-4dc3-80bd-14b2ac71bbc9", isoCurrencySymbol: "GBP" },*/
+            { country: "FR", partnerId: "9ed97bd7-dbc8-4839-ae9b-5c13cf5afb0f", isoCurrencySymbol: "EUR" },
+            { country: "DE", partnerId: "c3678f7c-dda3-4044-90c6-71f9dbdbbd7b", isoCurrencySymbol: "EUR" },
+            { country: "GR", partnerId: "5daed4c7-0667-451d-b870-3fddd4217935", isoCurrencySymbol: "EUR" },
+            { country: "IT", partnerId: "842fe19a-426b-4507-95e4-933a6a367164", isoCurrencySymbol: "EUR" },
+            { country: "PL", partnerId: "1eda4d60-4113-40bf-a20e-031bc290fc36", isoCurrencySymbol: "PLN" },
+            { country: "RO", partnerId: "9be565cb-762a-403b-bb77-420ffdf46c61", isoCurrencySymbol: "RON" },
+            { country: "SK", partnerId: "78d6d87b-ff1d-41a7-af2b-f46a5df0e0d3", isoCurrencySymbol: "EUR" },
+            { country: "SI", partnerId: "a0686939-f4e9-4fe7-8e1e-7896b67f08a6", isoCurrencySymbol: "EUR" },
+            { country: "ES", partnerId: "e982453d-9280-4a3a-8244-fb44027a9007", isoCurrencySymbol: "EUR" },
+        ];
+    
+    $scope.abon.selectedAbonCountry = $scope.abon_countries[0];
+    $scope.getDenominations();
 
     $scope.errorExamples = {
         Initiate: {
@@ -737,9 +968,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     "payType": 1,
                     "payMethod": 10,
                     "notificationUrl": "https://aircash.eu",
-                    "successUrl": "",
-                    "declineUrl": "",
-                    "cancelUrl": "",
+                    "successUrl": null,
+                    "declineUrl": null,
+                    "cancelUrl": null,
                     "originUrl": "https://aircash.eu",
                     "locale": "en-HR",
                     "signature": "elhPTBJ/hH..."
@@ -759,9 +990,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     "payType": 1,
                     "payMethod": 10,
                     "notificationUrl": "https://aircash.eu",
-                    "successUrl": "",
-                    "declineUrl": "",
-                    "cancelUrl": "",
+                    "successUrl": null,
+                    "declineUrl": null,
+                    "cancelUrl": null,
                     "originUrl": "https://aircash.eu",
                     "locale": "",
                     "signature": "Qlh2vKRfvQ..."
@@ -781,9 +1012,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     "payType": 1,
                     "payMethod": 10,
                     "notificationUrl": "https://aircash.eu",
-                    "successUrl": "",
-                    "declineUrl": "",
-                    "cancelUrl": "",
+                    "successUrl": null,
+                    "declineUrl": null,
+                    "cancelUrl": null,
                     "originUrl": "https://aircash.eu",
                     "locale": "en-HR",
                     "signature": "MnfnyRyBEF..."
@@ -803,9 +1034,9 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     "payType": 1,
                     "payMethod": 10,
                     "notificationUrl": "https://aircash.eu",
-                    "successUrl": "",
-                    "declineUrl": "",
-                    "cancelUrl": "",
+                    "successUrl": null,
+                    "declineUrl": null,
+                    "cancelUrl": null,
                     "originUrl": "https://aircash.eu",
                     "locale": "en-HR",
                     "signature": "dZiRP20OMA..."
@@ -961,8 +1192,31 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     "message": "Amount mismatch."
                 }
             }
+        },
+        CancelPayout: {
+            error1: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "aa17d623-e8c0-4e40-8a5a-bba7e0852455",
+                    "signature": "lpF2sp9..."
+                },
+                response: {
+                    "code": 1,
+                    "message": "Invalid signature or partner id."
+                }
+            },
+            error1000: {
+                request: {
+                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "partnerTransactionId": "60526f94-9d61-482f-b577-8c92a551da5d",
+                    "signature": "Nv62frlxIJ..."
+                },
+                response: {
+                    "code": 1000,
+                    "message": "Transaction doesn't exist or it is already processed."
+                }
+            }
         }
-
     }
 
     $scope.aircashFrameV2 = {
@@ -1049,6 +1303,37 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 additionalData: null
             }
         },
+        transactionStatusV3: {
+            responseExample:
+            {
+
+                "status": 1,
+                "currencyId": 978,
+                "aircashTransactionId": "95ff5846-f10c-4870-bcf1-e5a0014d0e37",
+                "parameters": [{
+                    Key: "AircashUserID",
+                    Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
+                }],
+                "events": [
+                    {
+                        "dateTimeUTC": "2023-09-01T06:07:38",
+                        "description": "Frame is initiated by user.",
+                        "code": 100
+                    },
+                    {
+                        "dateTimeUTC": "2023-09-01T06:07:43",
+                        "description": "QR code is generated and displayed to user.",
+                        "code": 101
+                    },
+                    {
+                        "dateTimeUTC": "2023-09-01T06:07:59",
+                        "description": "The user is not active with phone number: 385*******00",
+                        "code": 103
+                    }
+                ],
+                "signature": "Y7hXZ90VSu...",
+            }
+        },
         confirm: {
             requestExample: {
                 partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
@@ -1059,6 +1344,16 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             },
             responseExample: {
                 aircashTransactionId: "b74854c8-db9d-48d7-985a-59f587637a75"
+            },
+        },
+        cancelPayout: {
+            requestExample: {
+                partnerId: "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                partnerTransactionId: "aa17d623-e8c0-4e40-8a5a-bba7e0852455",
+                signature: "lpF2sp9..."
+            },
+            responseExample: {
+                aircashTransactionId: "4e32079c-4f2d-47e5-90a0-d0eb81c69670"
             },
         }
     };

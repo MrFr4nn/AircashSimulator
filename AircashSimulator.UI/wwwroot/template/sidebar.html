@@ -52,7 +52,7 @@
                         </a>
                     </li>
                     <li ui-sref-active="active">
-                        <a ui-sref="app.acRefund" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1">
+                        <a ui-sref="app.acRefund" ng-if="partnerRoles.indexOf('AircashFrameV2AcPay') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1">
                             <i class="fa fa-mobile"></i>
                             <span>{{translations.ac_refund_label}}</span>
                         </a>
@@ -69,6 +69,12 @@
                             <span>{{translations.signature_label}}</span>
                         </a>
                     </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acReconciliationAPI" ng-if="partnerRoles.indexOf('Admin') != -1">
+                            <i class="fas fa-clipboard-list"></i>
+                            <span>{{translations.Reconciliation_API_label}}</span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="nav-header" ng-if="partnerRoles.indexOf('AircashFrameV2')!= -1 || partnerRoles.indexOf('AircashPayment') != -1||partnerRoles.indexOf('AircashPayout') != -1 || partnerRoles.indexOf('AbonDeposit') != -1 || partnerRoles.indexOf('AircashPosDeposit') != -1 || partnerRoles.indexOf('AircashPayoutV2') != -1 || partnerRoles.indexOf('AircashPay') != -1 || partnerRoles.indexOf('AircashInAppPay') != -1 || partnerRoles.indexOf('AircashPayStaticCode') != -1">{{translations.online_label}}</li>
@@ -80,10 +86,30 @@
             </li>
 
             <li ui-sref-active="active">
-                <a ui-sref="app.aircashFrameV2" ng-if="partnerRoles.indexOf('AircashFrameV2') != -1">
+                <a ui-sref="app.aircashFrameV2" ng-if="partnerRoles.indexOf('AircashFrameV2AcPay') != -1 || partnerRoles.indexOf('AircashFrameV2Abon') != -1 || partnerRoles.indexOf('AircashFrameV2Withdrawal') != -1">
                     <i class="fa fa-desktop"></i>
                     <span>{{translations.ac_frameV2_label}}</span>
                 </a>
+                <ul class="nav ml-3">
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acFrameV2Pay" ng-if="partnerRoles.indexOf('AircashFrameV2AcPay') != -1">
+                            <i class="fa fa-qrcode" aria-hidden="true"></i>
+                            <span>{{translations.ac_frameV2_AcPay_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acFrameV2Abon" ng-if="partnerRoles.indexOf('AircashFrameV2Abon') != -1">
+                            <i class="fa fa-gamepad" aria-hidden="true"></i>
+                            <span>{{translations.ac_frameV2_Abon_label}}</span>
+                        </a>
+                    </li>
+                    <li ui-sref-active="active">
+                        <a ui-sref="app.acFrameV2Withdrawal" ng-if="partnerRoles.indexOf('AircashFrameV2Withdrawal') != -1">
+                            <i class="fa fa-mobile"></i>
+                            <span>{{translations.ac_frameV2_Withrawal_label}}</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li ui-sref-active="active">
                 <a ui-sref="app.acPayment" ng-if="partnerRoles.indexOf('AircashPayment') != -1">
@@ -162,6 +188,12 @@
                 <a ui-sref="app.aircash_ATM" ng-if="partnerRoles.indexOf('AircashATM') != -1">
                     <i class="fa fa-mobile-alt"></i>
                     <span>ATM integration</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
+                <a ui-sref="app.cobranded_card" ng-if="partnerRoles.indexOf('CobrandedCard') != -1">
+                    <i class="fa fa-credit-card"></i>
+                    <span>Cobranded card</span>
                 </a>
             </li>
             <li ui-sref-active="active">
