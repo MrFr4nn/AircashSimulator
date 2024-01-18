@@ -23,6 +23,7 @@ namespace Domain.Entities.Enum
         SlotMachines = 15,
         AircashFrameV2AcPay = 16,
         AircashFrameV2Abon = 17,
+        Mastercard=19,
         CobrandedCard =20,
         AMDDeepLink =21,
         Admin = 100

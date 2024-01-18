@@ -40,6 +40,7 @@ var app = angular.module('app', [
     'generalGuidlines',
     'matchPersonalData',
     'cobranded_card',
+    'mastercard',
     'aircash_ATM',
     'inAppPay'
 ]);
