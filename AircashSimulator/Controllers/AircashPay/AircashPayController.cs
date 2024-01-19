@@ -139,5 +139,23 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, generatePartnerCodeRequest.Environment);
             return Ok(response);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> GeneratePartnerCodeCashRegister(GeneratePartnerCodeRequest generatePartnerCodeRequest)
+        {
+            var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
+            {
+                PartnerId = SettingsService.AcPayCashRegisterId,
+                Amount = generatePartnerCodeRequest.Amount,
+                Description = generatePartnerCodeRequest.Description,
+                LocationId = generatePartnerCodeRequest.LocationID,
+                CurrencyId = generatePartnerCodeRequest.CurrencyId,
+                UserId = Guid.NewGuid().ToString(),
+                PartnerTransactionId = Guid.NewGuid().ToString(),
+                ValidForPeriod = 300,
+            };
+            var response = await AircashPayService.GeneratePartnerCodeCashRegister(generatePartnerCodeDTO, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
     }
 }
