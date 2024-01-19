@@ -222,7 +222,6 @@ namespace Services.AircashPay
         public async Task<string> GeneratePartnerCodeCashRegister(GeneratePartnerCodeDTO generatePartnerCodeDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
-            var partner = AircashSimulatorContext.Partners.Where(x => x.PartnerId == generatePartnerCodeDTO.PartnerId).FirstOrDefault();
             var aircashGeneratePartnerCodeResponse = new object();
             var aircashGeneratePartnerCodeRequestForSignature = new AircashGeneratePartnerCodeRequestForSignature
             {
@@ -244,7 +243,6 @@ namespace Services.AircashPay
                 ValidForPeriod = generatePartnerCodeDTO.ValidForPeriod
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashGeneratePartnerCodeRequestForSignature);
-            Logger.LogInformation(partner.PrivateKey);
             var signature = SignatureService.GenerateSignature(generatePartnerCodeDTO.PartnerId, dataToSign);
             aircashGeneratePartnerCodeRequest.Signature = signature;
             var response = await HttpRequestService.SendRequestAircash(aircashGeneratePartnerCodeRequest, HttpMethod.Post, $"{HttpRequestService.GetEnvironmentBaseUri(environment, EndpointEnum.M3)}{GeneratePartnerCodeEndpoint}");
