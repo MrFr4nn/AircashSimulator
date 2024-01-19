@@ -222,7 +222,7 @@ namespace Services.AircashPay
         public async Task<string> GeneratePartnerCodeCashRegister(GeneratePartnerCodeDTO generatePartnerCodeDTO, EnvironmentEnum environment)
         {
             var requestDateTime = DateTime.UtcNow;
-            var aircashGeneratePartnerCodeResponse = new object();
+            var aircashGeneratePartnerCodeResponse = new object(); 
             var aircashGeneratePartnerCodeRequestForSignature = new AircashGeneratePartnerCodeRequestForSignature
             {
                 PartnerID = generatePartnerCodeDTO.PartnerId,
