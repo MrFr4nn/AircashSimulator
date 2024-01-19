@@ -157,5 +157,11 @@ namespace AircashSimulator.Controllers
             var response = await AircashPayService.GeneratePartnerCodeCashRegister(generatePartnerCodeDTO, EnvironmentEnum.Staging);
             return Ok(response);
         }
+
+        [HttpPost]
+        public OkResult ConfirmTransactionCashRegister(AircashConfirmTransactionRequest aircashConfirmTransactionRequest)
+        {
+            return Ok();
+        }
     }
 }
