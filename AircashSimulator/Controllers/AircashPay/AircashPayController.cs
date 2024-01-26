@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Controllers.AircashPay;
 using Services.User;
 using Service.Settings;
+using AircashSimulator.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace AircashSimulator.Controllers
 {
@@ -23,13 +25,15 @@ namespace AircashSimulator.Controllers
         private AircashConfiguration AircashConfiguration;
         private IUserService UserService;
         private ISettingsService SettingsService;
-        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService, ISettingsService settingsService)
+        public readonly IHubContext<NotificationHub> _hubContext;
+        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService, ISettingsService settingsService, IHubContext<NotificationHub> hubContext)
         {
             AircashPayService = aircashPayService;
             UserContext = userContext;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             UserService = userService;
             SettingsService = settingsService;
+            _hubContext = hubContext;
         }
         
         [HttpPost]
@@ -159,9 +163,9 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
-        public OkResult ConfirmTransactionCashRegister(AircashConfirmTransactionRequest aircashConfirmTransactionRequest)
+        public async Task ConfirmTransactionCashRegister(AircashConfirmTransactionRequest aircashConfirmTransactionRequest)
         {
-            return Ok();
+            await _hubContext.Clients.All.SendAsync("TransactionStatus", "OK");
         }
     }
 }
