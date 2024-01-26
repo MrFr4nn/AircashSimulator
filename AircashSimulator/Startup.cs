@@ -190,7 +190,10 @@ namespace AircashSimulator
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationHub>("/hubs/notificationhub");
+                endpoints.MapHub<TransactionStatusHub>("/hubs/transactionstatushub");
             });
+
+
         }
     }
 }
