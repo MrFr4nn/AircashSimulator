@@ -191,14 +191,14 @@ eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQ
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="11"><b>400</b></td>
-                            <td rowspan="11">
+                            <td rowspan="10"><b>400</b></td>
+                            <td rowspan="10">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid ProviderId</td>
                             <td>-</td>
-                            <td rowspan="11">
+                            <td rowspan="10">
                                 The response will contain an error code,
                                 message and optionally additionalData.
 
@@ -218,11 +218,6 @@ eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQ
                             <td><b>4</b></td>
                             <td>Coupon Already Used</td>
                             <td>ISOCurrency, CouponValue, ProviderTransactionId</td>
-                        </tr>
-                        <tr>
-                            <td><b>5</b></td>
-                            <td>Conversion Module Error</td>
-                            <td>-</td>
                         </tr>
                         <tr>
                             <td><b>7</b></td>
@@ -390,9 +385,7 @@ eOplj4Cgfm/KNphpl61XyPfnZ5d3vuAUtP6g1hfvWcB89fWIzOVi5rn1Ra24hrP6Q3pTnyLQTiOk3SMQ
                     <button class="btn btn-primary mt-2" ng-click="confirmSimulateError(4)" ng-disabled="errorConfirmServiceBusy">Simulate <i ng-if="errorConfirmServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorConfirmRequestCopy)" ng-if="errorConfirmResponded && currentConfirmErrorCode == 4">Copy Request</button>
                 </uib-tab>
-                <uib-tab index="ConfirmTransactionError-tab-5" heading="5 - Conversion Module Error" classes="nav-item">
-                    Simulation not available.
-                </uib-tab>
+               
                 <uib-tab index="ConfirmTransactionError-tab-6" heading="7 - Coupon Country Not Allowed" classes="nav-item">
                     <div class="row col-12">
                         <div class="col-sm-6 overflow-auto" ng-if="!(errorConfirmResponded && currentConfirmErrorCode == 7)">
@@ -711,14 +704,14 @@ XJAit8JDaJyp7dUhwER8AFcU2ShGmBOA3v8Q0wwytXyBXgScRuC2dDFDTnXjBLNL2kd/PuJE/seghs36
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="16"><b>400</b></td>
-                            <td rowspan="16">
+                            <td rowspan="15"><b>400</b></td>
+                            <td rowspan="15">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid PartnerId</td>
                             <td>-</td>
-                            <td rowspan="16">
+                            <td rowspan="15">
                                 The response will contain an error code,
                                 message and optionally additionalData.
 
@@ -738,11 +731,6 @@ XJAit8JDaJyp7dUhwER8AFcU2ShGmBOA3v8Q0wwytXyBXgScRuC2dDFDTnXjBLNL2kd/PuJE/seghs36
                             <td><b>4</b></td>
                             <td>Coupon Already Used</td>
                             <td>ISOCurrency, CouponValue, PartnerTransactionId, CouponSerialNumber</td>
-                        </tr>
-                        <tr>
-                            <td><b>5</b></td>
-                            <td>Conversion Module Error</td>
-                            <td>-</td>
                         </tr>
                         <tr>
                             <td><b>6</b></td>

@@ -200,14 +200,14 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="5"><b>400</b></td>
-                            <td rowspan="5">
+                            <td rowspan="4"><b>400</b></td>
+                            <td rowspan="4">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid ProviderId</td>
                             <td>-</td>
-                            <td rowspan="5">
+                            <td rowspan="4">
                                 The response will contain an error code,
                                 message and optionally additionalData.
 
@@ -221,11 +221,6 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                         <tr>
                             <td><b>3</b></td>
                             <td>Invalid Coupon Code</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td><b>4</b></td>
-                            <td>Conversion Module Error</td>
                             <td>-</td>
                         </tr>
                         <tr>
@@ -333,9 +328,9 @@ BPz2mGu8UG89zpFZYdpbESrR4H4mA7cfWJBuyXWLtYJoQShHYQiMklof7NwNy/9lm0sC+PI7J99C/Ahl
                     <button class="btn btn-primary mt-2" ng-click="validateSimulateError(3)" ng-disabled="errorValidateServiceBusy">Simulate <i ng-if="errorValidateServiceBusy" class="fa fa-cog fa-spin"></i></button>
                     <button class="btn btn-white mt-2" ng-click="copyToClipboard(errorRequestCopy)" ng-if="errorValidateResponded && currentErrorCode == 3">Copy Request</button>
                 </uib-tab>
-                <uib-tab index="ValidateTransactionError-tab-4" heading="4 - Conversion Module Error" classes="nav-item">
+                <!--<uib-tab index="ValidateTransactionError-tab-4" heading="4 - Conversion Module Error" classes="nav-item">
                     Simulation not available.
-                </uib-tab>
+                </uib-tab>-->
                 <uib-tab index="ValidateTransactionError-tab-5" heading="7 - Coupon Country Not Allowed" classes="nav-item">
                     <div class="row col-12">
                         <div class="col-sm-6 overflow-auto" ng-if="!(errorValidateResponded && currentErrorCode == 7)">
@@ -670,14 +665,14 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                     </thead>
                     <tbody>
                         <tr>
-                            <td rowspan="11"><b>400</b></td>
-                            <td rowspan="11">
+                            <td rowspan="10"><b>400</b></td>
+                            <td rowspan="10">
                                 An invalid request was made. The response will contain an error code, message and optionally additionalData.
                             </td>
                             <td><b>1</b></td>
                             <td>Invalid PartnerId</td>
                             <td>-</td>
-                            <td rowspan="11">
+                            <td rowspan="10">
                                 The response will contain an error code,
                                 message and optionally additionalData.
                             </td>
@@ -696,11 +691,6 @@ AtztaUw2MjNUcfMnXP7vFhbxa8dQa1nNRcs5bbYlES1Qrb0ygWciDbG6e2mkN4/CpC93TPTt4pIrXEVf
                             <td><b>4</b></td>
                             <td>Coupon Already Used</td>
                             <td>ISOCurrency, CouponValue, PartnerTransactionId, CouponSerialNumber</td>
-                        </tr>
-                        <tr>
-                            <td><b>5</b></td>
-                            <td>Conversion Module Error</td>
-                            <td>-</td>
                         </tr>
                         <tr>
                             <td><b>6</b></td>
