@@ -35,9 +35,13 @@ cashierModule.controller("CashierCtrl", ['$scope', '$rootScope', '$location', '$
     function ($scope, $rootScope, $location, $localStorage) {
 
         $scope.languages = [
-            { language: "en", },
+            { language: "en" },
             { language: "hr" },
             { language: "es" },
+            { language: "it" },
+            { language: "el" },
+            { language: "de-DE" },
+            { language: "de-AT" },
             { language: "ro" }
         ];
 
