@@ -353,6 +353,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.initiateModelSelected = {};
     $scope.initiateModel = {};
+    $scope.initate = {};
     $scope.initiateModelSelected.data = $scope.initiateModels[0];
 
     $scope.transactionModel = {};
@@ -369,9 +370,15 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.config.useMatchPersonalData = false;
         $scope.initiateModel.firstName = "";
         $scope.initiateModel.lastName = "";
+        if ($scope.initiateModelSelected.data.payType == 0 && $scope.initiateModelSelected.data.payMethod == 2) {
+            $scope.initate.sequenceExample = "Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=";
+        } else if ($scope.initiateModelSelected.data.payType == 0 && $scope.initiateModelSelected.data.payMethod == 0) {
+            $scope.initate.sequenceExample = "Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=0&PayType=0&SuccessUrl=";
+        } else {
+            $scope.initate.sequenceExample = "Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=10&PayType=1&SuccessUrl=";
+        }
     };
 
-    $scope.setInititateModel();
 
     $scope.useMatchPersonalDataChanged = function () {
         if ($scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData != $scope.partnerIds.AircashFramePartnerId) {
@@ -1221,7 +1228,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.aircashFrameV2 = {
         initiate: {
-            requestExample: {
+            requestExamplePay: {
                 "customParameters": [
                     {
                         "key": "PayerFirstName",
@@ -1243,6 +1250,66 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                 currencyId: 978,
                 payType: 0,
                 payMethod: 2,
+                notificationUrl: "https://aircash.eu",
+                successUrl: null,
+                declineUrl: null,
+                cancelUrl: null,
+                originUrl: null,
+                locale: "en-US",
+                signature: "tc5NZjj7hO..."
+            },
+            requestExampleAbon: {
+                "customParameters": [
+                    {
+                        "key": "PayerFirstName",
+                        "value": "John"
+                    },
+                    {
+                        "key": "PayerLastName",
+                        "value": "Doe"
+                    },
+                    {
+                        "key": "PayerBirthDate",
+                        "value": "1990-01-01"
+                    }
+                ],
+                partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+                amount: 100,
+                currencyId: 978,
+                payType: 0,
+                payMethod: 0,
+                notificationUrl: "https://aircash.eu",
+                successUrl: null,
+                declineUrl: null,
+                cancelUrl: null,
+                originUrl: null,
+                locale: "en-US",
+                signature: "tc5NZjj7hO..."
+            },
+            requestExampleWithdrawal: {
+                "customParameters": [
+                    {
+                        "key": "PayerFirstName",
+                        "value": "John"
+                    },
+                    {
+                        "key": "PayerLastName",
+                        "value": "Doe"
+                    },
+                    {
+                        "key": "PayerBirthDate",
+                        "value": "1990-01-01"
+                    }
+                ],
+                partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+                amount: 100,
+                currencyId: 978,
+                payType: 1,
+                payMethod: 10,
                 notificationUrl: "https://aircash.eu",
                 successUrl: null,
                 declineUrl: null,
