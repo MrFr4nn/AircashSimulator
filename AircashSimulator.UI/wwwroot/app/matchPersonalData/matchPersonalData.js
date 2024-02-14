@@ -62,11 +62,11 @@ matchPersonalDataModule.controller("matchPersonalDataCtrl",
                 matchPersonalDataService.matchPersonalData($scope.matchPersonalDataRequest)
                     .then(function (response) {
                         if (response) {
-                            $scope.matchPersonalDataRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.matchPersonalDataResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.matchPersonalDataSequence = response.sequence;
-                            $scope.matchPersonalDataResponse = JSON.stringify(response.serviceResponse, null, 4);
-                            $scope.matchPersonalDataRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.matchPersonalDataRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.matchPersonalDataResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.matchPersonalDataSequence = response.Sequence;
+                            $scope.matchPersonalDataResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                            $scope.matchPersonalDataRequest = JSON.stringify(response.ServiceRequest, null, 4);
                         }
                         $scope.matchPersonalDataServiceBusy = false;
                         $scope.matchPersonalDataServiceResponse = true;

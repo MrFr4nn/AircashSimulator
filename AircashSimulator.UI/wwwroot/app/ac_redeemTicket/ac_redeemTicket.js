@@ -94,12 +94,12 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
             .then(function (response) {
 
                 if (response) {
-                    $scope.checkTicketRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.checkTicketResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkTicketSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkTicketResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.checkTicketRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkTicketRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.checkTicketResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkTicketSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkTicketResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.checkTicketRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.checkTicketServiceBusy = false;
                 $scope.checkTicketServiceResponse = true;
@@ -115,12 +115,12 @@ aircashRedeemTicketModule.controller("aircashRedeemTicketCtrl", ['$scope', '$sta
             .then(function (response) {
 
                 if (response) {
-                    $scope.createRedeemTicketRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.createRedeemTicketResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.createRedeemTicketSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.createRedeemTicketResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.createRedeemTicketRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.createRedeemTicketRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.createRedeemTicketResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.createRedeemTicketSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.createRedeemTicketResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.createRedeemTicketRequest = JSON.stringify(response.ServiceRequest, null, 4);
                     $scope.getTransactions(true);
                 }
                 $scope.createRedeemTicketServiceBusy = false;

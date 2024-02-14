@@ -87,14 +87,14 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
                     .then(function (response) {
                         console.log($scope.createPayoutRequest);
                         if (response) {
-                            $scope.createPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.createPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.createPayoutSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.createPayoutResponseObject = response.serviceResponse;
-                            $scope.createPayoutRequestObject = response.serviceRequest
-                            $scope.createPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
-                            $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.createPayoutRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.createPayoutResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.createPayoutSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.createPayoutResponseObject = response.ServiceResponse;
+                            $scope.createPayoutRequestObject = response.ServiceRequest
+                            $scope.createPayoutResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                            $scope.createPayoutRequest = JSON.stringify(response.ServiceRequest, null, 4);
                             console.log($scope.createPayoutModel.birthDate);
                             if ($scope.createPayoutResponseObject.aircashTransactionID) {
                                 $rootScope.showGritter("Success");
@@ -117,14 +117,14 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
                 cashier_acC2DPayoutService.checkCode($scope.barcode)
                     .then(function (response) {
                         if (response) {
-                            $scope.createPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.createPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.createPayoutSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.createPayoutResponseObject = response.serviceResponse;
-                            $scope.createPayoutRequestObject = response.serviceRequest
-                            $scope.createPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
-                            $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.createPayoutRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.createPayoutResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.createPayoutSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.createPayoutResponseObject = response.ServiceResponse;
+                            $scope.createPayoutRequestObject = response.ServiceRequest
+                            $scope.createPayoutResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                            $scope.createPayoutRequest = JSON.stringify(response.ServiceRequest, null, 4);
                             
                             if ($scope.createPayoutResponseObject.barCode) {
                                 $scope.confirmModel.amount = $scope.createPayoutResponseObject.amount;
@@ -160,13 +160,13 @@ cashierAcC2DPayoutModule.controller("cashier_acC2DPayoutCtrl",
                     .then(function (response) {
 
                         if (response) {
-                            $scope.confirmTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.confirmTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.confirmTransactionSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.confirmTransactionServiceResponseObject = response.serviceResponse;
-                            $scope.confirmTransactionServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                            $scope.confirmTransactionServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.confirmTransactionRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.confirmTransactionResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.confirmTransactionSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.confirmTransactionServiceResponseObject = response.ServiceResponse;
+                            $scope.confirmTransactionServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                            $scope.confirmTransactionServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                             if ($scope.confirmTransactionServiceResponseObject.errorCode) {
                                 $rootScope.showGritter("Error", $scope.confirmTransactionServiceResponseObject.errorMessage);
                             } else {

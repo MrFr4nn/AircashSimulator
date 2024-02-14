@@ -75,17 +75,17 @@ cashierAbonSpModule.controller("cashierAbonSpCtrl",
                 $scope.createCouponModel.value = abon_val;
                 cashierAbonSpService.createCoupon($scope.createCouponModel.value, $scope.selectedAbonCountry.partnerId)
                     .then(function (response) {
-                        if (response.serviceResponse.code) {
-                            $rootScope.showGritter("Error", response.serviceResponse.message);                            
+                        if (response.ServiceResponse.Code) {
+                            $rootScope.showGritter("Error", response.ServiceResponse.Message);                            
                         }
                         else {
-                            $scope.responseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.contentSubstring = response.serviceResponse.content.substring(0, 30) + "...";
-                            $scope.couponCode = response.serviceResponse.couponCode;
-                            $scope.serialNumber = response.serviceResponse.serialNumber;
-                            $scope.isoCurrencySymbol = response.serviceResponse.isoCurrencySymbol;
-                            $scope.couponValue = response.serviceResponse.value;
-                            $scope.content = response.serviceResponse.content;
+                            $scope.responseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.contentSubstring = response.ServiceResponse.Content.substring(0, 30) + "...";
+                            $scope.couponCode = response.ServiceResponse.CouponCode;
+                            $scope.serialNumber = response.ServiceResponse.SerialNumber;
+                            $scope.isoCurrencySymbol = response.ServiceResponse.IsoCurrencySymbol;
+                            $scope.couponValue = response.ServiceResponse.Value;
+                            $scope.content = response.ServiceResponse.Content;
                             $scope.decodedContent = decodeURIComponent(escape(window.atob($scope.content)));
                             document.querySelector('#content1').innerHTML = $scope.decodedContent;
                             $scope.createServiceResponse = true;

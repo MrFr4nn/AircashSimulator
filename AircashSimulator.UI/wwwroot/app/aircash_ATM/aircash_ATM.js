@@ -54,12 +54,12 @@ acATMModule.controller("acATMCtrl",
                 acATMService.useOneTimePayoutCode($scope.useOneTimePayoutCodeModel).then(function (response) {
                     if (response) {
                         console.log(response);
-                        $scope.useOneTimePayoutCodeRequestDateTimeUTC = response.requestDateTimeUTC;
-                        $scope.useOneTimePayoutCodeResponseDateTimeUTC = response.responseDateTimeUTC;
-                        $scope.useOneTimePayoutCodeSequence = response.sequence;
-                        response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                        $scope.useOneTimePayoutCodeResponse = JSON.stringify(response.serviceResponse, null, 4);
-                        $scope.useOneTimePayoutCodeRequest = JSON.stringify(response.serviceRequest, null, 4);
+                        $scope.useOneTimePayoutCodeRequestDateTimeUTC = response.RequestDateTimeUTC;
+                        $scope.useOneTimePayoutCodeResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                        $scope.useOneTimePayoutCodeSequence = response.Sequence;
+                        response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                        $scope.useOneTimePayoutCodeResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                        $scope.useOneTimePayoutCodeRequest = JSON.stringify(response.ServiceRequest, null, 4);
                     }
                     $scope.useOneTimePayoutCodeServiceBusy = false;
                     $scope.useOneTimePayoutCodeServiceResponse = true;
@@ -80,12 +80,12 @@ acATMModule.controller("acATMCtrl",
                 acATMService.cancelTranscation($scope.cancelTranscationModel).then(function (response) {
                     if (response) {
                         console.log(response);
-                        $scope.cancelTranscationRequestDateTimeUTC = response.requestDateTimeUTC;
-                        $scope.cancelTranscationResponseDateTimeUTC = response.responseDateTimeUTC;
-                        $scope.cancelTranscationSequence = response.sequence;
-                        response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                        $scope.cancelTranscationResponse = JSON.stringify(response.serviceResponse, null, 4);
-                        $scope.cancelTranscationRequest = JSON.stringify(response.serviceRequest, null, 4);
+                        $scope.cancelTranscationRequestDateTimeUTC = response.RequestDateTimeUTC;
+                        $scope.cancelTranscationResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                        $scope.cancelTranscationSequence = response.Sequence;
+                        response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                        $scope.cancelTranscationResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                        $scope.cancelTranscationRequest = JSON.stringify(response.ServiceRequest, null, 4);
                     }
                     $scope.cancelTranscationServiceBusy = false;
                     $scope.cancelTranscationServiceResponse = true;

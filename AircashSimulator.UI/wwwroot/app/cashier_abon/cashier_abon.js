@@ -96,8 +96,8 @@ cashierAbonModule.controller("cashierAbonCtrl",
                 }
                 cashierAbonService.confirmCashierTransaction($scope.confirmTransactionModel.couponCode.replaceAll('-', ''), $scope.confirmTransactionModel.phoneNumber, $scope.matchParameters)
                     .then(function (response) {
-                        if (response.serviceResponse.code) {
-                            $rootScope.showGritter("Error", response.serviceResponse.message);
+                        if (response.ServiceResponse.Code) {
+                            $rootScope.showGritter("Error", response.ServiceResponse.Message);
                         }
                         else {
                             $rootScope.showGritter("Success");
@@ -135,8 +135,8 @@ cashierAbonModule.controller("cashierAbonCtrl",
                 }
                 cashierAbonService.confirmCashierTransactionV2($scope.confirmTransactionModel.couponCode.replaceAll('-', ''), $scope.confirmTransactionModel.phoneNumber, $scope.matchParameters)
                     .then(function (response) {
-                        if (response.serviceResponse && response.serviceResponse.code) {
-                            $rootScope.showGritter("Error", response.serviceResponse.message);
+                        if (response.ServiceResponse && response.ServiceResponse.Code) {
+                            $rootScope.showGritter("Error", response.ServiceResponse.Message);
                         }
                         else {
                             $rootScope.showGritter("Success");
@@ -153,11 +153,11 @@ cashierAbonModule.controller("cashierAbonCtrl",
                 $scope.confirmBusy = true;
                 cashierAbonService.generateCashierAbon()
                     .then(function (response) {
-                        if (response.serviceResponse.couponCode) {
-                            $scope.confirmTransactionModel.couponCode = response.serviceResponse.couponCode.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1-$2-$3-$4");
+                        if (response.ServiceResponse.CouponCode) {
+                            $scope.confirmTransactionModel.couponCode = response.ServiceResponse.CouponCode.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, "$1-$2-$3-$4");
                         }
                         else {
-                            $rootScope.showGritter("Error", response.serviceResponse.message);
+                            $rootScope.showGritter("Error", response.ServiceResponse.Message);
                         }
                         $scope.confirmBusy = false;
                     }, () => {

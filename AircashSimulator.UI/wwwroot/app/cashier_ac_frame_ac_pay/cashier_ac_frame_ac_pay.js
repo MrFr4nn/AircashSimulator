@@ -78,7 +78,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                         if ($scope.selectedAcFrameOption.value == 1) {                            
                             /*---- METHOD 1 - RECOMMENDED SDK WINDOW CHECKOUT ----- */
                             new AircashFrame.WindowCheckout({
-                                transactionId: response.serviceResponse.transactionId,  //this is a "TransactionId" parameter from the Aircash Frame system response
+                                transactionId: response.ServiceResponse.TransactionId,  //this is a "TransactionId" parameter from the Aircash Frame system response
                                 onSuccess: $scope.onSuccess,                                   //a function that's needed to be defined in the partner's system, it's called after successful transaction
                                 onDecline: $scope.onDecline,                                   //a function that's needed to be defined in the partner's system, it's called after declined transaction
                                 onCancel: $scope.onCancel,                                     //a function that's needed to be defined in the partner's system, it's called after transaction cancel by user through an 'x' button in the AC Frame
@@ -91,7 +91,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                         else if ($scope.selectedAcFrameOption.value == 2) {
                             /*---- METHOD 2 - SDK REDIRECT CHECKOUT ----- */
                             new AircashFrame.RedirectCheckout({
-                                transactionId: response.serviceResponse.transactionId,  //this is a "TransactionId" parameter from the Aircash Frame system response
+                                transactionId: response.ServiceResponse.TransactionId,  //this is a "TransactionId" parameter from the Aircash Frame system response
                                 debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console
                                 environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production
                             });
@@ -99,11 +99,11 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                         }
                         else if ($scope.selectedAcFrameOption.value == 3) {
                             /*---- METHOD 3 - CUSTOM WINDOW CHECKOUT ----- */
-                            if (response.serviceResponse.url != "" && response.serviceResponse.url != null) {    
+                            if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {    
                                 $scope.createCashierAcFrameAcPayServiceBusy = false;                                
                                 setTimeout(function () {
                                     var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
-                                    $scope.frameWindow = window.open(response.serviceResponse.url, 'openFrameInNewWindow', windowOptions);
+                                    $scope.frameWindow = window.open(response.ServiceResponse.Url, 'openFrameInNewWindow', windowOptions);
                                 }, 1);  
 
                                 //SIGNAL R START
@@ -112,11 +112,11 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                         }
                         else if ($scope.selectedAcFrameOption.value == 4) {
                             /*---- METHOD 4 - CUSTOM REDIRECT CHECKOUT ----- */
-                            if (response.serviceResponse.url != "" && response.serviceResponse.url != null) {
+                            if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {
                                 $scope.createCashierAcFrameAcPayServiceBusy = false;
                                 setTimeout(function () {
                                     var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
-                                    $scope.frameTab = window.location.assign(response.serviceResponse.url, 'openFrameInNewWindow', windowOptions); 
+                                    $scope.frameTab = window.location.assign(response.ServiceResponse.Url, 'openFrameInNewWindow', windowOptions); 
                                 }, 1);
                             }
                         }

@@ -88,13 +88,13 @@ acRefundModule.controller("acRefundModuleCtrl", ['$scope', 'acRefundModuleServic
             acRefundModuleService.refundTransaction($scope.refundModel.partnerId, $scope.refundModel.partnerTransactionId, $scope.refundModel.refundPartnerTransactionId, $scope.refundModel.amount)
                 .then(function (response) {
                     if (response) {
-                        $scope.refundRequestDateTimeUTC = response.requestDateTimeUTC;
-                        $scope.refundResponseDateTimeUTC = response.responseDateTimeUTC;
-                        $scope.refundSequence = response.sequence;
+                        $scope.refundRequestDateTimeUTC = response.RequestDateTimeUTC;
+                        $scope.refundResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                        $scope.refundSequence = response.Sequence;
 
-                        response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                        $scope.refundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                        $scope.refundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                        response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                        $scope.refundServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                        $scope.refundServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                     }
                     $scope.refundServiceBusy = false;
                     $scope.refundResponded = true;
@@ -111,13 +111,13 @@ acRefundModule.controller("acRefundModuleCtrl", ['$scope', 'acRefundModuleServic
                 , $scope.frameRefundModel.amount)
                 .then(function (response) {
                     if (response) {
-                        $scope.frameRefundRequestDateTimeUTC = response.requestDateTimeUTC;
-                        $scope.frameRefundResponseDateTimeUTC = response.responseDateTimeUTC;
-                        $scope.frameRefundSequence = response.sequence;
+                        $scope.frameRefundRequestDateTimeUTC = response.RequestDateTimeUTC;
+                        $scope.frameRefundResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                        $scope.frameRefundSequence = response.Sequence;
 
-                        response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                        $scope.frameRefundServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                        $scope.frameRefundServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                        response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                        $scope.frameRefundServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                        $scope.frameRefundServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                     }
                     $scope.frameRefundServiceBusy = false;
                     $scope.frameRefundResponded = true;

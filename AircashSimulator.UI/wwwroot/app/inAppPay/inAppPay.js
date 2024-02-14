@@ -48,7 +48,7 @@ inAppPayModule.controller("InAppPayCtrl", ['$scope', '$state', '$filter', 'inApp
         inAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID)
             .then(function (response) {
                 $scope.generateBusy = false;
-                window.open(response.serviceResponse.url, "_self");
+                window.open(response.ServiceResponse.Url, "_self");
             }, () => {
                 console.log("error");
             });

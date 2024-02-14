@@ -65,14 +65,14 @@ cashierAcPaymentAndPayoutModule.controller("cashieracPaymentAndPayoutCtrl",
                     .then(function (response) {
 
                         if (response) {
-                            $scope.checkCodeRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.checkCodeResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.checkCodeSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.checkCodeServiceResponseObject = response.serviceResponse;
-                            $scope.checkCodeServiceRequestObject = response.serviceRequest;
-                            $scope.checkCodeServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                            $scope.checkCodeServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.checkCodeRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.checkCodeResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.checkCodeSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.checkCodeServiceResponseObject = response.ServiceResponse;
+                            $scope.checkCodeServiceRequestObject = response.ServiceRequest;
+                            $scope.checkCodeServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                            $scope.checkCodeServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                             if ($scope.checkCodeServiceResponseObject.errorCode) {
                                 $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.errorMessage);
                                 $scope.codeValid = false;
@@ -102,13 +102,13 @@ cashierAcPaymentAndPayoutModule.controller("cashieracPaymentAndPayoutCtrl",
                     .then(function (response) {
 
                         if (response) {
-                            $scope.confirmTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.confirmTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.confirmTransactionSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.confirmTransactionServiceResponse = response.serviceResponse;
-                            $scope.confirmTransactionServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                            $scope.confirmTransactionServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.confirmTransactionRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.confirmTransactionResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.confirmTransactionSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.confirmTransactionServiceResponse = response.ServiceResponse;
+                            $scope.confirmTransactionServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                            $scope.confirmTransactionServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                             if ($scope.confirmTransactionServiceResponse.errorCode) {
                                 $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.errorMessage);
                             } else {

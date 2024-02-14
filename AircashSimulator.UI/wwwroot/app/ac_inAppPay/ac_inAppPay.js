@@ -93,13 +93,13 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
         acInAppPayService.generateTransaction($scope.generateTransactionModel.amount, $scope.generateTransactionModel.description, $scope.generateTransactionModel.locationID, $scope.partnerIds.InAppPayPartnerId)
             .then(function (response) {
                 if (response) {
-                    $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.GenerateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceGenerate = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.codeLink = response.serviceResponse.url;
+                    $scope.GenerateRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.GenerateResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceGenerate = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.GenerateServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.GenerateServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.codeLink = response.ServiceResponse.Url;
                 }
                 $scope.generateBusy = false;
                 $scope.generateResponded = true;
@@ -118,15 +118,15 @@ acInAppPayModule.controller("acInAppPayCtrl", ['$scope', '$state', '$filter', 'a
         acInAppPayService.checkTransactionStatus($scope.transactionModel)
             .then(function (response) {
                 if (response) {
-                    $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceStatus = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.StatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.signature) {
-                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    $scope.StatusRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.StatusResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceStatus = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.StatusServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.signature) {
+                        response.ServiceResponse.signature = response.ServiceResponse.signature.substring(0, 10) + "...";
                     }
-                    $scope.checkTransactionStatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.checkTransactionStatusServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 $scope.statusBusy = false;
                 $scope.statusResponded = true;

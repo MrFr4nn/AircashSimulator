@@ -133,12 +133,12 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 cobrandedCardService.updateCardStatus($scope.updateStatusCardModel)
                     .then(function (response) {
                         if (response) {
-                            $scope.updateStatusCardRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.updateStatusCardResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.updateStatusCardSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.updateStatusCardServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                            $scope.updateStatusCardServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                            $scope.updateStatusCardRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.updateStatusCardResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.updateStatusCardSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.updateStatusCardServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                            $scope.updateStatusCardServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                         }
                         $scope.updateStatusCardResponded = true;
                         $scope.updateStatusCardServiceBusy = false;
@@ -162,12 +162,12 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 cobrandedCardService.updateCardOrderStatus($scope.updateCardOrderStatusModel)
                     .then(function (response) {
                         if (response) {
-                            $scope.updateCardOrderStatusRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.updateCardOrderStatusResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.updateCardOrderStatusSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.updateCardOrderStatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                            $scope.updateCardOrderStatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                            $scope.updateCardOrderStatusRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.updateCardOrderStatusResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.updateCardOrderStatusSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.updateCardOrderStatusServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                            $scope.updateCardOrderStatusServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                         }
                         $scope.updateCardOrderStatusResponded = true;
                         $scope.updateCardOrderStatusServiceBusy = false;
@@ -183,12 +183,12 @@ cobrandedCardModule.controller("CobrandedCardCtrl",
                 cobrandedCardService.orderCard($scope.cobrandedCardModel)
                     .then(function (response) {
                         if (response) {
-                            $scope.orderCardRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.orderCardResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.orderCardSequence = response.sequence;
-                            response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                            $scope.orderCardServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                            $scope.orderCardServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                            $scope.orderCardRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.orderCardResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.orderCardSequence = response.Sequence;
+                            response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                            $scope.orderCardServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                            $scope.orderCardServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                         }
                         $scope.orderCardResponded = true;
                         $scope.orderCardServiceBusy = false;
