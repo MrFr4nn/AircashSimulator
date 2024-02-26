@@ -54,7 +54,7 @@ cashierAcPayModule.controller("cashierAcPayCtrl",
                         .then(function (response) {
                             console.log(response);
                             if (response) {
-                                $('#confirmPayBtn').attr('href', response.serviceResponse.codeLink);
+                                $('#confirmPayBtn').attr('href', response.ServiceResponse.CodeLink);
                             }
                             $scope.generateBusy = false;
                         }, () => {
@@ -69,7 +69,7 @@ cashierAcPayModule.controller("cashierAcPayCtrl",
                         .then(function (response) {
                             console.log(response);
                             if (response) {
-                                new QRCode(document.getElementById("qrcode"), response.serviceResponse.codeLink);
+                                new QRCode(document.getElementById("qrcode"), response.ServiceResponse.CodeLink);
                             }
                             $scope.generateBusy = false;
                         }, () => {

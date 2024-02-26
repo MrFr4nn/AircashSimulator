@@ -476,12 +476,12 @@ CO+V+iwbc5AlKPzJkkQARoDv+uA6WDCt8Rs6d1OA6g5Fdh1XoeA+XWgztqzqor3vsMi3rs94DhNGIa2c
                         </div>
                         <div class="col-md-4" ng-if="createServiceResponse">
                             Request ({{requestDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="serviceRequest"></jsonformatter>
+                            <jsonformatter data="ServiceRequest"></jsonformatter>
                             Sequence: {{sequence}}<br />
                         </div>
                         <div class="col-md-4" ng-if="createServiceResponse">
                             Response ({{responseDateTimeUTC | date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                            <jsonformatter data="serviceResponse"></jsonformatter>
+                            <jsonformatter data="ServiceResponse"></jsonformatter>
                             <center><button href="" ng-click="showContent()" class="btn btn-primary w-100px me-5px">Preview</button></center>
                         </div>
                     </div>

@@ -230,14 +230,14 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
             .then(function (response) {
 
                 if (response) {
-                    $scope.checkCodeRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.checkCodeResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkCodeSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkCodeServiceResponseObject = response.serviceResponse;
-                    $scope.checkCodeServiceRequestObject = response.serviceRequest;
-                    $scope.checkCodeServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.checkCodeServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkCodeRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.checkCodeResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkCodeSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkCodeServiceResponseObject = response.ServiceResponse;
+                    $scope.checkCodeServiceRequestObject = response.ServiceRequest;
+                    $scope.checkCodeServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.checkCodeServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.checkCodeServiceBusy = false;
                 $scope.checkCodeServiceResponded = true;
@@ -254,14 +254,14 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
             .then(function (response) {
 
                 if (response) {
-                    $scope.checkCodeV2RequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.checkCodeV2ResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkCodeV2Sequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkCodeV2ServiceResponseObject = response.serviceResponse;
-                    $scope.checkCodeV2ServiceRequestObject = response.serviceRequest;
-                    $scope.checkCodeV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.checkCodeV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkCodeV2RequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.checkCodeV2ResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkCodeV2Sequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkCodeV2ServiceResponseObject = response.ServiceResponse;
+                    $scope.checkCodeV2ServiceRequestObject = response.ServiceRequest;
+                    $scope.checkCodeV2ServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.checkCodeV2ServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.checkCodeV2ServiceBusy = false;
                 $scope.checkCodeV2ServiceResponded = true;
@@ -278,14 +278,14 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
             .then(function (response) {
 
                 if (response) {
-                    $scope.checkDigitsRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.checkDigitsResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkDigitsSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkDigitsServiceResponse = response.serviceResponse;
-                    $scope.checkDigitsServiceRequest = response.serviceRequest;
-                    $scope.checkCodeV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.checkCodeV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkDigitsRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.checkDigitsResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkDigitsSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkDigitsServiceResponse = response.ServiceResponse;
+                    $scope.checkDigitsServiceRequest = response.ServiceRequest;
+                    $scope.checkCodeV2ServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.checkCodeV2ServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.checkDigitsServiceBusy = false;
                 $scope.checkDigitsServiceResponded = true;
@@ -302,12 +302,12 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
             .then(function (response) {
 
                 if (response) {
-                    $scope.confirmTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.confirmTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.confirmTransactionSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.confirmTransactionServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.confirmTransactionServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.confirmTransactionRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.confirmTransactionResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.confirmTransactionSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.confirmTransactionServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.confirmTransactionServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                     $scope.getCheckTransactions(true);
                     $scope.getCancelTransactions(true);
                 }
@@ -324,12 +324,12 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
         aircashPaymentAndPayoutService.checkTransactionStatus($scope.checkTransactionStatusModel.partnerId, $scope.checkTransactionStatusModel.partnerTransactionID)
             .then(function (response) {
                 if (response) {
-                    $scope.checkTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.checkTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkTransactionStatusSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkTransactionStatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.checkTransactionStatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkTransactionStatusRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.checkTransactionStatusResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkTransactionStatusSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkTransactionStatusServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.checkTransactionStatusServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.checkTransactionStatusServiceBusy = false;
                 $scope.checkTransactionStatusServiceResponded = true;
@@ -345,12 +345,12 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
         aircashPaymentAndPayoutService.cancelTransaction($scope.cancelTransactionModel.partnerId, $scope.cancelTransactionModel.partnerTransactionID, $scope.cancelTransactionModel.locationID)
             .then(function (response) {
                 if (response) {
-                    $scope.cancelTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.cancelTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.cancelTransactionSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.cancelTransactionServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.cancelTransactionServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.cancelTransactionRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.cancelTransactionResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.cancelTransactionSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.cancelTransactionServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.cancelTransactionServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.cancelTransactionServiceBusy = false;
                 $scope.cancelTransactionServiceResponded = true;
@@ -396,13 +396,13 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
         aircashPaymentAndPayoutService.checkCodeSimulateError(err)
             .then(function (response) {
                 if (response) {
-                    $scope.errorCheckRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorCheckResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorCheckSequence = response.sequence;
-                    $scope.errorCheckRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorCheckResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorCheckRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCheckRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorCheckResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorCheckSequence = response.Sequence;
+                    $scope.errorCheckRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorCheckResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorCheckRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.errorCheckCodeResponded = true;
                 $scope.errorCheckCodeServiceBusy = false;
@@ -421,13 +421,13 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
         aircashPaymentAndPayoutService.confirmSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorConfirmSequence = response.sequence;
-                    $scope.errorConfirmRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorConfirmRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorConfirmResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorConfirmSequence = response.Sequence;
+                    $scope.errorConfirmRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorConfirmResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorConfirmRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.confirmCurrentErrorCode = errCode;
                 $scope.errorConfirmResponded = true;
@@ -446,13 +446,13 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
         aircashPaymentAndPayoutService.cancelSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorCancellRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorCancellResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorCancellSequence = response.sequence;
-                    $scope.errorCancellRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorCancellResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorCancellRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCancellRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorCancellResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorCancellSequence = response.Sequence;
+                    $scope.errorCancellRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorCancellResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorCancellRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.cancellCurrentErrorCode = errCode;
                 $scope.errorCancelResponded = true;
@@ -470,13 +470,13 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
         aircashPaymentAndPayoutService.checkTransactionStatusSimulateError()
             .then(function (response) {
                 if (response) {
-                    $scope.errorCheckTransactionRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorCheckTransactionResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorCheckTransactionSequence = response.sequence;
-                    $scope.errorCheckTransactionRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorCheckTransactionResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorCheckTransactionRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCheckTransactionRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorCheckTransactionResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorCheckTransactionSequence = response.Sequence;
+                    $scope.errorCheckTransactionRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorCheckTransactionResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorCheckTransactionRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.errorCheckTransactionResponded = true;
                 $scope.errorCheckTransactionServiceBusy = false;

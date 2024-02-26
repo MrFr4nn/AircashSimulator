@@ -89,13 +89,13 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         acPayService.generatePartnerCode($scope.generatePartnerCodeModel.amount, $scope.generatePartnerCodeModel.description, $scope.generatePartnerCodeModel.locationID)
             .then(function (response) {
                 if (response) {
-                    $scope.GenerateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.GenerateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceGenerate = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.GenerateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.GenerateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.codeLink = response.serviceResponse.codeLink;
+                    $scope.GenerateRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.GenerateResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceGenerate = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.GenerateServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.GenerateServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.codeLink = response.ServiceResponse.CodeLink;
                     new QRCode(document.getElementById("qrcode"), $scope.codeLink);
                     $scope.getTransactions(true);
                 }
@@ -113,13 +113,13 @@ acPayModule.controller("acPayCtrl", ['$scope', '$state', '$filter', 'acPayServic
         acPayService.cancelTransaction(transactionId)
             .then(function (response) {
                 if (response) {
-                    $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.CancelResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceCancel = response.sequence;
+                    $scope.CancelRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.CancelResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceCancel = response.Sequence;
 
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.CancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.CancelServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.CancelServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.CancelServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 $scope.cancelBusy = false;
                 $scope.cancelResponded = true;

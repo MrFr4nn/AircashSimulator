@@ -64,7 +64,7 @@ cashierC2dModule.controller("cashierC2dCtrl",
                 cashierC2dService.confirmC2dPayment($scope.c2dPaymentRequest)
                     .then(function (response) {
                         console.log(response);
-                        switch (response.serviceResponse.status) {
+                        switch (response.ServiceResponse.Status) {
                             case 1:
                                 $rootScope.showGritter("Error", "Uknown phone number");
                                 break;

@@ -218,12 +218,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         abonOpService.validateCoupon($scope.validateCouponModel.couponCode, $scope.validateCouponModel.providerId)
             .then(function (response) {
                 if (response) {
-                    $scope.ValidateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.ValidateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.sequenceValidate = response.sequence;
-                    $scope.ValidateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.ValidateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.ValidateRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.ValidateServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.sequenceValidate = response.Sequence;
+                    $scope.ValidateResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.ValidateServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
 
                 }
                 $scope.validateBusy = false;
@@ -265,12 +265,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             .then(function (response) {
                 console.log(response);
                 if (response) {
-                    $scope.checkStatusCouponRequestDateTimeUTC = response.requestDateTimeUTC;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkStatusCouponServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.checkStatusCouponSequence = response.sequence;
-                    $scope.checkStatusCouponResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkStatusCouponServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.checkStatusCouponRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkStatusCouponServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.checkStatusCouponSequence = response.Sequence;
+                    $scope.checkStatusCouponResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkStatusCouponServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 if ($scope.select.CheckStatusUseAuthorization == 1) $scope.checkStatusSetDefaultAuthorizationValues();
                 $scope.checkStatusCouponBusy = false;
@@ -294,12 +294,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         abonOpService.confirmTransaction($scope.confirmTransactionModel)
             .then(function (response) {
                 if (response) {
-                    $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.ConfirmServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.sequenceConfirm = response.sequence;
-                    $scope.ConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.ConfirmServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.ConfirmRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.ConfirmServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.sequenceConfirm = response.Sequence;
+                    $scope.ConfirmResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.ConfirmServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
 
                 }
                 $scope.confirmBusy = false;
@@ -317,12 +317,12 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         abonOpService.confirmTransactionV2($scope.confirmTransactionV2Model)
             .then(function (response) {
                 if (response) {
-                    $scope.ConfirmV2RequestDateTimeUTC = response.requestDateTimeUTC;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.ConfirmV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.sequenceConfirmV2 = response.sequence;
-                    $scope.ConfirmV2ResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.ConfirmV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.ConfirmV2RequestDateTimeUTC = response.RequestDateTimeUTC;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.ConfirmV2ServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.sequenceConfirmV2 = response.Sequence;
+                    $scope.ConfirmV2ResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.ConfirmV2ServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 $scope.confirmV2Busy = false;
                 $scope.confirmV2Responded = true;
@@ -357,13 +357,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         abonOpService.validateSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorSequence = response.sequence;
-                    $scope.errorRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorSequence = response.Sequence;
+                    $scope.errorRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentErrorCode = errCode;
                 $scope.errorValidateResponded = true;
@@ -384,13 +384,13 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         abonOpService.confirmSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorConfirmSequence = response.sequence;
-                    $scope.errorConfirmRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorConfirmRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorConfirmResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorConfirmSequence = response.Sequence;
+                    $scope.errorConfirmRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorConfirmResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorConfirmRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentConfirmErrorCode = errCode;
                 $scope.errorConfirmResponded = true;

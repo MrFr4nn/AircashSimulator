@@ -334,15 +334,15 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         abonSpService.createCoupon($scope.createCouponModel.value, $scope.createCouponModel.pointOfSaleId, $scope.createCouponModel.partnerId, $scope.createCouponModel.partnerTransactionId, $scope.createCouponModel.isoCurrencySymbol, $scope.createCouponModel.contentType, $scope.createCouponModel.contentWidth)
             .then(function (response) {
                 if (response) {
-                    $scope.requestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.responseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.serviceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.serviceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.content) {
+                    $scope.requestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.responseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.ServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.ServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.Content) {
                         $scope.showPerview = true;
-                        $scope.content = response.serviceResponse.content;
+                        $scope.content = response.ServiceResponse.Content;
                         $scope.decodedContent = decodeURIComponent($scope.content);
                         console.log($scope.decodedContent);
                         document.querySelector('#content1').innerHTML = $scope.decodedContent;
@@ -361,14 +361,14 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         abonSpService.createMultipleCoupons($scope.createMultipleCouponsModel)
             .then(function (response) {
                 if (response) {
-                    $scope.requestMultipleDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.responseMultipleDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceMultiple = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature?.substring(0, 10) + "...";
-                    $scope.serviceResponseMultiple = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.serviceRequestMultiple = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.content) {
-                        $scope.contentMultiple = response.serviceResponse.content;
+                    $scope.requestMultipleDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.responseMultipleDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceMultiple = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature?.substring(0, 10) + "...";
+                    $scope.ServiceResponseMultiple = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.ServiceRequestMultiple = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.Content) {
+                        $scope.contentMultiple = response.ServiceResponse.Content;
                         $scope.decodedContentMultiple = decodeURIComponent($scope.contentMultiple);
                         console.log($scope.decodedContent);
                         document.querySelector('#content1').innerHTML = $scope.decodedContent;
@@ -388,14 +388,14 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         abonSpService.createMultipleCouponsV2($scope.createMultipleCouponsV2Model)
             .then(function (response) {
                 if (response) {
-                    $scope.requestMultipleV2DateTimeUTC = response.requestDateTimeUTC;
-                    $scope.responseMultipleV2DateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceMultipleV2 = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature?.substring(0, 10) + "...";
-                    $scope.serviceResponseMultipleV2 = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.serviceRequestMultipleV2 = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.content) {
-                        $scope.contentMultipleV2 = response.serviceResponse.content;
+                    $scope.requestMultipleV2DateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.responseMultipleV2DateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceMultipleV2 = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature?.substring(0, 10) + "...";
+                    $scope.ServiceResponseMultipleV2 = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.ServiceRequestMultipleV2 = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.Content) {
+                        $scope.contentMultipleV2 = response.ServiceResponse.Content;
                         $scope.decodedContentMultipleV2 = decodeURIComponent($scope.contentMultipleV2);
                         document.querySelector('#content1').innerHTML = $scope.decodedContentMultipleV2;
                     }
@@ -414,12 +414,12 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         abonSpService.cancelCoupon($scope.cancelCouponModel.cancelPartnerId, $scope.cancelCouponModel.cancelSerialNumber, $scope.cancelCouponModel.cancelPartnerTransactionId, $scope.cancelCouponModel.cancelPointOfSaleId)
             .then(function (response) {
                 if (response) {
-                    $scope.cancelRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.cancelResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.cancelSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.cancelResponse = response.serviceResponse;
-                    $scope.cancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.cancelRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.cancelResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.cancelSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.cancelResponse = response.ServiceResponse;
+                    $scope.cancelServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.cancelServiceBusy = false;
                 $scope.cancelServiceResponse = true;
@@ -462,13 +462,13 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         abonSpService.createSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorCreateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorCreateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorCreateSequence = response.sequence;
-                    $scope.errorCreateRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorCreateResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorCreateRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCreateRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorCreateResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorCreateSequence = response.Sequence;
+                    $scope.errorCreateRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorCreateResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorCreateRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentCreateErrorCode = errCode;
                 $scope.errorCreateResponded = true;
@@ -484,12 +484,12 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         abonSpService.createSimulateErrorMultiple(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorCreateRequestMultipleDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorCreateResponseMultipleDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorCreateSequenceMultiple = response.sequence;
-                    $scope.errorCreateRequestCopyMultiple = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.errorCreateResponseMultiple = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorCreateRequestMultiple = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCreateRequestMultipleDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorCreateResponseMultipleDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorCreateSequenceMultiple = response.Sequence;
+                    $scope.errorCreateRequestCopyMultiple = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.errorCreateResponseMultiple = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorCreateRequestMultiple = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentCreateErrorCodeMultiple = errCode;
                 $scope.errorCreateRespondedMultiple = true;
@@ -508,12 +508,12 @@ abonSpModule.controller("abonSpCtrl", ['HelperService', '$scope', '$state', 'abo
         abonSpService.cancelSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorCancelRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorCancelResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorCancelSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorCancelResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorCancelRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCancelRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorCancelResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorCancelSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorCancelResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorCancelRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentErrorCode = errCode;
                 $scope.errorCancelResponded = true;

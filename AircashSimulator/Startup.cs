@@ -45,6 +45,7 @@ using CrossCutting;
 using Services.Signature;
 using Services.AircashATM;
 using Services.CobrandedCard;
+using System.Text.Json;
 
 namespace AircashSimulator
 {
@@ -77,6 +78,10 @@ namespace AircashSimulator
             });
 
             services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                });
 
             services.AddAuthentication(x =>
             {
@@ -185,6 +190,7 @@ namespace AircashSimulator
             app.UseAuthentication();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {
