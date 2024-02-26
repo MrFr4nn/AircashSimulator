@@ -77,16 +77,16 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
             method: 'POST',
             url: config.baseUrl + "Partner/SavePartner",
             data: {
-                NewPartnerId: partner.newPartnerId,
-                PartnerId: partner.partnerId,
-                PartnerName: partner.partnerName,
-                PrivateKey: partner.privateKey,
-                PrivateKeyPass: partner.privateKeyPass,
-                CurrencyId: partner.currencyId,
-                CountryCode: partner.countryCode,
-                Environment: parseInt(partner.environment),
+                NewPartnerId: partner.NewPartnerId,
+                PartnerId: partner.PartnerId,
+                PartnerName: partner.PartnerName,
+                PrivateKey: partner.PrivateKey,
+                PrivateKeyPass: partner.PrivateKeyPass,
+                CurrencyId: partner.CurrencyId,
+                CountryCode: partner.CountryCode,
+                Environment: parseInt(partner.Environment),
                 Roles: roles,
-                UseDefaultPartner: (partner.useDefaultPartner === 'true'),
+                UseDefaultPartner: (partner.UseDefaultPartner === 'true'),
                 Username: username
             }
         });
@@ -109,10 +109,10 @@ partnerAdminModule.service("partnerAdminService", ['$http', '$q', 'handleRespons
             method: 'POST',
             url: config.baseUrl + "Partner/savePartnerV2",
             data: {
-                PartnerName: partner.partnerName,
-                CurrencyId: partner.currencyId,
-                CountryCode: partner.countryCode,
-                Username: partner.username,
+                PartnerName: partner.PartnerName,
+                CurrencyId: partner.CurrencyId,
+                CountryCode: partner.CountryCode,
+                Username: partner.Username,
                 Roles: roleIds
             }
         });
@@ -172,8 +172,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                     $scope.partnersetting = $scope.partnersetting.concat(response);
                     $scope.SettingsRoles.forEach(s =>{
                         s.input = "";
-                        if ($scope.partnersetting.filter(x => x.key == s.settingId).length > 0) {
-                            s.input = $scope.partnersetting.find(y => y.key == s.settingId).value;
+                        if ($scope.partnersetting.filter(x => x.Key == s.SettingId).length > 0) {
+                            s.input = $scope.partnersetting.find(y => y.Key == s.SettingId).value;
 
                         }
                         s.PartnerId = $scope.partnerId;
@@ -203,9 +203,9 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     $scope.partnersett = {};
     $scope.showPartnerSettingsModal = function (partner) {
         if (partner) {
-            $scope.partnerId = partner.partnerId;
+            $scope.partnerId = partner.PartnerId;
             $scope.getPartnerSetting();
-            partner.useDefaultPartner = String(partner.useDefaultPartner);
+            partner.UseDefaultPartner = String(partner.UseDefaultPartner);
             angular.copy(partner, $scope.partner);
         }
         $scope.togglePartnerSettingsModal(true);
@@ -215,19 +215,19 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     $scope.showPartnerModal = function (partner, newPartner) {
         $scope.newPartner = newPartner;
         if (partner) {
-            partner.useDefaultPartner = String(partner.useDefaultPartner);
-            partner.environment = String(partner.environment);
-            $scope.defaultCountry = partner.countryCode;
-            $scope.setCurrency = partner.currencyId;
+            partner.UseDefaultPartner = String(partner.UseDefaultPartner);
+            partner.Environment = String(partner.Environment);
+            $scope.defaultCountry = partner.CountryCode;
+            $scope.setCurrency = partner.CurrencyId;
             angular.copy(partner, $scope.partner);
         } else {
             $scope.defaultCountry = "HR";
             $scope.setCurrency = 978;
             $scope.partner = {
-                currencyId: $scope.currencyNew.code,
-                countryCode: $scope.countryPickerCode.countryCode,
-                useDefaultPartner: "true",
-                environment: "2"
+                CurrencyId: $scope.currencyNew.code,
+                CountryCode: $scope.countryPickerCode.countryCode,
+                UseDefaultPartner: "true",
+                Environment: "2"
             };
         }
         $scope.toggePartnerModal(true);
@@ -252,14 +252,14 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.filteredRoles = $filter('filter')($scope.roles, { selected: true });
 
         for (var i = 0; i < $scope.filteredRoles.length; i++) {
-            $scope.sendRoles.push($scope.filteredRoles[i].roleId);
+            $scope.sendRoles.push($scope.filteredRoles[i].RoleId);
         }
-        $scope.partner.privateKey = "";
-        $scope.partner.privateKeyPass = "";
+        $scope.partner.PrivateKey = "";
+        $scope.partner.PrivateKeyPass = "";
         $scope.useDefaultPartner = 1;
         $scope.environment = 2;
-        $scope.partner.countryCode = $scope.countryPickerCode.countryCode;
-        $scope.partner.currencyId = $scope.currencyNew.code;
+        $scope.partner.CountryCode = $scope.countryPickerCode.countryCode;
+        $scope.partner.CurrencyId = $scope.currencyNew.code;
         partnerAdminService.savePartner($scope.partner, $scope.sendRoles, $scope.username)
             .then(function (resposne) {
                 $scope.SearchTable();
@@ -281,8 +281,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
 
     $scope.partnerV2 = {};
     $scope.savePartnerV2 = function () {
-        $scope.partnerV2.countryCode = $scope.countryCodePayPicker.countryCode;
-        $scope.partnerV2.currencyId = $scope.currencyPay.code;
+        $scope.partnerV2.CountryCode = $scope.countryCodePayPicker.countryCode;
+        $scope.partnerV2.CurrencyId = $scope.currencyPay.code;
         partnerAdminService.savePartnerV2($scope.partnerV2, $scope.sendRolesV2)
             .then(function (resposne) {
                 $scope.SearchTable();
@@ -300,8 +300,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
             .then(function (response) {
                 $scope.roles = response;
                 $scope.roles = $scope.roles.sort(function (a, b) {
-                    var textA = a.roleName.toUpperCase();
-                    var textB = b.roleName.toUpperCase();
+                    var textA = a.RoleName.toUpperCase();
+                    var textB = b.RoleName.toUpperCase();
                     return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
                 });
                 console.log($scope.roles);
@@ -317,8 +317,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     }
 
     $scope.confirmDeleteModal = function (Partner) {
-        $scope.partner.partnerName = Partner.partnerName;
-        $scope.partner.partnerId = Partner.partnerId;
+        $scope.partner.PartnerName = Partner.PartnerName;
+        $scope.partner.PartnerId = Partner.PartnerId;
         $scope.toggleDeleteModal(true);
     };
 
@@ -327,7 +327,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     };
 
     $scope.deletePartner = function () {
-        partnerAdminService.deletePartner($scope.partner.partnerId)
+        partnerAdminService.deletePartner($scope.partner.PartnerId)
             .then(function (resposne) {
                 $scope.SearchTable();
             }, () => {
@@ -337,15 +337,15 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     }
 
     $scope.ShowPartnerRolesModal = function (Partner) {
-        if (Partner.roles != null) {
-            $scope.partner.partnerName = Partner.partnerName;
-            $scope.partner.roles = Partner.roles;
+        if (Partner.Roles != null) {
+            $scope.partner.PartnerName = Partner.PartnerName;
+            $scope.partner.Roles = Partner.Roles;
             $('#EmptyRoles').empty();
             $scope.togglePartnerRolesModal(true);
         }
         else {
-            $scope.partner.partnerName = Partner.partnerName;
-            $scope.partner.roles = null;
+            $scope.partner.PartnerName = Partner.PartnerName;
+            $scope.partner.Roles = null;
             $('#EmptyRoles').empty().append("<h6 style='color:#000000;' class=' alert alert-info'>Partner has no roles!</h6>");
             $scope.togglePartnerRolesModal(true);
         }
@@ -357,10 +357,10 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
 
     $scope.checkPartnerRole = function () {
         $scope.setCheckBoxSelected();
-        if ($scope.partner.roles != null) {
+        if ($scope.partner.Roles != null) {
             for (var i = 0; i < $scope.roles.length; i++) {
-                for (var j = 0; j < $scope.partner.roles.length; j++) {
-                    if ($scope.roles[i].roleId == $scope.partner.roles[j].roleId) {
+                for (var j = 0; j < $scope.partner.Roles.length; j++) {
+                    if ($scope.roles[i].RoleId == $scope.partner.Roles[j].RoleId) {
                         $scope.roles[i].selected = true;
                     }
                 }

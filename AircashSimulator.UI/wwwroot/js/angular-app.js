@@ -98,7 +98,7 @@ app.run(['$rootScope', '$state', 'setting', '$http', 'config', '$location', '$lo
         params: { locale: locale }
     }).then(function (response) {
         //console.log(response);
-        var responseObj = JSON.parse(response.data.responseContent);
+        var responseObj = JSON.parse(response.data.ResponseContent);
         $rootScope.translationsCashier = responseObj;
     },() => {
        console.log("error");

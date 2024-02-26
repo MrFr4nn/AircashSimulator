@@ -61,9 +61,9 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="u in users">
-                                    <td>{{u.userName}}</td>
-                                    <td>{{u.email}}</td>
-                                    <td>{{u.partner.name}}</td>
+                                    <td>{{u.UserName}}</td>
+                                    <td>{{u.Email}}</td>
+                                    <td>{{u.Partner.Name}}</td>
                                     <td style="cursor:pointer" ng-click="addEditUserModal(u)"><i class="fa fa-pen"></i></td>
                                     <td style="cursor:pointer" ng-click="deleteUserModal(u)"><i class="fa fa-trash"></i></td>
                                 </tr>
@@ -95,12 +95,12 @@
                         <form action="/" method="POST" name="saveUserForm">
                             <div class="mb-3">
                                 <label class="form-label">Username: </label>
-                                <input type="text" class="form-control" ng-model="user.userName" ng-required="true" />
+                                <input type="text" class="form-control" ng-model="user.UserName" ng-required="true" />
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label">Password: </label>
-                                <input type="password" class="form-control" ng-model="user.password" ng-required="isNewUser" />
+                                <input type="password" class="form-control" ng-model="user.Password" ng-required="isNewUser" />
                             </div>
 
                             <div class="mb-3">
@@ -110,21 +110,21 @@
 
                             <div class="mb-3">
                                 <label class="form-label">Email: </label>
-                                <input type="text" class="form-control" ng-model="user.email" ng-required="true" />
+                                <input type="text" class="form-control" ng-model="user.Email" ng-required="true" />
                             </div>
 
                             <div class="form-group">
                                 <label class="form-label">Partner</label>
                                 <select id="selPartner" ng-required="true">
 
-                                    <option ng-repeat="partner in partners" ng-selected="user.partner == partner" value="{{partner.id}}">{{partner.name}}</option>
+                                    <option ng-repeat="partner in partners" ng-selected="user.Partner == partner" value="{{partner.Id}}">{{partner.Name}}</option>
                                 </select>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Environment</label>
-                                <select class="form-control" ng-model="user.environment" ng-required="true">
-                                    <option value="1" ng-selected="user.environment == 1">Dev</option>
-                                    <option value="2" ng-selected="user.environment == 2">Staging</option>
+                                <select class="form-control" ng-model="user.Environment" ng-required="true">
+                                    <option value="1" ng-selected="user.Environment == 1">Dev</option>
+                                    <option value="2" ng-selected="user.Environment == 2">Staging</option>
                                 </select>
                             </div>
                         </form>
@@ -146,7 +146,7 @@
                 <h4 class="modal-title">Delete partner</h4>
             </div>
             <div class="modal-body" align="center">
-                <div class="span5">Are you sure you want to delete user: {{user.userName}}</div>
+                <div class="span5">Are you sure you want to delete user: {{user.UserName}}</div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>

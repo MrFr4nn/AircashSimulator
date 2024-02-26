@@ -38,12 +38,12 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
             method: 'POST',
             url: config.baseUrl + "User/SaveUser",
             data: {
-                UserId: user.userId,
-                UserName: user.userName,
-                Email: user.email,
-                Partner: user.partner,
-                Password: user.password,
-                Environment: parseInt(user.environment)
+                UserId: user.UserId,
+                UserName: user.UserName,
+                Email: user.Email,
+                Partner: user.Partner,
+                Password: user.Password,
+                Environment: parseInt(user.Environment)
             }
         });
         return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -127,8 +127,8 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     $scope.addEditUserModal = function (user) {
         angular.copy(user, $scope.user);
         $scope.ConfirmPassword = null;
-        if ($scope.user.partner != undefined) {
-            $("#selPartner").val($scope.user.partner.id).change();
+        if ($scope.user.Partner != undefined) {
+            $("#selPartner").val($scope.user.Partner.Id).change();
             $scope.isNewUser = false;
         }
         else
@@ -136,8 +136,8 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
             $("#selPartner").val(null).change();
             $scope.isNewUser = true;
         }
-        if ($scope.user.environment == undefined) {
-            $scope.user.environment = 2;
+        if ($scope.user.Environment == undefined) {
+            $scope.user.Environment = 2;
         }
         $scope.toggleAddEditUserModal(true);
     }
@@ -147,7 +147,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     };
 
     $scope.checkPassword = function () {
-        if ($scope.user.password == $scope.ConfirmPassword) {
+        if ($scope.user.Password == $scope.ConfirmPassword) {
             $scope.saveUser();
         }
         else {
@@ -157,13 +157,13 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
 
     $scope.saveUser = function () {
         var partnerId = $('#selPartner').val();
-        var filter = $filter('filter')($scope.partners, { 'id': partnerId }, true)[0];
+        var filter = $filter('filter')($scope.partners, { 'Id': partnerId }, true)[0];
 
         if (filter == null) {
             alert("Select partner!");
             return;
         }
-        $scope.user.partner = filter;
+        $scope.user.Partner = filter;
         userAdminService.saveUser($scope.user)
             .then(function (response) {
                 $scope.SearchTable();
@@ -183,7 +183,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     };
 
     $scope.deleteUser = function () {
-        userAdminService.deleteUser($scope.user.userId)
+        userAdminService.deleteUser($scope.user.UserId)
             .then(function (response) {
                 $scope.SearchTable();
             }, () => {

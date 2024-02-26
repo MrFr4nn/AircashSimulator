@@ -90,13 +90,13 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="p in partners">
-                                    <td>{{p.partnerId}}</td>
-                                    <td>{{p.partnerName}}</td>
-                                    <td>{{p.privateKey}}</td>
-                                    <td>{{p.privateKeyPass}}</td>
-                                    <td>{{p.currencyId}}</td>
-                                    <td>{{p.countryCode}}</td>
-                                    <td>{{p.environment == 1 ? "Dev" : "Staging"}}</td>
+                                    <td>{{p.PartnerId}}</td>
+                                    <td>{{p.PartnerName}}</td>
+                                    <td>{{p.PrivateKey}}</td>
+                                    <td>{{p.PrivateKeyPass}}</td>
+                                    <td>{{p.CurrencyId}}</td>
+                                    <td>{{p.CountryCode}}</td>
+                                    <td>{{p.Environment == 1 ? "Dev" : "Staging"}}</td>
                                     <td style="cursor:pointer" ng-click="ShowPartnerRolesModal(p)"><i class="fa fa-id-card"></i></td>
                                     <td style="cursor:pointer" ng-click="showPartnerModal(p, false);"><i class="fa fa-pen"></i></td>
                                     <td style="cursor:pointer" ng-click="confirmDeleteModal(p);"><i class="fa fa-trash"></i></td>
@@ -129,7 +129,7 @@
                         <div class="col-md-5">
                             <div class="mb-3">
                                 <label class="form-label">Partner Name</label>
-                                <input ng-model="partnerV2.partnerName" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partnerV2.PartnerName" class="form-control" type="text" ng-required="true">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Currency ID</label>
@@ -144,7 +144,7 @@
                             </div>
                             <div>
                                 <label class="form-label">User</label>
-                                <input ng-model="partnerV2.username" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partnerV2.Username" class="form-control" type="text" ng-required="true">
                             </div>
                         </div>
                     </div>
@@ -170,16 +170,16 @@
                         <div class="col-md-5">
                             <div class="mb-3" ng-if="!newPartner">
                                 <label class="form-label">New PartnerId</label>
-                                <input ng-model="partner.newPartnerId" class="form-control" type="text">
+                                <input ng-model="partner.NewPartnerId" class="form-control" type="text">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Partner Name</label>
-                                <input ng-model="partner.partnerName" class="form-control" type="text" ng-required="true">
+                                <input ng-model="partner.PartnerName" class="form-control" type="text" ng-required="true">
                             </div>
                             <div class="mb-3" ng-if="newPartner">
                                 <div>
                                     <label class="form-label">User</label>
-                                    <input ng-model="$parent.username" class="form-control" type="text" ng-required="true">
+                                    <input ng-model="$parent.Username" class="form-control" type="text" ng-required="true">
                                 </div>
                             </div>
                         </div>
@@ -202,12 +202,12 @@
                         <table class="table table-bordered table-hover table-condensed table-striped">
                             <tbody>
                                 <tr ng-repeat="r in roles">
-                                    <td>{{r.roleName}}</td>
-                                    <td>{{getDescription(r.roleName)}}</td>
+                                    <td>{{r.RoleName}}</td>
+                                    <td>{{getDescription(r.RoleName)}}</td>
                                     <td>
                                         <input type="checkbox"
                                                name="selectedRoles[]"
-                                               value="{{r.roleName}}"
+                                               value="{{r.RoleName}}"
                                                ng-model="r.selected" />
                                     </td>
                                 </tr>
@@ -236,9 +236,9 @@
                         <table class="table table-bordered table-hover table-condensed table-striped">
                             <tbody>
                                 <tr ng-repeat="s in SettingsRoles">
-                                    <td>{{s.settingName}}</td>
+                                    <td>{{s.SettingName}}</td>
                                     <td>
-                                        <input ng-model="s.input" class="form-control" type="text">
+                                        <input ng-model="s.Input" class="form-control" type="text">
                                     </td>
                                 </tr>
 
@@ -259,12 +259,12 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">{{partner.partnerName}} roles</h4>
+                <h4 class="modal-title">{{partner.PartnerName}} roles</h4>
             </div>
             <div class="modal-body" align="center">
-                <div class="row" ng-hide="partner.roles == null">
-                    <div class="col-md-4" ng-repeat="r in partner.roles">
-                        <button class="btn" style="margin-bottom: 5px; background-color:#008000; color: #FFFFFF; " disabled>{{r.roleName}}</button>
+                <div class="row" ng-hide="partner.Roles == null">
+                    <div class="col-md-4" ng-repeat="r in partner.Roles">
+                        <button class="btn" style="margin-bottom: 5px; background-color:#008000; color: #FFFFFF; " disabled>{{r.RoleName}}</button>
                     </div>
                 </div>
                 <div id="EmptyRoles"></div>
@@ -283,7 +283,7 @@
                 <h4 class="modal-title">Delete partner</h4>
             </div>
             <div class="modal-body" align="center">
-                <div class="span5">Are you sure you want to delete partner: {{partner.partnerName}}</div>
+                <div class="span5">Are you sure you want to delete partner: {{partner.PartnerName}}</div>
             </div>
             <div class="modal-footer">
                 <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
