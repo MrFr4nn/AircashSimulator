@@ -52,6 +52,8 @@ namespace Service.Settings
         Guid C2DDepositPartnerId { get; }
         Guid AcPayPartnerId { get; }
         Guid InAppPayPartnerId { get; }
+        Guid MatchPersonalDataDefault { get; }
+        Guid MatchPersonalDataDateOnly { get; }
         Guid AbonGeneratePartnerId { get; }
         string AircashFramePartnerTransactionAlreadyExists { get; }
         Guid AcFrameConfirmPayoutValidTransaction { get; }

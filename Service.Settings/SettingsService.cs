@@ -83,6 +83,8 @@ namespace Service.Settings
         public Guid UnableToCancelPayoutTransactionId { get { return GetSetting("UnableToCancelPayoutTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid TransactionAlreadyCanceledId { get { return GetSetting("TransactionAlreadyCanceledId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid AcPayCashRegisterId { get { return GetSetting("AcPayCashRegisterId", Guid.Empty , throwExceptionIfMissing: true); } }
+        public Guid MatchPersonalDataDefault { get { return GetSetting("MatchPersonalDataDefault", Guid.Empty , throwExceptionIfMissing: true); } }
+        public Guid MatchPersonalDataDateOnly { get { return GetSetting("MatchPersonalDataDateOnly", Guid.Empty , throwExceptionIfMissing: true); } }
         public string TestAdminPrivateKeyPath { get { return GetSetting("TestAdminPrivateKeyPath", string.Empty, throwExceptionIfMissing: true); } }
         public string TestAdminPrivateKeyPass { get { return GetSetting("TestAdminPrivateKeyPass", string.Empty, throwExceptionIfMissing: true); } }
       

@@ -76,6 +76,8 @@ namespace Services.Authentication
                 AcPayPartnerId = SettingsService.AcPayPartnerId.ToString(),
                 InAppPayPartnerId = SettingsService.InAppPayPartnerId.ToString(),
                 DefaulrPartnerId = DefaultPartnerID.ToString(),
+                MatchPersonalDataDefault = SettingsService.MatchPersonalDataDefault.ToString(),
+                MatchPersonalDataDateOnly = SettingsService.MatchPersonalDataDateOnly.ToString(),
             };
             var partnerId = partner.PartnerId;
             if (partner.PrivateKey != null && partner.PrivateKey != "")
