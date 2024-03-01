@@ -632,6 +632,70 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
         }
     }
 
+    $scope.AbonErrors = {
+        InvalidPartnerId: {
+            "code": 1,
+            "message": "invalid_partner_id",
+            "additionalData": null
+        },
+        InvalidSignature: {
+            "code": 2,
+            "message": "invalid_signature",
+            "additionalData": null
+        },
+        InvalidCouponCode: {
+            "code": 3,
+            "message": "invalid_coupon_code",
+            "additionalData": null
+        },
+        CouponAlreadyUsed: {
+            "code": 4,
+            "message": "coupon_already_used",
+            "additionalData": {
+                "couponSerialNumber": "7734046342086444",
+                "couponValue": 50,
+                "isoCurrency": "EUR",
+                "partnerTransactionId": "2a73c3d8-2c0c-4461-a269-73837aa7316a"
+            }
+        },
+        CouponCountryNotAllowed: {
+            "code": 6,
+            "message": "coupon_country_not_allowed",
+            "additionalData": null
+        },
+        LimitExeeded: {
+            "code": 7,
+            "message": "limit_exceeded",
+            "additionalData": null
+        },
+        InvalidPhoneNumber: {
+            "code": 13,
+            "message": "invalid_phone_number_format",
+            "additionalData": null
+        },
+        UserDoesNotExist: {
+            "code": 14,
+            "message": "user_does_not_exist",
+            "additionalData": null
+        },
+        UserDataDoesNotMatch: {
+            "code": 15,
+            "message": "user_data_does_not_match",
+            "additionalData": null
+        },
+        AuthorizationDecline: {
+            "code": 16,
+            "message": "authorization_declined",
+            "additionalData": null
+        },
+        AuthorizationNotStarted: {
+            "code": 12,
+            "message": "coupon_authorization_must_be_started_first",
+            "additionalData": null
+        }
+
+    }
+
     $scope.aBonDeposit = {
         validateCoupon: {
             requestExample: {
