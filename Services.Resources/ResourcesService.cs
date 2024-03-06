@@ -40,29 +40,29 @@ namespace Services.Resources
         public async Task<string> CreateCoupon(string currencyIsoCode)
         {
             Guid partnerId;
-            switch (currencyIsoCode.ToUpper())
+            switch (Enum.Parse(typeof(CurrencyEnum),currencyIsoCode.ToUpper()))
             {
-                case "EUR":
+                case CurrencyEnum.EUR:
                     {
                         partnerId = SettingsService.GenerateAbonPartnerIdDE;
                         break;
                     }
-                case "RON":
+                case CurrencyEnum.RON:
                     {
                         partnerId = SettingsService.GenerateAbonPartnerIdRO;
                         break;
                     }
-                case "CZK":
+                case CurrencyEnum.CZK:
                     {
                         partnerId = SettingsService.GenerateAbonPartnerIdCZ;
                         break;
                     }
-                case "PLN":
+                case CurrencyEnum.PLN:
                     {
                         partnerId = SettingsService.GenerateAbonPartnerIdPL;
                         break;
                     }
-                case "BGN":
+                case CurrencyEnum.BGN:
                     {
                         partnerId = SettingsService.GenerateAbonPartnerIdBG;
                         break;
@@ -86,7 +86,7 @@ namespace Services.Resources
                 PartnerId = partnerId.ToString(),
                 Value = amount,
                 PointOfSaleId = "SimulatorResources",
-                ISOCurrencySymbol = currencyIsoCode,
+                ISOCurrencySymbol = currencyIsoCode.ToUpper(),
                 PartnerTransactionId = Guid.NewGuid().ToString(),
                 ContentType = null,
                 ContentWidth = null
