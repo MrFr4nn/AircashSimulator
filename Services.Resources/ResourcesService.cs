@@ -39,40 +39,19 @@ namespace Services.Resources
 
         public async Task<string> CreateCoupon(string currencyIsoCode)
         {
-            Guid partnerId;
-            switch (Enum.Parse(typeof(CurrencyEnum),currencyIsoCode.ToUpper()))
-            {
-                case CurrencyEnum.EUR:
-                    {
-                        partnerId = SettingsService.GenerateAbonPartnerIdDE;
-                        break;
-                    }
-                case CurrencyEnum.RON:
-                    {
-                        partnerId = SettingsService.GenerateAbonPartnerIdRO;
-                        break;
-                    }
-                case CurrencyEnum.CZK:
-                    {
-                        partnerId = SettingsService.GenerateAbonPartnerIdCZ;
-                        break;
-                    }
-                case CurrencyEnum.PLN:
-                    {
-                        partnerId = SettingsService.GenerateAbonPartnerIdPL;
-                        break;
-                    }
-                case CurrencyEnum.BGN:
-                    {
-                        partnerId = SettingsService.GenerateAbonPartnerIdBG;
-                        break;
-                    }
-                default:
-                    {
-                        throw new Exception("Error generating coupon for currency " + currencyIsoCode);
+            var partnerIds = new Dictionary<CurrencyEnum, Guid> {
+                { CurrencyEnum.EUR, SettingsService.GenerateAbonPartnerIdDE},
+                { CurrencyEnum.RON, SettingsService.GenerateAbonPartnerIdRO},
+                { CurrencyEnum.CZK, SettingsService.GenerateAbonPartnerIdCZ},
+                { CurrencyEnum.PLN, SettingsService.GenerateAbonPartnerIdPL},
+                { CurrencyEnum.BGN, SettingsService.GenerateAbonPartnerIdBG}
 
-                    }
-            }
+            };
+            var sentCurrency = (CurrencyEnum)Enum.Parse(typeof(CurrencyEnum), currencyIsoCode.ToUpper());
+            var partnerId = partnerIds.Where(x => x.Key == sentCurrency).Select(x => x.Value).FirstOrDefault();
+
+            
+
             string returnToPartner;
             var amount = AircashSimulatorContext.PartnerAbonDenominations.Where(x => x.PartnerId == partnerId).Select(x => x.Denomination).FirstOrDefault();
 
