@@ -45,12 +45,9 @@ namespace Services.Resources
                 { CurrencyEnum.CZK, SettingsService.GenerateAbonPartnerIdCZ},
                 { CurrencyEnum.PLN, SettingsService.GenerateAbonPartnerIdPL},
                 { CurrencyEnum.BGN, SettingsService.GenerateAbonPartnerIdBG}
-
             };
             var sentCurrency = (CurrencyEnum)Enum.Parse(typeof(CurrencyEnum), currencyIsoCode.ToUpper());
             var partnerId = partnerIds.Where(x => x.Key == sentCurrency).Select(x => x.Value).FirstOrDefault();
-
-            
 
             string returnToPartner;
             var amount = AircashSimulatorContext.PartnerAbonDenominations.Where(x => x.PartnerId == partnerId).Select(x => x.Denomination).FirstOrDefault();
