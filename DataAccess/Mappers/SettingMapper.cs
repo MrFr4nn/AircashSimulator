@@ -10,7 +10,7 @@ namespace DataAccess.Mappers
         {
             builder.ToTable("Settings");
             builder.Property(x => x.Key).IsRequired().HasMaxLength(128);
-            builder.Property(x => x.Value).IsRequired().HasMaxLength(128);
+            builder.Property(x => x.Value).IsRequired().HasMaxLength(500);
         }
     }
 }

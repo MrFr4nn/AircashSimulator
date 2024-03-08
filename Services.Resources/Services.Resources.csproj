@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CrossCutting\CrossCutting.csproj" />
+    <ProjectReference Include="..\Domain.Entities\Domain.Entities.csproj" />
+    <ProjectReference Include="..\Service.Settings\Service.Settings.csproj" />
+    <ProjectReference Include="..\Services.HttpRequest\Services.HttpRequest.csproj" />
+    <ProjectReference Include="..\Services.Signature\Services.Signature.csproj" />
+  </ItemGroup>
+
+</Project>

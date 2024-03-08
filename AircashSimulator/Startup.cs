@@ -35,6 +35,7 @@ using Services.AircashPayStaticCode;
 using Services.AircashPayment;
 using Services.AircashPayoutV2;
 using Services.AircashInAppPay;
+using Services.Resources;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using System.Buffers.Text;
@@ -132,6 +133,7 @@ namespace AircashSimulator
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
             services.AddTransient<ISignatureService, SignatureService>();
+            services.AddTransient<IResourcesService, ResourcesService>();
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));
             services.AddSignalR(o => o.EnableDetailedErrors = true);
