@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AircashSimulatorContext))]
-    [Migration("20240306103637_AbonGenerateInsertPartnerIds")]
-    partial class AbonGenerateInsertPartnerIds
+    [Migration("20240308074840_SettingsValueIncreaseNumberOfCharachters")]
+    partial class SettingsValueIncreaseNumberOfCharachters
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -307,8 +307,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 

@@ -305,8 +305,8 @@ namespace DataAccess.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.HasKey("Id");
 

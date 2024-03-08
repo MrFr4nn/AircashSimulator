@@ -85,18 +85,7 @@ namespace Service.Settings
         public Guid AcPayCashRegisterId { get { return GetSetting("AcPayCashRegisterId", Guid.Empty , throwExceptionIfMissing: true); } }
         public Guid MatchPersonalDataDefault { get { return GetSetting("MatchPersonalDataDefault", Guid.Empty , throwExceptionIfMissing: true); } }
         public Guid MatchPersonalDataDateOnly { get { return GetSetting("MatchPersonalDataDateOnly", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdHR { get { return GetSetting("GenerateAbonPartnerIdHR", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdCZ { get { return GetSetting("GenerateAbonPartnerIdCZ", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdFR { get { return GetSetting("GenerateAbonPartnerIdFR", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdDE { get { return GetSetting("GenerateAbonPartnerIdDE", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdGR { get { return GetSetting("GenerateAbonPartnerIdGR", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdIT { get { return GetSetting("GenerateAbonPartnerIdIT", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdPL { get { return GetSetting("GenerateAbonPartnerIdPL", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdRO { get { return GetSetting("GenerateAbonPartnerIdRO", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdSK { get { return GetSetting("GenerateAbonPartnerIdSK", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdSI { get { return GetSetting("GenerateAbonPartnerIdSI", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdES { get { return GetSetting("GenerateAbonPartnerIdES", Guid.Empty , throwExceptionIfMissing: true); } }
-        public Guid GenerateAbonPartnerIdBG { get { return GetSetting("GenerateAbonPartnerIdBG", Guid.Empty , throwExceptionIfMissing: true); } }
+        public Dictionary<string, Guid> RecourcesGenerateAbonPartnerIds { get { return GetSetting("RecourcesGenerateAbonPartnerIds", new Dictionary<string, Guid>() , throwExceptionIfMissing: true); } }
         public string TestAdminPrivateKeyPath { get { return GetSetting("TestAdminPrivateKeyPath", string.Empty, throwExceptionIfMissing: true); } }
         public string TestAdminPrivateKeyPass { get { return GetSetting("TestAdminPrivateKeyPass", string.Empty, throwExceptionIfMissing: true); } }
       
@@ -142,6 +131,8 @@ namespace Service.Settings
                 return (T)Convert.ChangeType(JsonConvert.DeserializeObject<List<int>>(strValue), type);
             else if (type == typeof(Dictionary<int, string>))
                 return (T)Convert.ChangeType(JsonConvert.DeserializeObject<Dictionary<int, string>>(strValue), type);
+            else if (type == typeof(Dictionary<string, Guid>))
+                return (T)Convert.ChangeType(JsonConvert.DeserializeObject<Dictionary<string, Guid>>(strValue), type);
             else if (type == typeof(HashSet<string>))
                 return (T)Convert.ChangeType(new HashSet<string>(strValue.Split(new char[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries)), type);
             else if (type == typeof(HashSet<int>))

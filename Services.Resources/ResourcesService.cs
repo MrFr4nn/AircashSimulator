@@ -39,15 +39,8 @@ namespace Services.Resources
 
         public async Task<string> CreateCoupon(string currencyIsoCode)
         {
-            var partnerIds = new Dictionary<CurrencyEnum, Guid> {
-                { CurrencyEnum.EUR, SettingsService.GenerateAbonPartnerIdDE},
-                { CurrencyEnum.RON, SettingsService.GenerateAbonPartnerIdRO},
-                { CurrencyEnum.CZK, SettingsService.GenerateAbonPartnerIdCZ},
-                { CurrencyEnum.PLN, SettingsService.GenerateAbonPartnerIdPL},
-                { CurrencyEnum.BGN, SettingsService.GenerateAbonPartnerIdBG}
-            };
-            var sentCurrency = (CurrencyEnum)Enum.Parse(typeof(CurrencyEnum), currencyIsoCode.ToUpper());
-            var partnerId = partnerIds.Where(x => x.Key == sentCurrency).Select(x => x.Value).FirstOrDefault();
+            var partnerIds = SettingsService.RecourcesGenerateAbonPartnerIds;
+            var partnerId = partnerIds.Where(x => x.Key == currencyIsoCode.ToUpper()).Select(x => x.Value).FirstOrDefault();
 
             string returnToPartner;
             var amount = AircashSimulatorContext.PartnerAbonDenominations.Where(x => x.PartnerId == partnerId).Select(x => x.Denomination).FirstOrDefault();
