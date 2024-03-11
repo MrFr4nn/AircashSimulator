@@ -193,7 +193,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
     $scope.SearchTable = function () {
         $scope.partnerV2 = {};
         $scope.partners = [];
-        $scope.username = null;
+        $scope.Username = null;
         $scope.pageNumber = 1;
         $scope.getPartnersDetail();
         $scope.defaultCountry = "HR";
@@ -260,7 +260,7 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
         $scope.environment = 2;
         $scope.partner.CountryCode = $scope.countryPickerCode.countryCode;
         $scope.partner.CurrencyId = $scope.currencyNew.code;
-        partnerAdminService.savePartner($scope.partner, $scope.sendRoles, $scope.username)
+        partnerAdminService.savePartner($scope.partner, $scope.sendRoles, $scope.Username)
             .then(function (resposne) {
                 $scope.SearchTable();
                 $scope.defaultCountry = "";
