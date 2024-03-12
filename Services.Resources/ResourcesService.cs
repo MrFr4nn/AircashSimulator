@@ -45,6 +45,9 @@ namespace Services.Resources
             string returnToPartner;
             var amount = AircashSimulatorContext.PartnerAbonDenominations.Where(x => x.PartnerId == partnerId).Select(x => x.Denomination).FirstOrDefault();
 
+            if (partnerId == Guid.Empty)
+                return "Invalid currency";
+
             if (amount == 0) {
                 Logger.LogError("Couldn't find denomination for PartnerId: " + partnerId);
                 throw new Exception("Aircash configuration error");
