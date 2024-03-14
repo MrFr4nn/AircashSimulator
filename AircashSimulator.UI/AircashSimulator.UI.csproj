@@ -27,6 +27,7 @@
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <_ContentIncludedByDefault Remove="wwwroot\app\ac_payment\MinAndMaxCurrencyTable.html" />
     <_ContentIncludedByDefault Remove="wwwroot\images\ac_business_site_1.png" />
   </ItemGroup>
 

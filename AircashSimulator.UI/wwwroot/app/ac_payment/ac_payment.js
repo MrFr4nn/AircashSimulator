@@ -559,7 +559,7 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
     };
 
     $scope.transactionAlreadyProcessed = {
-        SuccessExample: {
+        successExample: {
             "Success": true,
             "PartnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
             "Parameters": [
