@@ -88,7 +88,7 @@ namespace Services.User
                 user.PartnerId = request.Partner.Id;
                 user.FirstName = request.FirstName;
                 user.LastName = request.LastName;
-                user.BirthDate = request.BirthDate;
+                user.BirthDate = request.BirthDate.GetValueOrDefault().ToLocalTime();
                 user.PhoneNumber = request.PhoneNumber;
                 if(request.Password != null) user.PasswordHash = hash;
                 user.Environment = request.Environment;
