@@ -1,16 +1,16 @@
 ﻿app.component('datePicker', {
-    template: `<p class="input-group" ng-class="{'has-error': (!$ctrl.date && !$ctrl.isOptional)}">
+    template: `<p class="input-group" ng-class="{'has-error': (!$ctrl.date && !$ctrl.isoptional)}">
                         <span class= "input-group-btn" >
                             <button type="button" class="btn btn-default" ng-click="$ctrl.open($event)"><i class="fa fa-calendar"></i></button>
                         </span>
-                        <input placeholder="{{$ctrl.format}}" ng-model="$ctrl.date" ng-change="$ctrl.setDate()" type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" max-date="$ctrl.maxDate" is-open="$ctrl.isOpened" datepicker-options="$ctrl.dateOptions" close-text="Close" ng-required="!$ctrl.isOptional"/>
+                        <input placeholder="{{$ctrl.format}}" ng-model="$ctrl.date" ng-change="$ctrl.setDate()" type="text" class="form-control" uib-datepicker-popup="{{$ctrl.format}}" max-date="$ctrl.maxDate" is-open="$ctrl.isOpened" datepicker-options="$ctrl.dateOptions" close-text="Close" ng-required="!$ctrl.isoptional"/>
                   </p >`,
     bindings: {
         out: '<',
         date: '<',
         obj: '<',
-        isOptional: '<',
-        maxDate: '<'
+        isoptional: '<',
+        maxdate: '<'
     },
     controller: function () {
         var $ctrl = this;

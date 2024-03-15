@@ -40,6 +40,10 @@ namespace Services.User
                 UserId = x.UserId,
                 UserName = x.Username,
                 Email = x.Email,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                PhoneNumber = x.PhoneNumber,
+                BirthDate = x.BirthDate,
                 Partner = new PartnerVM { Id = x.PartnerId, Name = null },
                 Environment = x.Environment
             }).ToList();
@@ -82,6 +86,10 @@ namespace Services.User
 
                 user.Email = request.Email;
                 user.PartnerId = request.Partner.Id;
+                user.FirstName = request.FirstName;
+                user.LastName = request.LastName;
+                user.BirthDate = request.BirthDate.GetValueOrDefault().ToLocalTime();
+                user.PhoneNumber = request.PhoneNumber;
                 if(request.Password != null) user.PasswordHash = hash;
                 user.Environment = request.Environment;
                 AircashSimulatorContext.Users.Update(user);
@@ -98,7 +106,11 @@ namespace Services.User
                     Email = request.Email,
                     PartnerId = request.Partner.Id,
                     PasswordHash = hash,
-                    Environment = request.Environment
+                    Environment = request.Environment,
+                    FirstName = request.FirstName,
+                    LastName = request.LastName,
+                    BirthDate = request.BirthDate,
+                    PhoneNumber = request.PhoneNumber,
             });
             }
             await AircashSimulatorContext.SaveChangesAsync();

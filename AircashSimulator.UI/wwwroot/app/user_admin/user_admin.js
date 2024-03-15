@@ -43,6 +43,10 @@ userAdminModule.service("userAdminService", ['$http', '$q', 'handleResponseServi
                 Email: user.Email,
                 Partner: user.Partner,
                 Password: user.Password,
+                FirstName: user.FirstName,
+                LastName: user.LastName,
+                BirthDate: user.BirthDate,
+                PhoneNumber: user.PhoneNumber,
                 Environment: parseInt(user.Environment)
             }
         });
@@ -126,6 +130,7 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
     $scope.user = {};
     $scope.addEditUserModal = function (user) {
         angular.copy(user, $scope.user);
+        if (user !=null) $scope.user.BirthDate = new Date(user.BirthDate)
         $scope.ConfirmPassword = null;
         if ($scope.user.Partner != undefined) {
             $("#selPartner").val($scope.user.Partner.Id).change();
@@ -190,6 +195,10 @@ userAdminModule.controller("userAdminCtrl", ['$scope', '$state', '$filter', 'use
                 console.log("Error, could not delete user.");
             });
         $scope.toggleDeleteUserModal();
+    }
+
+    $scope.setUserDate = function (date) {
+        $scope.user.BirthDate = date;
     }
 
     $scope.getUsers();
