@@ -52,6 +52,8 @@ namespace Service.Settings
         Guid C2DDepositPartnerId { get; }
         Guid AcPayPartnerId { get; }
         Guid InAppPayPartnerId { get; }
+        Guid MatchPersonalDataDefault { get; }
+        Guid MatchPersonalDataDateOnly { get; }
         Guid AbonGeneratePartnerId { get; }
         string AircashFramePartnerTransactionAlreadyExists { get; }
         Guid AcFrameConfirmPayoutValidTransaction { get; }
@@ -67,11 +69,13 @@ namespace Service.Settings
         Guid UnableToCancelPayoutTransactionId { get; }
         Guid TransactionAlreadyCanceledId { get; }
         Guid AircashFramePartnerId { get; }
+        Dictionary<string, Guid> RecourcesGenerateAbonPartnerIds { get; }
         Guid AircashFrameAmountDefaultPartnerId { get; }
         Guid AircashFrameAmountEqualOrLessThanCouponValuePartnerId { get; }
         Guid AircashFrameAmountEqualAsCouponValuePartnerId { get; }
         Guid AircashFrameAmountLessThanCouponValuePartnerId { get; }
         Guid AircashFramePartnerIdWithMatchPersonalData { get; }
+        Guid AcPayCashRegisterId { get; }
 
         public string TestAdminPrivateKeyPath { get; }
         public string TestAdminPrivateKeyPass { get; }

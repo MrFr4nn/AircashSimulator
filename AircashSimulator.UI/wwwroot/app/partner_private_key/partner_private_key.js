@@ -75,9 +75,9 @@ partnerPrivateKeyModule.controller("partnerPrivateKeyCtrl",
                 partnerPrivateKeyService.getPartnerKeys()
                     .then(function (response) {
                         $scope.inputs.partnerId = $scope.decodedToken.partnerId
-                        $scope.inputs.publicKey = response.publicKey
-                        $scope.inputs.privateKey = response.privateKey
-                        $scope.inputs.password = response.privateKeyPass
+                        $scope.inputs.publicKey = response.PublicKey
+                        $scope.inputs.privateKey = response.PrivateKey
+                        $scope.inputs.password = response.PrivateKeyPass
                     })
                     .catch(function (error) {
                         $rootScope.showGritter("error");

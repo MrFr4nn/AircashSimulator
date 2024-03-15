@@ -22,5 +22,7 @@ namespace Services.Authentication
         public string AcPayPartnerId { get; set; }
         public string InAppPayPartnerId { get; set; }
         public string DefaulrPartnerId { get; set; }
+        public string MatchPersonalDataDefault { get; set; }
+        public string MatchPersonalDataDateOnly { get; set; }
     }
 }

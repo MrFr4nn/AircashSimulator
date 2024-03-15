@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using AircashSimulator.Controllers.AircashPay;
 using Services.User;
 using Service.Settings;
+using AircashSimulator.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace AircashSimulator.Controllers
 {
@@ -23,17 +25,18 @@ namespace AircashSimulator.Controllers
         private AircashConfiguration AircashConfiguration;
         private IUserService UserService;
         private ISettingsService SettingsService;
-        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService, ISettingsService settingsService)
+        public readonly IHubContext<NotificationHub> _hubContext;
+        public AircashPayController(IAircashPayService aircashPayService, UserContext userContext, IOptionsMonitor<AircashConfiguration> aircashConfiguration, IUserService userService, ISettingsService settingsService, IHubContext<NotificationHub> hubContext)
         {
             AircashPayService = aircashPayService;
             UserContext = userContext;
             AircashConfiguration = aircashConfiguration.CurrentValue;
             UserService = userService;
             SettingsService = settingsService;
+            _hubContext = hubContext;
         }
         
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> GeneratePartnerCode(GeneratePartnerCodeRequest generatePartnerCodeRequest)
         {
             var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
@@ -134,11 +137,35 @@ namespace AircashSimulator.Controllers
                 LocationId = generatePartnerCodeRequest.LocationID,
                 CurrencyId = 978,
                 UserId = Guid.NewGuid().ToString(),
-                PartnerTransactionId = Guid.NewGuid().ToString(),
+                PartnerTransactionId = generatePartnerCodeRequest.PartnerTransactionId != null? generatePartnerCodeRequest.PartnerTransactionId: Guid.NewGuid().ToString(),
             };
 
             var response = await AircashPayService.GeneratePartnerCode(generatePartnerCodeDTO, generatePartnerCodeRequest.Environment);
             return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GeneratePartnerCodeCashRegister(GeneratePartnerCodeRequest generatePartnerCodeRequest)
+        {
+            var generatePartnerCodeDTO = new GeneratePartnerCodeDTO
+            {
+                PartnerId = SettingsService.AcPayCashRegisterId,
+                Amount = generatePartnerCodeRequest.Amount,
+                Description = generatePartnerCodeRequest.Description,
+                LocationId = generatePartnerCodeRequest.LocationID,
+                CurrencyId = generatePartnerCodeRequest.CurrencyId,
+                UserId = Guid.NewGuid().ToString(),
+                PartnerTransactionId = Guid.NewGuid().ToString(),
+                ValidForPeriod = 300,
+            };
+            var response = await AircashPayService.GeneratePartnerCodeCashRegister(generatePartnerCodeDTO, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task ConfirmTransactionCashRegister(AircashConfirmTransactionRequest aircashConfirmTransactionRequest)
+        {
+            await _hubContext.Clients.All.SendAsync("TransactionStatus", "OK");
         }
     }
 }

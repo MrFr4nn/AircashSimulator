@@ -11,8 +11,8 @@ namespace Services.AbonSalePartner
         public string ISOCurrencySymbol { get; set; }
         public string ContentType { get; set; }
         public int? ContentWidth { get; set; }
-        public string Signature { get; set; }
         public List<AbonDenomination> Denominations { get; set; }
+        public string Signature { get; set; }
     }
 
     public class AbonDenomination

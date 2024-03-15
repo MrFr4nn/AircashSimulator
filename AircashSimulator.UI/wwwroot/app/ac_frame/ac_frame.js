@@ -119,13 +119,13 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
         acFrameService.initiate($scope.initiateModel.payType, $scope.initiateModel.payMethod, $scope.initiateModel.amount, $scope.initiateModel.currency)
             .then(function (response) {
                 if (response) {
-                    $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceInitiate = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.frameUrl = response.serviceResponse.url;
+                    $scope.InitiateRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.InitiateResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceInitiate = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.InitiateServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.InitiateServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.frameUrl = response.ServiceResponse.Url;
                     $scope.getTransactions(true);
                 }
                 $scope.initiateBusy = false;
@@ -143,15 +143,15 @@ acFrameModule.controller("acFrameCtrl", ['$scope', '$state', '$filter', 'acFrame
         acFrameService.transactionStatus(transactionId)
             .then(function (response) {
                 if (response) {
-                    $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceStatus = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.StatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.signature) {
-                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    $scope.StatusRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.StatusResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceStatus = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.StatusServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.signature) {
+                        response.ServiceResponse.signature = response.ServiceResponse.signature.substring(0, 10) + "...";
                     }
-                    $scope.StatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.StatusServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 $scope.statusBusy = false;
                 $scope.statusResponded = true;

@@ -35,6 +35,7 @@ using Services.AircashPayStaticCode;
 using Services.AircashPayment;
 using Services.AircashPayoutV2;
 using Services.AircashInAppPay;
+using Services.Resources;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using System.Buffers.Text;
@@ -45,6 +46,7 @@ using CrossCutting;
 using Services.Signature;
 using Services.AircashATM;
 using Services.CobrandedCard;
+using System.Text.Json;
 
 namespace AircashSimulator
 {
@@ -77,6 +79,10 @@ namespace AircashSimulator
             });
 
             services.AddControllers();
+            services.AddControllers().AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                });
 
             services.AddAuthentication(x =>
             {
@@ -127,6 +133,7 @@ namespace AircashSimulator
             services.AddTransient<IPartnerAbonDenominationService, PartnerAbonDenominationService>();
             services.AddTransient<IAircashPosDepositService, AircashPosDepositService>();
             services.AddTransient<ISignatureService, SignatureService>();
+            services.AddTransient<IResourcesService, ResourcesService>();
             services.Configure<AircashConfiguration>(Configuration.GetSection("AircashConfiguration"));
             services.Configure<JwtConfiguration>(Configuration.GetSection("JwtConfiguration"));
             services.AddSignalR(o => o.EnableDetailedErrors = true);
@@ -186,11 +193,14 @@ namespace AircashSimulator
 
             app.UseAuthorization();
 
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationHub>("/hubs/notificationhub");
             });
+
+
         }
     }
 }

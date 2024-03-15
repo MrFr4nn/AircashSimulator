@@ -64,12 +64,12 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
         acPosDepositService.checkUser($scope.checkUserRequest)
             .then(function (response) {
                 if (response) {
-                    $scope.checkUserRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.checkUserResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkUserSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkUserResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.checkUserRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkUserRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.checkUserResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkUserSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkUserResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.checkUserRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.checkUserServiceBusy = false;
                 $scope.checkUserServiceResponse = true;
@@ -101,12 +101,12 @@ acPosDeposit.controller("acPosDepositCtrl", ['$scope', '$state', 'acPosDepositSe
         acPosDepositService.createPayout($scope.createPayoutRequest)
             .then(function (response) {
                 if (response) {
-                    $scope.createPayoutRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.createPayoutResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.createPayoutSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.createPayoutResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.createPayoutRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.createPayoutRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.createPayoutResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.createPayoutSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.createPayoutResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.createPayoutRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.createPayoutServiceBusy = false;
                 $scope.createPayoutServiceResponse = true;

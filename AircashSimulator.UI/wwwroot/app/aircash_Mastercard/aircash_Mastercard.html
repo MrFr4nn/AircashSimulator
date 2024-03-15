@@ -1,0 +1,119 @@
+﻿<h1>Mastercard</h1>
+<hr/>
+<div class="table-responsive">
+    <table class="table  table-active col-md-6">
+        <thead>
+            <tr>
+                <th>Environment</th>
+                <th>Method</th>
+                <th>URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><b>Test</b></td>
+                <td>
+                    
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><b>Production</b></td>
+                <td>
+                    
+                </td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<uib-tabset>
+    <uib-tab index="Mastercard-tab-0" heading="Request parameters" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>SerialNumber</b></td>
+                        <td>String</td>
+                        <td>Card identifier</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><b>EAN</b></td>
+                        <td>String</td>
+                        <td>
+                            ??
+                        </td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>Decimal</td>
+                        <td>
+                            ??
+                        </td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><b>DateTimeUTC</b></td>
+                        <td>String</td>
+                        <td>Date and time of the card sale</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><b>PointOfSale</b></td>
+                        <td>String</td>
+                        <td>Location of the sale</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+    <uib-tab index="Mastercard-tab-1" heading="Response" classes="nav-item">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Http response</th>
+                        <th>Description</th>
+                        <th>Error Code</th> 
+                        <th>Message</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>200</b></td>
+                        <td>Sale notification successfully received</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2"><b>400</b></td>
+                        <td rowspan="2">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
+                        <td><b>4001</b></td>
+                        <td>The card has already been sold</td>
+                    </tr>
+                    <tr>
+                        <td><b>4002</b></td>
+                        <td>Serial number does not exist in the Aircash system</td>
+                    </tr>
+                    <tr>
+                        <td><b>500</b></td>
+                        <td>An unknown error occured</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </uib-tab>
+</uib-tabset>

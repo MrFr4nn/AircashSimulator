@@ -77,7 +77,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.Signature", "Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.AircashATM", "Services.AircashATM\Services.AircashATM.csproj", "{562B5E93-7BA2-4A30-87C7-06C5A736E35F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.CobrandedCard", "Services.CobrandedCard\Services.CobrandedCard.csproj", "{89E73408-08D3-4816-AFAD-53F33F74DF25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services.CobrandedCard", "Services.CobrandedCard\Services.CobrandedCard.csproj", "{89E73408-08D3-4816-AFAD-53F33F74DF25}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services.Resources", "Services.Resources\Services.Resources.csproj", "{2551599C-CD3A-4359-BFE7-7FAE78228E43}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -213,6 +215,10 @@ Global
 		{89E73408-08D3-4816-AFAD-53F33F74DF25}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89E73408-08D3-4816-AFAD-53F33F74DF25}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89E73408-08D3-4816-AFAD-53F33F74DF25}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2551599C-CD3A-4359-BFE7-7FAE78228E43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2551599C-CD3A-4359-BFE7-7FAE78228E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2551599C-CD3A-4359-BFE7-7FAE78228E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2551599C-CD3A-4359-BFE7-7FAE78228E43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -248,6 +254,7 @@ Global
 		{8767AAE9-380B-4DDD-A450-AD331CCD11E0} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{562B5E93-7BA2-4A30-87C7-06C5A736E35F} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 		{89E73408-08D3-4816-AFAD-53F33F74DF25} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
+		{2551599C-CD3A-4359-BFE7-7FAE78228E43} = {CD3982EB-22A2-47A1-8FAE-D8555E6901AC}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7CF481FF-2B5A-4460-9F34-6A4EAED13029}

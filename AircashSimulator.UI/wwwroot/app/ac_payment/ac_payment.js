@@ -111,50 +111,50 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
     function setRequestExamples(generateSignatureModel) {
         $scope.requestExample = {
             username: {
-                key: "username",
-                value: generateSignatureModel.identificator
+                Key: "username",
+                Value: generateSignatureModel.identificator
             },
             email: {
-                key: "email",
-                value: generateSignatureModel.identificator
+                Key: "email",
+                Value: generateSignatureModel.identificator
             },
             currency: {
-                key: "currencyIsoCode",
-                value: generateSignatureModel.currency
+                Key: "currencyIsoCode",
+                Value: generateSignatureModel.currency
             },
             countryCode: {
-                key: "countryIsoCode",
-                value: generateSignatureModel.countryCode
+                Key: "countryIsoCode",
+                Value: generateSignatureModel.countryCode
             },
             aircashUserID: {
-                key: "AircashUserID",
-                value: generateSignatureModel.aircashUserID
+                Key: "AircashUserID",
+                Value: generateSignatureModel.aircashUserID
             },
             //firstName: {
-            //    key: "PayerFirstName",
-            //    value: generateSignatureModel.firstname
+            //    Key: "PayerFirstName",
+            //    Value: generateSignatureModel.firstname
             //},
             //lastName: {
-            //    key: "PayerLastName",
-            //    value: generateSignatureModel.lastname
+            //    Key: "PayerLastName",
+            //    Value: generateSignatureModel.lastname
             //},
             //birthDate: {
-            //    key: "PayerBirthDate",
-            //    value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
+            //    Key: "PayerBirthDate",
+            //    Value: generateSignatureModel.birthDate.toLocaleDateString('en-CA')
             //},
             merchantId: {
-                key: "merchantId",
+                Key: "merchantId",
                 Value: generateSignatureModel.merchantId
             },
             partnerUserId:
             {
-                key: "PartnerUserId",
-                value: generateSignatureModel.partnerUserId
+                Key: "PartnerUserId",
+                Value: generateSignatureModel.partnerUserId
             },
             //phoneNumber:
             //{
-            //    key: "AircashUserPhoneNumber",
-            //    value: generateSignatureModel.phoneNumber
+            //    Key: "AircashUserPhoneNumber",
+            //    Value: generateSignatureModel.phoneNumber
             //}
         }
     }
@@ -226,8 +226,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
             );
 
         $scope.aircashPayment.checkPlayer.requestExample = {
-            parameters: $scope.checkPlayerParameters,
-            signature: "HrlYnqqr...Cgs = "
+            Parameters: $scope.checkPlayerParameters,
+            Signature: "HrlYnqqr...Cgs = "
         }
 
         clearTimeout(typingTimerCheckPlayer);
@@ -270,10 +270,10 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
             );
 
         $scope.aircashPayment.createAndConfirmPayment.requestExample = {
-            transactionID: "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-            amount: $scope.createAndConfirmGenerateSignatureModel.amount || 123.45,
-            parameters: $scope.createAndConfirmParameters,
-            signature: "Gng+D6+3...P/4="
+            TransactionID: "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
+            Amount: $scope.createAndConfirmGenerateSignatureModel.amount || 123.45,
+            Parameters: $scope.createAndConfirmParameters,
+            Signature: "Gng+D6+3...P/4="
         }
 
         clearTimeout(typingTimerCreateAndConfirm);
@@ -291,8 +291,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
         acPaymentService.generateCheckPlayerSignature($scope.checkPlayerParameters)
             .then(function (response) {
                 if (response) {
-                    $scope.generateCheckPlayerSignatureResponse = JSON.stringify(response.aircashPaymentCheckPlayer, null, 4);
-                    $scope.CheckPlayerRequestExampleSequence = response.sequence;
+                    $scope.generateCheckPlayerSignatureResponse = JSON.stringify(response.AircashPaymentCheckPlayer, null, 4);
+                    $scope.CheckPlayerRequestExampleSequence = response.Sequence;
                 }
                 $scope.generateCheckPlayerSignatureBusy = false;
                 $scope.generateCheckPlayerSignatureResponded = true;
@@ -310,8 +310,8 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
         acPaymentService.generateCreateAndConfirmSignature($scope.createAndConfirmParameters, $scope.createAndConfirmGenerateSignatureModel.amount)
             .then(function (response) {
                 if (response) {
-                    $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response.aircashPaymentCreateAndConfirmPayment, null, 4);
-                    $scope.CreateAndConfirmRequestExampleSequence = response.sequence;
+                    $scope.generateCreateAndConfirmSignatureResponse = JSON.stringify(response.AircashPaymentCreateAndConfirmPayment, null, 4);
+                    $scope.CreateAndConfirmRequestExampleSequence = response.Sequence;
                 }
                 $scope.generateCreateAndConfirmSignatureBusy = false;
                 $scope.generateCreateAndConfirmSignatureResponded = true;
@@ -346,12 +346,12 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
         acPaymentService.checkPlayer($scope.checkPlayerModel.endpoint, CheckPlayerRequstGeneration())
             .then(function (response) {
                 if (response) {
-                    $scope.checkPlayerRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.checkPlayerResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.checkPlayerSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.checkPlayerResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.checkPlayerRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.checkPlayerRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.checkPlayerResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.checkPlayerSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.checkPlayerResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.checkPlayerRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.checkPlayerBusy = false;
                 $scope.checkPlayerResponded = true;
@@ -379,12 +379,12 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
             .then(function (response) {
                 if (response) {
                     console.log(response);
-                    $scope.createAndConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.createAndConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.createAndConfirmSequence = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.createAndConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.createAndConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.createAndConfirmRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.createAndConfirmResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.createAndConfirmSequence = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.createAndConfirmResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.createAndConfirmRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.createAndConfirmBusy = false;
                 $scope.createAndConfirmResponded = true;
@@ -469,117 +469,116 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
 
     $scope.responseParametersExample = {
         payerMaxAllowedAmount: {
-            "key": "payerMaxAllowedAmount",
-            "type": "Decimal",
-            "value": "123.45"
+            "Key": "payerMaxAllowedAmount",
+            "Type": "Decimal",
+            "Value": "123.45"
         },
         payerPhoneNumber: {
-            "key": "payerPhoneNumber",
-            "type": "String",
-            "value": "385981234567"
+            "Key": "payerPhoneNumber",
+            "Type": "String",
+            "Value": "385981234567"
         },
         personalIdentificationCode: {
-            "key": "payerPersonalIdentificationCode",
-            "type": "String",
-            "value": "RSSMRAURTMLARSNL"
+            "Key": "payerPersonalIdentificationCode",
+            "Type": "String",
+            "Value": "RSSMRAURTMLARSNL"
         },
         payerFirstName: {
-            "key": "payerFirstName",
-            "value": "John",
-            "type": "String"
+            "Key": "payerFirstName",
+            "Value": "John",
+            "Type": "String"
         },
         payerLastName: {
-            "key": "payerLastName",
-            "value": "Doe",
-            "type": "String"
+            "Key": "payerLastName",
+            "Value": "Doe",
+            "Type": "String"
         },
         payerBirthDate: {
-            "key": "payerBirthDate",
-            "value": "1990-01-01",
-            "type": "Date"
+            "Key": "payerBirthDate",
+            "Value": "1990-01-01",
+            "Type": "Date"
         },
         partnerUserID: {
-            "key": "partnerUserID",
-            "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
-            "type": "String"
+            "Key": "partnerUserID",
+            "Value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+            "Type": "String"
         }
     }
 
     $scope.aircashPayment = {
         checkPlayer: {
             requestExample: {
-                parameters: $scope.checkPlayerParameters,
-                signature: "HrlYnqqr...Cgs = "
+                Parameters: $scope.checkPlayerParameters,
+                Signature: "HrlYnqqr...Cgs = "
             },
             responseExample: {
-                isPlayer: true,
-                error: null,
-                parameters: [
+                IsPlayer: true,
+                Error: null,
+                Parameters: [
                     {
-                        "key": "partnerUserID",
-                        "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
-                        "type": "String"
+                        "Key": "partnerUserID",
+                        "Value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                        "Type": "String"
                     }
                 ]
             },
             errorResponseExample: {
-                isPlayer: false,
-                error: {
-                    errorCode: 500,
-                    errorMessage: "Unable to find user account"
+                IsPlayer: false,
+                Error: {
+                    ErrorCode: 500,
+                    ErrorMessage: "Unable to find user account"
                 },
-                parameters: null
+                Parameters: null
             }
         },
         createAndConfirmPayment: {
             requestExample: {
-                transactionID: "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
-                amount: 123.45,
-                parameters: $scope.createAndConfirmParameters,
-                signature: "Gng+D6+3...P/4="
+                TransactionID: "c1cf13b4-52ce-4b2f-9f9b-9d31cc1f800a",
+                Amount: 123.45,
+                Parameters: $scope.createAndConfirmParameters,
+                Signature: "Gng+D6+3...P/4="
             },
             responseExample: {
-                success: true,
-                partnerTransactionID: "7efb6b2b-3a5d-4871-8304-29532797e0ab",
-                parameters: [{
-                    key: "partnerUserID",
-                    value: "40ecee36-da23-48be-bf89-2d641d92b3ca",
-                    type: "string"
+                Success: true,
+                PartnerTransactionID: "7efb6b2b-3a5d-4871-8304-29532797e0ab",
+                Parameters: [{
+                    Key: "partnerUserID",
+                    Value: "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                    Type: "string"
                 }]
             },
             errorResponseExample: {
-                success: false,
-                error: {
-                    errorCode: 500,
-                    errorMessage: "Unable to find user account"
+                Success: false,
+                Error: {
+                    ErrorCode: 500,
+                    ErrorMessage: "Unable to find user account"
                 },
-                parameters: null
+                Parameters: null
             }
         }
     };
 
     $scope.transactionAlreadyProcessed = {
         successExample: {
-            "success": true,
-            "partnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
-            "parameters": [
+            "Success": true,
+            "PartnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
+            "Parameters": [
                 {
-                    "key": "partnerUserID",
-                    "value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
-                    "type": "string"
+                    "Key": "partnerUserID",
+                    "Value": "40ecee36-da23-48be-bf89-2d641d92b3ca",
+                    "Type": "string"
                 }
             ]
         },
         errorExample: {
-            "success": false,
-            "partnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
-            "error": {
-                "errorCode": 501,
-                "errorMessage": "Transaction already processed"
+            "Success": false,
+            "PartnerTransactionID": "7efb6b2b-3a5d-4871-8304-29532797e0ab",
+            "Error": {
+                "ErrorCode": 501,
+                "ErrorMessage": "Transaction already processed"
             },
-            "parameters": null
+            "Parameters": null
         }
-
     }
     $scope.checkPlayerResponseCheckbox = {};
     $scope.responseGenerated = false;
@@ -595,9 +594,9 @@ acPaymentModule.controller("acPaymentCtrl", ['$scope', '$localStorage', '$state'
         if ($scope.checkPlayerResponseCheckbox.phoneNumber) $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.payerPhoneNumber);
         if ($scope.checkPlayerResponseCheckbox.personalIdentificationCode) $scope.aircashPayment.checkPlayer.responseParameters.push($scope.responseParametersExample.personalIdentificationCode);
         $scope.aircashPayment.checkPlayer.responseExample = {
-            isPlayer: true,
-            error: null,
-            parameters: $scope.aircashPayment.checkPlayer.responseParameters
+            IsPlayer: true,
+            Error: null,
+            Parameters: $scope.aircashPayment.checkPlayer.responseParameters
         };
         $timeout(function () {
             $scope.text =

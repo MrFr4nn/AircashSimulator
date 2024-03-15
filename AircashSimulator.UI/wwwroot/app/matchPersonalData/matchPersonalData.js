@@ -29,11 +29,13 @@ matchPersonalDataModule.service("matchPersonalDataService", ['$http', '$q', 'han
 ]);
 
 matchPersonalDataModule.controller("matchPersonalDataCtrl",
-    ['$scope', '$state', 'matchPersonalDataService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
-        function ($scope, $state, matchPersonalDataService, $filter, $http, JwtParser, $uibModal, $rootScope) {
-
+    ['$scope', '$state', 'matchPersonalDataService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage',
+        function ($scope, $state, matchPersonalDataService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage) {
+            $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
+            $scope.partnerIds = JSON.parse($scope.decodedToken.partnerIdsDTO);
 
             $scope.matchPersonalDataModel = {
+                partnerId: $scope.partnerIds.MatchPersonalDataDefault,
                 firstNameAircashUser: "",
                 lastNameAircashUser: "",
                 birthDateAircashUser: new Date(""),
@@ -45,8 +47,31 @@ matchPersonalDataModule.controller("matchPersonalDataCtrl",
             $scope.matchPersonalDataServiceBusy = false;
             $scope.matchPersonalDataServiceResponse = false;
 
+            $scope.select = {};
+            $scope.select.MatchDataOption = 1;
+
+            $scope.changePartnerId = function () {
+                if ($scope.select.MatchDataOption == 2) {
+                    $scope.matchPersonalDataModel.partnerId = $scope.partnerIds.MatchPersonalDataDateOnly;
+                } else if ($scope.select.MatchDataOption == 1) {
+                    $scope.matchPersonalDataModel.partnerId = $scope.partnerIds.MatchPersonalDataDefault;
+                }
+                $rootScope.showGritter("", "PartnerId changed");
+            }
+
+            $scope.changeInputPartnerId = function () {
+                if ($scope.matchPersonalDataModel.partnerId == $scope.partnerIds.MatchPersonalDataDateOnly) {
+                    $scope.select.MatchDataOption = 2;
+                } else if ($scope.matchPersonalDataModel.partnerId == $scope.partnerIds.MatchPersonalDataDefault) {
+                    $scope.select.MatchDataOption = 1;
+                } else {
+                    $scope.select.MatchDataOption = 3;
+                }
+            }
+
             $scope.matchPersonalData = function () {
                 $scope.matchPersonalDataRequest = {
+                    partnerId: $scope.matchPersonalDataModel.partnerId,
                     aircashUser: {
                         firstName: $scope.matchPersonalDataModel.firstNameAircashUser,
                         lastName: $scope.matchPersonalDataModel.lastNameAircashUser,
@@ -62,11 +87,11 @@ matchPersonalDataModule.controller("matchPersonalDataCtrl",
                 matchPersonalDataService.matchPersonalData($scope.matchPersonalDataRequest)
                     .then(function (response) {
                         if (response) {
-                            $scope.matchPersonalDataRequestDateTimeUTC = response.requestDateTimeUTC;
-                            $scope.matchPersonalDataResponseDateTimeUTC = response.responseDateTimeUTC;
-                            $scope.matchPersonalDataSequence = response.sequence;
-                            $scope.matchPersonalDataResponse = JSON.stringify(response.serviceResponse, null, 4);
-                            $scope.matchPersonalDataRequest = JSON.stringify(response.serviceRequest, null, 4);
+                            $scope.matchPersonalDataRequestDateTimeUTC = response.RequestDateTimeUTC;
+                            $scope.matchPersonalDataResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                            $scope.matchPersonalDataSequence = response.Sequence;
+                            $scope.matchPersonalDataResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                            $scope.matchPersonalDataRequest = JSON.stringify(response.ServiceRequest, null, 4);
                         }
                         $scope.matchPersonalDataServiceBusy = false;
                         $scope.matchPersonalDataServiceResponse = true;

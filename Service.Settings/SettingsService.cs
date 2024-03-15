@@ -82,9 +82,13 @@ namespace Service.Settings
         public Guid SalesPartnerId { get { return GetSetting("SalesPartnerId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid UnableToCancelPayoutTransactionId { get { return GetSetting("UnableToCancelPayoutTransactionId", Guid.Empty, throwExceptionIfMissing: true); } }
         public Guid TransactionAlreadyCanceledId { get { return GetSetting("TransactionAlreadyCanceledId", Guid.Empty, throwExceptionIfMissing: true); } }
+        public Guid AcPayCashRegisterId { get { return GetSetting("AcPayCashRegisterId", Guid.Empty , throwExceptionIfMissing: true); } }
+        public Guid MatchPersonalDataDefault { get { return GetSetting("MatchPersonalDataDefault", Guid.Empty , throwExceptionIfMissing: true); } }
+        public Guid MatchPersonalDataDateOnly { get { return GetSetting("MatchPersonalDataDateOnly", Guid.Empty , throwExceptionIfMissing: true); } }
+        public Dictionary<string, Guid> RecourcesGenerateAbonPartnerIds { get { return GetSetting("RecourcesGenerateAbonPartnerIds", new Dictionary<string, Guid>() , throwExceptionIfMissing: true); } }
         public string TestAdminPrivateKeyPath { get { return GetSetting("TestAdminPrivateKeyPath", string.Empty, throwExceptionIfMissing: true); } }
         public string TestAdminPrivateKeyPass { get { return GetSetting("TestAdminPrivateKeyPass", string.Empty, throwExceptionIfMissing: true); } }
-
+      
         public SettingsService(AircashSimulatorContext aircashSimulatorContext, IMemoryCache memoryCache)
         {
             AircashSimulatorContext = aircashSimulatorContext;
@@ -127,6 +131,8 @@ namespace Service.Settings
                 return (T)Convert.ChangeType(JsonConvert.DeserializeObject<List<int>>(strValue), type);
             else if (type == typeof(Dictionary<int, string>))
                 return (T)Convert.ChangeType(JsonConvert.DeserializeObject<Dictionary<int, string>>(strValue), type);
+            else if (type == typeof(Dictionary<string, Guid>))
+                return (T)Convert.ChangeType(JsonConvert.DeserializeObject<Dictionary<string, Guid>>(strValue), type);
             else if (type == typeof(HashSet<string>))
                 return (T)Convert.ChangeType(new HashSet<string>(strValue.Split(new char[] { ';', ',' }, StringSplitOptions.RemoveEmptyEntries)), type);
             else if (type == typeof(HashSet<int>))

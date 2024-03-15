@@ -353,6 +353,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.initiateModelSelected = {};
     $scope.initiateModel = {};
+    $scope.initate = {};
     $scope.initiateModelSelected.data = $scope.initiateModels[0];
 
     $scope.transactionModel = {};
@@ -369,27 +370,35 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.config.useMatchPersonalData = false;
         $scope.initiateModel.firstName = "";
         $scope.initiateModel.lastName = "";
+        if ($scope.initiateModelSelected.data.payType == 0 && $scope.initiateModelSelected.data.payMethod == 2) {
+            $scope.initate.sequenceExample = "Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=2&PayType=0&SuccessUrl=";
+        } else if ($scope.initiateModelSelected.data.payType == 0 && $scope.initiateModelSelected.data.payMethod == 0) {
+            $scope.initate.sequenceExample = "Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=0&PayType=0&SuccessUrl=";
+        } else {
+            $scope.initate.sequenceExample = "Amount=100&CancelUrl=&CurrencyId=978&DeclineUrl=&Locale=en-US&NotificationUrl=https://aircash.eu&OriginUrl=&PartnerId=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994766&PartnerUserId=574f32a7-4ecb-48b2-9723-ac660b9c835d&PayMethod=10&PayType=1&SuccessUrl=";
+        }
     };
 
-    $scope.setInititateModel();
 
     $scope.useMatchPersonalDataChanged = function () {
-        if ($scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerId) {
-            $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.cancelModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $scope.transactionModelV3.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
-            $rootScope.showGritter("", "PartnerId changed to PartnerId that uses match personal data");
-        } else if (!$scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData) {
-            $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.cancelModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $scope.transactionModelV3.partnerId = $scope.partnerIds.AircashFramePartnerId;
-            $rootScope.showGritter("", "PartnerId changed to PartnerId that dosen't uses match personal data");
+        if ($scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData != $scope.partnerIds.AircashFramePartnerId) {
+            if ($scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerId) {
+                $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.cancelModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $scope.transactionModelV3.partnerId = $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData;
+                $rootScope.showGritter("", "PartnerId changed to PartnerId that uses match personal data");
+            } else if (!$scope.config.useMatchPersonalData && $scope.initiateModel.partnerId == $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData) {
+                $scope.initiateModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.confirmModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.cancelModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.transactionModel.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.transactionModelV2.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $scope.transactionModelV3.partnerId = $scope.partnerIds.AircashFramePartnerId;
+                $rootScope.showGritter("", "PartnerId changed to PartnerId that dosen't uses match personal data");
+            }
         }
     }
 
@@ -458,21 +467,22 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.initiateRedirectCheckout($scope.initiateModel, matchParameters)
             .then(function (response) {
                 if (response) {
-                    $scope.InitiateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.InitiateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceInitiate = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.InitiateServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    $scope.InitiateServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.InitiateServiceResponseObject = response.serviceResponse;
+                    console.log(response);
+                    $scope.InitiateRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.InitiateResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceInitiate = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.InitiateServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    $scope.InitiateServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.InitiateServiceResponseObject = response.ServiceResponse;
                     $scope.showButtonCopyUrl = false;
-                    if ($scope.InitiateServiceResponseObject.url != undefined) {
+                    if ($scope.InitiateServiceResponseObject.Url != undefined) {
                         $scope.showButtonCopyUrl = true;
                     }
 
-                    //$scope.getRedirectModal(response.serviceResponse.transactionId);
+                    //$scope.getRedirectModal(response.ServiceResponse.TransactionId);
                     /*new AircashFrame.WindowCheckout({
-                        transactionId: response.serviceResponse.transactionId,
+                        transactionId: response.ServiceResponse.TransactionId,
                         onSuccess: $scope.onSuccess,
                         onDecline: $scope.onDecline,
                         onCancel: $scope.onCancel,
@@ -512,13 +522,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.initiateSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorInitiateRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorInitiateResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorInitiateSequence = response.sequence;
-                    $scope.errorInitiateRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorInitiateResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorInitiateRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorInitiateRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorInitiateResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorInitiateSequence = response.Sequence;
+                    $scope.errorInitiateRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorInitiateResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorInitiateRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentInitiateErrorCode = errCode;
                 $scope.errorInitiateResponded = true;
@@ -557,15 +567,15 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.transactionStatus($scope.transactionModel)
             .then(function (response) {
                 if (response) {
-                    $scope.StatusRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.StatusResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceStatus = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.StatusServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.signature) {
-                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    $scope.StatusRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.StatusResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceStatus = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.StatusServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.Signature) {
+                        response.ServiceResponse.Signature = response.ServiceResponse.Signature.substring(0, 10) + "...";
                     }
-                    $scope.StatusServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.StatusServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 $scope.statusBusy = false;
                 $scope.statusResponded = true;
@@ -596,17 +606,17 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.transactionStatusV2($scope.transactionModelV2)
             .then(function (response) {
                 if (response) {
-                    $scope.StatusV2RequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.StatusV2ResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceStatusV2 = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.StatusV2ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.responseObject && response.serviceResponse.responseObject.signature) {
-                        response.serviceResponse.responseObject.signature = response.serviceResponse.responseObject.signature.substring(0, 10) + "...";
-                        $scope.StatusV2ServiceResponse = JSON.stringify(response.serviceResponse.responseObject, null, 4);
-                        $scope.StatusV2ServiceResponseSequence = response.serviceResponse.responseSequence;
+                    $scope.StatusV2RequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.StatusV2ResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceStatusV2 = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.StatusV2ServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.ResponseObject && response.ServiceResponse.ResponseObject.Signature) {
+                        response.ServiceResponse.ResponseObject.Signature = response.ServiceResponse.ResponseObject.Signature.substring(0, 10) + "...";
+                        $scope.StatusV2ServiceResponse = JSON.stringify(response.ServiceResponse.ResponseObject, null, 4);
+                        $scope.StatusV2ServiceResponseSequence = response.ServiceResponse.ResponseSequence;
                     } else {
-                        $scope.StatusV2ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);;
+                        $scope.StatusV2ServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);;
                     }
 
                 }
@@ -643,17 +653,17 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.transactionStatusV3($scope.transactionModelV3)
             .then(function (response) {
                 if (response) {
-                    $scope.StatusV3RequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.StatusV3ResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceStatusV3 = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.StatusV3ServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.responseObject && response.serviceResponse.responseObject.signature) {
-                        response.serviceResponse.responseObject.signature = response.serviceResponse.responseObject.signature.substring(0, 10) + "...";
-                        $scope.StatusV3ServiceResponse = JSON.stringify(response.serviceResponse.responseObject, null, 4);
-                        $scope.StatusV3ServiceResponseSequence = response.serviceResponse.responseSequence;
+                    $scope.StatusV3RequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.StatusV3ResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceStatusV3 = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.StatusV3ServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.ResponseObject && response.ServiceResponse.ResponseObject.Signature) {
+                        response.ServiceResponse.ResponseObject.Signature = response.ServiceResponse.ResponseObject.Signature.substring(0, 10) + "...";
+                        $scope.StatusV3ServiceResponse = JSON.stringify(response.ServiceResponse.ResponseObject, null, 4);
+                        $scope.StatusV3ServiceResponseSequence = response.ServiceResponse.ResponseSequence;
                     } else {
-                        $scope.StatusV3ServiceResponse = JSON.stringify(response.serviceResponse, null, 4);;
+                        $scope.StatusV3ServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);;
                     }
 
                 }
@@ -691,13 +701,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.transactionStatusSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorTransactionStatusRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorTransactionStatusResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorTransactionStatusSequence = response.sequence;
-                    $scope.errorTransactionStatusRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorTransactionStatusResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorTransactionStatusRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorTransactionStatusRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorTransactionStatusResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorTransactionStatusSequence = response.Sequence;
+                    $scope.errorTransactionStatusRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorTransactionStatusResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorTransactionStatusRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentTransactionStatusErrorCode = errCode;
                 $scope.errorTransactionStatusResponded = true;
@@ -719,13 +729,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.transactionStatusV2SimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorTransactionStatusV2RequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorTransactionStatusV2ResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorTransactionStatusV2Sequence = response.sequence;
-                    $scope.errorTransactionStatusV2RequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorTransactionStatusV2Response = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorTransactionStatusV2Request = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorTransactionStatusV2RequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorTransactionStatusV2ResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorTransactionStatusV2Sequence = response.Sequence;
+                    $scope.errorTransactionStatusV2RequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorTransactionStatusV2Response = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorTransactionStatusV2Request = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentTransactionStatusV2ErrorCode = errCode;
                 $scope.errorTransactionStatusV2Responded = true;
@@ -745,15 +755,15 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.confirmPayout($scope.confirmModel)
             .then(function (response) {
                 if (response) {
-                    $scope.ConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.ConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceConfirm = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.ConfirmServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.signature) {
-                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    $scope.ConfirmRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.ConfirmResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceConfirm = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.ConfirmServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.Signature) {
+                        response.ServiceResponse.Signature = response.ServiceResponse.Signature.substring(0, 10) + "...";
                     }
-                    $scope.ConfirmServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.ConfirmServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 $scope.confirmBusy = false;
                 $scope.confirmResponded = true;
@@ -789,13 +799,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.confirmSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorConfirmRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorConfirmResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorConfirmSequence = response.sequence;
-                    $scope.errorConfirmRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorConfirmResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorConfirmRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorConfirmRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorConfirmResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorConfirmSequence = response.Sequence;
+                    $scope.errorConfirmRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorConfirmResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorConfirmRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentConfirmErrorCode = errCode;
                 $scope.errorConfirmResponded = true;
@@ -815,15 +825,15 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.cancelPayout($scope.cancelModel)
             .then(function (response) {
                 if (response) {
-                    $scope.CancelRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.CancelResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.sequenceCancel = response.sequence;
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.CancelServiceRequest = JSON.stringify(response.serviceRequest, null, 4);
-                    if (response.serviceResponse.signature) {
-                        response.serviceResponse.signature = response.serviceResponse.signature.substring(0, 10) + "...";
+                    $scope.CancelRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.CancelResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.sequenceCancel = response.Sequence;
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.CancelServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
+                    if (response.ServiceResponse.Signature) {
+                        response.ServiceResponse.Signature = response.ServiceResponse.Signature.substring(0, 10) + "...";
                     }
-                    $scope.CancelServiceResponse = JSON.stringify(response.serviceResponse, null, 4);
+                    $scope.CancelServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                 }
                 $scope.cancelBusy = false;
                 $scope.cancelResponded = true;
@@ -859,13 +869,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         acFrameV2Service.cancelPayoutSimulateError(errCode)
             .then(function (response) {
                 if (response) {
-                    $scope.errorCancelRequestDateTimeUTC = response.requestDateTimeUTC;
-                    $scope.errorCancelResponseDateTimeUTC = response.responseDateTimeUTC;
-                    $scope.errorCancelSequence = response.sequence;
-                    $scope.errorCancelRequestCopy = JSON.stringify(response.serviceRequest, null, 4);
-                    response.serviceRequest.signature = response.serviceRequest.signature.substring(0, 10) + "...";
-                    $scope.errorCancelResponse = JSON.stringify(response.serviceResponse, null, 4);
-                    $scope.errorCancelRequest = JSON.stringify(response.serviceRequest, null, 4);
+                    $scope.errorCancelRequestDateTimeUTC = response.RequestDateTimeUTC;
+                    $scope.errorCancelResponseDateTimeUTC = response.ResponseDateTimeUTC;
+                    $scope.errorCancelSequence = response.Sequence;
+                    $scope.errorCancelRequestCopy = JSON.stringify(response.ServiceRequest, null, 4);
+                    response.ServiceRequest.Signature = response.ServiceRequest.Signature.substring(0, 10) + "...";
+                    $scope.errorCancelResponse = JSON.stringify(response.ServiceResponse, null, 4);
+                    $scope.errorCancelRequest = JSON.stringify(response.ServiceRequest, null, 4);
                 }
                 $scope.currentCancelErrorCode = errCode;
                 $scope.errorCancelResponded = true;
@@ -958,90 +968,90 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         Initiate: {
             error1: {
                 request: {
-                    "partnerId": "c02142bb-b5d4-4c40-9c85-ca90bd0f1fba",
-                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "partnerTransactionId": "622e7787-afa8-4ae0-adad-d356e8f91164",
-                    "amount": 10,
-                    "currencyId": 978,
-                    "payType": 1,
-                    "payMethod": 10,
-                    "notificationUrl": "https://aircash.eu",
-                    "successUrl": null,
-                    "declineUrl": null,
-                    "cancelUrl": null,
-                    "originUrl": "https://aircash.eu",
-                    "locale": "en-HR",
-                    "signature": "elhPTBJ/hH..."
+                    "PartnerId": "c02142bb-b5d4-4c40-9c85-ca90bd0f1fba",
+                    "PartnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "PartnerTransactionId": "622e7787-afa8-4ae0-adad-d356e8f91164",
+                    "Amount": 10,
+                    "CurrencyId": 978,
+                    "PayType": 1,
+                    "PayMethod": 10,
+                    "NotificationUrl": "https://aircash.eu",
+                    "SuccessUrl": null,
+                    "DeclineUrl": null,
+                    "CancelUrl": null,
+                    "OriginUrl": "https://aircash.eu",
+                    "Locale": "en-HR",
+                    "Signature": "elhPTBJ/hH..."
                 },
                 response: {
-                    "code": 1,
-                    "message": "Invalid signature or partner id."
+                    "Code": 1,
+                    "Message": "Invalid signature or partner id."
                 }
             },
             error3: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "partnerTransactionId": "aa1ccf34-cd9c-4f31-84c6-10e9130ad231",
-                    "amount": 10,
-                    "currencyId": 978,
-                    "payType": 1,
-                    "payMethod": 10,
-                    "notificationUrl": "https://aircash.eu",
-                    "successUrl": null,
-                    "declineUrl": null,
-                    "cancelUrl": null,
-                    "originUrl": "https://aircash.eu",
-                    "locale": "",
-                    "signature": "Qlh2vKRfvQ..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "PartnerTransactionId": "aa1ccf34-cd9c-4f31-84c6-10e9130ad231",
+                    "Amount": 10,
+                    "CurrencyId": 978,
+                    "PayType": 1,
+                    "PayMethod": 10,
+                    "NotificationUrl": "https://aircash.eu",
+                    "SuccessUrl": null,
+                    "DeclineUrl": null,
+                    "CancelUrl": null,
+                    "OriginUrl": "https://aircash.eu",
+                    "Locale": "",
+                    "Signature": "Qlh2vKRfvQ..."
                 },
                 response: {
-                    "code": 3,
-                    "message": "Locale cannot be empty."
+                    "Code": 3,
+                    "Message": "Locale cannot be empty."
                 }
             },
             error1004: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "partnerTransactionId": "c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8",
-                    "amount": 10,
-                    "currencyId": 978,
-                    "payType": 1,
-                    "payMethod": 10,
-                    "notificationUrl": "https://aircash.eu",
-                    "successUrl": null,
-                    "declineUrl": null,
-                    "cancelUrl": null,
-                    "originUrl": "https://aircash.eu",
-                    "locale": "en-HR",
-                    "signature": "MnfnyRyBEF..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "PartnerTransactionId": "c456eee8-ccaa-4c10-b6e9-7f8c9ca3d2d8",
+                    "Amount": 10,
+                    "CurrencyId": 978,
+                    "PayType": 1,
+                    "PayMethod": 10,
+                    "NotificationUrl": "https://aircash.eu",
+                    "SuccessUrl": null,
+                    "DeclineUrl": null,
+                    "CancelUrl": null,
+                    "OriginUrl": "https://aircash.eu",
+                    "Locale": "en-HR",
+                    "Signature": "MnfnyRyBEF..."
                 },
                 response: {
-                    "code": 1004,
-                    "message": "Partner transaction already exists."
+                    "Code": 1004,
+                    "Message": "Partner transaction already exists."
                 }
             },
             error3000: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
-                    "partnerTransactionId": "21f2098d-471f-4d5c-a68b-a855dc52d5b4",
-                    "amount": 10,
-                    "currencyId": 191,
-                    "payType": 1,
-                    "payMethod": 10,
-                    "notificationUrl": "https://aircash.eu",
-                    "successUrl": null,
-                    "declineUrl": null,
-                    "cancelUrl": null,
-                    "originUrl": "https://aircash.eu",
-                    "locale": "en-HR",
-                    "signature": "dZiRP20OMA..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerUserId": "a3876902-b3e4-4557-aace-a57a506e38ca",
+                    "PartnerTransactionId": "21f2098d-471f-4d5c-a68b-a855dc52d5b4",
+                    "Amount": 10,
+                    "CurrencyId": 191,
+                    "PayType": 1,
+                    "PayMethod": 10,
+                    "NotificationUrl": "https://aircash.eu",
+                    "SuccessUrl": null,
+                    "DeclineUrl": null,
+                    "CancelUrl": null,
+                    "OriginUrl": "https://aircash.eu",
+                    "Locale": "en-HR",
+                    "Signature": "dZiRP20OMA..."
                 },
                 response: {
-                    "code": 3000,
-                    "message": "Invalid currency."
+                    "Code": 3000,
+                    "Message": "Invalid currency."
                 }
             }
 
@@ -1049,13 +1059,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         TransactionStatus: {
             error1: {
                 request: {
-                    "partnerId": "fbea7431-e796-4472-8689-afddc013e723",
-                    "partnerTransactionId": "fd9d8fce-6548-4cb1-839b-57a599984b8f",
-                    "signature": "KLzsXlvjAW..."
+                    "PartnerId": "fbea7431-e796-4472-8689-afddc013e723",
+                    "PartnerTransactionId": "fd9d8fce-6548-4cb1-839b-57a599984b8f",
+                    "Signature": "KLzsXlvjAW..."
                 },
                 response: {
-                    "code": 1,
-                    "message": "Invalid signature or partner id."
+                    "Code": 1,
+                    "Message": "Invalid signature or partner id."
                 }
             },
             error3: {
@@ -1064,37 +1074,37 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             },
             error1002: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "c6935dce-1e91-434f-93b6-bbaa2a270b29",
-                    "signature": "Se0NO0yJaZ..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "c6935dce-1e91-434f-93b6-bbaa2a270b29",
+                    "Signature": "Se0NO0yJaZ..."
                 },
                 response: {
-                    "code": 1002,
-                    "message": "Transaction doesn't exist."
+                    "Code": 1002,
+                    "Message": "Transaction doesn't exist."
                 }
             },
             error1003: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "fad535bd-c413-4434-851f-fb2ebce7da06",
-                    "signature": "Ba+zwZ9OxE..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "fad535bd-c413-4434-851f-fb2ebce7da06",
+                    "Signature": "Ba+zwZ9OxE..."
                 },
                 response: {
-                    "code": 1003,
-                    "message": "Transaction not processed."
+                    "Code": 1003,
+                    "Message": "Transaction not processed."
                 }
             }
         },
         TransactionStatusV2: {
             error1: {
                 request: {
-                    "partnerId": "fbea7431-e796-4472-8689-afddc013e723",
-                    "partnerTransactionId": "fd9d8fce-6548-4cb1-839b-57a599984b8f",
-                    "signature": "KLzsXlvjAW..."
+                    "PartnerId": "fbea7431-e796-4472-8689-afddc013e723",
+                    "PartnerTransactionId": "fd9d8fce-6548-4cb1-839b-57a599984b8f",
+                    "Signature": "KLzsXlvjAW..."
                 },
                 response: {
-                    "code": 1,
-                    "message": "Invalid signature or partner id."
+                    "Code": 1,
+                    "Message": "Invalid signature or partner id."
                 }
             },
             error3: {
@@ -1103,115 +1113,115 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
             },
             error1002: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "c6935dce-1e91-434f-93b6-bbaa2a270b29",
-                    "signature": "Se0NO0yJaZ..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "c6935dce-1e91-434f-93b6-bbaa2a270b29",
+                    "Signature": "Se0NO0yJaZ..."
                 },
                 response: {
-                    "code": 1002,
-                    "message": "Transaction doesn't exist."
+                    "Code": 1002,
+                    "Message": "Transaction doesn't exist."
                 }
             },
             error1003: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "fad535bd-c413-4434-851f-fb2ebce7da06",
-                    "signature": "Ba+zwZ9OxE..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "fad535bd-c413-4434-851f-fb2ebce7da06",
+                    "Signature": "Ba+zwZ9OxE..."
                 },
                 response: {
-                    "code": 1003,
-                    "message": "Transaction not processed."
+                    "Code": 1003,
+                    "Message": "Transaction not processed."
                 }
             }
         },
         Confirm: {
             error1: {
                 request: {
-                    "partnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
-                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
-                    "amount": 10,
-                    "currencyId": 978,
-                    "signature": "os0+rv9Mwp..."
+                    "PartnerId": "8db69a48-7d61-48e7-9be8-3160549c7f17",
+                    "PartnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "Amount": 10,
+                    "CurrencyId": 978,
+                    "Signature": "os0+rv9Mwp..."
                 },
                 response: {
-                    "code": 1,
-                    "message": "Invalid signature or partner id."
+                    "Code": 1,
+                    "Message": "Invalid signature or partner id."
                 }
             },
             error1000: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "60526f94-9d61-482f-b577-8c92a551da5d",
-                    "amount": 10,
-                    "currencyId": 978,
-                    "signature": "Nv62frlxIJ..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "60526f94-9d61-482f-b577-8c92a551da5d",
+                    "Amount": 10,
+                    "CurrencyId": 978,
+                    "Signature": "Nv62frlxIJ..."
                 },
                 response: {
-                    "code": 1000,
-                    "message": "Transaction doesn't exist or it is already processed."
+                    "Code": 1000,
+                    "Message": "Transaction doesn't exist or it is already processed."
                 }
             },
             error1005: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "6f68fa9f-065e-43a0-b8d2-4760f94f9ea3",
-                    "amount": 10,
-                    "currencyId": 978,
-                    "signature": "uFLUm25tf1..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "6f68fa9f-065e-43a0-b8d2-4760f94f9ea3",
+                    "Amount": 10,
+                    "CurrencyId": 978,
+                    "Signature": "uFLUm25tf1..."
                 },
                 response: {
-                    "code": 1005,
-                    "message": "Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed."
+                    "Code": 1005,
+                    "Message": "Transaction confirmation not allowed. Wrong PayType/PayMethod or status not allowed."
                 }
             },
             error3000: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
-                    "amount": 10,
-                    "currencyId": 977,
-                    "signature": "IOWErWP7eP..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "Amount": 10,
+                    "CurrencyId": 977,
+                    "Signature": "IOWErWP7eP..."
                 },
                 response: {
-                    "code": 3000,
-                    "message": "Invalid currency."
+                    "Code": 3000,
+                    "Message": "Invalid currency."
                 }
             },
             error3016: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
-                    "amount": 12,
-                    "currencyId": 978,
-                    "signature": "DavAirjGS6..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "0fea9fbc-939f-4010-88c2-44a6ef0ac9f4",
+                    "Amount": 12,
+                    "CurrencyId": 978,
+                    "Signature": "DavAirjGS6..."
                 },
                 response: {
-                    "code": 3016,
-                    "message": "Amount mismatch."
+                    "Code": 3016,
+                    "Message": "Amount mismatch."
                 }
             }
         },
         CancelPayout: {
             error1: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "aa17d623-e8c0-4e40-8a5a-bba7e0852455",
-                    "signature": "lpF2sp9..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "aa17d623-e8c0-4e40-8a5a-bba7e0852455",
+                    "Signature": "lpF2sp9..."
                 },
                 response: {
-                    "code": 1,
-                    "message": "Invalid signature or partner id."
+                    "Code": 1,
+                    "Message": "Invalid signature or partner id."
                 }
             },
             error1000: {
                 request: {
-                    "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                    "partnerTransactionId": "60526f94-9d61-482f-b577-8c92a551da5d",
-                    "signature": "Nv62frlxIJ..."
+                    "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                    "PartnerTransactionId": "60526f94-9d61-482f-b577-8c92a551da5d",
+                    "Signature": "Nv62frlxIJ..."
                 },
                 response: {
-                    "code": 1000,
-                    "message": "Transaction doesn't exist or it is already processed."
+                    "Code": 1000,
+                    "Message": "Transaction doesn't exist or it is already processed."
                 }
             }
         }
@@ -1219,139 +1229,199 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.aircashFrameV2 = {
         initiate: {
-            requestExample: {
-                "customParameters": [
+            requestExamplePay: {
+                "CustomParameters": [
                     {
-                        "key": "PayerFirstName",
-                        "value": "John"
+                        "Key": "PayerFirstName",
+                        "Value": "John"
                     },
                     {
-                        "key": "PayerLastName",
-                        "value": "Doe"
+                        "Key": "PayerLastName",
+                        "Value": "Doe"
                     },
                     {
-                        "key": "PayerBirthDate",
-                        "value": "1990-01-01"
+                        "Key": "PayerBirthDate",
+                        "Value": "1990-01-01"
                     }
                 ],
-                partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                partnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
-                partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
-                amount: 100,
-                currencyId: 978,
-                payType: 0,
-                payMethod: 2,
-                notificationUrl: "https://aircash.eu",
-                successUrl: null,
-                declineUrl: null,
-                cancelUrl: null,
-                originUrl: null,
-                locale: "en-US",
-                signature: "tc5NZjj7hO..."
+                PartnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                PartnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                PartnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+                Amount: 100,
+                CurrencyId: 978,
+                PayType: 0,
+                PayMethod: 2,
+                NotificationUrl: "https://aircash.eu",
+                SuccessUrl: null,
+                DeclineUrl: null,
+                CancelUrl: null,
+                OriginUrl: null,
+                Locale: "en-US",
+                Signature: "tc5NZjj7hO..."
+            },
+            requestExampleAbon: {
+                "CustomParameters": [
+                    {
+                        "Key": "PayerFirstName",
+                        "Value": "John"
+                    },
+                    {
+                        "Key": "PayerLastName",
+                        "Value": "Doe"
+                    },
+                    {
+                        "Key": "PayerBirthDate",
+                        "Value": "1990-01-01"
+                    }
+                ],
+                PartnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                PartnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                PartnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+                Amount: 100,
+                CurrencyId: 978,
+                PayType: 0,
+                PayMethod: 0,
+                NotificationUrl: "https://aircash.eu",
+                SuccessUrl: null,
+                DeclineUrl: null,
+                CancelUrl: null,
+                OriginUrl: null,
+                Locale: "en-US",
+                Signature: "tc5NZjj7hO..."
+            },
+            requestExampleWithdrawal: {
+                "CustomParameters": [
+                    {
+                        "Key": "PayerFirstName",
+                        "Value": "John"
+                    },
+                    {
+                        "Key": "PayerLastName",
+                        "Value": "Doe"
+                    },
+                    {
+                        "Key": "PayerBirthDate",
+                        "Value": "1990-01-01"
+                    }
+                ],
+                PartnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                PartnerUserId: "574f32a7-4ecb-48b2-9723-ac660b9c835d",
+                PartnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+                Amount: 100,
+                CurrencyId: 978,
+                PayType: 1,
+                PayMethod: 10,
+                NotificationUrl: "https://aircash.eu",
+                SuccessUrl: null,
+                DeclineUrl: null,
+                CancelUrl: null,
+                OriginUrl: null,
+                Locale: "en-US",
+                Signature: "tc5NZjj7hO..."
             },
             responseExample: {
-                transactionId: "e22cd71a-276e-47e1-b7af-3d3a504e0ef9",
-                url: "https://stage-frame.aircash.eu/e22cd71a-276e-47e1-b7af-3d3a504e0ef9"
+                TransactionId: "e22cd71a-276e-47e1-b7af-3d3a504e0ef9",
+                Url: "https://stage-frame.aircash.eu/e22cd71a-276e-47e1-b7af-3d3a504e0ef9"
             },
             errorResponseExample: {
-                code: 1,
-                message: "Invalid ProviderId",
-                additionalData: null
+                Code: 1,
+                Message: "Invalid ProviderId",
+                AdditionalData: null
             }
         },
         transactionStatus: {
             requestExample: {
-                "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                "partnerTransactionId": "571fd959-fe70-412b-90d5-e6db6df953ea",
-                "signature": "JmdPLkrzTZ..."
+                "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                "PartnerTransactionId": "571fd959-fe70-412b-90d5-e6db6df953ea",
+                "Signature": "JmdPLkrzTZ..."
             },
             responseExample: {
-                "status": 2,
-                "amount": 10,
-                "currencyId": 978,
-                "aircashTransactionId": "11da2e60-f35e-43a9-be63-26cf34b12e3b",
-                "signature": "SsRvc7uHsL..."
+                "Status": 2,
+                "Amount": 10,
+                "CurrencyId": 978,
+                "AircashTransactionId": "11da2e60-f35e-43a9-be63-26cf34b12e3b",
+                "Signature": "SsRvc7uHsL..."
             },
             errorResponseExample: {
-                code: 1003,
-                message: "Transaction not processed",
-                additionalData: null
+                Code: 1003,
+                Message: "Transaction not processed",
+                AdditionalData: null
             }
         },
         transactionStatusV2: {
             requestExample: {
-                "partnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                "partnerTransactionId": "571fd959-fe70-412b-90d5-e6db6df953ea",
-                "signature": "JmdPLkrzTZ..."
+                "PartnerId": "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                "PartnerTransactionId": "571fd959-fe70-412b-90d5-e6db6df953ea",
+                "Signature": "JmdPLkrzTZ..."
             },
             responseExample: {
-                "status": 2,
-                "amount": 10,
-                "currencyId": 978,
-                "aircashTransactionId": "11da2e60-f35e-43a9-be63-26cf34b12e3b",
-                "parameters": [{
+                "Status": 2,
+                "Amount": 10,
+                "CurrencyId": 978,
+                "AircashTransactionId": "11da2e60-f35e-43a9-be63-26cf34b12e3b",
+                "Parameters": [{
                     Key: "AircashUserID",
                     Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
                 }],
-                "signature": "mGkC7OpmRf..."
+                "Signature": "mGkC7OpmRf..."
             },
             errorResponseExample: {
-                code: 1003,
-                message: "Transaction not processed",
-                additionalData: null
+                Code: 1003,
+                Message: "Transaction not processed",
+                AdditionalData: null
             }
         },
         transactionStatusV3: {
             responseExample:
             {
 
-                "status": 1,
-                "currencyId": 978,
-                "aircashTransactionId": "95ff5846-f10c-4870-bcf1-e5a0014d0e37",
-                "parameters": [{
+                "Status": 1,
+                "CurrencyId": 978,
+                "AircashTransactionId": "95ff5846-f10c-4870-bcf1-e5a0014d0e37",
+                "Parameters": [{
                     Key: "AircashUserID",
                     Value: "ccc1b67f-c871-45ff-9226-81b9e84d07a0"
                 }],
-                "events": [
+                "Events": [
                     {
-                        "dateTimeUTC": "2023-09-01T06:07:38",
-                        "description": "Frame is initiated by user.",
-                        "code": 100
+                        "DateTimeUTC": "2023-09-01T06:07:38",
+                        "Description": "Frame is initiated by user.",
+                        "Code": 100
                     },
                     {
-                        "dateTimeUTC": "2023-09-01T06:07:43",
-                        "description": "QR code is generated and displayed to user.",
-                        "code": 101
+                        "DateTimeUTC": "2023-09-01T06:07:43",
+                        "Description": "QR code is generated and displayed to user.",
+                        "Code": 101
                     },
                     {
-                        "dateTimeUTC": "2023-09-01T06:07:59",
-                        "description": "The user is not active with phone number: 385*******00",
-                        "code": 103
+                        "DateTimeUTC": "2023-09-01T06:07:59",
+                        "Description": "The user is not active with phone number: 385*******00",
+                        "Code": 103
                     }
                 ],
-                "signature": "Y7hXZ90VSu...",
+                "Signature": "Y7hXZ90VSu...",
             }
         },
         confirm: {
             requestExample: {
-                partnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
-                partnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
-                amount: 100,
-                currencyId: 978,
-                signature: "jBMpdollER..."
+                PartnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
+                PartnerTransactionId: "1a74bb41-36fe-4493-9ccf-30879b994766",
+                Amount: 100,
+                CurrencyId: 978,
+                Signature: "jBMpdollER..."
             },
             responseExample: {
-                aircashTransactionId: "b74854c8-db9d-48d7-985a-59f587637a75"
+                AircashTransactionId: "b74854c8-db9d-48d7-985a-59f587637a75"
             },
         },
         cancelPayout: {
             requestExample: {
-                partnerId: "5680e089-9e86-4105-b1a2-acd0cd77653c",
-                partnerTransactionId: "aa17d623-e8c0-4e40-8a5a-bba7e0852455",
-                signature: "lpF2sp9..."
+                PartnerId: "5680e089-9e86-4105-b1a2-acd0cd77653c",
+                PartnerTransactionId: "aa17d623-e8c0-4e40-8a5a-bba7e0852455",
+                Signature: "lpF2sp9..."
             },
             responseExample: {
-                aircashTransactionId: "4e32079c-4f2d-47e5-90a0-d0eb81c69670"
+                AircashTransactionId: "4e32079c-4f2d-47e5-90a0-d0eb81c69670"
             },
         }
     };
