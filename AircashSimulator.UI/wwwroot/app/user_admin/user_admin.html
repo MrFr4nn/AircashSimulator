@@ -53,6 +53,9 @@
                             <thead>
                                 <tr>
                                     <th>User</th>
+                                    <th>FirstName</th>
+                                    <th>LastName</th>
+                                    <th>DateOfBirth</th>
                                     <th>Email</th>
                                     <th>Partner</th>
                                     <th>Edit</th>
@@ -62,6 +65,9 @@
                             <tbody>
                                 <tr ng-repeat="u in users">
                                     <td>{{u.userName}}</td>
+                                    <td>{{u.firstName}}</td>
+                                    <td>{{u.lastName}}</td>
+                                    <td>{{u.birthDate}}</td>
                                     <td>{{u.email}}</td>
                                     <td>{{u.partner.name}}</td>
                                     <td style="cursor:pointer" ng-click="addEditUserModal(u)"><i class="fa fa-pen"></i></td>
