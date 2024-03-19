@@ -1,5 +1,27 @@
 ﻿<h1>Mastercard</h1>
 <hr/>
+<h4>ProcessCardPurchase</h4>
+<p>
+    This method processes a card purchase transaction submitted by a sales partner. It requires
+    detailed transaction information including partner ID, location ID, reference number,
+    transaction code, amount, and currency ISO code. The method verifies the integrity and
+    authenticity of the request, checks for the validity of the provided parameters, and processes
+    the card purchase if all validations pass.
+</p>
+<p>
+    The method ensures that each transaction is uniquely identified by its reference number and
+    can be linked back to the specific sales partner and location from where it originated. This
+    is crucial for maintaining a secure and traceable transaction record.
+</p>
+<p>
+    In case of errors or validation failures, the method returns appropriate error responses
+    indicating the nature of the problem. It is important for the calling system to handle these
+    responses accordingly to ensure smooth operation.
+</p>
+<p>
+    Successful transactions are confirmed with a response indicating success, and the details
+    of the transaction are logged and processed for settlement.
+</p>
 <div class="table-responsive">
     <table class="table  table-active col-md-6">
         <thead>
@@ -13,22 +35,22 @@
             <tr>
                 <td><b>Test</b></td>
                 <td>
-                    
+                    POST
                 </td>
-                <td></td>
+                <td>https://staging-api.aircash.eu/api/SalesPartnerV2/ProcessCardPurchase</td>
             </tr>
             <tr>
                 <td><b>Production</b></td>
                 <td>
-                    
+                    POST
                 </td>
-                <td></td>
+                <td>https://api.aircash.eu/api/SalesPartnerV2/ProcessCardPurchase</td>
             </tr>
         </tbody>
     </table>
 </div>
 <uib-tabset>
-    <uib-tab index="Mastercard-tab-0" heading="Request parameters" classes="nav-item">
+    <uib-tab index="ProcessCardPurchase-tab-0" heading="Request parameters" classes="nav-item">
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -41,79 +63,137 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>SerialNumber</b></td>
-                        <td>String</td>
-                        <td>Card identifier</td>
-                        <td>Yes</td>
+                        <td>PartnerID</td>
+                        <td>string</td>
+                        <td>Unique identifier for the partner</td>
+                        <td>YES</td>
                     </tr>
                     <tr>
-                        <td><b>EAN</b></td>
-                        <td>String</td>
-                        <td>
-                            ??
-                        </td>
-                        <td>Yes</td>
+                        <td>LocationID</td>
+                        <td>string</td>
+                        <td>Unique identifier for the location of the sale</td>
+                        <td>YES</td>
                     </tr>
                     <tr>
-                        <td><b>Amount</b></td>
-                        <td>Decimal</td>
-                        <td>
-                            ??
-                        </td>
-                        <td>Yes</td>
+                        <td>ReferenceNumber</td>
+                        <td>string</td>
+                        <td>Unique reference number for the transaction</td>
+                        <td>YES</td>
                     </tr>
                     <tr>
-                        <td><b>DateTimeUTC</b></td>
-                        <td>String</td>
-                        <td>Date and time of the card sale</td>
-                        <td>Yes</td>
+                        <td>Code</td>
+                        <td>string</td>
+                        <td>Scanned barcode (EAN) code</td>
+                        <td>YES</td>
                     </tr>
                     <tr>
-                        <td><b>PointOfSale</b></td>
-                        <td>String</td>
-                        <td>Location of the sale</td>
-                        <td>Yes</td>
+                        <td>Amount</td>
+                        <td>decimal</td>
+                        <td>Transaction amount</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>CurrencyIsoCode</td>
+                        <td>string</td>
+                        <td>Currency ISO code of the sale (e.g. EUR)</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>SoldAtUTC</td>
+                        <td>DateTime</td>
+                        <td>Date and time when the transaction was sold, in UTC</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td>Signature</td>
+                        <td>string</td>
+                        <td>Signature for verifying the transaction</td>
+                        <td>YES</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </uib-tab>
-    <uib-tab index="Mastercard-tab-1" heading="Response" classes="nav-item">
+    <uib-tab index="ProcessCardPurchase-tab-1" heading="Request example" classes="nav-item">
+        <jsonformatter data="mastercard.processCardPurchase.requestExample"></jsonformatter>
+    </uib-tab>
+    <uib-tab index="ProcessCardPurchase-tab-2" heading="200 OK response example" classes="nav-item">
+        In case of success Aircash system will respond with HTTP response 200 OK empty body.
+    </uib-tab>
+    <uib-tab index="ProcessCardPurchase-tab-3" heading="Error response messages" classes="nav-item">
         <div class="table-responsive">
             <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>Http response</th>
                         <th>Description</th>
-                        <th>Error Code</th> 
+                        <th>Error Code</th>
                         <th>Message</th>
+                        <th>Solution</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><b>200</b></td>
-                        <td>Sale notification successfully received</td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td rowspan="2"><b>400</b></td>
-                        <td rowspan="2">An invalid request was made. The response will contain an error code, message and optionally additionalData.</td>
-                        <td><b>4001</b></td>
-                        <td>The card has already been sold</td>
-                    </tr>
-                    <tr>
-                        <td><b>4002</b></td>
-                        <td>Serial number does not exist in the Aircash system</td>
-                    </tr>
-                    <tr>
-                        <td><b>500</b></td>
-                        <td>An unknown error occured</td>
+                        <td rowspan="9"><b>400</b></td>
+                        <td>Body/content is empty/not sent</td>
                         <td>-</td>
-                        <td>-</td>
+                        <td>Empty request payload.</td>
+                        <td>Fill out appropriate http body according to specification</td>
                     </tr>
+                    <tr>
+                        <td>Content is missing id of the partner</td>
+                        <td>-</td>
+                        <td>PartnerID is empty.</td>
+                        <td>Contact integration manager to obtain partner identification</td>
+                    </tr>
+                    <tr>
+                        <td>Missing locationId</td>
+                        <td>-</td>
+                        <td>LocationID is empty.</td>
+                        <td>Partner should define location id for each point of sale as this parameter is very useful in the support process.</td>
+                    </tr>
+                    <tr>
+                        <td>Missing unique reference of made sale</td>
+                        <td>-</td>
+                        <td>ReferenceNumber is empty.</td>
+                        <td>ReferenceNumber should be unique and non empty - represents a unique identifier of sale made by partner.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Ean code is missing.</td>
+                        <td>-</td>
+                        <td>Code is empty.</td>
+                        <td>Barcode (ean) code was not sent.</td>
+                    </tr>
+                    <tr>
+                        <td>Amount validation</td>
+                        <td>-</td>
+                        <td>Amount must be higher than 0.</td>
+                        <td>All amount values have to be higher than 0 since there is no refund mechanism.</td>
+                    </tr>
+                    <tr>
+                        <td>Currency must be defined for each sale</td>
+                        <td>-</td>
+                        <td>CurrencyIsoCode is empty.</td>
+                        <td>Currency (e.g. EUR) must be defined</td>
+                    </tr>
+                    <tr>
+                        <td>Code was already marked as sold with different reference number or partner id</td>
+                        <td>15</td>
+                        <td>Request payload missmatched with sold 128C code</td>
+                        <td>No action needed, this code is already marked as sold and cannot be used again with another sale transaction</td>
+                    </tr>
+                    <tr>
+                        <td>Code was not found</td>
+                        <td>16</td>
+                        <td>Requested 128C code not found</td>
+                        <td>Check the code that is being send to Aircash system</td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>
+    </uib-tab>
+    <uib-tab index="ProcessCardPurchase-tab-4" heading="Try it out" classes="nav-item" ng-if="false">
     </uib-tab>
 </uib-tabset>
