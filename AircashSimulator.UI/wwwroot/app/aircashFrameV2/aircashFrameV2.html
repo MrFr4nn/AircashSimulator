@@ -18,170 +18,6 @@
         </p>
 
         <hr />
-        <h2>SDK</h2>
-        <h4>General</h4>
-        <p>
-            There are two ways to integrate with Aircash Frame; Window Checkout and Redirect Checkout. Each of them will be described in its own section,
-            including the required parameters and how to use the script after initiating. To use the Aircash Frame checkout script, the partner’s system
-            must include a minified Javascript file on the web application. The partner's system is also responsible to ensure that script is loaded before
-            calling any of the functions in it. This is an example how to load/include script:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>< script src="https://firebasestorage.googleapis.com/v0/b/aircash-dev/o/Frame%2Fjs%2Faircashframe-sdk-web.min.js?alt=media">< /script></code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            Aircash will provide a link to the script additionally.
-        </p>
-        <h4>Integration types</h4>
-        <h5>Window Checkout</h5>
-        <p>
-            This integration type offers you a solution where, with a few passed parameters to Aircash Frame SDK, script opens a new window with Aircash Frame
-            in it. After finishing the transaction it will close and handle the rest of the process for you.
-            Below are the required parameters for initiating a transaction:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  {</code>
-<code>      ... //rest of the parameters for API v2</code>
-<code>      "successUrl": null,                                     //this must be 'null' when using this type of checkout</code>
-<code>      "declineUrl": null,                                     //this must be 'null' when using this type of checkout</code>
-<code>      "cancelUrl": null,                                      //this must be 'null' when using this type of checkout</code>
-<code>      "originUrl": "https://domain.com",                      //this must be domain where your web application runs Aircash Frame SDK</code>
-<code>      ... //rest of the parameters for API v2</code>
-<code>  }</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            After a successful transaction initiate Aircash Frame will return the following response:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  {</code>
-<code>      "transactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
-<code>      "url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
-<code>  }</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            When the partner's system gets a response from Aircash Frame it's necessary to call the SDK function which
-            can be done as in the following example:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  new AircashFrame.WindowCheckout({</code>
-<code>      transactionId: response.transactionId,                  //this is a "TransactionId" parameter from the Aircash Frame system response</code>
-<code>      onSuccess: onSuccess,                                   //a function that's needed to be defined in the partner's system, it's called after successful transaction</code>
-<code>      onDecline: onDecline,                                   //a function that's needed to be defined in the partner's system, it's called after declined transaction</code>
-<code>      onCancel: onCancel,                                     //a function that's needed to be defined in the partner's system, it's called after transaction cancel by user through an 'x' button in the AC Frame</code>
-<code>      originUrl: "https://yourwebclientapplication.com",      //partner's system web application domain, this is where is SDK loaded from</code>
-<code>      debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console</code>
-<code>      environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production</code>
-<code>  });</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            It's recommended but not mandatory that onSuccess, onDecline and onCancel functions support receiving JSON
-            object as the Aircash Frame system on calling these functions will send a JSON object with details of the
-            transaction. An example of the payload is below:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  {</code>
-<code>      "amount": 100.0,</code>
-<code>      "currencyId": 978                                       //ISO-4217 currency code</code>
-<code>  }</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            In case of user closes window by pressing 'close' button in browser, onCancel function is called with the following payload:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  {</code>
-<code>      "byUser": true</code>
-<code>  }</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-
-        <hr />
-        <h5>Redirect Checkout</h5>
-        <p>
-            This integration type offers you a simple checkout solution where, with a few passed parameters, a client will be fully redirected to
-            the Aircash Frame system and after finishing the transaction, Frame system will redirect to one of the predefined URLs depending on
-            transaction status. Below are the required parameters for initiating a transaction:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  {</code>
-<code>      ... //rest of the parameters for API v2</code>
-<code>      "successUrl": "https://domain.com/success",             //this is the URL where the client will be redirected after successfull transaction</code>
-<code>      "declineUrl":"https://domain.com/decline",              //this is the URL where the client will be redirected after declined transaction</code>
-<code>      "cancelUrl":"https://domain.com/cancel",                //this is the URL where the client will be redirected after manual transaction cancelation</code>
-<code>      "originUrl": null,                                      //this must be 'null' when using this type of checkout</code>
-<code>      ... //rest of the parameters for API v2</code>
-<code>  }</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            After a successful transaction initiate Aircash Frame will return the following response:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  {</code>
-<code>      "transactionId": "c125ba7d-afb5-4ce5-ac3c-33af420200cf",</code>
-<code>      "url": "https://frame.aircash.eu/c125ba7d-afb5-4ce5-ac3c-33af420200cf"</code>
-<code>  }</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            When the partner's system gets a response from Aircash Frame it's necessary to call the SDK function
-            which can be done as in the following example:
-        </p>
-        <uib-tabset>
-            <uib-tab index="checkUser1-tab-2" heading="Withdrawal" classes="nav-item" style="display:none">
-                <pre>
-<code>  new AircashFrame.RedirectCheckout({</code>
-<code>      transactionId: response.transactionId,                  //this is a "TransactionId" parameter from the Aircash Frame system response</code>
-<code>      debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console</code>
-<code>      environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production</code>
-<code>  });</code>
-</pre>
-            </uib-tab>
-        </uib-tabset>
-        <p>
-            Now, the client will be fully redirected to the Aircash Frame and after finishing the transaction it
-            will be returned (redirected) to one of the URLs defined by the partner's system on transaction initiation.
-        </p>
-
-        <hr />
-        <h5>Custom implementation for redirect checkout</h5>
-
-        <p>
-            This is your custom implementation of Aircash Frame integration. You can display Aircash Frame on any possible way that seems the best for your
-            requirements. For example, you can open new web browser’s window (blank or with your origin URL or any other URL) and use custom redirect to
-            Aircash Frame URL which you will receive in the Initiate method response body. In this case you have complete control over window where Aircash
-            Frame is displayed, you can implement your scripts to handle window open, window close and window redirect to your success URL.
-        </p>
-
-        <hr />
 
         <h1>FAQ</h1>
 
@@ -214,13 +50,6 @@
                 </tr>
                 <tr>
                     <td rowspan="2">4.</td>
-                    <td><b>Q:&nbsp; How can we show Aircash Frame?</b></td>
-                </tr>
-                <tr>
-                    <td><b>A:</b>&nbsp; You can use custom implementation to show/display Aircash Frame or you can use our Aircash Frame SDK (more about SDK examples you can find on: Aircash Simulator). </td>
-                </tr>
-                <tr>
-                    <td rowspan="2">5.</td>
                     <td><b>Q:&nbsp; Are there chargebacks possible?</b></td>
                 </tr>
                 <tr>
@@ -231,7 +60,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">6.</td>
+                    <td rowspan="2">5.</td>
                     <td><b>Q:&nbsp; In the withdrawal process via Aircash Frame can the Amount from Confirm payout method differ from the Initiate method? </b></td>
                 </tr>
                 <tr>
@@ -242,21 +71,21 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">7.</td>
+                    <td rowspan="2">6.</td>
                     <td><b>Q:&nbsp; Are there returns for the withdrawals possible? (reversal of the withdrawals/payouts) </b></td>
                 </tr>
                 <tr>
                     <td><b>A:</b>&nbsp; Yes, returns for the withdrawals are possible manually. Customer must contact merchant and we can made returns manually if customer still has money in Aircash Wallet </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">8.</td>
+                    <td rowspan="2">7.</td>
                     <td><b>Q:&nbsp; Are you provided reconciliation files for download, either manual download or by putting them to our SFTP server or download from your SFTP server?   </b></td>
                 </tr>
                 <tr>
                     <td><b>A:</b>&nbsp; Yes, we provide you reconciliation files for download. We can upload files on our FTP through FTPs or we can put them to your SFTP server.  </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">9.</td>
+                    <td rowspan="2">8.</td>
                     <td><b>Q:&nbsp; When are you calling our NotificationURL which we define as parameter in "Initiate" method and what happens if the payment notification cannot be delivered?  </b></td>
                 </tr>
                 <tr>
@@ -275,7 +104,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">10.</td>
+                    <td rowspan="2">9.</td>
                     <td><b>Q:&nbsp; What is "partnerUserId" parameter from "Initiate" method and what is it used for?   </b></td>
                 </tr>
                 <tr>
@@ -287,7 +116,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">11.</td>
+                    <td rowspan="2">10.</td>
                     <td><b>Q:&nbsp; What is "locale" parameter from "Initiate" method and what is it used for?   </b></td>
                 </tr>
                 <tr>
@@ -336,7 +165,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">12.</td>
+                    <td rowspan="2">11.</td>
                     <td><b>Q:&nbsp; What is Aircash marketplace deposit? How does it compare to Aircash Frame implementation? Is this for mobile app native integration?   </b></td>
                 </tr>
                 <tr>
@@ -348,7 +177,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">13.</td>
+                    <td rowspan="2">12.</td>
                     <td><b>Q:&nbsp; Are we expected to call Status periodically and wait for it to be moved to Pending so that the Confirmation can be called?   </b></td>
                 </tr>
                 <tr>
@@ -359,7 +188,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td rowspan="2">14.</td>
+                    <td rowspan="2">13.</td>
                     <td><b>Q:&nbsp; Is there any timer for Aircash Frame transactions? What happense once the timer expire?  </b></td>
                 </tr>
                 <tr>
