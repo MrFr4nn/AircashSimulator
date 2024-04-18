@@ -145,8 +145,11 @@ enc -e -base64 -in signature.txt.sha256 -out signature.txt.base64
     <h4>Code examples:</h4>
     <uib-tabset active="active">
         <uib-tab index="request-tab-0" heading="C#" classes="nav-item">
-            <pre style="background-color: white">
+            <div class="row row-cols-md-2">
+                <div class="col">
+                    <pre style="background-color: white">
 /// &lt;summary&gt;
+/// .NET Framework 4.7 and newer
 /// Method used to generate signatures based on input data and selected certificates.
 /// &lt;/summary&gt;
 /// &lt;param name=&quot;dataToSign&quot;&gt;Data for signature generation.&lt;/param&gt;
@@ -165,6 +168,41 @@ public static string GenerateSignature( string dataToSign, string certificatePat
         return Convert.ToBase64String(signeddata);
     }
 }</pre>
+                </div>
+                <div class="col">
+                    <pre style="background-color: white">
+/// &lt;summary&gt;
+/// .NET Framework 4.6.1
+/// Method used to generate signatures based on input data and selected certificates.
+/// &lt;/summary&gt;
+/// &lt;param name=&quot;sequence&quot;&gt;Data for signature generation.&lt;/param&gt;
+/// &lt;param name=&quot;PrivateCertificatePath&quot;&gt;Physical path to certificate.&lt;/param&gt;
+/// &lt;param name=&quot;PrivateCertificatePass&quot;&gt;Certificate password.&lt;/param&gt;
+/// &lt;returns&gt;Return generated signature.&lt;/returns&gt;
+public string GenerateSignature(string sequence)
+ {
+    try
+    {
+        var certificate = new X509Certificate2(PrivateCertificatePath, PrivateCertificatePass, X509KeyStorageFlags.Exportable);
+        var originalData = Encoding.UTF8.GetBytes(sequence);
+
+        using (var rsa = new RSACng())
+        {
+            rsa.ImportParameters(((RSA)certificate.PrivateKey).ExportParameters(true));
+
+            var signatureBytes = rsa.SignData(originalData, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+            return Convert.ToBase64String(signatureBytes);
+        }
+    }
+    catch (Exception x)
+    {
+        Console.WriteLine($"Error in GenerateSignature: {x.Message}");
+        return null;
+    }
+}</pre>
+                </div>
+            </div>
+            
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
             <pre style="background-color: white">
