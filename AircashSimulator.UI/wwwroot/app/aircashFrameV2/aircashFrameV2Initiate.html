@@ -379,6 +379,19 @@ tc5NZjj7hOAJ/UUTaFQe0bV5V78bEz560qEaOKv60N3D0c0yhLK7muB9OlULibojJEGNyLPQ6PdJ4IJP
                                         </div>
                                     </div>
                                 </div>
+                                <div>
+                                    <hr />
+                                    <div class="form-group align-items-center">
+                                        <input ng-model="config.sendPhoneNumber" style=" width: 1.0rem; height: 1.0rem;" type="checkbox" id="checkbox3" />
+                                        <label style=" font-size: 1.0em;" for="checkbox2">Phone Number</label>
+                                    </div>
+                                    <div ng-if="config.sendPhoneNumber">
+                                        <div class="mb-3">
+                                            <label class="form-label">Phone number</label>
+                                            <input ng-model="initiateModel.phoneNumber" type="text" class="form-control" ng-required="true" name="PhoneNumber">
+                                        </div>
+                                    </div>
+                                </div>
                                 <button ng-click="initiateRedirectCheckout()" class="btn btn-primary w-100px me-5px" ng-disabled="initiateBusy || initiateForm.$invalid">
                                     Initiate
                                     <i ng-if="initiateBusy" class="fa fa-cog fa-spin"></i>

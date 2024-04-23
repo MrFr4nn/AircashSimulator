@@ -350,6 +350,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
 
     $scope.config = {};
     $scope.config.useMatchPersonalData = false;
+    $scope.config.sendPhoneNumber = false;
 
     $scope.initiateModelSelected = {};
     $scope.initiateModel = {};
@@ -416,6 +417,7 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
         $scope.initiateModel.declineUrl = $location.absUrl().replace($location.url(), "/decline");
         $scope.initiateModel.cancelUrl = $location.absUrl().replace($location.url(), "/cancel");
         $scope.initiateModel.originUrl = "";
+        $scope.initiateModel.phoneNumber = "";
 
         $scope.confirmModel.partnerId = $scope.config.useMatchPersonalData ? $scope.partnerIds.AircashFramePartnerIdWithMatchPersonalData : $scope.partnerIds.AircashFramePartnerId;
         $scope.confirmModel.currencyId = 978;
@@ -461,6 +463,13 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     value: $scope.initiateModel.birthDate.toLocaleDateString('en-CA')
                 }
             ];
+        } else if ($scope.config.sendPhoneNumber){
+            matchParameters.push(
+                {
+                    key: "PartnerUserPhoneNumber",
+                    value: $scope.initiateModel.phoneNumber
+                }
+            );
         }
         $scope.showButtonCopyUrl = false;
         $scope.initiateModel.locale = $scope.locale.languageInput.toLowerCase() + "-" + $scope.locale.countryISOCodeInput.toUpperCase();
