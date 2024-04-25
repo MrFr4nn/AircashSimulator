@@ -160,6 +160,12 @@
                 </a>
             </li>
             <li ui-sref-active="active">
+                <a ui-sref="app.acPayTokenization" ng-if="partnerRoles.indexOf('AircashPayTokenization') != -1">
+                    <i class="fas fa-coins" aria-hidden="true"></i>
+                    <span>{{translations.ac_pay_tokenization}}</span>
+                </a>
+            </li>
+            <li ui-sref-active="active">
                 <a ui-sref="app.acRedeemTicket" ng-if="false">
                     <i class="fa fa-pager" aria-hidden="true"></i>
                     <span>{{translations.ac_redeemTicket_label}}</span>

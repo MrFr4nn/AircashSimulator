@@ -23,6 +23,7 @@ var app = angular.module('app', [
     'logo',
     'acRefund',
     'acPayStaticCode',
+    'acPayTokenization',
     'aircashPayoutV2',
     'ac_business_site',
     'ac_test_application',
