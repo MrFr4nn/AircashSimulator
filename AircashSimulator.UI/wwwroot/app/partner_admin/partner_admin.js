@@ -417,6 +417,8 @@ partnerAdminModule.controller("partnerAdminCtrl", ['$scope', '$state', '$filter'
                 return "Slot machines integration";
             case "AircashATM":
                 return "Aircash ATM";
+            case "AircashPayTokenization":
+                return "Aircash Pay Tokenization";
             default:
                 break;
 

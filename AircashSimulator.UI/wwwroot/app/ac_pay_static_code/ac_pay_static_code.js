@@ -32,7 +32,8 @@ acPayStaticCodeModule.service("acPayStaticCodeService", ['$http', '$q', 'handleR
 }
 ]);
 
-acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter', 'acPayStaticCodeService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', 'config', '$location', function ($scope, $state, $filter, acPayStaticCodeService, $http, JwtParser, $uibModal, $rootScope, $localStorage, config, $location) {
+acPayModule.controller("ac_pay_static_codeCtrl", ['$scope', '$state', '$filter', 'acPayStaticCodeService', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', 'config', '$location',
+    function ($scope, $state, $filter, acPayStaticCodeService, $http, JwtParser, $uibModal, $rootScope, $localStorage, config, $location) {
     $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
     $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
     if ($scope.partnerRoles.indexOf("AircashPayStaticCode") == -1) {

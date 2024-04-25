@@ -1,0 +1,144 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>CancelTransaction</h1>
+    <br />
+    <p>
+        The Aircash system will not allow partners to cancel one transaction twice. In case of a double cancellation request, the Aircash system will process only the first request. For every other request, Aircash system will not process the cancellation request but it will return the same response as in the first cancellation request.
+    </p>
+    <p>
+        The cancellation method is idempotent, and the partner system can perform multiple requests until the partner system receives a successful response.
+    </p>
+    <p>
+        URL: /api/AircashPay/CancelTransaction
+    </p>
+
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-0" heading="Request parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>string</td>
+                            <td>
+                                PartnerID
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionID</b></td>
+                            <td>string</td>
+                            <td>
+                                ID that partner sends in the Authorization method.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature </b></td>
+                            <td>string</td>
+                            <td>
+                                Transaction signature
+                            </td>
+                            <td>YES</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+            </uib-tab>
+            <br />
+            <uib-tab index="checkUser1-tab-1" heading="Response parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>string</td>
+                                <td>
+                                    PartnerID
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>PartnerTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    ID that partner sends in the GeneratePartnerCode method.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>CancelTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Transaction ID in Aircash system.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Signature </b></td>
+                                <td>string</td>
+                                <td>
+                                    Aircash signature
+                                </td>
+                                <td>YES</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+                <br />
+                <uib-tab index="checkUser1-tab-2" heading="Error response messages" classes="nav-item">
+                    
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Error code</th>
+                                    <th>Error message</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><b>0</b></td>
+                                    <td>Invalid request</td>
+
+                                </tr>
+                                <tr>
+                                    <td><b>1</b></td>
+                                    <td>Unable to find the transaction</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    </uib-tab>
+        </uib-tabset>
+                    <br />
+                    <hr />
+</body>
+</html>
