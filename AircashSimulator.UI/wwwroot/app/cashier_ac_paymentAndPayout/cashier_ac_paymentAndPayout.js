@@ -73,17 +73,17 @@ cashierAcPaymentAndPayoutModule.controller("cashieracPaymentAndPayoutCtrl",
                             $scope.checkCodeServiceRequestObject = response.ServiceRequest;
                             $scope.checkCodeServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                             $scope.checkCodeServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
-                            if ($scope.checkCodeServiceResponseObject.errorCode) {
-                                $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.errorMessage);
+                            if (typeof $scope.checkCodeServiceResponseObject.ErrorCode != "undefined") {
+                                $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.ErrorMessage);
                                 $scope.codeValid = false;
                             } else {
                                 $rootScope.showGritter("Success");
                                 $scope.codeValid = true;
-                                if ($scope.checkCodeServiceResponseObject.amount > 0) {
+                                if ($scope.checkCodeServiceResponseObject.Amount > 0) {
                                     $scope.transactionType = "Deposit";
                                 } else {
                                     $scope.transactionType = "Withdrawal";
-                                    $scope.checkCodeServiceResponseObject.amount = Math.abs($scope.checkCodeServiceResponseObject.amount);
+                                    $scope.checkCodeServiceResponseObject.Amount = Math.abs($scope.checkCodeServiceResponseObject.Amount);
                                 }
                                 console.log($scope.checkCodeServiceResponseObject);
                             }
@@ -109,8 +109,8 @@ cashierAcPaymentAndPayoutModule.controller("cashieracPaymentAndPayoutCtrl",
                             $scope.confirmTransactionServiceResponse = response.ServiceResponse;
                             $scope.confirmTransactionServiceResponse = JSON.stringify(response.ServiceResponse, null, 4);
                             $scope.confirmTransactionServiceRequest = JSON.stringify(response.ServiceRequest, null, 4);
-                            if ($scope.confirmTransactionServiceResponse.errorCode) {
-                                $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.errorMessage);
+                            if (typeof $scope.checkCodeServiceResponseObject.ErrorCode != "undefined") {
+                                $rootScope.showGritter("Error ", $scope.checkCodeServiceResponseObject.ErrorMessage);
                             } else {
                                 $rootScope.showGritter("Success");
                                 $scope.codeValid = false;
