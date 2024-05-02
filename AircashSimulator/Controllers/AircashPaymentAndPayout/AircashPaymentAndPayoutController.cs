@@ -82,6 +82,12 @@ namespace AircashSimulator.Controllers.AircashPaymentAndPayout
             var response = await AircashPaymentAndPayoutService.CheckCode(checkCodeRequest.BarCode, checkCodeRequest.LocationID, SettingsService.SalesPartnerId, checkCodeRequest.Environment);
             return Ok(response);
         }
+        [HttpPost]
+        public async Task<IActionResult> CashierCheckDigits(CheckDigitsRequest checkDigitsRequest)
+        {
+            var response = await AircashPaymentAndPayoutService.CheckDigitsV2(checkDigitsRequest.DigitCode, checkDigitsRequest.LocationID, SettingsService.SalesPartnerId.ToString(), checkDigitsRequest.CurrencyID, EnvironmentEnum.Staging);
+            return Ok(response);
+        }
 
         [HttpPost]
         public async Task<IActionResult> CashierConfirmTransaction(ConfirmTransactionRequest confirmTransactionRequest)

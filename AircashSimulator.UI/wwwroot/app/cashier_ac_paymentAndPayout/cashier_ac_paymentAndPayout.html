@@ -16,8 +16,14 @@
                         <div class="text-center mb-5 mt-3">
                             <img style="height:50px;" alt="" src="/images/aircash-red.svg">
                         </div>
+                        <div class="dropdown col-auto">
+                            <select class="form-control" ng-model="select.option" ng-init="select.option = '1'">
+                                <option value="1" selected>Use Barcode</option>
+                                <option value="2">Use DigitCode</option>
+                            </select>
+                        </div>
                         <br />
-                        <div class="card mb-3">
+                        <div class="card mb-3" ng-if="select.option == '1'">
                             <div class="card-header">
                                 <h5 class="mb-0">Check Barcode</h5>
                             </div>
@@ -38,6 +44,38 @@
                                             </div>
                                         </div>
                                         <button ng-click="checkCode()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="checkCodeServiceBusy || transactionForm.$invalid">Check Code <i ng-if="checkCodeServiceBusy" class="fa fa-cog fa-spin"></i></button>
+
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="card mb-3" ng-if="select.option == '2'">
+                            <div class="card-header">
+                                <h5 class="mb-0">CheckDigits</h5>
+                            </div>
+                            <div class="card-body">
+                                <h6>
+                                    Enter 6 digit code, LocationID and CurrencyId. Check if DigitCode is valid, then you will be able to confirm tranasction.
+                                </h6>
+                                <form action="/" method="POST" name="transactionForm">
+                                    <fieldset>
+                                        <div class="input-group">
+                                            <div class="mb-3 col-6 pl-0 pr-2">
+                                                <label class="form-label">DigitCode</label>
+                                                <input ng-model="codeModel.barCode" class="form-control form-control-lg" type="text" placeholder="Enter DigitCode" ng-disabled="checkDigitsServiceBusy" ng-required="true">
+                                            </div>
+                                            <div class="mb-3 col-6 pl-2 pr-0">
+                                                <label class="form-label">LocationID</label>
+                                                <input ng-model="codeModel.locationID" class="form-control form-control-lg" type="text" placeholder="Enter LocationID" ng-disabled="checkDigitsServiceBusy" ng-required="true">
+                                            </div>
+                                        </div>
+                                        <div class="input-group">
+                                            <div class="mb-3 col-6 pl-2 pr-0">
+                                                <label class="form-label">CurrencyID</label>
+                                                <input ng-model="codeModel.currencyID" class="form-control form-control-lg" type="text" placeholder="Enter CurrencyID" ng-disabled="checkDigitsServiceBusy" ng-required="true">
+                                            </div>
+                                        </div>
+                                        <button ng-click="checkDigits()" class="btn btn-danger w-100px me-5px" style="width:100%; font-size:15px;" ng-disabled="checkDigitsServiceBusy || transactionForm.$invalid">Check Code <i ng-if="checkDigitsServiceBusy" class="fa fa-cog fa-spin"></i></button>
 
                                     </fieldset>
                                 </form>
