@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>ConfirmTransaction</h1>
+    <br />
+    <p>
+        Once the partner system performs authorization, the partner system must perform confirmation to complete the transaction within the timeframe.  Confirmed transactions will be part of the settlement process with the partner. Confirmed transactions cannot be canceled but only refunded to the end-user.
+    </p>
+    <p>
+        URL: /api/AircashPay/ConfirmTransaction
+    </p>
+
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-0" heading="Request parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>string</td>
+                            <td>
+                                PartnerID
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionID</b></td>
+                            <td>string</td>
+                            <td>
+                                ID that partner sends in the Authorization method.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Partial completion is possible in which case the partner should send the amount that the partner would like to confirm. Partner is not able to confirm transactions above authorization amount (in such case partner must create new authorization request and new confirmation).
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>CurrencyID</b></td>
+                            <td>int</td>
+                            <td>
+                                Currency ID  (e.g. 191, 978) - must be the same as in authorization request
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature </b></td>
+                            <td>string</td>
+                            <td>
+                                Signature by Aircash system confirming that Aircash is sending a request to the partner system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <br />
+
+        <uib-tab index="checkUser1-tab-1" heading="Response example" classes="nav-item">
+            <p>
+                Aircash system will respond 200 OK in case of successful confirmation.
+            </p>
+        </uib-tab>
+        <uib-tab index="checkUser1-tab-2" heading="Response parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>string</td>
+                            <td>
+                                PartnerID
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionID</b></td>
+                            <td>string</td>
+                            <td>
+                                Same as requested ID
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Confirmed amount, same as in the request.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>CurrencyID</b></td>
+                            <td>int</td>
+                            <td>
+                                Currency ID  (e.g. 191, 978) - must be the same as in authorization request
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>AircashTransactionID</b></td>
+                            <td>Guid</td>
+                            <td>
+                                Aircash transaction ID - will be the same as in authorization response.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature </b></td>
+                            <td>string</td>
+                            <td>
+                                Signature by Aircash system confirming that Aircash is sending a request to the partner system
+                            </td>
+                            <td>YES</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <br />
+       
+        <uib-tab index="checkUser1-tab-3" heading="Error response messages" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Error code</th>
+                            <th>Error message</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>0</b></td>
+                            <td>Invalid request</td>
+
+                        </tr>
+                        <tr>
+                            <td><b>1</b></td>
+                            <td>Unable to find the transaction</td>
+
+                        </tr>
+                        <tr>
+                            <td><b>2</b></td>
+                            <td>Confirm amount is higher than authorization amount</td>
+
+                        </tr>
+                        <tr>
+                            <td><b>3</b></td>
+                            <td>Transaction already confirmed</td>
+
+                        </tr>
+                        <tr>
+                            <td><b>4</b></td>
+                            <td>The transaction has been canceled and cannot be confirmed</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </uib-tab>
+        </uib-tabset>
+            <br />
+            <hr />
+</body>
+</html>

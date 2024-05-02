@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>AuthorizeTransaction</h1>
+    <br />
+    <p>
+        Authorization is the first step of the payment process where Aircash users will need to perform authentication. Authentication will be handled completely on the Aircash side and the partner system will only receive end result of the authentication.
+    </p>
+    <p>
+        Authorization allows the partner systems to use tokenization in the process. Tokenization is part of the authentication process where the Aircash system will generate a token that is connected to the Aircash wallet which the partner system can use to perform the frictionless payment. In case of token use, the Aircash system can still request authentication from the end-user based on Aircash Risk rules for that merchant. In the case of low-risk merchants, these risk rules will monitor only suspicious behavior of the users on that merchant and in case of common use from the end-users, the flow will be frictionless to the end-user.
+    </p>
+    <p>URL: /api/AircashPay/AuthorizeTransaction</p>
+   
+    <uib-tabset>
+        <uib-tab index="checkUser1-tab-0" heading="Request parameters" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Parameter</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>PartnerID</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique partner identification that Aircash will provide in the account setup process
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Amount</b></td>
+                            <td>decimal</td>
+                            <td>
+                                Transaction amount
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>CurrencyID</b></td>
+                            <td>int</td>
+                            <td>
+                                Currency ID  (e.g. 191, 978)
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>PartnerTransactionID</b></td>
+                            <td>string</td>
+                            <td>
+                                Unique transaction identification in partner system. Based on this parameter, the partner will confirm transactions
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Description</b></td>
+                            <td>string</td>
+                            <td>
+                                Transaction description, additional info about the transaction (e.g. payment for invoice 42)
+                            </td>
+                            <td>NO</td>
+                        </tr>
+                        <tr>
+                            <td><b>UserID</b></td>
+                            <td>string</td>
+                            <td>
+                                User ID in partner system. This parameter is mandatory for each tokenization.
+                            </td>
+                            <td>YES, in case the partner uses tokenization</td>
+                        </tr>
+                        <tr>
+                            <td><b>Tokenize</b></td>
+                            <td>bool</td>
+                            <td>
+                                True, in case the partner system would like to tokenize the payment and false otherwise. Partner can omit this partner in case the Token parameter is sent.
+                            </td>
+                            <td>YES, in case the partner uses tokenization</td>
+                        </tr>
+                        <tr>
+                            <td><b>Token</b></td>
+                            <td>Guid</td>
+                            <td>
+                                Token received upon first successful authentication on this partner.
+                            </td>
+                            <td>NO</td>
+                        </tr>
+                        <tr>
+                            <td><b>SuccessUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                SuccessUrl is a payment page where the Aircash authentication page will return user in case of a successful transaction
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>DeclineUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                DeclineUrl is a payment page where the Aircash authentication page will return user in case of unsuccessful authorization
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>NotificationUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                NotificationUrl is a URL where Aircash will send information about successful authentication. Aircash has a retry policy in case the partner system is not available at the moment of the first attempt.
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>Signature</b></td>
+                            <td>string</td>
+                            <td>
+                                Signature
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+
+        <br />
+
+        <uib-tab index="checkUser1-tab-1" heading="Response parameters" classes="nav-item">
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Return value</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                            <th>Mandatory</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Type</b></td>
+                            <td>Enum</td>
+                            <td>
+                                Response type depending on request and Aircash Risk rules for this partner.
+                                Possible values are:
+                                <ul>
+                                    <li>redirect</li>
+                                    <li>transaction</li>
+                                </ul>
+                            </td>
+                            <td>YES</td>
+                        </tr>
+                        <tr>
+                            <td><b>RedirectUrl</b></td>
+                            <td>string</td>
+                            <td>
+                                A mandatory parameter in response in case type is “redirect”. Partner system leads users to this URL so that the user can perform transaction authentication.
+                            </td>
+                            <td>YES*</td>
+                        </tr>
+                        <tr>
+                            <td><b>AircashTransactionID</b></td>
+                            <td>Guid</td>
+                            <td>
+                                A mandatory parameter in response in case type is “transaction”. In case of this type of response, the transaction has been authorized and funds have been reserved from the end-user. Partner system can send merchandise to the end-user and perform confirmation.
+                            </td>
+                            <td>YES*</td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </uib-tab>
+        <br />
+
+        <uib-tab index="checkUser1-tab-2" heading="Error response messages" classes="nav-item">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Error code</th>
+                            <th>Error message</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>0</b></td>
+                            <td>Invalid request</td>
+
+                        </tr>
+                        <tr>
+                            <td><b>1</b></td>
+                            <td>The partner transaction ID is not unique</td>
+
+                        </tr>
+                        <tr>
+                            <td><b>2</b></td>
+                            <td>User blocked or reach its limits</td>
+
+                        </tr>
+                        <tr>
+                            <td><b>3</b></td>
+                            <td>Not enough funds on the user account.</td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </uib-tab>
+        </uib-tabset>
+            <hr />
+
+</body>
+</html>

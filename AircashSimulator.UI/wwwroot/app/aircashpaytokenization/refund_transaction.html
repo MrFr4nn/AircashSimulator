@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>RefundTransaction</h1>
+    <br />
+    <p>
+        A refund is possible only for the confirmed transactions, authorized or canceled transactions cannot be refunded. A refund is possible in the partial or full amount of the confirmed transaction.
+    </p>
+    <p>
+        Aircash system will monitor all refunds and will not allow multiple refunds per one transaction. Also, the Aircash system will not allow refund amount to be higher than the initial payment amount.
+    </p>
+    <p>
+        URL: /api/AircashPay/RefundTransaction
+    </p>
+
+    <div>
+        <uib-tabset>
+            <uib-tab index="checkUser1-tab-0" heading="Request parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>string</td>
+                                <td>
+                                    PartnerID
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>PartnerTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    ID that partner sends in the Authorization method.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>decimal</td>
+                                <td>
+                                    Refund amount that can be up to the completed amount of the transaction.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>CurrencyID</b></td>
+                                <td>int</td>
+                                <td>
+                                    Currency ID  (e.g. 191, 978) - must be the same as in authorization request
+                                </td>
+                                <td>YES</td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Signature </b></td>
+                                <td>string</td>
+                                <td>
+                                    Signature by Aircash system confirming that Aircash is sending a request to the partner system
+                                </td>
+                                <td>YES</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+            <br />
+
+            <uib-tab index="checkUser1-tab-1" heading="Response example" classes="nav-item">
+                <p>
+                    Aircash system will respond 200 OK in case of successful refund.
+                </p>
+            </uib-tab>
+            <uib-tab index="checkUser1-tab-2" heading="Response parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>string</td>
+                                <td>
+                                    PartnerID
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>PartnerTransactionID</b></td>
+                                <td>string</td>
+                                <td>
+                                    Same as requested ID
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>decimal</td>
+                                <td>
+                                    The refund amount, same as in the request.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>CurrencyID</b></td>
+                                <td>int</td>
+                                <td>
+                                    Currency ID  (e.g. 191, 978) - same as in request.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>AircashTransactionID</b></td>
+                                <td>Guid</td>
+                                <td>
+                                    Refund aircash transaction ID - this will be the ID of the refunded transaction.
+                                </td>
+                                <td>YES</td>
+                            </tr>
+
+
+                            <tr>
+                                <td><b>Signature </b></td>
+                                <td>string</td>
+                                <td>
+                                    Signature by Aircash system confirming that Aircash is sending a request to the partner system
+                                </td>
+                                <td>YES</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+            <br />
+            <uib-tab index="checkUser1-tab-3" heading="Error response messages" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Error code</th>
+                                <th>Error message</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>0</b></td>
+                                <td>Invalid request</td>
+
+                            </tr>
+                            <tr>
+                                <td><b>1</b></td>
+                                <td>Unable to find the transaction</td>
+
+                            </tr>
+                            <tr>
+                                <td><b>2</b></td>
+                                <td>Unable refund transaction that has not been completed</td>
+
+                            </tr>
+                            <tr>
+                                <td><b>3</b></td>
+                                <td>The refund amount is higher than the completed amount</td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+        </uib-tabset>
+    </div>
+            <br />
+
+            <h2 style="text-align:justify">Acceptance criteria</h2>
+            <p>
+                To release the service in the production, you need to make several tests to see if the integration is
+                well-made and ready for production
+                <div class="table-responsive">
+                    <table class="table table-active">
+                        <thead>
+                            <tr>
+                                <th>Scenario</th>
+                                <th>Test description</th>
+                                <th>Mandatory</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>AuthorizeTransaction - without tokenization</b></td>
+                                <td>
+                                    First authorization without tokenization
+                                </td>
+                                <td>YES, if used</td>
+                            </tr>
+                            <tr>
+                                <td><b>AuthorizeTransaction - with tokenization</b></td>
+                                <td>
+                                    First authorization with tokenization
+                                </td>
+                                <td>YES, if used</td>
+                            </tr>
+                            <tr>
+                                <td><b>AuthorizeTransaction - use token</b></td>
+                                <td>
+                                    Authorization with token
+                                </td>
+                                <td>
+                                    YES, if used
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>Notification</b></td>
+                                <td>
+                                    Validate successful notification process from the partner side
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>ConfirmTransaction - full amount</b></td>
+                                <td>
+                                    Partner confirms the transaction in the full amount
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>ConfirmTransaction - partial amount </b></td>
+                                <td>
+                                    Partner confirms transaction for a partial amount
+                                </td>
+                                <td>
+                                    YES
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>CancelTransaction</b></td>
+                                <td>
+                                    Partner system cancel transaction
+                                </td>
+                                <td>
+                                    YES
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>RefundTrasnaction - full amount</b></td>
+                                <td>
+                                    Partner refund the full transaction amount
+                                </td>
+                                <td>
+                                    YES, if this method is implemented
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>RefundTransction - partial amount</b></td>
+                                <td>
+                                    Partner refund the partial transaction amount
+                                </td>
+                                <td>
+                                    YES, if this method is implemented
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+</body>
+</html>

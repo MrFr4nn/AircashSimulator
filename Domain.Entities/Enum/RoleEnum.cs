@@ -26,6 +26,7 @@ namespace Domain.Entities.Enum
         Mastercard=19,
         CobrandedCard =20,
         AMDDeepLink =21,
+        AircashPayTokenization=22,
         Admin = 100
     }
 }

@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div style="width: 100%">
+
+        <h1>Payment process</h1>
+        <br />
+        <p>
+            This chapter describes the payment process using the AircashPay. The described process explains how the user can pay the invoice in the partner system using AircashPay.
+        </p>
+        <p>
+            The payment process consists of several steps:
+        </p>
+
+        <ol>
+            <li>
+                <b>Authorize payment</b>
+                <ul>
+                    <li>
+                        Partner system must send information to the Aircash system to start the payment process with Aircash
+                    </li>
+                    <li>
+                        The transaction must have a partner identifier, amount, currency, and some unique transaction identifier
+                    </li>
+                    <li>
+                        Aircash system will verify authorization data and reserve funds from the user’s account
+                    </li>
+                    <li>
+                        The first authorization will always require user authentication, and for each subsequent transaction user can send the token, and the Aircash system will define if authentication is required
+                    </li>
+                    <li>
+                        In case user flow in the partner system requires tokenization first before payment, the partner system can send an authorization request for 0 amount - this transaction doesn’t need confirmation or cancellation
+                    </li>
+                    <li>
+                        In case of payments in multiple currencies, Aircash will issue multiple partner identifiers one for each currency, and the partner system must take into account that mapping on their side in the process of integration
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>Confirm payment</b>
+                <ul>
+                    <li>
+                        Once the transaction is authorized, the partner system must confirm payment within the timeframe (max period is defined on the Aircash side and Aircash system will not allow confirmation after that period. Max period is part of the business discussion with the partner and will be defined in the contract)
+                    </li>
+                    <li>
+                        Partner system will send confirmation request towards Aircash system with the exact amount that needs to be confirmed (amount cannot be higher than
+                        authorize payment amount)
+                    </li>
+                    <li>
+                        Partner system needs to send a confirmation request for each transaction otherwise transaction will get canceled and funds will not be transferred to the partner account
+                    </li>
+                    <li>
+                        Partner system cannot confirm one transaction twice, in case partner system sends the confirmation for the transaction and does not receive a response, the partner system should repeat the same request until it gets confirmation from Aircash system
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>Cancel authorization</b>
+                <ul>
+                    <li>
+                        Authorized payments that can not and will not be confirmed should be canceled by the partner system to release users founds
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <b>Refund</b>
+                <ul>
+                    <li>
+                        Each confirmed transaction can be refunded to the user account in part of the full amount
+                    </li>
+                    <li>
+                        Partner system can call refund only when the transaction is confirmed, refund is not possible for authorized or canceled transactions
+                    </li>
+                    <li>
+                        Aircash system will not allow double cancellation of the same transaction, nor it will allow refund more amount that confirmed amount
+                    </li>
+                </ul>
+            </li>
+        </ol>
+        <hr />
+        <h1>Methods called by Aircash on the partner system</h1>
+        <p>
+            The Partner should open one REST method that receives JSON objects to receive notifications about successful authorization.
+        </p>
+
+        <p>
+            Url: defined by the partner in authorize transaction request.
+        </p>
+        <p>
+            Input parameters:
+        </p>
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Mandatory</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>PartnerID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique partner identification that Aircash will provide in the account setup process
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Amount</b></td>
+                        <td>decimal</td>
+                        <td>
+                            Transaction amount
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>CurrencyID</b></td>
+                        <td>int</td>
+                        <td>
+                            Currency ID  (e.g. 191, 978)
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>PartnerTransactionID</b></td>
+                        <td>string</td>
+                        <td>
+                            Unique transaction identification in partner system. Based on this parameter, the partner will confirm transactions.
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Token</b></td>
+                        <td>Guid</td>
+                        <td>
+                            In case the partner system requested tokenization upon request
+                        </td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>AircashTransactionID</b></td>
+                        <td>Guid</td>
+                        <td>Aircash transaction id.</td>
+                        <td>YES</td>
+                    </tr>
+                    <tr>
+                        <td><b>Signature</b></td>
+                        <td>string</td>
+                        <td>Signature</td>
+                        <td>YES</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h1>Methods called by Aircash on the partner system</h1>
+        <p>
+            Aircash will provide several REST methods that receive JSON objects.
+        </p>
+        <p>
+            In each request partner should send header Content-Type with value “application/json”
+        </p>
+        <p>
+            All Aircash methods have common behavior in case of responses:
+        </p>
+        <p>
+            In each method partner should send header Content-Type with value application/json
+        </p>
+        <p>
+            All Aircash methods have common behaviour in case of responses:
+        </p>
+        <ul>
+            <li>
+                In case of successful response Aircash system will return HTTP response 200 OK with JSON
+                content in response.
+            </li>
+            <li>In case of server error Aircash system will return HTTP response 500 Server error</li>
+            <li>
+                In case of bad request Aircash system will return HTTP response 400 Bad request with json
+                content about error
+            </li>
+            <li>In case of invalid partner ID or invalid signature, Aircash system will return 401 Unauthorized</li>
+        </ul>
+        <hr />
+        <br />
+
+        <ng-include src="'app/aircashpaytokenization/authorize_transaction.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashpaytokenization/confirm_transaction.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashpaytokenization/cancel_transaction.html?v=' + appVersion"></ng-include>
+        <ng-include src="'app/aircashpaytokenization/refund_transaction.html?v=' + appVersion"></ng-include>
+    </div>
+</body>
+</html>
