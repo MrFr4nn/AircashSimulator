@@ -121,7 +121,21 @@ namespace Services.AircashPayment
         public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
         {
             string UserId = ReturnUser(ReceiveData.Parameters);
-            if(UserId != "")
+            if (UserId == "test")
+            {
+                var response = new CreateAndConfirmRS
+                {
+                    Success = false,
+                    Error = new ResponseError
+                    {
+                        ErrorCode = 55,
+                        ErrorMessage = "User has reached limit"
+                    },
+                    Parameters = null
+                };
+                return response;
+            }
+            else if (UserId != "")
             {
                 TransactionEntity transactionEntity = new TransactionEntity
                 {
