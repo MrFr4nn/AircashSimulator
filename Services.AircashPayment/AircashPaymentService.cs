@@ -121,7 +121,7 @@ namespace Services.AircashPayment
         public async Task<object> CreateAndConfirmPayment(CreateAndConfirmPaymentReceive ReceiveData)
         {
             string UserId = ReturnUser(ReceiveData.Parameters);
-            if (UserId == "test")
+            if (UserId.ToLower() == "02b9e297-e807-4222-9149-8218df406d32".ToLower())
             {
                 var response = new CreateAndConfirmRS
                 {
