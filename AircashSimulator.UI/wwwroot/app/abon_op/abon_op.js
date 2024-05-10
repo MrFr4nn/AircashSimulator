@@ -706,11 +706,11 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             responseExample: {
                 couponValue: 50.0,
                 isValid: true,
-                isoCurrency: "HRK",
+                isoCurrency: "EUR",
                 providerTransactionId: "",
                 salePartnerId: "31dce332-1d55-4459-b166-d8d33a78226c",
                 isoCountryCode: null,
-                originalISOCurrency: "HRK",
+                originalISOCurrency: "EUR",
                 originalCouponValue: 50.0
             },
             errorResponseExample: {
@@ -750,7 +750,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
             responseExample: {
                 "couponValue": 50,
                 "status": 1,
-                "isoCurrency": "HRK",
+                "isoCurrency": "EUR",
                 "originalISOCurrency": "EUR",
                 "originalCouponValue": 50,
                 "currentCouponValue": 50,
@@ -787,7 +787,7 @@ abonOpModule.controller("abonOpCtrl", ['$scope', '$state', '$filter', 'abonOpSer
                 message: "Coupon Already Used",
                 additionalData: {
                     couponValue: 50.0,
-                    isoCurrency: "HRK",
+                    isoCurrency: "EUR",
                     providerTransactionId: "33352406-f672-4c27-a415-e26eb3ecd691",
                 }
             }
