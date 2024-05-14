@@ -72,7 +72,7 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
                     .then(function (response) {    
                         console.log(response);                        
                         
-                        if ($scope.selectedAcFrameOption.value == 3) {
+                        if ($scope.selectedAcFrameOption.value == 1) {
                             /*---- METHOD 1 - CUSTOM WINDOW CHECKOUT ----- */
                             if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {    
                                 $scope.createCashierAcFrameWithdrawalServiceBusy = false;                                
@@ -85,7 +85,7 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
                                 start();
                             }
                         }
-                        else if ($scope.selectedAcFrameOption.value == 4) {
+                        else if ($scope.selectedAcFrameOption.value == 2) {
                             /*---- METHOD 2 - CUSTOM REDIRECT CHECKOUT ----- */
                             if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {
                                 $scope.createCashierAcFrameWithdrawalServiceBusy = false;

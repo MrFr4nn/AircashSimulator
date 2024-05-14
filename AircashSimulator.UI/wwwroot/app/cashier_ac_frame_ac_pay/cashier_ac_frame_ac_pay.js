@@ -160,6 +160,10 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                 }
             };
 
+            $scope.showVideoDeposit = function () {
+                $("#videoModalDeposit").modal("show");
+            }
+
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
                 .configureLogging(signalR.LogLevel.Information)

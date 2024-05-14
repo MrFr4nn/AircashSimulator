@@ -6,6 +6,9 @@
                 <div class="col-md-6" style="float:left;">
                     <h2 style="margin-top: 5px !important; float:left !important;">Aircash Frame - Abon</h2>
                 </div>
+                <div class="ml-auto float-right" style="margin-top: 9px !important;">
+                    <a id="myBtn" ng-disabled="confirmBusy" ng-click="showVideoDeposit()"><span class="fa fa-cog fa-lg"></span> </a>
+                </div>
             </div>
             <div class="card-body">
                 <div class="row row-cols-1 row-cols-sm-2 text-center">
@@ -51,19 +54,17 @@
                         </div>
                     </fieldset>
                 </form>
-                <div class="row row-cols-1 row-cols-sm-2">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10 col-sm-12 align-items-center justify-content-center">
-                        <div id="accordion">
-                            <div class="card">
-                                <div class="card-header" id="headingOne">
-                                    <h5 class="mb-0">
-                                        <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#AcFrameAbonConfiguration" aria-expanded="false" aria-controls="AcFrameAbonConfiguration">
-                                            {{translationsCashier.cashier_configuration_button}}
-                                        </button>
-                                    </h5>
-                                </div>
-                                <div id="AcFrameAbonConfiguration" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="modal align-content-center justify-content-center grid-template-columns-50px-min-content-1fr" id="videoModalDeposit">
+                    <div class="row row-cols-1 row-cols-sm-2">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 col-sm-12 align-items-center justify-content-center">
+                            <div id="accordion">
+                                <div class="card">
+                                    <div class="card-header" id="headingOne">
+                                        <h5 class="mb-0">
+                                                {{translationsCashier.cashier_configuration_button}}
+                                        </h5>
+                                    </div>
                                     <div class="card-body">
                                         <div class="form-group">
                                             <select name="country" class="form-control form-control-lg" style="border-radius: 5px !important;" ng-options="item.desc for item in acFrameOptions" ng-model="selectedAcFrameOption" ng-disabled="createCashierAcFrameAcPayServiceBusy" ng-required="true">
@@ -74,10 +75,13 @@
                                             <label class="form-check-label" for="radio1" style=" padding-top: 4px; padding-left:10px; font-size:15px;">{{rule.description}}</label>
                                         </div>
                                     </div>
+                                    <div class="modal-footer">
+                                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                                    </div>
                                 </div>
-                             </div>
+                            </div>
+                            <div class="col-md-1"></div>
                         </div>
-                        <div class="col-md-1"></div>
                     </div>
                 </div>
             </div>

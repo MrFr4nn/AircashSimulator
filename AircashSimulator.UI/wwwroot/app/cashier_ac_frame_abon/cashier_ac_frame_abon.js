@@ -188,6 +188,10 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
                 }
             };
 
+            $scope.showVideoDeposit = function () {
+                $("#videoModalDeposit").modal("show");
+            }
+
             connection.onclose(async () => {
                 await start();
             });
