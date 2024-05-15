@@ -15,6 +15,10 @@
             <div class="form-group">
                 <label class="d-inline-block" for="abon_lang">Download multiple Abon voucher:</label>&nbsp;&nbsp;
                 <button ng-click="createAndSaveCoupons()" class="btn btn-primary w-100px me-5px" ng-disabled="createMultipleServiceBusy">Download<i ng-if="createMultipleServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                <hr />
+                <p> You can also use URL to get test Abon Vouchers:</p>
+                <p> GET - https://dev-simulator-api.aircash.eu/api/resources/getCoupon?currencyIsoCode={currency}</p>
+                <p>Suported currencies are EUR, RON, BGN, PLN, CZK.</p>
             </div>
             <br />
         </div>
