@@ -57,6 +57,10 @@ signatureModule.controller("SignatureCtrl",
     ['$scope', '$state', 'signatureService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope',
         function ($scope, $state, signatureService, $filter, $http, JwtParser, $uibModal, $rootScope) {
 
+            $scope.copyToClipboard = function (data) {
+                navigator.clipboard.writeText(data);
+            }
+
             $scope.getSignatureModel = {
                 dataSign: $scope.dataSign
             };
@@ -82,6 +86,7 @@ signatureModule.controller("SignatureCtrl",
             $scope.GenerateSignatureResponded = false;
             $scope.getSignature = function () {
                 $scope.GenerateSignatureServiceBusy = true;
+                $scope.GenerateSignatureResponded = false;
                 console.log($scope.dataSign)
                 signatureService.getSignature($scope.getSignatureModel.dataSign)
                     .then(function (response) {
@@ -98,6 +103,7 @@ signatureModule.controller("SignatureCtrl",
             $scope.ValidateSignatureServiceBusy = false;
             $scope.validateSignature = function () {
                 $scope.ValidateSignatureServiceBusy = true;
+                $scope.ValidateSignatureResponded = false;
                 signatureService.validateSignature($scope.validateSignatureModel.dataToValidate, $scope.validateSignatureModel.signatureToValidate)
                     .then(function (response) {
                         $scope.ValidateSignatureResponse = response;
