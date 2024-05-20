@@ -8,6 +8,7 @@ namespace Services.Partner
 {
     public class PartnerErrorCode
     {
+        public int Id { get; set; }
         public Guid? PartnerId { get; set; }
         public int Code { get; set; }
         public string LocoKey { get; set; }

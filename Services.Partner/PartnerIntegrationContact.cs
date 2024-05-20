@@ -8,7 +8,9 @@ namespace Services.Partner
 {
     public class PartnerIntegrationContact
     {
-        public Guid? PartnerId { get; set; }
-        public string Contact { get; set; }
+        public int Id { get; set; }
+        public string ContactName { get; set; }
+        public string ContactEmail { get; set; }
+        public string ContactPhoneNumber { get; set; }
     }
 }

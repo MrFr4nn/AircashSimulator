@@ -58,10 +58,52 @@
                         <td><b>Internal ticket</b></td>
                         <td><a editable-textarea="internalTicket" e-name="internalTicket" e-cols="80" e-rows="1" href="{{internalTicket}}" target="_blank">{{internalTicket || 'not set'}}</a></td>
                     </tr>
+                </tbody>
+            </table>
+        </div>
+        </br>
+        <div class="row">
+            <div class="col-5">
+                <h4><i class="fa fa-phone"></i> Integration contact</h4>
+            </div>
+            <div class="col-1">
+                <span ng-show="editableForm.$visible">
+                    <button type="button" class="btn btn-outline-dark" style="float: right;" ng-disabled="editableForm.$waiting" ng-click="showAddIntegrationContactModal();">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-active col-6 mt-2">
+                <thead>
                     <tr>
-                        <td><b>Integration contacts</b></td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone number</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="partnerIntegrationContacts.length === 0">
+                        <td colspan="4" class="text-center">No integration contacts!</td>
+                    </tr>
+                    <tr ng-repeat="c in partnerIntegrationContacts">
                         <td>
-                            <span editable-text="partnerContact" e-name="partnerContact"> {{ partnerContact || 'not set'}}</span>
+                            <span editable-text="c.ContactName" e-name="c.ContactName"> {{ c.ContactName || 'not set'}}</span>
+                        </td>
+                        <td>
+                            <span editable-text="c.ContactEmail" e-name="c.ContactEmail"> {{ c.ContactEmail || 'not set' }}</span>
+                        </td>
+                        <td>
+                            <span editable-text="c.ContactPhoneNumber" e-name="c.ContactPhoneNumber"> {{ c.ContactPhoneNumber || 'not set' }}</span>
+                        </td>
+                        <td>
+                            <span ng-show="editableForm.$visible">
+                                <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </span>
                         </td>
                     </tr>
                 </tbody>
@@ -428,19 +470,19 @@
                             <tbody>
                                 <tr>
                                     <td><b>Identifiers</b></td>
-                                    <td class="editable">
+                                    <td>
                                         <span editable-text="identifiersMarketplace" e-name="identifiersMarketplace"> {{ identifiersMarketplace || 'empty (API)' }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>Deeplink</b></td>
-                                    <td class="editable">
+                                    <td>
                                         <span editable-text="deeplinkMarketplace" e-name="deeplinkMarketplace"> {{ deeplinkMarketplace || 'empty (API)' }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>Position</b></td>
-                                    <td class="editable">
+                                    <td>
                                         <span editable-text="marketplacePosition" e-name="marketplacePosition"> {{ marketplacePosition || 'not set' }}</span>
                                     </td>
                                 </tr>
@@ -452,13 +494,13 @@
                                 </tr>
                                 <tr>
                                     <td><b>Min - max</b></td>
-                                    <td class="editable">
+                                    <td>
                                         <span editable-text="minMaxMarketplace" e-name="minMaxMarketplace"> {{ minMaxMarketplace || 'empty (API)' }}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>Name comparisson</b></td>
-                                    <td class="editable">
+                                    <td>
                                         <span editable-text="nameComparisonMarketplace" e-name="nameComparisonMarketplace"> {{ nameComparisonMarketplace || 'empty (API)' }}</span>
                                     </td>
                                 </tr>
@@ -520,15 +562,18 @@
                                         <th></th>
                                     </tr>
                                 </thead>
-                                <tbody id="errorCodesBody">
+                                <tbody>
+                                    <tr ng-if="partnerErrorCodes.length === 0">
+                                        <td colspan="4" class="text-center">No error codes!</td>
+                                    </tr>
                                     <tr ng-repeat="p in partnerErrorCodes">
                                         <td>
                                             <span editable-text="p.Code" e-name="p.Code"> {{ p.Code }}</span>
                                         </td>
-                                        <td class="editableErrorCode">
+                                        <td>
                                             <span editable-text="p.Description" e-name="p.Description"> {{ p.Description }}</span>
                                         </td>
-                                        <td class="editableErrorCode">
+                                        <td>
                                             <span editable-text="p.LocoKey" e-name="p.LocoKey"> {{ p.LocoKey }}</span>
                                         </td>
                                         <td>
@@ -619,7 +664,40 @@
         </div>
     </div>
 
+    <div class="modal fade" id="AddIntegrationContactModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">New integration contact</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <form action="/" method="POST" name="addIntegrationContactForm">
 
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input class="form-control" type="text" ng-required="true" ng-model="newnewContactName">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input class="form-control" type="text" ng-required="true" ng-model="newContactEmail">
+                        </div>
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">Phone number</label>
+                                <input class="form-control" type="text" ng-model="newContactPhoneNumber">
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-disabled="addIntegrationContacForm.$invalid" ng-click="saveIntegrationContact();">Add</button>
+                    <a href="javascript:;" class="btn btn-white" ng-click="closeAddIntegrationContactModal();">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

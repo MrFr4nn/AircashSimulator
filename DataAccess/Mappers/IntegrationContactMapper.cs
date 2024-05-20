@@ -15,7 +15,9 @@ namespace DataAccess.Mappers
         {
             builder.ToTable("IntegrationContacts");
             builder.Property(x => x.PartnerId).IsRequired();
-            builder.Property(x => x.Contact).IsRequired().HasMaxLength(256);
+            builder.Property(x => x.ContactName).HasMaxLength(256);
+            builder.Property(x => x.ContactEmail).HasMaxLength(256);
+            builder.Property(x => x.ContactPhoneNumber).HasMaxLength(256);
         }
     }
 }

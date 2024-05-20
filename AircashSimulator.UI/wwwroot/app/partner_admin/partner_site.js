@@ -17,10 +17,7 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
             getPartnerDetail: getPartnerDetail,
-            getPartnerIntegrationContact: getPartnerIntegrationContact,
-            getPartnerErrorCodes: getPartnerErrorCodes,
-            getEndpoints: getEndpoints,
-            getPartnerEndpoints: getPartnerEndpoints
+            getEndpoints: getEndpoints
         });
 
         function getPartnerDetail(partnerId) {
@@ -29,30 +26,6 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
                 url: config.baseUrl + "Partner/GetPartnerDetail",
                 params: {
                     partnerId:partnerId
-                }
-            }
-            );
-            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-        } 
-
-        function getPartnerIntegrationContact(partnerId) {
-            var request = $http({
-                method: 'GET',
-                url: config.baseUrl + "Partner/GetPartnerIntegrationContact",
-                params: {
-                    partnerId: partnerId
-                }
-            }
-            );
-            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-        } 
-
-        function getPartnerErrorCodes(partnerId) {
-            var request = $http({
-                method: 'GET',
-                url: config.baseUrl + "Partner/GetPartnerErrorCodes",
-                params: {
-                    partnerId: partnerId
                 }
             }
             );
@@ -68,18 +41,6 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
 
-        function getPartnerEndpoints(partnerId, endpointType) {
-            var request = $http({
-                method: 'GET',
-                url: config.baseUrl + "Partner/GetPartnerEndpoints",
-                params: {
-                    partnerId: partnerId,
-                    endpointType: endpointType
-                }
-            }
-            );
-            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
-        }
     }
 ]);
 
@@ -167,41 +128,16 @@ partnerSiteModule.controller("partnerSiteCtrl",
                                 $scope.abonAmountRule = 0;
                             }                            
                             $scope.roles = $scope.partner.Roles;
+                            $scope.partnerEndpointsAbon = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "AbonDeposit");
+                            $scope.partnerEndpointsWithdrawal = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "Withdrawal");
+                            $scope.partnerEndpointsAcPay = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "AircashPay");
+                            $scope.partnerIntegrationContacts = $scope.partner.PartnerIntegrationContact;
+                            $scope.partnerErrorCodes = $scope.partner.PartnerErrorCodes;
                             $scope.displayPanels();
 
                         }
                     }, () => {
                         console.log("Error, could not fetch partner!");
-                    });
-            };
-
-            $scope.getPartnerIntegrationContact = function () {
-                partnerSiteService.getPartnerIntegrationContact($scope.partnerId)
-                    .then(function (response) {
-                        if (response) {
-                            $scope.partnerIntegrationContact = response[0];
-                            if ($scope.partnerIntegrationContact != null) {
-                                $scope.partnerContact = $scope.partnerIntegrationContact.Contact;
-                            }
-                            else {
-                                $scope.partnerContact = null;
-                            }
-                            
-                        }
-                    }, () => {
-                        console.log("Error, could not fetch partner integration contact!");
-                    });
-            };
-
-            $scope.getPartnerErrorCodes = function () {
-                partnerSiteService.getPartnerErrorCodes($scope.partnerId)
-                    .then(function (response) {
-                        if (response) {
-                            $scope.partnerErrorCodes = response;
-                            
-                        }
-                    }, () => {
-                        console.log("Error, could not fetch partner error codes!");
                     });
             };
 
@@ -216,39 +152,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                         console.log("Error, could not fetch endpoints!");
                     });
             }
-
-            $scope.getPartnerEndpoints = function () {
-                partnerSiteService.getPartnerEndpoints($scope.partnerId,'AbonDeposit')
-                    .then(function (response) {
-                        if (response) {
-                            $scope.partnerEndpointsAbon = response;
-                        }
-                    }, () => {
-                        console.log("Error, could not fetch partner endpoints!");
-                    });
-                partnerSiteService.getPartnerEndpoints($scope.partnerId, 'Withdrawal')
-                    .then(function (response) {
-                        if (response) {
-                            $scope.partnerEndpointsWithdrawal = response;
-                        }
-                    }, () => {
-                        console.log("Error, could not fetch partner endpoints!");
-                    });
-                partnerSiteService.getPartnerEndpoints($scope.partnerId, 'AircashPay')
-                    .then(function (response) {
-                        if (response) {
-                            $scope.partnerEndpointsAcPay = response;
-                        }
-                    }, () => {
-                        console.log("Error, could not fetch partner endpoints!");
-                    });
-            }
             
             $scope.getPartnerDetail();
-            $scope.getPartnerIntegrationContact();
-            $scope.getPartnerErrorCodes();
             $scope.getEndpoints();
-            $scope.getPartnerEndpoints();
 
             $scope.showAddErrorCodeModal = function () {
                 $('#AddErrorCodeModal').modal('show');
@@ -288,6 +194,23 @@ partnerSiteModule.controller("partnerSiteCtrl",
                 $('#AddApiDetailsModal').modal('hide');
                 $scope.newRequest = "";
                 $scope.newResponse = "";
+            }
+
+            $scope.showAddIntegrationContactModal = function () {
+                $('#AddIntegrationContactModal').modal('show');
+            }
+
+            $scope.saveIntegrationContact = function () {
+                $scope.newContactName = "";
+                $scope.newContactEmail = "";
+                $scope.newContactPhoneNumber = "";
+            }
+
+            $scope.closeAddIntegrationContactModal = function () {
+                $('#AddIntegrationContactModal').modal('hide');
+                $scope.newContactName = "";
+                $scope.newContactEmail = "";
+                $scope.newContactPhoneNumber = "";
             }
         }
 

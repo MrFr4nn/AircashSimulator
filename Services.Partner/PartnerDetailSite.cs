@@ -27,5 +27,8 @@ namespace Services.Partner
         public List<KeyValuePair<int, string>> AbonAuthorizationEnums { get; set; }
         public List<KeyValuePair<int, string>> AbonAmoutRuleEnums { get; set; }
         public List<KeyValuePair<int, string>> WithdrawalInstantEnums { get; set; }
+        public List<PartnerEndpoint> PartnerEndpoints { get; set; }
+        public List<PartnerIntegrationContact> PartnerIntegrationContact { get; set; }
+        public List<PartnerErrorCode> PartnerErrorCodes { get; set; }
     }
 }

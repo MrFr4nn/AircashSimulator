@@ -12,13 +12,7 @@ namespace Services.Partner
         public string Url { get; set; }
         public string Request { get; set; }
         public string Response { get; set; }
-
-        public PartnerEndpoint(int id,string url, string request, string response) 
-        {
-            Id = id;
-            Url = url;
-            Request = request;
-            Response = response;        
-        }
+        public int EndpointType { get; set; }
+        public string EndpointTypeName { get; set; }
     }
 }

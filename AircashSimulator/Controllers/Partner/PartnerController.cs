@@ -127,40 +127,12 @@ namespace AircashSimulator.Controllers.Partner
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetPartnerIntegrationContact(Guid partnerId)
-        {
-            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-            var partnerContact = await PartnerService.GetPartnerIntegrationContact(partnerId);
-            return Ok(partnerContact);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetPartnerErrorCodes(Guid partnerId)
-        {
-            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-            var partnerErrorCodes = await PartnerService.GetPartnerErrorCodes(partnerId);
-            return Ok(partnerErrorCodes);
-        }
-
-        [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetEndpoints()
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
             var endpoints = await PartnerService.GetEndpoints();
             return Ok(endpoints);
-        }
-
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetPartnerEndpoints(Guid partnerId, string endpointType)
-        {
-            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-            var partnerEndpoints = await PartnerService.GetPartnerEndpoints(partnerId, endpointType);
-            return Ok(partnerEndpoints);
-        }
-        
+        }        
 
 
     }

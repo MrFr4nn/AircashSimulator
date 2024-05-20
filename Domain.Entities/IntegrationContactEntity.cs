@@ -8,6 +8,8 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public Guid PartnerId { get; set; }
-        public string Contact { get; set; }
+        public string ContactName { get; set; }
+        public string ContactEmail { get; set; }
+        public string ContactPhoneNumber { get; set; }
     }
 }

@@ -97,14 +97,15 @@ namespace Services.Partner
         }
         public async Task<List<PartnerSettingVM>> GetPartnerSetting(Guid partnerId)
         {
-            var partnerSetting = await AircashSimulatorContext.PartnerSettings.Select(x => new PartnerSettingVM
-            {
-                Id = x.Id,
-                PartnerId = x.PartnerId,
-                Key = x.Key,
-                Value = x.Value
-            }).ToListAsync();
-            partnerSetting.RemoveAll(p => p.PartnerId != partnerId);
+            var partnerSetting = await AircashSimulatorContext.PartnerSettings
+                .Where(p => p.PartnerId == partnerId)
+                .Select(x => new PartnerSettingVM
+                {
+                    Id = x.Id,
+                    PartnerId = x.PartnerId,
+                    Key = x.Key,
+                    Value = x.Value
+                }).ToListAsync();
 
             return partnerSetting;
         }
@@ -278,7 +279,48 @@ namespace Services.Partner
                                     .Cast<int>()
                                    .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(WithdrawalInstantEnum), x)))
                                    .ToList();
-            var partnerDetail = await AircashSimulatorContext.Partners.Select(x => new PartnerDetailSite
+            var endpointsTypeDictionary = await AircashSimulatorContext.Endpoints
+                                    .ToDictionaryAsync(
+                                        x => x.Id,
+                                        x => new EndpointInfo
+                                        {
+                                            EndpointType = x.EndpointType,
+                                            Url = x.Url
+                                        });
+            var partnerEndpoints = await AircashSimulatorContext.PartnerEndpointsUsage.Where(x => x.PartnerId == partnerId)
+                .Select(x => new PartnerEndpoint
+                {
+                    Id=x.Id,
+                    Url = endpointsTypeDictionary[x.EndpointId].Url,
+                    Request = x.Request,
+                    Response = x.Response,
+                    EndpointType= (int)endpointsTypeDictionary[x.EndpointId].EndpointType,
+                    EndpointTypeName= endpointsTypeDictionary[x.EndpointId].EndpointType.ToString()
+                }).ToListAsync();
+            var partnerIntegrationContact = await AircashSimulatorContext.IntegrationContacts
+                .Where(x => x.PartnerId == partnerId)
+                .Select(x =>  new PartnerIntegrationContact
+                {
+                    Id=x.Id,
+                    ContactName= x.ContactName,
+                    ContactEmail= x.ContactEmail,
+                    ContactPhoneNumber= x.ContactPhoneNumber
+                })
+                .ToListAsync();
+            var partnerErrorCodes = await AircashSimulatorContext.ErrorCodes
+                .Where(x => x.PartnerId == partnerId)
+                .Select(x => new PartnerErrorCode
+                {
+                    Id= x.Id,
+                    PartnerId = x.PartnerId,
+                    Code = x.Code,
+                    LocoKey = x.LocoKey,
+                    Description = x.Description
+                })
+                .ToListAsync();
+            var partnerDetail = await AircashSimulatorContext.Partners
+                .Where(p => p.PartnerId == partnerId)
+                .Select(x => new PartnerDetailSite
             {
                 PartnerId = x.PartnerId,
                 PartnerName = x.PartnerName,
@@ -297,10 +339,11 @@ namespace Services.Partner
                 IntegrationTypeEnums= integrationTypeEnums,
                 AbonAuthorizationEnums= abonAuthorizationEnums,
                 AbonAmoutRuleEnums = abonAmoutRuleEnums,
-                WithdrawalInstantEnums= withdrawalInstantEnums
-
+                WithdrawalInstantEnums= withdrawalInstantEnums,
+                PartnerEndpoints= partnerEndpoints,
+                PartnerIntegrationContact=partnerIntegrationContact,
+                PartnerErrorCodes= partnerErrorCodes
             }).ToListAsync();
-            partnerDetail.RemoveAll(p => p.PartnerId != partnerId);
 
             if (partnerDetail != null)
             {
@@ -316,34 +359,7 @@ namespace Services.Partner
                     }
                 }
             }
-
             return partnerDetail;
-        }
-
-        public async Task<List<PartnerIntegrationContact>> GetPartnerIntegrationContact(Guid partnerId)
-        {
-            var partnerContact = await AircashSimulatorContext.IntegrationContacts.Select(x => new PartnerIntegrationContact
-            {
-                PartnerId = x.PartnerId,
-                Contact = x.Contact
-            }).ToListAsync();
-            partnerContact.RemoveAll(p => p.PartnerId != partnerId);
-
-            return partnerContact;
-        }
-
-        public async Task<List<PartnerErrorCode>> GetPartnerErrorCodes(Guid partnerId)
-        {
-            var partnerErrorCodes = await AircashSimulatorContext.ErrorCodes.Select(x => new PartnerErrorCode
-            {
-                PartnerId = x.PartnerId,
-                Code=x.Code,
-                LocoKey=x.LocoKey,
-                Description=x.Description                
-            }).ToListAsync();
-            partnerErrorCodes.RemoveAll(p => p.PartnerId != partnerId);
-
-            return partnerErrorCodes;
         }
 
         public async Task<List<Endpoint>> GetEndpoints()
@@ -356,29 +372,7 @@ namespace Services.Partner
             }).ToListAsync();
             return endpoints;
         }
-        public async Task<List<PartnerEndpoint>> GetPartnerEndpoints(Guid partnerId, string endpointType)
-        {
-            var endpointsType = AircashSimulatorContext.Endpoints.Select(x => new Endpoint
-            {
-                Id = x.Id,
-                EndpointType = x.EndpointType.ToString(),
-                Url = x.Url
-            }).ToList();
-            endpointsType.RemoveAll(e => e.EndpointType != endpointType);
-            var partnerEndpointsUsage = await AircashSimulatorContext.PartnerEndpointsUsage.Where(x => x.PartnerId == partnerId && endpointsType.Select(e => e.Id).Contains(x.EndpointId)).ToListAsync();
-            var partnerEndpoints = new List<PartnerEndpoint>();
-            foreach(var p in partnerEndpointsUsage)
-            {
-                foreach(var e in endpointsType)
-                {
-                    if (e.Id == p.EndpointId)
-                    {
-                        partnerEndpoints.Add(new PartnerEndpoint(p.Id,e.Url, p.Request, p.Response));
-                    }
-                }  
-            }
-            return partnerEndpoints;
-        }
+        
 
     }
 }
