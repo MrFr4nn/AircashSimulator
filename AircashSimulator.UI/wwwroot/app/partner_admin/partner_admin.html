@@ -90,17 +90,17 @@
                             </thead>
                             <tbody>
                                 <tr ng-repeat="p in partners">
-                                    <td>{{p.PartnerId}}</td>
-                                    <td>{{p.PartnerName}}</td>
-                                    <td>{{p.PrivateKey}}</td>
-                                    <td>{{p.PrivateKeyPass}}</td>
-                                    <td>{{p.CurrencyId}}</td>
-                                    <td>{{p.CountryCode}}</td>
-                                    <td>{{p.Environment == 1 ? "Dev" : "Staging"}}</td>
-                                    <td style="cursor:pointer" ng-click="ShowPartnerRolesModal(p)"><i class="fa fa-id-card"></i></td>
-                                    <td style="cursor:pointer" ng-click="showPartnerModal(p, false);"><i class="fa fa-pen"></i></td>
-                                    <td style="cursor:pointer" ng-click="confirmDeleteModal(p);"><i class="fa fa-trash"></i></td>
-                                    <td style="cursor:pointer" ng-click="showPartnerSettingsModal(p);"><i class="fa fa-cog"></i></td>
+                                        <td style="cursor:pointer" ui-sref="app.partnerSite({partnerId: '{{p.PartnerId}}'})">{{p.PartnerId}}</td>
+                                        <td>{{p.PartnerName}}</td>
+                                        <td>{{p.PrivateKey}}</td>
+                                        <td>{{p.PrivateKeyPass}}</td>
+                                        <td>{{p.CurrencyId}}</td>
+                                        <td>{{p.CountryCode}}</td>
+                                        <td>{{p.Environment == 1 ? "Dev" : "Staging"}}</td>
+                                        <td style="cursor:pointer" ng-click="ShowPartnerRolesModal(p)"><i class="fa fa-id-card"></i></td>
+                                        <td style="cursor:pointer" ng-click="showPartnerModal(p, false);"><i class="fa fa-pen"></i></td>
+                                        <td style="cursor:pointer" ng-click="confirmDeleteModal(p);"><i class="fa fa-trash"></i></td>
+                                        <td style="cursor:pointer" ng-click="showPartnerSettingsModal(p);"><i class="fa fa-cog"></i></td>
                                 </tr>
                             </tbody>
                         </table>

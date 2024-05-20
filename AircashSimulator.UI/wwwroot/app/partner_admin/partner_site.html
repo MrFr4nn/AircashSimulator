@@ -1,0 +1,628 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <form editable-form name="editableForm" onaftersave="saveChanges()">
+        <div class="row justify-content-between">
+            <div class="col">
+                <h1>{{partnerName}}</h1>
+            </div>
+            <div class="col-1 buttons">
+                <button type="button" class="btn btn-outline-dark" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+                    <i class="fa fa-edit"></i>
+                </button>
+                <span ng-show="editableForm.$visible">
+                    <button type="submit" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
+                        <i class="fa fa-save"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                        <i class="fa fa-times-circle"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <br />
+
+        <h4><i class="fa fa-info-circle"></i> Basic info</h4>
+        <div class="table-responsive">
+            <table class="table table-active col-md-6 mt-2">
+                <tbody>
+                    <tr>
+                        <td><b>Partner Id</b></td>
+                        <td>
+                            <span editable-textarea="partnerId" e-name="partnerId" e-cols="40" e-rows="1"> {{ partnerId || 'not set' }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Partner name</b></td>
+                        <td>
+                            <span editable-text="partnerName" e-name="partnerName"> {{ partnerName || 'not set' }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Brand</b></td>
+                        <td>
+                            <span editable-text="brand" e-name="brand"> {{ brand || 'not set' }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Platform</b></td>
+                        <td>
+                            <span editable-text="platform" e-name="platform"> {{ platform || 'not set' }}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Internal ticket</b></td>
+                        <td><a editable-textarea="internalTicket" e-name="internalTicket" e-cols="80" e-rows="1" href="{{internalTicket}}" target="_blank">{{internalTicket || 'not set'}}</a></td>
+                    </tr>
+                    <tr>
+                        <td><b>Integration contacts</b></td>
+                        <td>
+                            <span editable-text="partnerContact" e-name="partnerContact"> {{ partnerContact || 'not set'}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <br />
+
+        <div id="panelAbon" class="panel panel-inverse" style="display:none;">
+            <div class="panel-heading">
+                <div class="row col-12 justify-content-between">
+                    <div class="col-auto row">
+                        <h2><i class="fa fa-receipt"></i> Abon deposit</h2>
+                    </div>
+                    <div>
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body p-0">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-active col-sm-3 mt-3">
+                            <tbody>
+                                <tr>
+                                    <td><b>Type</b></td>
+                                    <td>
+                                        <span editable-select="abonType" e-name="abonType" e-ng-options="t.Key as t.Value for t in integrationTypeEnums">
+                                            {{ (integrationTypeEnums | filter:{Key: abonType})[0].Value || 'not set' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr ng-if="abonType == 'Frame'">
+                                    <td><b>Amount rule</b></td>
+                                    <td>
+                                        <span editable-select="abonAmountRule" e-name="abonAmountRule" e-ng-options="r.Key as r.Value for r in abonAmoutRuleEnums">
+                                            {{ (abonAmoutRuleEnums | filter:{Key: abonAmountRule})[0].Value || 'not set' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Authorization</b></td>
+                                    <td>
+                                        <span editable-select="abonAuthorization" e-name="abonAuthorization" e-ng-options="a.Key as a.Value for a in abonAuthorizationEnums">
+                                            {{ (abonAuthorizationEnums | filter:{Key: abonAuthorization})[0].Value || 'not set' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>First transaction date</b></td>
+                                    <td>
+                                        <span editable-text="firstDateAbon" e-name="firstDateAbon"> {{ firstDateAbon || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <h4><i class="fa fa-exchange-alt"></i> Data exchange</h4>
+                    <div class="table-responsive">
+                        <table class="table table-active col-3 mt-2">
+                            <tbody>
+                                <tr>
+                                    <td><b>To Aircash</b></td>
+                                    <td>
+                                        <span editable-text="dataToAircashAbon" e-name="dataToAircashAbon"> {{ dataToAircashAbon || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>To Merchant</b></td>
+                                    <td>
+                                        <span editable-text="dataToMerchantAbon" e-name="dataToMerchantAbon"> {{ dataToMerchantAbon || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-1">
+                            <h4><i class="fa fa-tools"></i> API details</h4>
+                        </div>
+                        <div class="col-1">
+                            <span ng-show="editableForm.$visible">
+                                <button type="button" class="btn btn-outline-dark" style="float: left;" ng-disabled="editableForm.$waiting" ng-click="showAddApiDetailsModal('AbonDeposit');">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAbonDeposit" ng-if="partnerEndpointsAbon">
+                        <div ng-repeat="p in partnerEndpointsAbon" class="card">
+                            <div class="card-header" id="heading{{p.Id}}">
+                                <h2 class="mb-0 row">
+                                    <button class="btn btn-link btn-block text-left col" type="button" data-toggle="collapse" data-target="#collapse{{p.Id}}" aria-expanded="true" aria-controls="collapseOne">
+                                        <span editable-textarea="p.Url" e-name="p.Url" e-cols="80"> {{p.Url}}</span>
+                                    </button>
+                                    <span ng-show="editableForm.$visible" class="align-content-center col-1">
+                                        <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
+                                </h2>
+                            </div>
+                            <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAbonDeposit">
+                                <div class="card-body">
+                                    Request
+                                    </br>
+                                    <span editable-textarea="p.Request" e-name="p.Request" e-rows="5" e-cols="150"><jsonformatter data="p.Request"></jsonformatter></span>
+                                    </br>
+                                    HTTP 200 Response
+                                    </br>
+                                    <span editable-textarea="p.Response" e-name="p.Response" e-rows="5" e-cols="150"><jsonformatter data="p.Response"></jsonformatter></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </br>
+                    <h4><i class="fa fa-video"></i> Deposit example</h4>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="panelWithdrawal" class="panel panel-inverse" style="display:none;">
+            <div class="panel-heading">
+                <div class="row col-12 justify-content-between">
+                    <div class="col-auto row">
+                        <h2><i class="fa fa-coins"></i> Aircash withdrawal</h2>
+                    </div>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body p-0">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-active col-sm-3 mt-3">
+                            <tbody>
+                                <tr>
+                                    <td><b>Type</b></td>
+                                    <td>
+                                        <span editable-select="withdrawalType" e-name="withdrawalType" e-ng-options="t.Key as t.Value for t in integrationTypeEnums">
+                                            {{ (integrationTypeEnums | filter:{Key: withdrawalType})[0].Value || 'not set' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Instant</b></td>
+                                    <td>
+                                        <span editable-select="withdrawalInstant" e-name="withdrawalInstant" e-ng-options="i.Key as i.Value for i in withdrawalInstantEnums">
+                                            {{ (withdrawalInstantEnums | filter:{Key: withdrawalInstant})[0].Value || 'not set' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>First transaction date</b></td>
+                                    <td>
+                                        <span editable-text="firstDateWithdrawal" e-name="firstDateWithdrawal"> {{ firstDateWithdrawal || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <h4><i class="fa fa-exchange-alt"></i> Data exchange</h4>
+                    <div class="table-responsive">
+                        <table class="table table-active col-3 mt-2">
+                            <tbody>
+                                <tr>
+                                    <td><b>To Aircash</b></td>
+                                    <td>
+                                        <span editable-text="dataToAircashWithdrawal" e-name="dataToAircashWithdrawal"> {{ dataToAircashWithdrawal || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>To Merchant</b></td>
+                                    <td>
+                                        <span editable-text="dataToMerchantWithdrawal" e-name="dataToMerchantWithdrawal"> {{ dataToMerchantWithdrawal || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-1">
+                            <h4><i class="fa fa-tools"></i> API details</h4>
+                        </div>
+                        <div class="col-1">
+                            <span ng-show="editableForm.$visible">
+                                <button type="button" class="btn btn-outline-dark" style="float: left;" ng-disabled="editableForm.$waiting" ng-click="showAddApiDetailsModal('Withdrawal');">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAbonDeposit" ng-if="partnerEndpointsWithdrawal">
+                        <div ng-repeat="p in partnerEndpointsWithdrawal" class="card">
+                            <div class="card-header" id="heading{{p.Id}}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{p.Id}}" aria-expanded="true" aria-controls="collapseOne">
+                                        <span editable-textarea="p.Url" e-name="p.Url" e-cols="80"> {{p.Url}}</span>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAbonDeposit">
+                                <div class="card-body">
+                                    Request
+                                    </br>
+                                    <span editable-textarea="p.Request" e-name="p.Request" e-rows="5" e-cols="150"><jsonformatter data="p.Request"></jsonformatter></span>
+                                    </br>
+                                    HTTP 200 Response
+                                    </br>
+                                    <span editable-textarea="p.Response" e-name="p.Response" e-rows="5" e-cols="150"><jsonformatter data="p.Response"></jsonformatter></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </br>
+
+                    <h4><i class="fa fa-video"></i> Withdrawal example</h4>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelAcPay" class="panel panel-inverse" style="display:none;">
+            <div class="panel-heading">
+                <div class="row col-12 justify-content-between">
+                    <div class="col-auto row">
+                        <h2><i class="fa fa-mobile-alt"></i> Aircash Pay</h2>
+                    </div>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body p-0">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-active col-sm-3 mt-3">
+                            <tbody>
+                                <tr>
+                                    <td><b>Type</b></td>
+                                    <td>
+                                        <span editable-select="acPayType" e-name="acPayType" e-ng-options="t.Key as t.Value for t in integrationTypeEnums">
+                                            {{ (integrationTypeEnums | filter:{Key: acPayType})[0].Value || 'not set' }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Min - Max</b></td>
+                                    <td>
+                                        <span editable-text="minMaxAcPay" e-name="minMaxAcPay"> {{ minMaxAcPay || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>First transaction date</b></td>
+                                    <td>
+                                        <span editable-text="firstDateAcPay" e-name="firstDateAcPay"> {{ firstDateAcPay || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <h4><i class="fa fa-exchange-alt"></i> Data exchange</h4>
+                    <div class="table-responsive">
+                        <table class="table table-active col-3 mt-2">
+                            <tbody>
+                                <tr>
+                                    <td><b>To Aircash</b></td>
+                                    <td>
+                                        <span editable-text="dataToAircashAcPay" e-name="dataToAircashAcPay"> {{ dataToAircashAcPay || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>To Merchant</b></td>
+                                    <td>
+                                        <span editable-text="dataToMerchantAcPay" e-name="dataToMerchantAcPay"> {{ dataToMerchantAcPay || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <div class="row">
+                        <div class="col-1">
+                            <h4><i class="fa fa-tools"></i> API details</h4>
+                        </div>
+                        <div class="col-1">
+                            <span ng-show="editableForm.$visible">
+                                <button type="button" class="btn btn-outline-dark" style="float: left;" ng-disabled="editableForm.$waiting" ng-click="showAddApiDetailsModal('AircashPay');">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAbonDeposit" ng-if="partnerEndpointsAcPay">
+                        <div ng-repeat="p in partnerEndpointsAcPay" class="card">
+                            <div class="card-header" id="heading{{p.Id}}">
+                                <h2 class="mb-0">
+                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{p.Id}}" aria-expanded="true" aria-controls="collapseOne">
+                                        <span editable-textarea="p.Url" e-name="p.Url" e-cols="80"> {{p.Url}}</span>
+                                    </button>
+                                </h2>
+                            </div>
+                            <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAbonDeposit">
+                                <div class="card-body">
+                                    Request
+                                    </br>
+                                    <span editable-textarea="p.Request" e-name="p.Request" e-rows="5" e-cols="150"><jsonformatter data="p.Request"></jsonformatter></span>
+                                    </br>
+                                    HTTP 200 Response
+                                    </br>
+                                    <span editable-textarea="p.Response" e-name="p.Response" e-rows="5" e-cols="150"><jsonformatter data="p.Response"></jsonformatter></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </br>
+
+                    <h4><i class="fa fa-video"></i> Deposit example</h4>
+                </div>
+            </div>
+        </div>
+
+        <div id="panelMarketplace" class="panel panel-inverse" style="display:none;">
+            <div class="panel-heading">
+                <div class="row col-12 justify-content-between">
+                    <div class="col-auto row">
+                        <h2><i class="fa fa-mobile-alt"></i> Aircash Marketplace deposit</h2>
+                    </div>
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body p-0">
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-active col-sm-3 mt-3">
+                            <tbody>
+                                <tr>
+                                    <td><b>Identifiers</b></td>
+                                    <td class="editable">
+                                        <span editable-text="identifiersMarketplace" e-name="identifiersMarketplace"> {{ identifiersMarketplace || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Deeplink</b></td>
+                                    <td class="editable">
+                                        <span editable-text="deeplinkMarketplace" e-name="deeplinkMarketplace"> {{ deeplinkMarketplace || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Position</b></td>
+                                    <td class="editable">
+                                        <span editable-text="marketplacePosition" e-name="marketplacePosition"> {{ marketplacePosition || 'not set' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Country</b></td>
+                                    <td>
+                                        <span editable-text="countryCode" e-name="countryCode"> {{ countryCode || 'not set' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Min - max</b></td>
+                                    <td class="editable">
+                                        <span editable-text="minMaxMarketplace" e-name="minMaxMarketplace"> {{ minMaxMarketplace || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>Name comparisson</b></td>
+                                    <td class="editable">
+                                        <span editable-text="nameComparisonMarketplace" e-name="nameComparisonMarketplace"> {{ nameComparisonMarketplace || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>First transaction date</b></td>
+                                    <td>
+                                        <span editable-text="firstDateMarketplace" e-name="firstDateMarketplace"> {{ firstDateMarketplace || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <h4><i class="fa fa-exchange-alt"></i> Data exchange</h4>
+                    <div class="table-responsive">
+                        <table class="table table-active col-3 mt-2">
+                            <tbody>
+                                <tr>
+                                    <td><b>To Aircash</b></td>
+                                    <td>
+                                        <span editable-text="dataToAircashMarketplace" e-name="dataToAircashMarketplace"> {{ dataToAircashMarketplace || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><b>To Merchant</b></td>
+                                    <td>
+                                        <span editable-text="dataToMerchantMarketplace" e-name="dataToMerchantMarketplace"> {{ dataToMerchantMarketplace || 'empty (API)' }}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <br />
+
+                    <h4><i class="fa fa-tools"></i> API details</h4>
+                    </br>
+
+                    <div class="row">
+                        <div class="col-5">
+                            <h4><i class="fa fa-question-circle"></i> Error codes</h4>
+                        </div>
+                        <div class="col-1">
+                            <span ng-show="editableForm.$visible">
+                                <button type="button" class="btn btn-outline-dark" style="float: right;" ng-disabled="editableForm.$waiting" ng-click="showAddErrorCodeModal();">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="table-responsive">
+                            <table class="table table-active col-6 mt-2">
+                                <thead>
+                                    <tr>
+                                        <th>Code</th>
+                                        <th>Description</th>
+                                        <th>Loco Key</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="errorCodesBody">
+                                    <tr ng-repeat="p in partnerErrorCodes">
+                                        <td>
+                                            <span editable-text="p.Code" e-name="p.Code"> {{ p.Code }}</span>
+                                        </td>
+                                        <td class="editableErrorCode">
+                                            <span editable-text="p.Description" e-name="p.Description"> {{ p.Description }}</span>
+                                        </td>
+                                        <td class="editableErrorCode">
+                                            <span editable-text="p.LocoKey" e-name="p.LocoKey"> {{ p.LocoKey }}</span>
+                                        </td>
+                                        <td>
+                                            <span ng-show="editableForm.$visible">
+                                                <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
+                                                    <i class="fa fa-trash"></i>
+                                                </button>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="modal fade" id="AddErrorCodeModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">New error code</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <form action="/" method="POST" name="addErrorCodeForm">
+
+                        <div class="mb-3">
+                            <label class="form-label">Error code</label>
+                            <input class="form-control" type="text" ng-required="true" ng-model="newErrorCode">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input class="form-control" type="text" ng-required="true" ng-model="newDescription">
+                        </div>
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">Loco key</label>
+                                <input class="form-control" type="text" ng-model="newLocoKey">
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-disabled="addErrorCodeForm.$invalid" ng-click="saveErrorCode();">Add</button>
+                    <a href="javascript:;" class="btn btn-white" ng-click="closeAddErrorCodeModal();">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddApiDetailsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">New endpoint</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <form action="/" method="POST" name="addApiDetailsForm">
+
+                        <div class="mb-3">
+                            <label class="form-label">Url</label>
+                            <select id="selectUrl" class="form-control" ng-model="newUrl">
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Request</label>
+                            <textarea class="form-control" type="text" ng-required="true" ng-model="newRequest"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">Response</label>
+                                <textarea class="form-control" type="text" ng-required="true" ng-model="newResponse"></textarea>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-disabled="addApiDetailsForm.$invalid" ng-click="saveApiDetails();">Add</button>
+                    <a href="javascript:;" class="btn btn-white" ng-click="closeAddApiDetailsModal();">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</body>
+</html>

@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using Services.User;
 using AircashSimulator;
 using System.Data;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Services.Partner
 {
@@ -257,6 +258,126 @@ namespace Services.Partner
                 PasswordHash = hash,
                 Environment = EnvironmentEnum.Staging
             });
+        }
+
+        public async Task<List<PartnerDetailSite>> GetPartnerDetail(Guid partnerId)
+        {
+            var integrationTypeEnums = Enum.GetValues(typeof(IntegrationTypeEnum))
+                                    .Cast<int>()
+                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(IntegrationTypeEnum), x)))
+                                   .ToList();
+            var abonAuthorizationEnums = Enum.GetValues(typeof(AbonAuthorizationEnum))
+                                    .Cast<int>()
+                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(AbonAuthorizationEnum), x)))
+                                   .ToList();
+            var abonAmoutRuleEnums = Enum.GetValues(typeof(AbonAmoutRuleEnum))
+                                    .Cast<int>()
+                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(AbonAmoutRuleEnum), x)))
+                                   .ToList();
+            var withdrawalInstantEnums = Enum.GetValues(typeof(WithdrawalInstantEnum))
+                                    .Cast<int>()
+                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(WithdrawalInstantEnum), x)))
+                                   .ToList();
+            var partnerDetail = await AircashSimulatorContext.Partners.Select(x => new PartnerDetailSite
+            {
+                PartnerId = x.PartnerId,
+                PartnerName = x.PartnerName,
+                Brand= x.Brand,
+                Platform=x.Platform,
+                InternalTicket=x.InternalTicket,
+                MarketplacePosition = x.MarketplacePosition,
+                CountryCode=x.CountryCode,
+                AbonAmountRule =x.AbonAmountRule.ToString(),
+                AbonAuthorization = x.AbonAuthorization.ToString(),
+                AbonType= x.AbonType.ToString(),
+                AcPayType= x.AcPayType.ToString(),
+                WithdrawalType= x.WithdrawalType.ToString(),
+                WithdrawalInstant= x.WithdrawalInstant.ToString(),
+                Roles = null,
+                IntegrationTypeEnums= integrationTypeEnums,
+                AbonAuthorizationEnums= abonAuthorizationEnums,
+                AbonAmoutRuleEnums = abonAmoutRuleEnums,
+                WithdrawalInstantEnums= withdrawalInstantEnums
+
+            }).ToListAsync();
+            partnerDetail.RemoveAll(p => p.PartnerId != partnerId);
+
+            if (partnerDetail != null)
+            {
+                List<Role> roles = GetRoles();
+                var partnersRoles = AircashSimulatorContext.PartnerRoles.Select(r => new PartnerRoleEntity { PartnerId = r.PartnerId, PartnerRole = r.PartnerRole }).ToList();
+
+                foreach (var p in partnerDetail)
+                {
+                    List<PartnerRoleEntity> partnerRole = partnersRoles.Where(a => a.PartnerId == p.PartnerId).ToList();
+                    if (partnerRole.Count() > 0)
+                    {
+                        p.Roles = roles.Where(r => partnerRole.Select(r => r.PartnerRole).Contains(r.RoleId)).ToList();
+                    }
+                }
+            }
+
+            return partnerDetail;
+        }
+
+        public async Task<List<PartnerIntegrationContact>> GetPartnerIntegrationContact(Guid partnerId)
+        {
+            var partnerContact = await AircashSimulatorContext.IntegrationContacts.Select(x => new PartnerIntegrationContact
+            {
+                PartnerId = x.PartnerId,
+                Contact = x.Contact
+            }).ToListAsync();
+            partnerContact.RemoveAll(p => p.PartnerId != partnerId);
+
+            return partnerContact;
+        }
+
+        public async Task<List<PartnerErrorCode>> GetPartnerErrorCodes(Guid partnerId)
+        {
+            var partnerErrorCodes = await AircashSimulatorContext.ErrorCodes.Select(x => new PartnerErrorCode
+            {
+                PartnerId = x.PartnerId,
+                Code=x.Code,
+                LocoKey=x.LocoKey,
+                Description=x.Description                
+            }).ToListAsync();
+            partnerErrorCodes.RemoveAll(p => p.PartnerId != partnerId);
+
+            return partnerErrorCodes;
+        }
+
+        public async Task<List<Endpoint>> GetEndpoints()
+        {
+            var endpoints= await AircashSimulatorContext.Endpoints.Select( x => new Endpoint
+            {
+                Id= x.Id,
+                EndpointType=x.EndpointType.ToString(),
+                Url=x.Url
+            }).ToListAsync();
+            return endpoints;
+        }
+        public async Task<List<PartnerEndpoint>> GetPartnerEndpoints(Guid partnerId, string endpointType)
+        {
+            var endpointsType = AircashSimulatorContext.Endpoints.Select(x => new Endpoint
+            {
+                Id = x.Id,
+                EndpointType = x.EndpointType.ToString(),
+                Url = x.Url
+            }).ToList();
+            endpointsType.RemoveAll(e => e.EndpointType != endpointType);
+            var partnerEndpointsUsage = await AircashSimulatorContext.PartnerEndpointsUsage.Where(x => x.PartnerId == partnerId && endpointsType.Select(e => e.Id).Contains(x.EndpointId)).ToListAsync();
+            var partnerEndpoints = new List<PartnerEndpoint>();
+            foreach(var p in partnerEndpointsUsage)
+            {
+                foreach(var e in endpointsType)
+                {
+                    if (e.Id == p.EndpointId)
+                    {
+                        partnerEndpoints.Add(new PartnerEndpoint(p.Id,e.Url, p.Request, p.Response));
+                    }
+                }  
+            }
+            return partnerEndpoints;
         }
 
     }
