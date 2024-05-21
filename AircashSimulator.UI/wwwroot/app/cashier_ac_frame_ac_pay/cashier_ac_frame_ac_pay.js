@@ -75,30 +75,8 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                     .then(function (response) {    
                         console.log(response);                        
                         
-                        if ($scope.selectedAcFrameOption.value == 1) {                            
-                            /*---- METHOD 1 - RECOMMENDED SDK WINDOW CHECKOUT ----- */
-                            new AircashFrame.WindowCheckout({
-                                transactionId: response.ServiceResponse.TransactionId,  //this is a "TransactionId" parameter from the Aircash Frame system response
-                                onSuccess: $scope.onSuccess,                                   //a function that's needed to be defined in the partner's system, it's called after successful transaction
-                                onDecline: $scope.onDecline,                                   //a function that's needed to be defined in the partner's system, it's called after declined transaction
-                                onCancel: $scope.onCancel,                                     //a function that's needed to be defined in the partner's system, it's called after transaction cancel by user through an 'x' button in the AC Frame
-                                originUrl: location.origin,                                    //partner's system web application domain, this is where is SDK loaded from                                
-                                debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console
-                                environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production
-                            });
-                            $scope.createCashierAcFrameAcPayServiceBusy = false;
-                        }
-                        else if ($scope.selectedAcFrameOption.value == 2) {
-                            /*---- METHOD 2 - SDK REDIRECT CHECKOUT ----- */
-                            new AircashFrame.RedirectCheckout({
-                                transactionId: response.ServiceResponse.TransactionId,  //this is a "TransactionId" parameter from the Aircash Frame system response
-                                debug: true,                                            //optional parameter, send 'true' if you want a debugging logs in the browser console
-                                environment: "staging"                                  //default parameter if not sent, possible values are: localhost, development, staging and production
-                            });
-                            $scope.createCashierAcFrameAcPayServiceBusy = false;
-                        }
-                        else if ($scope.selectedAcFrameOption.value == 3) {
-                            /*---- METHOD 3 - CUSTOM WINDOW CHECKOUT ----- */
+                        if ($scope.selectedAcFrameOption.value == 1) {
+                            /*---- METHOD 1 - CUSTOM WINDOW CHECKOUT ----- */
                             if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {    
                                 $scope.createCashierAcFrameAcPayServiceBusy = false;                                
                                 setTimeout(function () {
@@ -110,8 +88,8 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                                 start();
                             }
                         }
-                        else if ($scope.selectedAcFrameOption.value == 4) {
-                            /*---- METHOD 4 - CUSTOM REDIRECT CHECKOUT ----- */
+                        else if ($scope.selectedAcFrameOption.value == 2) {
+                            /*---- METHOD 2 - CUSTOM REDIRECT CHECKOUT ----- */
                             if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {
                                 $scope.createCashierAcFrameAcPayServiceBusy = false;
                                 setTimeout(function () {
@@ -182,6 +160,10 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                 }
             };
 
+            $scope.showVideoDeposit = function () {
+                $("#videoModalDeposit").modal("show");
+            }
+
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
                 .configureLogging(signalR.LogLevel.Information)
@@ -214,10 +196,8 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                 $scope.busy = false;      
                 
                 $scope.acFrameOptions = [
-                    { value: 1, desc: 'SDK Window Checkout -  recommended' },
-                    { value: 2, desc: 'SDK Redirect Checkout' },
-                    { value: 3, desc: 'Custom Window Checkout' },
-                    { value: 4, desc: 'Custom Redirect Checkout' },
+                    { value: 1, desc: 'Custom Window Checkout' },
+                    { value: 2, desc: 'Custom Redirect Checkout' },
                 ];
 
                 $scope.selectedAcFrameOption = $scope.acFrameOptions[0];
