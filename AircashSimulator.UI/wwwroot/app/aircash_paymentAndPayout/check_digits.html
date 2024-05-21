@@ -10,93 +10,113 @@
     <p>
         Method used by the partner system to check whether there is an active transaction in the Aircash system for a given digit code. <br />
     </p>
-
-    <div class="table-responsive">
-        <table class="table table-active col-md-6">
-            <thead>
-                <tr>
-                    <th>Environment</th>
-                    <th>Method</th>
-                    <th>URL</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><b>Test</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://staging-api.aircash.eu/v2/api/SalesPartnerV2/CheckDigits</td>
-                </tr>
-                <tr>
-                    <td><b>Production</b></td>
-                    <td>
-                        POST
-                    </td>
-                    <td>https://api.aircash.eu/v2/api/SalesPartnerV2/CheckDigits</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <uib-tabset>
-        <uib-tab index="CheckDigits-tab-0" heading="Request parameters" classes="nav-item">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Required</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>DigitCode</b></td>
-                            <td>String</td>
-                            <td>Six digit code receieved from user</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>PartnerID</b></td>
-                            <td>String</td>
-                            <td>Partner identifier</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>LocationID</b></td>
-                            <td>String</td>
-                            <td>Sales partner location identifier</td>
-                            <td>NO</td>
-                        </tr>
-                        <tr>
-                            <td><b>CurrencyID</b></td>
-                            <td>Integer</td>
-                            <td>ISO-4217 currency code</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Signature</b></td>
-                            <td>String</td>
-                            <td>
-                                Signature to confirm that the partner is indeed making the request. Data to sign is CurrencyID={0}&DigitCode={1}&LocationID={2}&PartnerID={3}
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                    </tbody>
-                </table>
+    <p>Watch video example for <a href="" ng-click="showVideoCheckDigits()">digit code deposit</a></p>
+        <!-- #modal-dialog -->
+        <div class="modal fade" id="videoModalCheckDigits">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Digit code deposit</h4>
+                    </div>
+                    <div class="modal-body" align="center">
+                        <video width="600" controls muted>
+                            <source src="../../videos/salesPartner_checkDigits.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                    </div>
+                </div>
             </div>
-        </uib-tab>
-        <uib-tab index="CheckDigits-tab-1" heading="Request example" classes="nav-item">
-            <jsonformatter data="SalesPartner.CheckDigits.RequestExample"></jsonformatter>
-        </uib-tab>
-        <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
-            <pre>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-active col-md-6">
+                <thead>
+                    <tr>
+                        <th>Environment</th>
+                        <th>Method</th>
+                        <th>URL</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><b>Test</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://staging-api.aircash.eu/v2/api/SalesPartnerV2/CheckDigits</td>
+                    </tr>
+                    <tr>
+                        <td><b>Production</b></td>
+                        <td>
+                            POST
+                        </td>
+                        <td>https://api.aircash.eu/v2/api/SalesPartnerV2/CheckDigits</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <uib-tabset>
+            <uib-tab index="CheckDigits-tab-0" heading="Request parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>DigitCode</b></td>
+                                <td>String</td>
+                                <td>Six digit code receieved from user</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>PartnerID</b></td>
+                                <td>String</td>
+                                <td>Partner identifier</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>LocationID</b></td>
+                                <td>String</td>
+                                <td>Sales partner location identifier</td>
+                                <td>NO</td>
+                            </tr>
+                            <tr>
+                                <td><b>CurrencyID</b></td>
+                                <td>Integer</td>
+                                <td>ISO-4217 currency code</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Signature</b></td>
+                                <td>String</td>
+                                <td>
+                                    Signature to confirm that the partner is indeed making the request. Data to sign is CurrencyID={0}&DigitCode={1}&LocationID={2}&PartnerID={3}
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </uib-tab>
+            <uib-tab index="CheckDigits-tab-1" heading="Request example" classes="nav-item">
+                <jsonformatter data="SalesPartner.CheckDigits.RequestExample"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="CheckCode-tab-2" heading="Signature" classes="nav-item">
+                <pre>
 Request example:
 </pre>
-            <jsonformatter data="SalesPartner.CheckDigits.RequestExample"></jsonformatter>
-            <pre>
+                <jsonformatter data="SalesPartner.CheckDigits.RequestExample"></jsonformatter>
+                <pre>
 
 Sequence:
 CurrencyID=978&DigitCode=687502&LocationID=TestLocation&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf
@@ -106,186 +126,186 @@ aTgyZEI33vQNhUN/EhxIjj8t1kQWl6qpBweLs369bS3wp0BAo3H8q4Ze6HTZlRAQkOOnhL1CNpLk6Oc9
 
 
 </pre>
-        </uib-tab>
-        <uib-tab index="CheckDigits-tab-3" heading="Response parameters" classes="nav-item">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Parameter</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Required</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>DigitCode</b></td>
-                            <td>String</td>
-                            <td>Digit code that was sent in the request</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>BarCode</b></td>
-                            <td>String</td>
-                            <td>Barcode assigned to the same transaction as the digit code from the request. This is later used in ConfirmTransaction.</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>Amount</b></td>
-                            <td>Number</td>
-                            <td>
-                                A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
-                            </td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>CurrencyID</b></td>
-                            <td>Integer</td>
-                            <td>ISO-4217 currency code</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>FirstName</b></td>
-                            <td>String</td>
-                            <td>Aircash user first name</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>LastName</b></td>
-                            <td>String</td>
-                            <td>Aircash user last name</td>
-                            <td>YES</td>
-                        </tr>
-                        <tr>
-                            <td><b>DateOfBirth</b></td>
-                            <td>DateTime</td>
-                            <td>Aircash user date of birth</td>
-                            <td>YES</td>
-                        </tr>
-                </table>
-            </div>
-            <hr />
-            <p class="ml-3">
-                <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
-            </p>
-        </uib-tab>
-        <uib-tab index="CheckDigits-tab-4" heading="Response example" classes="nav-item">
-            <jsonformatter data="SalesPartner.CheckDigits.ResponseExampleV2"></jsonformatter>
-        </uib-tab>
-        <uib-tab index="CheckDigits-tab-5" heading="Error response messages" classes="nav-item">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Http response</th>
-                            <th>Description</th>
-                            <th>Error Code</th>
-                            <th>Message</th>
-                            <th>Solution</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><b>401</b></td>
-                            <td>
-                                The partner is sending an unknown partner ID, or the signature is not valid.
-                            </td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>
-                                Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td rowspan="5"><b>400</b></td>
-                            <td rowspan="5">
-                                An invalid request was made. The response will contain an error code and message
-                            </td>
-                            <td><b>2</b></td>
-                            <td>Bar code already used</td>
-                            <td>
-                                Barcode assigned to the digit code is already used.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>3</b></td>
-                            <td>Transaction limit</td>
-                            <td>
-                                User reached transaction limit. User can see exact limit and solution in his mobile application.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>12</b></td>
-                            <td>Digit code expired</td>
-                            <td>
-                                The digit code exists in the Aircash system, but it is not valid because it expired. User should generate new digit code.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>13</b></td>
-                            <td>Currency from the request does not match partner currency</td>
-                            <td>
-                                Currency from the request must be the same as partner currency.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>14</b></td>
-                            <td>Invalid digit code</td>
-                            <td>
-                                The digit code that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>500</b></td>
-                            <td>
-                                Unexpected system error
-                            </td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>
-                                Try again until the system recovers.
-                            </td>
-                        </tr>
-                </table>
-            </div>
-        </uib-tab>
-        <uib-tab index="CheckDigits-tab-7" heading="Try it out" classes="nav-item">
-            <div class="row">
-                <div class="col-md-4">
-                    <form action="/" method="POST" name="requestCheckDigitForm">
-                        <fieldset>
-                            <div class="mb-3">
-                                <label class="form-label">PartnerID</label>
-                                <input ng-model="checkDigitsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="checkDigitsServiceBusy" ng-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">DigitCode</label>
-                                <input ng-model="checkDigitsModel.digitCode" class="form-control" type="text" placeholder="Enter DigitCode" ng-disabled="checkDigitsServiceBusy" ng-required="true">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">LocationID</label>
-                                <input ng-model="checkDigitsModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkDigitsServiceBusy">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">CurrencyID</label>
-                                <input ng-model="checkDigitsModel.currencyID" class="form-control" type="text" placeholder="Enter CurrencyID" ng-disabled="checkDigitsServiceBusy" ng-required="true">
-                            </div>
-                            <button ng-click="checkDigits()" class="btn btn-primary w-100px me-5px" ng-disabled="checkDigitsServiceBusy || requestCheckDigitForm.$invalid">Check <i ng-if="checkDigitsServiceBusy" class="fa fa-cog fa-spin"></i></button>
-                        </fieldset>
-                    </form>
+            </uib-tab>
+            <uib-tab index="CheckDigits-tab-3" heading="Response parameters" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Required</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>DigitCode</b></td>
+                                <td>String</td>
+                                <td>Digit code that was sent in the request</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>BarCode</b></td>
+                                <td>String</td>
+                                <td>Barcode assigned to the same transaction as the digit code from the request. This is later used in ConfirmTransaction.</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>Amount</b></td>
+                                <td>Number</td>
+                                <td>
+                                    A positive amount represents payment (cashier takes the money from the user), and a negative amount represents payout (cashier hands the money to the user)
+                                </td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>CurrencyID</b></td>
+                                <td>Integer</td>
+                                <td>ISO-4217 currency code</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>FirstName</b></td>
+                                <td>String</td>
+                                <td>Aircash user first name</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>LastName</b></td>
+                                <td>String</td>
+                                <td>Aircash user last name</td>
+                                <td>YES</td>
+                            </tr>
+                            <tr>
+                                <td><b>DateOfBirth</b></td>
+                                <td>DateTime</td>
+                                <td>Aircash user date of birth</td>
+                                <td>YES</td>
+                            </tr>
+                    </table>
                 </div>
-                <div class="col-md-4" ng-if="checkDigitsServiceResponded">
-                    Request ({{checkDigitsRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                    <jsonformatter data="checkDigitsServiceRequest"></jsonformatter>
-                    Sequence: {{checkDigitsSequence}}<br />
+                <hr />
+                <p class="ml-3">
+                    <b>*NOTE:</b> Parameters in the table are included in each response, but you need to support new parameters as well, although you may not use them. If Aircash adds a new parameter, your system needs to accept the response with additional parameter(s).
+                </p>
+            </uib-tab>
+            <uib-tab index="CheckDigits-tab-4" heading="Response example" classes="nav-item">
+                <jsonformatter data="SalesPartner.CheckDigits.ResponseExampleV2"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="CheckDigits-tab-5" heading="Error response messages" classes="nav-item">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Http response</th>
+                                <th>Description</th>
+                                <th>Error Code</th>
+                                <th>Message</th>
+                                <th>Solution</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>401</b></td>
+                                <td>
+                                    The partner is sending an unknown partner ID, or the signature is not valid.
+                                </td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Check all of the parameters that are being sent. If all parameters look good, contact Aircash support.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td rowspan="5"><b>400</b></td>
+                                <td rowspan="5">
+                                    An invalid request was made. The response will contain an error code and message
+                                </td>
+                                <td><b>2</b></td>
+                                <td>Bar code already used</td>
+                                <td>
+                                    Barcode assigned to the digit code is already used.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>3</b></td>
+                                <td>Transaction limit</td>
+                                <td>
+                                    User reached transaction limit. User can see exact limit and solution in his mobile application.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>12</b></td>
+                                <td>Digit code expired</td>
+                                <td>
+                                    The digit code exists in the Aircash system, but it is not valid because it expired. User should generate new digit code.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>13</b></td>
+                                <td>Currency from the request does not match partner currency</td>
+                                <td>
+                                    Currency from the request must be the same as partner currency.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>14</b></td>
+                                <td>Invalid digit code</td>
+                                <td>
+                                    The digit code that was sent is not valid or doesn’t exist in the Aircash system. Check all of the parameters that are being sent.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><b>500</b></td>
+                                <td>
+                                    Unexpected system error
+                                </td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>
+                                    Try again until the system recovers.
+                                </td>
+                            </tr>
+                    </table>
                 </div>
-                <div class="col-md-4" ng-if="checkDigitsServiceResponded">
-                    Response ({{checkDigitsResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
-                    <jsonformatter data="checkDigitsServiceResponse"></jsonformatter>
+            </uib-tab>
+            <uib-tab index="CheckDigits-tab-7" heading="Try it out" classes="nav-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <form action="/" method="POST" name="requestCheckDigitForm">
+                            <fieldset>
+                                <div class="mb-3">
+                                    <label class="form-label">PartnerID</label>
+                                    <input ng-model="checkDigitsModel.partnerId" class="form-control" type="text" placeholder="Enter PartnerId" ng-disabled="checkDigitsServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">DigitCode</label>
+                                    <input ng-model="checkDigitsModel.digitCode" class="form-control" type="text" placeholder="Enter DigitCode" ng-disabled="checkDigitsServiceBusy" ng-required="true">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">LocationID</label>
+                                    <input ng-model="checkDigitsModel.locationID" class="form-control" type="text" placeholder="Enter LocationID" ng-disabled="checkDigitsServiceBusy">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">CurrencyID</label>
+                                    <input ng-model="checkDigitsModel.currencyID" class="form-control" type="text" placeholder="Enter CurrencyID" ng-disabled="checkDigitsServiceBusy" ng-required="true">
+                                </div>
+                                <button ng-click="checkDigits()" class="btn btn-primary w-100px me-5px" ng-disabled="checkDigitsServiceBusy || requestCheckDigitForm.$invalid">Check <i ng-if="checkDigitsServiceBusy" class="fa fa-cog fa-spin"></i></button>
+                            </fieldset>
+                        </form>
+                    </div>
+                    <div class="col-md-4" ng-if="checkDigitsServiceResponded">
+                        Request ({{checkDigitsRequestDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkDigitsServiceRequest"></jsonformatter>
+                        Sequence: {{checkDigitsSequence}}<br />
+                    </div>
+                    <div class="col-md-4" ng-if="checkDigitsServiceResponded">
+                        Response ({{checkDigitsResponseDateTimeUTC| date:'yyyy-MM-dd HH:mm:ss.sss'}})
+                        <jsonformatter data="checkDigitsServiceResponse"></jsonformatter>
+                    </div>
                 </div>
-            </div>
-        </uib-tab>
-    </uib-tabset>
+            </uib-tab>
+        </uib-tabset>
 </body>
 </html>

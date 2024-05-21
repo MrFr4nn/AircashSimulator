@@ -504,6 +504,9 @@ aircashPaymentAndPayoutModule.controller("aircashPaymentAndPayoutCtrl", ['Helper
     $scope.showVideoDeposit = function () {
         $("#videoModalDeposit").modal("show");
     }
+    $scope.showVideoCheckDigits = function () {
+        $("#videoModalCheckDigits").modal("show");
+    }
 
     $scope.showVideoWithdrawal = function () {
         $("#videoModalWithdrawal").modal("show");
