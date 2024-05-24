@@ -15,6 +15,7 @@ using Services.User;
 using AircashSimulator;
 using System.Data;
 using CrossCutting;
+using Microsoft.Extensions.Options;
 
 namespace Services.Partner
 {
@@ -327,10 +328,6 @@ namespace Services.Partner
                 WithdrawalType = x.WithdrawalType.ToString(),
                 WithdrawalInstant = x.WithdrawalInstant.ToString(),
                 Roles = partnerRoles,
-                IntegrationTypeEnums = HelperService.EnumToList(new IntegrationTypeEnum()),
-                AbonAuthorizationEnums = HelperService.EnumToList(new AbonAuthorizationEnum()),
-                AbonAmoutRuleEnums = HelperService.EnumToList(new AbonAmoutRuleEnum()),
-                WithdrawalInstantEnums = HelperService.EnumToList(new WithdrawalInstantEnum()),
                 PartnerEndpoints = partnerEndpoints,
                 PartnerIntegrationContact =partnerIntegrationContact,
                 PartnerErrorCodes = partnerErrorCodes
@@ -338,15 +335,20 @@ namespace Services.Partner
             return partnerDetail;
         }
 
-        public async Task<List<Endpoint>> GetEndpoints()
+        public async Task<Option> GetOptions()
         {
-            var endpoints= await AircashSimulatorContext.Endpoints.Select( x => new Endpoint
+            Option options = new Option();
+            options.Endpoints= await AircashSimulatorContext.Endpoints.Select( x => new Endpoint
             {
                 Id = x.Id,
                 EndpointType = x.EndpointType.ToString(),
                 Url = x.Url
             }).ToListAsync();
-            return endpoints;
+            options.IntegrationTypeEnums = HelperService.EnumToList(new IntegrationTypeEnum());
+            options.AbonAuthorizationEnums = HelperService.EnumToList(new AbonAuthorizationEnum());
+            options.AbonAmoutRuleEnums = HelperService.EnumToList(new AbonAmoutRuleEnum());
+            options.WithdrawalInstantEnums = HelperService.EnumToList(new WithdrawalInstantEnum());
+            return options;
         }
         
 

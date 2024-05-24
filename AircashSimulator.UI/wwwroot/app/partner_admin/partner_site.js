@@ -17,7 +17,7 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
             getPartnerDetail: getPartnerDetail,
-            getEndpoints: getEndpoints
+            getOptions: getOptions
         });
 
         function getPartnerDetail(partnerId) {
@@ -32,10 +32,10 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         } 
 
-        function getEndpoints() {
+        function getOptions() {
             var request = $http({
                 method: 'GET',
-                url: config.baseUrl + "Partner/GetEndpoints"
+                url: config.baseUrl + "Partner/GetOptions"
             }
             );
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -81,10 +81,6 @@ partnerSiteModule.controller("partnerSiteCtrl",
                             $scope.internalTicket = $scope.partner.InternalTicket;
                             $scope.marketplacePosition = $scope.partner.MarketplacePosition;
                             $scope.countryCode = $scope.partner.CountryCode;
-                            $scope.integrationTypeEnums = $scope.partner.IntegrationTypeEnums;
-                            $scope.abonAuthorizationEnums = $scope.partner.AbonAuthorizationEnums;
-                            $scope.abonAmoutRuleEnums = $scope.partner.AbonAmoutRuleEnums;
-                            $scope.withdrawalInstantEnums = $scope.partner.WithdrawalInstantEnums;
                             $scope.abonTypeExist = $scope.integrationTypeEnums.find(function (o) { return o.Value == $scope.partner.AbonType });
                             if ($scope.abonTypeExist != undefined) {
                                 $scope.abonType = $scope.abonTypeExist.Key;
@@ -141,20 +137,25 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     });
             };
 
-            $scope.getEndpoints = function () {
-                partnerSiteService.getEndpoints()
+            $scope.getOptions = function () {
+                partnerSiteService.getOptions()
                     .then(function (response) {
                         if (response) {
-                            $scope.endpoints = response;
+                            $scope.options = response;
+                            $scope.endpoints = $scope.options.Endpoints;
+                            $scope.integrationTypeEnums = $scope.options.IntegrationTypeEnums;
+                            $scope.abonAuthorizationEnums = $scope.options.AbonAuthorizationEnums;
+                            $scope.abonAmoutRuleEnums = $scope.options.AbonAmoutRuleEnums;
+                            $scope.withdrawalInstantEnums = $scope.options.WithdrawalInstantEnums;
 
                         }
                     }, () => {
-                        console.log("Error, could not fetch endpoints!");
+                        console.log("Error, could not fetch options!");
                     });
             }
             
             $scope.getPartnerDetail();
-            $scope.getEndpoints();
+            $scope.getOptions();
 
             $scope.showAddErrorCodeModal = function () {
                 $('#AddErrorCodeModal').modal('show');

@@ -127,11 +127,11 @@ namespace AircashSimulator.Controllers.Partner
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> GetEndpoints()
+        public async Task<IActionResult> GetOptions()
         {
             await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
-            var endpoints = await PartnerService.GetEndpoints();
-            return Ok(endpoints);
+            var options = await PartnerService.GetOptions();
+            return Ok(options);
         }        
 
 
