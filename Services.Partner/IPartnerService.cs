@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,7 @@ namespace Services.Partner
         Task SavePartnerSetting(SavePartnerSettingVM request);
         Task DeletePartner(PartnerDetailVM Partner);
         Task SaveUser(string username, Guid partnerId);
+        Task<List<PartnerDetailSite>> GetPartnerDetail(Guid partnerId);
+        Task<Option> GetOptions();
     }
 }

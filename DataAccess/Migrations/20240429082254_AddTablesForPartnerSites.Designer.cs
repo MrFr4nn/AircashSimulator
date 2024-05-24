@@ -4,14 +4,16 @@ using DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DataAccess.Migrations
 {
     [DbContext(typeof(AircashSimulatorContext))]
-    partial class AircashSimulatorContextModelSnapshot : ModelSnapshot
+    [Migration("20240429082254_AddTablesForPartnerSites")]
+    partial class AddTablesForPartnerSites
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -90,24 +92,6 @@ namespace DataAccess.Migrations
                     b.ToTable("Coupons");
                 });
 
-            modelBuilder.Entity("Domain.Entities.EndpointEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("EndpointType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Endpoints");
-                });
-
             modelBuilder.Entity("Domain.Entities.ErrorCodeEntity", b =>
                 {
                     b.Property<int>("Id")
@@ -140,15 +124,8 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("ContactEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("ContactName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("ContactPhoneNumber")
+                    b.Property<string>("Contact")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -186,17 +163,18 @@ namespace DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("EndpointId")
-                        .HasColumnType("int");
+                    b.Property<string>("Body")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("PartnerId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Request")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Response")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Url")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 

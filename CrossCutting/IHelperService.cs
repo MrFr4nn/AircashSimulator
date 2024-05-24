@@ -10,5 +10,6 @@ namespace CrossCutting
     {
         string RandomNumber(int length);
         string GetCurl(object request, string endpoint);
+        public List<KeyValuePair<int, string>> EnumToList(Enum e);
     }
 }

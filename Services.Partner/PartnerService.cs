@@ -14,6 +14,8 @@ using System.Security.Cryptography;
 using Services.User;
 using AircashSimulator;
 using System.Data;
+using CrossCutting;
+using Microsoft.Extensions.Options;
 
 namespace Services.Partner
 {
@@ -21,14 +23,16 @@ namespace Services.Partner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IUserService UserService;
+        private IHelperService HelperService;
 
         private const string DefaultPrivateKey = "";
         private const string DefaultPrivateKeyPass = "";
 
-        public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService)
+        public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService, IHelperService helperService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             UserService = userService;
+            HelperService = helperService;
         }
 
         public async Task<List<PartnerVM>> GetPartners()
@@ -96,14 +100,15 @@ namespace Services.Partner
         }
         public async Task<List<PartnerSettingVM>> GetPartnerSetting(Guid partnerId)
         {
-            var partnerSetting = await AircashSimulatorContext.PartnerSettings.Select(x => new PartnerSettingVM
-            {
-                Id = x.Id,
-                PartnerId = x.PartnerId,
-                Key = x.Key,
-                Value = x.Value
-            }).ToListAsync();
-            partnerSetting.RemoveAll(p => p.PartnerId != partnerId);
+            var partnerSetting = await AircashSimulatorContext.PartnerSettings
+                .Where(p => p.PartnerId == partnerId)
+                .Select(x => new PartnerSettingVM
+                {
+                    Id = x.Id,
+                    PartnerId = x.PartnerId,
+                    Key = x.Key,
+                    Value = x.Value
+                }).ToListAsync();
 
             return partnerSetting;
         }
@@ -258,6 +263,94 @@ namespace Services.Partner
                 Environment = EnvironmentEnum.Staging
             });
         }
+
+        public async Task<List<PartnerDetailSite>> GetPartnerDetail(Guid partnerId)
+        {
+            var partnerRoles = AircashSimulatorContext.PartnerRoles.Where(p => p.PartnerId == partnerId)
+                .Select(r => new Role { 
+                    RoleId=r.PartnerRole,
+                    RoleName=r.PartnerRole.ToString()
+                }).ToList();
+            var endpointsTypeDictionary = await AircashSimulatorContext.Endpoints
+                                    .ToDictionaryAsync(
+                                        x => x.Id,
+                                        x => new EndpointInfo
+                                        {
+                                            EndpointType = x.EndpointType,
+                                            Url = x.Url
+                                        });
+            var partnerEndpoints = await AircashSimulatorContext.PartnerEndpointsUsage.Where(x => x.PartnerId == partnerId)
+                .Select(x => new PartnerEndpoint
+                {
+                    Id=x.Id,
+                    Url = endpointsTypeDictionary[x.EndpointId].Url,
+                    Request = x.Request,
+                    Response = x.Response,
+                    EndpointType= (int)endpointsTypeDictionary[x.EndpointId].EndpointType,
+                    EndpointTypeName= endpointsTypeDictionary[x.EndpointId].EndpointType.ToString()
+                }).ToListAsync();
+            var partnerIntegrationContact = await AircashSimulatorContext.IntegrationContacts
+                .Where(x => x.PartnerId == partnerId)
+                .Select(x =>  new PartnerIntegrationContact
+                {
+                    Id=x.Id,
+                    ContactName= x.ContactName,
+                    ContactEmail= x.ContactEmail,
+                    ContactPhoneNumber= x.ContactPhoneNumber
+                })
+                .ToListAsync();
+            var partnerErrorCodes = await AircashSimulatorContext.ErrorCodes
+                .Where(x => x.PartnerId == partnerId)
+                .Select(x => new PartnerErrorCode
+                {
+                    Id= x.Id,
+                    PartnerId = x.PartnerId,
+                    Code = x.Code,
+                    LocoKey = x.LocoKey,
+                    Description = x.Description
+                })
+                .ToListAsync();
+            var partnerDetail = await AircashSimulatorContext.Partners
+                .Where(p => p.PartnerId == partnerId)
+                .Select(x => new PartnerDetailSite
+            {
+                PartnerId = x.PartnerId,
+                PartnerName = x.PartnerName,
+                Brand = x.Brand,
+                Platform = x.Platform,
+                InternalTicket = x.InternalTicket,
+                MarketplacePosition = x.MarketplacePosition,
+                CountryCode = x.CountryCode,
+                AbonAmountRule = x.AbonAmountRule.ToString(),
+                AbonAuthorization = x.AbonAuthorization.ToString(),
+                AbonType = x.AbonType.ToString(),
+                AcPayType = x.AcPayType.ToString(),
+                WithdrawalType = x.WithdrawalType.ToString(),
+                WithdrawalInstant = x.WithdrawalInstant.ToString(),
+                Roles = partnerRoles,
+                PartnerEndpoints = partnerEndpoints,
+                PartnerIntegrationContact =partnerIntegrationContact,
+                PartnerErrorCodes = partnerErrorCodes
+            }).ToListAsync();
+            return partnerDetail;
+        }
+
+        public async Task<Option> GetOptions()
+        {
+            Option options = new Option();
+            options.Endpoints= await AircashSimulatorContext.Endpoints.Select( x => new Endpoint
+            {
+                Id = x.Id,
+                EndpointType = x.EndpointType.ToString(),
+                Url = x.Url
+            }).ToListAsync();
+            options.IntegrationTypeEnums = HelperService.EnumToList(new IntegrationTypeEnum());
+            options.AbonAuthorizationEnums = HelperService.EnumToList(new AbonAuthorizationEnum());
+            options.AbonAmoutRuleEnums = HelperService.EnumToList(new AbonAmoutRuleEnum());
+            options.WithdrawalInstantEnums = HelperService.EnumToList(new WithdrawalInstantEnum());
+            return options;
+        }
+        
 
     }
 }

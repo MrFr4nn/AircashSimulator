@@ -43,7 +43,8 @@ var app = angular.module('app', [
     'cobranded_card',
     'mastercard',
     'aircash_ATM',
-    'inAppPay'
+    'inAppPay',
+    'partnerSite'
 ]);
 
 app.constant('Global', {

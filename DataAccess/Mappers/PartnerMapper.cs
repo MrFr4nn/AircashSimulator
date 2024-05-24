@@ -15,6 +15,10 @@ namespace DataAccess.Mappers
             builder.Property(x => x.PrivateKeyPass).IsRequired();
             builder.Property(x => x.CurrencyId).IsRequired();
             builder.Property(x => x.CountryCode).IsRequired();
+            builder.Property(x => x.Brand).HasMaxLength(256);
+            builder.Property(x => x.Platform).HasMaxLength(256);
+            builder.Property(x => x.InternalTicket).HasMaxLength(256);
+            builder.Property(x => x.MarketplacePosition).HasMaxLength(64);
         }
     }
 }

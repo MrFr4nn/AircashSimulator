@@ -19,6 +19,10 @@ namespace DataAccess
         public DbSet<PreparedAircashFrameTransactionEntity> PreparedAircashFrameTransactions { get; set; }
         public DbSet<PartnerRoleEntity> PartnerRoles { get; set; }
         public DbSet<PartnerSettingsEntity> PartnerSettings { get; set; }
+        public DbSet<IntegrationContactEntity> IntegrationContacts { get; set; }
+        public DbSet<ErrorCodeEntity> ErrorCodes { get; set; }
+        public DbSet<PartnerEndpointUsageEntity> PartnerEndpointsUsage { get; set; }
+        public DbSet<EndpointEntity> Endpoints { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -116,6 +116,24 @@ namespace AircashSimulator.Controllers.Partner
             return Ok();
         }
 
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetPartnerDetail(Guid partnerId)
+        {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+            var partner = await PartnerService.GetPartnerDetail(partnerId);
+            return Ok(partner);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetOptions()
+        {
+            await AuthenticationService.ValidateAdmin(UserContext.GetPartnerId(User));
+            var options = await PartnerService.GetOptions();
+            return Ok(options);
+        }        
+
 
     }
 }
