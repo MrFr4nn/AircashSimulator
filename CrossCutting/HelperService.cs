@@ -21,5 +21,14 @@ namespace CrossCutting
         {
             return "curl -X POST -H \"Content-Type: application/json\"  -d " + JsonConvert.SerializeObject(JsonConvert.SerializeObject(request)) + " " + endpoint;
         }
+
+        public List<KeyValuePair<int,string>> EnumToList(Enum e)
+        {
+            var listTypeEnum = Enum.GetValues(e.GetType())
+                                    .Cast<int>()
+                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(e.GetType(), x)))
+                                   .ToList();
+            return listTypeEnum;
+        }
     }
 }

@@ -14,7 +14,7 @@ using System.Security.Cryptography;
 using Services.User;
 using AircashSimulator;
 using System.Data;
-using System.Reflection.Metadata.Ecma335;
+using CrossCutting;
 
 namespace Services.Partner
 {
@@ -22,14 +22,16 @@ namespace Services.Partner
     {
         private AircashSimulatorContext AircashSimulatorContext;
         private IUserService UserService;
+        private IHelperService HelperService;
 
         private const string DefaultPrivateKey = "";
         private const string DefaultPrivateKeyPass = "";
 
-        public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService)
+        public PartnerService(AircashSimulatorContext aircashSimulatorContext, IUserService userService, IHelperService helperService)
         {
             AircashSimulatorContext = aircashSimulatorContext;
             UserService = userService;
+            HelperService = helperService;
         }
 
         public async Task<List<PartnerVM>> GetPartners()
@@ -263,22 +265,11 @@ namespace Services.Partner
 
         public async Task<List<PartnerDetailSite>> GetPartnerDetail(Guid partnerId)
         {
-            var integrationTypeEnums = Enum.GetValues(typeof(IntegrationTypeEnum))
-                                    .Cast<int>()
-                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(IntegrationTypeEnum), x)))
-                                   .ToList();
-            var abonAuthorizationEnums = Enum.GetValues(typeof(AbonAuthorizationEnum))
-                                    .Cast<int>()
-                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(AbonAuthorizationEnum), x)))
-                                   .ToList();
-            var abonAmoutRuleEnums = Enum.GetValues(typeof(AbonAmoutRuleEnum))
-                                    .Cast<int>()
-                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(AbonAmoutRuleEnum), x)))
-                                   .ToList();
-            var withdrawalInstantEnums = Enum.GetValues(typeof(WithdrawalInstantEnum))
-                                    .Cast<int>()
-                                   .Select(x => new KeyValuePair<int, string>(key: x, value: Enum.GetName(typeof(WithdrawalInstantEnum), x)))
-                                   .ToList();
+            var partnerRoles = AircashSimulatorContext.PartnerRoles.Where(p => p.PartnerId == partnerId)
+                .Select(r => new Role { 
+                    RoleId=r.PartnerRole,
+                    RoleName=r.PartnerRole.ToString()
+                }).ToList();
             var endpointsTypeDictionary = await AircashSimulatorContext.Endpoints
                                     .ToDictionaryAsync(
                                         x => x.Id,
@@ -324,41 +315,26 @@ namespace Services.Partner
             {
                 PartnerId = x.PartnerId,
                 PartnerName = x.PartnerName,
-                Brand= x.Brand,
-                Platform=x.Platform,
-                InternalTicket=x.InternalTicket,
+                Brand = x.Brand,
+                Platform = x.Platform,
+                InternalTicket = x.InternalTicket,
                 MarketplacePosition = x.MarketplacePosition,
-                CountryCode=x.CountryCode,
-                AbonAmountRule =x.AbonAmountRule.ToString(),
+                CountryCode = x.CountryCode,
+                AbonAmountRule = x.AbonAmountRule.ToString(),
                 AbonAuthorization = x.AbonAuthorization.ToString(),
-                AbonType= x.AbonType.ToString(),
-                AcPayType= x.AcPayType.ToString(),
-                WithdrawalType= x.WithdrawalType.ToString(),
-                WithdrawalInstant= x.WithdrawalInstant.ToString(),
-                Roles = null,
-                IntegrationTypeEnums= integrationTypeEnums,
-                AbonAuthorizationEnums= abonAuthorizationEnums,
-                AbonAmoutRuleEnums = abonAmoutRuleEnums,
-                WithdrawalInstantEnums= withdrawalInstantEnums,
-                PartnerEndpoints= partnerEndpoints,
-                PartnerIntegrationContact=partnerIntegrationContact,
-                PartnerErrorCodes= partnerErrorCodes
+                AbonType = x.AbonType.ToString(),
+                AcPayType = x.AcPayType.ToString(),
+                WithdrawalType = x.WithdrawalType.ToString(),
+                WithdrawalInstant = x.WithdrawalInstant.ToString(),
+                Roles = partnerRoles,
+                IntegrationTypeEnums = HelperService.EnumToList(new IntegrationTypeEnum()),
+                AbonAuthorizationEnums = HelperService.EnumToList(new AbonAuthorizationEnum()),
+                AbonAmoutRuleEnums = HelperService.EnumToList(new AbonAmoutRuleEnum()),
+                WithdrawalInstantEnums = HelperService.EnumToList(new WithdrawalInstantEnum()),
+                PartnerEndpoints = partnerEndpoints,
+                PartnerIntegrationContact =partnerIntegrationContact,
+                PartnerErrorCodes = partnerErrorCodes
             }).ToListAsync();
-
-            if (partnerDetail != null)
-            {
-                List<Role> roles = GetRoles();
-                var partnersRoles = AircashSimulatorContext.PartnerRoles.Select(r => new PartnerRoleEntity { PartnerId = r.PartnerId, PartnerRole = r.PartnerRole }).ToList();
-
-                foreach (var p in partnerDetail)
-                {
-                    List<PartnerRoleEntity> partnerRole = partnersRoles.Where(a => a.PartnerId == p.PartnerId).ToList();
-                    if (partnerRole.Count() > 0)
-                    {
-                        p.Roles = roles.Where(r => partnerRole.Select(r => r.PartnerRole).Contains(r.RoleId)).ToList();
-                    }
-                }
-            }
             return partnerDetail;
         }
 
@@ -366,9 +342,9 @@ namespace Services.Partner
         {
             var endpoints= await AircashSimulatorContext.Endpoints.Select( x => new Endpoint
             {
-                Id= x.Id,
-                EndpointType=x.EndpointType.ToString(),
-                Url=x.Url
+                Id = x.Id,
+                EndpointType = x.EndpointType.ToString(),
+                Url = x.Url
             }).ToListAsync();
             return endpoints;
         }
