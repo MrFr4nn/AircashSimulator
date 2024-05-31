@@ -20,5 +20,7 @@ namespace Services.Partner
         Task SaveUser(string username, Guid partnerId);
         Task<List<PartnerDetailSite>> GetPartnerDetail(Guid partnerId);
         Task<Option> GetOptions();
+        Task SavePartnerSite(SavePartnerSite request);
     }
+
 }

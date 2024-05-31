@@ -18,7 +18,7 @@
                     <button type="submit" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
                         <i class="fa fa-save"></i>
                     </button>
-                    <button type="button" class="btn btn-outline-danger" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel()">
+                    <button type="button" class="btn btn-outline-danger" ng-disabled="editableForm.$waiting" ng-click="editableForm.$cancel(); reaload();">
                         <i class="fa fa-times-circle"></i>
                     </button>
                 </span>
@@ -33,7 +33,8 @@
                     <tr>
                         <td><b>Partner Id</b></td>
                         <td>
-                            <span editable-textarea="partnerId" e-name="partnerId" e-cols="40" e-rows="1"> {{ partnerId || 'not set' }}</span>
+                            {{partnerId}}
+                            <!--<span editable-textarea="partnerId" e-name="partnerId" e-cols="40" e-rows="1"> {{ partnerId || 'not set' }}</span>-->
                         </td>
                     </tr>
                     <tr>
@@ -100,7 +101,56 @@
                         </td>
                         <td>
                             <span ng-show="editableForm.$visible">
-                                <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
+                                <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting" ng-click="deleteIntegrationContact($index);">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <hr />
+        <br />
+        <div class="row">
+            <div class="col-5">
+                <h4><i class="fa fa-user"></i> Login accounts</h4>
+            </div>
+            <div class="col-1">
+                <span ng-show="editableForm.$visible">
+                    <button type="button" class="btn btn-outline-dark" style="float: right;" ng-disabled="editableForm.$waiting" ng-click="showAddLoginAccountModal();">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-active col-6 mt-2">
+                <thead>
+                    <tr>
+                        <th>Url</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-if="partnerLoginAccounts.length === 0">
+                        <td colspan="4" class="text-center">No login accounts!</td>
+                    </tr>
+                    <tr ng-repeat="a in partnerLoginAccounts">
+                        <td>
+                            <span editable-text="a.Url" e-name="a.Url"> {{ a.Url || 'not set'}}</span>
+                        </td>
+                        <td>
+                            <span editable-text="a.Username" e-name="a.Username"> {{ a.Username || 'not set' }}</span>
+                        </td>
+                        <td>
+                            <span editable-text="a.Password" e-name="a.Password"> {{ a.Password || 'not set' }}</span>
+                        </td>
+                        <td>
+                            <span ng-show="editableForm.$visible">
+                                <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting" ng-click="deleteLoginAccount($index);">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </span>
@@ -209,7 +259,7 @@
                                         <span editable-textarea="p.Url" e-name="p.Url" e-cols="80"> {{p.Url}}</span>
                                     </button>
                                     <span ng-show="editableForm.$visible" class="align-content-center col-1">
-                                        <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
+                                        <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting" ng-click="deleteApiDetails($index,'AbonDeposit');">
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </span>
@@ -317,10 +367,15 @@
                     <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAbonDeposit" ng-if="partnerEndpointsWithdrawal">
                         <div ng-repeat="p in partnerEndpointsWithdrawal" class="card">
                             <div class="card-header" id="heading{{p.Id}}">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{p.Id}}" aria-expanded="true" aria-controls="collapseOne">
+                                <h2 class="mb-0 row">
+                                    <button class="btn btn-link btn-block text-left col" type="button" data-toggle="collapse" data-target="#collapse{{p.Id}}" aria-expanded="true" aria-controls="collapseOne">
                                         <span editable-textarea="p.Url" e-name="p.Url" e-cols="80"> {{p.Url}}</span>
                                     </button>
+                                    <span ng-show="editableForm.$visible" class="align-content-center col-1">
+                                        <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting" ng-click="deleteApiDetails($index,'Withdrawal');">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
                                 </h2>
                             </div>
                             <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAbonDeposit">
@@ -423,10 +478,15 @@
                     <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAbonDeposit" ng-if="partnerEndpointsAcPay">
                         <div ng-repeat="p in partnerEndpointsAcPay" class="card">
                             <div class="card-header" id="heading{{p.Id}}">
-                                <h2 class="mb-0">
-                                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse{{p.Id}}" aria-expanded="true" aria-controls="collapseOne">
+                                <h2 class="mb-0 row">
+                                    <button class="btn btn-link btn-block text-left col" type="button" data-toggle="collapse" data-target="#collapse{{p.Id}}" aria-expanded="true" aria-controls="collapseOne">
                                         <span editable-textarea="p.Url" e-name="p.Url" e-cols="80"> {{p.Url}}</span>
                                     </button>
+                                    <span ng-show="editableForm.$visible" class="align-content-center col-1">
+                                        <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting" ng-click="deleteApiDetails($index,'AircashPay');">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </span>
                                 </h2>
                             </div>
                             <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAbonDeposit">
@@ -578,7 +638,7 @@
                                         </td>
                                         <td>
                                             <span ng-show="editableForm.$visible">
-                                                <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting">
+                                                <button type="button" class="btn btn-outline-dark" ng-disabled="editableForm.$waiting" ng-click="deleteErrorCode($index);">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </span>
@@ -604,7 +664,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Error code</label>
-                            <input class="form-control" type="text" ng-required="true" ng-model="newErrorCode">
+                            <input class="form-control" type="text" ng-required="true" ng-model="newCode">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Description</label>
@@ -621,7 +681,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" ng-disabled="addErrorCodeForm.$invalid" ng-click="saveErrorCode();">Add</button>
+                    <button class="btn btn-primary" ng-disabled="addErrorCodeForm.$invalid" ng-click="addErrorCode();">Add</button>
                     <a href="javascript:;" class="btn btn-white" ng-click="closeAddErrorCodeModal();">Close</a>
                 </div>
             </div>
@@ -632,7 +692,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">New endpoint</h4>
+                    <h4 class="modal-title">New endpoint for <i id="endpointTitle"></i></h4>
                 </div>
                 <div class="modal-body" align="center">
                     <form action="/" method="POST" name="addApiDetailsForm">
@@ -657,7 +717,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" ng-disabled="addApiDetailsForm.$invalid" ng-click="saveApiDetails();">Add</button>
+                    <button class="btn btn-primary" ng-disabled="addApiDetailsForm.$invalid" ng-click="addApiDetails();">Add</button>
                     <a href="javascript:;" class="btn btn-white" ng-click="closeAddApiDetailsModal();">Close</a>
                 </div>
             </div>
@@ -671,15 +731,15 @@
                     <h4 class="modal-title">New integration contact</h4>
                 </div>
                 <div class="modal-body" align="center">
-                    <form action="/" method="POST" name="addIntegrationContactForm">
+                    <form action="/" method="POST" name="addIntegrationContacForm">
 
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input class="form-control" type="text" ng-required="true" ng-model="newnewContactName">
+                            <input class="form-control" type="text" ng-required="true" ng-model="newContactName">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input class="form-control" type="text" ng-required="true" ng-model="newContactEmail">
+                            <input class="form-control" type="text" ng-model="newContactEmail">
                         </div>
                         <div class="mb-3">
                             <div>
@@ -692,8 +752,43 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" ng-disabled="addIntegrationContacForm.$invalid" ng-click="saveIntegrationContact();">Add</button>
+                    <button class="btn btn-primary" ng-disabled="addIntegrationContacForm.$invalid" ng-click="addIntegrationContact();">Add</button>
                     <a href="javascript:;" class="btn btn-white" ng-click="closeAddIntegrationContactModal();">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="AddLoginAccountModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">New login account</h4>
+                </div>
+                <div class="modal-body" align="center">
+                    <form action="/" method="POST" name="addLoginAccountForm">
+
+                        <div class="mb-3">
+                            <label class="form-label">Url</label>
+                            <input class="form-control" type="text" ng-required="true" ng-model="newUrl">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            <input class="form-control" type="text" ng-required="true" ng-model="newUsername">
+                        </div>
+                        <div class="mb-3">
+                            <div>
+                                <label class="form-label">Password</label>
+                                <input class="form-control" type="text" ng-required="true" ng-model="newPassword">
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" ng-disabled="addLoginAccountForm.$invalid" ng-click="addLoginAccount();">Add</button>
+                    <a href="javascript:;" class="btn btn-white" ng-click="closeAddLoginAccountModal();">Close</a>
                 </div>
             </div>
         </div>

@@ -17,7 +17,8 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
     function ($http, $q, handleResponseService, config, $rootScope) {
         return ({
             getPartnerDetail: getPartnerDetail,
-            getOptions: getOptions
+            getOptions: getOptions,
+            savePartnerSite: savePartnerSite
         });
 
         function getPartnerDetail(partnerId) {
@@ -25,7 +26,7 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
                 method: 'GET',
                 url: config.baseUrl + "Partner/GetPartnerDetail",
                 params: {
-                    partnerId:partnerId
+                    partnerId: partnerId
                 }
             }
             );
@@ -41,6 +42,35 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
 
+        function savePartnerSite(partnerId, partnerName, brand, platform, internalTicket, partnerIntegrationContacts, abonType, abonAmountRule,
+            abonAuthorization, partnerEndpoints, withdrawalType, withdrawalInstant, acPayType, countryCode, marketplacePosition, partnerErrorCodes, partnerLoginAccounts) {
+            var request = $http({
+                method: 'POST',
+                url: config.baseUrl + "Partner/SavePartnerSite",
+                data: {
+                    PartnerId: partnerId,
+                    PartnerName: partnerName,
+                    Brand: brand,
+                    Platform: platform,
+                    InternalTicket: internalTicket,
+                    MarketplacePosition: marketplacePosition,
+                    CountryCode: countryCode,
+                    AbonAmountRule: abonAmountRule,
+                    AbonAuthorization: abonAuthorization,
+                    AbonType: abonType,
+                    AcPayType: acPayType,
+                    WithdrawalType: withdrawalType,
+                    WithdrawalInstant: withdrawalInstant,
+                    PartnerEndpoints: partnerEndpoints,
+                    PartnerIntegrationContact: partnerIntegrationContacts,
+                    PartnerErrorCodes: partnerErrorCodes,
+                    PartnerLoginAccounts: partnerLoginAccounts
+                }
+            }
+            );
+            return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
+        } 
+
     }
 ]);
 
@@ -48,6 +78,7 @@ partnerSiteModule.controller("partnerSiteCtrl",
     ['$scope', '$state', 'partnerSiteService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location',
         function ($scope, $state, partnerSiteService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
 
+            $scope.integrationContactId = null;
             $scope.roles = [];$scope.partnerId = $state.params.partnerId;
             $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
             $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
@@ -129,8 +160,8 @@ partnerSiteModule.controller("partnerSiteCtrl",
                             $scope.partnerEndpointsAcPay = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "AircashPay");
                             $scope.partnerIntegrationContacts = $scope.partner.PartnerIntegrationContact;
                             $scope.partnerErrorCodes = $scope.partner.PartnerErrorCodes;
+                            $scope.partnerLoginAccounts = $scope.partner.PartnerLoginAccounts;
                             $scope.displayPanels();
-
                         }
                     }, () => {
                         console.log("Error, could not fetch partner!");
@@ -147,34 +178,48 @@ partnerSiteModule.controller("partnerSiteCtrl",
                             $scope.abonAuthorizationEnums = $scope.options.AbonAuthorizationEnums;
                             $scope.abonAmoutRuleEnums = $scope.options.AbonAmoutRuleEnums;
                             $scope.withdrawalInstantEnums = $scope.options.WithdrawalInstantEnums;
-
+                            $scope.getPartnerDetail();
                         }
                     }, () => {
                         console.log("Error, could not fetch options!");
                     });
             }
             
-            $scope.getPartnerDetail();
             $scope.getOptions();
 
             $scope.showAddErrorCodeModal = function () {
                 $('#AddErrorCodeModal').modal('show');
             }
 
-            $scope.saveErrorCode = function () {
-                $scope.newErrorCode="";
+            $scope.addErrorCode = function () {
+                var newErrorCode = {
+                    Id: 0,
+                    Code: $scope.newCode,
+                    LocoKey: $scope.newLocoKey,
+                    Description: $scope.newDescription
+
+                }
+                $scope.partnerErrorCodes.push(newErrorCode);
+                $scope.newCode = "";
                 $scope.newDescription = "";
                 $scope.newLocoKey = "";
+                $('#AddErrorCodeModal').modal('hide');
+                
             }
 
             $scope.closeAddErrorCodeModal = function () {
                 $('#AddErrorCodeModal').modal('hide');
-                $scope.newErrorCode = "";
+                $scope.newCode = "";
                 $scope.newDescription = "";
                 $scope.newLocoKey = "";
             }
 
+            $scope.deleteErrorCode = function (index) {
+                $scope.partnerErrorCodes.splice(index, 1);
+            } 
+
             $scope.showAddApiDetailsModal = function (endpointType) {
+                $('#endpointTitle').text(endpointType);
                 $('#selectUrl').empty();
                 for (var i = 0; i < $scope.endpoints.length; i++) {
                     if ($scope.endpoints[i].EndpointType == endpointType) {
@@ -184,8 +229,25 @@ partnerSiteModule.controller("partnerSiteCtrl",
                 $('#AddApiDetailsModal').modal('show');
             }
 
-            $scope.saveApiDetails = function () {
-                console.log($('#selectUrl').find(':selected').val());
+            $scope.addApiDetails = function () {
+                var endpointType = $('#endpointTitle').text();
+                var newApiDetails = {
+                    Id: 0,
+                    Url: $('#selectUrl').find(':selected').text(),
+                    Request: $scope.newRequest,
+                    Response: $scope.newResponse,
+                    EndpointType: $('#selectUrl').find(':selected').val(),
+                    EndpointTypeName: endpointType
+                }
+                if (endpointType == 'AbonDeposit') {
+                    $scope.partnerEndpointsAbon.push(newApiDetails);
+                }
+                else if (endpointType == 'Withdrawal') {
+                    $scope.partnerEndpointsWithdrawal.push(newApiDetails);
+                }
+                else if (endpointType == 'AircashPay') {
+                    $scope.partnerEndpointsAcPay.push(newApiDetails);
+                }
                 $('#AddApiDetailsModal').modal('hide');
                 $scope.newRequest = "";
                 $scope.newResponse = "";
@@ -197,14 +259,35 @@ partnerSiteModule.controller("partnerSiteCtrl",
                 $scope.newResponse = "";
             }
 
+            $scope.deleteApiDetails = function (index, endpointType) {
+                if (endpointType == 'AbonDeposit') {
+                    $scope.partnerEndpointsAbon.splice(index, 1);
+                }
+                else if (endpointType == 'Withdrawal') {
+                    $scope.partnerEndpointsWithdrawal.splice(index, 1);
+                }
+                else if (endpointType == 'AircashPay') {
+                    $scope.partnerEndpointsAcPay.splice(index, 1);
+                }
+            } 
+
             $scope.showAddIntegrationContactModal = function () {
                 $('#AddIntegrationContactModal').modal('show');
             }
 
-            $scope.saveIntegrationContact = function () {
+            $scope.addIntegrationContact = function () {
+                var newIntegrationContact = {
+                    Id: 0,
+                    ContactName: $scope.newContactName,
+                    ContactEmail: $scope.newContactEmail,
+                    ContactPhoneNumber: $scope.newContactPhoneNumber
+
+                }
+                $scope.partnerIntegrationContacts.push(newIntegrationContact);
                 $scope.newContactName = "";
                 $scope.newContactEmail = "";
                 $scope.newContactPhoneNumber = "";
+                $('#AddIntegrationContactModal').modal('hide');
             }
 
             $scope.closeAddIntegrationContactModal = function () {
@@ -212,6 +295,55 @@ partnerSiteModule.controller("partnerSiteCtrl",
                 $scope.newContactName = "";
                 $scope.newContactEmail = "";
                 $scope.newContactPhoneNumber = "";
+            }
+
+            $scope.deleteIntegrationContact = function (index) {
+                $scope.partnerIntegrationContacts.splice(index, 1);
+            }  
+
+            $scope.showAddLoginAccountModal = function () {
+                $('#AddLoginAccountModal').modal('show');
+            }
+
+            $scope.addLoginAccount = function () {
+                var newLoginAccount = {
+                    Id: 0,
+                    Username: $scope.newUsername,
+                    Password: $scope.newPassword,
+                    Url: $scope.newUrl
+                }
+                $scope.partnerLoginAccounts.push(newLoginAccount);
+                $scope.newUsername = "";
+                $scope.newPassword = "";
+                $scope.newUrl = "";
+                $('#AddLoginAccountModal').modal('hide');
+            }
+
+            $scope.closeAddLoginAccountModal = function () {
+                $('#AddLoginAccountModal').modal('hide');
+                $scope.newUsername = "";
+                $scope.newPassword = "";
+                $scope.newUrl = "";
+            }
+
+            $scope.deleteLoginAccount = function (index) {
+                $scope.partnerLoginAccounts.splice(index, 1);
+            }  
+
+            $scope.reaload = function () {
+                location.reload();
+            }
+
+            $scope.saveChanges = function () {
+                $scope.partnerEndpoints = $scope.partnerEndpointsAbon.concat($scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay);
+                partnerSiteService.savePartnerSite($scope.partnerId, $scope.partnerName, $scope.brand, $scope.platform, $scope.internalTicket, $scope.partnerIntegrationContacts, $scope.abonType,
+                    $scope.abonAmountRule, $scope.abonAuthorization, $scope.partnerEndpoints, $scope.withdrawalType, $scope.withdrawalInstant,
+                    $scope.acPayType, $scope.countryCode, $scope.marketplacePosition, $scope.partnerErrorCodes, $scope.partnerLoginAccounts)
+                    .then(function (response) {
+                    }, () => {
+                        console.log("Error, could not save changes!");
+                    });
+                $scope.reaload();
             }
         }
 
