@@ -210,7 +210,8 @@
                                 <tr>
                                     <td><b>First transaction date</b></td>
                                     <td>
-                                        <span editable-text="firstDateAbon" e-name="firstDateAbon"> {{ firstDateAbon || 'empty (API)' }}</span>
+                                        <span ng-if="firstDateAbon">{{ firstDateAbon }}</span>
+                                        <span ng-if="!firstDateAbon">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -225,13 +226,15 @@
                                 <tr>
                                     <td><b>To Aircash</b></td>
                                     <td>
-                                        <span editable-text="dataToAircashAbon" e-name="dataToAircashAbon"> {{ dataToAircashAbon || 'empty (API)' }}</span>
+                                        <span ng-if="dataToAircashAbon">{{ dataToAircashAbon }}</span>
+                                        <span ng-if="!dataToAircashAbon">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>To Merchant</b></td>
                                     <td>
-                                        <span editable-text="dataToMerchantAbon" e-name="dataToMerchantAbon"> {{ dataToMerchantAbon || 'empty (API)' }}</span>
+                                        <span ng-if="dataToMerchantAbon">{{ dataToMerchantAbon }}</span>
+                                        <span ng-if="!dataToMerchantAbon">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -323,7 +326,8 @@
                                 <tr>
                                     <td><b>First transaction date</b></td>
                                     <td>
-                                        <span editable-text="firstDateWithdrawal" e-name="firstDateWithdrawal"> {{ firstDateWithdrawal || 'empty (API)' }}</span>
+                                        <span ng-if="firstDateWithdrawal">{{ firstDateWithdrawal }}</span>
+                                        <span ng-if="!firstDateWithdrawal">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -338,13 +342,15 @@
                                 <tr>
                                     <td><b>To Aircash</b></td>
                                     <td>
-                                        <span editable-text="dataToAircashWithdrawal" e-name="dataToAircashWithdrawal"> {{ dataToAircashWithdrawal || 'empty (API)' }}</span>
+                                        <span ng-if="dataToAircashWithdrawal">{{ dataToAircashWithdrawal }}</span>
+                                        <span ng-if="!dataToAircashWithdrawal">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>To Merchant</b></td>
                                     <td>
-                                        <span editable-text="dataToMerchantWithdrawal" e-name="dataToMerchantWithdrawal"> {{ dataToMerchantWithdrawal || 'empty (API)' }}</span>
+                                        <span ng-if="dataToMerchantWithdrawal">{{ dataToMerchantWithdrawal }}</span>
+                                        <span ng-if="!dataToMerchantWithdrawal">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -428,13 +434,15 @@
                                 <tr>
                                     <td><b>Min - Max</b></td>
                                     <td>
-                                        <span editable-text="minMaxAcPay" e-name="minMaxAcPay"> {{ minMaxAcPay || 'empty (API)' }}</span>
+                                        <span ng-if="minMaxAcPay">{{ minMaxAcPay }}</span>
+                                        <span ng-if="!minMaxAcPay">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>First transaction date</b></td>
                                     <td>
-                                        <span editable-text="firstDateAcPay" e-name="firstDateAcPay"> {{ firstDateAcPay || 'empty (API)' }}</span>
+                                        <span ng-if="firstDateAcPay">{{ firstDateAcPay }}</span>
+                                        <span ng-if="!firstDateAcPay">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -449,13 +457,15 @@
                                 <tr>
                                     <td><b>To Aircash</b></td>
                                     <td>
-                                        <span editable-text="dataToAircashAcPay" e-name="dataToAircashAcPay"> {{ dataToAircashAcPay || 'empty (API)' }}</span>
+                                        <span ng-if="dataToAircashAcPay">{{ dataToAircashAcPay }}</span>
+                                        <span ng-if="!dataToAircashAcPay">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>To Merchant</b></td>
                                     <td>
-                                        <span editable-text="dataToMerchantAcPay" e-name="dataToMerchantAcPay"> {{ dataToMerchantAcPay || 'empty (API)' }}</span>
+                                        <span ng-if="dataToMerchantAcPay">{{ dataToMerchantAcPay }}</span>
+                                        <span ng-if="!dataToMerchantAcPay">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -531,13 +541,15 @@
                                 <tr>
                                     <td><b>Identifiers</b></td>
                                     <td>
-                                        <span editable-text="identifiersMarketplace" e-name="identifiersMarketplace"> {{ identifiersMarketplace || 'empty (API)' }}</span>
+                                        <span ng-if="identifiersMarketplace">{{ identifiersMarketplace }}</span>
+                                        <span ng-if="!identifiersMarketplace">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>Deeplink</b></td>
                                     <td>
-                                        <span editable-text="deeplinkMarketplace" e-name="deeplinkMarketplace"> {{ deeplinkMarketplace || 'empty (API)' }}</span>
+                                        <span ng-if="deeplinkMarketplace">{{ deeplinkMarketplace }}</span>
+                                        <span ng-if="!deeplinkMarketplace">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -555,19 +567,22 @@
                                 <tr>
                                     <td><b>Min - max</b></td>
                                     <td>
-                                        <span editable-text="minMaxMarketplace" e-name="minMaxMarketplace"> {{ minMaxMarketplace || 'empty (API)' }}</span>
+                                        <span ng-if="minMaxMarketplace">{{ minMaxMarketplace }}</span>
+                                        <span ng-if="!minMaxMarketplace">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>Name comparisson</b></td>
                                     <td>
-                                        <span editable-text="nameComparisonMarketplace" e-name="nameComparisonMarketplace"> {{ nameComparisonMarketplace || 'empty (API)' }}</span>
+                                        <span ng-if="nameComparisonMarketplace">{{ nameComparisonMarketplace }}</span>
+                                        <span ng-if="!nameComparisonMarketplace">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>First transaction date</b></td>
                                     <td>
-                                        <span editable-text="firstDateMarketplace" e-name="firstDateMarketplace"> {{ firstDateMarketplace || 'empty (API)' }}</span>
+                                        <span ng-if="firstDateMarketplace">{{ firstDateMarketplace }}</span>
+                                        <span ng-if="!firstDateMarketplace">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -582,13 +597,15 @@
                                 <tr>
                                     <td><b>To Aircash</b></td>
                                     <td>
-                                        <span editable-text="dataToAircashMarketplace" e-name="dataToAircashMarketplace"> {{ dataToAircashMarketplace || 'empty (API)' }}</span>
+                                        <span ng-if="dataToAircashMarketplace">{{ dataToAircashMarketplace }}</span>
+                                        <span ng-if="!dataToAircashMarketplace">empty (API)</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><b>To Merchant</b></td>
                                     <td>
-                                        <span editable-text="dataToMerchantMarketplace" e-name="dataToMerchantMarketplace"> {{ dataToMerchantMarketplace || 'empty (API)' }}</span>
+                                        <span ng-if="dataToMerchantMarketplace">{{ dataToMerchantMarketplace }}</span>
+                                        <span ng-if="!dataToMerchantMarketplace">empty (API)</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -597,6 +614,42 @@
                     <br />
 
                     <h4><i class="fa fa-tools"></i> API details</h4>
+                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionMarketplace">
+                        <div class="card-header" id="headingCheckPlayer">
+                            <button class="btn btn-link btn-block text-left col" type="button" data-toggle="collapse" data-target="#collapseCheckPlayer" aria-expanded="true" aria-controls="collapseOne">
+                                <span ng-if="checkPlayerUrl">{{ checkPlayerUrl }}</span>
+                                <span ng-if="!checkPlayerUrl">empty (API)</span>
+                            </button>
+                        </div>
+                        <div id="collapseCheckPlayer" class="collapse" aria-labelledby="headingCheckPlayer" data-parent="#accordionMarketplace">
+                            <div class="card-body">
+                                Request
+                                </br>
+                                <span editable-textarea="checkPlayerRequest" e-name="checkPlayerRequest" e-rows="5" e-cols="150"><jsonformatter data="checkPlayerRequest"></jsonformatter></span>
+                                </br>
+                                HTTP 200 Response
+                                </br>
+                                <span editable-textarea="checkPlayerResponse" e-name="checkPlayerResponse" e-rows="5" e-cols="150"><jsonformatter data="checkPlayerResponse"></jsonformatter></span>
+                            </div>
+                        </div>
+                        <div class="card-header" id="headingConfirmPayment">
+                            <button class="btn btn-link btn-block text-left col" type="button" data-toggle="collapse" data-target="#collapseConfirmPayment" aria-expanded="true" aria-controls="collapseOne">
+                                <span ng-if="confirmPaymentUrl">{{ confirmPaymentUrl }}</span>
+                                <span ng-if="!confirmPaymentUrl">empty (API)</span>
+                            </button>
+                        </div>
+                        <div id="collapseConfirmPayment" class="collapse" aria-labelledby="headingConfirmPayment" data-parent="#accordionMarketplace">
+                            <div class="card-body">
+                                Request
+                                </br>
+                                <span editable-textarea="confirmPaymentRequest" e-name="confirmPaymentRequest" e-rows="5" e-cols="150"><jsonformatter data="confirmPaymentRequest"></jsonformatter></span>
+                                </br>
+                                HTTP 200 Response
+                                </br>
+                                <span editable-textarea="confirmPaymentResponse" e-name="confirmPaymentResponse" e-rows="5" e-cols="150"><jsonformatter data="confirmPaymentResponse"></jsonformatter></span>
+                            </div>
+                        </div>
+                    </div>
                     </br>
 
                     <div class="row">

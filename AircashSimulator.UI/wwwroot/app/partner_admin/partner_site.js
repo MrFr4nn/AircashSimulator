@@ -78,7 +78,8 @@ partnerSiteModule.controller("partnerSiteCtrl",
     ['$scope', '$state', 'partnerSiteService', '$filter', '$http', 'JwtParser', '$uibModal', '$rootScope', '$localStorage', '$location',
         function ($scope, $state, partnerSiteService, $filter, $http, JwtParser, $uibModal, $rootScope, $localStorage, $location) {
 
-            $scope.integrationContactId = null;
+            $scope.integrationContactId = null; $scope.checkPlayerUrl = "empty (API)"; $scope.confirmPaymentUrl = "empty (API)";
+            $scope.checkPlayerRequest = "-"; $scope.checkPlayerResponse = "-"; $scope.confirmPaymentRequest = "-"; $scope.confirmPaymentResponse = "-";
             $scope.roles = [];$scope.partnerId = $state.params.partnerId;
             $scope.decodedToken = jwt_decode($localStorage.currentUser.token);
             $scope.partnerRoles = JSON.parse($scope.decodedToken.partnerRoles);
@@ -147,7 +148,7 @@ partnerSiteModule.controller("partnerSiteCtrl",
                             else {
                                 $scope.abonAuthorization = 0;
                             }
-                            $scope.abonAmountRuleExist = $scope.abonAuthorizationEnums.find(function (o) { return o.Value == $scope.partner.AbonAmountRule });
+                            $scope.abonAmountRuleExist = $scope.abonAmoutRuleEnums.find(function (o) { return o.Value == $scope.partner.AbonAmountRule });
                             if ($scope.abonAmountRuleExist != undefined) {
                                 $scope.abonAmountRule = $scope.abonAmountRuleExist.Key;
                             }
@@ -158,9 +159,20 @@ partnerSiteModule.controller("partnerSiteCtrl",
                             $scope.partnerEndpointsAbon = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "AbonDeposit");
                             $scope.partnerEndpointsWithdrawal = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "Withdrawal");
                             $scope.partnerEndpointsAcPay = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "AircashPay");
+                            $scope.partnerEndpointsMarketplace = $scope.partner.PartnerEndpoints.filter(x => x.EndpointTypeName === "Marketplace");
                             $scope.partnerIntegrationContacts = $scope.partner.PartnerIntegrationContact;
                             $scope.partnerErrorCodes = $scope.partner.PartnerErrorCodes;
                             $scope.partnerLoginAccounts = $scope.partner.PartnerLoginAccounts;
+                            $scope.checkPlayerExist = $scope.partnerEndpointsMarketplace.find(function (o) { return o.Url == 'CheckPlayer' });
+                            if ($scope.checkPlayerExist != undefined) {
+                                $scope.checkPlayerRequest = $scope.checkPlayerExist.Request;
+                                $scope.checkPlayerResponse = $scope.checkPlayerExist.Response;
+                            }
+                            $scope.confirmPaymentExist = $scope.partnerEndpointsMarketplace.find(function (o) { return o.Url == 'CreateAndConfirmPayment' });
+                            if ($scope.confirmPaymentExist != undefined) {
+                                $scope.confirmPaymentRequest = $scope.confirmPaymentExist.Request;
+                                $scope.confirmPaymentResponse = $scope.confirmPaymentExist.Response;
+                            }
                             $scope.displayPanels();
                         }
                     }, () => {
@@ -335,7 +347,30 @@ partnerSiteModule.controller("partnerSiteCtrl",
             }
 
             $scope.saveChanges = function () {
-                $scope.partnerEndpoints = $scope.partnerEndpointsAbon.concat($scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay);
+                $scope.partnerEndpointsMarketplace.splice(0, 2);
+                if (($scope.checkPlayerRequest != "" && $scope.checkPlayerRequest != "-") || ($scope.checkPlayerResponse != "" && $scope.checkPlayerResponse != "-")) {
+                    var newCheckPlayer = {
+                        Id: 0,
+                        Url: "",
+                        Request: $scope.checkPlayerRequest,
+                        Response: $scope.checkPlayerResponse,
+                        EndpointType: 25,
+                        EndpointTypeName: 'Marketplace'
+                    }
+                    $scope.partnerEndpointsMarketplace.push(newCheckPlayer);
+                }
+                if (($scope.confirmPaymentRequest != "" && $scope.confirmPaymentRequest != "-") || ($scope.confirmPaymentResponse != "" && $scope.confirmPaymentResponse != "-")) {
+                    var newConfirmPayment = {
+                        Id: 0,
+                        Url: "",
+                        Request: $scope.confirmPaymentRequest,
+                        Response: $scope.confirmPaymentResponse,
+                        EndpointType: 26,
+                        EndpointTypeName: 'Marketplace'
+                    }
+                    $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
+                }
+                $scope.partnerEndpoints = $scope.partnerEndpointsAbon.concat($scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay, $scope.partnerEndpointsMarketplace);
                 partnerSiteService.savePartnerSite($scope.partnerId, $scope.partnerName, $scope.brand, $scope.platform, $scope.internalTicket, $scope.partnerIntegrationContacts, $scope.abonType,
                     $scope.abonAmountRule, $scope.abonAuthorization, $scope.partnerEndpoints, $scope.withdrawalType, $scope.withdrawalInstant,
                     $scope.acPayType, $scope.countryCode, $scope.marketplacePosition, $scope.partnerErrorCodes, $scope.partnerLoginAccounts)

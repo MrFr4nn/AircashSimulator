@@ -8,6 +8,7 @@ namespace Domain.Entities.Enum
     {
         AbonDeposit = 1,
         Withdrawal = 2,
-        AircashPay = 3
+        AircashPay = 3,
+        Marketplace = 4
     }
 }
