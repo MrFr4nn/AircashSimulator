@@ -10,7 +10,6 @@ using Services.Authentication;
 using Domain.Entities.Enum;
 using System.Collections.Generic;
 using Services.User;
-using Org.BouncyCastle.Asn1.Ocsp;
 
 namespace AircashSimulator.Controllers.Partner
 {

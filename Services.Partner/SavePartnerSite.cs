@@ -8,7 +8,7 @@ namespace Services.Partner
 {
     public class SavePartnerSite
     {
-        public Guid? PartnerId { get; set; }
+        public Guid PartnerId { get; set; }
         public string PartnerName { get; set; }
         public string Brand { get; set; }
         public string Platform { get; set; }
