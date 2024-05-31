@@ -23,6 +23,7 @@ namespace DataAccess
         public DbSet<ErrorCodeEntity> ErrorCodes { get; set; }
         public DbSet<PartnerEndpointUsageEntity> PartnerEndpointsUsage { get; set; }
         public DbSet<EndpointEntity> Endpoints { get; set; }
+        public DbSet<LoginAccountsEntity> LoginAccounts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

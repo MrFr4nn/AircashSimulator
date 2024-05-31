@@ -282,21 +282,21 @@ namespace Services.Partner
             var partnerEndpoints = await AircashSimulatorContext.PartnerEndpointsUsage.Where(x => x.PartnerId == partnerId)
                 .Select(x => new PartnerEndpoint
                 {
-                    Id=x.Id,
+                    Id = x.Id,
                     Url = endpointsTypeDictionary[x.EndpointId].Url,
                     Request = x.Request,
                     Response = x.Response,
-                    EndpointType= (int)endpointsTypeDictionary[x.EndpointId].EndpointType,
-                    EndpointTypeName= endpointsTypeDictionary[x.EndpointId].EndpointType.ToString()
+                    EndpointType = (int)endpointsTypeDictionary[x.EndpointId].EndpointType,
+                    EndpointTypeName = endpointsTypeDictionary[x.EndpointId].EndpointType.ToString()
                 }).ToListAsync();
             var partnerIntegrationContact = await AircashSimulatorContext.IntegrationContacts
                 .Where(x => x.PartnerId == partnerId)
                 .Select(x =>  new PartnerIntegrationContact
                 {
-                    Id=x.Id,
-                    ContactName= x.ContactName,
-                    ContactEmail= x.ContactEmail,
-                    ContactPhoneNumber= x.ContactPhoneNumber
+                    Id = x.Id,
+                    ContactName = x.ContactName,
+                    ContactEmail = x.ContactEmail,
+                    ContactPhoneNumber = x.ContactPhoneNumber
                 })
                 .ToListAsync();
             var partnerErrorCodes = await AircashSimulatorContext.ErrorCodes
@@ -304,10 +304,19 @@ namespace Services.Partner
                 .Select(x => new PartnerErrorCode
                 {
                     Id= x.Id,
-                    PartnerId = x.PartnerId,
                     Code = x.Code,
                     LocoKey = x.LocoKey,
                     Description = x.Description
+                })
+                .ToListAsync();
+            var partnerLoginAccounts = await AircashSimulatorContext.LoginAccounts
+                .Where(x => x.PartnerId == partnerId)
+                .Select(x => new PartnerLoginAccount
+                {
+                    Id = x.Id,
+                    Username = x.Username,
+                    Password = x.Password,
+                    Url = x.Url,
                 })
                 .ToListAsync();
             var partnerDetail = await AircashSimulatorContext.Partners
@@ -330,7 +339,8 @@ namespace Services.Partner
                 Roles = partnerRoles,
                 PartnerEndpoints = partnerEndpoints,
                 PartnerIntegrationContact =partnerIntegrationContact,
-                PartnerErrorCodes = partnerErrorCodes
+                PartnerErrorCodes = partnerErrorCodes,
+                PartnerLoginAccounts = partnerLoginAccounts
             }).ToListAsync();
             return partnerDetail;
         }
@@ -350,7 +360,94 @@ namespace Services.Partner
             options.WithdrawalInstantEnums = HelperService.EnumToList(new WithdrawalInstantEnum());
             return options;
         }
+
+        public async Task SavePartnerSite(SavePartnerSite request)
+        {
+            var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
+            partner.PartnerName = request.PartnerName;
+            partner.Brand = request.Brand;
+            partner.Platform= request.Platform;
+            partner.InternalTicket= request.InternalTicket;
+            partner.MarketplacePosition= request.MarketplacePosition;
+            partner.CountryCode = request.CountryCode;
+            if (Enum.IsDefined(typeof(AbonAmoutRuleEnum), request.AbonAmountRule))
+            {
+                partner.AbonAmountRule = (AbonAmoutRuleEnum)request.AbonAmountRule;
+            }
+            if (Enum.IsDefined(typeof(AbonAuthorizationEnum), request.AbonAuthorization))
+            {
+                partner.AbonAuthorization = (AbonAuthorizationEnum)request.AbonAuthorization;
+            }
+            if (Enum.IsDefined(typeof(IntegrationTypeEnum), request.AbonType))
+            {
+                partner.AbonType = (IntegrationTypeEnum)request.AbonType;
+            }
+            if (Enum.IsDefined(typeof(IntegrationTypeEnum), request.AcPayType))
+            {
+                partner.AcPayType = (IntegrationTypeEnum)request.AcPayType;
+            }
+            if (Enum.IsDefined(typeof(IntegrationTypeEnum), request.WithdrawalType))
+            {
+                partner.WithdrawalType = (IntegrationTypeEnum)request.WithdrawalType;
+            }
+            if (Enum.IsDefined(typeof(WithdrawalInstantEnum), request.WithdrawalInstant))
+            {
+                partner.WithdrawalInstant = (WithdrawalInstantEnum)request.WithdrawalInstant;
+            }
+            AircashSimulatorContext.Partners.Update(partner);
+
+            AircashSimulatorContext.IntegrationContacts.RemoveRange(await AircashSimulatorContext.IntegrationContacts.Where(c => c.PartnerId == request.PartnerId).ToListAsync());
+            foreach(PartnerIntegrationContact contact in request.PartnerIntegrationContact)
+            {
+                await AircashSimulatorContext.IntegrationContacts.AddAsync(new IntegrationContactEntity
+                {
+                    PartnerId = request.PartnerId,
+                    ContactName = contact.ContactName,
+                    ContactEmail = contact.ContactEmail,
+                    ContactPhoneNumber = contact.ContactPhoneNumber
+                });
+            }
+
+
+            AircashSimulatorContext.PartnerEndpointsUsage.RemoveRange(await AircashSimulatorContext.PartnerEndpointsUsage.Where(c => c.PartnerId == request.PartnerId).ToListAsync());
+            foreach (PartnerEndpoint endpoint in request.PartnerEndpoints)
+            {
+                await AircashSimulatorContext.PartnerEndpointsUsage.AddAsync(new PartnerEndpointUsageEntity
+                {
+                    PartnerId = request.PartnerId,
+                    EndpointId = endpoint.EndpointType,
+                    Request= endpoint.Request,
+                    Response= endpoint.Response
+
+                });
+            }
         
+            AircashSimulatorContext.ErrorCodes.RemoveRange(await AircashSimulatorContext.ErrorCodes.Where(c => c.PartnerId == request.PartnerId).ToListAsync());
+            foreach (PartnerErrorCode errorCode in request.PartnerErrorCodes)
+            {
+                await AircashSimulatorContext.ErrorCodes.AddAsync(new ErrorCodeEntity
+                {
+                    PartnerId = request.PartnerId,
+                    Code = errorCode.Code,
+                    LocoKey = errorCode.LocoKey,
+                    Description = errorCode.Description
+                });
+            }
+
+            AircashSimulatorContext.LoginAccounts.RemoveRange(await AircashSimulatorContext.LoginAccounts.Where(c => c.PartnerId == request.PartnerId).ToListAsync());
+            foreach (PartnerLoginAccount loginAccount in request.PartnerLoginAccounts)
+            {
+                await AircashSimulatorContext.LoginAccounts.AddAsync(new LoginAccountsEntity
+                {
+                    PartnerId = request.PartnerId,
+                    Username = loginAccount.Username,
+                    Password = loginAccount.Password,
+                    Url = loginAccount.Url
+                });
+            }
+
+            await AircashSimulatorContext.SaveChangesAsync();
+        }
 
     }
 }

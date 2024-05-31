@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Services.Partner
 {
-    public class PartnerErrorCode
+    public class PartnerLoginAccount
     {
         public int Id { get; set; }
-        public int Code { get; set; }
-        public string LocoKey { get; set; }
-        public string Description { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string Url { get; set; }
     }
 }
