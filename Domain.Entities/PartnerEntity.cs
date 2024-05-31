@@ -32,5 +32,6 @@ namespace Domain.Entities
         public WithdrawalInstantEnum WithdrawalInstant { get;set; }
         public IntegrationTypeEnum AcPayType { get;set; }
         public string MarketplacePosition { get; set; }
+        public string Confluence { get; set; }
     }
 }

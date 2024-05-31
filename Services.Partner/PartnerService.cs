@@ -328,6 +328,7 @@ namespace Services.Partner
                 Brand = x.Brand,
                 Platform = x.Platform,
                 InternalTicket = x.InternalTicket,
+                Confluence = x.Confluence,
                 MarketplacePosition = x.MarketplacePosition,
                 CountryCode = x.CountryCode,
                 AbonAmountRule = x.AbonAmountRule.ToString(),
@@ -366,9 +367,10 @@ namespace Services.Partner
             var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
             partner.PartnerName = request.PartnerName;
             partner.Brand = request.Brand;
-            partner.Platform= request.Platform;
-            partner.InternalTicket= request.InternalTicket;
-            partner.MarketplacePosition= request.MarketplacePosition;
+            partner.Platform = request.Platform;
+            partner.InternalTicket = request.InternalTicket;
+            partner.Confluence = request.Confluence; 
+            partner.MarketplacePosition = request.MarketplacePosition;
             partner.CountryCode = request.CountryCode;
             if (Enum.IsDefined(typeof(AbonAmoutRuleEnum), request.AbonAmountRule))
             {

@@ -42,7 +42,7 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
 
-        function savePartnerSite(partnerId, partnerName, brand, platform, internalTicket, partnerIntegrationContacts, abonType, abonAmountRule,
+        function savePartnerSite(partnerId, partnerName, brand, platform, internalTicket, confluence, partnerIntegrationContacts, abonType, abonAmountRule,
             abonAuthorization, partnerEndpoints, withdrawalType, withdrawalInstant, acPayType, countryCode, marketplacePosition, partnerErrorCodes, partnerLoginAccounts) {
             var request = $http({
                 method: 'POST',
@@ -53,6 +53,7 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
                     Brand: brand,
                     Platform: platform,
                     InternalTicket: internalTicket,
+                    Confluence: confluence,
                     MarketplacePosition: marketplacePosition,
                     CountryCode: countryCode,
                     AbonAmountRule: abonAmountRule,
@@ -111,6 +112,7 @@ partnerSiteModule.controller("partnerSiteCtrl",
                             $scope.brand = $scope.partner.Brand;
                             $scope.platform = $scope.partner.Platform;
                             $scope.internalTicket = $scope.partner.InternalTicket;
+                            $scope.confluence =  $scope.partner.Confluence;
                             $scope.marketplacePosition = $scope.partner.MarketplacePosition;
                             $scope.countryCode = $scope.partner.CountryCode;
                             $scope.abonTypeExist = $scope.integrationTypeEnums.find(function (o) { return o.Value == $scope.partner.AbonType });
@@ -371,7 +373,7 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
                 }
                 $scope.partnerEndpoints = $scope.partnerEndpointsAbon.concat($scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay, $scope.partnerEndpointsMarketplace);
-                partnerSiteService.savePartnerSite($scope.partnerId, $scope.partnerName, $scope.brand, $scope.platform, $scope.internalTicket, $scope.partnerIntegrationContacts, $scope.abonType,
+                partnerSiteService.savePartnerSite($scope.partnerId, $scope.partnerName, $scope.brand, $scope.platform, $scope.internalTicket, $scope.confluence, $scope.partnerIntegrationContacts, $scope.abonType,
                     $scope.abonAmountRule, $scope.abonAuthorization, $scope.partnerEndpoints, $scope.withdrawalType, $scope.withdrawalInstant,
                     $scope.acPayType, $scope.countryCode, $scope.marketplacePosition, $scope.partnerErrorCodes, $scope.partnerLoginAccounts)
                     .then(function (response) {

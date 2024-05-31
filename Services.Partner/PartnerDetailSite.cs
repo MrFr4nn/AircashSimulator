@@ -14,6 +14,7 @@ namespace Services.Partner
         public string Brand { get; set; }
         public string Platform { get; set; }
         public string InternalTicket { get; set; }
+        public string Confluence { get; set; }
         public string MarketplacePosition { get; set; }
         public string CountryCode { get; set; }
         public string AbonAmountRule { get; set;}
