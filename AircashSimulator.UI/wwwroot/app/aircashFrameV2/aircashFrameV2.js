@@ -1251,6 +1251,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     {
                         "Key": "PayerBirthDate",
                         "Value": "1990-01-01"
+                    },
+                    {
+                        "Key": "PartnerUserPhoneNumber",
+                        "Value": "38599000001"
                     }
                 ],
                 PartnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
@@ -1281,6 +1285,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     {
                         "Key": "PayerBirthDate",
                         "Value": "1990-01-01"
+                    },
+                    {
+                        "Key": "PartnerUserPhoneNumber",
+                        "Value": "38599000001"
                     }
                 ],
                 PartnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
@@ -1311,6 +1319,10 @@ acFrameV2Module.controller("acFrameV2Ctrl", ['$scope', '$location', '$state', '$
                     {
                         "Key": "PayerBirthDate",
                         "Value": "1990-01-01"
+                    },
+                    {
+                        "Key": "PartnerUserPhoneNumber",
+                        "Value": "38599000001"
                     }
                 ],
                 PartnerId: "8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf",
