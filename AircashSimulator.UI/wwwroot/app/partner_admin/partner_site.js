@@ -248,8 +248,8 @@ partnerSiteModule.controller("partnerSiteCtrl",
                 var newApiDetails = {
                     Id: 0,
                     Url: $('#selectUrl').find(':selected').text(),
-                    Request: $scope.newRequest,
-                    Response: $scope.newResponse,
+                    Request: JSON.stringify(JSON.parse($scope.newRequest)),
+                    Response: JSON.stringify(JSON.parse($scope.newResponse)),
                     EndpointType: $('#selectUrl').find(':selected').val(),
                     EndpointTypeName: endpointType
                 }
@@ -354,8 +354,8 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     var newCheckPlayer = {
                         Id: 0,
                         Url: "",
-                        Request: $scope.checkPlayerRequest,
-                        Response: $scope.checkPlayerResponse,
+                        Request: JSON.stringify(JSON.parse($scope.checkPlayerRequest)),
+                        Response: JSON.stringify(JSON.parse($scope.checkPlayerResponse)),
                         EndpointType: 25,
                         EndpointTypeName: 'Marketplace'
                     }
@@ -365,8 +365,8 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     var newConfirmPayment = {
                         Id: 0,
                         Url: "",
-                        Request: $scope.confirmPaymentRequest,
-                        Response: $scope.confirmPaymentResponse,
+                        Request: JSON.stringify(JSON.parse($scope.confirmPaymentRequest)),
+                            Response: JSON.stringify(JSON.parse($scope.confirmPaymentResponse)),
                         EndpointType: 26,
                         EndpointTypeName: 'Marketplace'
                     }
@@ -377,6 +377,7 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     $scope.abonAmountRule, $scope.abonAuthorization, $scope.partnerEndpoints, $scope.withdrawalType, $scope.withdrawalInstant,
                     $scope.acPayType, $scope.countryCode, $scope.marketplacePosition, $scope.partnerErrorCodes, $scope.partnerLoginAccounts)
                     .then(function (response) {
+                        console.log(response);
                     }, () => {
                         console.log("Error, could not save changes!");
                     });

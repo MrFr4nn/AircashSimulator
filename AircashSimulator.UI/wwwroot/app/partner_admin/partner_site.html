@@ -374,7 +374,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAbonDeposit" ng-if="partnerEndpointsWithdrawal">
+                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionWithdrawal" ng-if="partnerEndpointsWithdrawal">
                         <div ng-repeat="p in partnerEndpointsWithdrawal" class="card">
                             <div class="card-header" id="heading{{p.Id}}">
                                 <h2 class="mb-0 row">
@@ -388,7 +388,7 @@
                                     </span>
                                 </h2>
                             </div>
-                            <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAbonDeposit">
+                            <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionWithdrawal">
                                 <div class="card-body">
                                     Request
                                     </br>
@@ -489,7 +489,7 @@
                             </span>
                         </div>
                     </div>
-                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAbonDeposit" ng-if="partnerEndpointsAcPay">
+                    <div class="accordion mt-2 mb-2 col-6 ml-0 pl-0" id="accordionAcPay" ng-if="partnerEndpointsAcPay">
                         <div ng-repeat="p in partnerEndpointsAcPay" class="card">
                             <div class="card-header" id="heading{{p.Id}}">
                                 <h2 class="mb-0 row">
@@ -503,7 +503,7 @@
                                     </span>
                                 </h2>
                             </div>
-                            <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAbonDeposit">
+                            <div id="collapse{{p.Id}}" class="collapse" aria-labelledby="heading{{p.Id}}" data-parent="#accordionAcPay">
                                 <div class="card-body">
                                     Request
                                     </br>
