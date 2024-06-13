@@ -122,7 +122,8 @@ namespace AircashSimulator.Controllers.AircashFrame
                 Amount = initiateRequest.Amount,
                 MatchParameters = initiateRequest.MatchParameters,
                 PayType = initiateRequest.PayType,
-                PayMethod = initiateRequest.PayMethod
+                PayMethod = initiateRequest.PayMethod,
+                Locale = initiateRequest.Locale
             };
 
             if (initiateRequest.AcFrameOption == AcFrameIntegrationCheckoutTypeEnum.WindowCheckout)
