@@ -18,7 +18,7 @@ cashierAcFrameModule.service("cashierAcFrameWithdrawalService", ['$http', '$q', 
             initiateAcFrameWithdrawal: initiateAcFrameWithdrawal
         });
 
-        function initiateAcFrameWithdrawal(amount, matchParameters, payType, payMethod, acFrameOption) {
+        function initiateAcFrameWithdrawal(amount, matchParameters, payType, payMethod, acFrameOption, locale) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
@@ -28,7 +28,8 @@ cashierAcFrameModule.service("cashierAcFrameWithdrawalService", ['$http', '$q', 
                     matchParameters: matchParameters,
                     payMethod: payMethod,
                     acFrameOption: acFrameOption,
-                    environment: $rootScope.environment                                      
+                    environment: $rootScope.environment,    
+                    locale : locale
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -46,6 +47,7 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
             $scope.createCashierAcFrameWithdrawalServiceBusy = false;  
             $scope.frameWindow = null;
             $scope.frameTab = null;
+            $scope.locale = localStorage.getItem('selectedLanguage');
 
             $scope.initiateAcFrameWithdrawal = function () {                
                 $scope.createCashierAcFrameWithdrawalServiceBusy = true;  
@@ -68,7 +70,7 @@ cashierAcFrameModule.controller("cashierAcFrameWithdrawalCtrl",
                     $scope.matchParameters = [];
                 }
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
-                cashierAcFrameWithdrawalService.initiateAcFrameWithdrawal($scope.createCashierAcFrameWithdrawalModel.amount, $scope.matchParameters, 1, 10, $scope.selectedAcFrameOption.value)
+                cashierAcFrameWithdrawalService.initiateAcFrameWithdrawal($scope.createCashierAcFrameWithdrawalModel.amount, $scope.matchParameters, 1, 10, $scope.selectedAcFrameOption.value,$scope.locale)
                     .then(function (response) {    
                         console.log(response);                        
                         

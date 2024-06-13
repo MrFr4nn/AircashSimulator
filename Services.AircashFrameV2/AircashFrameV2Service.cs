@@ -168,7 +168,7 @@ namespace AircashFrame
                 DeclineUrl = initiateRequestDTO.DeclineUrl,
                 OriginUrl = initiateRequestDTO.OriginUrl,
                 CancelUrl = initiateRequestDTO.CancelUrl,
-                Locale = "en-HR"
+                Locale = initiateRequestDTO.Locale
             };
             var dataToSign = AircashSignatureService.ConvertObjectToString(aircashInitiateSignature);
             var signature = AircashSignatureService.GenerateSignature(dataToSign, SettingsService.AircashSimulatorPrivateKeyPath, SettingsService.AircashSimulatorPrivateKeyPass);
@@ -186,7 +186,7 @@ namespace AircashFrame
                 DeclineUrl = initiateRequestDTO.DeclineUrl,
                 OriginUrl = initiateRequestDTO.OriginUrl,
                 CancelUrl = initiateRequestDTO.CancelUrl,
-                Locale = "en-HR",
+                Locale = initiateRequestDTO.Locale,
                 CustomParameters = initiateRequestDTO.MatchParameters
             };
             aircashInitiateSignature.Signature = signature;

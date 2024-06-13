@@ -18,7 +18,7 @@ cashierAcFrameModule.service("cashierAcFrameAbonService", ['$http', '$q', 'handl
             initiateAcFrameAbon: initiateAcFrameAbon
         });
 
-        function initiateAcFrameAbon(amount, payType, payMethod, acFrameOption, amountRule) {
+        function initiateAcFrameAbon(amount, payType, payMethod, acFrameOption, amountRule, locale) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
@@ -28,7 +28,8 @@ cashierAcFrameModule.service("cashierAcFrameAbonService", ['$http', '$q', 'handl
                     payMethod: payMethod,
                     acFrameOption: acFrameOption,
                     amountRule: amountRule,
-                    environment: $rootScope.environment
+                    environment: $rootScope.environment,
+                    locale: locale
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
@@ -42,6 +43,7 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
             $scope.createCashierAcFrameAbonServiceBusy = false;  
             $scope.frameWindow = null;
             $scope.frameTab = null;
+            $scope.locale = localStorage.getItem('selectedLanguage');
 
             $scope.abon = {}
 
@@ -76,7 +78,7 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
                     $scope.abon.amount = 0;
                 }
                 console.log(config.baseUrl + "AircashFrame/InitiateCashierFrameV2");
-                cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value, $scope.setting.useAmountRule)
+                cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value, $scope.setting.useAmountRule,$scope.locale)
                     .then(function (response) {    
                         console.log(response);                        
                       if ($scope.selectedAcFrameOption.value == 1) {
