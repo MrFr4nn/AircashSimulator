@@ -18,7 +18,7 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
             initiateAcFrame: initiateAcFrame
         });
 
-        function initiateAcFrame(amount, matchParameters, payType, payMethod, acFrameOption) {
+        function initiateAcFrame(amount, matchParameters, payType, payMethod, acFrameOption, Locale) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "AircashFrame/InitiateCashierFrameV2",
@@ -28,7 +28,8 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
                     payType: payType,
                     payMethod: payMethod,
                     acFrameOption: acFrameOption,
-                    environment: $rootScope.environment                                      
+                    environment: $rootScope.environment,  
+                    locale: Locale
                 }
             });
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));            
@@ -38,17 +39,18 @@ cashierAcFrameModule.service("cashierAcFrameAcPayService", ['$http', '$q', 'hand
 
 cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
     ['$scope', '$state', 'cashierAcFrameAcPayService', '$filter', '$http', 'JwtParser', '$uibModal', 'config', '$rootScope',
-        function ($scope, $state, cashierAcFrameAcPayService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {    
-            $scope.createCashierAcFrameAcPayModel = {                
+        function ($scope, $state, cashierAcFrameAcPayService, $filter, $http, JwtParser, $uibModal, config, $rootScope) {
+            $scope.createCashierAcFrameAcPayModel = {
                 amount: 100,
-                firstName:"",
+                firstName: "",
                 lastName: "",
                 birthDate: new Date("")
             };
 
-            $scope.createCashierAcFrameAcPayServiceBusy = false;  
-            $scope.frameWindow = null;
-            $scope.frameTab = null;
+                $scope.locale = localStorage.getItem('selectedLanguage');
+                $scope.createCashierAcFrameAcPayServiceBusy = false;
+                $scope.frameWindow = null;
+                $scope.frameTab = null;
 
             $scope.matchParameters = [];
             $scope.initiateAcFrame = function () {                
@@ -71,7 +73,7 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                 } else {
                     $scope.matchParameters = [];    
                 }
-                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.matchParameters, 0, 2, $scope.selectedAcFrameOption.value)
+                cashierAcFrameAcPayService.initiateAcFrame($scope.createCashierAcFrameAcPayModel.amount, $scope.matchParameters, 0, 2, $scope.selectedAcFrameOption.value, $scope.locale)
                     .then(function (response) {    
                         console.log(response);                        
                         
@@ -118,38 +120,38 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                     });
             }           
 
-            $scope.onSuccess = function (windowCheckoutResponse) {                 
-                console.log(windowCheckoutResponse); 
-                $rootScope.showGritter("Transaction - Success");
-                //location.href = config.acFrameOriginUrl + '/#!/success';
-            }
+                $scope.onSuccess = function (windowCheckoutResponse) {
+                    console.log(windowCheckoutResponse);
+                    $rootScope.showGritter("Transaction - Success");
+                    //location.href = config.acFrameOriginUrl + '/#!/success';
+                }
 
-            $scope.onDecline = function (windowCheckoutResponse) {
-                console.log(windowCheckoutResponse);
-                $rootScope.showGritter("Transaction - Decline");
-                //location.href = config.acFrameOriginUrl + '/#!/decline';
-            }
+                $scope.onDecline = function (windowCheckoutResponse) {
+                    console.log(windowCheckoutResponse);
+                    $rootScope.showGritter("Transaction - Decline");
+                    //location.href = config.acFrameOriginUrl + '/#!/decline';
+                }
 
-            $scope.onCancel = function (windowCheckoutResponse) {
-                console.log(windowCheckoutResponse);
-                $rootScope.showGritter("Tranasction - Cancel");
-                //location.href = config.acFrameOriginUrl + '/#!/cancel';
-            }
+                $scope.onCancel = function (windowCheckoutResponse) {
+                    console.log(windowCheckoutResponse);
+                    $rootScope.showGritter("Tranasction - Cancel");
+                    //location.href = config.acFrameOriginUrl + '/#!/cancel';
+                }
 
-            //SIGNAL R START
-            $scope.CustomNotification = function (msg, status) {
-                var vm = this;
-                vm.name = 'TransactionInfo';
+                //SIGNAL R START
+                $scope.CustomNotification = function (msg, status) {
+                    var vm = this;
+                    vm.name = 'TransactionInfo';
 
-                vm.setOptions = function () {
-                    toastr.options.positionClass = "toast-top-center";
-                    toastr.options.closeButton = true;
-                    toastr.options.showMethod = 'slideDown';
-                    toastr.options.hideMethod = 'slideUp';
-                    toastr.options.progressBar = true;
-                    toastr.options.timeOut = 10000;
-                };
-                vm.setOptions();
+                    vm.setOptions = function () {
+                        toastr.options.positionClass = "toast-top-center";
+                        toastr.options.closeButton = true;
+                        toastr.options.showMethod = 'slideDown';
+                        toastr.options.hideMethod = 'slideUp';
+                        toastr.options.progressBar = true;
+                        toastr.options.timeOut = 10000;
+                    };
+                    vm.setOptions();
 
                 if (status == 1)
                 {                   
@@ -172,37 +174,34 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                 }
             };
 
-            $scope.showVideoDeposit = function () {
-                $("#videoModalDeposit").modal("show");
-            }
-
-            const connection = new signalR.HubConnectionBuilder()
-                .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
-                .configureLogging(signalR.LogLevel.Information)
-                .build();
-
-            async function start()
-            {
-                try
-                {
-                    await connection.start();
-                    console.log("SignalR Connected.");
+                $scope.showVideoDeposit = function () {
+                    $("#videoModalDeposit").modal("show");
                 }
-                catch (err)
-                {
-                    console.log(err);
-                    setTimeout(start, 10000);
-                }
-            };
 
-            connection.onclose(async () => {
-                await start();
-            });
-            
-            connection.on("TransactionConfirmedMessage", (message, status) => {
-                $scope.CustomNotification(message, status);
-            });            
-            //SIGNAL R END
+                const connection = new signalR.HubConnectionBuilder()
+                    .withUrl(config.baseUrl.replace("/api/", "") + "/Hubs/NotificationHub")
+                    .configureLogging(signalR.LogLevel.Information)
+                    .build();
+
+                async function start() {
+                    try {
+                        await connection.start();
+                        console.log("SignalR Connected.");
+                    }
+                    catch (err) {
+                        console.log(err);
+                        setTimeout(start, 10000);
+                    }
+                };
+
+                connection.onclose(async () => {
+                    await start();
+                });
+
+                connection.on("TransactionConfirmedMessage", (message, status) => {
+                    $scope.CustomNotification(message, status);
+                });
+                //SIGNAL R END
 
             $scope.setDefaults = function () {                
                 $scope.busy = false;      
@@ -213,14 +212,14 @@ cashierAcFrameModule.controller("cashierAcFrameAcPayCtrl",
                     { value: 3, desc: 'New Tab' },
                 ];
 
-                $scope.selectedAcFrameOption = $scope.acFrameOptions[0];
-            };
+                    $scope.selectedAcFrameOption = $scope.acFrameOptions[0];
+                };
 
-            $scope.setDate = function (date) {
-                $scope.createCashierAcFrameAcPayModel.birthDate = date;
+                $scope.setDate = function (date) {
+                    $scope.createCashierAcFrameAcPayModel.birthDate = date;
+                }
+
+                $scope.setDefaults();
+
             }
-
-            $scope.setDefaults();
-
-        }
     ]);
