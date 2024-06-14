@@ -81,26 +81,38 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
                 cashierAcFrameAbonService.initiateAcFrameAbon($scope.abon.amount, 0, 0, $scope.selectedAcFrameOption.value, $scope.setting.useAmountRule,$scope.locale)
                     .then(function (response) {    
                         console.log(response);                        
-                      if ($scope.selectedAcFrameOption.value == 1) {
-                            /*---- METHOD 1 - CUSTOM WINDOW CHECKOUT ----- */
-                            if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {    
-                                $scope.createCashierAcFrameAbonServiceBusy = false;                                
+
+                        if ($scope.selectedAcFrameOption.value == 1) {
+                            /*---- METHOD 1 - TAB REDIRECT ----- */
+
+                            if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {
+                                $scope.createCashierAcFrameAcPayServiceBusy = false;
+                                setTimeout(function () {
+                                    var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
+                                    $scope.frameTab = window.location.assign(response.ServiceResponse.Url, 'openFrameInNewWindow', windowOptions);
+                                }, 1);
+                            }
+                        }
+                        else if ($scope.selectedAcFrameOption.value == 2) {
+                            /*---- METHOD 2 - NEW WINDOW ----- */
+                            if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {
+                                $scope.createCashierAcFrameAcPayServiceBusy = false;
                                 setTimeout(function () {
                                     var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
                                     $scope.frameWindow = window.open(response.ServiceResponse.Url, 'openFrameInNewWindow', windowOptions);
-                                }, 1);  
+                                }, 1);
 
                                 //SIGNAL R START
                                 start();
                             }
                         }
-                        else if ($scope.selectedAcFrameOption.value == 2) {
-                            /*---- METHOD 2 - CUSTOM REDIRECT CHECKOUT ----- */
+                        else if ($scope.selectedAcFrameOption.value == 3) {
+                            /*---- METHOD 3 - NEW TAB ----- */
                             if (response.ServiceResponse.Url != "" && response.ServiceResponse.Url != null) {
-                                $scope.createCashierAcFrameAbonServiceBusy = false;
+                                $scope.createCashierAcFrameAcPayServiceBusy = false;
                                 setTimeout(function () {
-                                    var windowOptions = 'directories=no,menubar=no,status=no,titlebar=no,toolbar=no,width=600,height=700';
-                                    $scope.frameTab = window.location.assign(response.ServiceResponse.Url, 'openFrameInNewWindow', windowOptions); 
+                                    $scope.frameTab = window.open(response.ServiceResponse.Url, '_blank');
+
                                 }, 1);
                             }
                         }
@@ -138,36 +150,20 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
 
             //SIGNAL R START
             $scope.CustomNotification = function (msg, status) {
-                var vm = this;
-                vm.name = 'TransactionInfo';
-
-                vm.setOptions = function () {
-                    toastr.options.positionClass = "toast-top-center";
-                    toastr.options.closeButton = true;
-                    toastr.options.showMethod = 'slideDown';
-                    toastr.options.hideMethod = 'slideUp';
-                    toastr.options.progressBar = true;
-                    toastr.options.timeOut = 10000;
-                };
-                vm.setOptions();
-
                 if (status == 1)
                 {                   
-                    toastr.clear();
-                    toastr.success(msg);
+                    $scope.onSuccess();
                     if ($scope.frameWindow.closed == false) {
                         $scope.frameWindow.close();
                     }
                 }
                 else if (status == 2)
                 {
-                    toastr.clear();
-                    toastr.error(msg);
+                    $scope.onSuccess();
                 }
                 else if (status == 3)
                 {
-                    toastr.clear();
-                    toastr.error(msg);
+                    $scope.onSuccess();
                 }
             };
 
@@ -207,8 +203,9 @@ cashierAcFrameModule.controller("cashierAcFrameAbonCtrl",
                 $scope.busy = false;      
                 
                 $scope.acFrameOptions = [
-                    { value: 1, desc: 'Custom Window Checkout' },
-                    { value: 2, desc: 'Custom Redirect Checkout' },
+                    { value: 1, desc: 'Tab Redirect' },
+                    { value: 2, desc: 'New Window' },
+                    { value: 3, desc: 'New Tab' },
                 ];
 
                 $scope.selectedAcFrameOption = $scope.acFrameOptions[0];
