@@ -10,6 +10,7 @@ namespace Services.Partner
     public class PartnerDetailSite
     {
         public Guid PartnerId { get; set; }
+        public Guid PublicPartnerId { get; set; }
         public string PartnerName { get; set; }
         public string Brand { get; set; }
         public string Platform { get; set; }

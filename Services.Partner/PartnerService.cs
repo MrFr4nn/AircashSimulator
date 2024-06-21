@@ -324,6 +324,7 @@ namespace Services.Partner
                 .Select(x => new PartnerDetailSite
             {
                 PartnerId = x.PartnerId,
+                PublicPartnerId = x.PublicPartnerId,
                 PartnerName = x.PartnerName,
                 Brand = x.Brand,
                 Platform = x.Platform,
@@ -365,6 +366,7 @@ namespace Services.Partner
         public async Task SavePartnerSite(SavePartnerSite request)
         {
             var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
+            partner.PublicPartnerId = request.PublicPartnerId;
             partner.PartnerName = request.PartnerName;
             partner.Brand = request.Brand;
             partner.Platform = request.Platform;
