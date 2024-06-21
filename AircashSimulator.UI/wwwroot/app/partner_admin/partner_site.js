@@ -377,11 +377,10 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     $scope.abonAmountRule, $scope.abonAuthorization, $scope.partnerEndpoints, $scope.withdrawalType, $scope.withdrawalInstant,
                     $scope.acPayType, $scope.countryCode, $scope.marketplacePosition, $scope.partnerErrorCodes, $scope.partnerLoginAccounts)
                     .then(function (response) {
-                        console.log(response);
+                        $scope.reaload();
                     }, () => {
                         console.log("Error, could not save changes!");
                     });
-                $scope.reaload();
             }
         }
 
