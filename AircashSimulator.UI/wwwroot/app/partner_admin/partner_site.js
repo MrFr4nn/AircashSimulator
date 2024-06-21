@@ -42,13 +42,14 @@ partnerSiteModule.service("partnerSiteService", ['$http', '$q', 'handleResponseS
             return (request.then(handleResponseService.handleSuccess, handleResponseService.handleError));
         }
 
-        function savePartnerSite(partnerId, partnerName, brand, platform, internalTicket, confluence, partnerIntegrationContacts, abonType, abonAmountRule,
+        function savePartnerSite(partnerId, publicPartnerId, partnerName, brand, platform, internalTicket, confluence, partnerIntegrationContacts, abonType, abonAmountRule,
             abonAuthorization, partnerEndpoints, withdrawalType, withdrawalInstant, acPayType, countryCode, marketplacePosition, partnerErrorCodes, partnerLoginAccounts) {
             var request = $http({
                 method: 'POST',
                 url: config.baseUrl + "Partner/SavePartnerSite",
                 data: {
                     PartnerId: partnerId,
+                    PublicPartnerId: publicPartnerId,
                     PartnerName: partnerName,
                     Brand: brand,
                     Platform: platform,
@@ -108,6 +109,10 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     .then(function (response) {
                         if (response) {
                             $scope.partner = response[0];
+                            $scope.publicPartnerId = $scope.partner.PublicPartnerId;
+                            if ($scope.publicPartnerId == '00000000-0000-0000-0000-000000000000') {
+                                $scope.publicPartnerId = null;
+                            }
                             $scope.partnerName = $scope.partner.PartnerName;
                             $scope.brand = $scope.partner.Brand;
                             $scope.platform = $scope.partner.Platform;
@@ -373,15 +378,14 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
                 }
                 $scope.partnerEndpoints = $scope.partnerEndpointsAbon.concat($scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay, $scope.partnerEndpointsMarketplace);
-                partnerSiteService.savePartnerSite($scope.partnerId, $scope.partnerName, $scope.brand, $scope.platform, $scope.internalTicket, $scope.confluence, $scope.partnerIntegrationContacts, $scope.abonType,
+                partnerSiteService.savePartnerSite($scope.partnerId, $scope.publicPartnerId, $scope.partnerName, $scope.brand, $scope.platform, $scope.internalTicket, $scope.confluence, $scope.partnerIntegrationContacts, $scope.abonType,
                     $scope.abonAmountRule, $scope.abonAuthorization, $scope.partnerEndpoints, $scope.withdrawalType, $scope.withdrawalInstant,
                     $scope.acPayType, $scope.countryCode, $scope.marketplacePosition, $scope.partnerErrorCodes, $scope.partnerLoginAccounts)
                     .then(function (response) {
-                        console.log(response);
+                        $scope.reaload();
                     }, () => {
                         console.log("Error, could not save changes!");
                     });
-                $scope.reaload();
             }
         }
 
