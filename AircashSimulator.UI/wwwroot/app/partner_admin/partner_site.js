@@ -355,7 +355,29 @@ partnerSiteModule.controller("partnerSiteCtrl",
 
             $scope.saveChanges = function () {
                 $scope.partnerEndpointsMarketplace.splice(0, 2);
-                if (($scope.checkPlayerRequest != "" && $scope.checkPlayerRequest != "-") || ($scope.checkPlayerResponse != "" && $scope.checkPlayerResponse != "-")) {
+                if (($scope.checkPlayerRequest != "" && $scope.checkPlayerRequest != "-") && ($scope.checkPlayerResponse == "" || $scope.checkPlayerResponse == "-")) {
+                    var newCheckPlayer = {
+                        Id: 0,
+                        Url: "",
+                        Request: JSON.stringify(JSON.parse($scope.checkPlayerRequest)),
+                        Response: "-",
+                        EndpointType: 25,
+                        EndpointTypeName: 'Marketplace'
+                    }
+                    $scope.partnerEndpointsMarketplace.push(newCheckPlayer);
+                }
+                else if (($scope.checkPlayerRequest == "" || $scope.checkPlayerRequest == "-") && ($scope.checkPlayerResponse != "" && $scope.checkPlayerResponse != "-")) {
+                    var newCheckPlayer = {
+                        Id: 0,
+                        Url: "",
+                        Request: "-",
+                        Response: JSON.stringify(JSON.parse($scope.checkPlayerResponse)),
+                        EndpointType: 25,
+                        EndpointTypeName: 'Marketplace'
+                    }
+                    $scope.partnerEndpointsMarketplace.push(newCheckPlayer);
+                }
+                else if (($scope.checkPlayerRequest != "" && $scope.checkPlayerRequest != "-") && ($scope.checkPlayerResponse != "" && $scope.checkPlayerResponse != "-")) {
                     var newCheckPlayer = {
                         Id: 0,
                         Url: "",
@@ -366,18 +388,40 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     }
                     $scope.partnerEndpointsMarketplace.push(newCheckPlayer);
                 }
-                if (($scope.confirmPaymentRequest != "" && $scope.confirmPaymentRequest != "-") || ($scope.confirmPaymentResponse != "" && $scope.confirmPaymentResponse != "-")) {
+                if (($scope.confirmPaymentRequest == "" || $scope.confirmPaymentRequest == "-") && ($scope.confirmPaymentResponse != "" && $scope.confirmPaymentResponse != "-")) {
                     var newConfirmPayment = {
                         Id: 0,
                         Url: "",
-                        Request: JSON.stringify(JSON.parse($scope.confirmPaymentRequest)),
-                            Response: JSON.stringify(JSON.parse($scope.confirmPaymentResponse)),
+                        Request: "-",
+                        Response: JSON.stringify(JSON.parse($scope.confirmPaymentResponse)),
                         EndpointType: 26,
                         EndpointTypeName: 'Marketplace'
                     }
                     $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
                 }
-                if ($scope.productionPartnerId == "" ) {
+                else if (($scope.confirmPaymentRequest != "" && $scope.confirmPaymentRequest != "-") && ($scope.confirmPaymentResponse == "" || $scope.confirmPaymentResponse == "-")) {
+                    var newConfirmPayment = {
+                        Id: 0,
+                        Url: "",
+                        Request: JSON.stringify(JSON.parse($scope.confirmPaymentRequest)),
+                        Response: "-",
+                        EndpointType: 26,
+                        EndpointTypeName: 'Marketplace'
+                    }
+                    $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
+                }
+                else if (($scope.confirmPaymentRequest != "" && $scope.confirmPaymentRequest != "-") && ($scope.confirmPaymentResponse != "" && $scope.confirmPaymentResponse != "-")) {
+                    var newConfirmPayment = {
+                        Id: 0,
+                        Url: "",
+                        Request: JSON.stringify(JSON.parse($scope.confirmPaymentRequest)),
+                        Response: JSON.stringify(JSON.parse($scope.confirmPaymentResponse)),
+                        EndpointType: 26,
+                        EndpointTypeName: 'Marketplace'
+                    }
+                    $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
+                }
+                if ($scope.productionPartnerId == "" || $scope.productionPartnerId == null) {
                     $scope.productionPartnerId = '00000000-0000-0000-0000-000000000000';
                 }
                 $scope.partnerEndpoints = $scope.partnerEndpointsAbon.concat($scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay, $scope.partnerEndpointsMarketplace);
