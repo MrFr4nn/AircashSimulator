@@ -33,6 +33,6 @@ namespace Domain.Entities
         public IntegrationTypeEnum AcPayType { get;set; }
         public string MarketplacePosition { get; set; }
         public string Confluence { get; set; }
-        public Guid PublicPartnerId { get; set; }
+        public Guid ProductionPartnerId { get; set; }
     }
 }

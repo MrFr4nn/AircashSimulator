@@ -11,14 +11,14 @@ namespace Services.Partner
     {
         public Guid? PartnerId { get; set; }
         public string PartnerName { get; set; }
-        public string PrivateKey { get; set; }
-        public string PrivateKeyPass { get; set; }
         public int CurrencyId { get; set; }
         public string CountryCode { get; set; }
         public EnvironmentEnum Environment { get; set; }
         public List<Role> Roles { get; set; }
         public bool UseDefaultPartner { get; set; }
         public string Username { get; set; }
+        public string Brand { get; set; }
+        public Guid ProductionPartnerId { get; set; }
     }
 
     public class Role

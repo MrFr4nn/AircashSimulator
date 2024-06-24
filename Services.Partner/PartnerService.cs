@@ -63,7 +63,7 @@ namespace Services.Partner
             Expression<Func<PartnerEntity, bool>> predicate = x => true;
 
             if (!String.IsNullOrEmpty(search))
-                predicate = predicate.AndAlso(x => x.PartnerName.Contains(search) || x.PartnerId.ToString().Equals(search));
+                predicate = predicate.AndAlso(x => x.PartnerName.Contains(search) || x.Brand.Contains(search) || x.PartnerId.ToString().Contains(search) || x.ProductionPartnerId.ToString().Contains(search));
 
             var partners = await AircashSimulatorContext.Partners
                     .Where(predicate).OrderBy(t => t.PartnerName)
@@ -71,13 +71,13 @@ namespace Services.Partner
                     {
                         PartnerId = x.PartnerId,
                         PartnerName = x.PartnerName,
-                        PrivateKey = x.PrivateKey,
-                        PrivateKeyPass = x.PrivateKeyPass,
                         CurrencyId = x.CurrencyId,
                         CountryCode = x.CountryCode,
                         Environment = x.Environment,
                         Roles = null,
-                        UseDefaultPartner = x.UseDefaultPartner
+                        UseDefaultPartner = x.UseDefaultPartner,
+                        Brand = x.Brand,
+                        ProductionPartnerId = x.ProductionPartnerId
                     })
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize).ToListAsync();
@@ -324,7 +324,7 @@ namespace Services.Partner
                 .Select(x => new PartnerDetailSite
             {
                 PartnerId = x.PartnerId,
-                PublicPartnerId = x.PublicPartnerId,
+                ProductionPartnerId = x.ProductionPartnerId,
                 PartnerName = x.PartnerName,
                 Brand = x.Brand,
                 Platform = x.Platform,
@@ -366,7 +366,7 @@ namespace Services.Partner
         public async Task SavePartnerSite(SavePartnerSite request)
         {
             var partner = await AircashSimulatorContext.Partners.FirstOrDefaultAsync(x => x.PartnerId == request.PartnerId);
-            partner.PublicPartnerId = request.PublicPartnerId;
+            partner.ProductionPartnerId = request.ProductionPartnerId;
             partner.PartnerName = request.PartnerName;
             partner.Brand = request.Brand;
             partner.Platform = request.Platform;
