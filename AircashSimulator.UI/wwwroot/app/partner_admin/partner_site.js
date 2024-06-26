@@ -362,8 +362,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                         Url: "",
                         Request: JSON.stringify(JSON.parse($scope.checkPlayerRequest)),
                         Response: "-",
-                        EndpointType: 25,
-                        EndpointTypeName: 'Marketplace'
+                        EndpointType: 0,
+                        EndpointTypeName: 'Marketplace',
+                        EndpointId: 25
                     }
                     $scope.partnerEndpointsMarketplace.push(newCheckPlayer);
                 }
@@ -373,8 +374,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                         Url: "",
                         Request: "-",
                         Response: JSON.stringify(JSON.parse($scope.checkPlayerResponse)),
-                        EndpointType: 25,
-                        EndpointTypeName: 'Marketplace'
+                        EndpointType: 0,
+                        EndpointTypeName: 'Marketplace',
+                        EndpointId: 25
                     }
                     $scope.partnerEndpointsMarketplace.push(newCheckPlayer);
                 }
@@ -384,8 +386,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                         Url: "",
                         Request: JSON.stringify(JSON.parse($scope.checkPlayerRequest)),
                         Response: JSON.stringify(JSON.parse($scope.checkPlayerResponse)),
-                        EndpointType: 25,
-                        EndpointTypeName: 'Marketplace'
+                        EndpointType: 0,
+                        EndpointTypeName: 'Marketplace',
+                        EndpointId: 25
                     }
                     $scope.partnerEndpointsMarketplace.push(newCheckPlayer);
                 }
@@ -395,8 +398,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                         Url: "",
                         Request: "-",
                         Response: JSON.stringify(JSON.parse($scope.confirmPaymentResponse)),
-                        EndpointType: 26,
-                        EndpointTypeName: 'Marketplace'
+                        EndpointType: 0,
+                        EndpointTypeName: 'Marketplace',
+                        EndpointId: 26
                     }
                     $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
                 }
@@ -406,8 +410,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                         Url: "",
                         Request: JSON.stringify(JSON.parse($scope.confirmPaymentRequest)),
                         Response: "-",
-                        EndpointType: 26,
-                        EndpointTypeName: 'Marketplace'
+                        EndpointType: 0,
+                        EndpointTypeName: 'Marketplace',
+                        EndpointId: 26
                     }
                     $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
                 }
@@ -417,8 +422,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                         Url: "",
                         Request: JSON.stringify(JSON.parse($scope.confirmPaymentRequest)),
                         Response: JSON.stringify(JSON.parse($scope.confirmPaymentResponse)),
-                        EndpointType: 26,
-                        EndpointTypeName: 'Marketplace'
+                        EndpointType: 0,
+                        EndpointTypeName: 'Marketplace',
+                        EndpointId: 26
                     }
                     $scope.partnerEndpointsMarketplace.push(newConfirmPayment);
                 }
