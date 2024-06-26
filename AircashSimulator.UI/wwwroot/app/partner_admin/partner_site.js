@@ -255,8 +255,9 @@ partnerSiteModule.controller("partnerSiteCtrl",
                     Url: $('#selectUrl').find(':selected').text(),
                     Request: JSON.stringify(JSON.parse($scope.newRequest)),
                     Response: JSON.stringify(JSON.parse($scope.newResponse)),
-                    EndpointType: $('#selectUrl').find(':selected').val(),
-                    EndpointTypeName: endpointType
+                    EndpointType: 0,
+                    EndpointTypeName: endpointType,
+                    EndpointId: $('#selectUrl').find(':selected').val(),
                 }
                 if (endpointType == 'AbonDeposit') {
                     $scope.partnerEndpointsAbon.push(newApiDetails);
@@ -424,7 +425,8 @@ partnerSiteModule.controller("partnerSiteCtrl",
                 if ($scope.productionPartnerId == "" || $scope.productionPartnerId == null) {
                     $scope.productionPartnerId = '00000000-0000-0000-0000-000000000000';
                 }
-                $scope.partnerEndpoints = $scope.partnerEndpointsAbon.concat($scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay, $scope.partnerEndpointsMarketplace);
+                
+                $scope.partnerEndpoints = [].concat($scope.partnerEndpointsAbon, $scope.partnerEndpointsWithdrawal, $scope.partnerEndpointsAcPay, $scope.partnerEndpointsMarketplace);
                 partnerSiteService.savePartnerSite($scope.partnerId, $scope.productionPartnerId, $scope.partnerName, $scope.brand, $scope.platform, $scope.internalTicket, $scope.confluence, $scope.partnerIntegrationContacts, $scope.abonType,
                     $scope.abonAmountRule, $scope.abonAuthorization, $scope.partnerEndpoints, $scope.withdrawalType, $scope.withdrawalInstant,
                     $scope.acPayType, $scope.countryCode, $scope.marketplacePosition, $scope.partnerErrorCodes, $scope.partnerLoginAccounts)

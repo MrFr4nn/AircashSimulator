@@ -14,5 +14,6 @@ namespace Services.Partner
         public string Response { get; set; }
         public int EndpointType { get; set; }
         public string EndpointTypeName { get; set; }
+        public int EndpointId { get; set; }
     }
 }
