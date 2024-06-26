@@ -287,7 +287,8 @@ namespace Services.Partner
                     Request = x.Request,
                     Response = x.Response,
                     EndpointType = (int)endpointsTypeDictionary[x.EndpointId].EndpointType,
-                    EndpointTypeName = endpointsTypeDictionary[x.EndpointId].EndpointType.ToString()
+                    EndpointTypeName = endpointsTypeDictionary[x.EndpointId].EndpointType.ToString(),
+                    EndpointId = x.EndpointId
                 }).ToListAsync();
             var partnerIntegrationContact = await AircashSimulatorContext.IntegrationContacts
                 .Where(x => x.PartnerId == partnerId)
@@ -419,7 +420,7 @@ namespace Services.Partner
                 await AircashSimulatorContext.PartnerEndpointsUsage.AddAsync(new PartnerEndpointUsageEntity
                 {
                     PartnerId = request.PartnerId,
-                    EndpointId = endpoint.EndpointType,
+                    EndpointId = endpoint.EndpointId,
                     Request= endpoint.Request,
                     Response= endpoint.Response
 
