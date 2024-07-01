@@ -202,7 +202,7 @@ public string GenerateSignature(string sequence)
 }</pre>
                 </div>
             </div>
-            
+
         </uib-tab>
         <uib-tab index="request-tab-1" heading="Java" classes="nav-item">
             <pre style="background-color: white">
@@ -225,26 +225,47 @@ public  static String signData(String privateCertFilePath, String privateCertPas
         </uib-tab>
         <uib-tab index="request-tab-2" heading="Ruby" classes="nav-item">
             <pre style="background-color: white">
-def initialize
-    @url = "https://api.staging.aircash.eu/"
-    @guid = "79ce88c4-7f3b-41f2-91ec-e04ffe681190"
-    @fileLocation = "..../supersport.pfx" # file location
-    @pass = "....." # file password
+require 'openssl'
+require 'base64'
+
+class SignatureGenerator
+  def initialize(private_key_file, password)
+    @private_key_file = private_key_file
+    @password = password
+  end
+
+  def sign(data_to_sign)
+    begin
+      # Load private key from PEM file
+      rsa_key = OpenSSL::PKey::RSA.new(File.read(@private_key_file), @password)
+
+      # Sign the data using SHA256 digest
+      digest = OpenSSL::Digest::SHA256.new
+      signature = rsa_key.sign(digest, data_to_sign)
+
+      # Encode signature in Base64
+      signature_data = Base64.encode64(signature).gsub("\n", "")
+
+      return signature_data
+    rescue => e
+      puts "Failed to sign data: #{e.message}"
+      return nil
+    end
+  end
 end
 
-def sign(dataToSign)
-    @cert = Chilkat::CkCert.new()
-    @success = @cert.LoadPfxFile(@fileLocation, @pass)
-    @publicKeyXml = @cert.ExportPublicKey().getXml()
-    @publicKeyXml.gsub! &#39;RSAPublicKey&#39;, &#39;RSAKeyValue&#39;
+# Initialize the SignatureGenerator with the PEM private key location and password
+signature_generator = SignatureGenerator.new("C://desktop//PrivateKey.pem", "Password")
 
-    @p12 = OpenSSL::PKCS12.new(File.binread(@fileLocation), @pass)
-    @originalData = (dataToSign).bytes
-    @digest = OpenSSL::Digest::SHA1.new
-    @keypair = OpenSSL::PKey::RSA.new(@p12.key.to_pem)
-    @signature = @keypair.sign(@digest, dataToSign + @publicKeyXml)
-    return Base64.encode64(@signature).gsub(&quot;\n&quot;, &quot;&quot;)
-end</pre>
+# Example data to sign (corrected SuccessUrl)
+data_to_sign = "Amount=10&CancelUrl=https://dev-simulator.aircash.eu/#!/cancel&CurrencyId=978&DeclineUrl=https://dev-simulator.aircash.eu/#!/decline&Locale=en-US&NotificationUrl=https://dev-simulator-api.aircash.eu/api/AircashFrame/NotificationCashierFrameV2&OriginUrl=&PartnerId=faa29c1a-94b4-41c8-8ad7-0d2a59df007a&PartnerTransactionId=1a74bb41-36fe-4493-9ccf-30879b994729&PartnerUserId=bd6e91e5-2d82-4d3d-a4a5-bded52427a93&PayMethod=2&PayType=0&SuccessUrl=https://dev-simulator.aircash.eu/#!/success"
+
+# Generate signature
+signature = signature_generator.sign(data_to_sign)
+
+# Output the generated signature
+puts "Generated Signature: #{signature}"
+</pre>
         </uib-tab>
         <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
             <pre style="background-color: white">
@@ -267,6 +288,49 @@ function generate_signature($sequence)
             <p>
                 <b>*NOTE: This is working example for the .pfx format of the private key</b>
             </p>
+        </uib-tab>
+        <uib-tab index="request-tab-4" heading="Phyton" classes="nav-item">
+            <pre style="background-color: white">
+import base64
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.hazmat.primitives.serialization import pkcs12
+from cryptography.hazmat.backends import default_backend
+
+def generate_signature(data_to_sign, certificate_path, certificate_pass):
+    # Read the certificate and private key from the PFX file
+    with open(certificate_path, 'rb') as pfx_file:
+        pfx_data = pfx_file.read()
+
+    private_key, certificate, additional_certificates = pkcs12.load_key_and_certificates(
+        pfx_data,
+        certificate_pass.encode(),
+        backend=default_backend()
+    )
+
+    # Create byte array to hold original data
+    original_data = data_to_sign.encode('utf-8')
+
+    # Sign the data using SHA256
+    signature = private_key.sign(
+        original_data,
+        padding.PKCS1v15(),
+        hashes.SHA256()
+    )
+
+    # Return the Base64-encoded signature
+    return base64.b64encode(signature).decode('utf-8')
+
+# Example usage:
+data_to_sign = "Amount=1&CancelUrl=https://dev-simulator.aircash.eu/#!/cancel&CurrencyId=978&DeclineUrl=https://dev-simulator.aircash.eu/#!/decline&Locale=en-US&NotificationUrl=https://dev-simulator-api.aircash.eu/api/AircashFrame/NotificationCashierFrameV2&OriginUrl=&PartnerId=5680e089-9e86-4105-b1a2-acd0cd77653c&PartnerTransactionId=10000&PartnerUserId=150&PayMethod=2&PayType=0&SuccessUrl=https://dev-simulator.aircash.eu/#!/success"
+certificate_path = "C:/desktop/TestPrivateKey.pfx" # file location
+certificate_pass = "Password" # file password
+
+signature = generate_signature(data_to_sign, certificate_path, certificate_pass)
+print("Generated Signature:", signature)
+	}</pre>
+            <br />
+           
         </uib-tab>
     </uib-tabset>
     <br />
