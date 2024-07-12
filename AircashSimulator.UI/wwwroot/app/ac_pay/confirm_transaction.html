@@ -115,14 +115,28 @@
         <uib-tab index="request-tab-1" heading="Request example" classes="nav-item">
             <jsonformatter data="aircashPay.confirmTransaction.requestExample"></jsonformatter>
         </uib-tab>
-        <uib-tab index="request-tab-2" heading="Response example" classes="nav-item">
+        <uib-tab index="request-tab-2" heading="Signature" classes="nav-item">
+            <pre>
+Request example:
+</pre>
+            <jsonformatter data="aircashPay.confirmTransaction.requestExample"></jsonformatter>
+            <pre>
+
+Sequence:
+AircashTransactionID=122e5e33-b5fb-4398-b138-c60582b9fa2b&Amount=100&CurrencyID=978&PartnerID=8f62c8f0-7155-4c0e-8ebe-cd9357cfd1bf&PartnerTransactionID=ef52ca13-33b4-4564-8bca-0cbfc7c5a37d
+
+Signature:
+BnXksHubv6RDgTgcFRZXG14/ENhyh/WF/227wOMWo7nOUzuExpUFYC9qTMGCDEVeU1NDQEeBR7xNlk+WCxPjFOcP/kTB+BREwjegmw4Kw3ushg4i969sjWEF/tk72aJ15XKssnYpMRXnFAtMP71CSM9UW/lZ5oVla5h3uxGa6XkwpkD8ubXC6HiAK+WIvJzmHxvBYvma9qVNCA/iHudSM7JoMwP8a4Z2CEmR9XYDcZd5H6iurIQ5lw4TELjobvWioWWC/LNPH8KfFS95emPsff+XaIOYq//S1rhO7SB7UZSzEa/RwEJscnuD0tYHZBg4/RDmAFPasf5g7N4QmCkVcilgt7jutq5dyc3RSYS2kVAHfxUY4loeqgH2fAFjVe3XNPTUzmkcJMMqMRD1Gw+MWpHG7LNIZ6AE0IgGnC1piHdN8FXX0Sbg015MRDh704RmDObbqoiQ6oGjwIeFBFv3ZdEZUBlWvEOia609DBPc6Fu/u8hLsSoFG5i6sENBeby/CjYTQOymXYI44IU37EpAXnk7VtiNiynxt0FjZVBLOBrSLbFB+Wyo6brPcyn6iPUmB+D4XiTTXPzWC74mcfx9gC3msdXGdijM2OnB2T5l9KV/eUrUYrVo8cWvv00tvqJg8qPtEQTFF3O70uDSgUJVxkZVwmZ9slhRk3sH+gyHx1w=
+</pre>
+        </uib-tab>
+        <uib-tab index="request-tab-3" heading="Response example" classes="nav-item">
             <p>
                 Partner system should respond with HTTP response 200 OK in case of success. In case the partner
                 system isn’t able to process the transaction, the partner system should respond with HTTP response
                 code that isn’t 200 OK.
             </p>
         </uib-tab>
-        <uib-tab index="request-tab-3" heading="Error response parameters" classes="nav-item">
+        <uib-tab index="request-tab-4" heading="Error response parameters" classes="nav-item">
             <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -158,7 +172,7 @@
                 </table>
             </div>
         </uib-tab>
-        <uib-tab index="request-tab-4" heading="Error response example" classes="nav-item">
+        <uib-tab index="request-tab-5" heading="Error response example" classes="nav-item">
             <jsonformatter data="aircashPay.confirmTransaction.errorResponseExample"></jsonformatter>
         </uib-tab>
     </uib-tabset>
