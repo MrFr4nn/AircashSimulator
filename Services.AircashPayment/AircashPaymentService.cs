@@ -45,7 +45,7 @@ namespace Services.AircashPayment
                 var parameters = new List<Parameters>();
                 parameters.Add(new Parameters
                 {
-                    Key = "PartnerUserID",
+                    Key = "partnerUserID",
                     Type = "String",
                     Value = user.UserId.ToString()
                 });
