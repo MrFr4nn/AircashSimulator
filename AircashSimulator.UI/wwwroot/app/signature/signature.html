@@ -224,7 +224,9 @@ public  static String signData(String privateCertFilePath, String privateCertPas
 </pre>
         </uib-tab>
         <uib-tab index="request-tab-2" heading="Ruby" classes="nav-item">
-            <pre style="background-color: white">
+            <div class="row row-cols-md-2">
+                <div class="col">
+                    <pre style="background-color: white">
 require 'openssl'
 require 'base64'
 
@@ -266,9 +268,39 @@ signature = signature_generator.sign(data_to_sign)
 # Output the generated signature
 puts "Generated Signature: #{signature}"
 </pre>
+                </div>
+                <div class="col">
+                    <pre style="background-color: white">
+def initialize
+    @url = "https://api.staging.aircash.eu/"
+    @guid = "79ce88c4-7f3b-41f2-91ec-e04ffe681190"
+    @fileLocation = "..../supersport.pfx" # file location
+    @pass = "....." # file password
+end
+
+def sign(dataToSign)
+    @cert = Chilkat::CkCert.new()
+    @success = @cert.LoadPfxFile(@fileLocation, @pass)
+    @publicKeyXml = @cert.ExportPublicKey().getXml()
+    @publicKeyXml.gsub! &#39;RSAPublicKey&#39;, &#39;RSAKeyValue&#39;
+
+    @p12 = OpenSSL::PKCS12.new(File.binread(@fileLocation), @pass)
+    @originalData = (dataToSign).bytes
+    @digest = OpenSSL::Digest::SHA1.new
+    @keypair = OpenSSL::PKey::RSA.new(@p12.key.to_pem)
+    @signature = @keypair.sign(@digest, dataToSign + @publicKeyXml)
+    return Base64.encode64(@signature).gsub(&quot;\n&quot;, &quot;&quot;)
+end
+</pre>
+                </div>
+            </div>
+                
         </uib-tab>
         <uib-tab index="request-tab-3" heading="PHP" classes="nav-item">
-            <pre style="background-color: white">
+            <div class="row row-cols-md-2">
+                <div class="col">
+                    <pre style="background-color: white">
+\\\PHP 8.0
 function generate_signature($sequence)
 	{
 		if(!file_exists($this->privateKeyPath)) 
@@ -284,10 +316,40 @@ function generate_signature($sequence)
 
 		return $signature;
 	}</pre>
-            <br />
-            <p>
-                <b>*NOTE: This is working example for the .pfx format of the private key</b>
-            </p>
+                    </div>
+                    <div class="col">
+                        <pre style="background-color: white">
+\\\PHP 8.1 and newer
+function generate_signature($sequence)
+{
+    if (!file_exists($this->privateKeyPath)) {
+        throw new Exception("File not found");
+    }
+
+    $pkcs12 = file_get_contents($this->privateKeyPath);
+    openssl_pkcs12_read($pkcs12, $certs, $this->privateKeyPass);
+    $privateKey = $certs['pkey'];        
+    $binarySignature = "";
+    
+    // Convert the sequence to UTF-8 encoding
+    $utf8Sequence = mb_convert_encoding($sequence, 'UTF-8', 'auto');
+    
+    openssl_sign($utf8Sequence, $binarySignature, $privateKey, OPENSSL_ALGO_SHA256);
+    $signature = base64_encode($binarySignature);
+
+    return $signature;
+}
+</pre>
+                    </div>
+                </div>
+
+
+
+
+                <br />
+                <p>
+                    <b>*NOTE: This is working example for the .pfx format of the private key</b>
+                </p>
         </uib-tab>
         <uib-tab index="request-tab-4" heading="Phyton" classes="nav-item">
             <pre style="background-color: white">
