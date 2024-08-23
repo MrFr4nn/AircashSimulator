@@ -96,6 +96,12 @@ namespace AircashSimulator.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> ConfirmTransactionTest(AircashConfirmTransactionRequest aircashConfirmTransactionRequest)
+        {
+            return Ok("Transaction confirmed successfully");
+        }
+
+        [HttpPost]
         [Authorize]
         public async Task<IActionResult> CancelTransaction(CancelTransaction cancelTransactionRequest)
         {
